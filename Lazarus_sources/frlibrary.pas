@@ -92,7 +92,7 @@ begin
   sgLibrary.RowCount := 2;
   sgLibrary.ColCount := 10;
 
-  sgLibrary.ColWidths[0] := 30;
+  sgLibrary.ColWidths[0] := 52;
   sgLibrary.ColWidths[1] := 200;
   sgLibrary.ColWidths[2] := 100;
   sgLibrary.ColWidths[3] := 250;
@@ -150,6 +150,10 @@ begin //LoadIni
       if W <> 0 then
         sgLibrary.ColWidths[i] := W;
     end;
+    // The row numbers can reach four digits; keep them readable even if an
+    // older ini saved a too-narrow width.
+    if sgLibrary.ColWidths[0] < 52 then
+      sgLibrary.ColWidths[0] := 52;
 
     TLibrary.Puzzles.Sort(TSortType(Ini.ReadInteger('LibraryFrame', 'SortMode', Ord(SORT_BY_MENU))));
   finally
