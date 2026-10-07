@@ -188,12 +188,13 @@ uses
   fLogo, fMacro, {fOrderDialog,}
   uVector, uSelection, uUtils, uPuzzleUtils, uXmlReadWrite,
   uZBufferGraphics, uBspGraphics, uOpenglGraphics, uSplitOrder, uScript,
-  IniFiles, Math, IntfGraphics, LCLIntf, LCLType, FPImage,
+  IniFiles, Math,
 {$IFDEF MSWINDOWS}
   Windows,
 {$ELSE}
   uWinCompat,
 {$ENDIF}
+  IntfGraphics, LCLIntf, LCLType, FPImage,
   XMLRead;
 
 // TMainForm

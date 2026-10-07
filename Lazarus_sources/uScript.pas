@@ -265,13 +265,13 @@ implementation
 
 uses fOrderDialog,
      uUtils,
-     SysUtils, Variants, Types, Math, Dialogs, Controls, Forms
+     SysUtils, Variants, Types,
 {$IFDEF MSWINDOWS}
-     , Windows, Messages
+     Windows, Messages,
 {$ELSE}
-     , uWinCompat
+     uWinCompat,
 {$ENDIF}
-     ;
+     Math, Dialogs, Controls, Forms;
 
 const
   SpaceSet: set of AnsiChar = [' ', #9, #10, #13];

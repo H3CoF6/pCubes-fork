@@ -77,13 +77,13 @@ implementation
 uses
   uUtils, uLibrary,
   fMain,
-  Clipbrd, IniFiles, LCLIntf, Graphics, Dialogs, Process,
+  Clipbrd, IniFiles, LCLIntf, Graphics, Dialogs,
 {$IFDEF MSWINDOWS}
-  Windows
+  Windows,
 {$ELSE}
-  uWinCompat, Math
+  uWinCompat, Math,
 {$ENDIF}
-  ;
+  Process;
 
 constructor TLibraryFrame.Create(TheOwner: TComponent);
 begin

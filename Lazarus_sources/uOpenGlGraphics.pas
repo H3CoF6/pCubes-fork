@@ -13,11 +13,13 @@ unit uOpenGlGraphics;
 
 interface
 uses uVector, uPlane, uFace, uPuzzle, uAxis, uPart, uBaseGraphics,
-     LCLIntf, LCLType, Graphics
+     LCLIntf, LCLType,
 {$IFDEF MSWINDOWS}
-     , Windows
+     Windows,
+{$ELSE}
+     uWinCompat,
 {$ENDIF}
-     ;
+     Graphics;
 
 type
   TFPoint = record
