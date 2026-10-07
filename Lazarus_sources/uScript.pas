@@ -265,7 +265,13 @@ implementation
 
 uses fOrderDialog,
      uUtils,
-     SysUtils, Variants, Types, Windows, Messages, Math, Dialogs, Controls, Forms;
+     SysUtils, Variants, Types, Math, Dialogs, Controls, Forms
+{$IFDEF MSWINDOWS}
+     , Windows, Messages
+{$ELSE}
+     , uWinCompat
+{$ENDIF}
+     ;
 
 const
   SpaceSet: set of AnsiChar = [' ', #9, #10, #13];
@@ -2006,6 +2012,7 @@ begin // PreProcess
             Exit;
           end;
 
+          s := TUtils.ToNativePath(s);
           h := FileOpen(s, fmOpenRead or fmShareDenyNone);
           if h = INVALID_HANDLE_VALUE then begin
             Error('Can''t open file "' + s + '", error code ' + IntToStr(GetLastError),

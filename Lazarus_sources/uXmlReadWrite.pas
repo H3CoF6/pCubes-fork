@@ -1094,14 +1094,16 @@ end; // PuzzleLoadHeaderFromXml
 class function TXmlReadWrite.PuzzleLoadHeaderFromXmlFile(Puzzle: TPuzzle; const FileName: String): Boolean;
 var
   XmlDoc: TXmlDocument;
+  FName: String;
 begin
   Result := False;
-  if not FileExists(FileName) then
+  FName := TUtils.ToNativePath(FileName);
+  if not FileExists(FName) then
     exit;
 
 //  XmlDoc := TXmlDocument.Create;
   try
-    ReadXMLFile(XmlDoc, FileName);
+    ReadXMLFile(XmlDoc, FName);
     Result := PuzzleLoadHeaderFromXml(Puzzle, XmlDoc.DocumentElement);
   finally
     XmlDoc.Free;
@@ -1501,7 +1503,7 @@ class function TXmlReadWrite.PuzzleLoadFromXml(Puzzle: TPuzzle; XmlNode: TDomNod
     ReadStringFromXml(XmlNode, 'File', S, '');
 //    if S = '' then
 //      ReadStringFromXml(XmlNode, '', S, '');
-    S := Trim(S);
+    S := TUtils.ToNativePath(Trim(S));
 
 //    XmlDoc := TXmlDocument.Create;
 
@@ -1779,14 +1781,16 @@ end; // PuzzleLoadFromXmlCommon
 class function TXmlReadWrite.PuzzleLoadFromXmlFile(Puzzle: TPuzzle; const FileName: String): Boolean;
 var
   XmlDoc: TXmlDocument;
+  FName: String;
 begin
-  if not FileExists(FileName) then
+  FName := TUtils.ToNativePath(FileName);
+  if not FileExists(FName) then
     Exit(False);
 
-  ReadXMLFile(XmlDoc, FileName);
+  ReadXMLFile(XmlDoc, FName);
   try
     //  XmlDoc := LoadXmlDocument(AnsiString(FileName));
-    Result := PuzzleLoadFromXmlCommon(Puzzle, XmlDoc, FileName);
+    Result := PuzzleLoadFromXmlCommon(Puzzle, XmlDoc, FName);
   finally
     XmlDoc.Free;
   end;

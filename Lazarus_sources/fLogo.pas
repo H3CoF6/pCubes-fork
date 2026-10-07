@@ -40,7 +40,11 @@ var
 
 implementation
 {$R *.lfm}
+{$IFDEF MSWINDOWS}
 uses Windows;
+{$ELSE}
+uses uWinCompat;
+{$ENDIF}
 
 procedure TLogoForm.FormCreate(Sender: TObject);
 begin

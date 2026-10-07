@@ -14,7 +14,12 @@ unit fMacro;
 interface
 
 uses
-  Windows, SysUtils, Variants, Classes, Graphics,
+{$IFDEF MSWINDOWS}
+  Windows,
+{$ELSE}
+  uWinCompat,
+{$ENDIF}
+  SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, Menus, StdCtrls, Grids, ExtCtrls,
   Buttons, Generics.Collections,
   uMacro;

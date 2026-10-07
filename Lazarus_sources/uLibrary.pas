@@ -476,7 +476,8 @@ begin
 
   Folders := TStringList.Create;
 
-  iRes := FindFirst(Folder + PathDelim + '*.*', faDirectory, SearchRec);
+  // Note: "*.*" does not match extension-less directory names on Unix.
+  iRes := FindFirst(Folder + PathDelim + '*', faDirectory, SearchRec);
   while iRes = 0 do begin
     if ((SearchRec.Attr and faDirectory) <> 0) and (copy(SearchRec.Name, 1, 1) <> '.') then
       Folders.Add(SearchRec.Name);
@@ -644,9 +645,10 @@ var
   XmlNode: TDomNode;
   i: integer;
 begin
-//  XmlDoc := TXmlDocument.Create;
+  XmlDoc := TXmlDocument.Create;
   try
-    XmlNode := XmlDoc.FindNode('xml');
+    XmlNode := XmlDoc.CreateElement('xml');
+    XmlDoc.AppendChild(XmlNode);
 
     TDomElement(XmlNode).SetAttribute('Data_Version', IntToStr(XML_VERSION));
 
@@ -747,16 +749,13 @@ begin
   NN.TextContent := Aliases;
   NewNode.AppendChild(NN);
 
-  NN := XmlDoc.CreateElement('ClassName');
+  NN := XmlDoc.CreateElement('Class');
   NN.TextContent := PuzzleClass.ClassName;
   NewNode.AppendChild(NN);
 
-  S := MenuString;
-  while S <> '' do begin
-    NN := XmlDoc.CreateElement('Menu');
-    NN.TextContent := TUtils.Parse(S, ';');
-    NewNode.AppendChild(NN);
-  end;
+  NN := XmlDoc.CreateElement('Menu');
+  NN.TextContent := MenuString;
+  NewNode.AppendChild(NN);
 
   NN := XmlDoc.CreateElement('Inventor');
   NN.TextContent := Inventor;

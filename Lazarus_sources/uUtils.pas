@@ -32,6 +32,7 @@ type
     class procedure LogFileOutput(const filepath, str: String); static;
     class function  GetStartDir: String; static;
     class function  AbsToRelative(const AbsPath, BasePath: string): string;
+    class function  ToNativePath(const Path: string): string; static;
     class procedure GetFilesListRecursive(Folder, Mask: String; slFiles: TStringList); static;
     class function LoadFileFromZip(Stream: TStream; const ArchiveFileName: String; const FileName: String): Boolean;
     class procedure LoadFileListFromZip(const ArchiveFileName: String; FilesList: TStringList);
@@ -79,7 +80,12 @@ implementation
 
 uses
 //  uLog,
-  Windows, SysUtils, Unzip, ZipUtils;
+{$IFDEF MSWINDOWS}
+  Windows,
+{$ELSE}
+  uWinCompat,
+{$ENDIF}
+  SysUtils, Unzip, ZipUtils;
 
 class procedure TUtils.LogFileOutput(const filepath, str: String);
 var F: THandle;
@@ -124,10 +130,28 @@ begin
   //Result := UTF8Encode(Buffer);
 end;
 
+{$IFDEF MSWINDOWS}
 function PathRelativePathTo(pszPath: PChar; pszFrom: PChar; dwAttrFrom: DWORD;
   pszTo: PChar; dwAtrTo: DWORD): LongBool; stdcall; external 'shlwapi.dll' name 'PathRelativePathToW';
+{$ENDIF}
+
+class function TUtils.ToNativePath(const Path: string): string;
+{$IFDEF MSWINDOWS}
+begin
+  Result := Path;
+end;
+{$ELSE}
+var i: integer;
+begin
+  Result := Path;
+  for i := 1 to Length(Result) do
+    if Result[i] = '\' then
+      Result[i] := '/';
+end;
+{$ENDIF}
 
 class function TUtils.AbsToRelative(const AbsPath, BasePath: string): string;
+{$IFDEF MSWINDOWS}
 var
   Path: array[0..MAX_PATH-1] of char;
 begin
@@ -136,6 +160,15 @@ begin
   if Result.StartsWith('.\') then
     Delete(Result, 1, 2);
 end;
+{$ELSE}
+begin
+  Result := AbsPath;
+  if Result.StartsWith(BasePath) then
+    Delete(Result, 1, Length(BasePath));
+  while (Result <> '') and ((Result[1] = '\') or (Result[1] = '/')) do
+    Delete(Result, 1, 1);
+end;
+{$ENDIF}
 
 class procedure TUtils.GetFilesListRecursive(Folder, Mask: String; slFiles: TStringList);
 var
@@ -143,16 +176,17 @@ var
   iRes, i: Integer;
   Folders: TStringList;
 begin
-  iRes := FindFirst(Folder + '\' + Mask, faAnyFile, SearchRec);
+  iRes := FindFirst(IncludeTrailingPathDelimiter(Folder) + Mask, faAnyFile, SearchRec);
   while iRes = 0 do begin
-    slFiles.Add(Folder + '\' + SearchRec.Name);
+    slFiles.Add(IncludeTrailingPathDelimiter(Folder) + SearchRec.Name);
     iRes := FindNext(SearchRec);
   end;
   FindClose(SearchRec);
 
   Folders := TStringList.Create;
 
-  iRes := FindFirst(Folder + '\*.*', faDirectory, SearchRec);
+  // Note: "*.*" does not match extension-less directory names on Unix.
+  iRes := FindFirst(IncludeTrailingPathDelimiter(Folder) + '*', faDirectory, SearchRec);
   while iRes = 0 do begin
     if ((SearchRec.Attr and faDirectory) <> 0) and (copy(SearchRec.Name, 1, 1) <> '.') then
       Folders.Add(SearchRec.Name);
@@ -160,7 +194,7 @@ begin
   end;
 
   for i := 0 to Folders.Count - 1 do
-    GetFilesListRecursive(Folder + '\' + Folders[i], Mask, slFiles);
+    GetFilesListRecursive(IncludeTrailingPathDelimiter(Folder) + Folders[i], Mask, slFiles);
 
   Folders.Free;
 end; // GetFilesListRecursive

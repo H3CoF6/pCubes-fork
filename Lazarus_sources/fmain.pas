@@ -188,7 +188,12 @@ uses
   fLogo, fMacro, {fOrderDialog,}
   uVector, uSelection, uUtils, uPuzzleUtils, uXmlReadWrite,
   uZBufferGraphics, uBspGraphics, uOpenglGraphics, uSplitOrder, uScript,
-  IniFiles, Math, Windows, IntfGraphics, LCLIntf, LCLType, FPImage,
+  IniFiles, Math, IntfGraphics, LCLIntf, LCLType, FPImage,
+{$IFDEF MSWINDOWS}
+  Windows,
+{$ELSE}
+  uWinCompat,
+{$ENDIF}
   XMLRead;
 
 // TMainForm
@@ -1096,6 +1101,13 @@ begin
   end;
 
   FGraphicsEngine := AGraphicsEngine;
+
+  // The OpenGL engine renders through WGL into a bitmap, which only exists on
+  // Windows. Fall back to the BSP engine elsewhere so the canvas is never blank.
+{$IFNDEF MSWINDOWS}
+  if FGraphicsEngine = geOpenGl then
+    FGraphicsEngine := geBsp;
+{$ENDIF}
 
   case FGraphicsEngine of
     geBsp:     GraphicsEngine := TBspGraphics.Create;

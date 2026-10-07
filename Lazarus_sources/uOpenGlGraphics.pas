@@ -13,7 +13,11 @@ unit uOpenGlGraphics;
 
 interface
 uses uVector, uPlane, uFace, uPuzzle, uAxis, uPart, uBaseGraphics,
-     LCLIntf, LCLType, Windows, Graphics;
+     LCLIntf, LCLType, Graphics
+{$IFDEF MSWINDOWS}
+     , Windows
+{$ENDIF}
+     ;
 
 type
   TFPoint = record
@@ -57,7 +61,14 @@ type
 
 implementation
 uses uSelection, uUtils, uGeometryUtils, uLayer,
-  Classes, Math, System.UITypes, Generics.Collections, gl, glu;
+  Classes, Math, System.UITypes, Generics.Collections
+{$IFDEF MSWINDOWS}
+  , gl, glu
+{$ENDIF}
+  ;
+
+{$IFDEF MSWINDOWS}
+
 
 procedure SetDCPixelFormat(DC: THandle; var Palette: HPalette; ToBitmap: Boolean);
 var
@@ -632,5 +643,118 @@ begin
   LineTo(vn);
 end; // PaintPlane
 
-end.
+{$ELSE}
+{ Non-Windows: the original engine used WGL to draw into a bitmap, which has
+  no portable equivalent. Kept as a compiling stub; the main form routes
+  geOpenGl to the BSP engine on these platforms. }
 
+constructor TOpenGlGraphics.Create;
+begin
+  inherited;
+  Zoom := DEFAULT_ZOOM;
+  LastScreen := [0, 0, 0];
+end;
+
+procedure TOpenGlGraphics.SetBitmap(Bitmap: Graphics.TBitmap);
+begin
+  inherited;
+end;
+
+procedure TOpenGlGraphics.PenWidth(Width: extended);
+begin
+end;
+
+procedure TOpenGlGraphics.MoveTo(const ScreenPoint: TVector);
+begin
+  FBitmap.Canvas.MoveTo(Round(ScreenPoint.X), Round(ScreenPoint.Y));
+  LastScreen := ScreenPoint;
+end;
+
+procedure TOpenGlGraphics.LineTo(const SceenPoint: TVector);
+begin
+  FBitmap.Canvas.LineTo(Round(SceenPoint.X), Round(SceenPoint.Y));
+  LastScreen := SceenPoint;
+end;
+
+procedure TOpenGlGraphics.Line3d(const V1, V2: TVector);
+begin
+  MoveTo(getPers(V1 + ExplodeDelta));
+  LineTo(getPers(V2 + ExplodeDelta));
+end;
+
+procedure TOpenGlGraphics.CalcExplode(Part: TPart);
+begin
+end;
+
+procedure TOpenGlGraphics.PaintSmallSquare(const ScreenPoint: TVector);
+begin
+end;
+
+procedure TOpenGlGraphics.Polygon(Path: array of TVector);
+var
+  i: integer;
+  PPath: array of TPoint;
+begin
+  with FBitmap.Canvas do begin
+    SetLength(PPath, High(Path) + 1);
+    for i := 0 to High(Path) do
+      PPath[i] := Point(Round(Path[i].X), Round(Path[i].Y));
+    Polygon(PPath);
+  end;
+end;
+
+procedure TOpenGlGraphics.Polygon3d(Path: array of TVector);
+begin
+end;
+
+function TOpenGlGraphics.MouseIsInFace(mx, my: extended; Face: TFace): Boolean;
+begin
+  Result := False;
+end;
+
+procedure TOpenGlGraphics.Select(Puzzle: TPuzzle; mx, my: integer);
+begin
+end;
+
+procedure TOpenGlGraphics.GetMouseParts(Puzzle: TPuzzle; mx, my: integer);
+begin
+end;
+
+procedure TOpenGlGraphics.DrawBackground;
+begin
+end;
+
+procedure TOpenGlGraphics.PaintScene(Puzzle: TPuzzle);
+begin
+end;
+
+procedure TOpenGlGraphics.PaintPart(Part: TPart; Flags: integer);
+begin
+end;
+
+procedure TOpenGlGraphics.PaintPuzzle(Puzzle: TPuzzle; DrawLines: Boolean);
+begin
+end;
+
+procedure TOpenGlGraphics.PaintPart1(Part: TPart; DrawLines: Boolean);
+begin
+end;
+
+procedure TOpenGlGraphics.PaintFace(Face: TFace; DrawLines: Boolean);
+begin
+end;
+
+procedure TOpenGlGraphics.PaintAxis(Axis: TAxis);
+begin
+end;
+
+procedure TOpenGlGraphics.PaintPlane(Plane: TPlane);
+begin
+end;
+
+procedure TOpenGlGraphics.PaintRay(const VBase, V: TVector);
+begin
+end;
+{$ENDIF}
+
+end.

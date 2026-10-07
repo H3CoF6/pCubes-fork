@@ -13,7 +13,13 @@ unit uZBufferGraphics;
 
 interface
 uses uVector, uPlane, uFace, uPuzzle, uAxis, uPart, uVectorImage, uBaseGraphics,
-     Windows, LCLIntf, LCLType, FPImage, Graphics, {EZLines,} Generics.Collections;
+     LCLIntf, LCLType, FPImage, Graphics, {EZLines,} Generics.Collections,
+{$IFDEF MSWINDOWS}
+     Windows
+{$ELSE}
+     uWinCompat
+{$ENDIF}
+     ;
 
 type
   TScanRow = record
