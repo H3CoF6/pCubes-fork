@@ -41,7 +41,7 @@ with the IDE.
     # register BGRABitmap once (adjust the path to your checkout)
     lazbuild --add-package-link /path/to/bgrabitmap/bgrabitmap/bgrabitmappack.lpk
 
-    # build (choose a widgetset: gtk2 on Linux, win32 on Windows)
+    # build (choose a widgetset: gtk2 on Linux, win32 on Windows, cocoa on macOS)
     lazbuild --widgetset=gtk2 Lazarus_sources/pCubes.lpi
 
 The binary is written to `Lazarus_sources/pCubes` (`pCubes.exe` on Windows).
@@ -50,11 +50,41 @@ use `tools/package-release.sh` to assemble a runnable folder:
 
     tools/package-release.sh Lazarus_sources/pCubes linux-x86_64 dist
 
+### macOS
+
+macOS needs the **cocoa** widgetset (carbon is gone, and the OpenGL engine
+falls back to the BSP engine here too). No Pascal toolchain ships with the
+system, so `tools/setup-macos-toolchain.sh` installs one: FPC from the
+official universal disk image (that single step needs `sudo`) and a portable
+Lazarus unpacked under `~/pctools/Lazarus`:
+
+    tools/setup-macos-toolchain.sh
+
+    LAZ=$HOME/pctools/Lazarus
+    "$LAZ/lazbuild" --lazarusdir="$LAZ" \
+        --add-package-link /path/to/bgrabitmap/bgrabitmap/bgrabitmappack.lpk
+    "$LAZ/lazbuild" --lazarusdir="$LAZ" --widgetset=cocoa \
+        --build-mode=Release Lazarus_sources/pCubes.lpi
+
+Lazarus emits a `pCubes.app` bundle on macOS; `tools/package-macos.sh` builds a
+self-contained, ad-hoc-signed one (signing is mandatory for arm64):
+
+    tools/package-macos.sh Lazarus_sources/pCubes macos-x86_64 dist
+
+Because `Puzzles.zip` and the `Puzzles/ Figures/ Extra/` data are read from
+the executable's directory, they are copied into `pCubes.app/Contents/MacOS`.
+Ship the archive with `ditto` (`tools/package-macos.sh` output is zipped that
+way in CI) so the code signature survives; a plain `unzip` breaks the seal.
+
 ## Releases
 
 Pushing a `v*` tag triggers `.github/workflows/release.yml`, which builds and
-publishes archives for Linux/Windows on x86_64 and arm64. Pushes to `main`
-do not create a release.
+publishes archives for Linux, Windows and macOS on x86_64 and arm64. Pushes to
+`main` do not create a release.
+
+The macOS jobs (`macos-x86_64` on `macos-15-intel`, `macos-aarch64` on
+`macos-14`) install the toolchain with `tools/setup-macos-toolchain.sh`, cache
+the downloads, and publish a signed `pCubes.app` zipped with `ditto`.
 
 Prebuilt archives are also available on the Actions page: run the workflow
 manually (Actions -> Release -> Run workflow) and download the *Artifacts*.

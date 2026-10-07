@@ -15,9 +15,9 @@ jobs:
   build:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.runner }}
-    # The arm64 jobs are best effort: they need a native arm64 FPC/Lazarus
-    # toolchain, which the runners do not always provide. Marking them
-    # experimental keeps a missing toolchain from blocking the x64 release.
+    # The arm64/experimental jobs are best effort: they need a native toolchain
+    # the runners do not always provide. Marking them experimental keeps a
+    # missing toolchain from blocking the main release.
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
@@ -27,6 +27,7 @@ jobs:
             runner: ubuntu-24.04
             widgetset: gtk2
             binary: Lazarus_sources/pCubes
+            package: generic
             archive: tar
             out: pCubes-linux-x86_64.tar.gz
             experimental: false
@@ -34,13 +35,31 @@ jobs:
             runner: windows-2022
             widgetset: win32
             binary: Lazarus_sources/pCubes.exe
+            package: generic
             archive: zip
             out: pCubes-windows-x86_64.zip
+            experimental: false
+          - name: macos-x86_64
+            runner: macos-15-intel
+            widgetset: cocoa
+            binary: Lazarus_sources/pCubes
+            package: macos
+            archive: ditto-zip
+            out: pCubes-macos-x86_64.zip
+            experimental: false
+          - name: macos-aarch64
+            runner: macos-14
+            widgetset: cocoa
+            binary: Lazarus_sources/pCubes
+            package: macos
+            archive: ditto-zip
+            out: pCubes-macos-aarch64.zip
             experimental: false
           - name: linux-aarch64
             runner: ubuntu-24.04-arm
             widgetset: gtk2
             binary: Lazarus_sources/pCubes
+            package: generic
             archive: tar
             out: pCubes-linux-aarch64.tar.gz
             experimental: true
@@ -48,6 +67,7 @@ jobs:
             runner: windows-11-arm
             widgetset: win32
             binary: Lazarus_sources/pCubes.exe
+            package: generic
             archive: zip
             out: pCubes-windows-aarch64.zip
             experimental: true
@@ -97,6 +117,32 @@ jobs:
           git clone --depth 1 https://github.com/bgrabitmap/bgrabitmap.git "$env:RUNNER_TEMP\bgrabitmap"
           lazbuild --add-package-link "$env:RUNNER_TEMP\bgrabitmap\bgrabitmap\bgrabitmappack.lpk"
 
+      # ------------------------------------------------------- macOS toolchain
+      # The runners ship no Pascal toolchain, so install FPC (official dmg,
+      # universal) plus a portable Lazarus zip. Cache the ~650 MB of downloads
+      # between runs; the install itself still runs every time.
+      - name: Cache macOS downloads
+        if: runner.os == 'macOS'
+        uses: actions/cache@v4
+        with:
+          path: ~/pctools/cache
+          key: macos-fpc-lazarus-${{ runner.arch }}-3.2.2-3.8
+
+      - name: Install toolchain (macOS)
+        if: runner.os == 'macOS'
+        run: tools/setup-macos-toolchain.sh "$HOME/pctools"
+
+      - name: Export toolchain paths (macOS)
+        if: runner.os == 'macOS'
+        run: echo "LAZARUS_DIR=$HOME/pctools/Lazarus" >> "$GITHUB_ENV"
+
+      - name: Fetch BGRABitmap (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          git clone --depth 1 https://github.com/bgrabitmap/bgrabitmap.git "$RUNNER_TEMP/bgrabitmap"
+          "$LAZARUS_DIR/lazbuild" --lazarusdir="$LAZARUS_DIR" \
+            --add-package-link "$RUNNER_TEMP/bgrabitmap/bgrabitmap/bgrabitmappack.lpk"
+
       # ----------------------------------------------------------------- Build
       - name: Build (Linux)
         if: runner.os == 'Linux'
@@ -107,10 +153,23 @@ jobs:
         shell: pwsh
         run: lazbuild --widgetset=${{ matrix.widgetset }} Lazarus_sources/pCubes.lpi
 
+      - name: Build (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          "$LAZARUS_DIR/lazbuild" --lazarusdir="$LAZARUS_DIR" \
+            --widgetset=${{ matrix.widgetset }} --build-mode=Release \
+            Lazarus_sources/pCubes.lpi
+
       # --------------------------------------------------------------- Package
-      - name: Package
+      - name: Package (generic)
+        if: matrix.package == 'generic'
         shell: bash
         run: tools/package-release.sh "${{ matrix.binary }}" ${{ matrix.name }} dist
+
+      - name: Package (macOS)
+        if: matrix.package == 'macos'
+        shell: bash
+        run: tools/package-macos.sh "${{ matrix.binary }}" ${{ matrix.name }} dist
 
       - name: Archive (tar)
         if: matrix.archive == 'tar'
@@ -123,6 +182,13 @@ jobs:
         shell: pwsh
         run: |
           Compress-Archive -Path "dist/${{ matrix.name }}" -DestinationPath "${{ matrix.out }}"
+
+      # ditto preserves the code signature that plain zip/unzip would break.
+      - name: Archive (ditto-zip)
+        if: matrix.archive == 'ditto-zip'
+        run: |
+          cd dist/${{ matrix.name }}
+          ditto -c -k --sequesterRsrc --keepParent pCubes.app "../../${{ matrix.out }}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
