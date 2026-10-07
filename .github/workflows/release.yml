@@ -1,0 +1,139 @@
+name: Release
+
+# Publishes a GitHub Release only when a version tag is pushed (e.g. v0.3.169).
+# Normal pushes to main never trigger this workflow.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runner }}
+    # The arm64 jobs are best effort: they need a native arm64 FPC/Lazarus
+    # toolchain, which the runners do not always provide. Marking them
+    # experimental keeps a missing toolchain from blocking the x64 release.
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux-x86_64
+            runner: ubuntu-24.04
+            widgetset: gtk2
+            binary: Lazarus_sources/pCubes
+            archive: tar
+            out: pCubes-linux-x86_64.tar.gz
+            experimental: false
+          - name: windows-x86_64
+            runner: windows-2022
+            widgetset: win32
+            binary: Lazarus_sources/pCubes.exe
+            archive: zip
+            out: pCubes-windows-x86_64.zip
+            experimental: false
+          - name: linux-aarch64
+            runner: ubuntu-24.04-arm
+            widgetset: gtk2
+            binary: Lazarus_sources/pCubes
+            archive: tar
+            out: pCubes-linux-aarch64.tar.gz
+            experimental: true
+          - name: windows-aarch64
+            runner: windows-11-arm
+            widgetset: win32
+            binary: Lazarus_sources/pCubes.exe
+            archive: zip
+            out: pCubes-windows-aarch64.zip
+            experimental: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # ------------------------------------------------------- Linux toolchain
+      - name: Install toolchain (Linux)
+        if: runner.os == 'Linux'
+        continue-on-error: ${{ matrix.experimental }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fpc lazarus lcl-gtk2 lcl-units libgtk2.0-dev
+
+      - name: Fetch BGRABitmap (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          git clone --depth 1 https://github.com/bgrabitmap/bgrabitmap.git "$RUNNER_TEMP/bgrabitmap"
+          lazbuild --add-package-link "$RUNNER_TEMP/bgrabitmap/bgrabitmap/bgrabitmappack.lpk"
+
+      # ----------------------------------------------------- Windows toolchain
+      - name: Install toolchain (Windows)
+        if: runner.os == 'Windows'
+        continue-on-error: ${{ matrix.experimental }}
+        shell: pwsh
+        run: |
+          choco install --no-progress -y lazarus
+
+      - name: Fetch BGRABitmap (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          git clone --depth 1 https://github.com/bgrabitmap/bgrabitmap.git "$env:RUNNER_TEMP\bgrabitmap"
+          lazbuild --add-package-link "$env:RUNNER_TEMP\bgrabitmap\bgrabitmap\bgrabitmappack.lpk"
+
+      # ----------------------------------------------------------------- Build
+      - name: Build (Linux)
+        if: runner.os == 'Linux'
+        run: lazbuild --widgetset=${{ matrix.widgetset }} Lazarus_sources/pCubes.lpi
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: lazbuild --widgetset=${{ matrix.widgetset }} Lazarus_sources/pCubes.lpi
+
+      # --------------------------------------------------------------- Package
+      - name: Package
+        shell: bash
+        run: tools/package-release.sh "${{ matrix.binary }}" ${{ matrix.name }} dist
+
+      - name: Archive (tar)
+        if: matrix.archive == 'tar'
+        run: |
+          cd dist
+          tar czf "../${{ matrix.out }}" ${{ matrix.name }}
+
+      - name: Archive (zip)
+        if: matrix.archive == 'zip'
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "dist/${{ matrix.name }}" -DestinationPath "${{ matrix.out }}"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pCubes-${{ matrix.name }}
+          path: ${{ matrix.out }}
+          if-no-files-found: error
+
+  release:
+    name: Publish release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: List artifacts
+        run: ls -la artifacts
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*
+          generate_release_notes: true

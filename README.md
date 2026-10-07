@@ -23,3 +23,35 @@ To build the sources you must install the **BGRABitmap** package:
 
 Sources live in `Lazarus_sources/`; puzzle definitions are XML files under
 `Puzzles/` and `Figures/`, loaded at runtime from `Puzzles.zip`.
+
+## What this fork adds
+
+* The complete puzzle library from the official release
+  (http://pmetro.su/pCubes.zip, v0.3 build 169) — 5819 puzzles, up from the
+  four samples that ship with the open sources.
+* A cross-platform (Linux) build: the sources now compile with the LCL on
+  non-Windows targets. See `Lazarus_sources/uWinCompat.pas`; the Windows-only
+  OpenGL backend (WGL into a bitmap) falls back to the BSP engine elsewhere.
+
+## Building
+
+Requirements: FPC 3.2.x, Lazarus 2.2+, and the BGRABitmap package registered
+with the IDE.
+
+    # register BGRABitmap once (adjust the path to your checkout)
+    lazbuild --add-package-link /path/to/bgrabitmap/bgrabitmap/bgrabitmappack.lpk
+
+    # build (choose a widgetset: gtk2 on Linux, win32 on Windows)
+    lazbuild --widgetset=gtk2 Lazarus_sources/pCubes.lpi
+
+The binary is written to `Lazarus_sources/pCubes` (`pCubes.exe` on Windows).
+It reads its puzzle library and `Puzzles.zip` from the working directory, so
+use `tools/package-release.sh` to assemble a runnable folder:
+
+    tools/package-release.sh Lazarus_sources/pCubes linux-x86_64 dist
+
+## Releases
+
+Pushing a `v*` tag triggers `.github/workflows/release.yml`, which builds and
+publishes archives for Linux/Windows on x86_64 and arm64. Pushes to `main`
+do not create a release.
