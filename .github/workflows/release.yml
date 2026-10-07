@@ -76,6 +76,19 @@ jobs:
         shell: pwsh
         run: |
           choco install --no-progress -y lazarus
+          # choco does not put Lazarus on PATH; locate lazbuild.exe and add it.
+          $exe = Get-ChildItem -Path 'C:\tools','C:\' -Filter lazbuild.exe -Recurse `
+                   -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $exe) { throw 'lazbuild.exe not found after install' }
+          Write-Host "using $($exe.FullName)"
+          $exe.DirectoryName | Out-File -Append -Encoding ascii $env:GITHUB_PATH
+
+      - name: Verify toolchain (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          where.exe lazbuild
+          lazbuild --version
 
       - name: Fetch BGRABitmap (Windows)
         if: runner.os == 'Windows'
