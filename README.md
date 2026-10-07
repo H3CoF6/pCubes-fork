@@ -55,3 +55,16 @@ use `tools/package-release.sh` to assemble a runnable folder:
 Pushing a `v*` tag triggers `.github/workflows/release.yml`, which builds and
 publishes archives for Linux/Windows on x86_64 and arm64. Pushes to `main`
 do not create a release.
+
+Prebuilt archives are also available on the Actions page: run the workflow
+manually (Actions -> Release -> Run workflow) and download the *Artifacts*.
+
+The Linux builds use the **GTK2** widgetset, so the `gtk2` runtime must be
+installed to run them, e.g. on Arch:
+
+    sudo pacman -S gtk2        # or: yay -S gtk2
+    tar xzf pCubes-linux-x86_64.tar.gz
+    cd linux-x86_64 && ./pCubes
+
+Keep the whole folder together: the executable reads `Puzzles.zip`, `Menu.xml`
+and the `Puzzles/ Figures/ Extra/` data from its own directory.
