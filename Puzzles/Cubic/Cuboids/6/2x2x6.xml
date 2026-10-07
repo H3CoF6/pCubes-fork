@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cuboid 2x2x6</Name>
+        <Menu>Cubic\Cuboids\6\2x2x6</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-04-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2429</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        H := 0.6;
+        N := 6;
+
+        WD := 2 * H / N;
+        D[0] := -H + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+
+        WX := WD;
+        WY := WD;
+        WZ := H;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "WD" WY = "H" WZ = "WD" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "H" WY = "WD" WZ = "WD" />
+        <Split Axis = "0" From = "N / 2" />
+        <Split Axis = "1" From = "N / 2" />
+        <Split Axis = "2" From = "N / 2" />
+        <InvertVisibility/>
+    </Figure>
+</xml>

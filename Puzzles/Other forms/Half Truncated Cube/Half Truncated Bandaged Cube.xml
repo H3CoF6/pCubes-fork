@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Half Truncated Bandaged Cube</Name>
+        <Menu>Other forms\Half Truncated Cube\Half Truncated Bandaged Cube</Menu>
+        <Inventor>Hidetoshi Takeji</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-01-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7688</Link>
+    </Interface>
+
+    <Script>
+        Colors[6] := '0000A0';
+        Colors[7] := '8888BB';
+        Colors[8] := '8800FF';
+        Colors[9] := '00CCCC';
+
+        W := 0.5;
+        N := 3;
+        DCut := W * 5 / 3 / sqrt(3);
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('211=002, 012, 022');
+        ParseTxt('121=210, 211, 212');
+        ParseTxt('112=000, 100, 200, 010, 020');
+        ParseTxt('122=110');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+
+        <Cut Color = "Colors[6]"><Plane NormVector = "-1;-1;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[7]"><Plane NormVector = " 1; 1;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[8]"><Plane NormVector = " 1;-1; 1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[9]"><Plane NormVector = "-1; 1; 1" NormDistance = "-DCut" /></Cut>
+    </Figure>
+</xml>

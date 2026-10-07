@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>SG Cube (4 colors)</Name>
+        <Menu>Cubic\Rubiks Recolored\SG Cube (4 colors)</Menu>
+        <Inventor>Jared McComb</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4849</Link>
+    </Interface>
+
+    <Script>
+        C[1] := '00DD00';
+        C[2] := '0066FF';
+        C[3] := 'C80000';
+        C[4] := 'FFFFFF';
+
+        W := 0.5;
+        D := W / 3;
+
+        WX := D;
+        WY := D;
+        WZ := D;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCubie" >
+            <Script>
+                Color := C[StrToInt(copy(SColors, 1, 1))];
+                for j := 0 to 5 do
+                    Colors[j] := Color;
+                Delete(SColors, 1, 1);
+
+                DWX := (i mod 3 - 1) * D * 2;
+                DWY := (i div 3 mod 3 - 1) * D * 2;
+                DWZ := (i div 9 - 1) * D * 2;
+
+                Inc(i);
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCubie" i = "0"  SColors = "4113323322112" Repeat = "13" />
+        <ExecMacro MacroName = "AddCubie" i = "14" SColors = "2112233233114" Repeat = "13" />
+
+        <Macro Name = "TurnAndSave" >
+            <SaveSolvedState/>
+            <Turn Axis = "2" From = "0" To = "2" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "TurnAndSave" Repeat = "4" />
+        <Turn Axis = "1" From = "0" To = "2" Angle = "Pi" />
+        <ExecMacro MacroName = "TurnAndSave" Repeat = "4" />
+        <Turn Axis = "1" From = "0" To = "2" Angle = "Pi" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

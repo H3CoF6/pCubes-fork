@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Granada Sol y Nieve</Name>
+        <Menu>Other forms\Dodecahedron\Other\Granada Sol y Nieve</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-01-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9650</Link>
+    </Interface>
+
+    <Script>
+        Color0 := 'F0F0F0'; // White
+        Color1 := 'CFFF00'; // Yellow
+        Color2 := '00BFFF'; // DeepSky
+
+        procedure SetColor(Color);
+        begin
+            for i := 0 to 11 do
+                Colors[i] := Color;
+        end;
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" TurnAxesWithPartNo = "21" >
+        <Axis NormVector = " Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = " Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = " Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = " Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = " Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = " Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "HideTop" >
+            <HideContaining Vector = "Vx[ 0];Vy[ 0];Vz[ 0]" />
+            <HideContaining Vector = "Vx[ 3];Vy[ 3];Vz[ 3]" />
+            <HideContaining Vector = "Vx[ 4];Vy[ 4];Vz[ 4]" />
+            <HideContaining Vector = "Vx[ 9];Vy[ 9];Vz[ 9]" />
+            <HideContaining Vector = "Cx[ 0];Cy[ 0];Cz[ 0]" />
+            <HideContaining Vector = "Cx[ 4];Cy[ 4];Cz[ 4]" />
+            <HideContaining Vector = "Cx[ 5];Cy[ 5];Cz[ 5]" />
+        </Macro>
+
+        <Macro Name = "HideBottom" >
+            <HideContaining Vector = "Vx[11];Vy[11];Vz[11]" />
+            <HideContaining Vector = "Vx[15];Vy[15];Vz[15]" />
+            <HideContaining Vector = "Vx[16];Vy[16];Vz[16]" />
+            <HideContaining Vector = "Vx[17];Vy[17];Vz[17]" />
+            <HideContaining Vector = "Cx[ 9];Cy[ 9];Cz[ 9]" />
+            <HideContaining Vector = "Cx[10];Cy[10];Cz[10]" />
+            <HideContaining Vector = "Cx[11];Cy[11];Cz[11]" />
+        </Macro>
+
+        <Turn NormVector = " Ex[0]; Ey[0]; Ez[0]" Angle = " Pi / 2" />
+
+        <Script> SetColor(Color1); </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideTop" />
+        <ExecMacro MacroName = "HideBottom" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <Script> SetColor(Color0); </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideTop" />
+        <RemoveAllVisible/>
+
+        <Script> SetColor(Color2); </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideBottom" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+
+        <Turn NormVector = " 0; 0; 1" Angle = "sAngle" />
+        <Turn NormVector = " 1; 0; 0" Angle = "-Pi/2+dAngle" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

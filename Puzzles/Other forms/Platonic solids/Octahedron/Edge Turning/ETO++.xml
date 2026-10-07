@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>ETO++</Name>
+        <Menu>Other forms\Octahedron\Edge Turning\ETO++</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-01-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10745</Link>
+    </Interface>
+
+    <Script>
+        W := 0.75;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+
+        D := W * sqrt(2) / 4;
+        DCut := W / 2;
+        JumbleAngle := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "JumbleAngle" PlaneDistances = "D" FixedLayers = "0" NormVectors = " Ex; Ey; Ez" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "DCut" /></Split>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "DCut" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "DCut" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "DCut" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "DCut" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "DCut" /></Split>
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split" >
+            <HideContaining Vector = "Cx[1];Cy[1];Cz[1]" />
+            <InvertVisibility/>
+            <Turn NormVector = " 1; 0; 1" Angle = " JumbleAngle" />
+            <Split><Plane NormVector = " 1; 1; 0" NormDistance = "D" /> </Split>
+            <Turn NormVector = " 1; 0; 1" Angle = "-JumbleAngle" />
+            <Turn NormVector = " 0;-1; 1" Angle = "-JumbleAngle" />
+            <Split><Plane NormVector = "-1;-1; 0" NormDistance = "D" /> </Split>
+            <Turn NormVector = " 0;-1; 1" Angle = " JumbleAngle" />
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = " Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi" />
+        <ExecMacro MacroName = "Split" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi" />
+    </Figure>
+</xml>

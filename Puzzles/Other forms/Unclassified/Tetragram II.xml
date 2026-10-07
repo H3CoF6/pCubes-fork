@@ -1,0 +1,153 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tetragram II</Name>
+        <Menu>Other forms\Unclassified\Tetragram II</Menu>
+        <Inventor>Wong Chong Wen</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-12-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9823</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'F0F0F0'; // White 
+        Colors[1] := '0000FF'; // Blue  
+        Colors[2] := 'FF0000'; // Red   
+        Colors[3] := 'FFFF00'; // Yellow
+        Colors[4] := 'FF6000'; // Orange
+        Colors[5] := '008000'; // Green 
+        Colors[6] := '00FFFF'; // Cyan  
+        Colors[7] := '00FF00'; // Lime  
+        Colors[8] := 'F0E68C'; // Khaki 
+        Colors[9] := '505080'; // Gray  
+
+        K := 0.42;
+        s3  := sqrt(3);
+        D := K / s3;
+        RC := K * 0.378;
+
+        aX := s3 / 2;
+        aZ := 1 / 2;
+
+        jAngle := Arccos(-3/5);
+
+        pX0 := K;
+        pZ0 := K * 2 / s3;
+
+        pX1 := K * 3 / 2;
+        pZ1 := K / 2 / s3;
+
+        pX2 := K;
+        pZ2 :=-K / s3;
+
+        pX3 := pX2 + (pX2 - pX1);
+        pZ3 := pZ2 + (pZ2 - pZ1);
+
+        procedure Add4( x, y, z);
+        begin
+            Vx[i] := x; Vy[i] := y; Vz[i] := z; Inc(i);
+            Vx[i] :=-y; Vy[i] := x; Vz[i] := z; Inc(i);
+            Vx[i] :=-x; Vy[i] :=-y; Vz[i] := z; Inc(i);
+            Vx[i] := y; Vy[i] :=-x; Vz[i] := z; Inc(i);
+        end;
+
+        i := 0;
+        Add4( pX0,   0, pZ0);
+        Add4( pX1,   0, pZ1);
+        Add4( pX2, pX2, pZ2);
+        Add4( pX3,   0, pZ3);
+
+        pX5 := K * 5 / 7;
+        pZ5 := pX5 / s3;
+        pX6 := K;
+        pZ6 :=-K / s3;
+
+        Cx[0] :=   0; Cy[0] :=   0; Cz[0] := pZ0;
+        Cx[1] := pX6; Cy[1] :=   0; Cz[1] := pZ6;
+        Cx[2] :=   0; Cy[2] := pX6; Cz[2] := pZ6;
+        Cx[3] :=-pX6; Cy[3] :=   0; Cz[3] := pZ6;
+        Cx[4] :=   0; Cy[4] :=-pX6; Cz[4] := pZ6;
+        Cx[5] :=   0; Cy[5] :=   0; Cz[5] := pZ3;
+
+        // Circle centers
+        CCx[0] := pX5; CCy[0] := pX5; CCz[0] := pZ5;
+        CCx[1] :=-pX5; CCy[1] := pX5; CCz[1] := pZ5;
+        CCx[2] :=-pX5; CCy[2] :=-pX5; CCz[2] := pZ5;
+        CCx[3] := pX5; CCy[3] :=-pX5; CCz[3] := pZ5;
+
+        pillow := 1.2;
+        for i := 0 to 4 do begin
+          Cx[i] := Cx[i] * pillow;
+          Cy[i] := Cy[i] * pillow;
+          Cz[i] := Cz[i] * pillow;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi" JumbleAngle = "jAngle" PlaneDistances = "D" >
+        <Axis NormVector = " aX;  0; aZ" />
+        <Axis NormVector = "  0; aX; aZ" />
+        <Axis NormVector = "-aX;  0; aZ" />
+        <Axis NormVector = "  0;-aX; aZ" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-pZ2" NormVectors = " 0; 0;-1" FixedLayers = "0" />
+
+    <Figure>
+        <Macro Name = "Pyramid" >
+            <Face Color = "Color" VertexIndexes = "i1;i2;i0" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i2;i3;i0" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i3;i4;i0" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i4;i1;i0" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx;Vy;Vz" />
+            <Vertices Vectors = "Cx;Cy;Cz" />
+
+            <Faces>
+                <ExecMacro MacroName = "Pyramid" Color = "Colors[0]" i0 = "16" i1 = " 0" i2 = " 1" i3 = " 2" i4 = " 3" />
+
+                <Face Color = "Colors[1]" VertexIndexes = " 1; 0; 4; 8; 5" />
+                <Face Color = "Colors[2]" VertexIndexes = " 2; 1; 5; 9; 6" />
+                <Face Color = "Colors[3]" VertexIndexes = " 3; 2; 6;10; 7" />
+                <Face Color = "Colors[4]" VertexIndexes = " 0; 3; 7;11; 4" />
+
+                <ExecMacro MacroName = "Pyramid" Color = "Colors[5]" i0 = "17" i1 = " 4" i2 = "11" i3 = "12" i4 = " 8" />
+                <ExecMacro MacroName = "Pyramid" Color = "Colors[6]" i0 = "18" i1 = " 5" i2 = " 8" i3 = "13" i4 = " 9" />
+                <ExecMacro MacroName = "Pyramid" Color = "Colors[7]" i0 = "19" i1 = " 6" i2 = " 9" i3 = "14" i4 = "10" />
+                <ExecMacro MacroName = "Pyramid" Color = "Colors[8]" i0 = "20" i1 = " 7" i2 = "10" i3 = "15" i4 = "11" />
+
+                <Face Color = "Colors[9]" VertexIndexes = "12;11;15" />
+                <Face Color = "Colors[9]" VertexIndexes = "15;10;14" />
+                <Face Color = "Colors[9]" VertexIndexes = "14; 9;13" />
+                <Face Color = "Colors[9]" VertexIndexes = "13; 8;12" />
+                <Face Color = "Colors[9]" VertexIndexes = "15;14;13;12" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split">
+            <Turn Axis = "i mod 4" Angle = " Pi" Layer = "1" />
+            <SplitByAxes/>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "16" />
+        <Undo Repeat = "16"/>
+
+        <HideContaining Vectors = " Vx; Vy; Vz" />
+        <HideContaining Vectors = " Cx; Cy; Cz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "Circle" >
+            <Circle Radius = "RC" Color = "Colors[c + 1]" Center = "CCx[c];CCy[c];CCz[c]" />
+            <Script>Inc(c);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Circle" c = "0" Repeat = "4" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

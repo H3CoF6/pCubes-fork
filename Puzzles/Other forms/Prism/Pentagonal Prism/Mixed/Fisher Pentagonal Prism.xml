@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Pentagonal Prism</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Mixed\Fisher Pentagonal Prism</Menu>
+        <Inventor>Adrián Cures</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9134</Link>
+    </Interface>
+
+    <Script>
+        clBlue    := '0000C8';
+        clGreen   := '009600';
+        clRed     := 'C80000';
+        clOrange  := 'FF800A';
+        clViolett := '7700CD';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        R := 0.6;
+        H := R * 0.6;
+        sAngle := Pi * 2 / 5;
+
+        D1 := R * 0.45;
+        D2 := H / 3;
+
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi" NormVectors = "x; y; 0" PlaneDistances = "D1" FixedLayers = "0" />
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; -H" />
+            <Vertices Vectors = "x; y;  H" />
+            <Faces>
+                <Face Color = "clRed"     VertexIndexes = "5;6;1;0" />
+                <Face Color = "clOrange"  VertexIndexes = "6;7;2;1" />
+                <Face Color = "clGreen"   VertexIndexes = "7;8;3;2" />
+                <Face Color = "clViolett" VertexIndexes = "8;9;4;3" />
+                <Face Color = "clBlue"    VertexIndexes = "9;5;0;4" />
+                <Face Color = "clYellow"  VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clWhite"   VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+    </Figure>
+</xml>

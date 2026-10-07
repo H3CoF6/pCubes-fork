@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Master Hexagonal Prism</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Master Hexagonal Prism</Menu>
+        <Inventor>Kyler van der Gaag</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2209</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFF00'; // Yellow
+        Colors[1] := 'FF64FF'; // Pink
+        Colors[2] := 'FF6000'; // Orange
+        Colors[3] := '00FF00'; // Light Green
+        Colors[4] := '0064FF'; // Sky Blue
+        Colors[5] := 'FF0000'; // Red
+
+        Colors[6] := '646464'; // Gray
+        Colors[7] := 'C8C8C8'; // Light Gray
+
+        R := 0.56;
+        H := R * sqrt(2) * 0.6;
+        D := R / sqrt(6);
+
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 3 * i);
+            y[i] := R * sin(Pi / 3 * i);
+        end;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+        az := 1 / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" NormVectors = "ax; ay; az" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = " 1; 0; 6; 7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 2; 1; 7; 8" />
+                <Face Color = "Colors[2]" VertexIndexes = " 3; 2; 8; 9" />
+                <Face Color = "Colors[3]" VertexIndexes = " 4; 3; 9;10" />
+                <Face Color = "Colors[4]" VertexIndexes = " 5; 4;10;11" />
+                <Face Color = "Colors[5]" VertexIndexes = " 0; 5;11; 6" />
+
+                <Face Color = "Colors[6]" VertexIndexes = "11;10; 9; 8; 7; 6" />
+                <Face Color = "Colors[7]" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+    </Figure>
+</xml>

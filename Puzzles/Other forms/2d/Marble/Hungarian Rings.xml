@@ -1,0 +1,131 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hungarian Rings</Name>
+        <Menu>Other forms\2d\Marble\Hungarian Rings</Menu>
+        <Inventor>Endre Pap</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-03-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1251</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red   
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := '0000FF'; // Blue  
+        Colors[3] := '444444'; // Black 
+
+        // "solved" variants
+
+        sColorsLeft[0]  := '0000000000111111111';
+        sColorsRight[0] := '2222222222333333333';
+
+        sColorsLeft[1]  := '0000000001111111111';
+        sColorsRight[1] := '2222222222333333333';
+
+        sColorsLeft[2]  := '0000000001111111111';
+        sColorsRight[2] := '2222222223333333333';
+
+        sColorsLeft[3]  := '0000000000111111111';
+        sColorsRight[3] := '2222222223333333333';
+
+        sColorsLeft[4]  := '0000211111111100000';
+        sColorsRight[4] := '2222033333333322222';
+
+        sColorsLeft[5]  := '0000211111111110000';
+        sColorsRight[5] := '2222033333333322222';
+
+        sColorsLeft[6]  := '0000211111111110000';
+        sColorsRight[6] := '2222033333333332222';
+
+        sColorsLeft[7]  := '0000211111111100000';
+        sColorsRight[7] := '2222033333333332222';
+
+        <!-- variables -->
+        AxesAngle := 0.3;
+        K := 1.2;  // Scale
+        D1 := 0.74 * K;
+        D2 := 0.79 * K;
+        RCut := 0.88 * K;
+        RCu2 := 0.5 * K;
+        RCu3 := 0.5 * K;
+        WBase := 0.1 * K;
+
+        RotateAngle := 2*Pi/20; // 20 balls in a circle
+        IntersectAngle := 5 * RotateAngle; // 5 balls from one intersection to another
+
+        DY := 0.6 * K;
+
+        cs := cos(AxesAngle);
+        ss := sin(AxesAngle);
+
+        H := D1 / cs;
+
+        // circle
+        cy := K * 0.8;
+        cz := cy * tan(IntersectAngle / 2) * ss;
+        RC := K * 0.031;
+        Sc := 1.001;
+    </Script>
+
+    <Axes TurningAngles = "RotateAngle" PlaneDistances = "D1; D2" FixedLayers = "0;2" >
+        <Axis NormVector = " ss;-cs; 0" BaseVector = "0; DY; 0" />
+        <Axis NormVector = "-ss;-cs; 0" BaseVector = "0; DY; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "2" Color = "-1" />
+        <Cut><Plane NormVector = "0; 1; 0" NormDistance = "-RCu2 + DY" /></Cut>
+        <Cut><Plane NormVector = "0;-1; 0" NormDistance = " RCu2 - WBase - DY" /></Cut>
+        <Cut><Plane NormVector = "0; 0; 1" NormDistance = "-RCu3" /></Cut>
+        <Cut><Plane NormVector = "0; 0;-1" NormDistance = "-RCu3" /></Cut>
+        <Cut><Plane NormVector = " sqrt(3); 0; 1" NormDistance = "-RCu3 * 3 / 2" /></Cut>
+        <Cut><Plane NormVector = " sqrt(3); 0;-1" NormDistance = "-RCu3 * 3 / 2" /></Cut>
+        <Cut><Plane NormVector = "-sqrt(3); 0;-1" NormDistance = "-RCu3 * 3 / 2" /></Cut>
+        <Cut><Plane NormVector = "-sqrt(3); 0; 1" NormDistance = "-RCu3 * 3 / 2" /></Cut>
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" >
+                <Base X = " 0" Y = " -cy + DY" Z = "cz" />
+                <Top Color = "Color" X = " 0" Y = " -cy * Sc + DY" Z = "cz * Sc" />
+            </Cylinder>
+        </Macro>
+
+        <Macro Name = "FormLeft" >
+            <ExecMacro MacroName = "AddCircle" Color = "Colors[StrToInt(Copy(sColors, ci+1, 1))]" />
+            <Turn1 Axis = "1" Layer = "1" Angle = " RotateAngle" />
+            <Turn NormVector = "-ss;-cs; 0" BaseVector = "0; DY; 0" Angle = " RotateAngle" />
+            <Script> Inc(ci); Inc(lr); </Script>
+        </Macro>
+
+        <Macro Name = "FormRight" >
+            <ExecMacro MacroName = "AddCircle" Color = "Colors[StrToInt(Copy(sColors, ci+1, 1))]" />
+            <Turn1 Axis = "0" Layer = "1" Angle = "-RotateAngle" />
+            <Turn NormVector = " ss;-cs; 0" BaseVector = "0; DY; 0" Angle = " RotateAngle" />
+            <Script> Inc(ci); Inc(rr); </Script>
+        </Macro>
+
+        <Macro Name = "FormSolution" >
+            <Cut><Plane NormVector = "0; 1; 0" NormDistance = "-RCu2 + DY" /></Cut>
+            <Turn1 Axis = "1" Layer = "1" Angle = "4 * RotateAngle" />
+            <Turn NormVector = "-ss;-cs; 0" BaseVector = "0; DY; 0" Angle = "1 * RotateAngle" />
+            <ExecMacro MacroName = "FormLeft " lr = "-4" rr = "0" ci = "0" Repeat = "19" sColors = "sColorsLeft[solution]" />
+            <Turn1 Axis = "1" Layer = "1" Angle = "-5 * RotateAngle" />
+            <Turn1 Axis = "0" Layer = "1" Angle = "-RotateAngle" />
+            <Turn NormVector = " ss;-cs; 0" BaseVector = "0; DY; 0" Angle = "-4*RotateAngle" />
+            <ExecMacro MacroName = "FormRight" lr = " 0" rr = "1" ci = "0" Repeat = "19" sColors = "sColorsRight[solution]" />
+            <Turn NormVector = " ss;-cs; 0" BaseVector = "0; DY; 0" Angle = " 5*RotateAngle" />
+
+            <SaveSolvedState/>
+            <Script> Dec(solution); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "FormSolution" solution = "7" Repeat = "8" />
+
+        <Turn NormVector = "1;0;0" Angle = "-Pi / 180 * 20" />
+        <Turn NormVector = "0;0;1" Angle = " Pi / 180 * 30" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

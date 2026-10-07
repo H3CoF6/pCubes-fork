@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dogoc Ex</Name>
+        <Menu>Other forms\Octahedron\Edge Turning\Dogoc Ex</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-01-29</Added>
+    </Interface>
+
+    <Script>
+        clRed     := 'FF0000';
+        clOrange  := 'FF6000';
+        clYellow  := 'FFFF00';
+        clGreen   := '008000';
+        clDeepSky := '00BFFF';
+        clBlue    := '0000FF';
+        clLime    := '00FF00';
+        clWhite   := 'F0F0F0';
+
+        K := 0.4;
+
+        phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        v1 := K / phi;
+        v2 := K * phi;
+        v3 := K;
+
+        D := K * 2 * sqrt((-2 * sqrt(5) + 5) / 5);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "-D;D" FixedLayers = "1">
+        <Axis NormVector = " v2;   0;  v3" />
+        <Axis NormVector = " v2;   0; -v3" />
+        <Axis NormVector = "  0;  v3;  v2" />
+        <Axis NormVector = "  0; -v3;  v2" />
+        <Axis NormVector = " v3;  v2;   0" />
+        <Axis NormVector = "-v3;  v2;   0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " v1; -v2; -v3" />
+                <Add Vector = "-v1;  v2;  v3" />
+                <Add Vector = "-v2;  v3; -v1" />
+                <Add Vector = " v2; -v3;  v1" />
+                <Add Vector = "-v3; -v1; -v2" />
+                <Add Vector = " v3;  v1;  v2" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange " VertexIndexes = "2;0;4" />
+                <Face Color = "clDeepSky" VertexIndexes = "1;2;4" />
+                <Face Color = "clRed    " VertexIndexes = "0;3;4" />
+                <Face Color = "clBlue   " VertexIndexes = "3;1;4" />
+                <Face Color = "clWhite  " VertexIndexes = "0;2;5" />
+                <Face Color = "clLime   " VertexIndexes = "2;1;5" />
+                <Face Color = "clYellow " VertexIndexes = "3;0;5" />
+                <Face Color = "clGreen  " VertexIndexes = "1;3;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

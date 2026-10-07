@@ -1,0 +1,113 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+
+After fist turn on sAngle / 2, some turns are blocked.
+
+
+    <Interface>
+        <Name>Helimate</Name>
+        <Menu>Other forms\Dodecahedron\Mixed\Face Edge\Helimate</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3047</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        dAngle := (Arctan(2) + Arcsin(2/3)) / 2;
+        dAngle2 := (Arctan(2) - Arcsin(2/3)) / 2;
+        Rsin := R * sin(dAngle);
+        Rcos := R * cos(dAngle);
+        R2sin := R * sin(dAngle2);
+        R2cos := R * cos(dAngle2);
+        mAngle := ArcTan(0.5);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+        sAngle := PI * 2 / 5;
+
+        for i := 0 to 4 do begin
+            x[i] := Rcos * sin(sAngle * (i - 0.5));
+            y[i] := Rcos * cos(sAngle * (i - 0.5));
+            z[i] := Rsin;
+        end;
+
+        for i := 5 to 9 do begin
+            x[i] := R2cos * sin(sAngle * (i - 0.5));
+            y[i] := R2cos * cos(sAngle * (i - 0.5));
+            z[i] := R2sin;
+        end;
+
+        for i := 10 to 14 do begin
+            x[i] := R2cos * sin(sAngle * i);
+            y[i] := R2cos * cos(sAngle * i);
+            z[i] := -R2sin;
+        end;
+
+        for i := 1 to 5 do begin
+            ax[i] := sin(sAngle * (i - 1)) * Ac;
+            ay[i] := cos(sAngle * (i - 1)) * Ac;
+        end;
+
+        D := R * sqrt(3) * (Sqrt(5) + 3) / 12;
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0; Pi" JumbleAngle = "arctan(2)" PlaneDistances = "-D; D" >
+        <Axis NormVector = " x[0] + x[1];  y[0] + y[1];  z[0] + z[1]" />
+        <Axis NormVector = " x[1] + x[2];  y[1] + y[2];  z[1] + z[2]" />
+        <Axis NormVector = " x[2] + x[3];  y[2] + y[3];  z[2] + z[3]" />
+        <Axis NormVector = " x[3] + x[4];  y[3] + y[4];  z[3] + z[4]" />
+        <Axis NormVector = " x[4] + x[0];  y[4] + y[0];  z[4] + z[0]" />
+
+        <Axis NormVector = " x[0] + x[5];  y[0] + y[5];  z[0] + z[5]" />
+        <Axis NormVector = " x[1] + x[6];  y[1] + y[6];  z[1] + z[6]" />
+        <Axis NormVector = " x[2] + x[7];  y[2] + y[7];  z[2] + z[7]" />
+        <Axis NormVector = " x[3] + x[8];  y[3] + y[8];  z[3] + z[8]" />
+        <Axis NormVector = " x[4] + x[9];  y[4] + y[9];  z[4] + z[9]" />
+
+        <Axis NormVector = "x[10] + x[5]; y[10] + y[5]; z[10] + z[5]" />
+        <Axis NormVector = "x[11] + x[6]; y[11] + y[6]; z[11] + z[6]" />
+        <Axis NormVector = "x[12] + x[7]; y[12] + y[7]; z[12] + z[7]" />
+        <Axis NormVector = "x[13] + x[8]; y[13] + y[8]; z[13] + z[8]" />
+        <Axis NormVector = "x[14] + x[9]; y[14] + y[9]; z[14] + z[9]" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle / 2" PlaneDistances = "0" >
+        <Axis NormVector = "   0;    0;  1" />
+        <Axis NormVector = "ax[1]; ay[1]; As" />
+        <Axis NormVector = "ax[2]; ay[2]; As" />
+        <Axis NormVector = "ax[3]; ay[3]; As" />
+        <Axis NormVector = "ax[4]; ay[4]; As" />
+        <Axis NormVector = "ax[5]; ay[5]; As" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <!-- cut for better control -->
+        <Script>DCut := 0.32;</Script>
+        <Macro Name = "Cut">
+            <Hide Axis = "Ax" Layer = "1" />
+            <Cut><Plane NormVector = "x[V1] - x[V2]; y[V1] - y[V2]; z[V1] - z[V2]" NormDistance = "-DCut" /></Cut>
+            <Cut><Plane NormVector = "x[V2] - x[V1]; y[V2] - y[V1]; z[V2] - z[V1]" NormDistance = "-DCut" /></Cut>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Ax = " 0" V1 = " 0" V2 = "1" />
+        <ExecMacro MacroName = "Cut" Ax = " 1" V1 = " 1" V2 = "2" />
+        <ExecMacro MacroName = "Cut" Ax = " 2" V1 = " 2" V2 = "3" />
+        <ExecMacro MacroName = "Cut" Ax = " 3" V1 = " 3" V2 = "4" />
+        <ExecMacro MacroName = "Cut" Ax = " 4" V1 = " 4" V2 = "0" />
+        <ExecMacro MacroName = "Cut" Ax = " 5" V1 = " 0" V2 = "5" />
+        <ExecMacro MacroName = "Cut" Ax = " 6" V1 = " 1" V2 = "6" />
+        <ExecMacro MacroName = "Cut" Ax = " 7" V1 = " 2" V2 = "7" />
+        <ExecMacro MacroName = "Cut" Ax = " 8" V1 = " 3" V2 = "8" />
+        <ExecMacro MacroName = "Cut" Ax = " 9" V1 = " 4" V2 = "9" />
+        <ExecMacro MacroName = "Cut" Ax = "10" V1 = "10" V2 = "5" />
+        <ExecMacro MacroName = "Cut" Ax = "11" V1 = "11" V2 = "6" />
+        <ExecMacro MacroName = "Cut" Ax = "12" V1 = "12" V2 = "7" />
+        <ExecMacro MacroName = "Cut" Ax = "13" V1 = "13" V2 = "8" />
+        <ExecMacro MacroName = "Cut" Ax = "14" V1 = "14" V2 = "9" />
+
+    </Figure>
+</xml>

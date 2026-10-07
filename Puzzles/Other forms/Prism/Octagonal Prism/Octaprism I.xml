@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octaprism I</Name>
+        <Menu>Other forms\Prism\Octagonal Prism\Octaprism I</Menu>
+        <Menu>Other forms\3x3x3 variants\Prism\Octaprism I</Menu>
+        <Inventor>Nikola Tutic</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2459</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clPink   := 'FF69B4';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+        clCyan   := '00FFFF';
+        clLime   := '00FF00';
+
+        R := 0.55;
+
+        H := R * 0.48;
+        sAngle := PI * 2 / 8;
+        for i := 0 to 7 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+            ax[i] := sin(sAngle * i + sAngle/2);
+            ay[i] := cos(sAngle * i + sAngle/2);
+        end;
+
+        D := (y[1] - H) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = " 0; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 8; 9; 1; 0" />
+                <Face Color = "clBlue  " VertexIndexes = " 9;10; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = "10;11; 3; 2" />
+                <Face Color = "clOrange" VertexIndexes = "11;12; 4; 3" />
+                <Face Color = "clPurple" VertexIndexes = "12;13; 5; 4" />
+                <Face Color = "clCyan  " VertexIndexes = "13;14; 6; 5" />
+                <Face Color = "clPink  " VertexIndexes = "14;15; 7; 6" />
+                <Face Color = "clLime  " VertexIndexes = "15; 8; 0; 7" />
+
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4;5;6;7" />
+                <Face Color = "clWhite " VertexIndexes = "15;14;13;12;11;10;9;8" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

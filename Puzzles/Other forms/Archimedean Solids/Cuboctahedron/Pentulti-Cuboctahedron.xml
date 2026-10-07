@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentulti-Cuboctahedron</Name>
+        <Menu>Other forms\Archimedean Solids\Cuboctahedron\Pentulti-Cuboctahedron</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9431</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 6] := 'ee82ee';
+        Colors[ 7] := 'f6e6fa';
+        Colors[ 8] := 'ebaed2';
+        Colors[ 9] := '967bb6';
+        Colors[10] := 'fba0e3';
+        Colors[11] := '7cfc00';
+        Colors[12] := '7b68ee';
+        Colors[13] := 'c9dc87';
+
+        W := 0.5;
+
+        sAngle := 2 * Pi / 5;
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = "  0; ss; cs" />
+        <Axis NormVector = "  0;-ss; cs" />
+        <Axis NormVector = " ss; cs;  0" />
+        <Axis NormVector = "-ss; cs;  0" />
+        <Axis NormVector = " cs;  0; ss" />
+        <Axis NormVector = " cs;  0;-ss" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Colors[i+6]" ><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-W * 2 / sqrt(3)" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "8" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sphere Penta 3</Name>
+        <Menu>Other forms\Sphere\Biaxes Virtual\Sphere Penta 3</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-02-26</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        K := 0.7;
+
+        AngleD := 116.56505118;
+
+        Angle  := AngleD * Pi/180;
+        AngleM := (Pi - Angle)/2;
+        x := cos(AngleM);
+        y := sin(AngleM);
+
+        A := 2*Pi/5;
+
+        D := 0;
+    </Script>
+
+    <Axes TurningAngles = "A" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " x; -y; 0" />
+        <Axis NormVector = "-x; -y; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn Axis = "0" Angle = " Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-Dt*A" Layer = "1" /> <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart" Dt = " 1" Repeat = "4" />
+        <Undo Repeat = "200" />
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

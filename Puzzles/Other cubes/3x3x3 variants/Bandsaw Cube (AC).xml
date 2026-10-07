@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bandsaw Cube (AC)</Name>
+        <Menu>Other cubes\3x3x3 variants\Bandsaw Cube (AC)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-09-26</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Color1 := '666666'; // Silver
+        Color2 := 'FFFFFF'; // White
+
+        W := 0.5;
+        D := W / 3;
+
+        Angle := 2 * arctan((3 + sqrt(13)) / sqrt(2));
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "-1; 1; 0" Angle = "Angle" />
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "Color1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Hide Axis = "2" Layer = "1" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "Color2" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <H1ide Axis = "2" Layer = "1" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

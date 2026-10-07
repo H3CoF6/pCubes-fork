@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy FTRD - B4</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Crazy\Crazy FTRD\B\B4</Menu>
+        <Inventor></Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-09-07</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=32646</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Rhombic_Dodecahedron_Coordinates.inc';
+
+        D1 := R * sqrt(2) / 2;
+        D2 := R * sqrt(2) / 3.3;
+
+        RC := R * 0.34;
+        A := Arccos(1/3);
+
+        Delta := 1.001;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi;Pi" JumbleAngle = "A" PlaneDistances = "D1; D2" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[ax]" Center = "Cx[ax] * Delta; Cy[ax] * Delta; Cz[ax] * Delta" />
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" ax = " 0" Repeat = "12" />
+
+        <Connect Axis = " 0" Layers = "0;2" />
+        <Connect Axis = " 1" Layers = "1;2" />
+        <Connect Axis = " 2" Layers = "0;2" />
+        <Connect Axis = " 3" Layers = "0;2" />
+        <Connect Axis = " 4" Layers = "0;2" />
+        <Connect Axis = " 5" Layers = "0;2" />
+        <Connect Axis = " 6" Layers = "0;2" />
+        <Connect Axis = " 7" Layers = "0;2" />
+        <Connect Axis = " 8" Layers = "0;2" />
+        <Connect Axis = " 9" Layers = "1;2" />
+        <Connect Axis = "10" Layers = "0;2" />
+        <Connect Axis = "11" Layers = "0;2" />
+
+        <SplitByAxes/>
+
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Circle" File = "..\Textures\Circle.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Circle = 74,0,0, 92,0,1, 101,0,0, 110,0,1, 119,0,1, 128,0,0, 137,0,0, 146,0,0, 164,0,1, 173,0,0
+
+    </SetTextures>
+</xml>

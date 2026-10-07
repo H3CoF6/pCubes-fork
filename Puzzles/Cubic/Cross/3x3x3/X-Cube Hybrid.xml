@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>X-Cube Hybrid</Name>
+        <Menu>Cubic\Cross\3x3x3\X-Cube Hybrid</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-04-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9332</Link>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+        W1 := W * 3 / 5; // = height
+
+        D1 := W / 5;
+        D2 := D1 * 3; // = W1
+
+        WC := W1 * 1.1;
+        RC := W1 * 0.8;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D1; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Cubic\Cross\_Macro_For_Cross.xml" w2 = "W" w1 = "W1" />
+        <Cut Axis = "2" From = "1" To = "4" />
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W1" WY = "W1" WZ = "W1" />
+
+        <Cylinder Radius = "RC" Base = "0;0; W1" Top = "0;0; WC" TopColor = "clWhite" />
+        <Cylinder Radius = "RC" Base = "0;0;-W1" Top = "0;0;-WC" TopColor = "clYellow" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

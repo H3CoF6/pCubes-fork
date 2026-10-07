@@ -1,0 +1,135 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Compound Hexagon</Name>
+        <Menu>Other forms\Unclassified\Compound Hexagon</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-11-11</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=33914</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'F0F0F0'; //clWhite         
+        Colors[ 1] := 'FFFF00'; //clYellow        
+        Colors[ 2] := '00FF00'; //clLime          
+        Colors[ 3] := '6495ed'; //clCornflowerBlue
+        Colors[ 4] := 'FF69B4'; //clPink          
+        Colors[ 5] := '8a2be2'; //clBlueViolet    
+        Colors[ 6] := '008080'; //clTeal          
+        Colors[ 7] := '0000FF'; //clBlue          
+        Colors[ 8] := '000080'; //clNavy          
+        Colors[ 9] := 'FF7F50'; //clCoral         
+        Colors[10] := 'FF0000'; //clRed           
+        Colors[11] := 'DC143C'; //clCrimson       
+        Colors[12] := 'CD5C5C'; //clIndian        
+        Colors[13] := '008000'; //clGreen         
+
+        H := 0.33;
+
+        A := H * sqrt(3) /2;
+        B := H / 2;
+        C := H;
+        R := H * 2.2;
+
+        x1[0] := -A; y1[0] := -R; z1[0] := -B;
+        x1[1] :=  0; y1[1] := -R; z1[1] := -B;
+        x1[2] :=  0; y1[2] := -R; z1[2] :=  C;
+        x1[3] := -A; y1[3] :=  0; z1[3] := -B;
+        x1[4] :=  0; y1[4] :=  0; z1[4] := -B;
+        x1[5] :=  0; y1[5] :=  0; z1[5] :=  C;
+
+        x2[0] :=  0; y2[0] := -R; z2[0] := -B;
+        x2[1] :=  A; y2[1] := -R; z2[1] := -B;
+        x2[2] :=  0; y2[2] := -R; z2[2] :=  C;
+        x2[3] :=  0; y2[3] :=  0; z2[3] := -B;
+        x2[4] :=  A; y2[4] :=  0; z2[4] := -B;
+        x2[5] :=  0; y2[5] :=  0; z2[5] :=  C;
+
+        D := H * 1.9;
+    </Script>
+
+    <Axes TurningAngles = "Pi/3; 0; Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = " sqrt(3); -1; 0" />
+        <Axis NormVector = "-sqrt(3); -1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddPrism" >
+            <Part>
+                <Vertices Vectors = "x1; y1; z1" />
+                <Faces>
+                    <Face Color="Colors[c1]" VertexIndexes="0;1;2" InvisibleEdges = "2" />
+                    <Face                    VertexIndexes="5;4;3" />
+                    <Face Color="Colors[c2]" VertexIndexes="1;0;3;4" InvisibleEdges = "8" />
+                    <Face                    VertexIndexes="2;1;4;5" InvisibleEdges = "3" />
+                    <Face Color="Colors[c3]" VertexIndexes="0;2;5;3" />
+                </Faces>
+            </Part>
+            <Part>
+                <Vertices Vectors = "x2; y2; z2" />
+                <Faces>
+                    <Face Color="Colors[c1]" VertexIndexes="0;1;2" InvisibleEdges = "4" />
+                    <Face                    VertexIndexes="5;4;3"/>
+                    <Face Color="Colors[c2]" VertexIndexes="1;0;3;4" InvisibleEdges = "2" />
+                    <Face Color="Colors[c4]" VertexIndexes="2;1;4;5" />
+                    <Face                    VertexIndexes="0;2;5;3" InvisibleEdges = "9" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddPart" >
+            <HideAll/>
+            <ExecMacro MacroName = "AddPrism" />
+            <Cut> <Plane NormVector = "0;0;1" /> </Cut>
+            <Cut> <Plane NormVector = "-1;-sqrt(3);0" /> </Cut>
+            <Cut> <Plane NormVector = " 1;-sqrt(3);0" /> </Cut>
+
+            <HideAll/>
+            <ExecMacro MacroName = "AddPrism" />
+            <Cut> <Plane NormVector = "0;0;-1" /> </Cut>
+            <Cut> <Plane NormVector = "-sqrt(3);-3;-2" NormDistance = "H * 0.5" /> </Cut>
+            <Cut> <Plane NormVector = " sqrt(3);-3;-2" NormDistance = "H * 0.5" /> </Cut>
+        </Macro>
+        <ExecMacro MacroName = "AddPart" c1 = "5" c2 = "1" c3 = "7" c4 = "7" />
+        <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddPart" c1 = "6" c2 = "1" c3 = "10" c4 = "10" />
+        <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddPart" c1 = "8" c2 = "1" c3 = "13" c4 = "13" />
+        <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddPart" c1 = "9" c2 = "0" c3 = "3" c4 = "3" />
+        <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddPart" c1 = "11" c2 = "0" c3 = "2" c4 = "2" />
+        <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddPart" c1 = "12" c2 = "0" c3 = "4" c4 = "4" />
+        <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "0" Angle = "2*Pi/3" />
+        <Turn Axis = "0" Layer = "2" Angle = "2*Pi/3" />
+        <Turn Axis = "1" Layer = "0" Angle = "2*Pi/3" />
+        <Turn Axis = "1" Layer = "2" Angle = "2*Pi/3" />
+        <Turn Axis = "2" Layer = "0" Angle = "2*Pi/3" />
+        <Turn Axis = "2" Layer = "2" Angle = "2*Pi/3" />
+        <Split Axis = "3" From = "1" />
+        <Turn Axis = "0" Layer = "0" Angle = "2*Pi/3" />
+        <Turn Axis = "0" Layer = "2" Angle = "2*Pi/3" />
+        <Turn Axis = "1" Layer = "0" Angle = "2*Pi/3" />
+        <Turn Axis = "1" Layer = "2" Angle = "2*Pi/3" />
+        <Turn Axis = "2" Layer = "0" Angle = "2*Pi/3" />
+        <Turn Axis = "2" Layer = "2" Angle = "2*Pi/3" />
+        <Split Axis = "3" From = "1" />
+        <Undo Repeat = "12" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

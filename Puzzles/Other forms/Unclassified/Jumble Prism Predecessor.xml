@@ -1,0 +1,124 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jumble Prism Predecessor</Name>
+        <Menu>Other forms\Unclassified\Jumble Prism Predecessor</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-09-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1504</Link>
+    </Interface>
+
+    <Script>
+        clDeepSky   := '00BFFF';
+        clBlue      := '0000FF';
+        clNavy      := '000080';
+        clCoral     := 'FF7F50';
+        clRed       := 'FF0000';
+        clCrimson   := 'DC143C';
+        clIndian    := 'CD5C5C';
+        clBrown     := '800000';
+        clYellow    := 'FFFF00';
+        clOrange    := 'FF6000';
+        clKhaki     := 'F0E68C';
+        clGolden    := 'DDBB20';
+        clTeal      := '008080';
+        clGreen     := '008000';
+        clDarkGreen := '006400';
+        clPink      := 'FF69B4';
+        clFuchsia   := 'FF00FF';
+        clPurple    := '800080';
+
+        R := 0.65;
+        H1 := R * 0.5;
+        H2 := R * 5/6;
+        H  := R;
+
+        for i := 0 to 5 do begin
+            x[i] := R * sin(Pi / 3 * i);
+            y[i] := R * cos(Pi / 3 * i);
+        end;
+
+        R2 := R / sqrt(3);
+        for i := 0 to 2 do begin
+            x2[i] := R2 * sin(2 * Pi / 3 * (i + 0.25));
+            y2[i] := R2 * cos(2 * Pi / 3 * (i + 0.25));
+        end;
+
+        az := R / 2;
+
+        D := R * sqrt(3 / 7) / 2;
+
+        A1 := ArcCos(1/8);
+        A2 := ArcCos(-3/4);
+
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1;0;A1;A2" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " x2[0]; y2[0];  az" />
+        <Axis NormVector = " x2[1]; y2[1];  az" />
+        <Axis NormVector = " x2[2]; y2[2];  az" />
+        <Axis NormVector = " x2[0]; y2[0]; -az" />
+        <Axis NormVector = " x2[1]; y2[1]; -az" />
+        <Axis NormVector = " x2[2]; y2[2]; -az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " 0; 0; H" />
+
+                <Add Vector = " x2[0]; y2[0]; H2" />
+                <Add Vector = " x2[1]; y2[1]; H2" />
+                <Add Vector = " x2[2]; y2[2]; H2" />
+
+                <Add Vector = "x[0]; y[0];  H1" />
+                <Add Vector = "x[1]; y[1];  H1" />
+                <Add Vector = "x[2]; y[2];  H1" />
+                <Add Vector = "x[3]; y[3];  H1" />
+                <Add Vector = "x[4]; y[4];  H1" />
+                <Add Vector = "x[5]; y[5];  H1" />
+
+                <Add Vector = "x[0]; y[0]; -H1" />
+                <Add Vector = "x[1]; y[1]; -H1" />
+                <Add Vector = "x[2]; y[2]; -H1" />
+                <Add Vector = "x[3]; y[3]; -H1" />
+                <Add Vector = "x[4]; y[4]; -H1" />
+                <Add Vector = "x[5]; y[5]; -H1" />
+
+                <Add Vector = " x2[0]; y2[0]; -H2" />
+                <Add Vector = " x2[1]; y2[1]; -H2" />
+                <Add Vector = " x2[2]; y2[2]; -H2" />
+
+                <Add Vector = " 0; 0; -H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clKhaki    " VertexIndexes = " 0; 2; 6; 5; 1" />
+                <Face Color = "clTeal     " VertexIndexes = " 0; 3; 8; 7; 2" />
+                <Face Color = "clPink     " VertexIndexes = " 0; 1; 4; 9; 3" />
+
+                <Face Color = "clCrimson  " VertexIndexes = " 1; 5; 4" />
+                <Face Color = "clCoral    " VertexIndexes = " 2; 7; 6" />
+                <Face Color = "clDeepSky  " VertexIndexes = " 3; 9; 8" />
+
+                <Face Color = "clRed      " VertexIndexes = " 4; 5; 11; 10" />
+                <Face Color = "clYellow   " VertexIndexes = " 5; 6; 12; 11" />
+                <Face Color = "clOrange   " VertexIndexes = " 6; 7; 13; 12" />
+                <Face Color = "clGreen    " VertexIndexes = " 7; 8; 14; 13" />
+                <Face Color = "clBlue     " VertexIndexes = " 8; 9; 15; 14" />
+                <Face Color = "clFuchsia  " VertexIndexes = " 9; 4; 10; 15" />
+
+                <Face Color = "clBrown    " VertexIndexes = " 16; 10; 11" />
+                <Face Color = "clIndian   " VertexIndexes = " 17; 12; 13" />
+                <Face Color = "clNavy     " VertexIndexes = " 18; 14; 15" />
+
+                <Face Color = "clGolden   " VertexIndexes = " 19; 16; 11; 12; 17" />
+                <Face Color = "clDarkGreen" VertexIndexes = " 19; 17; 13; 14; 18" />
+                <Face Color = "clPurple   " VertexIndexes = " 19; 18; 15; 10; 16" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

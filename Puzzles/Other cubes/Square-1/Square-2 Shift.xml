@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-2 Shift</Name>
+        <Menu>Other cubes\Square-1\Square-2 Shift</Menu>
+        <Inventor>Lee Zhen Xing</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-08-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10226</Link>
+    </Interface>
+
+    <Script>
+        clGold   := 'EFCC71';
+        clSilver := 'BFBFBA';
+
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "-1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" Width = "W" />
+        <Split Axis = "1" From  = "1" />
+        <Turn Axis = "1" Layer = "0" Angle = "Pi/2" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+            <Split Axis = "1" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "5" />
+        <Undo Repeat = "5" />
+
+        <SaveSolvedState/>
+
+        <Turn Axis = "1" Layer = "0" Angle = "-Pi / 2" />
+    </Figure>
+</xml>

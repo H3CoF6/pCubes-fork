@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cubic 3x3x6 II</Name>
+        <Menu>Cubic\3x3xN Cube\Cubic 3x3x6 II</Menu>
+        <Inventor>Adam G. Cowan</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4336</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-W*2/3; -W/3; 0; W/3; W*2/3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "5" />
+        <RemoveGrayParts/>
+
+        <HideContaining Vector = " W; 0; 0" />
+        <HideContaining Vector = "-W; 0; 0" />
+        <HideContaining Vector = " 0; W; 0" />
+        <HideContaining Vector = " 0;-W; 0" />
+        <InvertVisibility/>
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "5" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(2)" Layer = "Random(6)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(6)" Angle = "Pi/2 * Random(4)" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(6)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "20" />
+        </Macro>
+    </Macros>
+</xml>

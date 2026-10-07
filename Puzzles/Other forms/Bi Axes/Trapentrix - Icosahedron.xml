@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Trapentrix - Icosahedron</Name>
+        <Menu>Other forms\Bi Axes\Trapentrix - Icosahedron</Menu>
+        <Menu>Other forms\Icosahedron\Face turning\Trapentrix</Menu>
+        <Programmer>knightcrawler</Programmer>
+        <Added>2016-09-18</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := -R * sqrt((5 - 2 * sqrt(5)) / 15);
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "Cx[19]; Cy[19]; Cz[19]" />
+        <Axis NormVector = "Cx[16]; Cy[16]; Cz[16]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Turn">
+            <Turn Axis = "0" Angle = "Pi * 2 / 3" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "Pi * 4 / 3" Layer = "1" /> <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "Turn" Repeat = "9" />
+        <RemoveGrayParts/>
+
+        <Undo Repeat = "18" />
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

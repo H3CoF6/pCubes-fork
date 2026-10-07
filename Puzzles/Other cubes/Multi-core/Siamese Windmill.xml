@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese Windmill</Name>
+        <Menu>Other cubes\Multi-core\Siamese Windmill</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-12-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3967</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red
+        Colors[1] := 'FF800A'; // Orange
+        Colors[2] := '0000C8'; // Blue
+        Colors[3] := '009600'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        Color2[0] := 'C80001'; // Red
+        Color2[1] := 'FF800B'; // Orange
+        Color2[2] := '0000C9'; // Blue
+        Color2[3] := '009601'; // Green
+        Color2[4] := 'FFFF01'; // Yellow
+        Color2[5] := 'FFFFFE'; // White
+
+        W := 0.35;
+
+        x := 0.5436890126920763615708559; // x^3 + x^2 + x - 1 = 0, x := (-1 - 2/(17 + 3 *sqrt(33))^(1/3) + (17 + 3 *sqrt(33))^(1/3)) / 3;
+        A := Arcsin(x) / 2;
+        D := W * (cos(2*A) - sin(2*A));
+
+        Tx := (W * cos(A) + D * sin(A)) / 2;
+        Ty := Tx;
+        Tz := (W + D) / 2;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi/2;Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "-cos(A); sin(A); 0" BaseVector = "-Tx;-Ty;-Tz" />
+        <Axis NormVector = "-sin(A);-cos(A); 0" BaseVector = "-Tx;-Ty;-Tz" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = "-Tx;-Ty;-Tz" />
+        <Axis NormVector = " cos(A); sin(A); 0" BaseVector = " Tx; Ty; Tz" />
+        <Axis NormVector = "-sin(A); cos(A); 0" BaseVector = " Tx; Ty; Tz" />
+        <Axis NormVector = " 0; 0; 1" BaseVector = " Tx; Ty; Tz" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "5" To = "1" />
+        <Cut Axis = "0" To = "2" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut Axis = "4" To = "2" />
+        <HideAll/>
+
+        <Transfer Vector = "-Tx;-Ty;-Tz" />
+        <Turn NormVector = "0;0;1" Angle = "A" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "3" From = "2" />
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "4" From = "2" />
+        <Split Axis = "5" From = "1" />
+        <Split Axis = "5" From = "2" />
+        <RemoveContaining Vector = "-W;-W;-W" />
+        <Turn NormVector = "0;0;1" Angle = "-A" />
+        <Transfer Vector = " Tx; Ty; Tz" />
+        <HideAll/>
+
+        <Script>for i := 0 to 5 do Colors[i] := Color2[i];</Script>
+
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <Transfer Vector = "-Tx; Ty;-Tz" />
+        <Turn NormVector = "0;0;1" Angle = " A" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <RemoveContaining Vector = "-W; W;-W" />
+        <Turn NormVector = "0;0;1" Angle = "-A" />
+        <Transfer Vector = " Tx;-Ty; Tz" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

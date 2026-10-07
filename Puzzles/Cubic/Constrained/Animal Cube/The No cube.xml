@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Animal Cube - The No cube</Name>
+        <Menu>Cubic\Constrained\Animal Cube\The No cube</Menu>
+        <Class>TTenon</Class>
+        <Inventor>E-Cubes Designer X</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-04-12</Added>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Textures>
+        <Texture Name = "Spider" File = "Textures\Spider.vec" />
+    </Textures>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Script>
+            procedure AddTexture(x, y, z, nx, ny, nz, Rotate);
+            begin
+              PartNo := CallGlobal('GetVisiblePartContaining', x, y, z);
+              FaceNo := CallGlobal('FindFaceByNorm', PartNo, nx, ny, nz);
+              CallGlobal('SetTexture', 'Spider', PartNo, FaceNo, Rotate);
+            end;
+
+            AddTexture(-W,-W,-W, -1, 0, 0,  1);
+            AddTexture(-W,-W,-W,  0,-1, 0,  1);
+            AddTexture(-W,-W,-W,  0, 0,-1,  1);
+
+            AddTexture( W, W, W,  1, 0, 0,  1);
+            AddTexture( W, W, W,  0, 1, 0,  1);
+            AddTexture( W, W, W,  0, 0, 1,  1);
+
+            AddTexture( 0,-W, W,  0, 0, 1,  1);
+            AddTexture( 0,-W, W,  0,-1, 0,  0);
+
+            AddTexture( W, 0,-W,  1, 0, 0,  1);
+            AddTexture( W, 0,-W,  0, 0,-1,  0);
+
+            AddTexture(-W, W, 0, -1, 0, 0,  0);
+            AddTexture(-W, W, 0,  0, 1, 0,  2);
+
+            // Add tenon or groove to every gray side
+            for PartNo := 0 to 25 do begin
+              for FaceNo := 0 to 5 do begin
+                Found := False;
+                if CallGlobal('GetTexture', PartNo, FaceNo) = 'Spider' then begin
+                  Found := True;
+                  break;
+                end;
+              end;
+              for FaceNo := 0 to 5 do
+                if CallGlobal('GetColor', PartNo, FaceNo) = '-1' then begin // if gray
+                  if Found then
+                    CallGlobal('SetTenon', 1, PartNo, FaceNo)
+                  else
+                    CallGlobal('SetGroove', 1, PartNo, FaceNo);
+                end;
+            end;
+        </Script>
+    </Figure>
+</xml>

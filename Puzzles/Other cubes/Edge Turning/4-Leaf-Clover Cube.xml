@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4-Leaf-Clover Cube</Name>
+        <Menu>Other cubes\Edge Turning\4-Leaf-Clover Cube</Menu>
+        <Inventor>Yukang Wu</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6490</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        A := W * 1.45;
+        B := W * 0.171;
+        D := A / sqrt(2) + 0.022;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Vx; Vy; Vz" />
+        <RemoveContaining Vector = "0; 0; 0" />
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0; 0; 0" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

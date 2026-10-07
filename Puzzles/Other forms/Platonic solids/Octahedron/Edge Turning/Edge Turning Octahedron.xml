@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Edge-Turning Octahedron</Name>
+        <Menu>Other forms\Octahedron\Edge Turning\Edge Turning</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-08-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1648</Link>
+    </Interface>
+
+    <Script>
+        W := 0.75;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+
+        D := W * sqrt(2) / 4;
+        jAngle := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "jAngle" PlaneDistances = "D" FixedLayers = "0" NormVectors = " Ex; Ey; Ez" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+
+        // cut vertices to allow some moves
+        <Macro Name  = "Cut" >
+            <HideContaining Vector = " 0;-W; 0" />
+            <InvertVisibility/>
+            <Turn NormVector = " 0;-1;-1" Angle = " jAngle" />
+            <Cut Color = "Color" ><Plane NormVector = " 1; 0;-1" NormDistance = "-D" /></Cut>
+            <Turn NormVector = " 0;-1;-1" Angle = "-jAngle" />
+            <Turn NormVector = "-1;-1; 0" Angle = "-jAngle" />
+            <Cut Color = "Color" ><Plane NormVector = "-1; 0; 1" NormDistance = "-D" /></Cut>
+            <Turn NormVector = "-1;-1; 0" Angle = " jAngle" />
+            <ShowAll/>
+            <Turn NormVector = " 1;-1; 1" Angle = " 2*Pi/3" />
+        </Macro>
+        <Macro Name  = "Cut3" >
+            <ExecMacro MacroName  = "Cut" Repeat = "3" />
+            <Turn NormVector = " 1; 0; 0" Angle = " Pi/2" />
+        </Macro>
+        <ExecMacro MacroName  = "Cut3" Color = "Colors[1]" />
+        <ExecMacro MacroName  = "Cut3" Color = "Colors[2]" />
+        <ExecMacro MacroName  = "Cut3" Color = "Colors[6]" />
+        <ExecMacro MacroName  = "Cut3" Color = "Colors[5]" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName  = "Cut3" Color = "Colors[3]" />
+        <ExecMacro MacroName  = "Cut3" Color = "Colors[0]" />
+        <ExecMacro MacroName  = "Cut3" Color = "Colors[4]" />
+        <ExecMacro MacroName  = "Cut3" Color = "Colors[7]" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

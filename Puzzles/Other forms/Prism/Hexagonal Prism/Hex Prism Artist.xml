@@ -1,0 +1,105 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hex Prism Artist</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Hex Prism Artist</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9575</Link>
+    </Interface>
+
+    <Script>
+        R := 0.6;
+        H := R / sqrt(2);
+        sAngle := 2 * Pi / 3;
+
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 3 * i);
+            y[i] := R * sin(Pi / 3 * i);
+        end;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(sAngle * i);
+            ay[i] := sin(sAngle * i);
+        end;
+        az := 1 / sqrt(8);
+        az2 := 1 / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-H/2; 0; H/2" NormVectors = "0; 0; -1" />
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-H/2; 0; H/2" NormVectors = "ax; ay; az" TurnAxesWithLayer = "0" />
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" NormVectors = "ax; ay; -az2" TurnAxesWithLayer = "1" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+            <Faces>
+                <Face Color = "FFFF00" VertexIndexes = " 1; 0; 6; 7" />
+                <Face Color = "FF64FF" VertexIndexes = " 2; 1; 7; 8" />
+                <Face Color = "FF6000" VertexIndexes = " 3; 2; 8; 9" />
+                <Face Color = "00FF00" VertexIndexes = " 4; 3; 9;10" />
+                <Face Color = "0064FF" VertexIndexes = " 5; 4;10;11" />
+                <Face Color = "FF0000" VertexIndexes = " 0; 5;11; 6" />
+
+                <Face Color = "646464" VertexIndexes = "11;10; 9; 8; 7; 6" />
+                <Face Color = "C8C8C8" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+            </Faces>
+        </Part>
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "3" From = "2" />
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "5" From = "1" />
+        <Split Axis = "6" From = "1" />
+
+        <Turn Axis = "3" Layers = "2" Angle = "-sAngle" />
+        <Turn Axis = "1" Layers = "2" Angle = " sAngle" />
+        <Turn Axis = "3" Layers = "2" Angle = " sAngle" />
+        <Turn Axis = "1" Layers = "2" Angle = "-sAngle" />
+        <Split Axis = "0" From = "1" />
+        <Undo Repeat = "4" />
+
+        <Turn Axis = "1" Layers = "2" Angle = "-sAngle" />
+        <Turn Axis = "2" Layers = "2" Angle = " sAngle" />
+        <Turn Axis = "1" Layers = "2" Angle = " sAngle" />
+        <Turn Axis = "2" Layers = "2" Angle = "-sAngle" />
+        <Split Axis = "0" From = "1" />
+        <Undo Repeat = "4" />
+
+        <Turn Axis = "2" Layers = "2" Angle = "-sAngle" />
+        <Turn Axis = "3" Layers = "2" Angle = " sAngle" />
+        <Turn Axis = "2" Layers = "2" Angle = " sAngle" />
+        <Turn Axis = "3" Layers = "2" Angle = "-sAngle" />
+        <Split Axis = "0" From = "1" />
+        <Undo Repeat = "4" />
+
+        <Turn Axis = "3" Layers = "1" Angle = " sAngle" />
+        <Turn Axis = "1" Layers = "1" Angle = "-sAngle" />
+        <Turn Axis = "0" Layers = "1" Angle = "-sAngle" />
+        <Turn Axis = "1" Layers = "1" Angle = " sAngle" />
+        <Split Axis = "2" From = "3" />
+        <Undo Repeat = "4" />
+
+        <Turn Axis = "1" Layers = "1" Angle = " sAngle" />
+        <Turn Axis = "2" Layers = "1" Angle = "-sAngle" />
+        <Turn Axis = "0" Layers = "1" Angle = "-sAngle" />
+        <Turn Axis = "2" Layers = "1" Angle = " sAngle" />
+        <Split Axis = "3" From = "3" />
+        <Undo Repeat = "4" />
+
+        <Turn Axis = "2" Layers = "1" Angle = " sAngle" />
+        <Turn Axis = "3" Layers = "1" Angle = "-sAngle" />
+        <Turn Axis = "0" Layers = "1" Angle = "-sAngle" />
+        <Turn Axis = "3" Layers = "1" Angle = " sAngle" />
+        <Split Axis = "1" From = "3" />
+        <Undo Repeat = "4" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

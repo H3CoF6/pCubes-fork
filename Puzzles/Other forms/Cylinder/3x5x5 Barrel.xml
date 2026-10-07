@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x5x5 Barrel</Name>
+        <Menu>Other forms\Cylinder\3x5x5 Barrel</Menu>
+        <Inventor>Roberto Cazares</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9192</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        R := 0.6;
+        H := R * 0.9;
+        D := H / 5;
+
+        N := 40;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+
+        RCut := R * 0.6;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-3*D;-D; D; 3*D" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "Colors[5]" VertexIndexes = "FromTo(0, N - 1)" />
+                <ExecMacro MacroName = "AddFace" i = "N/8" c = "3" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"           c = "0" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"           c = "2" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"           c = "1" Repeat = "N/4" />
+                <Face Color = "Colors[4]" VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+
+        <Hide Axis = "0" Layers = "0;4" />
+        <Hide Axis = "2" Layers = "0;4" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "4" />
+        <ShowAll/>
+
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

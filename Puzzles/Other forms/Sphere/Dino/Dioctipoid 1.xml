@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dioctipoid 1</Name>
+        <Menu>Other forms\Sphere\Dino\Dioctipoid 1</Menu>
+        <Inventor>Gary Spencer-Purvis</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-10-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2098</Link>
+    </Interface>
+
+    <Script>
+        K := 0.6;
+        W := K * 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := K * 0.333526099730881 // C15/K/sqrt(3)
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "Ex; Ey; Ez" />
+        <HideAll/>
+
+        <Script>Color := 'FFFFCF'; </Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Ex; Ey; Ez" />
+        <ExecMacro MacroName = "HideEdges" Id = "0" Repeat = "12" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

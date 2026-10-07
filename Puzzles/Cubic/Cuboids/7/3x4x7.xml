@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cuboid 3x4x7</Name>
+        <Menu>Cubic\Cuboids\7\3x4x7</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-11-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6874</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+
+        X := 7;
+        Y := 3;
+        Z := 4;
+        Oversize := 0;
+
+        include 'Puzzles\Cubic\Cuboids\Cuboid Calculation.inc';
+    </Script>
+
+    <Axes>
+        <Axis TurningAngles = "Ax" NormVector = " 1; 0; 0" PlaneDistances = "DX" />
+        <Axis TurningAngles = "Ay" NormVector = " 0; 1; 0" PlaneDistances = "DY" />
+        <Axis TurningAngles = "Az" NormVector = " 0; 0; 1" PlaneDistances = "DZ" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Cx[c];Cy[c];Cz[c]" NormDistance = "WD * (-L + 2*i)" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" c = "1" L = "X" i = "1" Repeat = "X - 1" />
+        <ExecMacro MacroName = "Split" c = "3" L = "Y" i = "1" Repeat = "Y - 1" />
+        <ExecMacro MacroName = "Split" c = "5" L = "Z" i = "1" Repeat = "Z - 1" />
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "WD*3" WY = "W" WZ = "WD*4" />
+
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <InvertVisibility/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "0" Layer = "Random(X)" Angle = "Pi" />
+            <Turn Axis = "1" Layer = "Random(Y)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(Z)" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "0" Layer = "Random(X)" Angle = "2*Pi * Random" />
+            <Turn Axis = "1" Layer = "Random(Y)" Angle = "2*Pi * Random" />
+            <Turn Axis = "2" Layer = "Random(Z)" Angle = "2*Pi * Random" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script>X := 7; Y := 3; Z := 4;</Script>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

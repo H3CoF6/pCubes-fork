@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Icosidodecahedron Square-1</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other forms\Archimedean Solids\Icosidodecahedron\Icosidodecahedron Square-1</Menu>
+        <Menu>Other forms\Square-1\Icosidodecahedron Square-1</Menu>
+        <Inventor>Karl-Heinz Diekmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-10-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3292</Link>
+    </Interface>
+
+    <Script>
+        vColors[ 0] := '734092';
+        vColors[ 1] := 'E23475';
+        vColors[ 2] := '008200';
+        vColors[ 3] := '4070F1';
+        vColors[ 4] := '00F200';
+        vColors[ 5] := 'FFF3FF';
+        vColors[ 6] := 'FFF400';
+        vColors[ 7] := '004070';
+        vColors[ 8] := '800070';
+        vColors[ 9] := 'BF8050';
+        vColors[10] := '309070';
+        vColors[11] := 'FE0000';
+        vColors[12] := 'FE0080';
+        vColors[13] := '80CF80';
+        vColors[14] := 'FF700A';
+        vColors[15] := '4D1340';
+        vColors[16] := '9E0000';
+        vColors[17] := '7F7040';
+        vColors[18] := 'C1C4C7';
+        vColors[19] := 'FACD05';
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        Cut := R * (sqrt(5) / 3 + 1) / 2;
+
+        D := R * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 0; 1" Angle = "2.36" />
+        <Turn NormVector = " 1; 0; 0" Angle = "0.41" />
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "CutVertex" >
+            <Cut Color="vColors[i]" > <Plane NormVector = "-Vx[i];-Vy[i];-Vz[i]" NormDistance = "-Cut" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutVertex" i = "0" Repeat = "20" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+    </Figure>
+</xml>

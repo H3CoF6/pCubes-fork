@@ -1,0 +1,148 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Barrel #4 Ultimate</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other forms\Cylinder\Barrel\Barrel #4 Ultimate</Menu>
+        <Menu>Other forms\Square-1\Barrel #4 Ultimate</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-20</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=27115</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0055EE';
+        Colors[1] := 'EE0011';
+        Colors[2] := '00CC00';
+        Colors[3] := 'FFEE00';
+        Colors[4] := 'FF7700';
+        Colors[5] := 'AA00CC';
+
+        H := 0.5275;
+        R := H / 1.4;
+
+        D := H / 3;
+
+        for i := 0 to 59 do begin
+            x[i] := R * cos(2 * Pi / 60 * i);
+            y[i] := R * sin(2 * Pi / 60 * i);
+        end;
+
+        S15 := sin (Pi / 12); // 15 degrees
+        C15 := cos (Pi / 12);
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "C15; S15; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "0; 0; H" />
+            <Vertices Vectors = "0; 0;-H" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "15;120;FromTo( 0,14)" InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = "30;120;FromTo(15,29)" InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = "45;120;FromTo(30,44)" InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = "0;120;FromTo(45,59)"  InvisibleEdges = "3" />
+
+                <Face Color = "Colors[0]" VertexIndexes = "60;61; 1; 0" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "61;62; 2; 1" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "62;63; 3; 2" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "63;64; 4; 3" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "64;65; 5; 4" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "65;66; 6; 5" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "66;67; 7; 6" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "67;68; 8; 7" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "68;69; 9; 8" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "69;70;10; 9" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "70;71;11;10" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "71;72;12;11" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "72;73;13;12" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "73;74;14;13" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "74;75;15;14" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "75;76;16;15" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "76;77;17;16" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "77;78;18;17" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "78;79;19;18" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "79;80;20;19" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "80;81;21;20" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "81;82;22;21" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "82;83;23;22" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "83;84;24;23" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "84;85;25;24" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "85;86;26;25" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "86;87;27;26" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "87;88;28;27" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "88;89;29;28" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "89;90;30;29" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "90;91;31;30" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "91;92;32;31" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "92;93;33;32" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "93;94;34;33" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "94;95;35;34" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "95;96;36;35" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "96;97;37;36" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "97;98;38;37" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "98;99;39;38" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "99;100;40;39" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "100;101;41;40" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "101;102;42;41" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "102;103;43;42" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "103;104;44;43" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "104;105;45;44" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "105;106;46;45" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "106;107;47;46" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "107;108;48;47" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "108;109;49;48" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "109;110;50;49" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "110;111;51;50" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "111;112;52;51" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "112;113;53;52" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "113;114;54;53" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "114;115;55;54" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "115;116;56;55" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "116;117;57;56" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "117;118;58;57" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "118;119;59;58" InvisibleEdges = "10" />
+                <Face Color = "Colors[3]" VertexIndexes = "119; 60; 0;59" InvisibleEdges = "10" />
+
+                <Face Color = "Colors[3]" VertexIndexes = "105;121;60;FromTo(119,106)" InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = "90;121;FromTo(105,91)"      InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = "75;121;FromTo(90,76)"       InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = "60;121;FromTo(75,61)"       InvisibleEdges = "3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

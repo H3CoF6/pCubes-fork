@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Puck Radioactive</Name>
+        <Menu>Other forms\Cylinder\Puck\Puck Radioactive</Menu>
+        <Menu>Other forms\Square-1\Puck Radioactive</Menu>
+        <Inventor>Zoltán Pataki, Udulo Mszmp and Géza Csomós</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1045</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'E9C023';
+        clBlack  := '202020';
+        Colors[0] := clYellow;
+        Colors[1] := clBlack;
+
+        R := 0.6;
+        R1 := R / 2;
+        R2 := R1 * 0.85;
+        H := R * 0.25;
+        H2 := H + 0.0003;
+        Angle := Pi/6;
+    </Script>
+
+    <Axes TurningAngles = "0; Angle; 0" PlaneDistances = "-H; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+
+        <Turn NormVector = "0; 0; 1" Angle = "Angle / 2" />
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "R" Color = "Colors[i mod 2]" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Colors[i mod 2]"/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Colors[i mod 2]" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "-cos(Pi/12); -sin(Pi/12); 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " cos(Pi/12); -sin(Pi/12); 0" NormDistance = "0" /> </Cut>
+            <Turn NormVector = "0; 0; 1" Angle = "Angle" />
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "12" />
+
+        <ShowAll/>
+
+<!--        <Circle Radius = "R1" Color = "clBlack " Center =  "0; 0;  H2" />-->
+        <Cylinder Radius = "R1" Color = "clYellow "> <Base X = "0" Y = "0" Z = "H" /> <Top Color = "clYellow" X = "0" Y = "0" Z = "H2" /> </Cylinder>
+        <Circle Radius = "R2" Color = "clBlack" Center =  "0; 0; 2*H2-H" />
+
+        <Cylinder Radius = "R1" Color = "clBlack "> <Base X = "0" Y = "0" Z = "-H" /> <Top Color = "clBlack" X = "0" Y = "0" Z = "-H2" /> </Cylinder>
+        <Circle Radius = "R2" Color = "clYellow" Center =  "0; 0; -2*H2+H" />
+        <Turn NormVector = "0; 0; 1" Angle = "-Angle / 2" />
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "0" Angle = "Angle" Layer = "1" />
+        <SaveSolvedState/>
+        <Undo/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Textures>
+        <Texture Name = "Puck1" File = "Puzzles\Other forms\Cylinder\Textures\Puck Radioactive1.vec" />
+        <Texture Name = "Puck2" File = "Puzzles\Other forms\Cylinder\Textures\Puck Radioactive2.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Puck1 =  19,0,15
+        Puck2 =  18,0,0 
+    </SetTextures>
+</xml>

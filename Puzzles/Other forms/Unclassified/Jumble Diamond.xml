@@ -1,0 +1,111 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jumble Diamond</Name>
+        <Menu>Other forms\Unclassified\Jumble Diamond</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2020-07-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4047</Link>
+    </Interface>
+
+    <Script>
+        clOrange    := 'FF6000';
+        clWhite     := 'FFFFFF';
+        clRed       := 'FF0000';
+        clLightBlue := '2868FF';
+        clGray      := '707070';
+        clPink      := 'ff66cb';
+        clGreen     := '008000';
+        clYellow    := 'FFFF00';
+        clViolett   := '800080';
+
+        R := 0.45;
+
+        N1 :=  0.81191453412041067797;
+        N2 :=  0.58377631785131236599;
+        N3 :=  0.66477774917518455213;
+        N4 := -0.34079478928403648500;
+
+        C1 :=  R * 1.71298487009659694250;
+        C2 :=  R * 0.87815261352478509880;
+        C3 :=  R * 0.49165257501333878301;
+        C4 :=  R * 1.39079731275979071112;
+        C5 := -R * 0.22133229508325815949;
+        C6 :=  R * 0.99161744136873548944;
+        C7 := -R * 1;
+
+        D := R * 0.61066614754162907974;
+
+        A1 := ArcCos(0.25417371249333060849);  // 75.27537073848393354979 degs
+        A2 := ArcCos(-0.49165257501333878301); // 119.44925852303213290042 degs
+        A3 := 2 * Pi - A1 - A2;                // 165.27537073848393354979 degs
+        A4 := Pi - A1 / 2;                     // 142.36231463075803322510 degs
+    </Script>
+
+    <Axes TurningAngles = "Pi*2" AvailableAngles = "-A3; -A2; -Pi/2; -A1; 0; A1; Pi/2; A2; A3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " N1;  0; N2" />
+        <Axis NormVector = "  0; N1; N2" />
+        <Axis NormVector = "-N1;  0; N2" />
+        <Axis NormVector = "  0;-N1; N2" />
+    </Axes>
+    <Axes TurningAngles = "Pi*2" AvailableAngles = "-A4; -A1; 0; A1; A4" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " N3; N3; N4" />
+        <Axis NormVector = "-N3; N3; N4" />
+        <Axis NormVector = "-N3;-N3; N4" />
+        <Axis NormVector = " N3;-N3; N4" />
+    </Axes>
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "  0;  0;  -1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;  0; C1" />
+                <Add Vector = " C2; C2; C3" />
+                <Add Vector = "-C2; C2; C3" />
+                <Add Vector = "-C2;-C2; C3" />
+                <Add Vector = " C2;-C2; C3" />
+                <Add Vector = " C4;  0; C5" />
+                <Add Vector = "  0; C4; C5" />
+                <Add Vector = "-C4;  0; C5" />
+                <Add Vector = "  0;-C4; C5" />
+                <Add Vector = " C6;  0; C7" />
+                <Add Vector = "  0; C6; C7" />
+                <Add Vector = "-C6;  0; C7" />
+                <Add Vector = "  0;-C6; C7" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange   " VertexIndexes = " 0; 1; 6; 2" />
+                <Face Color = "clWhite    " VertexIndexes = " 0; 2; 7; 3" />
+                <Face Color = "clRed      " VertexIndexes = " 0; 3; 8; 4" />
+                <Face Color = "clLightBlue" VertexIndexes = " 0; 4; 5; 1" />
+
+                <Face Color = "clGray     " VertexIndexes = " 1; 5; 9;10; 6" />
+                <Face Color = "clPink     " VertexIndexes = " 2; 6;10;11; 7" />
+                <Face Color = "clGreen    " VertexIndexes = " 3; 7;11;12; 8" />
+                <Face Color = "clYellow   " VertexIndexes = " 4; 8;12; 9; 5" />
+
+                <Face Color = "clViolett  " VertexIndexes = " 9;12;11;10" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Hide  Axis = "ax2" Layer = "0" />
+            <Turn  Axis = "ax1" Layer = "1" Angle = "A1" />
+            <Split Axis = "ax2" From = "1" />
+            <Undo Repeat = "1" />
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax1 = " 0" ax2 = " 3" />
+        <ExecMacro MacroName = "Split" ax1 = " 1" ax2 = " 0" />
+        <ExecMacro MacroName = "Split" ax1 = " 2" ax2 = " 1" />
+        <ExecMacro MacroName = "Split" ax1 = " 3" ax2 = " 2" />
+    </Figure>
+</xml>

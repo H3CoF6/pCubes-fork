@@ -1,0 +1,109 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mole Pyraminx</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Pyraminx\Mole Pyraminx (Sudoku)</Menu>
+        <Inventor>Uwe Mèffert</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-05-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7261</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 1] := 'C80000'; // clRed
+        Colors[ 2] := 'FF8E01'; // clOrange
+        Colors[ 3] := 'ECE300'; // clYellow
+        Colors[ 4] := '04A42A'; // clGreen
+        Colors[ 5] := '64CBFC'; // clCyan
+        Colors[ 6] := '0019FF'; // clBlue
+        Colors[ 7] := 'C2009E'; // clViolett
+        Colors[ 8] := 'ff0088'; // clMagenta
+        Colors[ 9] := 'FFFFFF'; // clWhite
+        Colors[10] := '101010'; // clDark
+
+        ColorsS := 'roygcbvmwd';
+
+        W := 0.5;
+        D := W / sqrt(3);
+        D0 := -W / sqrt(3);
+        W1 := 0.55;
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', SColors);
+          if p = 0 then begin
+            substr := Trim(SColors);
+            SColors := '';
+          end else begin
+            substr := Trim(copy(SColors, 1, p-1));
+            Delete(SColors, 1, p);
+          end;
+          Result := Pos(substr, ColorsS);
+        end;
+
+        SColors1 := 'b, c,v, g,w,d, y,o,r,m';
+        SColors2 := 'b, v,r, d,y,o, m,g,c,w';
+        SColors3 := 'b, r,c, o,m,g, w,v,d,y';
+        SColors4 := 'w, c,v, g,b,d, m,r,o,y';
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2*D; D0 + 3*D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " W1;-W1; W1" />
+                <Add Vector = "-W1; W1; W1" />
+                <Add Vector = " W1; W1;-W1" />
+                <Add Vector = "-W1;-W1;-W1" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = "1;2;3" />
+                <Face VertexIndexes = "0;3;2" />
+                <Face VertexIndexes = "0;1;3" />
+                <Face VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "CutCubie" >
+            <HideContaining Vector = "x; w-x-z; z" />
+            <InvertVisibility />
+            <Cut Color = "Colors[GetInt]"><Plane NormVector = "-1;-1;-1" NormDistance = "D0" /></Cut>
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "CutFace" >
+            <ExecMacro MacroName = "CutCubie" x = "-W*2/3" z = " W*5/6" />
+            <ExecMacro MacroName = "CutCubie" x = "-W/6  " z = " W*5/6" />
+            <ExecMacro MacroName = "CutCubie" x = "-W/6  " z = " W/3  " />
+            <ExecMacro MacroName = "CutCubie" x = " W/3  " z = " W*5/6" />
+            <ExecMacro MacroName = "CutCubie" x = " W/3  " z = " W/3  " />
+            <ExecMacro MacroName = "CutCubie" x = " W/3  " z = "-W/6  " />
+            <ExecMacro MacroName = "CutCubie" x = " W*5/6" z = " W*5/6" />
+            <ExecMacro MacroName = "CutCubie" x = " W*5/6" z = " W/3  " />
+            <ExecMacro MacroName = "CutCubie" x = " W*5/6" z = "-W/6  " />
+            <ExecMacro MacroName = "CutCubie" x = " W*5/6" z = "-W*2/3" />
+            <Cut><Plane NormVector = "-1;-1;-1" NormDistance = "D0" /></Cut>
+        </Macro>
+
+        <ExecMacro MacroName = "CutFace" SColors = "SColors1" />
+        <Turn NormVector = "-1; 1; 1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColors2" />
+        <Turn NormVector = "-1; 1; 1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColors3" />
+        <Turn NormVector = "-1; 1; 1" Angle = "-2*Pi/3" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColors4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "-Pi" />
+    </Figure>
+    <Procedures CheckSolved="EachFaceConsistsOfDifferentColors" />
+</xml>

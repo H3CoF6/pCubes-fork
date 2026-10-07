@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Soccer Slide</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Icosahedron\Soccer Slide</Menu>
+        <Inventor>Iwona Gorczyca</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-05-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4733</Link>
+        <Link>http://dmccooey.com/polyhedra/TruncatedIcosahedron.html</Link>
+    </Interface>
+
+    <Script>
+        Black[ 0] := '202020';
+        Black[ 1] := '202021';
+        Black[ 2] := Black[ 0];
+        Black[ 3] := Black[ 1];
+        Black[ 4] := '202022';
+        Black[ 5] := '202023';
+        Black[ 6] := Black[ 4];
+        Black[ 7] := Black[ 5];
+        Black[ 8] := '202024';
+        Black[ 9] := '202025';
+        Black[10] := Black[ 8];
+        Black[11] := Black[ 9];
+
+        Colors[ 0] := '800000'; // Brown
+        Colors[ 1] := '0000FF'; // Blue
+        Colors[ 2] := 'FF0000'; // Red
+        Colors[ 3] := '800080'; // Purple
+        Colors[ 4] := 'FFFF00'; // Yellow
+        Colors[ 5] := '00FFFF'; // Cyan
+        Colors[ 6] := '008000'; // Green
+        Colors[ 7] := '000080'; // Navy
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := 'FF69B4'; // Pink
+        Colors[10] := Colors[ 0];
+        Colors[11] := Colors[ 1];
+        Colors[12] := Colors[ 2];
+        Colors[13] := Colors[ 3];
+        Colors[14] := Colors[ 4];
+        Colors[15] := Colors[ 5];
+        Colors[16] := Colors[ 6];
+        Colors[17] := Colors[ 7];
+        Colors[18] := Colors[ 8];
+        Colors[19] := Colors[ 9];
+
+        R := 0.7;
+
+        s5 := sqrt(5);
+        phi := (s5 - 1) / 2; // The golden ratio
+
+        D := R * s5 / 15;
+        RCut := R * (10 + s5) / 15;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi/5; 0" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 0; phi; 1" />
+        <Axis NormVector = " 0;-phi; 1" />
+        <Axis NormVector = " phi; 1; 0" />
+        <Axis NormVector = "-phi; 1; 0" />
+        <Axis NormVector = " 1; 0; phi" />
+        <Axis NormVector = " 1; 0;-phi" />
+    </Axes>
+
+    <Figure>
+        <Turn1 NormVector = "0;0;1" Angle = "Pi/2" />
+        <LoadFrom File = "Figures\IcosahedronSq.xml"  />
+
+        <Macro Name = "CutV" >
+            <Cut Color = "Black[v]" ><Plane NormVector = "Vx[v];Vy[v];Vz[v]" NormDistance = "-RCut" /></Cut>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" v = "0" Repeat = "12" />
+
+        <SplitByAxes/>
+        <R1emoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

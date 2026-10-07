@@ -1,0 +1,135 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Stellar Cross</Name>
+        <Menu>Other forms\Star\Stellar Cross</Menu>
+        <Inventor>Kyle Jackson</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-05-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7808</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // white1
+        Colors[ 1] := '640064'; // violet
+        Colors[ 2] := 'C80000'; // red1
+        Colors[ 3] := '009600'; // dark green1
+        Colors[ 4] := '0000C8'; // dark blue1
+        Colors[ 5] := 'FF800A'; // orange1
+        Colors[ 6] := 'FFFF00'; // yellow1
+        Colors[ 7] := '5F5F5F'; // gray
+        
+        Colors[ 8] := '0000C7'; // dark blue2
+        Colors[ 9] := '009601'; // dark green2
+        Colors[10] := 'FFFFFE'; // white2
+        Colors[11] := 'FFFF01'; // yellow2
+        Colors[12] := 'FF800B'; // orange2
+        Colors[13] := 'C80001'; // red2
+
+        W := 1.5 * 0.5;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+
+        D := W / 4;
+        RCut := W * 0.47;
+        RCu1 := W * 0.37;
+        D2 := W / sqrt(3);
+
+        // Vertices of Cube
+        for i := 0 to 7 do begin
+            VCx[i] := Cx[i] * 3/2;
+            VCy[i] := Cy[i] * 3/2;
+            VCz[i] := Cz[i] * 3/2;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-2*D; -D; D; 2*D" FixedLayers = "2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <Split><Plane NormVector = " 1; 1; 1" /></Split>
+        <Split><Plane NormVector = "-1; 1; 1" /></Split>
+        <Split><Plane NormVector = "-1;-1; 1" /></Split>
+        <Split><Plane NormVector = " 1;-1; 1" /></Split>
+
+        <Macro Name = "RemoveCenters" >
+            <RemoveContaining Vector = "Cx[i]; Cy[i]; Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" i = "0" Repeat = "8" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "4" />
+
+        <!-- cut for better control -->
+<!--        <Macro Name = "Cut" >
+            <HideContaining Vector = " Vx[i]; Vy[i]; Vz[i]" />
+            <HideContaining Vector = " 0; 0; 0" />
+            <Cut><Plane NormVector = "-Vx[i];-Vy[i];-Vz[i]" NormDistance = "-RCut" /></Cut>
+            <ShowAll/>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "6" />-->
+
+        <InvertVisibility/>
+
+        <Part>
+            <Vertices Vectors = "VCx; VCy; VCz" />
+
+            <Faces>
+                <Face Color = "Colors[ 8]" VertexIndexes = "0;1;2;3" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "5;4;7;6" />
+                <Face Color = "Colors[10]" VertexIndexes = "1;0;4;5" />
+                <Face Color = "Colors[11]" VertexIndexes = "3;2;6;7" />
+                <Face Color = "Colors[12]" VertexIndexes = "4;0;3;7" />
+                <Face Color = "Colors[13]" VertexIndexes = "2;1;5;6" />
+            </Faces>
+        </Part>
+        <Split><Plane NormVector = " 1; 1; 1" /></Split>
+        <Split><Plane NormVector = "-1; 1; 1" /></Split>
+        <Split><Plane NormVector = "-1;-1; 1" /></Split>
+        <Split><Plane NormVector = " 1;-1; 1" /></Split>
+
+        <Macro Name = "RemoveCubeCenters" >
+            <RemoveContaining Vector = "Vx[i] / 2; Vy[i] / 2; Vz[i] / 2" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCubeCenters" i = "0" Repeat = "6" />
+
+        <ShowAll/>
+
+        <!-- cut for better control -->
+<!--        <Macro Name = "Cut2" >
+            <Split> <Plane NormVector = " 1; 1; 1" NormDistance = "D2" /> </Split>
+            <HideContaining Vector = " W/2; W/2; W/2" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = "-1;-1; 2" NormDistance = "-RCu1" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 2;-1" NormDistance = "-RCu1" /> </Cut>
+            <Cut> <Plane NormVector = " 2;-1;-1" NormDistance = "-RCu1" /> </Cut>
+            <ShowAll/>
+            <Script>Inc(i);</Script>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Cut2" i = "0" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "Cut2" i = "0" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />-->
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Seven Sided Oddity</Name>
+        <Alias>Octagonal Edges 21E8800144087 Extended</Alias>
+        <Menu>Other forms\3x3x3 variants\Seven Sided Oddity</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-04-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3791</Link>
+    </Interface>
+
+    <Script>
+        W := 0.3;
+        D := W / 3;
+        RCut := W * 2 * sqrt(2) / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" W = "W * 10" />
+
+        <Cut Color = "Colors[5]"><Plane NormVector = " 1; 0;-1" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[5]"><Plane NormVector = "-1; 0;-1" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[2]"><Plane NormVector = " 1; 1; 0" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[2]"><Plane NormVector = "-1; 1; 0" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[1]"><Plane NormVector = " 0; 1; 1" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[0]"><Plane NormVector = " 0;-1;-1" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[3]"><Plane NormVector = " 0;-1; 1" NormDistance = "-RCut" /></Cut>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "D * 3" /></Split>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "D * 3" /></Split>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "D * 5" /></Split>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "D * 5" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "D * 3" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "D * 3" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "D * 3" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "D * 3" /></Split>
+        <SaveSolvedState/>
+        <Turn NormVector = " 1; 0; 0" Angle = "-Pi/4" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

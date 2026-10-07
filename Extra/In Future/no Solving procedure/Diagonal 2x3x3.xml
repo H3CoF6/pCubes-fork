@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+<!-- model hasn't 'solved' procedure -->
+
+    <Interface>
+        <Name>Diagonal 2x3x3</Name>
+        <Menu>Cubic\Crazy\Diagonal 2x3x3</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8023</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * (sqrt(2) - 1);
+
+        RC := W * 0.3;
+        WC := W * 1.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-W;-D; D; W" FixedLayers = "2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = "-1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/4" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W * 2 / 3" />
+
+        <Cylinder Radius = "RC" Color = "clRed"    Base = "-W; 0; 0" Top = "-WC; 0; 0" TopColor = "clRed   " />
+        <Cylinder Radius = "RC" Color = "clOrange" Base = " W; 0; 0" Top = " WC; 0; 0" TopColor = "clOrange" />
+        <Cylinder Radius = "RC" Color = "clGreen " Base = " 0; W; 0" Top = " 0; WC; 0" TopColor = "clGreen " />
+        <Cylinder Radius = "RC" Color = "clBlue  " Base = " 0;-W; 0" Top = " 0;-WC; 0" TopColor = "clBlue  " />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "Pi/2" />
+        <Split Axis = "2" From = "1" Color1 = "clRed"    />
+        <Split Axis = "2" From = "4" Color2 = "clOrange" />
+        <Split Axis = "3" From = "1" Color1 = "clBlue"   />
+        <Split Axis = "3" From = "4" Color2 = "clGreen"  />
+        <Undo/>
+    </Figure>
+</xml>

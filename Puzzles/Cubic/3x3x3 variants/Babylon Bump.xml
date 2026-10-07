@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Babylon Bump</Name>
+        <Menu>Cubic\3x3x3 variants\Babylon Bump</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4411</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.6;
+        N := 5;
+        D := W / N;
+        WX := D;
+        WY := D;
+        WZ := D;
+
+        S[0] := '     |     |  1  |     |     ';
+        S[1] := '     | 111 | 101 | 111 |     ';
+        S[2] := '     | 111 | 101 | 111 |     ';
+        S[3] := '11111|11111|11111|11111|11111';
+        S[4] := '     |     |     |     |     ';
+
+        function GetType(x1, y1, z1);
+        begin
+            if (x1 &lt; 0) or (y1 &lt; 0) or (z1 &lt; 0) or (x1 &gt;= N) or (y1 &gt;= N) or (z1 &gt;= N) then
+                Result := ' '
+            else
+                Result := copy(S[N-1-z1], (N + 1) * y1 + x1 + 1, 1);
+        end;
+
+        procedure CalcCubie(No);
+        begin
+            x := No mod N;
+            y := No div N mod N;
+            z := No div N div N;
+            for i := 0 to 5 do
+                Colors[i] := -1;
+            CType := GetType(x,y,z);
+            if CType = '1' then begin
+                if GetType(x-1,y,z) = ' ' then Colors[0] := clRed;
+                if GetType(x+1,y,z) = ' ' then Colors[1] := clOrange;
+                if GetType(x,y-1,z) = ' ' then Colors[2] := clBlue;
+                if GetType(x,y+1,z) = ' ' then Colors[3] := clGreen;
+                if GetType(x,y,z-1) = ' ' then Colors[4] := clYellow;
+                if (GetType(x,y,z+1) = ' ') or (z = 2) then Colors[5] := clWhite;
+            end;
+            if CType &lt;&gt; ' ' then begin 
+                DWX := D * (2 * x - N + 1);
+                DWY := D * (2 * y - N + 1);
+                DWZ := D * (2 * z - N + 1);
+                CCount := 1;
+            end else
+                CCount := 0;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCubie">
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <Macro Name = "AddCubies">
+            <Script> CalcCubie(No); Inc(No); </Script>
+            <ExecMacro MacroName = "AddCubie" Repeat = "CCount" /> // if CCount = 1 then draw cubie
+        </Macro>
+
+        <ExecMacro MacroName = "AddCubies" No = "0" Repeat = "N*N*N" />
+
+        <Hide Axis = "2" From = "1" />
+        <Cut Color = "clRed   " > <Plane NormVector = " 1; 0; 0" NormDistance = "-D * 4" /> </Cut>
+        <Cut Color = "clOrange" > <Plane NormVector = "-1; 0; 0" NormDistance = "-D * 4" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormVector = " 0; 1; 0" NormDistance = "-D * 4" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = " 0;-1; 0" NormDistance = "-D * 4" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "2" To = "1" />
+        <Cut Color = "clRed   " > <Plane NormVector = " 1; 0; 0" NormDistance = "-D * 2" /> </Cut>
+        <Cut Color = "clOrange" > <Plane NormVector = "-1; 0; 0" NormDistance = "-D * 2" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormVector = " 0; 1; 0" NormDistance = "-D * 2" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = " 0;-1; 0" NormDistance = "-D * 2" /> </Cut>
+        <ShowAll/>
+    </Figure>
+</xml>

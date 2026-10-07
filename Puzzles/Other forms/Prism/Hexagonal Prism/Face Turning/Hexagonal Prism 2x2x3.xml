@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagonal Prism 2x2x3</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Face Turning\Hexagonal Prism 2x2x3</Menu>
+        <Inventor>Justin Costa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9733</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clLBlue  := '0055FF';
+        clGreen  := '009600';
+        clOrange := 'FF7700';
+        clBlue   := '0000C8';
+        clLGreen := '00FF33';
+        clYellow := 'EEFF00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.6;
+
+        H := R * 3 / 4;
+        sAngle := 2 * Pi / 6;
+        for i := 0 to 5 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D1 := R * sqrt(3) / 4;
+        D2 := H / 3;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D1" NormVectors = "y; x; 0" />
+
+    <Axes TurningAngles = "2*Pi/6" PlaneDistances = "-D2; D2" NormVectors = "0; 0; 1" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x; y;-H" />
+            <Vertices Vectors = " x; y; H" />
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "clLBlue " VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "clOrange" VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "clBlue  " VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "clLGreen" VertexIndexes = "11; 6; 0; 5" />
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                <Face Color = "clWhite " VertexIndexes = "11;10; 9; 8; 7; 6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

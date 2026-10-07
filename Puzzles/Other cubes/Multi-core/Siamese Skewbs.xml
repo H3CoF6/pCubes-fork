@@ -1,0 +1,39 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese Skewbs</Name>
+        <Menu>Other cubes\Multi-core\Siamese Skewbs</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=468</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        D2 := D * 2;
+    </Script>
+ 
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "-1;-1; 1" BaseVector = "-D;-D; 0" />
+        <Axis NormVector = "-1;-1;-1" BaseVector = "-D;-D; 0" />
+
+        <Axis NormVector = " 1; 1; 1" BaseVector = " D; D; 0" />
+        <Axis NormVector = " 1; 1;-1" BaseVector = " D; D; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D2" WY = "WX" WZ = "WX" DWX = " D" DWY = " D" DWZ = "0" />
+        <Cut><Plane NormVector = " 1; 1; 0" /></Cut>
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D2" WY = "WX" WZ = "WX" DWX = "-D" DWY = "-D" DWZ = "0" />
+        <Cut><Plane NormVector = "-1;-1; 0" /></Cut>
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Split><Plane NormVector = "-1; 1; 1" /></Split>
+        <Split><Plane NormVector = "-1; 1;-1" /></Split>
+    </Figure>
+</xml>

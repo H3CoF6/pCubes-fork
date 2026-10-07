@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    // Scrambling is bad
+
+    <Interface>
+        <Name>Clocked Tera DodecoSpiral-minx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bandaged\Clocked Tera DodecoSpiral-minx</Menu>
+        <Inventor>virtual model by AndyKybik</Inventor>
+        <Programmer>AndyKybik</Programmer>
+        <Added>2024-11-01</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := (5 * Rsin + 1 * R2sin) / 6;
+        D2 := (4 * Rsin + 2 * R2sin) / 6;
+        D3 := (3 * Rsin + 3 * R2sin) / 6;
+
+        procedure Prepare();
+        begin
+            Count := Length(S) div 3;
+            for i := 0 to Count - 1 do begin
+                ax[i] := StrToInt(copy(S, i * 3 + 1, 1));
+                L[i] := StrToInt(copy(S, i * 3 + 2, 1));
+                Sign := copy(S, i * 3 + 3, 1);
+                if Sign = '-' then begin
+                    FromL[i] := L[i] + 1;
+                    ToL[i] := 20;
+                end else if Sign = '+' then begin
+                    FromL[i] := 0;
+                    ToL[i] := L[i];
+                end else begin
+                    FromL[i] := 20;
+                    ToL[i] := 20;
+                end;
+            end;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; sAngle; sAngle; 0; sAngle; sAngle; sAngle" PlaneDistances = "-D1; -D2; -D3; D3; D2; D1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "Split1" >
+            <Split Axis = "ax[i]" From = "L[i] + 1" />
+            <Hide Axis = "ax[i]" From = "FromL[i]" To = "ToL[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <Macro Name = "Split2" >
+            <Script> Prepare; </Script>
+            <ExecMacro MacroName = "Split1" i = "0" Repeat = "Count" />
+            <ShowAll/>
+        </Macro>
+
+        // "52-" means split axis = "5" From = "2+1" and hide lower or upper half depending on sign
+        // these strings split very bandaged puzzle
+        <ExecMacro MacroName = "Split2" S = "'53-52-42-23-41-02-01-40-51-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42-23-41-02-01-40+50*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42-23-41-02-01+50*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42-23-41-02+51-50-40*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42-23-41+51-02-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42-23+51-41-50-24+40*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42-23+51-41-50+25*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42-23+51-41+25*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42-23+51+40-24*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33-51-25-24-23-12-02-01-50-11-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33-51-25-24-23-12-02-01-50+10*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33-51-25-24-23-12-02-01+10*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33-51-25-24-23-12-02+50-11-10*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33-51-25-24-23-12+50-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33-51-25+50*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33-51+25-12-11-02-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33+24-23-12-11-51-10-34+50*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33+24-23-12-11-51-10+35*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33+24-23-12-11-51+35*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33+24-23-12-11+50-34*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33+24-23-12+51-50-35-34*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33+24-23+51-35*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33+24+34-50*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33+24+34+25-50*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52-42+33+24+34+25+51-35*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32-13-31-02-01-30-41-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32-13-31-02-01-30+40*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32-13-31-02-01+40*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32-13-31-02+41-40-30*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32-13-31+41-02-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32-13+41-31-40-14+30*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32-13+41-31-40+15*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32-13+41-31+15*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32-13+41+30-14*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32+23-41-40-15-14-13-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32+23-41-40+15*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32+23-41+15*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32+23+14-41-25-13-24*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32+23+14-41-25+13-40*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32+23+14-41+13*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32+23+14+24-40*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32+23+14+24+15-40*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42-32+23+14+24+15+41-25*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22-32-21-02-01-20-31-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22-32-21-02-01-20+30*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22-32-21-02-01+30*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22-32-21-02+31-30-20*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22-32-21+31-02-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22-32+12-11-02-01-10-21-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22-32+12-11-02-01-10+20*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22-32+12-11-02-01+20*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22-32+12-11-02+21-20-10*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22-32+12-11+21-02-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22-32+12+21-20-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22+31-30-15-14-13-02-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22+31-30+15*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22+31+15-14-11-33-10-02-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22+31+15-14-11+05*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23-22+31+15+32+05-04-03*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23+33-14-13*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24-23+33-14+05-03*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24+33-13-25+05-04*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24+33-13+04-15-03-14*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24+33-13+04-15+03-25*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24+33-13+04+25-15*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24+33-13+04+25+14+05*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34-24+33+05-03*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34+23-35-12*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34+23-35+12-11-10*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34+23-35+12+05-04-03*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34+23+04-25-03-24*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34+23+04-25+03-35*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34+23+04+35-25*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43-42+34+23+04+35+24+05*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33-22-21-12-11-20-44+10*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33-22-21-12-11-20+45*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33-22-21-12-11+45*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33-22-21-12+45-44*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33-22-21-12+45+20*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33-22-21+44+12-10*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33-22+45-44-12*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33-22+45-44+12*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33-22+45+12-11-10*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33-22+45+12+05-04*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33+12-34-45+11*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33+12-34+44-10*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33+12-34+44+35-10*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33+12-34+44+35+11-45*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33+12+44-34+05-03*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33+12+44+04-35-03-34*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33+12+44+04-35+03-45*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33+12+44+04+45-35*'" />
+        <ExecMacro MacroName = "Split2" S = "'53-52+43+33+12+44+04+45+34+05*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32-22-31-21-30-54+20*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32-22-31-21-30+55*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32-22-31-21+55*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32-22-31+54+20*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32-22+54-31-15-13*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32-22+54+14-30-13-55*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32-22+54+14-30+13-31*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32-22+54+14+55-30*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32-22+54+14+55+31-15*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32+22-55-54*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32+22-55+21-20*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32+22+14-54-13*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32+22+14-54+13-55+05-04*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32+22+14-54+13+05-03*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32+22+14+04-55-03-54*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32+22+14+04-55+03-15*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32+22+14+04+15-55*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43-32+22+14+04+15+54+05*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43+22-44-55+21*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43+22-44+54-20*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43+22-44+54+45-20*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43+22-44+54+45+21-55*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43+22+54-44+05-03*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43+22+54+04-45-03-44*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43+22+54+04-45+03-55*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43+22+54+04+55-45*'" />
+        <ExecMacro MacroName = "Split2" S = "'53+43+22+54+04+55+44+05*'" />
+
+        <Macro Name = "Hide" >
+            <Hide>  <Plane NormVector = " Cx[i]; Cy[i]; Cz[i]" NormDistance = "-D1" /> </Hide>
+            <Hide>  <Plane NormVector = "-Cx[i];-Cy[i];-Cz[i]" NormDistance = "-D1" /> </Hide>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" i = "0" Repeat = "6" />
+        <Macro Name = "Cut" >
+            <Split> <Plane NormVector = " Cx[i]; Cy[i]; Cz[i]" NormDistance = "-D1" /> </Split>
+            <Split> <Plane NormVector = "-Cx[i];-Cy[i];-Cz[i]" NormDistance = "-D1" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "6" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+    </Figure>
+</xml>

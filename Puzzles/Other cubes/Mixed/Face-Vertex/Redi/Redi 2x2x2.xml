@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Redi 2x2x2</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\Redi\Redi 2x2x2</Menu>
+        <Inventor>Jonathan Burn</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-11-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6405</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        A := W * 1.2;
+        B := W * 0.7;
+        D := A / sqrt(3);
+        W1 := W * 0.7;
+
+        RCut := W * 1.56;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3;0;2*Pi/3" PlaneDistances = "-D;D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <!-- cut vertices for better control -->
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <InvertVisibility/>
+        <Cut> <Plane NormVector = " 1; 1; 1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 1;-1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1;-1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1; 1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1;-1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1; 1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1;-1" NormDistance = "-RCut" /> </Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

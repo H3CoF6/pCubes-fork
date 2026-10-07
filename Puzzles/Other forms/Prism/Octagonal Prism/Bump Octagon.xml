@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bump Octagon</Name>
+        <Menu>Other forms\Prism\Octagonal Prism\Bump Octagon</Menu>
+        <Menu>Other forms\3x3x3 variants\Prism\Bump Octagon</Menu>
+        <Inventor>Roberto Cazares</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-08-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10886</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        D := W / 3;
+        DCut := W * 2 * sqrt(2) / 3;
+
+        DWX :=-W * 0.13;
+        DWY := W * 0.23;
+        DWZ := W * 0.37;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Cut" >
+            <Cut Color = "Color" ><Plane NormVector = " 1; 1; 0" NormDistance = "-DCut" /></Cut>
+            <Cut Color = "Color" ><Plane NormVector = " 1;-1; 0" NormDistance = "-DCut" /></Cut>
+            <Cut Color = "Color" ><Plane NormVector = "-1; 1; 0" NormDistance = "-DCut" /></Cut>
+            <Cut Color = "Color" ><Plane NormVector = "-1;-1; 0" NormDistance = "-DCut" /></Cut>
+        </Macro>
+
+        <Transfer Vector = " DWX; DWY; DWZ" />
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "clYellow" />
+        <ExecMacro MacroName = "Cut" Color = "clYellow" />
+        <Cut Axis = "2" From = "2" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "clOrange" />
+        <ExecMacro MacroName = "Cut" Color = "clOrange" />
+        <Cut Axis = "2" To   = "2" />
+        <Cut Axis = "2" From = "1" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "clRed" />
+        <ExecMacro MacroName = "Cut" Color = "clRed" />
+        <Cut Axis = "2" To   = "1" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <Transfer Vector = "-DWX;-DWY;-DWZ" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

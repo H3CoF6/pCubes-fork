@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Deep 3x3x3 + Master Skewb II</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\Deep 3x3x3 + Master Skewb II</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-12-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9027</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D1 := W / 3;
+        D2 := D1 / sqrt(3);
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

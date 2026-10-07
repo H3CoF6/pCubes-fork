@@ -1,0 +1,236 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tuttminx Crystal</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Icosahedron\Tuttminx Crystal</Menu>
+        <Inventor>Diogo Sousa</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-08-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7581</Link>
+        <Link>http://dmccooey.com/polyhedra/TruncatedIcosahedron.html</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '004080'; // Pacific Navy
+        Colors[ 1] := '4070FF'; // Deep Sky Blue
+        Colors[ 2] := '00FF00'; // Green
+        Colors[ 3] := 'FFFFFF'; // White
+        Colors[ 4] := 'FFFF00'; // Yellow
+        Colors[ 5] := 'C1C5C7'; // Metallic
+        Colors[ 6] := 'FACC05'; // Pot of Gold
+        Colors[ 7] := '734082'; // Purple Sultan
+        Colors[ 8] := 'E23465'; // Mellow Melon
+        Colors[ 9] := '008000'; // Hulk
+        Colors[10] := 'FF0080'; // Neon Rose
+        Colors[11] := '800080'; // Purple
+        Colors[12] := 'BF8040'; // Ginger Beer
+        Colors[13] := '309060'; // Primal Green
+        Colors[14] := 'FF0000'; // Red
+        Colors[15] := '80BF80'; // Exhilarating Green
+        Colors[16] := 'FF800A'; // Orange Juice
+        Colors[17] := '4D1350'; // Purple Velour
+        Colors[18] := '9F0000'; // Cacodemon Red
+        Colors[19] := '7F8040'; // Green Commando
+
+        Colors[20] := '51C4FA'; // Blue Mana
+        Colors[21] := '075AFF'; // Opulent Blue
+        Colors[22] := 'FF8079'; // Light Red
+        Colors[23] := 'FFFFAE'; // Ginger Lemon Tea
+        Colors[24] := 'FACC76'; // Popcorn
+        Colors[25] := '00FF70'; // Light Green
+        Colors[26] := '009484'; // Sea
+        Colors[27] := '38ABEA'; // High Blue
+        Colors[28] := 'FF0041'; // Red Flag
+        Colors[29] := 'C1C548'; // Lush Bamboo
+        Colors[30] := 'FFFF41'; // Bee Yellow
+        Colors[31] := '018000'; // Green Clover
+
+        R := 0.7;
+
+        s5 := sqrt(5);
+
+        C4 := (1 + s5) * 3 / 4;
+        C5 := 1 / 2;
+        K := R / sqrt(C4^2 + C5^2);
+
+        C0 := K * (1 + s5) / 4;
+        C1 := K * (1 + s5) / 2;
+        C2 := K * (5 + s5) / 4;
+        C3 := K * (2 + s5) / 2;
+        C4 := K * (1 + s5) * 3 / 4;
+        C5 := K / 2;
+        C6 := K;
+
+        // pillow
+        C := 1.06;
+        C7 := K * (3 + s5) / 4 * C;
+        C8 := C0 * C;
+        C9 := C3 * C;
+
+        D1 := K * sqrt((7 + 3 * s5) * 5 / 24) * C;
+        D2 := K * sqrt((65 + 29 * s5) / 40) * C;
+
+        jumAngle := Arcsin(1/4) + Pi/6;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" JumbleAngle = "jumAngle" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = "  0;-C0; C3" />
+        <Axis NormVector = "  0; C0; C3" />
+        <Axis NormVector = " C3;  0;-C0" />
+        <Axis NormVector = " C3;  0; C0" />
+        <Axis NormVector = "-C0; C3;  0" />
+        <Axis NormVector = " C0; C3;  0" />
+
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " C6;  0; C1" />
+        <Axis NormVector = " C6;  0;-C1" />
+        <Axis NormVector = " C1; C6;  0" />
+        <Axis NormVector = " C1;-C6;  0" />
+        <Axis NormVector = "  0; C1; C6" />
+        <Axis NormVector = "  0; C1;-C6" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddConvexSide" >
+            <Face Color = "cl" VertexIndexes = "v1;v2;v0" InvisibleEdges = "6" />
+            <Face Color = "cl" VertexIndexes = "v2;v3;v0" InvisibleEdges = "6" />
+            <Face Color = "cl" VertexIndexes = "v3;v4;v0" InvisibleEdges = "6" />
+            <Face Color = "cl" VertexIndexes = "v4;v5;v0" InvisibleEdges = "6" />
+            <Face Color = "cl" VertexIndexes = "v5;v6;v0" InvisibleEdges = "6" />
+            <Face Color = "cl" VertexIndexes = "v6;v1;v0" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices>
+                <Add Vector = " C5;   0;  C4" />
+                <Add Vector = " C5;   0; -C4" />
+                <Add Vector = "-C5;   0;  C4" />
+                <Add Vector = "-C5;   0; -C4" />
+                <Add Vector = " C4;  C5;   0" />
+                <Add Vector = " C4; -C5;   0" />
+                <Add Vector = "-C4;  C5;   0" />
+                <Add Vector = "-C4; -C5;   0" />
+                <Add Vector = "  0;  C4;  C5" />
+                <Add Vector = "  0;  C4; -C5" />
+                <Add Vector = "  0; -C4;  C5" />
+                <Add Vector = "  0; -C4; -C5" />
+                <Add Vector = " C6;  C0;  C3" />
+                <Add Vector = " C6;  C0; -C3" />
+                <Add Vector = " C6; -C0;  C3" />
+                <Add Vector = " C6; -C0; -C3" />
+                <Add Vector = "-C6;  C0;  C3" />
+                <Add Vector = "-C6;  C0; -C3" />
+                <Add Vector = "-C6; -C0;  C3" />
+                <Add Vector = "-C6; -C0; -C3" />
+                <Add Vector = " C3;  C6;  C0" />
+                <Add Vector = " C3;  C6; -C0" />
+                <Add Vector = " C3; -C6;  C0" />
+                <Add Vector = " C3; -C6; -C0" />
+                <Add Vector = "-C3;  C6;  C0" />
+                <Add Vector = "-C3;  C6; -C0" />
+                <Add Vector = "-C3; -C6;  C0" />
+                <Add Vector = "-C3; -C6; -C0" />
+                <Add Vector = " C0;  C3;  C6" />
+                <Add Vector = " C0;  C3; -C6" />
+                <Add Vector = " C0; -C3;  C6" />
+                <Add Vector = " C0; -C3; -C6" />
+                <Add Vector = "-C0;  C3;  C6" />
+                <Add Vector = "-C0;  C3; -C6" />
+                <Add Vector = "-C0; -C3;  C6" />
+                <Add Vector = "-C0; -C3; -C6" />
+                <Add Vector = " C5;  C1;  C2" />
+                <Add Vector = " C5;  C1; -C2" />
+                <Add Vector = " C5; -C1;  C2" />
+                <Add Vector = " C5; -C1; -C2" />
+                <Add Vector = "-C5;  C1;  C2" />
+                <Add Vector = "-C5;  C1; -C2" />
+                <Add Vector = "-C5; -C1;  C2" />
+                <Add Vector = "-C5; -C1; -C2" />
+                <Add Vector = " C2;  C5;  C1" />
+                <Add Vector = " C2;  C5; -C1" />
+                <Add Vector = " C2; -C5;  C1" />
+                <Add Vector = " C2; -C5; -C1" />
+                <Add Vector = "-C2;  C5;  C1" />
+                <Add Vector = "-C2;  C5; -C1" />
+                <Add Vector = "-C2; -C5;  C1" />
+                <Add Vector = "-C2; -C5; -C1" />
+                <Add Vector = " C1;  C2;  C5" />
+                <Add Vector = " C1;  C2; -C5" />
+                <Add Vector = " C1; -C2;  C5" />
+                <Add Vector = " C1; -C2; -C5" />
+                <Add Vector = "-C1;  C2;  C5" />
+                <Add Vector = "-C1;  C2; -C5" />
+                <Add Vector = "-C1; -C2;  C5" />
+                <Add Vector = "-C1; -C2; -C5" />
+                                                  
+                <Add Vector = "  0; -C8;  C9" />
+                <Add Vector = "  0;  C8; -C9" />
+                <Add Vector = "  0;  C8;  C9" />
+                <Add Vector = "  0; -C8; -C9" />
+                <Add Vector = " C9;   0; -C8" />
+                <Add Vector = " C9;   0;  C8" />
+                <Add Vector = "-C9;   0;  C8" />
+                <Add Vector = "-C9;   0; -C8" />
+                <Add Vector = "-C8;  C9;   0" />
+                <Add Vector = " C8;  C9;   0" />
+                <Add Vector = " C8; -C9;   0" />
+                <Add Vector = "-C8; -C9;   0" />
+                <Add Vector = " C7;  C7;  C7" />
+                <Add Vector = " C7;  C7; -C7" />
+                <Add Vector = " C7; -C7;  C7" />
+                <Add Vector = " C7; -C7; -C7" />
+                <Add Vector = "-C7;  C7;  C7" />
+                <Add Vector = "-C7;  C7; -C7" />
+                <Add Vector = "-C7; -C7;  C7" />
+                <Add Vector = "-C7; -C7; -C7" />
+            </Vertices>                                                           
+            <Faces>
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[ 0]" v0 = "60" v1 = " 0" v2 = " 2" v3 = "18" v4 = "42" v5 = "38" v6 = "14" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[ 1]" v0 = "61" v1 = " 1" v2 = " 3" v3 = "17" v4 = "41" v5 = "37" v6 = "13" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[ 2]" v0 = "62" v1 = " 2" v2 = " 0" v3 = "12" v4 = "36" v5 = "40" v6 = "16" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[ 3]" v0 = "63" v1 = " 3" v2 = " 1" v3 = "15" v4 = "39" v5 = "43" v6 = "19" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[ 4]" v0 = "64" v1 = " 4" v2 = " 5" v3 = "23" v4 = "47" v5 = "45" v6 = "21" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[ 5]" v0 = "65" v1 = " 5" v2 = " 4" v3 = "20" v4 = "44" v5 = "46" v6 = "22" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[ 6]" v0 = "66" v1 = " 6" v2 = " 7" v3 = "26" v4 = "50" v5 = "48" v6 = "24" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[ 7]" v0 = "67" v1 = " 7" v2 = " 6" v3 = "25" v4 = "49" v5 = "51" v6 = "27" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[ 8]" v0 = "68" v1 = " 8" v2 = " 9" v3 = "33" v4 = "57" v5 = "56" v6 = "32" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[ 9]" v0 = "69" v1 = " 9" v2 = " 8" v3 = "28" v4 = "52" v5 = "53" v6 = "29" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[10]" v0 = "70" v1 = "10" v2 = "11" v3 = "31" v4 = "55" v5 = "54" v6 = "30" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[11]" v0 = "71" v1 = "11" v2 = "10" v3 = "34" v4 = "58" v5 = "59" v6 = "35" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[12]" v0 = "72" v1 = "12" v2 = "44" v3 = "20" v4 = "52" v5 = "28" v6 = "36" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[13]" v0 = "73" v1 = "13" v2 = "37" v3 = "29" v4 = "53" v5 = "21" v6 = "45" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[14]" v0 = "74" v1 = "14" v2 = "38" v3 = "30" v4 = "54" v5 = "22" v6 = "46" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[15]" v0 = "75" v1 = "15" v2 = "47" v3 = "23" v4 = "55" v5 = "31" v6 = "39" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[16]" v0 = "76" v1 = "16" v2 = "40" v3 = "32" v4 = "56" v5 = "24" v6 = "48" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[17]" v0 = "77" v1 = "17" v2 = "49" v3 = "25" v4 = "57" v5 = "33" v6 = "41" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[18]" v0 = "78" v1 = "18" v2 = "50" v3 = "26" v4 = "58" v5 = "34" v6 = "42" />
+                <ExecMacro MacroName = "AddConvexSide" cl = "Colors[19]" v0 = "79" v1 = "19" v2 = "43" v3 = "35" v4 = "59" v5 = "27" v6 = "51" />
+                <Face Color = "Colors[20]" VertexIndexes = " 0; 14; 46; 44; 12" />
+                <Face Color = "Colors[21]" VertexIndexes = " 1; 13; 45; 47; 15" />
+                <Face Color = "Colors[22]" VertexIndexes = " 2; 16; 48; 50; 18" />
+                <Face Color = "Colors[23]" VertexIndexes = " 3; 19; 51; 49; 17" />
+                <Face Color = "Colors[24]" VertexIndexes = " 4; 21; 53; 52; 20" />
+                <Face Color = "Colors[25]" VertexIndexes = " 5; 22; 54; 55; 23" />
+                <Face Color = "Colors[26]" VertexIndexes = " 6; 24; 56; 57; 25" />
+                <Face Color = "Colors[27]" VertexIndexes = " 7; 27; 59; 58; 26" />
+                <Face Color = "Colors[28]" VertexIndexes = " 8; 32; 40; 36; 28" />
+                <Face Color = "Colors[29]" VertexIndexes = " 9; 29; 37; 41; 33" />
+                <Face Color = "Colors[30]" VertexIndexes = "10; 30; 38; 42; 34" />
+                <Face Color = "Colors[31]" VertexIndexes = "11; 35; 43; 39; 31" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

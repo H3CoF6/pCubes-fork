@@ -1,0 +1,189 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher's Golden Cube</Name>
+        <Menu>Other cubes\Skewb variants\Fisher's Golden Cube</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-09-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=763</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'E0C07D';
+
+        W := 0.5;
+        D := W / 3;
+
+        if not VarExists('Rx') then
+          RX :=  -9 * Pi / 180
+        else
+          RX :=  Rx * Pi / 180;
+          RX :=  -90 * Pi / 180;
+
+        if not VarExists('Ry') then
+          RY := -69 * Pi / 180
+        else
+          RY :=  Ry * Pi / 180;
+
+        if not VarExists('Rz') then
+          RZ :=  65 * Pi / 180
+        else
+          RZ :=  Rz * Pi / 180;
+
+        if not VarExists('Ra') then
+          Ra :=  96 * Pi / 180
+        else
+          Ra :=  Ra * Pi / 180;
+
+        DR := 0.1;
+        if not VarExists('NR') then
+          NR := 13;
+//        RequestNumbers('Input order', 'Order:', NR);
+
+        RX := RX + (NR mod 3 - 1) * DR;
+        RY := RY + (NR div 3 mod 3 - 1) * DR;
+        RZ := RZ + (NR div 9 mod 3 - 1) * DR;
+
+RX := -0.27076963267949; RY := -1.045167183876087; RZ := 1.348554013796314;
+DR := 0.03;
+
+    A1 := 30 * Pi / 180;
+        A2 := 30 * Pi / 180;
+
+
+
+
+        <!-- Rotate -->
+        AngleX := RX; //45 * Pi / 180;
+        AngleY := RY; //45 * Pi / 180;
+        AngleZ := RZ; //45 * Pi / 180;
+
+<!-- Rotate axes, RotateAxes() -->
+        procedure Rotate(i);
+        begin
+            temp := ay[i] * cos(AngleX) - az[i] * sin(AngleX);
+            az[i] := ay[i] * sin(AngleX) + az[i] * cos(AngleX);
+            ay[i] := temp;
+
+            temp := az[i] * cos(AngleY) - ax[i] * sin(AngleY);
+            ax[i] := az[i] * sin(AngleY) + ax[i] * cos(AngleY);
+            az[i] := temp;
+
+            temp := ax[i] * cos(AngleZ) - ay[i] * sin(AngleZ);
+            ay[i] := ax[i] * sin(AngleZ) + ay[i] * cos(AngleZ);
+            ax[i] := temp;
+        end;
+
+        // initial axes
+        ax[0] := 1; ay[0] := 1; az[0] := 1;
+        ax[1] :=-1; ay[1] :=-1; az[1] := 1;
+        ax[2] :=-1; ay[2] := 1; az[2] :=-1;
+        ax[3] := 1; ay[3] :=-1; az[3] :=-1;
+
+        for i := 0 to 3 do
+            Rotate(i);
+
+        function Distp(p,px,py,pz);
+        begin
+            Result := Abs(px * ax[p] + py * ay[p] + pz * az[p]);
+        end;
+
+        function Crit();
+        begin
+            Result := 0;
+            Result := Result + Distp(0,     W, W*0.05,  W    );
+            Result := Result + Distp(1,     W, W*0.05,  W    );
+//            Result := Result + Distp(2,    -W,    -W, -W*0.2);
+//            Result := Result + Distp(3,-W*0.8,     W,  W    );
+            Result 	:= Result + Distp(0,     W*0.85, -W,  W    );
+        end;
+//        ShowMessage(Crit);
+
+        MMM := 100;
+        for ix := -1 to 1 do
+          for iy := -1 to 1 do
+            for iz := -1 to 1 do begin
+                AngleX := RX + DR * ix;
+                AngleY := RY + DR * iy;
+                AngleZ := RZ + DR * iz;
+
+                // initial axes
+                ax[0] := 1; ay[0] := 1; az[0] := 1;
+                ax[1] :=-1; ay[1] :=-1; az[1] := 1;
+                ax[2] :=-1; ay[2] := 1; az[2] :=-1;
+                ax[3] := 1; ay[3] :=-1; az[3] :=-1;
+
+                for i := 0 to 3 do
+                    Rotate(i);
+
+                C := Crit;
+                //ShowMessage(RZ);
+                if C &lt; MMM then begin
+                    MMM := C;
+                    mIx := ix;
+                    mIy := iy;
+                    mIz := iz;
+                end;
+            end;
+        ShowMessage(IntToStr(mix) + ' ' + IntToStr(miy) + ' ' + IntToStr(miz) + ' ' + FloatToStr(MMM));
+ShowMessage('RX := ' + FloatToStr(RX + DR * mIx) + '; RY := ' + FloatToStr(RY + DR * mIy) + '; RZ := ' + FloatToStr(RZ + DR * mIz) + ';');
+
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "0" >
+    </Axes>
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "ax[0];ay[0];az[0]" />
+        <Axis NormVector = "ax[1];ay[1];az[1]" />
+        <Axis NormVector = "ax[2];ay[2];az[2]" />
+        <Axis NormVector = "ax[3];ay[3];az[3]" />
+        <Axis1 NormVector = " 1; 1; 1" />
+        <Axis1 NormVector = "-1;-1; 1" />
+        <Axis1 NormVector = "-1; 1;-1" />
+        <Axis1 NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+<!--        <Turn NormVector = " 1; 0; 0" Angle = "RX" />
+        <Turn NormVector = " 0; 1; 0" Angle = "RY" />
+        <Turn NormVector = " 0; 0; 1" Angle = "RZ" />-->
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "MirrorColor" />
+        <SplitByAxes/>
+
+
+        <Macro Name = "Split" >
+            <Script>
+                RRX := RX + (i mod 3 - 1) * DR;
+                RRY := RY + (i div 3 mod 3 - 1) * DR;
+                RRZ := RZ + (i div 9 mod 3 - 1) * DR;
+//ShowMessage('RX := ' + FloatToStr(RRX) + '; RY := ' + FloatToStr(RRY) + '; RZ := ' + FloatToStr(RRZ) + ';');
+                Inc(i);
+            </Script>
+            <Turn NormVector = " 0; 0; 1" Angle = "-RRZ" />
+            <Turn NormVector = " 0; 1; 0" Angle = "-RRY" />
+            <Turn NormVector = " 1; 0; 0" Angle = "-RRX" />
+            <Split> <Plane NormVector = " 1; 1; 1" NormDistance = "0" /> </Split>
+            <Split> <Plane NormVector = "-1;-1; 1" NormDistance = "0" /> </Split>
+            <Split> <Plane NormVector = "-1; 1;-1" NormDistance = "0" /> </Split>
+            <Split> <Plane NormVector = " 1;-1;-1" NormDistance = "0" /> </Split>
+            <Turn NormVector = " 1; 0; 0" Angle = "RRX" />
+            <Turn NormVector = " 0; 1; 0" Angle = "RRY" />
+            <Turn NormVector = " 0; 0; 1" Angle = "RRZ" />
+        </Macro>
+        <ExecMacro1 MacroName = "Split" i = "13" Repeat = "1" DR = "0.055" />
+-->
+
+
+<!--        <Turn Axis = "2" Layer = "1" Angle = "Ra" />
+        <SplitByAxes/>
+        <Undo/>-->
+<Circle1 Radius = "0.1" Center = "x[0];y[0];z[0]" />
+<Circle1 Radius = "0.1" Center = "x[1];y[1];z[1]" />
+<Circle1 Radius = "0.1" Center = "x[2];y[2];z[2]" />
+<Circle1 Radius = "0.1" Center = "x[3];y[3];z[3]" />
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

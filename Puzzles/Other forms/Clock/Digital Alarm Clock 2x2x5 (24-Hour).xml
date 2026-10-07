@@ -1,0 +1,299 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Digital Alarm Clock 2x2x5 (24-Hour)</Name>
+        <Menu>Other forms\Clock\Digital Alarm Clock 2x2x5 (24-Hour)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-05-11</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clBody    := 'AAAAAA';
+        clTone    := '777777';
+        clDisplay := '770000';
+        clLegs    := '444444';
+
+        R := 1;
+
+        // segments
+        CharW := R * 0.1;
+        CharH := R * 0.15;
+        SegW := R * 0.025; // Width 0f single segment
+        SegS := R * 0.007; // Space between segments
+
+        // dots
+        ColonR := R * 0.025;
+
+        // body
+        Border := R * 0.05;
+        Spacing := R * 0.025; // Space between digits
+        CHeight := Border + Spacing + CharH;
+        CLength := Border + CharW * 4 + ColonR + Spacing * 3;
+        DDepth  := Border / 3;
+
+        // Legs
+        LegR := R * 0.025;
+        LegH := R * 0.05;
+
+        // Buttons
+        ButtonH := R * 0.01;
+        ButtonW := R * 0.05;
+
+        D1 := ColonR + Spacing + CharW;
+        D2 := D1 + CharW * 2 + Spacing;
+
+        // digits from time
+        Ht := 0; Mt := 0; St := 0; MSt := 0;
+        DecodeTime(Time, Ht, Mt, St, MSt);
+        N1 := Ht div 10;
+        N2 := Ht mod 10;
+        N3 := Mt div 10;
+        N4 := Mt mod 10;
+
+        if N1 = 0 then // remove leading zero
+          N1 := -1;
+
+        // visible segments
+        Dig[-1] := 0000000;
+        Dig[ 0] := 1111101;
+        Dig[ 1] := 0110000;
+        Dig[ 2] := 1010111;
+        Dig[ 3] := 0110111;
+        Dig[ 4] := 0111010;
+        Dig[ 5] := 0101111;
+        Dig[ 6] := 1101111;
+        Dig[ 7] := 0110001;
+        Dig[ 8] := 1111111;
+        Dig[ 9] := 0111111;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2;-D1; D1; D2" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Cuboid">
+            <Part>
+                <Vertices>
+                    <Add Vector = "X1; Y1; Z1" />
+                    <Add Vector = "X1; Y1; Z2" />
+                    <Add Vector = "X1; Y2; Z1" />
+                    <Add Vector = "X1; Y2; Z2" />
+                    <Add Vector = "X2; Y1; Z1" />
+                    <Add Vector = "X2; Y1; Z2" />
+                    <Add Vector = "X2; Y2; Z1" />
+                    <Add Vector = "X2; Y2; Z2" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;3;2" InvisibleEdges = "IE2" />
+                    <Face Color = "cl" VertexIndexes = "5;4;6;7" InvisibleEdges = "IE3" />
+                    <Face Color = "cl" VertexIndexes = "1;0;4;5" InvisibleEdges = "IE0" />
+                    <Face Color = "cl" VertexIndexes = "2;3;7;6" InvisibleEdges = "IE1" />
+                    <Face Color = "cl" VertexIndexes = "0;2;6;4" InvisibleEdges = "IE4" />
+                    <Face Color = "cl" VertexIndexes = "3;1;5;7" InvisibleEdges = "IE5" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        // Body
+
+        <Script>
+            cl := clBody;
+
+            CX1 := CLength - Border;
+            CX2 := CLength;
+            CY1 := CHeight - 2 * Border; // may be varied
+            CY2 := CHeight;
+            CY3 := CHeight - DDepth;
+            CZ1 := CHeight - Border;
+            CZ2 := CHeight;
+        </Script>
+
+        <ExecMacro MacroName = "Cuboid" X1 = "-CX2" X2 = " CX2" Y1 = "-CY1" Y2 = " CY2" Z1 = "-CZ2" Z2 = " CZ2" IE0 = "15" IE1 = " 0" IE2 = " 1" IE3 = " 1" IE4 = " 8" IE5 = " 2" />
+        <ExecMacro MacroName = "Cuboid" X1 = " CX1" X2 = " CX2" Y1 = "-CY2" Y2 = "-CY1" Z1 = "-CZ1" Z2 = " CZ1" IE0 = "10" IE1 = "15" IE2 = " 5" IE3 = "14" IE4 = "15" IE5 = "15" />
+        <ExecMacro MacroName = "Cuboid" X1 = "-CX2" X2 = "-CX1" Y1 = "-CY2" Y2 = "-CY1" Z1 = "-CZ1" Z2 = " CZ1" IE0 = "10" IE1 = "15" IE2 = "14" IE3 = " 5" IE4 = "15" IE5 = "15" />
+        <ExecMacro MacroName = "Cuboid" X1 = "-CX1" X2 = " CX1" Y1 = "-CY2" Y2 = "-CY1" Z1 = "-CZ2" Z2 = "-CZ1" IE0 = " 5" IE1 = "15" IE2 = "15" IE3 = "15" IE4 = " 7" IE5 = " 8" />
+        <ExecMacro MacroName = "Cuboid" X1 = "-CX1" X2 = " CX1" Y1 = "-CY2" Y2 = "-CY1" Z1 = " CZ1" Z2 = " CZ2" IE0 = " 5" IE1 = "15" IE2 = "15" IE3 = "15" IE4 = " 2" IE5 = "13" />
+        <ExecMacro MacroName = "Cuboid" X1 = "-CX2" X2 = "-CX1" Y1 = "-CY2" Y2 = "-CY1" Z1 = " CZ1" Z2 = " CZ2" IE0 = " 6" IE1 = "15" IE2 = "12" IE3 = "15" IE4 = "15" IE5 = "12" />
+        <ExecMacro MacroName = "Cuboid" X1 = "-CX2" X2 = "-CX1" Y1 = "-CY2" Y2 = "-CY1" Z1 = "-CZ2" Z2 = "-CZ1" IE0 = "12" IE1 = "15" IE2 = " 6" IE3 = "15" IE4 = " 6" IE5 = "15" />
+        <ExecMacro MacroName = "Cuboid" X1 = " CX1" X2 = " CX2" Y1 = "-CY2" Y2 = "-CY1" Z1 = " CZ1" Z2 = " CZ2" IE0 = " 3" IE1 = "15" IE2 = "15" IE3 = " 6" IE4 = "15" IE5 = " 9" />
+        <ExecMacro MacroName = "Cuboid" X1 = " CX1" X2 = " CX2" Y1 = "-CY2" Y2 = "-CY1" Z1 = "-CZ2" Z2 = "-CZ1" IE0 = " 9" IE1 = "15" IE2 = "15" IE3 = "12" IE4 = " 3" IE5 = "15" />
+
+        <ExecMacro MacroName = "Cuboid" X1 = "-CX1" X2 = " CX1" Y1 = "-CY3" Y2 = "-CY1" Z1 = "-CZ1" Z2 = " CZ1" IE0 = " 0" IE1 = "15" IE2 = "14" IE3 = "14" IE4 = " 7" IE5 = "13" cl = "clTone" />
+
+        // Upper buttons
+
+        <Script>
+            IE0 := 0;
+            IE1 := 0;
+            IE2 := 0;
+            IE3 := 0;
+            IE4 := 0;
+            IE5 := 0;
+
+            cl := clTone;
+
+            CX3 := CLength / 2 - Border;
+            CX4 := CLength / 2;
+            Y1 :=-ButtonW;
+            Y2 := ButtonW;
+            Z1 := CHeight;
+            Z2 := CHeight + ButtonH;
+        </Script>
+
+        <ExecMacro MacroName = "Cuboid" X1 = "-CX1" X2 = "-CX4" />
+        <ExecMacro MacroName = "Cuboid" X1 = "-CX3" X2 = " CX3" />
+        <ExecMacro MacroName = "Cuboid" X1 = " CX4" X2 = " CX1" />
+
+        // two dots
+
+        <Script>
+            DZ := CHeight / 2 + ColonR / 2 - Border;
+        </Script>
+
+        <Cylinder Radius = "ColonR" Color = "clDisplay" Base = "0;-CY3; DZ" Top = "0;-CY2; DZ" >
+            <Top  Color = "clDisplay" />
+        </Cylinder>
+        <Cylinder Radius = "ColonR" Color = "clDisplay" Base = "0;-CY3;-DZ" Top = "0;-CY2;-DZ" >
+            <Top  Color = "clDisplay" />
+        </Cylinder>
+
+        // legs
+
+        <Script>
+            LX := CLength - LegR * 2;
+            LY := CHeight - LegR * 2;
+        </Script>
+
+        <Macro Name = "AddLeg">
+            <Cylinder Radius = "LegR" Color = "clLegs" Base = " X; Y;-CHeight" Top = " X; Y;-CHeight - LegH" >
+                <Top Color = "clLegs" />
+            </Cylinder>
+        </Macro>
+        <ExecMacro MacroName = "AddLeg" X = " LX" Y = " LY" />
+        <ExecMacro MacroName = "AddLeg" X = " LX" Y = "-LY" />
+        <ExecMacro MacroName = "AddLeg" X = "-LX" Y = " LY" />
+        <ExecMacro MacroName = "AddLeg" X = "-LX" Y = "-LY" />
+
+        // segments
+
+        <Script> // vertical
+            SZ := (CharH - SegW) / 2;
+            X1 := SegW;
+            Y2 := SZ - SegS;
+            Y1 := Y2 - SegW;
+
+            Vx[0] :=-X1; Vz[0] :=-Y1;
+            Vx[1] :=-X1; Vz[1] := Y1;
+            Vx[2] :=  0; Vz[2] := Y2;
+            Vx[3] := X1; Vz[3] := Y1;
+            Vx[4] := X1; Vz[4] :=-Y1;
+            Vx[5] :=  0; Vz[5] :=-Y2;
+        </Script>
+
+        <Macro Name = "VSeg">
+            <Transfer Vector = "-X; 0;-Z" />
+            <Part>
+                <Vertices Vectors = "Vx; DDepth; Vz" />
+                <Vertices Vectors = "Vx;      0; Vz" />
+
+                <Faces>
+                    <Face                     VertexIndexes = "0;1;2;3;4;5" />
+                    <Face Color = "clDisplay" VertexIndexes = "11;10;9;8;7;6" />
+                    <Face Color = "clDisplay" VertexIndexes = "1;0;6;7" />
+                    <Face Color = "clDisplay" VertexIndexes = "2;1;7;8" />
+                    <Face Color = "clDisplay" VertexIndexes = "3;2;8;9" />
+                    <Face Color = "clDisplay" VertexIndexes = "4;3;9;10" />
+                    <Face Color = "clDisplay" VertexIndexes = "5;4;10;11" />
+                    <Face Color = "clDisplay" VertexIndexes = "0;5;11;6" />
+                </Faces>
+            </Part>
+            <Transfer Vector = " X; 0; Z" />
+        </Macro>
+
+        <Script> // horizontal
+            SX := CharW - SegW;
+            Y1 := SegW;
+            X2 := SX - SegS;
+            X1 := X2 - SegW;
+
+            Hx[0] :=-X1; Hz[0] :=-Y1;
+            Hx[1] :=-X2; Hz[1] :=  0;
+            Hx[2] :=-X1; Hz[2] := Y1;
+            Hx[3] := X1; Hz[3] := Y1;
+            Hx[4] := X2; Hz[4] :=  0;
+            Hx[5] := X1; Hz[5] :=-Y1;
+        </Script>
+
+        <Macro Name = "HSeg">
+            <Transfer Vector = "-X; 0;-Z" />
+            <Part>
+                <Vertices Vectors = "Hx; DDepth; Hz" />
+                <Vertices Vectors = "Hx;      0; Hz" />
+
+                <Faces>
+                    <Face Color = "clDisplay" VertexIndexes = "0;1;2;3;4;5" />
+                    <Face Color = "clDisplay" VertexIndexes = "11;10;9;8;7;6" />
+                    <Face Color = "clDisplay" VertexIndexes = "1;0;6;7" />
+                    <Face Color = "clDisplay" VertexIndexes = "2;1;7;8" />
+                    <Face Color = "clDisplay" VertexIndexes = "3;2;8;9" />
+                    <Face Color = "clDisplay" VertexIndexes = "4;3;9;10" />
+                    <Face Color = "clDisplay" VertexIndexes = "5;4;10;11" />
+                    <Face Color = "clDisplay" VertexIndexes = "0;5;11;6" />
+                </Faces>
+            </Part>
+            <Transfer Vector = " X; 0; Z" />
+        </Macro>
+
+        <Macro Name = "7-Segment">
+            <Script>
+                Digs := Dig[Digit];
+
+                A := Digs div 1000000 mod 10;
+                B := Digs div 100000 mod 10;
+                C := Digs div 10000 mod 10;
+                D := Digs div 1000 mod 10;
+                E := Digs div 100 mod 10;
+                F := Digs div 10 mod 10;
+                G := Digs div 1 mod 10;
+            </Script>
+
+            <Transfer Vector = "-dx1; 0; 0" />
+
+            <ExecMacro MacroName = "VSeg" X = "-SX" Z = "-SZ"   Repeat = "A" />
+            <ExecMacro MacroName = "VSeg" X = " SX" Z = "-SZ"   Repeat = "B" />
+            <ExecMacro MacroName = "VSeg" X = " SX" Z = " SZ"   Repeat = "C" />
+            <ExecMacro MacroName = "VSeg" X = "-SX" Z = " SZ"   Repeat = "D" />
+
+            <ExecMacro MacroName = "HSeg" X = "  0" Z = "-SZ*2" Repeat = "E" />
+            <ExecMacro MacroName = "HSeg" X = "  0" Z = " 0"    Repeat = "F" />
+            <ExecMacro MacroName = "HSeg" X = "  0" Z = " SZ*2" Repeat = "G" />
+
+            <Transfer Vector = " dx1; 0; 0" />
+        </Macro>
+
+        <Transfer Vector = " 0; CHeight; 0" />
+
+        <ExecMacro MacroName = "7-Segment" dx1 = "-D2" Digit = "N1" />
+        <ExecMacro MacroName = "7-Segment" dx1 = "-D1" Digit = "N2" />
+        <ExecMacro MacroName = "7-Segment" dx1 = " D1" Digit = "N3" />
+        <ExecMacro MacroName = "7-Segment" dx1 = " D2" Digit = "N4" />
+
+        <Transfer Vector = " 0;-CHeight; 0" />
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

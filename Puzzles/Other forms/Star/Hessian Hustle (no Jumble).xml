@@ -1,0 +1,162 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hessian Hustle (no Jumble)</Name>
+        <Menu>Other forms\Star\Hessian Hustle (no Jumble)</Menu>
+        <Inventor>not invented, idea of ElephantHistorian</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-04-19</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=428523</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'FFFF00';
+        clBlue   := '0000A0';
+        clRed    := 'FF0000';
+        clGreen  := '00FF00';
+        clOrange := 'EA7800';
+
+        W := 0.5;
+        include 'Figures\Scripts\Dodecahedron_Sq_Coordinates.inc';
+
+        W2 := W * 0.2;
+        W3 := W * 0.3;
+        W5 := W * 0.5;
+        W9 := W * 0.9;
+
+        CVx[0] :=-W; CVy[0] :=-W; CVz[0] :=-W;
+        CVx[1] :=-W; CVy[1] :=-W; CVz[1] := W;
+        CVx[2] :=-W; CVy[2] := W; CVz[2] :=-W;
+        CVx[3] :=-W; CVy[3] := W; CVz[3] := W;
+        CVx[4] := W; CVy[4] :=-W; CVz[4] :=-W;
+        CVx[5] := W; CVy[5] :=-W; CVz[5] := W;
+        CVx[6] := W; CVy[6] := W; CVz[6] :=-W;
+        CVx[7] := W; CVy[7] := W; CVz[7] := W;
+
+        CWx[0] :=-W9; CWy[0] :=-W9; CWz[0] :=-W9;
+        CWx[1] :=-W9; CWy[1] :=-W9; CWz[1] := W9;
+        CWx[2] :=-W9; CWy[2] := W9; CWz[2] :=-W9;
+        CWx[3] :=-W9; CWy[3] := W9; CWz[3] := W9;
+        CWx[4] := W9; CWy[4] :=-W9; CWz[4] :=-W9;
+        CWx[5] := W9; CWy[5] :=-W9; CWz[5] := W9;
+        CWx[6] := W9; CWy[6] := W9; CWz[6] :=-W9;
+        CWx[7] := W9; CWy[7] := W9; CWz[7] := W9;
+
+        CEx[ 0] := 0; CEy[ 0] :=-W; CEz[ 0] := W;
+        CEx[ 1] := 0; CEy[ 1] := W; CEz[ 1] := W;
+        CEx[ 2] :=-W; CEy[ 2] := 0; CEz[ 2] := W;
+        CEx[ 3] := W; CEy[ 3] := 0; CEz[ 3] := W;
+        CEx[ 4] := W; CEy[ 4] :=-W; CEz[ 4] := 0;
+        CEx[ 5] := W; CEy[ 5] := W; CEz[ 5] := 0;
+        CEx[ 6] := 0; CEy[ 6] := W; CEz[ 6] :=-W;
+        CEx[ 7] := 0; CEy[ 7] :=-W; CEz[ 7] :=-W;
+        CEx[ 8] := W; CEy[ 8] := 0; CEz[ 8] :=-W;
+        CEx[ 9] :=-W; CEy[ 9] := 0; CEz[ 9] :=-W;
+        CEx[10] :=-W; CEy[10] := W; CEz[10] := 0;
+        CEx[11] :=-W; CEy[11] :=-W; CEz[11] := 0;
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-W; W" >
+        <Axis NormVector = "Ex[ 0]; Ey[ 0]; Ez[ 0]" />
+        <Axis NormVector = "Ex[ 2]; Ey[ 2]; Ez[ 2]" />
+        <Axis NormVector = "Ex[ 4]; Ey[ 4]; Ez[ 4]" />
+        <Axis NormVector = "Ex[ 6]; Ey[ 6]; Ez[ 6]" />
+        <Axis NormVector = "Ex[ 8]; Ey[ 8]; Ez[ 8]" />
+        <Axis NormVector = "Ex[10]; Ey[10]; Ez[10]" />
+        <Axis NormVector = "Ex[12]; Ey[12]; Ez[12]" />
+        <Axis NormVector = "Ex[14]; Ey[14]; Ez[14]" />
+        <Axis NormVector = "Ex[16]; Ey[16]; Ez[16]" />
+        <Axis NormVector = "Ex[18]; Ey[18]; Ez[18]" />
+        <Axis NormVector = "Ex[20]; Ey[20]; Ez[20]" />
+        <Axis NormVector = "Ex[22]; Ey[22]; Ez[22]" />
+        <Axis NormVector = "Ex[24]; Ey[24]; Ez[24]" />
+        <Axis NormVector = "Ex[26]; Ey[26]; Ez[26]" />
+        <Axis NormVector = "Ex[28]; Ey[28]; Ez[28]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCube" >
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "W" />
+            <SplitByAxes/>
+            <RemoveContaining Vector = "CWx;CWy;CWz" /> <!-- Remove Inner Corners -->
+            <HideContaining   Vector = "CVx;CVy;CVz" /> <!-- Keep Remaining Corners -->
+            <HideContaining   Vector = "CEx;CEy;CEz" /> <!-- Keep Edge Pieces -->
+            <RemoveAllVisible/>
+            <Turn NormVector = "Cx[0];Cy[0];Cz[0]" Angle = "2 * Pi / 5" />
+        </Macro>
+
+        <Macro Name = "AddGray" >
+            <HideAll/>
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+            <SplitByAxes/>
+
+            <!-- Hide Only Half of Inner Corners -->
+            <HideContaining   Vector = "CWx[0];CWy[0];CWz[0]" />
+            <HideContaining   Vector = "CWx[3];CWy[3];CWz[3]" />
+            <HideContaining   Vector = "CWx[5];CWy[5];CWz[5]" />
+            <HideContaining   Vector = "CWx[6];CWy[6];CWz[6]" />
+
+            <!-- Removed Existing Pieces -->
+            <RemoveContaining Vector = "CVx;CVy;CVz" />
+            <RemoveContaining Vector = "CEx;CEy;CEz" />
+
+            <!-- Hide Select Edge Corner Pieces -->
+            <HideContaining   Vector = " W9; W9; W3" />
+            <HideContaining   Vector = " W9; W9;-W3" />
+            <HideContaining   Vector = " W9;-W9; W3" />
+            <HideContaining   Vector = " W9;-W9;-W3" />
+            <HideContaining   Vector = "-W9; W9; W3" />
+            <HideContaining   Vector = "-W9; W9;-W3" />
+            <HideContaining   Vector = "-W9;-W9; W3" />
+            <HideContaining   Vector = "-W9;-W9;-W3" />
+            <HideContaining   Vector = " W9; W3; W9" />
+            <HideContaining   Vector = "-W9; W3;-W9" />
+            <HideContaining   Vector = " W3; W9; W9" />
+            <HideContaining   Vector = "-W3; W9;-W9" />
+
+            <!-- Hide Select Inner Kite Pieces -->
+            <HideContaining   Vector = " 0 ; W5; W " />
+            <HideContaining   Vector = " 0 ;-W5; W " />
+            <HideContaining   Vector = " 0 ; W5;-W " />
+            <HideContaining   Vector = " 0 ;-W5;-W " />
+            <HideContaining   Vector = " W5; W ; 0 " />
+            <HideContaining   Vector = "-W5; W ; 0 " />
+            <HideContaining   Vector = " W5;-W ; 0 " />
+            <HideContaining   Vector = "-W5;-W ; 0 " />
+            <HideContaining   Vector = " W ; 0 ; W5" />
+            <HideContaining   Vector = " W ; 0 ;-W5" />
+            <HideContaining   Vector = "-W ; 0 ; W5" />
+            <HideContaining   Vector = "-W ; 0 ;-W5" />
+
+            <!-- Hide Select Center Pieces -->
+            <HideContaining   Vector = " W2; W5; W " />
+            <HideContaining   Vector = " W2; W5;-W " />
+            <HideContaining   Vector = "-W2; W5; W " />
+            <HideContaining   Vector = "-W2; W5;-W " />
+            <HideContaining   Vector = " W ; W2;-W5" />
+            <HideContaining   Vector = " W ;-W2;-W5" />
+
+            <HideContaining Vector = " 0; 0; 1 - KeepCenter" />
+            <RemoveAllVisible/>
+            <Turn NormVector = "Cx[0];Cy[0];Cz[0]" Angle = "2 * Pi / 5" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCube" Color = "clYellow" />
+        <ExecMacro MacroName = "AddCube" Color = "clGreen " />
+        <ExecMacro MacroName = "AddCube" Color = "clOrange" />
+        <ExecMacro MacroName = "AddCube" Color = "clBlue  " />
+        <ExecMacro MacroName = "AddCube" Color = "clRed   " />
+
+        <ExecMacro MacroName = "AddGray" KeepCenter = "0" />
+        <ExecMacro MacroName = "AddGray" KeepCenter = "0" />
+        <ExecMacro MacroName = "AddGray" KeepCenter = "0" />
+        <ExecMacro MacroName = "AddGray" KeepCenter = "0" />
+        <ExecMacro MacroName = "AddGray" KeepCenter = "1" />
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

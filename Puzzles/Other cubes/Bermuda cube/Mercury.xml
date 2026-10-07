@@ -1,0 +1,148 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bermuda cube - Mercury</Name>
+        <Menu>Other cubes\Bermuda Cubes\Mercury</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Andrea</Programmer>
+        <Added>2014-03-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2408</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * (sqrt(2) - 1);
+        p4 := Pi/4;
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', sSplits);
+          if p = 0 then begin
+            substr := sSplits;
+            sSplits := '';
+          end else begin
+            substr := copy(sSplits, 1, p-1);
+            Delete(sSplits, 1, p);
+          end;
+          Result := StrToInt(Trim(substr));
+        end;
+
+        procedure GetSplits();
+        begin
+          pCount := 0;
+          while Length(sSplits) > 0 do begin
+            Splits[pCount] := GetInt;
+            Inc(pCount);
+          end;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "p4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 1; 0" />
+        <Axis NormVector = "1;-1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "SplitCenter" >
+            <HideContaining Vector   = "Cx[c1]; Cy[c1]; Cz[c1]" />
+            <InvertVisibility/>
+            <Split><Plane NormVector = "Cx[c1]; Cy[c1]; Cz[c1]" NormDistance = "D" /></Split>
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "SplitPart" >
+            <Script>a := Splits[i]; Inc(i);</Script>
+            <HideContaining Vector   = "Cx[c1]; Cy[c1]; Cz[c1]" />
+            <InvertVisibility/>
+            <Turn NormVector         = "Cx[c1]; Cy[c1]; Cz[c1]" Angle = "p4 * a" />
+            <Split><Plane NormVector = "Cx[c2]; Cy[c2]; Cz[c2]" NormDistance = "D" /></Split>
+            <HideContaining Vector   = "Cx[c1]; Cy[c1]; Cz[c1]" />
+            <Turn NormVector         = "Cx[c1]; Cy[c1]; Cz[c1]" Angle = "2*p4" />
+            <Split><Plane NormVector = "Cx[c2]; Cy[c2]; Cz[c2]" NormDistance = "D" /></Split>
+            <Turn NormVector         = "Cx[c1]; Cy[c1]; Cz[c1]" Angle = "-4*p4" />
+            <Split><Plane NormVector = "Cx[c2]; Cy[c2]; Cz[c2]" NormDistance = "D" /></Split>
+            <Turn NormVector         = "Cx[c1]; Cy[c1]; Cz[c1]" Angle = "p4 * (2 - a)" />
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "SplitSide" >
+            <Script>GetSplits;</Script>
+            <ExecMacro MacroName = "SplitCenter" />
+            <ExecMacro MacroName = "SplitPart" Repeat = "pCount" i = "0" />
+        </Macro>
+
+        //  5 - White
+        <Script>sSplits := '1,3,5,7';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "5" c2 = "0" />
+
+        //  4 - Yellow
+        <Script>sSplits := '1,4,6';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "4" c2 = "0" />
+
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/4" />
+
+        //  0 - Red
+        <Script>sSplits := '2,6';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "0" c2 = "5" />
+
+        //  1 - Orange
+        <Script>sSplits := '2,6';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "1" c2 = "5" />
+
+        //  3 - Blue
+        <Script>sSplits := '';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "2" c2 = "5" />
+
+        //  5 - Green
+        <Script>sSplits := '';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "3" c2 = "5" />
+
+        <Turn Axis = "2" Layer = "1" Angle = "-Pi/4" />
+    </Figure>
+</xml>
+
+<!--
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "2" From  = "1" />
+        <Split Axis = "2" From  = "2" />
+
+        <Turn  Axis = "2" Layer = "2" Angle = " Pi / 4" />
+
+        <Split Axis = "0" From  = "2" />
+        <Split Axis = "1" From  = "2" />
+
+        <Hide  Axis = "2" Layer = "0" />
+
+        <Split Axis = "0" From  = "1" />
+        <Split Axis = "1" From  = "1" />
+
+        <ShowAll/>
+
+        <Turn  Axis = "0" Layer = "2" Angle = "-Pi / 2" />
+        <Split Axis = "2" From  = "2" />
+        <Turn  Axis = "0" Layer = "2" Angle = " Pi / 2" />
+
+        <Turn  Axis = "1" Layer = "2" Angle = " Pi / 2" />
+        <Split Axis = "2" From  = "2" />
+        <Turn  Axis = "1" Layer = "2" Angle = "-Pi / 2" />
+
+        <Turn  Axis = "2" Layer = "0" Angle = " Pi / 4" />
+        <Split Axis = "1" From  = "1" />
+        <Turn  Axis = "1" Layer = "0" Angle = " Pi / 2" />
+        <Split Axis = "2" From  = "1" />
+        <Split Axis = "2" From  = "2" />
+        <Turn  Axis = "1" Layer = "0" Angle = "-Pi / 2" />
+        <Turn  Axis = "2" Layer = "0" Angle = "-Pi / 4" />
+
+        <Turn  Axis = "2" Layer = "2" Angle = "-Pi / 4" />
+    </Figure>
+-->

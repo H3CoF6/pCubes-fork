@@ -1,0 +1,220 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Multi Radio 3 Dodecahedron</Name>
+        <Menu>Other forms\Dodecahedron\Vertex Turning\Multi Radio 3 Dodecahedron</Menu>
+        <Menu>Other forms\Multi-puzzles\Multi Radio 3 Dodecahedron</Menu>
+        <Inventor>Justin Costa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-11</Added>
+        <Link>https://www.instagram.com/p/B5itn_1pDFq/</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // clWhite
+        Colors[ 1] := 'FFFF00'; // clYellow
+        Colors[ 2] := '0000CC'; // clBlue
+        Colors[ 3] := 'FF0000'; // clRed
+        Colors[ 4] := '00AA00'; // clGreen
+        Colors[ 5] := '800080'; // clViolett
+        Colors[ 6] := 'FFFFAA'; // clCream
+        Colors[ 7] := '0066CC'; // clLightBlue
+        Colors[ 8] := 'FF6000'; // clOrange
+        Colors[ 9] := '00FF00'; // clLightGreen
+        Colors[10] := 'FF88CC'; // clLightViolett
+        Colors[11] := '666666'; // clGray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := 0.58 * R;
+        jumAngle := Arcsin(1/4) + Pi/6;
+
+        k := 1.20;
+        for i := 0 to 11 do begin
+          Ckx[i] := Cx[i] * k;
+          Cky[i] := Cy[i] * k;
+          Ckz[i] := Cz[i] * k;
+        end;
+        DCut := R * sqrt(5) / 3;
+        DH := DCut * 0.82; // Size of hole
+        DH2 := Rsin * 1.10;
+
+        Thick := 0.96;
+        Thick1 := 1.116;
+        Thick2 := Thick1 + 0.001;
+        Hole1 := 0.375;
+        Hole2 := 0.3;
+
+        // vertex indexes around centers (e.g. there are vertexes # 0 4 3 2 1 around center # 0)
+        vi[ 0, 0] :=  0; vi[ 0, 1] :=  4; vi[ 0, 2] :=  3; vi[ 0, 3] :=  2; vi[ 0, 4] :=  1;
+        vi[ 1, 0] :=  1; vi[ 1, 1] :=  6; vi[ 1, 2] := 10; vi[ 1, 3] :=  5; vi[ 1, 4] :=  0;
+        vi[ 2, 0] :=  2; vi[ 2, 1] :=  7; vi[ 2, 2] := 11; vi[ 2, 3] :=  6; vi[ 2, 4] :=  1;
+        vi[ 3, 0] :=  3; vi[ 3, 1] :=  8; vi[ 3, 2] := 12; vi[ 3, 3] :=  7; vi[ 3, 4] :=  2;
+        vi[ 4, 0] :=  4; vi[ 4, 1] :=  9; vi[ 4, 2] := 13; vi[ 4, 3] :=  8; vi[ 4, 4] :=  3;
+        vi[ 5, 0] :=  0; vi[ 5, 1] :=  5; vi[ 5, 2] := 14; vi[ 5, 3] :=  9; vi[ 5, 4] :=  4;
+        vi[ 6, 0] := 17; vi[ 6, 1] := 12; vi[ 6, 2] :=  8; vi[ 6, 3] := 13; vi[ 6, 4] := 18;
+        vi[ 7, 0] := 18; vi[ 7, 1] := 13; vi[ 7, 2] :=  9; vi[ 7, 3] := 14; vi[ 7, 4] := 19;
+        vi[ 8, 0] := 19; vi[ 8, 1] := 14; vi[ 8, 2] :=  5; vi[ 8, 3] := 10; vi[ 8, 4] := 15;
+        vi[ 9, 0] := 15; vi[ 9, 1] := 10; vi[ 9, 2] :=  6; vi[ 9, 3] := 11; vi[ 9, 4] := 16;
+        vi[10, 0] := 16; vi[10, 1] := 11; vi[10, 2] :=  7; vi[10, 3] := 12; vi[10, 4] := 17;
+        vi[11, 0] := 15; vi[11, 1] := 16; vi[11, 2] := 17; vi[11, 3] := 18; vi[11, 4] := 19;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3"  JumbleAngle = "jumAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+        <Axis NormVector = "Vx[6]; Vy[6]; Vz[6]" />
+        <Axis NormVector = "Vx[7]; Vy[7]; Vz[7]" />
+        <Axis NormVector = "Vx[8]; Vy[8]; Vz[8]" />
+        <Axis NormVector = "Vx[9]; Vy[9]; Vz[9]" />
+    </Axes>
+
+    <Figure>
+
+        <!-- Main figure -->
+        <Macro Name = "Create3Prism" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "Vx[vi1] * Thick; Vy[vi1] * Thick; Vz[vi1] * Thick" />
+                    <Add Vector = "Ckx[ci] * Thick; Cky[ci] * Thick; Ckz[ci] * Thick" />
+                    <Add Vector = "Vx[vi2] * Thick; Vy[vi2] * Thick; Vz[vi2] * Thick" />
+                    <Add Vector = "Vx[vi1]; Vy[vi1]; Vz[vi1]" />
+                    <Add Vector = "Ckx[ci]; Cky[ci]; Ckz[ci]" />
+                    <Add Vector = "Vx[vi2]; Vy[vi2]; Vz[vi2]" />
+                </Vertices>
+
+                <Faces>
+                    <Face VertexIndexes = "0;1;2  " InvisibleEdges = "3 " />
+                    <Face VertexIndexes = "1;0;3;4" InvisibleEdges = "13" />
+                    <Face VertexIndexes = "2;1;4;5" InvisibleEdges = "7 " />
+                    <Face VertexIndexes = "0;2;5;3" InvisibleEdges = "0 " />
+                    <Face Color = "Colors[ci]" VertexIndexes = "5;4;3" InvisibleEdges = "3" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "CreateSide" >
+            <ExecMacro MacroName = "Create3Prism" vi1 = "vi[ci, 0]" vi2 = "vi[ci, 1]" />
+            <ExecMacro MacroName = "Create3Prism" vi1 = "vi[ci, 1]" vi2 = "vi[ci, 2]" />
+            <ExecMacro MacroName = "Create3Prism" vi1 = "vi[ci, 2]" vi2 = "vi[ci, 3]" />
+            <ExecMacro MacroName = "Create3Prism" vi1 = "vi[ci, 3]" vi2 = "vi[ci, 4]" />
+            <ExecMacro MacroName = "Create3Prism" vi1 = "vi[ci, 4]" vi2 = "vi[ci, 0]" />
+            <Script> Inc(ci); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CreateSide" ci = "0" Repeat = "12" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "RemoveC" >
+            <RemoveContaining Vector = "Ckx[ci];Cky[ci];Ckz[ci]" />
+            <Script> Inc(ci); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveC" ci = "0" Repeat = "12" />
+
+        <InvertVisibility/>
+
+        <!-- Centers -->
+        <Macro Name = "Create4Prism" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "(Cx[ci] + (Vx[vi1] - Cx[ci]) * hole1) * Thick1; (Cy[ci] + (Vy[vi1] - Cy[ci]) * hole1) * Thick1; (Cz[ci] + (Vz[vi1] - Cz[ci]) * hole1) * Thick1" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi1] - Cx[ci]) * hole2) * Thick1; (Cy[ci] + (Vy[vi1] - Cy[ci]) * hole2) * Thick1; (Cz[ci] + (Vz[vi1] - Cz[ci]) * hole2) * Thick1" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole2) * Thick1; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole2) * Thick1; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole2) * Thick1" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole1) * Thick1; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole1) * Thick1; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole1) * Thick1" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi1] - Cx[ci]) * hole1) * Thick2; (Cy[ci] + (Vy[vi1] - Cy[ci]) * hole1) * Thick2; (Cz[ci] + (Vz[vi1] - Cz[ci]) * hole1) * Thick2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi1] - Cx[ci]) * hole2) * Thick2; (Cy[ci] + (Vy[vi1] - Cy[ci]) * hole2) * Thick2; (Cz[ci] + (Vz[vi1] - Cz[ci]) * hole2) * Thick2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole2) * Thick2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole2) * Thick2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole2) * Thick2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole1) * Thick2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole1) * Thick2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole1) * Thick2" />
+                </Vertices>
+
+                <Faces>
+                    <Face VertexIndexes = "0;1;2;3" InvisibleEdges = "5" />
+                    <Face VertexIndexes = "1;0;4;5" InvisibleEdges = "13" />
+                    <Face VertexIndexes = "2;1;5;6" InvisibleEdges = "10" />
+                    <Face VertexIndexes = "3;2;6;7" InvisibleEdges = "7" />
+                    <Face VertexIndexes = "0;3;7;4" InvisibleEdges = "0" />
+                    <Face Color = "Colors[ci]" VertexIndexes = "7;6;5;4"   InvisibleEdges = "5" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "CreateDivided4Prism" > // specially for bsp graphics engine
+            <Part>
+                <Vertices>
+                    <Add Vector = "(Cx[ci] + (Vx[vi1] - Cx[ci]) * hole1) * Thick1; (Cy[ci] + (Vy[vi1] - Cy[ci]) * hole1) * Thick1; (Cz[ci] + (Vz[vi1] - Cz[ci]) * hole1) * Thick1" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi1] - Cx[ci]) * hole2) * Thick1; (Cy[ci] + (Vy[vi1] - Cy[ci]) * hole2) * Thick1; (Cz[ci] + (Vz[vi1] - Cz[ci]) * hole2) * Thick1" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole2 + Cx[ci] + (Vx[vi1] - Cx[ci]) * hole2) * Thick1 / 2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole2 + Cy[ci] + (Vy[vi1] - Cy[ci]) * hole2) * Thick1 / 2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole2 + Cz[ci] + (Vz[vi1] - Cz[ci]) * hole2) * Thick1 / 2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole1 + Cx[ci] + (Vx[vi1] - Cx[ci]) * hole1) * Thick1 / 2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole1 + Cy[ci] + (Vy[vi1] - Cy[ci]) * hole1) * Thick1 / 2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole1 + Cz[ci] + (Vz[vi1] - Cz[ci]) * hole1) * Thick1 / 2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi1] - Cx[ci]) * hole1) * Thick2; (Cy[ci] + (Vy[vi1] - Cy[ci]) * hole1) * Thick2; (Cz[ci] + (Vz[vi1] - Cz[ci]) * hole1) * Thick2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi1] - Cx[ci]) * hole2) * Thick2; (Cy[ci] + (Vy[vi1] - Cy[ci]) * hole2) * Thick2; (Cz[ci] + (Vz[vi1] - Cz[ci]) * hole2) * Thick2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole2 + Cx[ci] + (Vx[vi1] - Cx[ci]) * hole2) * Thick2 / 2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole2 + Cy[ci] + (Vy[vi1] - Cy[ci]) * hole2) * Thick2 / 2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole2 + Cz[ci] + (Vz[vi1] - Cz[ci]) * hole2) * Thick2 / 2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole1 + Cx[ci] + (Vx[vi1] - Cx[ci]) * hole1) * Thick2 / 2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole1 + Cy[ci] + (Vy[vi1] - Cy[ci]) * hole1) * Thick2 / 2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole1 + Cz[ci] + (Vz[vi1] - Cz[ci]) * hole1) * Thick2 / 2" />
+                </Vertices>
+
+                <Faces>
+                    <Face VertexIndexes = "0;1;2;3" InvisibleEdges = "5" />
+                    <Face VertexIndexes = "1;0;4;5" InvisibleEdges = "13" />
+                    <Face VertexIndexes = "2;1;5;6" InvisibleEdges = "10" />
+                    <Face VertexIndexes = "3;2;6;7" InvisibleEdges = "7" />
+                    <Face VertexIndexes = "0;3;7;4" InvisibleEdges = "0" />
+                    <Face Color = "Colors[ci]" VertexIndexes = "7;6;5;4"   InvisibleEdges = "5" />
+                </Faces>
+            </Part>
+            <Part>
+                <Vertices>
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole1 + Cx[ci] + (Vx[vi1] - Cx[ci]) * hole1) * Thick1 / 2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole1 + Cy[ci] + (Vy[vi1] - Cy[ci]) * hole1) * Thick1 / 2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole1 + Cz[ci] + (Vz[vi1] - Cz[ci]) * hole1) * Thick1 / 2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole2 + Cx[ci] + (Vx[vi1] - Cx[ci]) * hole2) * Thick1 / 2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole2 + Cy[ci] + (Vy[vi1] - Cy[ci]) * hole2) * Thick1 / 2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole2 + Cz[ci] + (Vz[vi1] - Cz[ci]) * hole2) * Thick1 / 2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole2) * Thick1; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole2) * Thick1; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole2) * Thick1" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole1) * Thick1; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole1) * Thick1; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole1) * Thick1" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole1 + Cx[ci] + (Vx[vi1] - Cx[ci]) * hole1) * Thick2 / 2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole1 + Cy[ci] + (Vy[vi1] - Cy[ci]) * hole1) * Thick2 / 2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole1 + Cz[ci] + (Vz[vi1] - Cz[ci]) * hole1) * Thick2 / 2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole2 + Cx[ci] + (Vx[vi1] - Cx[ci]) * hole2) * Thick2 / 2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole2 + Cy[ci] + (Vy[vi1] - Cy[ci]) * hole2) * Thick2 / 2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole2 + Cz[ci] + (Vz[vi1] - Cz[ci]) * hole2) * Thick2 / 2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole2) * Thick2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole2) * Thick2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole2) * Thick2" />
+                    <Add Vector = "(Cx[ci] + (Vx[vi2] - Cx[ci]) * hole1) * Thick2; (Cy[ci] + (Vy[vi2] - Cy[ci]) * hole1) * Thick2; (Cz[ci] + (Vz[vi2] - Cz[ci]) * hole1) * Thick2" />
+                </Vertices>
+
+                <Faces>
+                    <Face VertexIndexes = "0;1;2;3" InvisibleEdges = "5" />
+                    <Face VertexIndexes = "1;0;4;5" InvisibleEdges = "13" />
+                    <Face VertexIndexes = "2;1;5;6" InvisibleEdges = "10" />
+                    <Face VertexIndexes = "3;2;6;7" InvisibleEdges = "7" />
+                    <Face VertexIndexes = "0;3;7;4" InvisibleEdges = "0" />
+                    <Face Color = "Colors[ci]" VertexIndexes = "7;6;5;4"   InvisibleEdges = "5" />
+                </Faces>
+            </Part>
+        </Macro>
+
+
+        <Macro Name = "Create4Side" >
+            <ExecMacro MacroName = "CreateDivided4Prism" vi1 = "vi[ci, 0]" vi2 = "vi[ci, 1]" />
+            <ExecMacro MacroName = "Create4Prism" vi1 = "vi[ci, 1]" vi2 = "vi[ci, 2]" />
+            <ExecMacro MacroName = "Create4Prism" vi1 = "vi[ci, 2]" vi2 = "vi[ci, 3]" />
+            <ExecMacro MacroName = "Create4Prism" vi1 = "vi[ci, 3]" vi2 = "vi[ci, 4]" />
+            <ExecMacro MacroName = "Create4Prism" vi1 = "vi[ci, 4]" vi2 = "vi[ci, 0]" />
+            <Script> Inc(ci); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Create4Side" ci = "0" Repeat = "12" />
+
+        <SplitByAxes/>
+
+        <ShowAll/>
+
+        <!-- small figure -->
+        <Script>
+            R := D * 3 / Sqrt(5);
+            include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        </Script>
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

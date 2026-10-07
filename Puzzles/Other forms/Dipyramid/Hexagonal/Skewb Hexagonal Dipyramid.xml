@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dipyramid Hexagonal Skewb</Name>
+        <Menu>Other forms\Dipyramid\Hexagonal\Skewb</Menu>
+        <Menu>Other forms\Skewb variants\Dipyramid\Dipyramid Hexagonal Skewb</Menu>
+        <Inventor>José Manuel Garcéa Mouzo</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2017-12-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2462</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-W;-W;-W" />
+                <Add Vector = "-W;-W; W" />
+                <Add Vector = "-W; W;-W" />
+                <Add Vector = "-W; W; W" />
+                <Add Vector = " W;-W;-W" />
+                <Add Vector = " W;-W; W" />
+                <Add Vector = " W; W;-W" />
+                <Add Vector = " W; W; W" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue " VertexIndexes = "1;0;4;5" />
+                <Face Color = "clBlue " VertexIndexes = "2;3;7;6" />
+                <Face Color = "clRed  " VertexIndexes = "0;1;3;2" />
+                <Face Color = "clRed  " VertexIndexes = "5;4;6;7" />
+                <Face Color = "clWhite" VertexIndexes = "0;2;6;4" />
+                <Face Color = "clWhite" VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <Cut Color = "clOrange" > <Plane NormVector = " 2; 2;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clOrange" > <Plane NormVector = "-2;-2; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = " 2;-1; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = "-2; 1;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = "-1; 2; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 1;-2;-2" NormDistance = "-W" /> </Cut>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = "0;1;0" Angle = "-ArcTan(sqrt(2))" />
+    </Figure>
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

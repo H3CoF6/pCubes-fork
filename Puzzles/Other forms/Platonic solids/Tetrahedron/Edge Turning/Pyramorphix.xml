@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyramorphix</Name>
+        <Menu>Other forms\Tetrahedron\Edge Turning\Pyramorphix</Menu>
+        <Inventor>Manfred Fritsche</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-06-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=542</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+        DCut := W * 0.97;
+        DCut3 := (DCut * 2 - W) * sqrt(3); 
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <SplitByAxes/>
+
+        <!-- cut edges for better control -->
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-DCut" /> </Cut>
+
+        <Cut> <Plane NormVector = " 1;-1;-1" NormDistance = "-DCut3" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 1; 1" NormDistance = "-DCut3" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1; 1" NormDistance = "-DCut3" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1;-1" NormDistance = "-DCut3" /> </Cut>
+    </Figure>
+</xml>

@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>UltraMorph Egg</Name>
+        <Menu>Other forms\Egg\UltraMorph Egg</Menu>
+        <Inventor>Hugo Hiarmes</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6257</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        K := 0.7;
+        D := K * 0.12;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D*3;-D; D; D*3" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <Turn NormVector = " 0; 1; 0" Angle = "-Pi / 4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Arcsin(1/sqrt(3))" />
+
+        <Macro Name = "AddSector" >
+            <LoadFrom File = "Puzzles\Other forms\Egg\_Macro_For_Egg.xml" Nx = "24" />
+            <Cut Color = "-1" InvisibleEdges = "-1" > <Plane NormVector = " 1; 0; 0" /> </Cut>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi / 3" />
+            <Cut Color = "-1" InvisibleEdges = "-1" > <Plane NormVector = "-1; 0; 0" /> </Cut>
+            <HideAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" Color = "clYellow" />
+        <ExecMacro MacroName = "AddSector" Color = "clOrange" />
+        <ExecMacro MacroName = "AddSector" Color = "clGreen" />
+        <ExecMacro MacroName = "AddSector" Color = "clWhite" />
+        <ExecMacro MacroName = "AddSector" Color = "clRed" />
+        <ExecMacro MacroName = "AddSector" Color = "clBlue" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

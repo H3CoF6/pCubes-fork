@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bump Cheese</Name>
+        <Menu>Other forms\Cylinder\Bump Cheese</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-04</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?t=35283</Link>
+    </Interface>
+
+    <Script>
+        Color1 := '99AACC';
+        Color2 := '99AACB';
+
+        R := 0.6;
+        H := R / 4;
+
+        for i := 0 to 2 do begin
+            Ax[i] := cos(Pi / 3 * i);
+            Ay[i] := sin(Pi / 3 * i);
+        end;
+
+        DX := -0.1;
+        DY := 0.3;
+
+        DAX := 0.001;
+        ND := (-DAX + H) / sqrt(1 + DAX^2);
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "Ax[0]; Ay[0]; 0" />
+        <Axis NormVector = "Ax[1]; Ay[1]; 0" />
+        <Axis NormVector = "Ax[2]; Ay[2]; 0" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Radius = "R" Color = "Color1" >
+            <Base X = "DX" Y = "DY" Z = "-H" Color = "Color2" />
+            <Top  X = "DX" Y = "DY" Z = " H" Color = "Color1" />
+        </Cylinder>
+
+        <Cut Color = "Color1" ><Plane NormVector = "-DAX; 0; -1" NormDistance = "-ND" /></Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

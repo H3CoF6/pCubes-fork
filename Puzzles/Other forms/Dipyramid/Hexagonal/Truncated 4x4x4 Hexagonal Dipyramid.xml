@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Truncated 4x4x4 Hexagonal Dipyramid</Name>
+        <Menu>Other forms\Dipyramid\Hexagonal\Truncated 4x4x4 Hexagonal Dipyramid</Menu>
+        <Inventor>David Calzone</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1973</Link>
+    </Interface>
+
+    <Script>
+        Color := '8888AA';
+        for i := 0 to 5 do
+            Colors[i] := Color;
+
+        W := 0.5;
+        D := W / 2;
+        DCut := W;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut Color = "Color" > <Plane NormVector = " 2; 2;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = "-2;-2; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = " 2;-1; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = "-2; 1;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = "-1; 2; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = " 1;-2;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = " 1; 1; 1" NormDistance = "-DCut" /></Cut>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = "0;1;0" Angle = "-ArcTan(sqrt(2))" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>National Cube (Ukraine)</Name>
+        <Menu>Other cubes\3x3x3 variants\National Cube (Ukraine)</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-16</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=26532</Link>
+    </Interface>
+
+    <Script>
+        Color1 := '0057B8'; // LightBlue
+        Color2 := 'FFD700'; // Yellow
+
+        W := 0.5;
+        D := W / 3;
+
+        RotateAngle := 0.4;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 1; 1; 1" Angle = "-RotateAngle" />
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "Color1" />
+        <Turn NormVector = " 1; 1; 1" Angle = "RotateAngle" />
+        <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+        <Turn NormVector = " 1; 1; 1" Angle = "-RotateAngle" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "Color2" />
+        <Turn NormVector = " 1; 1; 1" Angle = "RotateAngle" />
+        <Cut> <Plane NormVector = " 0; 0;-1" /> </Cut>
+        <Turn NormVector = " 1; 1; 1" Angle = "-RotateAngle" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

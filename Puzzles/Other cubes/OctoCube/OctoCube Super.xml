@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>OctoCube Super</Name>
+        <Menu>Other cubes\OctoCube\OctoCube Super</Menu>
+        <Inventor>Jake Gaudet</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-05-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4531</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / (1 + sqrt(2));
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "HideCorners" >
+            <HideContaining Vector = "Vx[Id]; Vy[Id]; Vz[Id]" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCorners" Id = "0" Repeat = "8" />
+
+        <Macro Name = "Split" >
+            <Turn Axis = "Ax" Angle =  "Pi / 4" Layer = "0" />
+            <Turn Axis = "Ax" Angle =  "Pi / 4" Layer = "2" />
+            <SplitByAxes/>
+            <Undo/>
+            <Undo/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax = "0" />
+        <ExecMacro MacroName = "Split" Ax = "1" />
+        <ExecMacro MacroName = "Split" Ax = "2" />
+
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split2" >
+            <Turn Axis = "Ax1" Angle =  "Pi / 4" Layer = "1" />
+
+            <Turn Axis = "Ax2" Angle =  "Pi / 4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+
+            <Turn Axis = "Ax3" Angle =  "Pi / 4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Undo/>
+
+        </Macro>
+        <ExecMacro MacroName = "Split2" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "Split2" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "Split2" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

@@ -1,0 +1,121 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-1 Super Column (1 layer)</Name>
+        <Menu>Other forms\Square-1\Column (1 layer)</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-05-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2650</Link>
+    </Interface>
+
+    <Script>
+        clWhite      := 'FFFFFF';
+        clYellow     := 'FFFF00';
+        clRed        := 'C80000';
+        clOrange     := 'FF800A';
+        clDarkGreen  := '00BE00';
+        clLightBlue  := '2464FF';
+        clBlue       := '2424FF';
+        clViolett    := '6500CD';
+
+        Colors[ 0] := clRed;
+        Colors[ 1] := clOrange;
+        Colors[ 2] := clDarkGreen;
+        Colors[ 3] := clLightBlue;
+        Colors[ 4] := clBlue;
+        Colors[ 5] := clViolett;
+        Colors[ 6] := clRed;
+        Colors[ 7] := clOrange;
+        Colors[ 8] := clDarkGreen;
+        Colors[ 9] := clLightBlue;
+        Colors[10] := clBlue;
+        Colors[11] := clViolett;
+
+        ColorBottom := clYellow;
+        ColorUp     := clWhite;
+
+        W := 0.5;
+        R := W;
+        for i := 0 to 11 do begin
+          x[i] := R * sin(i * Pi / 6);
+          y[i] := R * cos(i * Pi / 6);
+        end;
+        RC := W / 2;
+        H := W / 4;
+        Delta := 0.002;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/6; 0" PlaneDistances = "-H; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[ 0]; y[ 0]; -H" />
+                <Add Vector = "x[ 1]; y[ 1]; -H" />
+                <Add Vector = "x[ 2]; y[ 2]; -H" />
+                <Add Vector = "x[ 3]; y[ 3]; -H" />
+                <Add Vector = "x[ 4]; y[ 4]; -H" />
+                <Add Vector = "x[ 5]; y[ 5]; -H" />
+                <Add Vector = "x[ 6]; y[ 6]; -H" />
+                <Add Vector = "x[ 7]; y[ 7]; -H" />
+                <Add Vector = "x[ 8]; y[ 8]; -H" />
+                <Add Vector = "x[ 9]; y[ 9]; -H" />
+                <Add Vector = "x[10]; y[10]; -H" />
+                <Add Vector = "x[11]; y[11]; -H" />
+                <Add Vector = "x[ 0]; y[ 0];  H" />
+                <Add Vector = "x[ 1]; y[ 1];  H" />
+                <Add Vector = "x[ 2]; y[ 2];  H" />
+                <Add Vector = "x[ 3]; y[ 3];  H" />
+                <Add Vector = "x[ 4]; y[ 4];  H" />
+                <Add Vector = "x[ 5]; y[ 5];  H" />
+                <Add Vector = "x[ 6]; y[ 6];  H" />
+                <Add Vector = "x[ 7]; y[ 7];  H" />
+                <Add Vector = "x[ 8]; y[ 8];  H" />
+                <Add Vector = "x[ 9]; y[ 9];  H" />
+                <Add Vector = "x[10]; y[10];  H" />
+                <Add Vector = "x[11]; y[11];  H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "ColorBottom" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11" />
+                <Face Color = "ColorUp    " VertexIndexes = "23;22;21;20;19;18;17;16;15;14;13;12" />
+                <Face Color = "clRed      " VertexIndexes = " 1; 0;12;13" />
+                <Face Color = "clOrange   " VertexIndexes = " 2; 1;13;14" />
+                <Face Color = "clDarkGreen" VertexIndexes = " 3; 2;14;15" />
+                <Face Color = "clLightBlue" VertexIndexes = " 4; 3;15;16" />
+                <Face Color = "clBlue     " VertexIndexes = " 5; 4;16;17" />
+                <Face Color = "clViolett  " VertexIndexes = " 6; 5;17;18" />
+                <Face Color = "clRed      " VertexIndexes = " 7; 6;18;19" />
+                <Face Color = "clOrange   " VertexIndexes = " 8; 7;19;20" />
+                <Face Color = "clDarkGreen" VertexIndexes = " 9; 8;20;21" />
+                <Face Color = "clLightBlue" VertexIndexes = "10; 9;21;22" />
+                <Face Color = "clBlue     " VertexIndexes = "11;10;22;23" />
+                <Face Color = "clViolett  " VertexIndexes = " 0;11;23;12" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Split><Plane NormVector = "x[0]; y[0]; 0"/></Split>
+        <Split><Plane NormVector = "x[1]; y[1]; 0"/></Split>
+        <Split><Plane NormVector = "x[2]; y[2]; 0"/></Split>
+        <Split><Plane NormVector = "x[4]; y[4]; 0"/></Split>
+        <Split><Plane NormVector = "x[5]; y[5]; 0"/></Split>
+
+        <Circle Color = "ColorUp    " Radius = "RC" Center = "0; 0;  H + Delta" />
+        <Circle Color = "ColorBottom" Radius = "RC" Center = "0; 0; -H - Delta" />
+        <Split Axis = "1" From = "1" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

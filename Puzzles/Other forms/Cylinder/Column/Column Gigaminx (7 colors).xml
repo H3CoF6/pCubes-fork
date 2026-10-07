@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Column Gigaminx (7 colors)</Name>
+        <Aliases>Gigaminx Barrel</Aliases>
+        <Menu>Other forms\Cylinder\Column\Column Gigaminx (7 colors)</Menu>
+        <Inventor>Justin Costa</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-07-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9755</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'EE0000'; // Red
+        Colors[ 1] := 'FF800A'; // Orange
+        Colors[ 2] := 'FFFF00'; // Yellow
+        Colors[ 3] := '00AA00'; // Green
+        Colors[ 4] := '0033EE'; // Blue
+        clWhite := 'FFFFFF';
+        clCream := 'FFFFAA';
+
+        R := 0.5;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        H := R * 0.915;
+
+        D := R * sqrt((5 + 2 * sqrt(5)) / 20);
+        D2 := D * 1.125;
+
+        N := 40;
+        NAngle := 2 * Pi / N;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(NAngle * (i + 6));
+            y[i] := R * sin(NAngle * (i + 6));
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = " 0; sAngle; sAngle" PlaneDistances = " D; D2" NormVectors = " Cx; Cy; Cz" />
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "clWhite" VertexIndexes = "FromTo( 0, N - 1)" />
+
+                <ExecMacro MacroName = "AddFace" i = "0" Color = "Colors[0]" Repeat = "N div 5" />
+                <ExecMacro MacroName = "AddFace"         Color = "Colors[1]" Repeat = "N div 5" />
+                <ExecMacro MacroName = "AddFace"         Color = "Colors[2]" Repeat = "N div 5" />
+                <ExecMacro MacroName = "AddFace"         Color = "Colors[3]" Repeat = "N div 5" />
+                <ExecMacro MacroName = "AddFace"         Color = "Colors[4]" Repeat = "N div 5" />
+
+                <Face Color = "clCream" VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

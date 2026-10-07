@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mayan Cube v2</Name>
+        <Menu>Cubic\Constrained\Corner Confusion\Mayan Cube v2</Menu>
+        <Class>TTenon</Class>
+        <Inventor>Adam Ford</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2026-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3507</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        D := W * 0.31;
+        D2 := W - 2 * D;
+        WD := W - D; // center of cubies
+        RC := W * 1.15;
+        DE := (D - WD + sqrt(RC^2 - W^2)) / sqrt(2)*0.9;
+    </Script>
+
+<!--
+    <Script> ShowTextures := True; </Script>
+    <Textures>
+        <Texture Name = "Tenon" File = "Textures\Tenon.vec" />
+        <Texture Name = "Groove" File = "Textures\Groove.vec" />
+    </Textures>-->
+
+    <Axes TurningAngles = " Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "_Macro_For_Mayan.xml" />
+
+        // Make Colored cube with gaps and with some big parts (Side^Place, ...)
+        <ExecMacro MacroName = "MakeCube" Places = "'00,02,08,12,16,18'" />
+
+        <ExecMacro MacroName = "CutVs" Places = "'08,16,20,32,48,52'" />
+        <ExecMacro MacroName = "CutEs" Places = "'01,05,15,17,27,31'" />
+        <ExecMacro MacroName = "CutHs" Places = "'03,11,25,37,43,57'" />
+        <ExecMacro MacroName = "CutWs" Places = "'00,02,12,18,26,28,30,36,40,42,50,56'" />
+
+        <Script>
+            AddTenon(-D,-W, W,  1, 0, 0);
+            AddTenon( D, W,-W, -1, 0, 0);
+            AddTenon(-W,-D,-W,  0, 1, 0);
+            AddTenon( W, D, W,  0,-1, 0);
+            AddTenon( W,-W,-D,  0, 0, 1);
+            AddTenon(-W, W, D,  0, 0,-1);
+        </Script>
+    </Figure>
+</xml>

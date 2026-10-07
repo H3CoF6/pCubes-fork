@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx Crazy Advance</Name>
+        <Aliases>Megaminx Crazy Dodecaheds</Aliases>
+        <Menu>Other forms\Dodecahedron\Face Turning\Crazy\Megaminx Advance\Megaminx</Menu>
+        <Inventor>Calvin's Puzzle</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9293</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10357</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := Rsin * 0.757;
+        RC := R * 0.34;
+
+        D1 := RSin;
+        L := 1.004;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; 0; sAngle; 0" PlaneDistances = "-D1; -D; D; D1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = "Cx[i] * L; Cy[i] * L; Cz[i] * L" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "12" i = "0" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "RemoveArtefact1" >
+            <Hide><Plane NormVector = " Cx[0]; Cy[0]; Cz[0]" NormDistance = "D" /></Hide>
+            <Hide><Plane NormVector = " Cx[1]; Cy[1]; Cz[1]" NormDistance = "D" /></Hide>
+            <Hide><Plane NormVector = " Cx[2]; Cy[2]; Cz[2]" NormDistance = "RSin" /></Hide>
+            <RemoveAllVisible/>
+            <ShowAll/>
+            <Turn NormVector = " Cx[2]; Cy[2]; Cz[2]" Angle = "sAngle" />
+        </Macro>
+        <Macro Name = "RemoveArtefact10" >
+            <ExecMacro MacroName = "RemoveArtefact1" Repeat = "5" />
+            <Turn NormVector = " Ex[1]; Ey[1]; Ez[1]" Angle = "Pi" />
+            <ExecMacro MacroName = "RemoveArtefact1" Repeat = "5" />
+            <Turn NormVector = " Ex[1]; Ey[1]; Ez[1]" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "RemoveArtefact20" >
+            <ExecMacro MacroName = "RemoveArtefact10" />
+            <Turn NormVector = " Ex[10]; Ey[10]; Ez[10]" Angle = "Pi" />
+            <ExecMacro MacroName = "RemoveArtefact10" />
+            <Turn NormVector = " Ex[10]; Ey[10]; Ez[10]" Angle = "Pi" />
+        </Macro>
+        <ExecMacro MacroName = "RemoveArtefact20" />
+        <Turn NormVector = " Vx[7]; Vy[7]; Vz[7]" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "RemoveArtefact20" />
+        <Turn NormVector = " Vx[7]; Vy[7]; Vz[7]" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "RemoveArtefact20" />
+        <Turn NormVector = " Vx[7]; Vy[7]; Vz[7]" Angle = "2*Pi/3" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Star" File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Crazy\Textures\Star.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Star = 62,0,0, 70,0,0, 76,0,0, 82,0,0, 88,0,0, 94,0,0, 101,0,0, 107,0,0, 113,0,0, 119,0,0, 125,0,0, 133,0,0
+    </SetTextures>
+</xml>

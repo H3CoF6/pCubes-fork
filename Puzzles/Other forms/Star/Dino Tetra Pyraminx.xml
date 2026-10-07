@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Tetra Pyraminx</Name>
+        <Menu>Other forms\Star\Dino Tetra Pyraminx</Menu>
+        <Inventor>Javier Alla La</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-01-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9692</Link>
+    </Interface>
+
+    <Script>
+        clPink        := 'FF69B4';
+        clDeepPink    := '8B0A50';
+        clDeepSky     := '00BFFF';
+        clGreenYellow := 'ADFF2F';
+
+        W := 0.5;
+        D := W / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "MakeCorner" >
+            <LoadFrom File = "Figures\Cube.xml" />
+
+            <Turn NormVector = "0;1;0" Angle = "Pi * Y" />
+            <Turn NormVector = "0;0;1" Angle = "Pi * Z" />
+
+            <Cut><Plane NormVector = " 1; 1; 1" NormDistance = "D" /></Cut>
+
+            <Split Color2 = "Color" ><Plane NormVector = " 1; 1;-1" NormDistance = "D" /></Split>
+            <Split Color2 = "Color" ><Plane NormVector = " 1;-1; 1" NormDistance = "D" /></Split>
+            <Split Color2 = "Color" ><Plane NormVector = "-1; 1; 1" NormDistance = "D" /></Split>
+            <HideContaining Vector = " W/2; W/2; W/2" />
+
+            <Cut Color = "Color" ><Plane NormVector = "-1;-2;-2" NormDistance = "-W" /></Cut>
+            <Cut Color = "Color" ><Plane NormVector = "-2;-1;-2" NormDistance = "-W" /></Cut>
+            <Cut Color = "Color" ><Plane NormVector = "-2;-2;-1" NormDistance = "-W" /></Cut>
+
+            <Turn NormVector = "0;0;1" Angle = "-Pi * Z" />
+            <Turn NormVector = "0;1;0" Angle = "-Pi * Y" />
+            <HideAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "MakeCorner" Y = "0" Z = "0" Color = "clDeepSky    " />
+        <ExecMacro MacroName = "MakeCorner" Y = "1" Z = "0" Color = "clDeepPink   " />
+        <ExecMacro MacroName = "MakeCorner" Y = "1" Z = "1" Color = "clPink       " />
+        <ExecMacro MacroName = "MakeCorner" Y = "0" Z = "1" Color = "clGreenYellow" />
+
+        <ShowAll/>
+
+        <S1plitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

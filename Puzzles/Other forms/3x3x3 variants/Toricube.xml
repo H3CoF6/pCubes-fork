@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Toricube</Name>
+        <Menu>Other forms\3x3x3 variants\Toricube</Menu>
+        <Inventor>Tim Fitzrandolph</Inventor>
+        <Programmer>Skallos, Boris</Programmer>
+        <Added>2024-01-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7309</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        R := W * 0.33;
+
+        N := 16; // must be 4 * k
+        M := 16;
+
+        tn := tan(Pi / N);
+        s2 := sqrt(2);
+        if N mod 8 = 4 then
+          s2 := s2 * cos(Pi / N);
+
+        for i := 0 to M - 1 do begin
+            Vx[i] := W - R - R * cos(2*Pi * i / M);
+            Vz[i] := W - R - R * sin(2*Pi * i / M);
+            Vy[i] := Vx[i] * tn;
+            Vt[i] :=-Vy[i];
+
+            // find exact corner's coordinates, intersection with z - x / s2 = 0
+            if (i &gt; 0) then begin
+                Z1 := Vz[i - 1];
+                F1 := Z1 - Vx[i - 1] / s2;
+                Z2 := Vz[i];
+                F2 := Z2 - Vx[i] / s2;
+
+                if F2 &gt; 0 then
+                    if F1 &lt; 0 then
+                        D := Z1 - F1 * (Z2 - Z1) / (F2 - F1); 
+            end;
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+        idx1 := FromTo( 0, M - 1);
+        idx2 := FromTo( 2 * M - 1, M);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i;
+                i2 := (i + 1) mod M;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + M; i2 + M; i2; i1" InvisibleEdges = "-1" />
+        </Macro>
+
+        <Macro Name = "AddSlice" >
+            <Part>
+                <Vertices Vectors = " Vx; Vt; Vz" />
+                <Vertices Vectors = " Vx; Vy; Vz" />
+                <Faces>
+                    <Face Color = "-2" InvisibleEdges = "-1" VertexIndexes = "idx1" />
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "M" />
+                    <Face Color = "-2" InvisibleEdges = "-1" VertexIndexes = "idx2" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "-2*Pi / N" />
+        </Macro>
+
+        <Macro Name = "MakeTorus" >
+            <ExecMacro MacroName = "AddSlice" Repeat = "N" />
+        </Macro>
+
+        <Macro Name = "MakeSide" >
+            <HideAll/>
+            <ExecMacro MacroName = "MakeTorus" />
+            <Cut Color = "-2" InvisibleEdges = "-1" ><Plane NormVector = " 1; 0; 1" /></Cut>
+            <Cut Color = "-2" InvisibleEdges = "-1" ><Plane NormVector = " 0; 1; 1" /></Cut>
+            <Cut Color = "-2" InvisibleEdges = "-1" ><Plane NormVector = "-1; 0; 1" /></Cut>
+            <Cut Color = "-2" InvisibleEdges = "-1" ><Plane NormVector = " 0;-1; 1" /></Cut>
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" ><Plane NormVector = " 1;-1; 0" /></Split>
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" ><Plane NormVector = " 1; 1; 0" /></Split>
+        </Macro>
+        <ExecMacro MacroName = "MakeSide" Color = "clWhite " /> <Turn NormVector = "0;1;0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "MakeSide" Color = "clRed   " /> <Turn NormVector = "1;0;0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "MakeSide" Color = "clGreen " /> <Turn NormVector = "0;1;0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "MakeSide" Color = "clYellow" /> <Turn NormVector = "1;0;0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "MakeSide" Color = "clOrange" /> <Turn NormVector = "0;1;0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "MakeSide" Color = "clBlue  " /> <Turn NormVector = "1;0;0" Angle = "Pi / 2" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexis Bump</Name>
+        <Menu>Other forms\3x3x3 variants\Dipyramid\Hexis Bump</Menu>
+        <Menu>Other forms\Dipyramid\Hexagonal\Hexis Bump</Menu>
+        <Inventor>David Calzone</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1953</Link>
+    </Interface>
+
+    <Script>
+        Color := 'E0C07D';
+
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "-2;-1; 2" />
+        <Axis NormVector = " 1; 2; 2" />
+        <Axis NormVector = "-2; 2;-1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-W;-W;-W" />
+                <Add Vector = "-W;-W; W" />
+                <Add Vector = "-W; W;-W" />
+                <Add Vector = "-W; W; W" />
+                <Add Vector = " W;-W;-W" />
+                <Add Vector = " W;-W; W" />
+                <Add Vector = " W; W;-W" />
+                <Add Vector = " W; W; W" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Color" VertexIndexes = "1;0;4;5" />
+                <Face Color = "Color" VertexIndexes = "2;3;7;6" />
+                <Face Color = "Color" VertexIndexes = "0;1;3;2" />
+                <Face Color = "Color" VertexIndexes = "5;4;6;7" />
+                <Face Color = "Color" VertexIndexes = "0;2;6;4" />
+                <Face Color = "Color" VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <Cut Color = "Color" > <Plane NormVector = " 2; 2;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = "-2;-2; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = " 2;-1; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = "-2; 1;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = "-1; 2; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = " 1;-2;-2" NormDistance = "-W" /> </Cut>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = "0;1;0" Angle = "-ArcTan(sqrt(2))" />
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 12" />
+</xml>

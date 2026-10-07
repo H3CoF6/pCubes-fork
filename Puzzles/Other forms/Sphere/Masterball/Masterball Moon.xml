@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Masterball Moon</Name>
+        <Menu>Other forms\Sphere\Masterball\Masterball Moon</Menu>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-02-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7911</Link>
+    </Interface>
+
+    <Script>
+        clWhite := 'F5F3CE';
+        clBlack := '333323';
+        Colors[0] := clWhite;
+        Colors[1] := clWhite;
+        Colors[2] := clWhite;
+        Colors[3] := clWhite;
+        Colors[4] := clBlack;
+        Colors[5] := clBlack;
+        Colors[6] := clBlack;
+        Colors[7] := clBlack;
+
+        K := 0.6;
+        D := K * 0.55;
+    </Script>
+
+    <Axes TurningAngles = "Pi/4" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = "-1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "Pi/8" />
+        <Macro Name = "AddSector" >
+            <Script>Color := Colors[i];</Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = "-cos(Pi/8); -sin(Pi/8); 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " cos(Pi/8); -sin(Pi/8); 0" NormDistance = "0" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = "Pi/4" />
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "8" />
+        <Turn NormVector = "0;0;1" Angle = "-Pi/8" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+        <Turn Axis = "0" From = "0" To = "3" Angle = "Pi / 4" />
+        <SaveSolvedState/>
+        <Turn Axis = "0" From = "0" To = "3" Angle = "Pi / 4" />
+        <SaveSolvedState/>
+        <Turn Axis = "0" From = "0" To = "3" Angle = "Pi / 4" />
+        <SaveSolvedState/>
+        <Undo Repeat = "3" />
+
+        // Pattern 1
+        <Turn Axis = "4" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "4" Layer = "0" Angle = "Pi" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <SaveSolvedState/>
+        // Pattern 2
+        <Turn Axis = "0" Layer = "2" Angle = "Pi / 4" />
+        <Turn Axis = "0" Layer = "0" Angle = "Pi / 4" />
+        <SaveSolvedState/>
+        <Undo Repeat = "6" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Wacky Diamond</Name>
+        <Menu>Other forms\Octahedron\Face Turning\Crazy\Wacky Diamond</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-06-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11243</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Octahedron_Standard_Colors.inc';
+
+        W := 0.75;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+
+        D1 := W * 0.15;
+        D2 := W / sqrt(3);
+        RC := W * 0.31;
+        DC := 1.001;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "-D2;-D1; D1; D2" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = "Cx[i] * DC; Cy[i] * DC; Cz[i] * DC" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "8" i = "0" />
+
+        <SplitByAxes/>
+
+        <RemoveGrayParts/>
+        <RemoveContaining Vector = " Cx; Cy; Cz" />
+
+        <Connect Axis = "0" Layers = "0;2;4" />
+        <Connect Axis = "1" Layers = "0;2;4" />
+        <Connect Axis = "2" Layers = "0;2;4" />
+        <Connect Axis = "3" Layers = "0;2;4" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Triangle" File = "Puzzles\Other forms\Platonic solids\Octahedron\Face Turning\Crazy\Triangle.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Triangle = 45,0,0, 53,0,0, 60,0,0, 68,0,0, 72,0,0, 78,0,0, 87,0,0, 93,0,0
+    </SetTextures>
+</xml>

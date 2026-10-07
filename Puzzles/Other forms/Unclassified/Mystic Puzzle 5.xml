@@ -1,0 +1,100 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mystic Puzzle 5</Name>
+        <Menu>Other forms\Unclassified\Mystic Puzzle 5</Menu>
+        <Inventor>Matt Galla</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-09-24</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=368893#p368893</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clOrange := 'FF6000';
+        clCyan   := '00FFFF';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clTop    := 'FFFFFF'; // clWhite
+        clBottom := '555555'; // clGray
+
+        R := 0.55;
+
+        K := 0.4535; // may be varied
+        H1 := R * K;
+        H2 := R * (6 / (8 * K - 1 / K) + K - 3/2 / K);
+
+        for i := 0 to 5 do begin
+            x[i] := R * sin(Pi / 3 * i);
+            y[i] := R * cos(Pi / 3 * i);
+        end;
+
+        D := R * (1/2 - K^2) / sqrt(1 + K^2);
+        DCut := R * (3/2 / K - 5 * K);
+
+        A1 := ArcCos((-2 * K^2 - 3) / (4 * K^2 + 3));
+        A2 := ArcCos(( 2 * K^2 - 1) / (4 * K^2 + 1));
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1;0;A1;A2" PlaneDistances = "-D;D" FixedLayers = "1" >
+        <Axis NormVector = " x[0]; y[0]; H1" />
+        <Axis NormVector = " x[1]; y[1]; H1" />
+        <Axis NormVector = " x[2]; y[2]; H1" />
+        <Axis NormVector = " x[3]; y[3]; H1" />
+        <Axis NormVector = " x[4]; y[4]; H1" />
+        <Axis NormVector = " x[5]; y[5]; H1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H1" />
+                <Add Vector = "x[1]; y[1]; -H1" />
+                <Add Vector = "x[2]; y[2]; -H1" />
+                <Add Vector = "x[3]; y[3]; -H1" />
+                <Add Vector = "x[4]; y[4]; -H1" />
+                <Add Vector = "x[5]; y[5]; -H1" />
+                <Add Vector = "x[0]; y[0];  H1" />
+                <Add Vector = "x[1]; y[1];  H1" />
+                <Add Vector = "x[2]; y[2];  H1" />
+                <Add Vector = "x[3]; y[3];  H1" />
+                <Add Vector = "x[4]; y[4];  H1" />
+                <Add Vector = "x[5]; y[5];  H1" />
+
+                <Add Vector = " 0; 0;  H2" />
+                <Add Vector = " 0; 0; -H2" />
+            </Vertices>
+            <Faces>
+                <Face Color = "cc0000" VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "ff6000" VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "ffff00" VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "009000" VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "000090" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "900090" VertexIndexes = "11; 6; 0; 5" />
+
+                <Face Color = "e1a95f" VertexIndexes = "13; 0; 1" />
+                <Face Color = "e9d66b" VertexIndexes = "13; 1; 2" />
+                <Face Color = "fdfd96" VertexIndexes = "13; 2; 3" />
+                <Face Color = "fdcf3f" VertexIndexes = "13; 3; 4" />
+                <Face Color = "af940c" VertexIndexes = "13; 4; 5" />
+                <Face Color = "e9d6ac" VertexIndexes = "13; 5; 0" />
+
+                <Face Color = "5d8aa8" VertexIndexes = "12; 7; 6" />
+                <Face Color = "0f4d92" VertexIndexes = "12; 8; 7" />
+                <Face Color = "89cfd0" VertexIndexes = "12; 9; 8" />
+                <Face Color = "21abcd" VertexIndexes = "12;10; 9" />
+                <Face Color = "5070a0" VertexIndexes = "12;11;10" />
+                <Face Color = "80d0ff" VertexIndexes = "12; 6;11" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Cut Color = "clTop   "> <Plane NormVector = " 0; 0; -1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clBottom"> <Plane NormVector = " 0; 0;  1" NormDistance = "-DCut" /> </Cut>
+    </Figure>
+</xml>

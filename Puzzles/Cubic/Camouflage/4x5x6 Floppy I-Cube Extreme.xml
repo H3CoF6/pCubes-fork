@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4x5x6 Floppy I-Cube Extreme</Name>
+        <Menu>Cubic\Camouflage\4x5x6 Floppy I-Cube Extreme</Menu>
+        <Inventor>Liapis Nikolaos</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-05-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5440</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+
+        N := 6;
+
+        WD := W / 8;
+        for i := 0 to N - 2 do
+            D[i] := 2 * WD * i - WD * (N - 2);
+
+        WD := W / 8;
+        WX := WD * 7;
+        WY := WD * 6;
+        WZ := WD * 8;
+        DWX :=-WD * 1;
+        DWY := WD * 0;
+        DWZ :=-WD * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "3" />
+        <RemoveGrayParts/>
+
+        // inner cut centers
+        <HideContaining Vector = "DWX;DWY;WZ+DWZ" />
+        <HideContaining Vector = "WX+DWX;DWY;DWZ" />
+        <InvertVisibility/>
+        <Split Axis = "2" From = "5" />
+        <Split Axis = "0" From = "5" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "2" />
+    </Figure>
+</xml>

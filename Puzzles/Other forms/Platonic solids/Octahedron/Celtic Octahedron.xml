@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Celtic Octahedron</Name>
+        <Menu>Other forms\Octahedron\Celtic Octahedron</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-11-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9414</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0088FF'; // clBlue1
+        Colors[7] := 'FFFF00'; // clYellow
+        Colors[2] := '00FF00'; // clGreen1
+        Colors[3] := 'FF0000'; // clRed
+        Colors[4] := '00AA00'; // clGreen2
+        Colors[5] := 'FF6000'; // clOrange
+        Colors[6] := '0033EE'; // clBlue2
+        Colors[1] := '8800DD'; // clViolett
+
+        W := 1.5 * 0.5;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+
+        Pillow := 1.15;
+
+        for i := 0 to 7 do begin
+            CPx[i] := Cx[i] * Pillow;
+            CPy[i] := Cy[i] * Pillow;
+            CPz[i] := Cz[i] * Pillow;
+        end;
+
+        nA := 1;
+        n0 := sqrt(2) + 1;
+
+        A1 := ArcCos( sqrt(2) / 8 + 0.25);
+        A2 := ArcCos( sqrt(2) / 4 - 0.5 );
+        A3 := ArcCos(-sqrt(2) / 2 - 0.25);
+
+        D := W * 0.57;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "-D; D" FixedLayers = "1">
+        <Axis NormVector = " nA; nA; n0" />
+        <Axis NormVector = "-nA; nA; n0" />
+        <Axis NormVector = " nA;-nA; n0" />
+        <Axis NormVector = "-nA;-nA; n0" />
+
+        <Axis NormVector = " nA; n0; nA" />
+        <Axis NormVector = "-nA; n0; nA" />
+        <Axis NormVector = " nA; n0;-nA" />
+        <Axis NormVector = "-nA; n0;-nA" />
+
+        <Axis NormVector = " n0; nA; nA" />
+        <Axis NormVector = " n0;-nA; nA" />
+        <Axis NormVector = " n0; nA;-nA" />
+        <Axis NormVector = " n0;-nA;-nA" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Side" >
+            <Face Color = "Colors[c]" VertexIndexes = "i1;i2;i0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = "i2;i3;i0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = "i3;i1;i0" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "CPx; CPy; CPz" />
+
+            <Faces>
+                <ExecMacro MacroName = "Side" c = "0" i0 = " 6" i1 = "0" i2 = "2" i3 = "5" />
+                <ExecMacro MacroName = "Side" c = "1" i0 = " 7" i1 = "5" i2 = "2" i3 = "1" />
+                <ExecMacro MacroName = "Side" c = "2" i0 = " 8" i1 = "5" i2 = "1" i3 = "3" />
+                <ExecMacro MacroName = "Side" c = "3" i0 = " 9" i1 = "5" i2 = "3" i3 = "0" />
+                <ExecMacro MacroName = "Side" c = "4" i0 = "10" i1 = "4" i2 = "2" i3 = "0" />
+                <ExecMacro MacroName = "Side" c = "5" i0 = "11" i1 = "4" i2 = "1" i3 = "2" />
+                <ExecMacro MacroName = "Side" c = "6" i0 = "12" i1 = "4" i2 = "3" i3 = "1" />
+                <ExecMacro MacroName = "Side" c = "7" i0 = "13" i1 = "4" i2 = "0" i3 = "3" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

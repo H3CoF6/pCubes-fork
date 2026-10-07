@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Gimmick Pillow (3 Layers)</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Mixed\Gimmick Pillow (3 Layers)</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4273</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // clRed
+        Colors[1] := '00CC00'; // clGreen
+        Colors[2] := '0088EE'; // clBlue
+        Colors[3] := 'FFFFFF'; // clWhite
+        Colors[4] := 'EDFF11'; // clYellow
+
+        R := 0.6;
+        sAngle := Pi * 2 / 3;
+        for i := 0 to 2 do begin
+            Vx[i] := R * sin(sAngle * i);
+            Vy[i] := R * cos(sAngle * i);
+        end;
+
+        H := R / sqrt(3);
+        D1 := H / 3;
+        D2 := R * 0.54;
+
+        K1 := 0.42;
+        K2 := 0.64; // empiric
+
+        for i := 0 to 17 do begin
+            x[i] := R * cos(2*Pi/18 * i - 3*Pi / 18) * (1 - K1 * abs(sin(Pi/6 * i))^K2);
+            y[i] := R * sin(2*Pi/18 * i - 3*Pi / 18) * (1 - K1 * abs(sin(Pi/6 * i))^K2);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0;Pi" PlaneDistances = "D2" >
+        <Axis NormVector = "Vx[0]; Vy[0]; 0" />
+        <Axis NormVector = "Vx[1]; Vy[1]; 0" />
+        <Axis NormVector = "Vx[2]; Vy[2]; 0" />
+    </Axes>
+
+    <Figure>
+         <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = " 1; 0; 18;19" InvisibleEdges = " 8" />
+                <Face Color = "Colors[0]" VertexIndexes = " 2; 1; 19;20" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = " 3; 2; 20;21" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = " 4; 3; 21;22" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = " 5; 4; 22;23" InvisibleEdges = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = " 6; 5; 23;24" InvisibleEdges = " 2" />
+
+                <Face Color = "Colors[1]" VertexIndexes = " 7; 6; 24;25" InvisibleEdges = " 8" />
+                <Face Color = "Colors[1]" VertexIndexes = " 8; 7; 25;26" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = " 9; 8; 26;27" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "10; 9; 27;28" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "11;10; 28;29" InvisibleEdges = "10" />
+                <Face Color = "Colors[1]" VertexIndexes = "12;11; 29;30" InvisibleEdges = " 2" />
+
+                <Face Color = "Colors[2]" VertexIndexes = "13;12; 30;31" InvisibleEdges = " 8" />
+                <Face Color = "Colors[2]" VertexIndexes = "14;13; 31;32" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "15;14; 32;33" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "16;15; 33;34" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = "17;16; 34;35" InvisibleEdges = "10" />
+                <Face Color = "Colors[2]" VertexIndexes = " 0;17; 35;18" InvisibleEdges = " 2" />
+
+                <Face Color = "Colors[3]" VertexIndexes = " 0; 1; 2; 3; 4; 5; 6; 7; 8; 9;10;11;12;13;14;15;16;17" />
+                <Face Color = "Colors[4]" VertexIndexes = "35;34;33;32;31;30;29;28;27;26;25;24;23;22;21;20;19;18" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

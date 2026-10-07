@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Thomas Ball - Solid Colours</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Icosahedron\Thomas Ball - Solid Colours</Menu>
+        <Inventor>Zdenek Blazek</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1067</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '075AFF';
+        clRed    := 'FF0001';
+        clYellow := 'FFFF01';
+        clBlack  := '222222';
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := RSin;
+        RCut := (2 * R + RSin) / 3;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" NormVectors = " Vx; Vy; Vz" />
+
+    <Figure>
+        <Macro Name = "AddColorBody" >
+            <Script>
+                for i := 0 to 19 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Figures\Icosahedron.xml" />
+        </Macro>
+
+        <Macro Name = "CutV" >
+            <Cut Color = "clBlack" > <Plane NormVector = " Vx[v]; Vy[v]; Vz[v]" NormDistance = "-RCut" /> </Cut>
+            <Script>Inc(v);</Script>
+        </Macro>
+
+        <Macro Name = "AddSolvedState" >
+            <ExecMacro MacroName = "AddColorBody" Color = "clYellow" />
+            <Cut Axis = "ax1" From = "1" />
+            <HideAll/>
+
+            <ExecMacro MacroName = "AddColorBody" Color = "clBlue" />
+            <Cut Axis = "ax1" To = "1" />
+            <Cut Axis = "ax2" To = "1" />
+            <HideAll/>
+
+            <ExecMacro MacroName = "AddColorBody" Color = "clRed" />
+            <Cut Axis = "ax2" From = "1" />
+            <ShowAll/>
+
+            <ExecMacro MacroName = "CutV" v = "0" Repeat = "12" />
+
+	        <SplitByAxes/>
+            <RemoveGrayParts/>
+
+            <SaveSolvedState/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSolvedState" ax1 = "1" ax2 = " 8" /> <RemoveAllVisible/>
+        <ExecMacro MacroName = "AddSolvedState" ax1 = "2" ax2 = " 9" /> <RemoveAllVisible/>
+        <ExecMacro MacroName = "AddSolvedState" ax1 = "3" ax2 = "10" /> <RemoveAllVisible/>
+        <ExecMacro MacroName = "AddSolvedState" ax1 = "4" ax2 = " 6" /> <RemoveAllVisible/>
+        <ExecMacro MacroName = "AddSolvedState" ax1 = "5" ax2 = " 7" /> <RemoveAllVisible/>
+        <ExecMacro MacroName = "AddSolvedState" ax1 = "0" ax2 = "11" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

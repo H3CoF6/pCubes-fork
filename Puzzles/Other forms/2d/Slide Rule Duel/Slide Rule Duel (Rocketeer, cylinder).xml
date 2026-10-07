@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Slide Rule Duel (Rocketeer, cylinder)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Rocketeer (cylinder)</Menu>
+        <Menu>Other forms\Cylinder\Slide Rule Duel (Rocketeer)</Menu>
+        <Inventor>Douglas A. Engel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4557</Link>
+    </Interface>
+
+    <Script>
+        clBrown  := '88653F';
+        clRed    := 'FF0000';
+        clGreen  := '007700';
+        clBlue   := '4444FF';
+        clYellow := 'FFFF00';
+
+        R := 0.5;
+        H := R / 2;
+
+        Angle := Pi * 0.56;
+        D := R * sin(Angle - Pi/2);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Angle" PlaneDistances = "0" T1urnAxesWithLayer = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddColor" >
+            <Cylinder Radius = "R" Color = "Color" Base = "0;0;0" Top = "0;0;H" TopColor = "Color" />
+            <Turn NormVector = " 0; 0; 1" Angle = "Angle" />
+            <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Split>
+            <Turn NormVector = " 0; 0; 1" Angle = "-2*Angle" />
+            <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Split>
+            <Turn NormVector = " 0; 0; 1" Angle = "Angle" />
+        </Macro>
+
+        <Macro Name = "Add2Colors" >
+            <ExecMacro MacroName = "AddColor" Color = "Color1" />
+            <RemoveContaining Vector = "0;0;0" />
+            <HideAll/>
+            <ExecMacro MacroName = "AddColor" Color = "Color2" />
+            <HideContaining Vector = "0;0;0" />
+            <RemoveAllVisible/>
+            <ShowAll/>
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+            <HideAll/>
+        </Macro>
+
+        <Cylinder Radius = "R" Color = "clBrown" Base = "0;0;0" Top = "0;0;-H" TopColor = "clBrown" />
+        <Cut Axis = "1" To = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Add2Colors" Color1 = "clBlue"  Color2 = "clRed"    />
+        <ExecMacro MacroName = "Add2Colors" Color1 = "clGreen" Color2 = "clYellow" />
+        <ShowAll/>
+
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "0" />
+        <Cut Axis = "1" From = "1" />
+        <ShowAll/>
+
+        <Split Axis = "1" From  = "1" />
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = " D" /></Split>
+        <Hide> <Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Hide>
+        <Hide> <Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Hide>
+        <Turn NormVector = " 0; 0; 1" Angle = "Angle" />
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = " D" /></Split>
+        <Turn NormVector = " 0; 0; 1" Angle = "-2*Angle" />
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = " D" /></Split>
+        <Turn NormVector = " 0; 0; 1" Angle = "Angle" />
+        <HideContaining Vector = "-0; 0; 0" />
+        <HideContaining Vector = " R; 0; 0" />
+        <HideContaining Vector = "-R; 0; 0" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

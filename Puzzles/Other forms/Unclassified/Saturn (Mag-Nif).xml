@@ -1,0 +1,103 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Saturn (Mag-Nif)</Name>
+        <Menu>Other forms\Unclassified\Saturn (Mag-Nif)</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=913</Link>
+    </Interface>
+
+    <Script>
+        Color1 := -1;
+        Color2 := 'FFFFFF'; // clWhite
+
+        R := 0.6;
+        H := R * 0.05;
+
+        N := 8;
+        Angle := 2 * Pi / N;
+
+        K := R * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Angle" PlaneDistances = "-H; H" TurnAxesWithLayer = "0">
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0">
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color1" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <RemoveContaining Vector = "0;0;0" />
+        <SplitByAxes/>
+        <HideAll/>
+
+        <Turn NormVector = "0; 0; 1" Angle = "Angle / 2" />
+
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "R" Color = "Color2" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Color2" />
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Color2" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "-cos(Angle / 2); -sin(Angle / 2); 0" /> </Cut>
+            <Cut> <Plane NormVector = " cos(Angle / 2); -sin(Angle / 2); 0" /> </Cut>
+            <Cut Color = "FF0000" ><Plane NormVector = "0;-1; 0 " NormDistance = "R * (0.1 + i * 0.001)" /></Cut> // cut every piece in a slightly different way to distinct them in the Solving procedure
+
+            <Turn NormVector = "0; 0; 1" Angle = "Angle" />
+
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "N" />
+
+        <ShowAll/>
+        <Turn NormVector = "0; 0; 1" Angle = "-Angle / 2" />
+
+        <Connect Axis = "0" Layers = "0;2" />
+
+        <Macro Name = "SolvedStates">
+            <Turn Axis = "0" Layers = "1" Angle = "Angle" />
+            <SaveSolvedState/>
+        </Macro>
+        <ExecMacro MacroName = "SolvedStates" Repeat = "N" />
+        <Undo Repeat = "N" />
+
+        <Turn Axis = "1" Layers = "1" Angle = "Pi" />
+        <Turn Axis = "0" Layers = "1" Angle = "Pi" />
+        <Turn Axis = "1" Layers = "1" Angle = "Pi" />
+        <ExecMacro MacroName = "SolvedStates" Repeat = "N" />
+        <Undo Repeat = "N + 3" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_06.vec" />
+        <Texture Name = "tm_07" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_07.vec" />
+        <Texture Name = "tm_08" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_08.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 =  7, 0, 9,  7, 1, 8
+        tm_02 =  6, 0, 9,  6, 1, 8
+        tm_03 =  5, 0, 9,  5, 1, 8
+        tm_04 =  4, 0, 9,  4, 1, 8
+        tm_05 = 11, 0, 9, 11, 1, 8
+        tm_06 = 10, 0, 9, 10, 1, 8
+        tm_07 =  9, 0, 9,  9, 1, 8
+        tm_08 =  8, 0, 9,  8, 1, 8
+    </SetTextures>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

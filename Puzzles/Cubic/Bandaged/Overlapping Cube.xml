@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Overlapping Cube</Name>
+        <Menu>Cubic\Bandaged\Overlapping Cube</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2019-02-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1428</Link>
+    </Interface>
+
+    <Script>
+        W1 := 0.5;
+
+        D1 := W1 / 4;
+        D2 := W1 / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2; D1; D2" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" W = "W1 * 1.1" />
+
+        <SplitByAxes/>
+        <Split><Plane NormDistance = "-D1" NormVector = " 1; 0; 0" /></Split>
+        <Split><Plane NormDistance = "-D1" NormVector = " 0; 1; 0" /></Split>
+        <Split><Plane NormDistance = "-D1" NormVector = " 0; 0;-1" /></Split>
+        <RemoveGrayParts/>
+
+        <HideContaining Vectors = "Ex; Ey; Ez" />
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Colors[Id]"> <Plane NormVector = "-Cx[Id]; -Cy[Id]; -Cz[Id]" NormDistance = "-W1" /> </Cut>
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Id = "0" Repeat = "6" />
+
+        <ShowAll/>
+
+        <Macro Name = "Cut2" >
+            <Cut> <Plane NormVector = "-Cx[Id]; -Cy[Id]; -Cz[Id]" NormDistance = "-W1" /> </Cut>
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut2" Id = "0" Repeat = "6" />
+    </Figure>
+</xml>

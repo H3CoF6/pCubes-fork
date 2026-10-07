@@ -1,0 +1,105 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>DaYan Gem 5</Name>
+        <Menu>Other forms\DaYan\DaYan Gem 5</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-04-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4369</Link>
+    </Interface>
+
+    <Script>
+        Scale := 1.2;
+        R := 0.5 * 1.5 * Scale;
+        DCut := 0.45 * Scale;
+        D1 := DCut / sqrt(3);
+        D2 := -(2 * dCut - R) / sqrt(3);
+
+        clYellow := 'EDFF11';
+        clBlue := '0000FF';
+        clOrange := 'FF5C00';
+        clRed := 'FF0000';
+        clGreen := '1D9F00';
+        clViolett := '7700CD';
+        clGray := '45575E';
+        clWhite := 'FFFFFF';
+
+        clYellow1 := 'EDFF15';
+        clBlue1 := '0000FD';
+        clOrange1 := 'FF5C05';
+        clRed1 := 'FF0005';
+        clGreen1 := '1D9F05';
+        clWhite1 := 'FFFFF0';
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D1; D2" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = " 1; -1; -1" />
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = "-1;  1; -1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-R; 0; 0" />
+                <Add Vector = "R; 0; 0" />
+                <Add Vector = "0; -R; 0" />
+                <Add Vector = "0; R; 0" />
+                <Add Vector = "0; 0; -R" />
+                <Add Vector = "0; 0; R" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clGreen" VertexIndexes = "0;2;5" />
+                <Face Color = "clWhite" VertexIndexes = "5;2;1" />
+                <Face Color = "clGray" VertexIndexes = "5;1;3" />
+                <Face Color = "clRed" VertexIndexes = "5;3;0" />
+                <Face Color = "clViolett" VertexIndexes = "4;2;0" />
+                <Face Color = "clOrange" VertexIndexes = "4;1;2" />
+                <Face Color = "clBlue" VertexIndexes = "4;3;1" />
+                <Face Color = "clYellow" VertexIndexes = "4;0;3" />
+            </Faces>
+        </Part>
+
+           <Cut Color="clWhite1" >
+               <Plane>
+                   <NormVector X="1" Y="0" Z="0" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>
+           <Cut Color="clYellow1" >
+               <Plane>
+                   <NormVector X="-1" Y="0" Z="0" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>
+           <Cut Color="clBlue1" >
+               <Plane>
+                   <NormVector X="0" Y="1" Z="0" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>
+           <Cut Color="clGreen1" >
+               <Plane>
+                   <NormVector X="0" Y="-1" Z="0" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>
+           <Cut Color="clRed1" >
+               <Plane>
+                   <NormVector X="0" Y="0" Z="1" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>
+           <Cut Color="clOrange1" >
+               <Plane>
+                   <NormVector X="0" Y="0" Z="-1" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>
+        <SplitByAxes/>
+    </Figure>
+</xml>

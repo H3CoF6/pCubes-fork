@@ -1,0 +1,153 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Penta Time Machine</Name>
+        <Menu>Other forms\Wheel\Penta Time Machine</Menu>
+        <Inventor>Alexandr Bezrukov</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-09-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7674</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        sAngle := 2 * Pi / 5;
+        Colors[1] := '880088';
+        Colors[2] := 'FFDD00';
+        Colors[3] := '0000DD';
+        Colors[4] := 'FF6600';
+        Colors[5] := 'EEEEEE';
+
+        clTop1    := '008800';
+        clBottom1 := 'FF3399';
+        clTop2    := '008801';
+        clBottom2 := 'FF3398';
+
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        H := R * sqrt(2 * (5 + sqrt(5))) / 8;
+
+        D := (y[0] + y[1]) / 2;
+
+        CylinderWidth := R * 0.2;
+        HC := H + CylinderWidth;
+        //D := R / 2;
+        Sc := (D + CylinderWidth) / D;
+        RC := R * 0.5;
+
+        C := 0.001;
+        DC := (-RC * C + H + CylinderWidth) / sqrt(C^2 + 1) * 0.99;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D"  FixedLayers = "0" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+        <Axis NormVector = "x[3]; y[3]; 0" />
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/30; Pi/5; Pi/5; Pi/30" PlaneDistances = "-H; 0; H" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; -H" />
+            <Vertices Vectors = "x; y;  H" />
+            <Faces>
+                <Face Color = "Colors[1]" VertexIndexes = "5;6;1;0" />
+                <Face Color = "Colors[2]" VertexIndexes = "6;7;2;1" />
+                <Face Color = "Colors[3]" VertexIndexes = "7;8;3;2" />
+                <Face Color = "Colors[4]" VertexIndexes = "8;9;4;3" />
+                <Face Color = "Colors[5]" VertexIndexes = "9;5;0;4" />
+                <Face Color = "clBottom1" VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clTop1   " VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+
+        <Cylinder Radius = "RC" Color = "clTop2" >
+            <Base X = "0" Y = "0" Z = "H" />
+            <Top  X = "0" Y = "0" Z = "HC" Color = "clTop2" />
+        </Cylinder>
+
+        <Cylinder Radius = "RC" Color = "clBottom2" >
+            <Base X = "0" Y = "0" Z = "-H" />
+            <Top  X = "0" Y = "0" Z = "-HC" Color = "clBottom2" />
+        </Cylinder>
+
+        <Cut Color = "clBottom2" > <Plane NormVector = "-C;  0;  1" NormDistance = "-DC" /> </Cut>
+        <Cut Color = "clTop2" > <Plane NormVector = " C;  0; -1" NormDistance = "-DC" /> </Cut>
+
+        <Macro Name = "Split1" >
+            <Turn Axis = "i" Layer = "1" Angle = "Pi/2" />
+            <Split Axis = "6" From = "2" />
+            <Undo/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split1" i = "1" Repeat = "4" />
+
+        <Macro Name = "Split2" >
+            <Turn Axis = "6" Layer = "0" Angle = "Pi / 6" />
+            <Turn Axis = "6" Layer = "3" Angle = "Pi / 6" />
+            <Split Axis = "5" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split2" Repeat = "6" />
+        <Undo Repeat = "12" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_06.vec" />
+        <Texture Name = "tm_07" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_07.vec" />
+        <Texture Name = "tm_08" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_08.vec" />
+        <Texture Name = "tm_09" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_09.vec" />
+        <Texture Name = "tm_10" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_10.vec" />
+        <Texture Name = "tm_11" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_11.vec" />
+        <Texture Name = "tm_12" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_12.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 = 24,7,6, 37,7,6
+        tm_02 = 30,7,6, 38,7,6
+        tm_03 = 31,7,6, 39,7,6
+        tm_04 = 32,7,9, 40,7,6
+        tm_05 = 33,7,6, 41,7,6
+        tm_06 = 34,7,6, 47,7,6
+        tm_07 = 35,7,7, 46,7,6
+        tm_08 = 29,7,6, 45,7,6
+        tm_09 = 28,7,6, 44,7,6
+        tm_10 = 27,7,6, 43,7,9
+        tm_11 = 26,7,6, 42,7,7
+        tm_12 = 25,7,6, 36,7,6
+    </SetTextures>
+
+    <Macros>
+        <Macro Name = "CircleTurn" >
+            <Turn Axis = "5" Layer = "Random(2)" Angle = "Pi"/>
+            <Turn Axis = "6" Layer = "Random(2)*3" Angle = "Pi/6 * (Random(11) + 1)"/>
+        </Macro>
+        <Macro Name = "RandomTurn" >
+            <Turn Axis = "Random(5)" Layer = "1" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "6" Layer = "Random(2)+2" Angle = "Pi/5 * (Random(9) + 1)"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" Description = "Replacing of standard scrambling" Sequence = "" >
+            <ExecMacro MacroName = "CircleTurn" Repeat = "20" />
+            <ExecMacro MacroName = "RandomTurn" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

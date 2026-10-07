@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Net Block UFO</Name>
+        <Menu>Cubic\Multi-core\Net Block UFO</Menu>
+        <Inventor>Wai K. Chan</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-11-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=894</Link>
+    </Interface>
+
+    <Script>
+        Colour[0] := 'C80000'; // Red  
+        Colour[1] := '009600'; // Green
+        Colour[2] := '0000C8'; // Blue 
+
+        W := 0.20;
+        s3 := sqrt(3);
+        sAngle := 2 * Pi / 3;
+
+        Ay := -W * 3;
+
+        for i := 0 to 6 do begin
+            Qx[i] := Ay * sin(sAngle * i);
+            Qy[i] := Ay * cos(sAngle * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2; 0" PlaneDistances = "-W; 0; W" >
+        <Axis NormVector = "Qy[0];-Qx[0];0" BaseVector = "Qx[0];Qy[0];0" />
+        <Axis NormVector = "Qy[1];-Qx[1];0" BaseVector = "Qx[1];Qy[1];0" />
+        <Axis NormVector = "Qy[2];-Qx[2];0" BaseVector = "Qx[2];Qy[2];0" />
+    </Axes>
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddPart">
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W" DWY = "Ay" />
+            <SplitByAxes/>
+            <Turn NormVector = "0; 0; 1" Angle = "sAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddPart" Color = "Colour[0]" />
+        <ExecMacro MacroName = "AddPart" Color = "Colour[1]" />
+        <ExecMacro MacroName = "AddPart" Color = "Colour[2]" />
+        <Turn Axis = "0" Layers = "1;2" Angle = "Pi / 2" />
+        <Turn Axis = "1" Layers = "1;2" Angle = "Pi / 2" />
+        <Turn Axis = "2" Layers = "1;2" Angle = "Pi / 2" />
+        <Split Axis = "3" From = "1" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

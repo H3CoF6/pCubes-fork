@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crosskube</Name>
+        <Menu>Other forms\Star\Crosskube</Menu>
+        <Menu>Other forms\2x2x2 variants\Crosskube</Menu>
+        <Inventor>Iñaki Malo</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9126</Link>
+    </Interface>
+
+    <Script>
+        Color0 := 'FFAFAF'; // Pink
+        Color1 := 'C80000'; // Red         
+
+        W := 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCube" >
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/4" />
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "W" />
+            <Turn NormVector = " 0; 0; 1" Angle = "-Pi/4" />
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-W" /></Split>
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = " W" /></Split>
+            <Split><Plane NormVector = " 1; 0; 1" NormDistance = "-W" /></Split>
+            <Split><Plane NormVector = " 1; 0; 1" NormDistance = " W" /></Split>
+            <Split><Plane NormVector = " 1; 0;-1" NormDistance = "-W" /></Split>
+            <Split><Plane NormVector = " 1; 0;-1" NormDistance = " W" /></Split>
+        </Macro>
+        <ExecMacro MacroName = "AddCube" Color = "Color0" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <HideAll/>
+
+        <Turn NormVector = " 0; 1;-1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCube" Color = "Color1" />
+        <Turn NormVector = " 0; 1;-1" Angle = "Pi" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddCube" Color = "-1" />
+        <HideContaining Vector = " 0; 0; 0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

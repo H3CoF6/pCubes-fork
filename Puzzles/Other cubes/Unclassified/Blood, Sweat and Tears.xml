@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Blood, Sweat and Tears</Name>
+        <Menu>Other cubes\Unclassified\Blood, Sweat and Tears</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Ginanjar Syahfia + Skallos</Programmer>
+        <Added>2017-07-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2532</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        clRed := 'C80000';
+
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W;
+
+        D := W / 4;
+        DCut := W * (1/4 + 2/sqrt(3));
+
+        for i := 0 to 5 do
+            Colors[i] := clRed;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = " 1;  1; -5" />
+        <Axis NormVector = " 1; -5;  1" />
+        <Axis NormVector = "-5;  1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Cut" >
+            <Cut Color = "clRed" > <Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "8" />
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 14" />
+</xml>

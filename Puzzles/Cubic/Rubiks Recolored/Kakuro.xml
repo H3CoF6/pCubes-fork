@@ -1,0 +1,118 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Kakuro</Name>
+        <Menu>Cubic\Rubiks Recolored\Kakuro</Menu>
+        <Inventor>Denny Hartel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-08-11</Added>
+        <Link>http://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8063</Link>
+    </Interface>
+
+    <Script>
+        clGray[0] := '818180';
+        clGray[1] := '818182';
+        clGray[2] := '818081';
+        clGray[3] := '818281';
+        clGray[4] := '808181';
+        clGray[5] := '828181';
+
+        W := 0.5;
+        D := W / 3;
+        dW := 0.0003;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " D;-D; D" />
+        <RemoveContaining Vector = "-D; D;-D" />
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := clGray[i];
+        </Script>
+        <LoadFrom File = "Figures\Cube.xml" W = "0.5" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <HideContaining Vector = " D;-D; D" />
+        <HideContaining Vector = "-D; D;-D" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Cubic\Classic Rubiks\_Macro_For_Super.xml" WE = "D" DCut1 = "W" DCut2 = "W + dW" />
+        <ShowAll/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "KKR_01"  File = "Textures\Kakuro\KKR_01.vec" />
+        <Texture Name = "KKR_02"  File = "Textures\Kakuro\KKR_02.vec" />
+        <Texture Name = "KKR_03"  File = "Textures\Kakuro\KKR_03.vec" />
+        <Texture Name = "KKR_04"  File = "Textures\Kakuro\KKR_04.vec" />
+        <Texture Name = "KKR_05"  File = "Textures\Kakuro\KKR_05.vec" />
+        <Texture Name = "KKR_06"  File = "Textures\Kakuro\KKR_06.vec" />
+        <Texture Name = "KKR_07"  File = "Textures\Kakuro\KKR_07.vec" />
+        <Texture Name = "KKR_08"  File = "Textures\Kakuro\KKR_08.vec" />
+        <Texture Name = "KKR_09"  File = "Textures\Kakuro\KKR_09.vec" />
+
+        <Texture Name = "aKKR_03"  File = "Textures\Kakuro\aKKR_03.vec" />
+        <Texture Name = "aKKR_04"  File = "Textures\Kakuro\aKKR_04.vec" />
+        <Texture Name = "bKKR_05"  File = "Textures\Kakuro\bKKR_05.vec" />
+        <Texture Name = "aKKR_06"  File = "Textures\Kakuro\aKKR_06.vec" />
+        <Texture Name = "bKKR_06"  File = "Textures\Kakuro\bKKR_06.vec" />
+        <Texture Name = "aKKR_07"  File = "Textures\Kakuro\aKKR_07.vec" />
+        <Texture Name = "bKKR_08"  File = "Textures\Kakuro\bKKR_08.vec" />
+        <Texture Name = "aKKR_09"  File = "Textures\Kakuro\aKKR_09.vec" />
+        <Texture Name = "bKKR_09"  File = "Textures\Kakuro\bKKR_09.vec" />
+        <Texture Name = "aKKR_10"  File = "Textures\Kakuro\aKKR_10.vec" />
+        <Texture Name = "bKKR_10"  File = "Textures\Kakuro\bKKR_10.vec" />
+        <Texture Name = "aKKR_11"  File = "Textures\Kakuro\aKKR_11.vec" />
+        <Texture Name = "bKKR_11"  File = "Textures\Kakuro\bKKR_11.vec" />
+        <Texture Name = "bKKR_12"  File = "Textures\Kakuro\bKKR_12.vec" />
+        <Texture Name = "bKKR_13"  File = "Textures\Kakuro\bKKR_13.vec" />
+        <Texture Name = "aKKR_14"  File = "Textures\Kakuro\aKKR_14.vec" />
+        <Texture Name = "aKKR_15"  File = "Textures\Kakuro\aKKR_15.vec" />
+        <Texture Name = "bKKR_16"  File = "Textures\Kakuro\bKKR_16.vec" />
+        <Texture Name = "aKKR_17"  File = "Textures\Kakuro\aKKR_17.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        KKR_01 = 23,2,3, 25,0,3
+        KKR_02 = 20,0,3, 22,1,1, 25,1,0
+        KKR_03 = 12,0,2, 14,1,3, 23,1,3, 27,0,3
+        KKR_04 = 12,1,1, 29,2,3
+        KKR_05 = 14,2,3, 17,1,0, 28,2,2
+        KKR_06 = 14,0,3, 31,4,1
+        KKR_07 = 15,0,3, 15,1,0, 17,0,2, 30,4,0
+        KKR_08 = 26,0,2, 22,0,2
+        KKR_09 = 20,1,3, 23,0,3
+
+        aKKR_03 = 11,2,2
+        aKKR_04 =  8,0,2
+        bKKR_05 =  7,1,0,  9,1,0
+        aKKR_06 =  6,0,2
+        bKKR_06 =  2,2,0
+        aKKR_07 =  1,1,1
+        bKKR_08 =  3,1,0
+        aKKR_09 =  0,0,2
+        bKKR_09 =  0,2,0
+        aKKR_10 =  2,1,2,  4,1,2
+        bKKR_10 = 11,0,0
+        aKKR_11 =  6,1,1,  8,1,1
+        bKKR_11 =  3,0,1, 10,0,2, 10,1,0
+        bKKR_12 =  5,0,1
+        bKKR_13 =  4,0,0
+        aKKR_14 =  9,2,2
+        aKKR_15 =  1,0,3
+        bKKR_16 =  5,1,0
+        aKKR_17 =  7,0,2
+    </SetTextures>
+</xml>

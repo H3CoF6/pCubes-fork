@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bicube AC</Name>
+        <Menu>Cubic\Bandaged\Cube 3x3x3\Bicube AC</Menu>
+        <Inventor>Dieter Gebhardt</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-10-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10484</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red
+        Colors[1] := '009600'; // Green
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := 'FF800A'; // Orange
+        Colors[4] := '222222'; // Dark
+
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "Colors[0]" Width = "W" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" From = "1" />
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-D" /></Split>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "Colors[1]" Width = "W" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Split>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "Colors[2]" Width = "W" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" From = "1" />
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Split>
+        <HideAll/>
+       
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "Colors[3]" Width = "W" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "2" From = "1" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "Colors[4]" Width = "W" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

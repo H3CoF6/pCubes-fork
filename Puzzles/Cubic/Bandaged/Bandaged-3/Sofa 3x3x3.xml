@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sofa 3x3x3</Name>
+        <Menu>Cubic\Bandaged\Cube 3x3x3\Sofa 3x3x3</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-01-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10730</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = " 0; Pi / 2" PlaneDistances = " D" >
+        <Axis NormVector = "-1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "D;D;0" />
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Split>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "W" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Split InvisibleEdges1 = "5" InvisibleEdges2 = "10" Color1 = "-2" Color2 = "-2" ><Plane NormVector = "1;-1; 0" /></Split>
+        <HideContaining Vector = "W;D;0" />
+        <Cut Color = "-1" ><Plane NormVector = "-1; 0; 0" NormDistance = "0" /></Cut>
+        <ShowAll/>
+        <HideContaining Vector = "W;D;0" />
+        <InvertVisibility/>
+        <Cut Color = "-1" ><Plane NormVector = " 0;-1; 0" NormDistance = "0" /></Cut>
+        <ShowAll/>
+    </Figure>
+</xml>

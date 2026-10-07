@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hex Domino (2 layers)</Name>
+        <Aliases>Slim Hexomino</Aliases>
+        <Menu>Other forms\Prism\Hexagonal Prism\Face Turning\Hex Domino (2 layers)</Menu>
+        <Inventor>Scott Bedard</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1884</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12169</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+        clCyan   := '00FFFF';
+
+        R := 0.6;
+        H := R * sin(Pi / 6) * 2 / 3;
+        sAngle := 2*Pi / 6;
+
+        for i := 0 to 5 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+            ax[i] := sin(sAngle * i + sAngle/2);
+            ay[i] := cos(sAngle * i + sAngle/2);
+        end;
+
+        D := x[1] * 2 / 3;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D" NormVectors = " ax; ay; 0" />
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x; y;-H" />
+            <Vertices Vectors = " x; y; H" />
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "clBlue  " VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "clOrange" VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "clPurple" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "clCyan  " VertexIndexes = "11; 6; 0; 5" />
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                <Face Color = "clWhite " VertexIndexes = "11;10; 9; 8; 7; 6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

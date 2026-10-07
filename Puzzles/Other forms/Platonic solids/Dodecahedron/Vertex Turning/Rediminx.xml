@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rediminx</Name>
+        <Menu>Other forms\Dodecahedron\Vertex Turning\Rediminx</Menu>
+        <Inventor>Justin Costa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7436</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // clWhite
+        Colors[ 1] := 'FFFF00'; // clYellow
+        Colors[ 2] := '0000CC'; // clBlue
+        Colors[ 3] := 'FF0000'; // clRed
+        Colors[ 4] := '00AA00'; // clGreen
+        Colors[ 5] := '800080'; // clViolett
+        Colors[ 6] := 'FFFFAA'; // clCream
+        Colors[ 7] := '0066CC'; // clLightBlue
+        Colors[ 8] := 'FF6000'; // clOrange
+        Colors[ 9] := '00FF00'; // clLightGreen
+        Colors[10] := 'FF88CC'; // clLightViolett
+        Colors[11] := '666666'; // clGray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * 0.79;
+
+        k := 1.15;
+        for i := 0 to 11 do begin
+            Ckx[i] := Cx[i] * k;
+            Cky[i] := Cy[i] * k;
+            Ckz[i] := Cz[i] * k;
+        end;
+    </Script>
+
+    <Axes TurningAngles = " 0; 2*Pi/3"  PlaneDistances = "D" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <Macro Name = "AddColor" >
+            <Face Color = "Colors[cl]" VertexIndexes = " v4; v3; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v3; v2; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v2; v1; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v1; v0; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v0; v4; c" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Ckx; Cky; Ckz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddColor" cl = " 0" c = "20" v0 = " 0" v1 = " 1" v2 = " 2" v3 = " 3" v4 = " 4" />
+                <ExecMacro MacroName = "AddColor" cl = " 1" c = "21" v0 = " 5" v1 = "10" v2 = " 6" v3 = " 1" v4 = " 0" />
+                <ExecMacro MacroName = "AddColor" cl = " 2" c = "22" v0 = " 6" v1 = "11" v2 = " 7" v3 = " 2" v4 = " 1" />
+                <ExecMacro MacroName = "AddColor" cl = " 3" c = "23" v0 = " 7" v1 = "12" v2 = " 8" v3 = " 3" v4 = " 2" />
+                <ExecMacro MacroName = "AddColor" cl = " 4" c = "24" v0 = " 8" v1 = "13" v2 = " 9" v3 = " 4" v4 = " 3" />
+                <ExecMacro MacroName = "AddColor" cl = " 5" c = "25" v0 = " 9" v1 = "14" v2 = " 5" v3 = " 0" v4 = " 4" />
+                <ExecMacro MacroName = "AddColor" cl = " 6" c = "26" v0 = "13" v1 = " 8" v2 = "12" v3 = "17" v4 = "18" />
+                <ExecMacro MacroName = "AddColor" cl = " 7" c = "27" v0 = "14" v1 = " 9" v2 = "13" v3 = "18" v4 = "19" />
+                <ExecMacro MacroName = "AddColor" cl = " 8" c = "28" v0 = "10" v1 = " 5" v2 = "14" v3 = "19" v4 = "15" />
+                <ExecMacro MacroName = "AddColor" cl = " 9" c = "29" v0 = "11" v1 = " 6" v2 = "10" v3 = "15" v4 = "16" />
+                <ExecMacro MacroName = "AddColor" cl = "10" c = "30" v0 = "12" v1 = " 7" v2 = "11" v3 = "16" v4 = "17" />
+                <ExecMacro MacroName = "AddColor" cl = "11" c = "31" v0 = "19" v1 = "18" v2 = "17" v3 = "16" v4 = "15" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

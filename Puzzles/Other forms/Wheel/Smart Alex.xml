@@ -1,0 +1,168 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Smart Alex</Name>
+        <Menu>Other forms\Wheel\Smart Alex</Menu>
+        <Inventor>Dumitru A. Pop</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-09-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1132</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'F0F0F0';
+        clBlue   := '0000FF';
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clGreen  := '008000';
+
+        W := 0.5;
+        R := W * 0.8;
+
+        sAngle := Pi / 3;
+        for i := 0 to 5 do begin
+            y[i] := R * cos(sAngle * i);
+            z[i] := R * sin(sAngle * i);
+        end;
+
+        L := W / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-W; W" FixedLayers = "1">
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Part>
+            <Vertices>
+                <Add Vector = " W  ;  y[0]; z[0]" />
+                <Add Vector = " W  ;  y[1]; z[1]" />
+                <Add Vector = " W  ;  y[2]; z[2]" />
+                <Add Vector = " W  ;  y[3]; z[3]" />
+                <Add Vector = " W  ;  y[4]; z[4]" />
+                <Add Vector = " W  ;  y[5]; z[5]" />
+                <Add Vector = " W+L;  y[0]; z[0]" />
+                <Add Vector = " W+L;  y[1]; z[1]" />
+                <Add Vector = " W+L;  y[2]; z[2]" />
+                <Add Vector = " W+L;  y[3]; z[3]" />
+                <Add Vector = " W+L;  y[4]; z[4]" />
+                <Add Vector = " W+L;  y[5]; z[5]" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clOrange" VertexIndexes = " 6; 7; 8; 9;10;11" />
+                <Face Color = "clGreen " VertexIndexes = " 0; 1; 7; 6" />
+                <Face Color = "clWhite " VertexIndexes = " 1; 2; 8; 7" />
+                <Face Color = "clBlue  " VertexIndexes = " 2; 3; 9; 8" />
+                <Face Color = "clBlue  " VertexIndexes = " 3; 4;10; 9" />
+                <Face Color = "clYellow" VertexIndexes = " 4; 5;11;10" />
+                <Face Color = "clGreen " VertexIndexes = " 5; 0; 6;11" />
+                <Face                    VertexIndexes = " 5; 4; 3; 2; 1; 0" />
+            </Faces>
+        </Part>
+        <Part>
+            <Vertices>
+                <Add Vector = "-W  ;  y[0]; z[0]" />
+                <Add Vector = "-W  ;  y[1]; z[1]" />
+                <Add Vector = "-W  ;  y[2]; z[2]" />
+                <Add Vector = "-W  ;  y[3]; z[3]" />
+                <Add Vector = "-W  ;  y[4]; z[4]" />
+                <Add Vector = "-W  ;  y[5]; z[5]" />
+                <Add Vector = "-W-L;  y[0]; z[0]" />
+                <Add Vector = "-W-L;  y[1]; z[1]" />
+                <Add Vector = "-W-L;  y[2]; z[2]" />
+                <Add Vector = "-W-L;  y[3]; z[3]" />
+                <Add Vector = "-W-L;  y[4]; z[4]" />
+                <Add Vector = "-W-L;  y[5]; z[5]" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "11;10; 9; 8; 7; 6" />
+                <Face Color = "clGreen " VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "clWhite " VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "clBlue  " VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "clBlue  " VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "clYellow" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "clGreen " VertexIndexes = "11; 6; 0; 5" />
+                <Face                    VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+            </Faces>
+        </Part>
+        <Part>
+            <Vertices>
+                <Add Vector = " y[0]; -W  ; z[0]" />
+                <Add Vector = " y[1]; -W  ; z[1]" />
+                <Add Vector = " y[2]; -W  ; z[2]" />
+                <Add Vector = " y[3]; -W  ; z[3]" />
+                <Add Vector = " y[4]; -W  ; z[4]" />
+                <Add Vector = " y[5]; -W  ; z[5]" />
+                <Add Vector = " y[0]; -W-L; z[0]" />
+                <Add Vector = " y[1]; -W-L; z[1]" />
+                <Add Vector = " y[2]; -W-L; z[2]" />
+                <Add Vector = " y[3]; -W-L; z[3]" />
+                <Add Vector = " y[4]; -W-L; z[4]" />
+                <Add Vector = " y[5]; -W-L; z[5]" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clBlue  " VertexIndexes = " 6; 7; 8; 9;10;11" />
+                <Face Color = "clOrange" VertexIndexes = " 0; 1; 7; 6" />
+                <Face Color = "clWhite " VertexIndexes = " 1; 2; 8; 7" />
+                <Face Color = "clRed   " VertexIndexes = " 2; 3; 9; 8" />
+                <Face Color = "clRed   " VertexIndexes = " 3; 4;10; 9" />
+                <Face Color = "clYellow" VertexIndexes = " 4; 5;11;10" />
+                <Face Color = "clOrange" VertexIndexes = " 5; 0; 6;11" />
+                <Face                    VertexIndexes = " 5; 4; 3; 2; 1; 0" />
+            </Faces>
+        </Part>
+        <Part>
+            <Vertices>
+                <Add Vector = " y[0];  W  ; z[0]" />
+                <Add Vector = " y[1];  W  ; z[1]" />
+                <Add Vector = " y[2];  W  ; z[2]" />
+                <Add Vector = " y[3];  W  ; z[3]" />
+                <Add Vector = " y[4];  W  ; z[4]" />
+                <Add Vector = " y[5];  W  ; z[5]" />
+                <Add Vector = " y[0];  W+L; z[0]" />
+                <Add Vector = " y[1];  W+L; z[1]" />
+                <Add Vector = " y[2];  W+L; z[2]" />
+                <Add Vector = " y[3];  W+L; z[3]" />
+                <Add Vector = " y[4];  W+L; z[4]" />
+                <Add Vector = " y[5];  W+L; z[5]" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clGreen " VertexIndexes = "11;10; 9; 8; 7; 6" />
+                <Face Color = "clOrange" VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "clWhite " VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "clRed   " VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "clRed   " VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "clYellow" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "clOrange" VertexIndexes = "11; 6; 0; 5" />
+                <Face                    VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn  Axis = "1" Layer = "0" Angle = "sAngle" />
+        <Turn  Axis = "1" Layer = "2" Angle = "sAngle" />
+        <Turn  Axis = "2" Layer = "0" Angle = "sAngle" />
+        <Turn  Axis = "2" Layer = "2" Angle = "sAngle" />
+        <Split Axis = "0" From  = "1"/>
+        <Turn  Axis = "1" Layer = "0" Angle = "sAngle" />
+        <Turn  Axis = "1" Layer = "2" Angle = "sAngle" />
+        <Turn  Axis = "2" Layer = "0" Angle = "sAngle" />
+        <Turn  Axis = "2" Layer = "2" Angle = "sAngle" />
+        <Split Axis = "0" From  = "1"/>
+        <Undo  Repeat = "8" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

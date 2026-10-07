@@ -1,0 +1,113 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+// Limited: TurningAngles = "sAngle" instead of "sAngle / 2"
+
+    <Interface>
+        <Name>Helimate (limited)</Name>
+        <Menu>Other forms\Dodecahedron\Mixed\Face-Edge\Helimate (limited)</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Evgeniy Grigoriev+Skallos+Boris</Programmer>
+        <Added>2017-08-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3047</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * sqrt(3) * (Sqrt(5) + 3) / 12;
+
+        DCut := R * 0.456;
+        DCutE := R * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0; Pi" JumbleAngle = "arctan(2)" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Ex[ 0]; Ey[ 0]; Ez[ 0]" />
+        <Axis NormVector = "Ex[ 1]; Ey[ 1]; Ez[ 1]" />
+        <Axis NormVector = "Ex[ 2]; Ey[ 2]; Ez[ 2]" />
+        <Axis NormVector = "Ex[ 3]; Ey[ 3]; Ez[ 3]" />
+        <Axis NormVector = "Ex[ 4]; Ey[ 4]; Ez[ 4]" />
+        <Axis NormVector = "Ex[ 5]; Ey[ 5]; Ez[ 5]" />
+        <Axis NormVector = "Ex[ 6]; Ey[ 6]; Ez[ 6]" />
+        <Axis NormVector = "Ex[ 7]; Ey[ 7]; Ez[ 7]" />
+        <Axis NormVector = "Ex[ 8]; Ey[ 8]; Ez[ 8]" />
+        <Axis NormVector = "Ex[ 9]; Ey[ 9]; Ez[ 9]" />
+        <Axis NormVector = "Ex[10]; Ey[10]; Ez[10]" />
+        <Axis NormVector = "Ex[11]; Ey[11]; Ez[11]" />
+        <Axis NormVector = "Ex[12]; Ey[12]; Ez[12]" />
+        <Axis NormVector = "Ex[13]; Ey[13]; Ez[13]" />
+        <Axis NormVector = "Ex[14]; Ey[14]; Ez[14]" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <!-- cut for better control -->
+        <Macro Name = "CutE">
+            <HideContaining Vector = " Vx[V1]; Vy[V1]; Vz[V1]" />
+            <HideContaining Vector = " Vx[V2]; Vy[V2]; Vz[V2]" />
+            <HideContaining Vector = "-Vx[V1];-Vy[V1];-Vz[V1]" />
+            <HideContaining Vector = "-Vx[V2];-Vy[V2];-Vz[V2]" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "Ex[E1] - Ex[E2]; Ey[E1] - Ey[E2]; Ez[E1] - Ez[E2]" NormDistance = "-DCutE" /></Cut>
+            <Cut><Plane NormVector = "Ex[E2] - Ex[E1]; Ey[E2] - Ey[E1]; Ez[E2] - Ez[E1]" NormDistance = "-DCute" /></Cut>
+            <Cut><Plane NormVector = "Ex[E3] - Ex[E4]; Ey[E3] - Ey[E4]; Ez[E3] - Ez[E4]" NormDistance = "-DCutE" /></Cut>
+            <Cut><Plane NormVector = "Ex[E4] - Ex[E3]; Ey[E4] - Ey[E3]; Ez[E4] - Ez[E3]" NormDistance = "-DCute" /></Cut>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "CutE" Ax = " 0" E1 = " 1" E2 = " 5" E3 = " 4" E4 = " 6" V1 = " 0" V2 = "1" />
+        <ExecMacro MacroName = "CutE" Ax = " 1" E1 = " 2" E2 = " 6" E3 = " 0" E4 = " 7" V1 = " 1" V2 = "2" />
+        <ExecMacro MacroName = "CutE" Ax = " 2" E1 = " 3" E2 = " 7" E3 = " 1" E4 = " 8" V1 = " 2" V2 = "3" />
+        <ExecMacro MacroName = "CutE" Ax = " 3" E1 = " 4" E2 = " 8" E3 = " 2" E4 = " 9" V1 = " 3" V2 = "4" />
+        <ExecMacro MacroName = "CutE" Ax = " 4" E1 = " 0" E2 = " 9" E3 = " 3" E4 = " 5" V1 = " 4" V2 = "0" />
+                                                                                                          
+        <ExecMacro MacroName = "CutE" Ax = " 5" E1 = " 0" E2 = "19" E3 = " 4" E4 = "10" V1 = " 0" V2 = "5" />
+        <ExecMacro MacroName = "CutE" Ax = " 6" E1 = " 1" E2 = "15" E3 = " 0" E4 = "11" V1 = " 1" V2 = "6" />
+        <ExecMacro MacroName = "CutE" Ax = " 7" E1 = " 2" E2 = "16" E3 = " 1" E4 = "12" V1 = " 2" V2 = "7" />
+        <ExecMacro MacroName = "CutE" Ax = " 8" E1 = " 3" E2 = "17" E3 = " 2" E4 = "13" V1 = " 3" V2 = "8" />
+        <ExecMacro MacroName = "CutE" Ax = " 9" E1 = " 4" E2 = "18" E3 = " 3" E4 = "14" V1 = " 4" V2 = "9" />
+                                                                                                          
+        <ExecMacro MacroName = "CutE" Ax = "10" E1 = " 5" E2 = "20" E3 = "15" E4 = "19" V1 = "10" V2 = "5" />
+        <ExecMacro MacroName = "CutE" Ax = "11" E1 = " 6" E2 = "21" E3 = "16" E4 = "15" V1 = "11" V2 = "6" />
+        <ExecMacro MacroName = "CutE" Ax = "12" E1 = " 7" E2 = "22" E3 = "17" E4 = "16" V1 = "12" V2 = "7" />
+        <ExecMacro MacroName = "CutE" Ax = "13" E1 = " 8" E2 = "23" E3 = "18" E4 = "17" V1 = "13" V2 = "8" />
+        <ExecMacro MacroName = "CutE" Ax = "14" E1 = " 9" E2 = "24" E3 = "19" E4 = "18" V1 = "14" V2 = "9" />
+
+        <!-- cut for better control -->
+<!--        <Macro Name = "Cut">
+            <Hide Axis = "Ax" Layer = "1" />
+            <Cut><Plane NormVector = "Vx[V1] - Vx[V2]; Vy[V1] - Vy[V2]; Vz[V1] - Vz[V2]" NormDistance = "-DCut" /></Cut>
+            <Cut><Plane NormVector = "Vx[V2] - Vx[V1]; Vy[V2] - Vy[V1]; Vz[V2] - Vz[V1]" NormDistance = "-DCut" /></Cut>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Ax = " 0" V1 = " 0" V2 = "1" />
+        <ExecMacro MacroName = "Cut" Ax = " 1" V1 = " 1" V2 = "2" />
+        <ExecMacro MacroName = "Cut" Ax = " 2" V1 = " 2" V2 = "3" />
+        <ExecMacro MacroName = "Cut" Ax = " 3" V1 = " 3" V2 = "4" />
+        <ExecMacro MacroName = "Cut" Ax = " 4" V1 = " 4" V2 = "0" />
+
+        <ExecMacro MacroName = "Cut" Ax = " 5" V1 = " 0" V2 = "5" />
+        <ExecMacro MacroName = "Cut" Ax = " 6" V1 = " 1" V2 = "6" />
+        <ExecMacro MacroName = "Cut" Ax = " 7" V1 = " 2" V2 = "7" />
+        <ExecMacro MacroName = "Cut" Ax = " 8" V1 = " 3" V2 = "8" />
+        <ExecMacro MacroName = "Cut" Ax = " 9" V1 = " 4" V2 = "9" />
+
+        <ExecMacro MacroName = "Cut" Ax = "10" V1 = "10" V2 = "5" />
+        <ExecMacro MacroName = "Cut" Ax = "11" V1 = "11" V2 = "6" />
+        <ExecMacro MacroName = "Cut" Ax = "12" V1 = "12" V2 = "7" />
+        <ExecMacro MacroName = "Cut" Ax = "13" V1 = "13" V2 = "8" />
+        <ExecMacro MacroName = "Cut" Ax = "14" V1 = "14" V2 = "9" />
+-->
+    </Figure>
+</xml>

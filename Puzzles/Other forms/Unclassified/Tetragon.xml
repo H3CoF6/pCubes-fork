@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Tetragon</Name>
+        <Menu>Other forms\Unclassified\Tetragon</Menu>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Inventor></Inventor>
+        <Added>2017-01-09</Added>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clOrange       := 'FF6000';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clWhite        := 'FFFFFF';
+        clLightViolett := 'FF0080';
+        clLightBlue    := '2828FF';
+        clViolett      := '800080';
+        clBrown        := '800000';
+        clLightGreen   := '00FF00';
+        clCyan         := '00DCB4';
+
+        DCut := 0.5;
+        D := DCut * 0.7;
+
+        A1 := ArcCos(35 / 86);
+        A2 := ArcCos(5 / 22);
+        A3 := ArcCos(-25 / 26);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "-5; -5;  1" />
+        <Axis NormVector = "-5; -1;  5" />
+        <Axis NormVector = "-1; -5;  5" />
+
+        <Axis NormVector = "-5;  5; -1" />
+        <Axis NormVector = "-5;  1; -5" />
+        <Axis NormVector = "-1;  5; -5" />
+
+        <Axis NormVector = " 5; -5; -1" />
+        <Axis NormVector = " 5; -1; -5" />
+        <Axis NormVector = " 1; -5; -5" />
+
+        <Axis NormVector = " 5;  5;  1" />
+        <Axis NormVector = " 5;  1;  5" />
+        <Axis NormVector = " 1;  5;  5" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " 2; -2;  2" />
+                <Add Vector = "-2;  2;  2" />
+                <Add Vector = " 2;  2; -2" />
+                <Add Vector = "-2; -2; -2" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = "0;1;3" />
+                <Face VertexIndexes = "1;2;3" />
+                <Face VertexIndexes = "0;3;2" />
+                <Face VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "clViolett     "><Plane NormVector = " 5;  5; -1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clYellow      "><Plane NormVector = " 5;  1; -5" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clBrown       "><Plane NormVector = " 1;  5; -5" NormDistance = "-DCut" /></Cut>
+                                                                
+        <Cut Color = "clBlue        "><Plane NormVector = " 5; -5;  1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clWhite       "><Plane NormVector = " 5; -1;  5" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clGreen       "><Plane NormVector = " 1; -5;  5" NormDistance = "-DCut" /></Cut>
+                                                                
+        <Cut Color = "clCyan        "><Plane NormVector = "-5;  5;  1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clLightBlue   "><Plane NormVector = "-5;  1;  5" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clLightViolett"><Plane NormVector = "-1;  5;  5" NormDistance = "-DCut" /></Cut>
+                                                                
+        <Cut Color = "clRed         "><Plane NormVector = "-5; -5; -1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clLightGreen  "><Plane NormVector = "-5; -1; -5" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clOrange      "><Plane NormVector = "-1; -5; -5" NormDistance = "-DCut" /></Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Planet</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Skewb Planet</Menu>
+        <Inventor>Matt Lozano</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-06-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8974</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36964</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * 0.3;
+        R := W * 0.8;
+        WC := W * 1.004;
+        Sc := 1.1;
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.985;
+    </Script>
+
+    <Axes TurningAngles = "Pi;0;Pi" PlaneDistances = "-W; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "D" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "R" Color = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese Skewb Hexs</Name>
+        <Menu>Other forms\Multi-core\Siamese Skewb Hexs</Menu>
+        <Inventor>Benjy Oliver</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2869</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'F0F0F0'; // White
+        Colors[ 1] := '00FFFF'; // Cyan
+        Colors[ 2] := '0000FF'; // Blue
+        Colors[ 3] := '000080'; // Navy
+        Colors[ 4] := 'FF7F50'; // Coral
+        Colors[ 5] := 'FF0000'; // Red
+        Colors[ 6] := '800000'; // Brown
+        Colors[ 7] := 'FFFF00'; // Yellow
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '808000'; // Olive
+        Colors[10] := '00FF00'; // Lime
+        Colors[11] := '008000'; // Green
+        Colors[12] := 'FF69B4'; // Pink
+        Colors[13] := '800080'; // Purple
+
+        W := 0.35;
+        C := W / 2;
+        T := (W + C) / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = "-1; 1; 1" BaseVector = "-T; 0; 0" />
+        <Axis NormVector = "-1; 1;-1" BaseVector = "-T; 0; 0" />
+        <Axis NormVector = "-1;-1;-1" BaseVector = "-T; 0; 0" />
+        <Axis NormVector = "-1;-1; 1" BaseVector = "-T; 0; 0" />
+        <Axis NormVector = " 1;-1;-1" BaseVector = " T; 0; 0" />
+        <Axis NormVector = " 1;-1; 1" BaseVector = " T; 0; 0" />
+        <Axis NormVector = " 1; 1; 1" BaseVector = " T; 0; 0" />
+        <Axis NormVector = " 1; 1;-1" BaseVector = " T; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Figure" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " C; 0; W" />
+                    <Add Vector = " 0;-C; W" />
+                    <Add Vector = "-C; 0; W" />
+                    <Add Vector = " 0; C; W" />
+
+                    <Add Vector = " W; 0; C" />
+                    <Add Vector = " 0;-W; C" />
+                    <Add Vector = "-W; 0; C" />
+                    <Add Vector = " 0; W; C" />
+
+                    <Add Vector = " C; W; 0" />
+                    <Add Vector = " W; C; 0" />
+                    <Add Vector = " W;-C; 0" />
+                    <Add Vector = " C;-W; 0" />
+                    <Add Vector = "-C;-W; 0" />
+                    <Add Vector = "-W;-C; 0" />
+                    <Add Vector = "-W; C; 0" />
+                    <Add Vector = "-C; W; 0" />
+
+                    <Add Vector = " W; 0;-C" />
+                    <Add Vector = " 0;-W;-C" />
+                    <Add Vector = "-W; 0;-C" />
+                    <Add Vector = " 0; W;-C" />
+
+                    <Add Vector = " C; 0;-W" />
+                    <Add Vector = " 0;-C;-W" />
+                    <Add Vector = "-C; 0;-W" />
+                    <Add Vector = " 0; C;-W" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[ 0]" VertexIndexes = " 3; 2; 1; 0" />
+                    <Face Color = "Colors[ 1]" VertexIndexes = " 4;10;16; 9" />
+                    <Face Color = "Colors[ 2]" VertexIndexes = " 5;12;17;11" />
+                    <Face Color = "Colors[ 3]" VertexIndexes = " 6;14;18;13" />
+                    <Face Color = "Colors[ 4]" VertexIndexes = " 7; 8;19;15" />
+                    <Face Color = "Colors[ 5]" VertexIndexes = "20;21;22;23" />
+
+                    <Face Color = "Colors[ 6]" VertexIndexes = " 0; 1; 5;11;10; 4" />
+                    <Face Color = "Colors[ 7]" VertexIndexes = " 1; 2; 6;13;12; 5" />
+                    <Face Color = "Colors[ 8]" VertexIndexes = " 2; 3; 7;15;14; 6" />
+                    <Face Color = "Colors[ 9]" VertexIndexes = " 3; 0; 4; 9; 8; 7" />
+
+                    <Face Color = "Colors[10]" VertexIndexes = " 8; 9;16;20;23;19" />
+                    <Face Color = "Colors[11]" VertexIndexes = "10;11;17;21;20;16" />
+                    <Face Color = "Colors[12]" VertexIndexes = "12;13;18;22;21;17" />
+                    <Face Color = "Colors[13]" VertexIndexes = "14;15;19;23;22;18" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Transfer Vector = " T; 0; 0" />
+        <ExecMacro MacroName = "Figure" />
+        <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-T" /> </Cut>
+        <SplitByAxes/>
+        <HideAll/>
+
+        <Transfer Vector = "-T * 2; 0; 0" />
+        <ExecMacro MacroName = "Figure" />
+        <Cut><Plane NormVector = " 1; 0; 0" NormDistance = "-T" /> </Cut>
+        <SplitByAxes/>
+
+        <Transfer Vector = " T; 0; 0" />
+        <ShowAll/>
+    </Figure>
+</xml>

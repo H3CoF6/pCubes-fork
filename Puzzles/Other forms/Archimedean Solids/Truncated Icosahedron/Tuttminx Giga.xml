@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tuttminx Giga</Name>
+        <Aliases>Rayminx</Aliases>
+        <Menu>Other forms\Archimedean Solids\Truncated Icosahedron\Tuttminx Giga</Menu>
+        <Inventor>Ray Bruner</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-04-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4291</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFF00'; // ArtyClick Yellow
+        Colors[ 1] := '004080'; // Deep Sea Blue
+        Colors[ 2] := '4070FF'; // Ultramarine Blue
+        Colors[ 3] := '00FF00'; // Hot Green
+        Colors[ 4] := 'FFFFFF'; // White
+
+        Colors[ 5] := 'FF0000'; // Bright Red
+        Colors[ 6] := 'FF0080'; // Deep Pink
+        Colors[ 7] := '800080'; // Dark Magenta
+        Colors[ 8] := 'BF8040'; // Tiger Orange
+        Colors[ 9] := '309060'; // Sea Green
+
+        Colors[10] := 'FACC05'; // Mikado Yellow
+        Colors[11] := '734082'; // Dirty Purple
+        Colors[12] := 'E23465'; // Deep Rose
+        Colors[13] := '008000'; // Tree Green
+        Colors[14] := 'C1C5C7'; // Metallic Silver
+
+        Colors[15] := 'FF800A'; // Dark Orange
+        Colors[16] := '4D1350'; // Deep Violet
+        Colors[17] := '9F0000'; // Dark Red
+        Colors[18] := '7F8040'; // Khaki Green
+        Colors[19] := '80BF80'; // Soft Green (Olivine)
+
+        Colors[20] := '51C4FA'; // Crystal Blue
+        Colors[21] := '075AFF'; // Bright Blue
+        Colors[22] := 'FF8009'; // Dark Orange
+        Colors[23] := 'FFFFFE'; // White
+        Colors[24] := 'FACC06'; // Mikado Yellow
+        Colors[25] := '01FF00'; // Hot Green
+        Colors[26] := 'FFFF01'; // ArtyClick Yellow
+        Colors[27] := '018000'; // Tree Green
+        Colors[28] := '38ABEA'; // Butterfly Blue
+        Colors[29] := 'FF0001'; // Bright Red
+        Colors[30] := 'C1C5C8'; // Metallic Silver
+        Colors[31] := '009484'; // Teal (Dark Cyan)
+
+        R := 0.7;
+
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        RCut := (2 * R + RSin) / 3;
+
+        D1  := Rin - R * cos(dAngle) / 6;
+        D12 := Rin - R * cos(dAngle) / 12;
+        D2 := (R + RSin) / 2;
+        D22 := (7 * R + 5 * RSin) / 12;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D1;D12" FixedLayers = "0" NormVectors = "Cx; Cy; Cz" />
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D2;D22" FixedLayers = "0" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+
+        <Macro Name = "CutV" >
+            <Cut Color="Colors[v + 20]" > <Plane NormVector = " Vx[v]; Vy[v]; Vz[v]" NormDistance = "-RCut" /> </Cut>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" v = "0" Repeat = "12" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

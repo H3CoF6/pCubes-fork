@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Weird Skewb Plus II</Name>
+        <Menu>Other cubes\Unclassified\Weird Skewb Plus II</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-10</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0077EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 2 / sqrt(6);
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; 0;Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 2; 1" />
+        <Axis NormVector = "-1; 1; 2" />
+        <Axis NormVector = "-2;-1; 1" />
+        <Axis NormVector = " 1; 1; 2" />
+        <Axis NormVector = " 2;-1; 1" />
+        <Axis NormVector = " 1;-2;-1" />
+        <Axis NormVector = "-1;-2; 1" />
+        <Axis NormVector = " 1;-1; 2" />
+        <Axis NormVector = " 2; 1; 1" />
+        <Axis NormVector = "-1;-1; 2" />
+        <Axis NormVector = "-2; 1; 1" />
+        <Axis NormVector = "-1; 2;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split><Plane NormVector = " 1; 1; 1" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = "-1;-1; 1" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = "-1; 1;-1" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 1;-1;-1" NormDistance = "0" /></Split>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "ax0" Layer = "0" Angle = "Pi/3" />
+            <Split Axis = "ax  " From = "1" />
+            <Split Axis = "ax+1" From = "2" />
+            <Split Axis = "ax+2" From = "1" />
+            <Undo />
+        </Macro>
+        <ExecMacro MacroName = "Split" ax0 = "0" ax = "13" />
+        <ExecMacro MacroName = "Split" ax0 = "1" ax = " 7" />
+        <ExecMacro MacroName = "Split" ax0 = "2" ax = " 4" />
+        <ExecMacro MacroName = "Split" ax0 = "3" ax = "10" />
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

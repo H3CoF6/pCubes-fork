@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Little Hut</Name>
+        <Menu>Other cubes\Bermuda Cubes\Little Hut</Menu>
+        <Inventor>Aleh Hladzilin</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8369</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        s2 := sqrt(2);
+        H := W * 2 / 3;
+        L := W * s2;
+        D := W * (s2 - 1);
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "-1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-W;-W;-H" />
+                <Add Vector = "-W; W;-H" />
+                <Add Vector = "-D; W;-H" />
+                <Add Vector = " 0; L;-H" />
+                <Add Vector = " L; 0;-H" />
+                <Add Vector = " W;-D;-H" />
+                <Add Vector = " W;-W;-H" />
+
+                <Add Vector = "-W;-W; H" />
+                <Add Vector = "-W; W; H" />
+                <Add Vector = "-D; W; H" />
+                <Add Vector = " 0; L; H" />
+                <Add Vector = " L; 0; H" />
+                <Add Vector = " W;-D; H" />
+                <Add Vector = " W;-W; H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "FFFFFF" VertexIndexes = " 0; 1; 2; 3;4;5;6" />
+                <Face Color = "FFFF00" VertexIndexes = "13;12;11;10;9;8;7" />
+                <Face Color = "C80000" VertexIndexes = " 0; 7; 8; 1" />
+                <Face Color = "008800" VertexIndexes = " 1; 8; 9; 2" />
+                <Face Color = "008801" VertexIndexes = " 2; 9;10; 3" />
+                <Face Color = "FF7700" VertexIndexes = " 3;10;11; 4" />
+                <Face Color = "018800" VertexIndexes = " 4;11;12; 5" />
+                <Face Color = "018900" VertexIndexes = " 5;12;13; 6" />
+                <Face Color = "0000DD" VertexIndexes = " 6;13; 7; 0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "D / s2; D / s2; 0" />
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "D" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "D" /></Split>
+        <InvertVisibility/>
+        <HideContaining Vector = "0;0;0" />
+        <Split><Plane NormVector = "-1; 1; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = "-1; 1; 0" NormDistance = "-D" /></Split>
+        <ShowAll/>
+    </Figure>
+</xml>

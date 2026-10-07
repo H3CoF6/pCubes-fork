@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hex Domino Half Black Rainbow Puck</Name>
+        <Menu>Other forms\Cylinder\Hex Domino Half Black Rainbow Puck</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-03-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2512</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '009600'; // Green
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := 'FF800A'; // Orange
+        Colors[3] := 'C80000'; // Red
+        Colors[4] := '990099'; // Violett
+        Colors[5] := '1C34C3'; // Blue
+        Colors[6] := '222222'; // Black
+
+        R := 0.6;
+        D := R * 0.65;
+        H := R * 0.25;
+
+        for i := 0 to 5 do begin
+            ax[i] := cos( Pi / 3 * i);
+            ay[i] := sin( Pi / 3 * i);
+        end;
+
+        N := 48;
+        M := N/12;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for j := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(j);
+            for j := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(j);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" NormVectors = "  0;  0; 1" TurnAxesWithLayer = "0" />
+    <Axes TurningAngles = " 0; Pi" PlaneDistances = "D" NormVectors = " ax; ay; 0" />
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "Pi/6" />
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "AddSector" >
+            <Script>
+                Color := Colors[c];
+                Inc(c);
+            </Script>
+            <ExecMacro MacroName = "AddFace" Repeat = "M" />
+            <Face Color = "Color" VertexIndexes = "i; 2*N; FromTo(i-M, i-1)" InvisibleEdges = "3" />
+            <Face Color = "Color" VertexIndexes = "i-M+N;2*N+1; FromTo(i+N, i-M+N+1)" InvisibleEdges = "3" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " x; y; H" />
+            <Vertices Vectors = " x; y;-H" />
+            <Vertices Vectors = " 0; 0; H" />
+            <Vertices Vectors = " 0; 0;-H" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddSector" i = "0" c = "0" Repeat = "6" />
+                <ExecMacro MacroName = "AddFace"  Color = "Colors[6]" Repeat = "N/2" />
+                <Face Color = "Colors[6]" VertexIndexes = " 0; FromTo( N div 2, N - 1)" InvisibleEdges = "1" />
+                <Face Color = "Colors[6]" VertexIndexes = " N div 2 + N; N; FromTo( 2 * N - 1, N div 2 + N + 1)" InvisibleEdges = "1" />
+            </Faces>
+        </Part>
+        <Turn NormVector = "0;0;1" Angle = "Pi*3/3" />
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

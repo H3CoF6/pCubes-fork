@@ -1,0 +1,136 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentaxon</Name>
+        <Menu>Other forms\2d\Pentaxon</Menu>
+        <Inventor>Karolis Kairysv</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10860</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clGreen  := '00FF00';
+        clYellow := 'FFFF00';
+        clBlue   := '0000FF';
+        clBlack  := '333333';
+
+        K := 0.6;
+        phi := (sqrt(5) - 1) / 2; // The golden ratio
+
+        C30 := K * 0.4853980997217;
+        C60 := K * 0.8766749731297;
+
+        D1 := (C30 + C60 * phi) / sqrt(1 + phi^2);
+        D2 := (C60 * phi + C30 * (1 + phi)) / 2;
+
+        DCut1 := D1 - K * 0.05;
+        DCut2 := D2 - K * 0.05;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi/5" PlaneDistances = "D1" >
+        <Axis NormVector = "0;  -1; phi" />
+        <Axis NormVector = "1;-phi;   0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D2" >
+        <Axis NormVector = "1;-phi-1; phi" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSphere" >
+            <Script>
+                for i := 0 to 11 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clGreen" />
+        <Cut Axis = "0" From = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-phi;-1;-phi-1" NormDistance = " 0" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clRed" />
+        <Cut Axis = "0" From = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " phi; 1; phi+1" NormDistance = " 0" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clYellow" />
+        <Cut Axis = "1" From = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " phi; 1; phi+1" NormDistance = " 0" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlue" />
+        <Cut Axis = "1" From = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-phi;-1;-phi-1" NormDistance = " 0" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlack" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "2" From = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; phi+1;-phi" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;    -1; phi" NormDistance = " DCut1" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-phi-1; phi" NormDistance = " DCut2" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;    -1; phi" NormDistance = " DCut1" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlack" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1;   phi;   0" NormDistance = "-DCut1" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;     1;-phi" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1;-phi-1; phi" NormDistance = " DCut2" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-phi-1; phi" NormDistance = " DCut2" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;  -phi;   0" NormDistance = " DCut1" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; phi+1;-phi" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1;  -phi;   0" NormDistance = " DCut1" /> </Cut>
+        <ShowAll/>
+
+        <Macro Name = "Unbandage" >
+            <SplitByAxes/>
+            <Turn Axis = "0" Layer = "1" Angle = "2*Pi/5" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "2*Pi/5" />
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" Repeat = "5" />
+        <Undo Repeat = "10" />
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "1;0;0" Angle = " ArcTan(phi)" />
+        <Turn NormVector = "0;1;0" Angle = "-Pi/10" />
+        <Turn NormVector = "0;0;1" Angle = "-ArcTan(phi)" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

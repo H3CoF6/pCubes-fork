@@ -1,0 +1,202 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hungarian Rings Mini</Name>
+        <Menu>Other forms\2d\Marble\Hungarian Rings Mini</Menu>
+        <Inventor>Endre Pap</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4174</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'EE0000';
+        clYellow := 'FFFF00';
+        clGreen  := '00BB00';
+        clBlue   := '0033EE';
+        clWhite  := 'FFFFFF';
+
+        R := 0.55;
+
+        C1 := R * 0.4;
+        C2 := R * 0.5;
+        C3 := R * 0.635;
+
+        WX := (C3 - C2) / 2;
+        WY := WX;
+        WZ := WX;
+        DWX := (C3 + C2) / 2;
+        DWY := DWX;
+        DWZ := DWX;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/8; 0" PlaneDistances = " C2; C3" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddBody" >
+            <HideAll/>
+            <Cylinder Radius = "R" Color = "clGreen" >
+                <Base X = "C1" Y = "0" Z = "0" Color = "clGreen"/>
+                <Top  X = "C2" Y = "0" Z = "0" Color = "clGreen" />
+            </Cylinder>
+
+            <SplitByAxes/>
+            <Split> <Plane NormVector = " 1;-1; 0" NormDistance = " 0" /> </Split>
+            <RemoveContaining Vector = "C1; C2; 0" />
+            <Turn NormVector = "1;1;0" Angle = "Pi" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddBody" Repeat = "2" />
+        <ShowAll/>
+
+        <Macro Name = "AddPuck" >
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := cl;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Turn Axis = "ax" Layer = "1" Angle = " Pi/8" />
+        </Macro>
+
+        <Macro Name = "ClearMarbles" >
+            <HideContaining Vector = "C1; C1; 0" />
+            <HideContaining Vector = "C1; C3; 0" />
+            <HideContaining Vector = "C3; C1; 0" />
+            <RemoveAllVisible/>
+            <ShowAll/>
+        </Macro>
+
+1)
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 3" cl ="clWhite " />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 1" cl ="clYellow  " />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 7" cl ="clRed" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 4" cl ="clWhite " />
+
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 1" cl ="clWhite  " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 7" cl ="clBlue   " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 4" cl ="clYellow" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 3" cl ="clYellow" />
+
+        <SaveSolvedState/>
+
+2)
+        <ExecMacro MacroName = "ClearMarbles" />
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 3" cl ="clRed " />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 1" cl ="clYellow  " />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 8" cl ="clWhite" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 3" cl ="clRed " />
+
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 1" cl ="clRed  " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 7" cl ="clBlue   " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 4" cl ="clYellow" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 3" cl ="clYellow" />
+
+        <SaveSolvedState/>
+
+3)
+        <ExecMacro MacroName = "ClearMarbles" />
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 3" cl ="clRed " />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 1" cl ="clBlue  " />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 8" cl ="clWhite" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 3" cl ="clRed " />
+
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 1" cl ="clRed  " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 8" cl ="clYellow   " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 3" cl ="clBlue " />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 3" cl ="clBlue" />
+
+        <SaveSolvedState/>
+
+4)
+        <ExecMacro MacroName = "ClearMarbles" />
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 3" cl ="clWhite " />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 1" cl ="clBlue  " />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 7" cl ="clRed" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 4" cl ="clWhite " />
+
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 1" cl ="clWhite  " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 8" cl ="clYellow   " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 3" cl ="clBlue " />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 3" cl ="clBlue" />
+
+        <SaveSolvedState/>
+
+5)
+        <ExecMacro MacroName = "ClearMarbles" />
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 8" cl ="clYellow" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 7" cl ="clBlue   " />
+
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 5" cl ="clWhite " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 7" cl ="clRed  " />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 3" cl ="clWhite" />
+
+        <SaveSolvedState/>
+
+6)
+        <ExecMacro MacroName = "ClearMarbles" />
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 7" cl ="clBlue" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 8" cl ="clYellow   " />
+
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 5" cl ="clWhite " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 7" cl ="clRed  " />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 3" cl ="clWhite" />
+
+        <SaveSolvedState/>
+
+7)
+        <ExecMacro MacroName = "ClearMarbles" />
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 8" cl ="clYellow" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 7" cl ="clBlue   " />
+
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 4" cl ="clRed " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 8" cl ="clWhite  " />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 3" cl ="clRed" />
+
+        <SaveSolvedState/>
+
+8)
+        <ExecMacro MacroName = "ClearMarbles" />
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 7" cl ="clBlue" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = " 8" cl ="clYellow   " />
+
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 4" cl ="clRed " />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 8" cl ="clWhite  " />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/8" />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = " 3" cl ="clRed" />
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-135 * Pi/180" />
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

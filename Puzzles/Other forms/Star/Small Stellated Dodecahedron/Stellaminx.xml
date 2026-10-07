@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Stellaminx</Name>
+        <Menu>Other forms\Star\Small Stellated Dodecahedron\Stellaminx</Menu>
+        <Inventor>Manish Rathod</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-12-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11539</Link>
+    </Interface>
+
+    <Script>
+        R := 0.45;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        pillow := 1.8; // sqrt(5) for Small Stellated Dodecahedron
+        for i := 0 to 11 do begin
+          Cx[i] := Cx[i] * pillow;
+          Cy[i] := Cy[i] * pillow;
+          Cz[i] := Cz[i] * pillow;
+        end;
+
+        D := (RSin + Cz[1]) / 2;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <Macro Name = "Pyramid" >
+            <Face Color = "Colors[c]" VertexIndexes = "i1;i2;i0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = "i2;i3;i0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = "i3;i4;i0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = "i4;i5;i0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = "i5;i1;i0" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx;Vy;Vz" />
+            <Vertices Vectors = "Cx;Cy;Cz" />
+
+            <Faces>
+                <ExecMacro MacroName = "Pyramid" c = " 0" i0 = "20" i1 = " 4" i2 = " 3" i3 = " 2" i4 = " 1" i5 = " 0" />
+                <ExecMacro MacroName = "Pyramid" c = " 1" i0 = "21" i1 = " 0" i2 = " 1" i3 = " 6" i4 = "10" i5 = " 5" />
+                <ExecMacro MacroName = "Pyramid" c = " 2" i0 = "22" i1 = " 1" i2 = " 2" i3 = " 7" i4 = "11" i5 = " 6" />
+                <ExecMacro MacroName = "Pyramid" c = " 3" i0 = "23" i1 = " 2" i2 = " 3" i3 = " 8" i4 = "12" i5 = " 7" />
+                <ExecMacro MacroName = "Pyramid" c = " 4" i0 = "24" i1 = " 3" i2 = " 4" i3 = " 9" i4 = "13" i5 = " 8" />
+                <ExecMacro MacroName = "Pyramid" c = " 5" i0 = "25" i1 = " 4" i2 = " 0" i3 = " 5" i4 = "14" i5 = " 9" />
+                <ExecMacro MacroName = "Pyramid" c = " 6" i0 = "26" i1 = "18" i2 = "17" i3 = "12" i4 = " 8" i5 = "13" />
+                <ExecMacro MacroName = "Pyramid" c = " 7" i0 = "27" i1 = "19" i2 = "18" i3 = "13" i4 = " 9" i5 = "14" />
+                <ExecMacro MacroName = "Pyramid" c = " 8" i0 = "28" i1 = "15" i2 = "19" i3 = "14" i4 = " 5" i5 = "10" />
+                <ExecMacro MacroName = "Pyramid" c = " 9" i0 = "29" i1 = "16" i2 = "15" i3 = "10" i4 = " 6" i5 = "11" />
+                <ExecMacro MacroName = "Pyramid" c = "10" i0 = "30" i1 = "17" i2 = "16" i3 = "11" i4 = " 7" i5 = "12" />
+                <ExecMacro MacroName = "Pyramid" c = "11" i0 = "31" i1 = "15" i2 = "16" i3 = "17" i4 = "18" i5 = "19" />
+            </Faces>
+        </Part>
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <HideContaining Vectors = "Vx;Vy;Vz" />
+        <InvertVisibility/>
+
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Cx[i];Cy[i];Cz[i]" NormDistance = "RSin" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "12" />
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

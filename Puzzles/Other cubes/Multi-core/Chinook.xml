@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Chinook</Name>
+        <Menu>Other cubes\Multi-core\Chinook</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-04-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1638</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=20704</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        D2 := D * 2;
+        DE := D2 / sqrt(2);
+        jumAngle := Arccos(1/3);
+    </Script>
+ 
+    <Axes TurningAngles = "0; Pi" JumbleAngle = "jumAngle" PlaneDistances = "DE" >
+        <Axis NormVector = " 0; 1; 1" BaseVector = " D; D; 0" />
+        <Axis NormVector = " 1; 0; 1" BaseVector = " D; D; 0" />
+        <Axis NormVector = " 0;-1; 1" BaseVector = "-D;-D; 0" />
+        <Axis NormVector = "-1; 0; 1" BaseVector = "-D;-D; 0" />
+
+        <Axis NormVector = " 0;-1;-1" BaseVector = "-D;-D; 0" />
+        <Axis NormVector = "-1; 0;-1" BaseVector = "-D;-D; 0" />
+        <Axis NormVector = " 0; 1;-1" BaseVector = " D; D; 0" />
+        <Axis NormVector = " 1; 0;-1" BaseVector = " D; D; 0" />
+
+        <Axis NormVector = " 1; 1; 0" BaseVector = " D; D; 0" />
+        <Axis NormVector = "-1;-1; 0" BaseVector = "-D;-D; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D2" WY = "WX" WZ = "WX" DWX = " D" DWY = " D" DWZ = "0" />
+        <Cut><Plane NormVector = " 1; 1; 0" /></Cut>
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D2" WY = "WX" WZ = "WX" DWX = "-D" DWY = "-D" DWZ = "0" />
+        <Cut><Plane NormVector = "-1;-1; 0" /></Cut>
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "4" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "6" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "4" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "3" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "5" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "7" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "4" />
+
+        <Split><Plane NormVector = "0;0;1" /></Split>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

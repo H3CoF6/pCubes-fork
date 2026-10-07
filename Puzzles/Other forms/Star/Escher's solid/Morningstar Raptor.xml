@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Morningstar Raptor</Name>
+        <Menu>Other forms\Star\Escher's solid\Morningstar Raptor</Menu>
+        <Inventor>Seth Holiday</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11205</Link>
+    </Interface>
+
+    <Script>
+        Color[ 0] := 'FF0000'; // Red
+        Color[ 1] := '008000'; // Green
+        Color[ 2] := '800080'; // Purple
+        Color[ 3] := 'F0F0F0'; // White
+        Color[ 4] := '0000FF'; // Blue
+        Color[ 5] := 'FF6000'; // Orange
+        Color[ 6] := 'FF69B4'; // Pink
+        Color[ 7] := '00FF00'; // Lime
+        Color[ 8] := '000080'; // Navy
+        Color[ 9] := '202020'; // Black
+        Color[10] := '00FFFF'; // Cyan
+        Color[11] := 'FFFF00'; // Yellow
+
+        W := 0.5;
+        DCut := W / sqrt(2);
+        D := W * 0.44;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "SplitAxes">
+            <Split Color2 = "Color[ i]"><Plane NormVector = " Ex[i]; Ey[i]; Ez[i]" NormDistance = "DCut" />  </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitAxes" i = "0" Repeat = "12" />
+
+        <Macro Name = "HideEdges">
+            <HideContaining Vector = " Ex[i] * 0.9; Ey[i] * 0.9; Ez[i] * 0.9" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideEdges" i = "0" Repeat = "12" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

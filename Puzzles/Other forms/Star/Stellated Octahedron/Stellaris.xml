@@ -1,0 +1,88 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Stellaris</Name>
+        <Menu>Other forms\Star\Stellated Octahedron\Stellaris</Menu>
+        <Inventor>Raphaël Mouflin</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7987</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'F0F0F0'; // White 
+        Colors[1] := 'FF99FF'; // Rose  
+        Colors[2] := '0066FF'; // Blue  
+        Colors[3] := 'FF0000'; // Red   
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FF6000'; // Orange
+        Colors[6] := '00BB00'; // Green 
+        Colors[7] := '8800FF'; // Purple
+
+        W  := 0.5;
+        D  := W * sqrt(3)/9;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "-7*D; -5*D; -D; D; 5*D; 7*D" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddVertex" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " 0; 0; W" />
+                    <Add Vector = " W; W; W" />
+                    <Add Vector = " W; 0; 0" />
+                    <Add Vector = " 0; W; 0" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "Colors[c0]" VertexIndexes = "0;2;1" />
+                    <Face Color = "Colors[c1]" VertexIndexes = "0;1;3" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "1;2;3" />
+                    <Face                      VertexIndexes = "0;3;2" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddVertex" c0 = "7" C1 = "5" c2 = "6" />
+        <ExecMacro MacroName = "AddVertex" c0 = "2" C1 = "4" c2 = "3" />
+        <ExecMacro MacroName = "AddVertex" c0 = "5" C1 = "7" c2 = "0" />
+        <ExecMacro MacroName = "AddVertex" c0 = "4" C1 = "2" c2 = "1" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddVertex" c0 = "0" C1 = "6" c2 = "5" />
+        <ExecMacro MacroName = "AddVertex" c0 = "3" C1 = "1" c2 = "2" />
+        <ExecMacro MacroName = "AddVertex" c0 = "6" C1 = "0" c2 = "7" />
+        <ExecMacro MacroName = "AddVertex" c0 = "1" C1 = "3" c2 = "4" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+
+<!-- gray part is unnecessary
+        <Part>
+            <Vertices>
+                <Add Vector = "-w; 0; 0" />
+                <Add Vector = " w; 0; 0" />
+                <Add Vector = " 0;-w; 0" />
+                <Add Vector = " 0; w; 0" />
+                <Add Vector = " 0; 0;-w" />
+                <Add Vector = " 0; 0; w" />
+            </Vertices>
+            <Faces>
+                <Face VertexIndexes = "1;5;2" />
+                <Face VertexIndexes = "2;5;0" />
+                <Face VertexIndexes = "0;5;3" />
+                <Face VertexIndexes = "3;5;1" />
+                <Face VertexIndexes = "2;4;1" />
+                <Face VertexIndexes = "0;4;2" />
+                <Face VertexIndexes = "3;4;0" />
+                <Face VertexIndexes = "1;4;3" />
+            </Faces>
+        </Part>
+-->
+        <SplitByAxes/>
+    </Figure>
+</xml>

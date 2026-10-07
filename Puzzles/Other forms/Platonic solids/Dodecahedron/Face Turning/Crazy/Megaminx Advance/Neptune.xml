@@ -1,0 +1,88 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx Crazy Advance - Neptune</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Crazy\Megaminx Advance\Neptune</Menu>
+        <Inventor>Calvin's Puzzle</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-09-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9293</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10357</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := Rsin * 0.757;
+        RC := R * 0.338;
+
+        D1 := RSin;
+        L := 1.004;
+
+        FaceStatus[ 0] := 1;
+        FaceStatus[ 1] := 0;
+        FaceStatus[ 2] := 1;
+        FaceStatus[ 3] := 1;
+        FaceStatus[ 4] := 0;
+        FaceStatus[ 5] := 0;
+        FaceStatus[ 6] := 0;
+        FaceStatus[ 7] := 1;
+        FaceStatus[ 8] := 1;
+        FaceStatus[ 9] := 0;
+        FaceStatus[10] := 0;
+        FaceStatus[11] := 1;
+
+        for i := 0 to 11 do begin
+            CCx[i] := Cx[i] * L;
+            CCy[i] := Cy[i] * L;
+            CCz[i] := Cz[i] * L;
+            D2[i] := D1 * (2 - FaceStatus[i]);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; 0; sAngle; 0" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" PlaneDistances = "-D2[11]; -D; D; D2[ 0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" PlaneDistances = "-D2[ 6]; -D; D; D2[ 1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" PlaneDistances = "-D2[ 7]; -D; D; D2[ 2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" PlaneDistances = "-D2[ 8]; -D; D; D2[ 3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" PlaneDistances = "-D2[ 9]; -D; D; D2[ 4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" PlaneDistances = "-D2[10]; -D; D; D2[ 5]" />
+    </Axes>
+
+    <Figure>
+        // make center parts ordered from 0 to 11 corresponding to face number (for SetTextures)
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = "CCx[i]; CCy[i]; CCz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddCircle" Repeat = "12" i = "0" />
+        <SplitByAxes/>
+        <HideContaining Vectors = "CCx;CCy;CCz" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "AddCircle" Repeat = "12" i = "0" />
+        <SplitByAxes/>
+        <RemoveContaining Vectors = "CCx;CCy;CCz" />
+
+        <ShowAll/>
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Star" File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Crazy\Textures\Star.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Star = 0,0,0, 2,0,0, 3,0,0, 7,0,0, 8,0,0, 11,0,0
+    </SetTextures>
+
+</xml>

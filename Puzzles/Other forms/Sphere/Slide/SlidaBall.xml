@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>SlidaBall</Name>
+        <Menu>Other forms\Sphere\Slide\SlidaBall</Menu>
+        <Inventor>Albert Weeda</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-16</Added>
+        <Link>https://www.facebook.com/SlidaBall/</Link>
+        <Link>https://www.youtube.com/watch?v=TLwyigxx_lQ</Link>
+		<Link>https://www.kickstarter.com/projects/1053123883/the-slidaball-a-new-approach-to-a-3d-slide-puzzle</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        Color := '101010';
+
+        K := 0.6;
+        D := 1 / (1 + sqrt(2))+0.015;
+        D := 0.42;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/4; 0" PlaneDistances = "-D/2; D/2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+
+        // black body
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "HideCorner" >
+            <HideContaining Vector = "Vx[i]*Kv; Vy[i]*Kv; Vz[i]*Kv" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCorner" i = "0" Repeat = "8" Kv = "0.3"/>
+
+        <RemoveAllVisible/>
+
+        // colored parts
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <SplitByAxes/>
+
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "Ax1" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "Ax2" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Turn Axis = "Ax3" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Undo/>
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+
+
+        <Macro Name = "HideEdge" >
+            <HideContaining Vector = "Ex[i]*K; Ey[i]*K; Ez[i]*K" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideEdge" i = "0" Repeat = "12" K = "0.4"/>
+
+        <Macro Name = "HideCenter" >
+            <HideContaining Vector = "Cx[i]*K; Cy[i]*K; Cz[i]*K" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenter" i = "0" Repeat = "6" K = "0.5"/>
+
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

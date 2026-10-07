@@ -1,0 +1,109 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tridecalis</Name>
+        <Menu>Other forms\Bi Axes\Tridecalis</Menu>
+        <Inventor>Wong Chong Wen</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9149</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=412494</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF800A'; // Orange
+        Colors[1] := '0000FF'; // Blue
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := 'FFFFFF'; // White
+        clBlack  := '333333';
+
+        K := 0.65;
+        D := K * 0.224; // middle point
+        D := K * 0.2;
+
+        s5 := sqrt(5);
+        Px := K * sqrt((5 + 3 * s5) / 10);
+        Py := K * sqrt(2 + s5);
+        Pz := K * (1 + s5) / 2;
+
+        DCut := (sqrt(6 * (5 - s5)) * D + 2 * K) / 4;
+
+        A := 2 * Pi / 3;
+    </Script>
+
+    <Axes TurningAngles = "A" PlaneDistances = "-D" FixedLayers = "0" >
+        <Axis NormVector = " Px; 0; K" />
+        <Axis NormVector = "-Px; 0; K" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " Px;  0;  K" />
+                <Add Vector = "-Px;  0;  K" />
+                <Add Vector = "  0; Py;-Pz" />
+                <Add Vector = "  0;-Py;-Pz" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "0;2;1" />
+                <Face Color = "Colors[1]" VertexIndexes = "1;3;0" />
+                <Face Color = "Colors[2]" VertexIndexes = "0;3;2" />
+                <Face Color = "Colors[3]" VertexIndexes = "1;2;3" />
+            </Faces>
+        </Part>
+
+        // bottom
+        <Cut Color = "clBlack" ><Plane NormVector = "0;0;1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clBlack" ><Plane NormVector = "0; 0.24;1" NormDistance = "-K*0.724" /></Cut>
+        <Cut Color = "clBlack" ><Plane NormVector = "0;-0.24;1" NormDistance = "-K*0.724" /></Cut>
+        <Cut Color = "clBlack" ><Plane NormVector = "0; 1.27;1" NormDistance = "-K*0.854" /></Cut>
+        <Cut Color = "clBlack" ><Plane NormVector = "0;-1.27;1" NormDistance = "-K*0.854" /></Cut>
+
+        // brilliant faceting
+        <Macro Name = "CutAndRotate" > 
+            <Cut Color = "Color" ><Plane NormVector = " 1;1.6;0" NormDistance = "-K * 0.7927" /></Cut>
+            <Turn NormVector = "0;1;0" Angle = "Pi/5" />
+        </Macro>
+
+        <Macro Name = "CutFace" > 
+            <Turn NormVector = "1;0;0" Angle = "ArcTan(1/sqrt((1 + sqrt(5))/2))" />
+            <ExecMacro MacroName = "CutAndRotate" Repeat = "10" /> 
+            <Turn NormVector = "1;0;0" Angle = "-ArcTan(1/sqrt((1 + sqrt(5))/2))" />
+        </Macro>
+        <ExecMacro MacroName = "CutFace" Color = "Colors[1]" /> 
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+        <ExecMacro MacroName = "CutFace" Color = "Colors[0]" /> 
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+
+        <Turn NormVector = " Px; 0; K" Angle = "-A" />
+        <ExecMacro MacroName = "CutFace" Color = "Colors[2]" /> 
+        <Turn NormVector = " Px; 0; K" Angle = " A" />
+        <Turn NormVector = "-Px; 0; K" Angle = " A" />
+        <ExecMacro MacroName = "CutFace" Color = "Colors[3]" /> 
+        <Turn NormVector = "-Px; 0; K" Angle = "-A" />
+
+        // splitting
+
+        <SplitByAxes/>
+
+        <Macro Name = "R" > <Turn Axis = "0" Angle = "-A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+        <Macro Name = "R'"> <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+        <Macro Name = "L" > <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+        <Macro Name = "L'"> <Turn Axis = "1" Angle = " A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+
+        <ExecMacro MacroName = "R' L" Repeat = "9" />
+        <Undo Repeat = "18" />
+
+        <ExecMacro MacroName = "R L'" Repeat = "9" />
+        <Undo Repeat = "18" />
+
+        <ExecMacro MacroName = "R' L" Repeat = "1" />
+        <ExecMacro MacroName = "R L'" Repeat = "9" />
+        <Undo Repeat = "20" />
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

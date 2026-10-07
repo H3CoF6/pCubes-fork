@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Nightmare Cube</Name>
+        <Menu>Cubic\Bandaged\Nightmare Cube</Menu>
+        <Inventor>Adam G. Cowan</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2019-11-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3053</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        D := W * 0.0005;
+        W1 := D * 3; // size of small part
+        DC3 := W / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D"  >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <!-- Add a big part -->
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <!-- Remove middle layers -->
+
+        <Macro Name = "HideCorners" >
+            <HideContaining Vector = "Vx[Id]; Vy[Id]; Vz[Id]" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCorners" Id = "0" Repeat = "8" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <!-- Cut internal parts -->
+
+        <Macro Name = "CutCorners" >
+            <HideContaining Vector = "Vx[Id]; Vy[Id]; Vz[Id]" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "Vx[Id]; Vy[Id]; Vz[Id]" NormDistance = "DC3"/></Cut>
+            <ShowAll/>
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutCorners" Id = "0" Repeat = "8" />
+
+        <!-- Add a small part -->
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W1" Color = "-1" />
+
+        <!-- Split it as a Bicube -->
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "2" />
+
+        <ShowAll/>
+        <HideContaining Vector = "W1; 0; 0" />
+        <InvertVisibility/>
+        <Split Axis = "2" From = "1" />
+
+        <ShowAll/>
+        <HideContaining Vector = "0; -W1; 0" />
+        <InvertVisibility/>
+        <Split Axis = "0" From = "1" />
+
+        <ShowAll/>
+        <HideContaining Vector = "0; 0; W1" />
+        <InvertVisibility/>
+        <Split Axis = "1" From = "2" />
+
+        <ShowAll/>
+        <HideContaining Vector = "0; 0; 0" />
+        <InvertVisibility/>
+        <Split Axis = "0" From = "1" />
+        <HideContaining Vector = "0; 0; 0" />
+        <Split Axis = "1" From = "2" />
+
+        <ShowAll/>
+    </Figure>
+
+</xml>

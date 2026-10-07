@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Half Truncated Ivy Cube</Name>
+        <Menu>Other forms\Half Truncated Cube\Half Truncated Ivy Cube</Menu>
+        <Inventor>Gabe Vogt</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-12-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9786</Link>
+    </Interface>
+
+    <Script>
+        clPayneGrey          := '536878';
+        clPersianBlue        := '1C39BB';
+        clWine               := '722F37';
+        clBritishRacingGreen := '004225';
+
+        W := 0.5;
+        C := W * 5 * sqrt(3) / 9;
+        D :=-W * 0.15;
+        DCut1 := (C + D) * sqrt(3) / 2;
+        DCut2 := C + D * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = " D" FixedLayers = "1">
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "-W; W; W" />
+        <RemoveContaining Vector = " W;-W; W" />
+        <RemoveContaining Vector = " W; W;-W" />
+        <RemoveContaining Vector = "-W;-W;-W" />
+
+        <Cut Color = "clPayneGrey         "> <Plane NormVector = " 1; 1; 1" NormDistance = "-C" /> </Cut>
+        <Cut Color = "clPersianBlue       "> <Plane NormVector = " 1;-1;-1" NormDistance = "-C" /> </Cut>
+        <Cut Color = "clWine              "> <Plane NormVector = "-1;-1; 1" NormDistance = "-C" /> </Cut>
+        <Cut Color = "clBritishRacingGreen"> <Plane NormVector = "-1; 1;-1" NormDistance = "-C" /> </Cut>
+
+        <HideContaining Vectors = "Cx;Cy;Cz" />
+        <InvertVisibility/>
+        <Split> <Plane NormVector = "-1; 0; 0" NormDistance = "DCut1" /> </Split>
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "DCut1" /> </Split>
+        <Split> <Plane NormVector = " 0;-1; 0" NormDistance = "DCut1" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "DCut1" /> </Split>
+        <Split> <Plane NormVector = " 0; 0;-1" NormDistance = "DCut1" /> </Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "DCut1" /> </Split>
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <HideContaining Vectors = "Vx;Vy;Vz" />
+        <InvertVisibility/>
+        <Split> <Plane NormVector = " 1; 1; 1" NormDistance = "DCut2" /> </Split>
+        <Split> <Plane NormVector = " 1;-1;-1" NormDistance = "DCut2" /> </Split>
+        <Split> <Plane NormVector = "-1; 1;-1" NormDistance = "DCut2" /> </Split>
+        <Split> <Plane NormVector = "-1;-1; 1" NormDistance = "DCut2" /> </Split>
+        <RemoveGrayParts/>
+        <ShowAll/>
+        <RemoveContaining Vectors = "0;0;0" />
+    </Figure>
+</xml>

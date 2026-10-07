@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Half Truncated Crazy 4x4x4</Name>
+        <Menu>Other forms\Half Truncated Cube\Half Truncated Crazy 4x4x4</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2020-04-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2644</Link>
+    </Interface>
+
+    <Script>
+        clPayneGrey          := '536878';
+        clPersianBlue        := '1C39BB';
+        clWine               := '722F37';
+        clBritishRacingGreen := '004225';
+                
+        W := 0.5;
+        R := W * 0.36;
+        D := W * 1.001;
+                
+        DCut := W * 2 / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W; -W/2; 0; W/2; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Cut Color = "clPayneGrey         "> <Plane NormVector = " 1; 1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clPersianBlue       "> <Plane NormVector = " 1;-1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clBritishRacingGreen"> <Plane NormVector = "-1; 1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clWine              "> <Plane NormVector = "-1;-1; 1" NormDistance = "-DCut" /> </Cut>
+
+        <Circle Radius = "R" Color = "Colors[0]" Center = "-D; 0; 0" />
+        <Circle Radius = "R" Color = "Colors[1]" Center = " D; 0; 0" />
+        <Circle Radius = "R" Color = "Colors[2]" Center = " 0;-D; 0" />
+        <Circle Radius = "R" Color = "Colors[3]" Center = " 0; D; 0" />
+        <Circle Radius = "R" Color = "Colors[4]" Center = " 0; 0;-D" />
+        <Circle Radius = "R" Color = "Colors[5]" Center = " 0; 0; D" />
+                
+        <SplitByAxes/>
+
+        <RemoveGrayParts/>
+
+        <Connect Layers = "0;2" />
+        <Connect Layers = "3;5" />
+    </Figure>
+</xml>

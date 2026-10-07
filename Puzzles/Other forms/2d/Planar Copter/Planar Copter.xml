@@ -1,0 +1,117 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Planar Copter</Name>
+        <Menu>Other forms\2d\Planar Copter\Planar Copter</Menu>
+        <Inventor>Nathaniel Virgo</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7781</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := -1;
+        Colors[1] := 'FF8000'; // clOrange
+        Colors[2] := 'FFFFFF'; // clWhite
+        Colors[3] := -1;
+        Colors[4] := -1;
+        Colors[5] := '303030'; // clBlack
+
+        Color := '0055FF'; // Blue
+
+        K := 0.6;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        D := K * 0.7115;
+        E := D - K * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi"  JumbleAngle = "Arccos(1/3)" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 1" NormDistance = " E" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1; 0; 1" NormDistance = " E" /> </Cut>
+        <Cut                      > <Plane NormVector = "-1; 1; 0" NormDistance = "-E" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 1" NormDistance = " E" /> </Cut>
+        <Cut                      > <Plane NormVector = "-1; 0;-1" NormDistance = "-E" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = " E" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut                      > <Plane NormVector = " 0; 1;-1" NormDistance = "-E" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1; 0; 1" NormDistance = " E" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = " E" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0;-1" NormDistance = "-E" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1; 0" NormDistance = "-E" /> </Cut>
+        <Cut Color = "color"      > <Plane NormVector = " 0;-1; 1" NormDistance = " E" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1;-1" NormDistance = "-E" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1; 0" NormDistance = "-E" /> </Cut>
+        <Cut Color = "color"      > <Plane NormVector = " 1; 0; 1" NormDistance = " E" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1;-1" NormDistance = "-E" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0;-1" NormDistance = "-E" /> </Cut>
+        <Cut Color = "color"      > <Plane NormVector = " 1;-1; 0" NormDistance = " E" /> </Cut>
+        <HideAll/>
+
+        <ShowAll/>
+
+        <InvertVisibility/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <Turn Axis = "2" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <RemoveContaining Vector = "0;0;0" />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi / 180 * 45" />
+        <Turn NormVector = "1;0;0" Angle = " ArcTan(1/sqrt(2))" />
+
+        <Turn NormVector = "1;0;0" Angle = "-Pi / 180 * 20" />
+        <Turn NormVector = "0;0;1" Angle = " Pi / 180 * 30" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

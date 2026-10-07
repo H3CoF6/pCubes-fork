@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dogic Claws (10 colors)</Name>
+        <Menu>Other forms\Icosahedron\Vertex turning\Dogic Claws (10 colors)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-09-14</Added>
+    </Interface>
+
+    <Script>
+        Color[ 0] := '00FF00'; // LightGreen
+        Color[ 1] := '2828FF'; // LightBlue
+        Color[ 2] := 'FFFF00'; // Yellow
+        Color[ 3] := '008000'; // Green
+        Color[ 4] := '800000'; // Brown
+        Color[ 5] := '800080'; // Violett
+        Color[ 6] := 'FFFFFF'; // White
+        Color[ 7] := 'FF0000'; // Red
+        Color[ 8] := '0000A0'; // Blue
+        Color[ 9] := 'FF0080'; // LightViolett
+        Color[10] := '303030'; // Black
+        Color[11] := '00DCB4'; // Cyan
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D1 := Rsin;
+        D2 := (Rsin + R) / 2;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D1; D2" FixedLayers = "0" NormVectors = "Vx; Vy; Vz" TurnAxesWithPartNo = "13" />
+
+    <Figure>
+        <Macro Name = "Claw" >
+            <Face Color = "Color[c]" VertexIndexes = "v1;e4;v0"    InvisibleEdges = "2" />
+            <Face Color = "Color[c]" VertexIndexes = "v1;e3;c3;e4" InvisibleEdges = "6" />
+            <Face Color = "Color[c]" VertexIndexes = "v1;e2;c2;e3" InvisibleEdges = "6" />
+            <Face Color = "Color[c]" VertexIndexes = "v1;e1;c1;e2" InvisibleEdges = "6" />
+            <Face Color = "Color[c]" VertexIndexes = "v1;v0;e1"    InvisibleEdges = "2" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Cx; Cy; Cz" />
+            <Vertices Vectors = "Ex; Ey; Ez" />
+
+            <Faces>
+                <ExecMacro MacroName = "Claw" c = " 0" v0 = " 0" v1 = " 3" e1 = "39" c1 = "20" e2 = "44" c2 = "27" e3 = "49" c3 = "19" e4 = "38" />
+                <ExecMacro MacroName = "Claw" c = " 1" v0 = " 0" v1 = " 2" e1 = "38" c1 = "19" e2 = "43" c2 = "31" e3 = "48" c3 = "18" e4 = "37" />
+                <ExecMacro MacroName = "Claw" c = " 3" v0 = " 0" v1 = " 4" e1 = "40" c1 = "21" e2 = "45" c2 = "28" e3 = "50" c3 = "20" e4 = "39" />
+                <ExecMacro MacroName = "Claw" c = " 4" v0 = "11" v1 = " 8" e1 = "53" c1 = "27" e2 = "44" c2 = "20" e3 = "50" c3 = "28" e4 = "54" />
+                <ExecMacro MacroName = "Claw" c = " 5" v0 = "11" v1 = " 7" e1 = "52" c1 = "31" e2 = "43" c2 = "19" e3 = "49" c3 = "27" e4 = "53" />
+                <ExecMacro MacroName = "Claw" c = " 6" v0 = "11" v1 = "10" e1 = "55" c1 = "29" e2 = "46" c2 = "17" e3 = "47" c3 = "30" e4 = "56" />
+                <ExecMacro MacroName = "Claw" c = " 7" v0 = " 0" v1 = " 5" e1 = "41" c1 = "17" e2 = "46" c2 = "29" e3 = "51" c3 = "21" e4 = "40" />
+                <ExecMacro MacroName = "Claw" c = " 8" v0 = " 0" v1 = " 1" e1 = "37" c1 = "18" e2 = "42" c2 = "30" e3 = "47" c3 = "17" e4 = "41" />
+                <ExecMacro MacroName = "Claw" c = " 9" v0 = "11" v1 = " 6" e1 = "56" c1 = "30" e2 = "42" c2 = "18" e3 = "48" c3 = "31" e4 = "52" />
+                <ExecMacro MacroName = "Claw" c = "11" v0 = "11" v1 = " 9" e1 = "54" c1 = "28" e2 = "45" c2 = "21" e3 = "51" c3 = "29" e4 = "55" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

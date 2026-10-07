@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mirror Illusion 3x3x3 Siamese</Name>
+        <Menu>Cubic\Bump\Mirror Illusion 3x3x3 Siamese</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8183</Link>
+    </Interface>
+
+    <Script>
+        Color1 := '00FF00'; // Green
+        Color2 := 'EEFF00'; // Yellow
+
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W;
+
+        D := W / 3;
+
+        procedure SetColor(Color);
+        begin
+            for i := 0 to 5 do
+                Colors[i] := Color;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Split1" >
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "1" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "2" From = "2" />
+        </Macro>
+
+        <Macro Name = "Split2" >
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "2" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "1" From = "2" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "2" From = "1" />
+        </Macro>
+
+        <Script>
+            SetColor(Color1);
+            DWX := W / 5;
+            DWY :=-W / 15;
+            DWZ := W / 3;
+        </Script>
+
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <ExecMacro MacroName = "Split1" Color = "Color1" />
+        <RemoveContaining Vector = "0;0;0" />
+        <ExecMacro MacroName = "Split2" Color = "Color1" />
+
+        <HideAll/>
+
+        <Script>
+            SetColor(Color2);
+            DWX := W * 0.52;
+            DWY := W * 0.36;
+            DWZ :=-W / 9;
+        </Script>
+
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <ExecMacro MacroName = "Split1" Color = "Color2" />
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <ExecMacro MacroName = "Split2" Color = "Color2" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+
+        <SaveSolvedState/>
+        <Turn NormVector = "1;0;0" Angle = "-Pi" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

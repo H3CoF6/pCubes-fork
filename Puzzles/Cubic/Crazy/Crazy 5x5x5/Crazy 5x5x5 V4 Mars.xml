@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 5x5x5 V4 Mars</Name>
+        <Menu>Cubic\Crazy\Crazy 5x5x5\Crazy 5x5x5 V4 Mars</Menu>
+        <Inventor>Ilya Toporgilka</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2025-07-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12664</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 5;
+        RC := D * 3 * sqrt(2) * 1.1;
+        DC := 1.002;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W;-D*3;-D; D; D*3; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "5" />
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+        <RemoveContaining Vector = "0;0;0" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "5" />
+        <HideContaining Vector = "Cx;Cy;Cz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = "Cx[i] * DC; Cy[i] * DC; Cz[i] * DC" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+
+        <SplitByAxes/>
+
+        <Connect Axis = "0" Layers = "0;3;6" />
+        <Connect Axis = "1" Layers = "0;2" />
+        <Connect Axis = "1" Layers = "4;6" />
+        <Connect Axis = "2" Layers = "3;6" />
+        <Connect Axis = "2" Layers = "0;2" />
+
+    </Figure>
+</xml>

@@ -1,0 +1,170 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sheliak-3</Name>
+        <Menu>Other forms\2d\Looper\Sheliak-3</Menu>
+        <Menu>Other forms\Prism\Heptagonal Prism\Sheliak-3</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-12-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11578</Link>
+    </Interface>
+
+    <Script>
+        clTeal    := '44AA99';
+        clDeepSky := '00BFFF';
+        clRed     := 'B00000';
+        clOrange  := 'EE3000';
+        clLime    := '44FF00';
+        clGreen   := '339900';
+        clBlack   := '333333';
+
+        R := 0.65;
+        sAngle := 2 * Pi / 7;
+        H := R * 0.5;
+        D1 := R * 0.35;
+        D2 := H * 0.3;
+
+        for i := 0 to 6 do begin
+            x[i] := R * cos(sAngle * (i + 0.5));
+            y[i] := R * sin(sAngle * (i + 0.5));
+        end;
+        for i := 0 to 3 do begin
+            ax[i] :=-cos(sAngle * (i + 3/2));
+            ay[i] :=-sin(sAngle * (i + 3/2));
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D1" NormVectors = " ax; ay; 0" />
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D2*3;-D2; D2; D2*3" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = " 0; 0; 0; 0; 0" MaxAngles = " 0; sAngle; sAngle; sAngle; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "CreatePrism" >
+            <Part>
+                <Vertices Vectors = " x; y; H" />
+                <Vertices Vectors = " x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2;3;4;5;6" />
+                    <Face Color = "Color" VertexIndexes = " 7; 8;1;0" />
+                    <Face Color = "Color" VertexIndexes = " 8; 9;2;1" />
+                    <Face Color = "Color" VertexIndexes = " 9;10;3;2" />
+                    <Face Color = "Color" VertexIndexes = "10;11;4;3" />
+                    <Face Color = "Color" VertexIndexes = "11;12;5;4" />
+                    <Face Color = "Color" VertexIndexes = "12;13;6;5" />
+                    <Face Color = "Color" VertexIndexes = "13; 7;0;6" />
+                    <Face Color = "Color" VertexIndexes = "13;12;11;10;9;8;7" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clBlack" />
+        <Split Color1 = "Color" Axis = "4" From = "1" />
+        <Split Color2 = "Color" Axis = "4" From = "4" />
+        <Hide Axis = "4" From = "1" To = "3" />
+        <Cut Color = "Color" Axis = "0" To = "1" />
+        <Cut Color = "Color" Axis = "1" To = "1" />
+        <Cut Color = "Color" Axis = "2" To = "1" />
+        <Turn NormVector = "0;0;1" Angle = "-sAngle" />
+        <Cut Color = "Color" ><Plane NormVector = "-ax[2];-ay[2]; 0" NormDistance = "-D1" /></Cut>
+        <Turn NormVector = "0;0;1" Angle = " sAngle" />
+
+        <InvertVisibility/>
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clDeepSky" />
+        <Cut Color = "Color" Axis = "4" To   = "4" />
+        <Cut Color = "Color" Axis = "4" From = "1" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "4" To   = "2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clTeal" />
+        <Cut Color = "Color" Axis = "4" To   = "4" />
+        <Cut Color = "Color" Axis = "4" From = "1" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "4" From = "2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clGreen" />
+        <Cut Color = "Color" Axis = "4" To   = "4" />
+        <Cut Color = "Color" Axis = "4" From = "1" />
+        <Cut Axis = "2" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "4" To   = "2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clLime" />
+        <Cut Color = "Color" Axis = "4" To   = "4" />
+        <Cut Color = "Color" Axis = "4" From = "1" />
+        <Cut Axis = "2" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "4" From = "2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clRed" />
+        <Cut Color = "Color" Axis = "4" To   = "4" />
+        <Cut Color = "Color" Axis = "4" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "4" To   = "2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clOrange" />
+        <Cut Color = "Color" Axis = "4" To   = "4" />
+        <Cut Color = "Color" Axis = "4" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "4" From = "2" />
+        <ShowAll/>
+
+        <!-- Unbandage -->
+        <Split Axis = "4" From = "2" />
+        <Split Axis = "4" From = "3" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Undo/>
+        <Turn Axis = "2" Layer = "1" Angle = "Pi" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Undo/>
+
+        <!-- Aliases -->
+        <Macro Name = "L"  > <Turn Axis = "0" Layers = "1" Angle = "Pi" /> </Macro>
+        <Macro Name = "F"  > <Turn Axis = "1" Layers = "1" Angle = "Pi" /> </Macro>
+        <Macro Name = "R"  > <Turn Axis = "2" Layers = "1" Angle = "Pi" /> </Macro>
+        <Macro Name = "D"  > <Turn Axis = "4" Layers = "1" Angle = " sAngle" /> </Macro>
+        <Macro Name = "D'" > <Turn Axis = "4" Layers = "1" Angle = "-sAngle" /> </Macro>
+        <Macro Name = "E"  > <Turn Axis = "4" Layers = "2" Angle = "-sAngle" /> </Macro>
+        <Macro Name = "E'" > <Turn Axis = "4" Layers = "2" Angle = " sAngle" /> </Macro>
+        <Macro Name = "U"  > <Turn Axis = "4" Layers = "3" Angle = "-sAngle" /> </Macro>
+        <Macro Name = "U'" > <Turn Axis = "4" Layers = "3" Angle = " sAngle" /> </Macro>
+
+        <!-- Solutions (it's may be some solutions more...) -->
+
+        <SaveSolvedState/>
+
+        <ExecMacro MacroName = "U' E' D" />
+        <SaveSolvedState/>
+        <Undo Repeat = "3" />
+
+        <ExecMacro MacroName = "D F D' U' F U F U' R U D R D' F D F D' U' F U E' F E F U' D R F U D' L" />
+        <SaveSolvedState/>
+
+        <ExecMacro MacroName = "U' E' D" />
+        <SaveSolvedState/>
+        <Undo Repeat = "34" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

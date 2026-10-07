@@ -1,0 +1,112 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhombic Raptor II</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Vertex Turning\Rhombic Raptor II</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-06</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := '800080'; // Violett
+        Colors[ 2] := 'FF0000'; // Red
+        Colors[ 3] := 'FFFF00'; // Yellow
+        Colors[ 4] := '0000CC'; // Blue
+        Colors[ 5] := '00AA00'; // Green
+        Colors[ 6] := '0066CC'; // LightBlue
+        Colors[ 7] := '00FF00'; // LightGreen
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := 'FFFFAA'; // Cream
+        Colors[10] := '666666'; // Gray
+        Colors[11] := 'FF88CC'; // LightViolett
+
+        W1 := 0.7;
+        W2 := W1 / 2;
+
+        A  := W2 * 1.2; // pillow
+
+        D1 := A * 0.95;
+        D2 := D1 * 2 / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi / 3" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Add4Face" >
+            <Face Color = "Color" VertexIndexes = "i1;i2;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i2;i3;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i3;i4;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i4;i1;i5" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;  0; W1" />
+                <Add Vector = " W2; W2; W2" />
+                <Add Vector = " W2;-W2; W2" />
+                <Add Vector = "-W2;-W2; W2" />
+                <Add Vector = "-W2; W2; W2" />
+                <Add Vector = " W1;  0;  0" />
+                <Add Vector = "  0;-W1;  0" />
+                <Add Vector = "-W1;  0;  0" />
+                <Add Vector = "  0; W1;  0" />
+                <Add Vector = " W2; W2;-W2" />
+                <Add Vector = " W2;-W2;-W2" />
+                <Add Vector = "-W2;-W2;-W2" />
+                <Add Vector = "-W2; W2;-W2" />
+                <Add Vector = "  0;  0;-W1" />
+
+                <Add Vector = " A; 0; A" />
+                <Add Vector = " 0;-A; A" />
+                <Add Vector = "-A; 0; A" />
+                <Add Vector = " 0; A; A" />
+
+                <Add Vector = " A; A; 0" />
+                <Add Vector = " A;-A; 0" />
+                <Add Vector = "-A;-A; 0" />
+                <Add Vector = "-A; A; 0" />
+
+                <Add Vector = " A; 0;-A" />
+                <Add Vector = " 0;-A;-A" />
+                <Add Vector = "-A; 0;-A" />
+                <Add Vector = " 0; A;-A" />
+            </Vertices>
+
+            <Faces>
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 0]" i1 = " 0" i2 = " 2" i3 = " 5" i4 = " 1" i5 = "14" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 1]" i1 = " 0" i2 = " 3" i3 = " 6" i4 = " 2" i5 = "15" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 2]" i1 = " 0" i2 = " 4" i3 = " 7" i4 = " 3" i5 = "16" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 3]" i1 = " 0" i2 = " 1" i3 = " 8" i4 = " 4" i5 = "17" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 4]" i1 = " 1" i2 = " 5" i3 = " 9" i4 = " 8" i5 = "18" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 5]" i1 = " 2" i2 = " 6" i3 = "10" i4 = " 5" i5 = "19" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 6]" i1 = " 3" i2 = " 7" i3 = "11" i4 = " 6" i5 = "20" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 7]" i1 = " 4" i2 = " 8" i3 = "12" i4 = " 7" i5 = "21" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 8]" i1 = "13" i2 = " 9" i3 = " 5" i4 = "10" i5 = "22" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 9]" i1 = "13" i2 = "10" i3 = " 6" i4 = "11" i5 = "23" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[10]" i1 = "13" i2 = "11" i3 = " 7" i4 = "12" i5 = "24" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[11]" i1 = "13" i2 = "12" i3 = " 8" i4 = " 9" i5 = "25" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

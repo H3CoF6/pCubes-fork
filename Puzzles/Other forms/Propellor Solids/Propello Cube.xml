@@ -1,0 +1,224 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Propello Cube</Name>
+        <Menu>Other forms\Propellor Solids\Propello Cube</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2019-02-02</Added>
+        <Link>http://dmccooey.com/polyhedra/PropelloCube.html</Link>
+    </Interface>
+
+    <Script>
+        clWhite        := 'F0F0F0';
+        clCyan         := '00FFFF';
+        clDeepSky      := '00BFFF';
+        clTeal         := '008080';
+        clBlue         := '0000FF';
+        clCoral        := 'FF7F50';
+        clRed          := 'FF0000';
+        clCrimson      := 'DC143C';
+        clIndian       := 'CD5C5C';
+        clBrown        := '800000';
+        clSeaGreen     := '2E8B57';
+        clAquaMarine   := '66CDAA';
+        clDarkSeaGreen := '8FBC8F';
+        clYellow       := 'FFFF00';
+        clOrange       := 'FF6000';
+        clKhaki        := 'F0E68C';
+        clGolden       := 'DDBB20';
+        clOlive        := '808000';
+        clGreenYellow  := 'ADFF2F';
+        clLime         := '00FF00';
+        clGreen        := '008000';
+        clDarkGreen    := '006400';
+        clPink         := 'FF69B4';
+        clFuchsia      := 'FF00FF';
+        clPale         := 'D07090';
+        clOrchid       := 'DA70D6';
+        clPurple       := '800080';
+        clIndigo       := '4B0082';
+        clDarkSlate    := '483D8B';
+        clSlate        := '6A5ACD';
+
+        K  := 0.55;
+
+// Propello Cube (canonical)
+
+        C0 := K * 0.169629045867;
+        C1 := K * 0.481689876410;
+        C2 := K * 0.587800511503;
+        C3 := K * 0.932523685962;
+
+        // Calcs normal to plane with 3 points. Answer - in vector nx, ny, nz
+        procedure Normal(x1, y1, z1, x2, y2, z2, x3, y3, z3, i);
+        begin
+          nx := (y1-y3) * (z2-z3) - (y2-y3) * (z1-z3);
+          ny := (z1-z3) * (x2-x3) - (z2-z3) * (x1-x3);
+          nz := (x1-x3) * (y2-y3) - (x2-x3) * (y1-y3);
+
+          // normalize vector
+          dn := sqrt(nx^2 + ny^2 + nz^2);
+          nx := nx / dn; ny := ny / dn; nz := nz / dn;
+          px[i] := nx; py[i] := ny; pz[i] := nz;
+
+          // distace to plane
+          L := x1*nx + y1*ny + z1* nz;
+        end;
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(ver1, ver2, ver3);
+        begin
+          vx := py[ver1] * pz[ver2] - py[ver2] * pz[ver1];
+          vy := pz[ver1] * px[ver2] - pz[ver2] * px[ver1];
+          vz := px[ver1] * py[ver2] - px[ver2] * py[ver1];
+          wx := py[ver1] * pz[ver3] - py[ver3] * pz[ver1];
+          wy := pz[ver1] * px[ver3] - pz[ver3] * px[ver1];
+          wz := px[ver1] * py[ver3] - px[ver3] * py[ver1];
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+
+        // Calc all Normal and fill array
+        Normal( C1, C0, C3,  C3,-C0, C1,  C3, C1, C0, 0); // " 0;16; 4"
+        Normal( C3, C1, C0,  C1, C3,-C0,  C0, C3, C1, 1); // " 4;21; 8"
+        Normal( C0, C3, C1, -C0, C1, C3,  C1, C0, C3, 2); // " 8;14; 0"
+        Normal( C0, C1,-C3, -C0, C3,-C1,  C1, C3,-C0, 3); // "13;11;21"
+        Normal( C1, C3,-C0,  C3, C1, C0,  C3, C0,-C1, 4); // "21; 4;17"
+        Normal( C3, C0,-C1,  C1,-C0,-C3,  C0, C1,-C3, 5); // "17; 1;13"
+        Normal( C0,-C1, C3, -C0,-C3, C1,  C1,-C3, C0, 6); // "12;10;20"
+        Normal( C1,-C3, C0,  C3,-C1,-C0,  C3,-C0, C1, 7); // "20; 5;16"
+        Normal( C3,-C0, C1,  C1, C0, C3,  C0,-C1, C3, 8); // "16; 0;12"
+        Normal( C1,-C0,-C3,  C3, C0,-C1,  C3,-C1,-C0, 9); // " 1;17; 5"
+        Normal( C3,-C1,-C0,  C1,-C3, C0,  C0,-C3,-C1,10); // " 5;20; 9"
+        Normal( C0,-C3,-C1, -C0,-C1,-C3,  C1,-C0,-C3,11); // " 9;15; 1"
+        Normal(-C0, C1, C3,  C0, C3, C1, -C1, C3, C0,12); // "14; 8;22"
+        Normal(-C1, C3, C0, -C3, C1,-C0, -C3, C0, C1,13); // "22; 7;18"
+        Normal(-C3, C0, C1, -C1,-C0, C3, -C0, C1, C3,14); // "18; 2;14"
+        Normal(-C1, C0,-C3, -C3,-C0,-C1, -C3, C1,-C0,15); // " 3;19; 7"
+        Normal(-C3, C1,-C0, -C1, C3, C0, -C0, C3,-C1,16); // " 7;22;11"
+        Normal(-C0, C3,-C1,  C0, C1,-C3, -C1, C0,-C3,17); // "11;13; 3"
+        Normal(-C1,-C0, C3, -C3, C0, C1, -C3,-C1, C0,18); // " 2;18; 6"
+        Normal(-C3,-C1, C0, -C1,-C3,-C0, -C0,-C3, C1,19); // " 6;23;10"
+        Normal(-C0,-C3, C1,  C0,-C1, C3, -C1,-C0, C3,20); // "10;12; 2"
+        Normal(-C0,-C1,-C3,  C0,-C3,-C1, -C1,-C3,-C0,21); // "15; 9;23"
+        Normal(-C1,-C3,-C0, -C3,-C1, C0, -C3,-C0,-C1,22); // "23; 6;19"
+        Normal(-C3,-C0,-C1, -C1, C0,-C3, -C0,-C1,-C3,23); // "19; 3;15"
+
+        // Calc all Jumble Angles
+        A1 := Angle(1, 0, 2);
+        A2 := Angle(1, 0, 4);
+        A3 := Angle(1, 2, 4);
+        A4 := Angle(1, 3, 12);
+
+        D1 := K / 2 * 1.595;
+        D2 := K / 2 * 1.65;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = " -A4;-A3;-A2;-A1; 0; A1;A2;A3;A4" PlaneDistances = "D2" FixedLayers = "0" >
+        <Axis NormVector = "px[ 0]; py[ 0]; pz[ 0]" />
+        <Axis NormVector = "px[ 1]; py[ 1]; pz[ 1]" />
+        <Axis NormVector = "px[ 2]; py[ 2]; pz[ 2]" />
+        <Axis NormVector = "px[ 3]; py[ 3]; pz[ 3]" />
+        <Axis NormVector = "px[ 4]; py[ 4]; pz[ 4]" />
+        <Axis NormVector = "px[ 5]; py[ 5]; pz[ 5]" />
+        <Axis NormVector = "px[ 6]; py[ 6]; pz[ 6]" />
+        <Axis NormVector = "px[ 7]; py[ 7]; pz[ 7]" />
+        <Axis NormVector = "px[ 8]; py[ 8]; pz[ 8]" />
+        <Axis NormVector = "px[ 9]; py[ 9]; pz[ 9]" />
+        <Axis NormVector = "px[10]; py[10]; pz[10]" />
+        <Axis NormVector = "px[11]; py[11]; pz[11]" />
+        <Axis NormVector = "px[12]; py[12]; pz[12]" />
+        <Axis NormVector = "px[13]; py[13]; pz[13]" />
+        <Axis NormVector = "px[14]; py[14]; pz[14]" />
+        <Axis NormVector = "px[15]; py[15]; pz[15]" />
+        <Axis NormVector = "px[16]; py[16]; pz[16]" />
+        <Axis NormVector = "px[17]; py[17]; pz[17]" />
+        <Axis NormVector = "px[18]; py[18]; pz[18]" />
+        <Axis NormVector = "px[19]; py[19]; pz[19]" />
+        <Axis NormVector = "px[20]; py[20]; pz[20]" />
+        <Axis NormVector = "px[21]; py[21]; pz[21]" />
+        <Axis NormVector = "px[22]; py[22]; pz[22]" />
+        <Axis NormVector = "px[23]; py[23]; pz[23]" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D1;D1" FixedLayers = "1" >
+        <Axis NormVector = "1;0;0" /> <!-- blue   -->
+        <Axis NormVector = "0;1;0" /> <!-- orange -->
+        <Axis NormVector = "0;0;1" /> <!-- white  -->
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " C1; C0; C3" />
+                <Add Vector = " C1;-C0;-C3" />
+                <Add Vector = "-C1;-C0; C3" />
+                <Add Vector = "-C1; C0;-C3" />
+                <Add Vector = " C3; C1; C0" />
+                <Add Vector = " C3;-C1;-C0" />
+                <Add Vector = "-C3;-C1; C0" />
+                <Add Vector = "-C3; C1;-C0" />
+                <Add Vector = " C0; C3; C1" />
+                <Add Vector = " C0;-C3;-C1" />
+                <Add Vector = "-C0;-C3; C1" />
+                <Add Vector = "-C0; C3;-C1" />
+                <Add Vector = " C0;-C1; C3" />
+                <Add Vector = " C0; C1;-C3" />
+                <Add Vector = "-C0; C1; C3" />
+                <Add Vector = "-C0;-C1;-C3" />
+                <Add Vector = " C3;-C0; C1" />
+                <Add Vector = " C3; C0;-C1" />
+                <Add Vector = "-C3; C0; C1" />
+                <Add Vector = "-C3;-C0;-C1" />
+                <Add Vector = " C1;-C3; C0" />
+                <Add Vector = " C1; C3;-C0" />
+                <Add Vector = "-C1; C3; C0" />
+                <Add Vector = "-C1;-C3;-C0" />
+                <Add Vector = " C2; C2; C2" />
+                <Add Vector = " C2; C2;-C2" />
+                <Add Vector = " C2;-C2; C2" />
+                <Add Vector = " C2;-C2;-C2" />
+                <Add Vector = "-C2; C2; C2" />
+                <Add Vector = "-C2; C2;-C2" />
+                <Add Vector = "-C2;-C2; C2" />
+                <Add Vector = "-C2;-C2;-C2" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite       " VertexIndexes = " 2;12; 0;14" />
+                <Face Color = "clYellow      " VertexIndexes = " 3;13; 1;15" />
+                <Face Color = "clBlue        " VertexIndexes = " 4;16; 5;17" />
+                <Face Color = "clGreen       " VertexIndexes = " 7;19; 6;18" />
+                <Face Color = "clOrange      " VertexIndexes = " 8;21;11;22" />
+                <Face Color = "clRed         " VertexIndexes = " 9;20;10;23" />
+                <Face Color = "clPink        " VertexIndexes = "24; 0;16; 4" />
+                <Face Color = "clPurple      " VertexIndexes = "24; 4;21; 8" />
+                <Face Color = "clFuchsia     " VertexIndexes = "24; 8;14; 0" />
+                <Face Color = "clSeaGreen    " VertexIndexes = "25;13;11;21" />
+                <Face Color = "clDarkSeaGreen" VertexIndexes = "25;21; 4;17" />
+                <Face Color = "clAquaMarine  " VertexIndexes = "25;17; 1;13" />
+                <Face Color = "clGreenYellow " VertexIndexes = "26;12;10;20" />
+                <Face Color = "clLime        " VertexIndexes = "26;20; 5;16" />
+                <Face Color = "clDarkGreen   " VertexIndexes = "26;16; 0;12" />
+                <Face Color = "clIndigo      " VertexIndexes = "27; 1;17; 5" />
+                <Face Color = "clDarkSlate   " VertexIndexes = "27; 5;20; 9" />
+                <Face Color = "clSlate       " VertexIndexes = "27; 9;15; 1" />
+                <Face Color = "clCrimson     " VertexIndexes = "28;14; 8;22" />
+                <Face Color = "clCoral       " VertexIndexes = "28;22; 7;18" />
+                <Face Color = "clIndian      " VertexIndexes = "28;18; 2;14" />
+                <Face Color = "clCyan        " VertexIndexes = "29; 3;19; 7" />
+                <Face Color = "clDeepSky     " VertexIndexes = "29; 7;22;11" />
+                <Face Color = "clTeal        " VertexIndexes = "29;11;13; 3" />
+                <Face Color = "clKhaki       " VertexIndexes = "30; 2;18; 6" />
+                <Face Color = "clGolden      " VertexIndexes = "30; 6;23;10" />
+                <Face Color = "clOlive       " VertexIndexes = "30;10;12; 2" />
+                <Face Color = "clPale        " VertexIndexes = "31;15; 9;23" />
+                <Face Color = "clOrchid      " VertexIndexes = "31;23; 6;19" />
+                <Face Color = "clBrown       " VertexIndexes = "31;19; 3;15" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

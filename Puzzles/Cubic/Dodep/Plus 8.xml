@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dodep Plus 8</Name>
+        <Menu>Cubic\Dodep\Dodep Plus 8</Menu>
+        <Class>TDodep</Class>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-06-10</Added>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-3/10; -1/10; 1/10; 3/10" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Circle1" File = "Puzzles\Cubic\Dodep\Circle1.vec" />
+        <Texture Name = "Circle2" File = "Puzzles\Cubic\Dodep\Circle2.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Circle1 = 20,2,0, 20,1,0, 20,0,0,  5,1,0, 30,0,0, 46,0,0, 62,0,0, 64,0,0
+        Circle1 = 66,0,0, 68,1,0, 68,0,0, 69,0,0, 70,0,0, 71,0,0, 55,0,0, 39,0,0
+        Circle1 = 23,1,0, 23,0,0, 18,0,0, 13,0,0,  8,0,0,  7,0,0,  6,0,0,  5,0,0
+
+        Circle2 = 61,0,0, 82,1,0, 76,0,0, 73,1,0, 57,0,1, 41,0,1, 25,0,1,  0,1,1,  1,1,1,  2,1,1
+        Circle2 =  3,1,1,  4,1,0,  4,2,0,  9,1,0, 14,1,0, 19,1,0, 24,2,1, 40,1,1, 56,1,1, 72,1,1
+        Circle2 = 97,2,0, 97,0,0, 96,0,0, 95,0,0, 94,0,0, 93,0,1, 88,0,0, 83,0,0, 78,0,0, 73,0,0
+    </SetTextures>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(5)" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns" Repeat = "10000" />
+        </Macro>
+    </Macros>
+</xml>

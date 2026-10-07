@@ -1,0 +1,131 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Teselico 3x3x3</Name>
+        <Menu>Cubic\Rubiks Recolored\Teselico 3x3x3</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-07-30</Added>
+        <Link>http://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9356</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0080'; // pink
+        Colors[1] := 'F80000'; // red
+        Colors[2] := 'F67F05'; // orange
+        Colors[3] := 'FFFF00'; // yellow
+        Colors[4] := '005600'; // green
+        Colors[5] := '000078'; // blue
+
+        sColors[0] := '   24      ';
+        sColors[1] := '   01      ';
+        sColors[2] := '20 01 14 42';
+        sColors[3] := '14 42 20 01';
+        sColors[4] := '   42      ';
+        sColors[5] := '   10      ';
+
+        W := 0.5;
+        D := W / 3;
+
+        N := 4;
+        step := W * 2 / N; // minimal step in coordinates
+        cv := 0; // Vertex Count
+
+        function GetId(xc, yc);
+        begin
+            xi := x + dx1 * xc + dx2 * yc;
+            yi := y + dy1 * xc + dy2 * yc;
+            zi := z + dz1 * xc + dz2 * yc;
+            if VarExists('Idx[' + IntToStr(xi) + ',' + IntToStr(yi) + ',' + IntToStr(zi) + ']') then
+                Result := Idx[xi, yi, zi]
+            else begin
+                Vx[cv] := xi * step - W;
+                Vy[cv] := yi * step - W;
+                Vz[cv] := zi * step - W;
+                Result := IntToStr(cv) + ';';
+                Idx[xi, yi, zi] := Result;
+                Inc(cv);
+            end;
+        end;
+
+        function GetColor(x3, y3);
+        begin
+            char := copy(sColors[sy + y3], sx + x3, 1);
+            Result := Colors[StrToInt(char)];
+        end;
+
+        procedure Polygon3(x1, y1, x2, y2, x3, y3);
+        begin
+            S[cf] := GetId(x1, y1) + GetId(x2, y2) + GetId(x3, y3);
+            Cl[cf] := BrushColor;
+            IE[cf] := 1;
+            Inc(cf);
+        end;
+
+        procedure Polygon4(x1, y1, x2, y2, x3, y3, x4, y4);
+        begin
+            S[cf] := GetId(x1, y1) + GetId(x2, y2) + GetId(x3, y3) + GetId(x4, y4);
+            Cl[cf] := BrushColor;
+            IE[cf] := 15;
+            Inc(cf);
+        end;
+
+        procedure MakeSide(x, y, z, dx1, dy1, dz1, dx2, dy2, dz2, sx, sy);
+        // x, y, z - left-top point of side
+        // dx1, dy1, dz1 - 1st counting vector
+        // dx2, dy2, dz2 - 2nd counting vector
+        // sx, sy - left-top letter in sColors
+        begin
+            BrushColor := GetColor(0,0);
+            Polygon3( 0,2, 2,0, 0,0);
+            Polygon4( 0,2, 1,3, 2,2, 1,1);
+
+            BrushColor := GetColor(0,1);
+            Polygon3( 2,4, 0,2, 0,4);
+            Polygon4( 2,4, 3,3, 2,2, 1,3);
+
+            BrushColor := GetColor(1,1);
+            Polygon3( 4,2, 2,4, 4,4);
+            Polygon4( 4,2, 3,1, 2,2, 3,3);
+
+            BrushColor := GetColor(1,0);
+            Polygon3( 2,0, 4,2, 4,0);
+            Polygon4( 2,0, 1,1, 2,2, 3,1);
+        end;
+
+        cf := 0;
+        MakeSide( 0, N, N,  1, 0, 0,  0,-1, 0,  4, 0); // up
+        MakeSide( 0, 0, N,  1, 0, 0,  0, 0,-1,  4, 2); // face
+        MakeSide( 0, N, N,  0,-1, 0,  0, 0,-1,  1, 2); // left
+        MakeSide( N, 0, N,  0, 1, 0,  0, 0,-1,  7, 2); // right
+        MakeSide( N, N, N, -1, 0, 0,  0, 0,-1, 10, 2); // back
+        MakeSide( 0, 0, 0,  1, 0, 0,  0, 1, 0,  4, 4); // bottom
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Cl[i]" VertexIndexes = "S[i]" InvisibleEdges = "IE[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "cf" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "AdjoiningFacesHaveSameColors" />
+</xml>

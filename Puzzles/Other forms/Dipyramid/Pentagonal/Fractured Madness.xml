@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fractured Madness</Name>
+        <Menu>Other forms\Dipyramid\Pentagonal\Fractured Madness</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-03-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2764</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clViolett      := '800080';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clOrange       := 'FF6000';
+        clLightBlue    := '2828FF';
+        clLightViolett := 'FF0080';
+        clBrown        := '800000';
+        clLightGreen   := '00FF00';
+
+        R := 0.5;
+        C0 := R * sqrt(5 * (5 - 2 * sqrt(5))) / 5;
+        C1 := R * (sqrt(5) - 1) / 2;
+        C2 := R * sqrt(10 * (5 + sqrt(5))) / 10;
+        C3 := R * sqrt(10 * (5 - sqrt(5))) / 5;
+        C4 := R * (5 + sqrt(5)) / 5;
+
+        for i := 0 to 4 do begin
+            ax[i] := sin(2*Pi/5 * i);
+            ay[i] := cos(2*Pi/5 * i);
+        end;
+        az := sqrt((1 - cos(2*Pi/5)) / 2);
+
+        D  := (C2 - C0) / 2 / sqrt(1 + az^2);
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vx := y1 * z2 - y2 * z1;
+          vy := z1 * x2 - z2 * x1;
+          vz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+
+        A1 := Angle(ax[0], ay[0], az, ax[2], ay[2],  az, ax[3], ay[3], az);
+        A2 := Angle(ax[0], ay[0], az, ax[0], ay[0], -az, ax[1], ay[1], az);
+        A3 := Angle(ax[0], ay[0], az, ax[1], ay[1],  az, ax[4], ay[4], az);
+    </Script>
+
+    <Axes TurningAngles = "Pi*2" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = "ax[0]; ay[0]; az" />
+        <Axis NormVector = "ax[1]; ay[1]; az" />
+        <Axis NormVector = "ax[2]; ay[2]; az" />
+        <Axis NormVector = "ax[3]; ay[3]; az" />
+        <Axis NormVector = "ax[4]; ay[4]; az" />
+        <Axis NormVector = "ax[0]; ay[0];-az" />
+        <Axis NormVector = "ax[1]; ay[1];-az" />
+        <Axis NormVector = "ax[2]; ay[2];-az" />
+        <Axis NormVector = "ax[3]; ay[3];-az" />
+        <Axis NormVector = "ax[4]; ay[4];-az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;   0;  C4" />
+                <Add Vector = "  0;   0; -C4" />
+                <Add Vector = "  R; -C0;   0" />
+                <Add Vector = " -R; -C0;   0" />
+                <Add Vector = " C1;  C2;   0" />
+                <Add Vector = "-C1;  C2;   0" />
+                <Add Vector = "  0; -C3;   0" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed         " VertexIndexes = " 0; 2; 4" />
+                <Face Color = "clLightViolett" VertexIndexes = " 0; 4; 5" />
+                <Face Color = "clBrown       " VertexIndexes = " 0; 5; 3" />
+                <Face Color = "clOrange      " VertexIndexes = " 0; 3; 6" />
+                <Face Color = "clYellow      " VertexIndexes = " 0; 6; 2" />
+
+                <Face Color = "clBlue        " VertexIndexes = " 1; 2; 6" />
+                <Face Color = "clViolett     " VertexIndexes = " 1; 6; 3" />
+                <Face Color = "clLightBlue   " VertexIndexes = " 1; 3; 5" />
+                <Face Color = "clGreen       " VertexIndexes = " 1; 5; 4" />
+                <Face Color = "clLightGreen  " VertexIndexes = " 1; 4; 2" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

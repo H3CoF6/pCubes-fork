@@ -1,0 +1,164 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rota-Rius (Limited)</Name>
+        <Menu>Other forms\Prism\Octagonal Prism\Rota-Rius (Limited)</Menu>
+        <Menu>Other forms\2d\Rota-Rius (Limited)</Menu>
+        <Inventor>Karolis Kairysv</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-19</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=420159</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'FFFF00';
+        clBlack  := '333333';
+
+        R := 0.55;
+
+        H := R * sin(Pi / 8) / 2 * 3;
+        sAngle := Pi * 2 / 8;
+        for i := 0 to 7 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+            ax[i] := R * cos(Pi / 8) * sin(sAngle * (i + 0.5));
+            ay[i] := R * cos(Pi / 8) * cos(sAngle * (i + 0.5));
+        end;
+
+        D1 := x[1];
+        D2 := H / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D1" FixedLayers = "0" >
+        <Axis NormVector = "x[2]; y[2]; 0" />
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/4; 0" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "0; 0; 1" MinAngles = "0; -Pi/4; 0" MaxAngles = "0; Pi/4; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[3]; y[3]; -H" />
+                <Add Vector = "x[4]; y[4]; -H" />
+                <Add Vector = "x[5]; y[5]; -H" />
+                <Add Vector = "x[6]; y[6]; -H" />
+                <Add Vector = "x[7]; y[7]; -H" />
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+                <Add Vector = "x[3]; y[3];  H" />
+                <Add Vector = "x[4]; y[4];  H" />
+                <Add Vector = "x[5]; y[5];  H" />
+                <Add Vector = "x[6]; y[6];  H" />
+                <Add Vector = "x[7]; y[7];  H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clYellow" VertexIndexes = " 8; 9; 1; 0" />
+                <Face Color = "clYellow" VertexIndexes = " 9;10; 2; 1" />
+                <Face Color = "clYellow" VertexIndexes = "10;11; 3; 2" />
+                <Face Color = "clYellow" VertexIndexes = "11;12; 4; 3" />
+                <Face Color = "clYellow" VertexIndexes = "12;13; 5; 4" />
+                <Face Color = "clYellow" VertexIndexes = "13;14; 6; 5" />
+                <Face Color = "clBlack " VertexIndexes = "14;15; 7; 6" />
+                <Face Color = "clBlack " VertexIndexes = "15; 8; 0; 7" />
+
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4;5;6;7" />
+                <Face Color = "clYellow" VertexIndexes = "15;14;13;12;11;10;9;8" />
+            </Faces>
+        </Part>
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <HideContaining Vector = "0;0;0"/>
+        <RemoveAllVisible/>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[3]; y[3]; -H" />
+                <Add Vector = "x[4]; y[4]; -H" />
+                <Add Vector = "x[5]; y[5]; -H" />
+                <Add Vector = "x[6]; y[6]; -H" />
+                <Add Vector = "x[7]; y[7]; -H" />
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+                <Add Vector = "x[3]; y[3];  H" />
+                <Add Vector = "x[4]; y[4];  H" />
+                <Add Vector = "x[5]; y[5];  H" />
+                <Add Vector = "x[6]; y[6];  H" />
+                <Add Vector = "x[7]; y[7];  H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clBlack" VertexIndexes = " 8; 9; 1; 0" />
+                <Face Color = "clBlack" VertexIndexes = " 9;10; 2; 1" />
+                <Face Color = "clBlack" VertexIndexes = "10;11; 3; 2" />
+                <Face Color = "clBlack" VertexIndexes = "11;12; 4; 3" />
+                <Face Color = "clBlack" VertexIndexes = "12;13; 5; 4" />
+                <Face Color = "clBlack" VertexIndexes = "13;14; 6; 5" />
+                <Face Color = "clBlack" VertexIndexes = "14;15; 7; 6" />
+                <Face Color = "clBlack" VertexIndexes = "15; 8; 0; 7" />
+
+                <Face Color = "clBlack" VertexIndexes = "0;1;2;3;4;5;6;7" />
+                <Face Color = "clBlack" VertexIndexes = "15;14;13;12;11;10;9;8" />
+            </Faces>
+        </Part>
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <RemoveContaining Vector = "0;0;0"/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "1" Angle = " Pi / 4"/>
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = " Pi"/>
+        <Turn Axis = "2" Layer = "1" Angle = "-Pi / 4"/>
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "1" Angle = "-Pi / 4"/>
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = " Pi"/>
+        <Turn Axis = "2" Layer = "1" Angle = " Pi / 4"/>
+        <SplitByAxes/>
+        <Undo Repeat = "6" />
+
+        <Macro Name = "Mark" >
+            <HideContaining Vector = " ax[i]; ay[i];  0" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = " ax[i]; ay[i]; -2.4" NormDistance = "0" /> </Cut>
+            <ShowAll/>
+            <Script>inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Mark" i = "0" Repeat = "6" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_06.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 =  4,0,1
+        tm_02 =  7,0,1
+        tm_03 =  8,0,1
+        tm_04 = 11,0,1
+        tm_05 = 10,0,1
+        tm_06 =  2,0,1
+    </SetTextures>
+
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

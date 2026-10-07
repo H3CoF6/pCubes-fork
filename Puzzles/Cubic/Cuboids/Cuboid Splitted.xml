@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Cx[c];Cy[c];Cz[c]" NormDistance = "WD * (-L + 2*i)" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" c = "0" L = "X" i = "1" Repeat = "Min( 1, X - 1)" />
+        <ExecMacro MacroName = "Split" c = "1" L = "X" i = "1" Repeat = "Min( 1, X - 1)" />
+        <ExecMacro MacroName = "Split" c = "2" L = "Y" i = "1" Repeat = "Min( 1, Y - 1)" />
+        <ExecMacro MacroName = "Split" c = "3" L = "Y" i = "1" Repeat = "Min( 1, Y - 1)" />
+        <ExecMacro MacroName = "Split" c = "4" L = "Z" i = "1" Repeat = "Min( 1, Z - 1)" />
+        <ExecMacro MacroName = "Split" c = "5" L = "Z" i = "1" Repeat = "Min( 1, Z - 1)" />
+        <RemoveGrayParts/>
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <ShowAll/>
+        <ExecMacro MacroName = "Split" c = "1" L = "X" i = "2" Repeat = "X - 3" />
+        <ExecMacro MacroName = "Split" c = "3" L = "Y" i = "2" Repeat = "Y - 3" />
+        <ExecMacro MacroName = "Split" c = "5" L = "Z" i = "2" Repeat = "Z - 3" />
+</xml>

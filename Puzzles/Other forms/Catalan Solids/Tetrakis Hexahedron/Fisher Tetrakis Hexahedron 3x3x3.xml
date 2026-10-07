@@ -1,0 +1,78 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Tetrakis Hexahedron 3x3x3</Name>
+        <Menu>Other forms\Catalan Solids\Tetrakis Hexahedron\Fisher 3x3x3</Menu>
+        <Menu>Other forms\3x3x3 variants\Catalan\Fisher Tetrakis Hexahedron</Menu>
+        <Inventor>Wu Zhe</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-09-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11996</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clOrange := 'FF6000';
+        clBlue   := '0000FF';
+        clGreen  := '008000';
+        clYellow := 'FFFF00';
+        clWhite  := 'F0F0F0';
+
+        K  := 0.45;
+        C0 := K;
+        C1 := K * 3 / 2;
+
+        D  := K / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 0; 1" Angle = " Pi/4" />
+
+        <Macro Name = "Face" >
+            <Face Color = "Color" VertexIndexes = "i0;i1;i2" />
+            <Face Color = "Color" VertexIndexes = "i0;i2;i3" />
+            <Face Color = "Color" VertexIndexes = "i0;i3;i4" />
+            <Face Color = "Color" VertexIndexes = "i0;i4;i1" />
+        </Macro>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;  0; C1" />
+                <Add Vector = "  0;  0;-C1" />
+                <Add Vector = " C1;  0;  0" />
+                <Add Vector = "-C1;  0;  0" />
+                <Add Vector = "  0; C1;  0" />
+                <Add Vector = "  0;-C1;  0" />
+                <Add Vector = " C0; C0; C0" />
+                <Add Vector = " C0; C0;-C0" />
+                <Add Vector = " C0;-C0; C0" />
+                <Add Vector = " C0;-C0;-C0" />
+                <Add Vector = "-C0; C0; C0" />
+                <Add Vector = "-C0; C0;-C0" />
+                <Add Vector = "-C0;-C0; C0" />
+                <Add Vector = "-C0;-C0;-C0" />
+            </Vertices>
+
+            <Faces>
+                <ExecMacro MacroName = "Face" Color = "clRed   " i0 = " 3" i1 = "10" i2 = "11" i3 = "13" i4 = "12" />
+                <ExecMacro MacroName = "Face" Color = "clOrange" i0 = " 2" i1 = " 6" i2 = " 8" i3 = " 9" i4 = " 7" />
+                <ExecMacro MacroName = "Face" Color = "clBlue  " i0 = " 5" i1 = " 8" i2 = "12" i3 = "13" i4 = " 9" />
+                <ExecMacro MacroName = "Face" Color = "clGreen " i0 = " 4" i1 = " 6" i2 = " 7" i3 = "11" i4 = "10" />
+                <ExecMacro MacroName = "Face" Color = "clYellow" i0 = " 1" i1 = " 7" i2 = " 9" i3 = "13" i4 = "11" />
+                <ExecMacro MacroName = "Face" Color = "clWhite " i0 = " 0" i1 = " 6" i2 = "10" i3 = "12" i4 = " 8" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

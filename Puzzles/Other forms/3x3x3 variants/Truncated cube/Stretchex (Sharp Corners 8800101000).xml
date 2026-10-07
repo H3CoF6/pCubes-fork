@@ -1,0 +1,37 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Stretchex (Sharp Corners 8800101000)</Name>
+        <Menu>Other forms\3x3x3 variants\Truncated cube\Stretchex (Sharp Corners 8800101000)</Menu>
+        <Inventor>Kyler van der Gaag</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2191</Link>
+    </Interface>
+
+    <Script>
+        W := 0.4;
+        D := W / 3;
+        RCut := W * 1.0;
+        ACut := D / (W + D) * sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "Pi/4" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W * 2" WY = "W * 2" WZ = "W" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Cut Color = "Colors[0]"><Plane NormVector = " 1; 0;-ACut" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[1]"><Plane NormVector = "-1; 0;-ACut" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[2]"><Plane NormVector = " 0; 1; ACut" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[3]"><Plane NormVector = " 0;-1; ACut" NormDistance = "-RCut" /></Cut>
+    </Figure>
+</xml>

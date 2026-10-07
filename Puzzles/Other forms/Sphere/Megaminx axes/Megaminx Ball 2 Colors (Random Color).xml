@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx Ball 2 Colors (Random Color)</Name>
+        <Menu>Other forms\Sphere\Megaminx axes\Megaminx Ball 2 Colors (Random Color)</Menu>
+        <Inventor>Traipum Prungtaengkit</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-03-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6592</Link>
+    </Interface>
+
+    <Script>
+        Colors0[0] := 'BFBFBA'; // Silver
+        Colors1[0] := 'EFCC71'; // Gold
+
+        Colors0[1] := 'EFCC71'; // Gold
+        Colors1[1] := 'BFBFBA'; // Silver
+
+        Colors0[2] := '642BC6'; // Purple
+        Colors1[2] := 'EFCC71'; // Gold
+
+        Colors0[3] := 'EFCC71'; // Gold
+        Colors1[3] := '642BC6'; // Purple
+
+        Colors0[4] := 'FFFFFF'; // White
+        Colors1[4] := '333333'; // Black
+
+        Colors0[5] := '333333'; // Black
+        Colors1[5] := 'FFFFFF'; // White
+
+        C := Random(6);
+
+        K := 0.6;
+        D := K * 0.6;
+        L := K * 1.5;
+
+        phi := (Sqrt(5) - 1) / 2; // The golden ratio
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5; 0; 2*Pi/5" PlaneDistances = "-D; D" >
+        <Axis NormVector = "   0;  -1; phi" />
+        <Axis NormVector = "   0;  -1;-phi" />
+        <Axis NormVector = "-phi;   0;  -1" />
+        <Axis NormVector = " phi;   0;  -1" />
+        <Axis NormVector = "   1;-phi;   0" />
+        <Axis NormVector = "   1; phi;   0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSphere" >
+            <Script>
+                for i := 0 to 11 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSphere" Color = "Colors0[C]" />
+
+        <RemoveGrayParts/>
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <RemoveContaining Vector = "0;0;0" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "Colors1[C]" />
+
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

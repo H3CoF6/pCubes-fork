@@ -1,0 +1,138 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tetrahedron 3x3x5</Name>
+        <Menu>Other forms\Tetrahedron\Edge Turning\Tetrahedron 3x3x5</Menu>
+        <Inventor>Alberto Quevedo</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1483</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '009600'; // Green
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := 'FFFFFF'; // White
+        Colors[3] := 'C80000'; // Red
+
+        W := 0.5;
+        D := W * 0.2;
+        D2 := D * 2;
+
+        Hx[0] :=-W  ; Hy[0] :=-W  ; Hz[0] :=-W  ;
+        Hx[1] := 0  ; Hy[1] :=-W/2; Hz[1] :=-W/2;
+        Hx[2] := W  ; Hy[2] := W  ; Hz[2] :=-W  ;
+        Hx[3] := W/2; Hy[3] := 0  ; Hz[3] :=-W/2;
+        Hx[4] := W  ; Hy[4] :=-W  ; Hz[4] := W  ;
+        Hx[5] := W/2; Hy[5] :=-W/2; Hz[5] := 0  ;
+        Hx[6] := W/3; Hy[6] :=-W/3; Hz[6] :=-W/3;
+
+        Sx[0] := 1; Sy[0] := 0; Sz[0] := 0; Sd[0] :=-D2;
+        Sx[1] := 1; Sy[1] := 0; Sz[1] := 0; Sd[1] := D2;
+        Sx[2] := 0; Sy[2] := 1; Sz[2] := 0; Sd[2] := D2;
+        Sx[3] := 0; Sy[3] := 1; Sz[3] := 0; Sd[3] :=-D2;
+        Sx[4] := 0; Sy[4] := 0; Sz[4] := 1; Sd[4] := D2;
+        Sx[5] := 0; Sy[5] := 0; Sz[5] := 1; Sd[5] :=-D2;
+
+        function GetInt(): integer;
+        begin
+          substr := copy(sSplitParts, Counter, 1);
+          Result := StrToInt(substr);
+          Inc(Counter);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2;-D; D; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+
+        <HideContaining Vector = "Ex; Ey; Ez" />
+        <InvertVisibility/>
+        <SplitByAxes/>
+
+        <Macro Name = "ShowPart" >
+            <ShowAll/>
+            <HideContaining Vector = "Hx[idx]; Hy[idx]; Hz[idx]" />
+            <InvertVisibility/>
+        </Macro>
+
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Sx[idx]; Sy[idx]; Sz[idx]" NormDistance = "Sd[idx]" /></Split>
+        </Macro>
+
+        <Macro Name = "Step" >
+            <ExecMacro MacroName = "ShowPart" idx = "GetInt()" />
+            <ExecMacro MacroName = "Split"    idx = "GetInt()" />
+        </Macro>
+
+        <Macro Name = "Side" >
+            <ExecMacro MacroName = "Step" Counter = "1" Repeat = "Length(sSplitParts) div 2" />
+            <Turn NormVector = "0;1;0" Angle = "Pi" />
+        </Macro>
+        <ExecMacro MacroName = "Side" sSplitParts = "'0525354465'" />
+        <ExecMacro MacroName = "Side" sSplitParts = "'0525315363'" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "Side" sSplitParts = "'15315161'" />
+        <ExecMacro MacroName = "Side" sSplitParts = "'135365'" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Preset" >
+    		<Turn Axis = "0" Layers = "3;4" Angle = " Pi/2" />
+    		<Turn Axis = "1" Layers = "3;4" Angle = "-Pi/2" />
+    		<Turn Axis = "2" Layers = "3;4" Angle = "-Pi/2" />
+    		<Turn Axis = "1" Layers = "3;4" Angle = " Pi/2" />
+    		<Turn Axis = "2" Layers = "3;4" Angle = " Pi/2" />
+    		<Turn Axis = "1" Layers = "3;4" Angle = " Pi/2" />
+    		<Turn Axis = "0" Layers = "3;4" Angle = "-Pi/2" />
+    		<Turn Axis = "1" Layers = "3;4" Angle = "-Pi/2" />
+    		<Turn Axis = "1" Layers = "0;1" Angle = " Pi/2" />
+    		<Turn Axis = "2" Layers = "2  " Angle = "-Pi/2" />
+    		<Turn Axis = "1" Layers = "0;1" Angle = "-Pi/2" />
+    		<Turn Axis = "2" Layers = "3;4" Angle = " Pi  " />
+    		<Turn Axis = "0" Layers = "0;1" Angle = "-Pi/2" />
+    		<Turn Axis = "2" Layers = "2  " Angle = " Pi/2" />
+    		<Turn Axis = "0" Layers = "0;1" Angle = " Pi/2" />
+    		<Turn Axis = "2" Layers = "0;1" Angle = "-Pi/2" />
+    		<Turn Axis = "1" Layers = "2  " Angle = " Pi/2" />
+    		<Turn Axis = "2" Layers = "0;1" Angle = " Pi/2" />
+    		<Turn Axis = "1" Layers = "0;1" Angle = "-Pi/2" />
+    		<Turn Axis = "2" Layers = "0;1" Angle = "-Pi/2" />
+    		<Turn Axis = "1" Layers = "2  " Angle = "-Pi/2" />
+    		<Turn Axis = "2" Layers = "0;1" Angle = " Pi/2" />
+    		<Turn Axis = "1" Layers = "0;1" Angle = " Pi/2" />
+        </Macro>
+
+        <Macro Name = "Sc1" >
+            <Turn Axis = "2" Layer = "Random(5)" Angle = "Pi/2 * Random(4)" />
+            <Turn Axis = "0" Layer = "Random(5)" Angle = "Pi" />
+            <Turn Axis = "1" Layer = "Random(5)" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(5)" Angle = "2 * Pi * Random"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Preset" />
+            <ExecMacro MacroName = "Sc1" Repeat = "50" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "50" />
+        </Macro>
+    </Macros>
+</xml>

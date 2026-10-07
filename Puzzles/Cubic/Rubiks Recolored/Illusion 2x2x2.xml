@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Illusion 2x2x2</Name>
+        <Menu>Cubic\Rubiks Recolored\Illusion 2x2x2</Menu>
+        <Inventor>Mark Lodge</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-02-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10893</Link>
+    </Interface>
+
+    <Script>
+        clBlack := '444444';
+        clWhite := 'FFFFFF';
+
+        W := 0.5;
+        N := 2;
+        D := 2 * W / N;
+        for i := 0 to N - 2 do
+            Dist[i] := -W + D + i * D;
+
+        for i := 0 to N - 1 do
+            Coords[i] := -W + D/2 + i * D;
+
+        OddCubes := 0;
+        for i := 0 to N - 1 do
+            for j := 0 to N - 1 do
+                for k := 0 to N - 1 do
+                    if (i = 0) or (i = N - 1) or (j = 0) or (j = N - 1) or (k = 0) or (k = N - 1) then
+                        if (i + j + k) mod 2 = 0 then begin
+                            OddX[OddCubes] := Coords[i];
+                            OddY[OddCubes] := Coords[j];
+                            OddZ[OddCubes] := Coords[k];
+                            Inc(OddCubes);
+                        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "Dist" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W * 1.1" Color = "-1" />
+        <SplitByAxes/>
+
+        <Macro Name = "HideOdd" >
+            <HideContaining Vector = "OddX[i]; OddY[i]; OddZ[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideOdd" Repeat = "OddCubes" i = "0" />
+
+        <Cut Color = "clBlack" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+
+        <Cut Color = "clWhite" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

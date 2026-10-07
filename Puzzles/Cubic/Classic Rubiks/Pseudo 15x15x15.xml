@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pseudo 15x15x15</Name>
+        <Menu>Cubic\Classic Rubiks\Pseudo 15x15x15</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-03-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4998</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        N := 15;
+        WD := 2 * W / N;
+        D[0] := -W + 2 * WD;
+        for i := 1 to N - 4 do
+            D[i] := D[i-1] + WD;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "-W + WD" /> </Split>
+        <Split> <Plane NormVector = "-1; 0; 0" NormDistance = "-W + WD" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "-W + WD" /> </Split>
+        <Split> <Plane NormVector = " 0;-1; 0" NormDistance = "-W + WD" /> </Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "-W + WD" /> </Split>
+        <Split> <Plane NormVector = " 0; 0;-1" NormDistance = "-W + WD" /> </Split>
+        <RemoveContaining Vector = "0; 0; 0" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Proxy Cube - Mercury</Name>
+        <Menu>Other cubes\Mixed\Fisher\Proxy Cube - Mercury</Menu>
+        <Inventor>Mohammad Badir</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-04-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5194</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        W1 := W / sqrt(2); // = height
+
+        D1 := W1 / 3;
+        D2 := W1;
+
+        delta := 1.001;
+        WD := W1 * delta;
+        WC := W1 * 1.1;
+        RC := W1 * 0.8;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D1; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0; 0; 1" Angle = "Pi/4" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W1" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "4" />
+        <RemoveContaining Vector = "0;0;0" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "WD" />
+        <Cut Axis = "0" From = "1" To = "4" />
+        <Cut Axis = "1" From = "1" To = "4" />
+        <Cut Color = "clWhite" Axis = "2" To = "4" />
+
+        <Cylinder Radius = "RC" Base = "0;0;W1" Top = "0;0;WC" TopColor = "clWhite" />
+
+        <ShowAll/>
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <HideContaining Vector = "0;0;-W1" />
+        <InvertVisibility/>
+        <Split Axis = "2" From = "1" />
+        <ShowAll/>
+    </Figure>
+</xml>

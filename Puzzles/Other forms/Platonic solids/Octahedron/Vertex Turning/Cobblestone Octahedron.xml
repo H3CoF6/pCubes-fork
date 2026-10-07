@@ -1,0 +1,246 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cobblestone Octahedron</Name>
+        <Menu>Other forms\Octahedron\Vertex Turning\Cobblestone Octahedron</Menu>
+        <Inventor>Taras Bereznyak</Inventor>
+        <Programmer>Taras Bereznyak</Programmer>
+        <Added>2026-02-03</Added>
+        <Link>https://twistypuzzles.com/forum/viewtopic.php?p=436080</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0';
+        Colors[1] := 'FFFFFF';
+        Colors[2] := '00FF00';
+        Colors[3] := '883300';
+        Colors[4] := 'FF0000';
+        Colors[5] := 'FF8000';
+        Colors[6] := 'BBBBBB';
+        Colors[7] := '0080FF';
+        Colors[8] := 'FFFF00';
+
+        W := 0.7;
+        W2 := W * 0.4;
+        D := W / 3;
+        A := Pi*2/12;
+
+        Vx[ 0] := -W; Vy[ 0] :=  0; Vz[ 0] :=  0;
+        Vx[ 1] :=  W; Vy[ 1] :=  0; Vz[ 1] :=  0;
+        Vx[ 2] :=  0; Vy[ 2] := -W; Vz[ 2] :=  0;
+        Vx[ 3] :=  0; Vy[ 3] :=  W; Vz[ 3] :=  0;
+        Vx[ 4] :=  0; Vy[ 4] :=  0; Vz[ 4] := -W;
+        Vx[ 5] :=  0; Vy[ 5] :=  0; Vz[ 5] :=  W;
+
+        Vx[ 6] :=-W2; Vy[ 6] :=-W2; Vz[ 6] :=-W2;
+        Vx[ 7] :=-W2; Vy[ 7] :=-W2; Vz[ 7] := W2;
+        Vx[ 8] :=-W2; Vy[ 8] := W2; Vz[ 8] :=-W2;
+        Vx[ 9] :=-W2; Vy[ 9] := W2; Vz[ 9] := W2;
+        Vx[10] := W2; Vy[10] :=-W2; Vz[10] :=-W2;
+        Vx[11] := W2; Vy[11] :=-W2; Vz[11] := W2;
+        Vx[12] := W2; Vy[12] := W2; Vz[12] :=-W2;
+        Vx[13] := W2; Vy[13] := W2; Vz[13] := W2;
+    </Script>
+
+    <Axes TurningAngles = "0; A" PlaneDistances = "D" >
+        <Axis NormVector = " 0; 0; 1" />
+        <Axis NormVector = " 0; 0;-1" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = "-1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Side" >
+            <Face Color = "Colors[c]" VertexIndexes = "v1;v2;v0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = "v2;v3;v0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = "v3;v1;v0" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <ExecMacro MacroName = "Side" c = "1" v0 = " 6" v1 = "4" v2 = "2" v3 = "0" />
+                <ExecMacro MacroName = "Side" c = "2" v0 = " 7" v1 = "0" v2 = "2" v3 = "5" />
+                <ExecMacro MacroName = "Side" c = "3" v0 = " 8" v1 = "4" v2 = "0" v3 = "3" />
+                <ExecMacro MacroName = "Side" c = "4" v0 = " 9" v1 = "5" v2 = "3" v3 = "0" />
+                <ExecMacro MacroName = "Side" c = "5" v0 = "10" v1 = "4" v2 = "1" v3 = "2" />
+                <ExecMacro MacroName = "Side" c = "6" v0 = "11" v1 = "5" v2 = "2" v3 = "1" />
+                <ExecMacro MacroName = "Side" c = "7" v0 = "12" v1 = "4" v2 = "3" v3 = "1" />
+                <ExecMacro MacroName = "Side" c = "8" v0 = "13" v1 = "5" v2 = "1" v3 = "3" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = " A*4" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = "-A*5" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" From = "1" Angle = "-A*3" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = "-A*1" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" From = "1" Angle = " A*6" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*2" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*2" />
+        <Split Axis = "2" From = "1" />
+        <Turn  Axis = "2" From = "1" Angle = " A*3" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*3" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = " A*6" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" From = "1" Angle = " A*1" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = " A*6" />
+        <Turn  Axis = "1" From = "1" Angle = " A*1" />
+        <Split Axis = "5" From = "1" />
+        <Turn  Axis = "5" From = "1" Angle = " A*3" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*4" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*5" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*5" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*1" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = " A*4" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*4" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = " A*2" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = " A*4" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*2" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = " A*2" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = " A*4" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*1" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*4" />
+        <Split Axis = "5" From = "1" />
+        <Turn  Axis = "5" From = "1" Angle = " A*3" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*2" />
+        <Split Axis = "5" From = "1" />
+        <Turn  Axis = "5" From = "1" Angle = " A*3" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" From = "1" Angle = " A*6" />
+        <Turn  Axis = "0" From = "1" Angle = " A*4" />
+        <Turn  Axis = "1" From = "1" Angle = " A*3" />
+        <Turn  Axis = "0" From = "1" Angle = " A*2" />
+        <Turn  Axis = "1" From = "1" Angle = " A*4" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*5" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*1" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*4" />
+        <Turn  Axis = "1" From = "1" Angle = " A*1" />
+        <Turn  Axis = "0" From = "1" Angle = " A*5" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*3" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*5" />
+        <Turn  Axis = "1" From = "1" Angle = " A*3" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*4" />
+        <Turn  Axis = "1" From = "1" Angle = " A*1" />
+        <Turn  Axis = "0" From = "1" Angle = " A*6" />
+        <Turn  Axis = "1" From = "1" Angle = " A*4" />
+        <Turn  Axis = "0" From = "1" Angle = " A*2" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*2" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*3" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*3" />
+        <Turn  Axis = "0" From = "1" Angle = " A*1" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = " A*5" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" From = "1" Angle = " A*6" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = "-A*5" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*4" />
+        <Turn  Axis = "3" From = "1" Angle = " A*3" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = " A*4" />
+        <Turn  Axis = "3" From = "1" Angle = "-A*3" />
+        <Turn  Axis = "1" From = "1" Angle = " A*2" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*4" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*5" />
+        <Split Axis = "5" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*3" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*1" />
+        <Turn  Axis = "0" From = "1" Angle = " A*3" />
+        <Turn  Axis = "1" From = "1" Angle = " A*4" />
+        <Turn  Axis = "0" From = "1" Angle = " A*4" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = "-A*4" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" From = "1" Angle = " A*4" />
+        <Split Axis = "5" From = "1" />
+        <Turn  Axis = "5" From = "1" Angle = "-A*3" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" From = "1" Angle = " A*6" />
+        <Turn  Axis = "4" From = "1" Angle = " A*4" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*1" />
+        <Split Axis = "5" From = "1" />
+        <Turn  Axis = "5" From = "1" Angle = "-A*3" />
+        <Turn  Axis = "0" From = "1" Angle = " A*6" />
+        <Turn  Axis = "5" From = "1" Angle = " A*6" />
+        <Turn  Axis = "1" From = "1" Angle = " A*3" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*4" />
+        <Turn  Axis = "1" From = "1" Angle = " A*5" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = " A*3" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*2" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = " A*1" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = " A*4" />
+        <Turn  Axis = "4" From = "1" Angle = " A*2" />
+        <Turn  Axis = "1" From = "1" Angle = " A*2" />
+        <Turn  Axis = "4" From = "1" Angle = "-A*3" />
+        <Turn  Axis = "1" From = "1" Angle = " A*3" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = " A*6" />
+        <Turn  Axis = "0" From = "1" Angle = " A*3" />
+        <Turn  Axis = "4" From = "1" Angle = " A*3" />
+        <Turn  Axis = "0" From = "1" Angle = " A*2" />
+        <Turn  Axis = "3" From = "1" Angle = " A*3" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" From = "1" Angle = " A*1" />
+        <Turn  Axis = "4" From = "1" Angle = " A*3" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" From = "1" Angle = " A*3" />
+        <Turn  Axis = "5" From = "1" Angle = " A*6" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*1" />
+        <Turn  Axis = "4" From = "1" Angle = "-A*5" />
+        <Turn  Axis = "1" From = "1" Angle = " A*2" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = "-A*1" />
+        <Turn  Axis = "2" From = "1" Angle = "-A*3" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*5" />
+        <Split Axis = "2" From = "1" />
+        <Turn  Axis = "2" From = "1" Angle = " A*3" />
+        <Turn  Axis = "0" From = "1" Angle = "-A*3" />
+        <Turn  Axis = "4" From = "1" Angle = "-A*3" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*4" />
+        <Turn  Axis = "4" From = "1" Angle = " A*4" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*5" />
+        <Turn  Axis = "4" From = "1" Angle = "-A*1" />
+        <Turn  Axis = "0" From = "1" Angle = " A*5" />
+        <Turn  Axis = "4" From = "1" Angle = "-A*2" />
+        <Turn  Axis = "3" From = "1" Angle = " A*6" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "4" From = "1" Angle = "-A*1" />
+        <Turn  Axis = "1" From = "1" Angle = "-A*1" />
+        <Turn  Axis = "2" From = "1" Angle = "-A*3" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" From = "1" Angle = " A*6" />
+        <Turn  Axis = "0" From = "1" Angle = " A*3" />
+        <Split Axis = "4" From = "1" />
+
+        <Undo Repeat = "117" />
+    </Figure>
+</xml>

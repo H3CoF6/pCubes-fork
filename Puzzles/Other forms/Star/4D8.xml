@@ -1,0 +1,107 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4D8</Name>
+        <Menu>Other forms\Star\4D8</Menu>
+        <Inventor>Heinz Molidor</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2018-10-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2701</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'F0F0F0';
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clGreen  := '008000';
+        clPurple := '800080';
+
+        H  := 0.5;
+        D2 := H / sqrt(3);
+        RC := H * 1.3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = "  1;  0;  0" />
+        <Axis NormVector = "  0;  1;  0" />
+        <Axis NormVector = "  0;  0;  1" />
+    </Axes>
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "-D2;D2" FixedLayers = "1" >
+        <Axis NormVector = "  H;  H;  H" />
+        <Axis NormVector = " -H;  H;  H" />
+        <Axis NormVector = " -H; -H;  H" />
+        <Axis NormVector = "  H; -H;  H" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-H; -H;  H" />
+                <Add Vector = " H;  H;  H" />
+                <Add Vector = " H; -H; -H" />
+                <Add Vector = "-H;  H; -H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clYellow" VertexIndexes = " 0; 2; 1" />
+                <Face Color = "clOrange" VertexIndexes = " 0; 1; 3" />
+                <Face Color = "clBlue  " VertexIndexes = " 1; 2; 3" />
+                <Face Color = "clPurple" VertexIndexes = " 0; 3; 2" />
+            </Faces>
+        </Part>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "-H;  H;  H" />
+                <Add Vector = " H; -H;  H" />
+                <Add Vector = " H;  H; -H" />
+                <Add Vector = "-H; -H; -H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clWhite" VertexIndexes = " 0; 3; 1" />
+                <Face Color = "clGreen" VertexIndexes = " 0; 1; 2" />
+                <Face Color = "clRed  " VertexIndexes = " 1; 3; 2" />
+                <Face Color = "clCyan " VertexIndexes = " 0; 2; 3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Part>
+            <Vertices>
+                <Add Vector = "-H;  0;  0" />
+                <Add Vector = " H;  0;  0" />
+                <Add Vector = " 0; -H;  0" />
+                <Add Vector = " 0;  H;  0" />
+                <Add Vector = " 0;  0; -H" />
+                <Add Vector = " 0;  0;  H" />
+            </Vertices>
+            <Faces>
+                <Face VertexIndexes = " 1; 5; 2" />
+                <Face VertexIndexes = " 2; 5; 0" />
+                <Face VertexIndexes = " 0; 5; 3" />
+                <Face VertexIndexes = " 3; 5; 1" />
+                <Face VertexIndexes = " 2; 4; 1" />
+                <Face VertexIndexes = " 0; 4; 2" />
+                <Face VertexIndexes = " 3; 4; 0" />
+                <Face VertexIndexes = " 1; 4; 3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Cut Color = "clGreen " > <Plane NormVector = "-1;-1;-1" NormDistance = "-RC" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormVector = "-1;-1; 1" NormDistance = "-RC" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = "-1; 1;-1" NormDistance = "-RC" /> </Cut>
+        <Cut Color = "clRed   " > <Plane NormVector = "-1; 1; 1" NormDistance = "-RC" /> </Cut>
+        <Cut Color = "clOrange" > <Plane NormVector = " 1;-1;-1" NormDistance = "-RC" /> </Cut>
+        <Cut Color = "clCyan  " > <Plane NormVector = " 1;-1; 1" NormDistance = "-RC" /> </Cut>
+        <Cut Color = "clWhite " > <Plane NormVector = " 1; 1;-1" NormDistance = "-RC" /> </Cut>
+        <Cut Color = "clPurple" > <Plane NormVector = " 1; 1; 1" NormDistance = "-RC" /> </Cut>
+    </Figure>
+</xml>

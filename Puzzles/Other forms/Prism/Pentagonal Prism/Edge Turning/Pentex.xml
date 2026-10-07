@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentex</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Edge Turning\Pentex</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2016-12-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5728</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '0000A0';
+        clOrange  := 'FF6000';
+        clRed     := 'FF0000';
+        clGreen   := '008000';
+        clWhite   := 'FFFFFF';
+        clViolett := '800080';
+
+        H := 0.42;
+        R := 0.65;
+        D := 0.20;
+
+        sAngle := PI * 2 / 5;
+
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+         
+        az := R * sqrt((5 - sqrt(5)) / 8);
+
+        A1 := ArcCos((5 * sqrt(5) - 2) / 22);
+        A2 := ArcCos((sqrt(5) - 5) / 8);
+        A3 := ArcCos(-(1 + 5 * sqrt(5)) / 16);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi; 0" AvailableAngles = "-a3; -a2; -a1; 0; a1; a2; a3" PlaneDistances = "-D" >
+        <Axis NormVector = " x[0]; y[0];  az" />
+        <Axis NormVector = " x[1]; y[1];  az" />
+        <Axis NormVector = " x[2]; y[2];  az" />
+        <Axis NormVector = " x[3]; y[3];  az" />
+        <Axis NormVector = " x[4]; y[4];  az" />
+        <Axis NormVector = " x[0]; y[0]; -az" />
+        <Axis NormVector = " x[1]; y[1]; -az" />
+        <Axis NormVector = " x[2]; y[2]; -az" />
+        <Axis NormVector = " x[3]; y[3]; -az" />
+        <Axis NormVector = " x[4]; y[4]; -az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+                <Add Vector = "x[3]; y[3];  H" />
+                <Add Vector = "x[4]; y[4];  H" />
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[3]; y[3]; -H" />
+                <Add Vector = "x[4]; y[4]; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite  " VertexIndexes = "4;3;2;1;0" />
+
+                <Face Color = "clOrange " VertexIndexes = "0;1;6;5" />
+                <Face Color = "clRed    " VertexIndexes = "1;2;7;6" />
+                <Face Color = "clViolett" VertexIndexes = "2;3;8;7" />
+                <Face Color = "clBlue   " VertexIndexes = "3;4;9;8" />
+                <Face Color = "clGreen  " VertexIndexes = "4;0;5;9" />
+
+                <Face Color = "clYellow " VertexIndexes = "5;6;7;8;9" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

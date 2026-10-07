@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super 10x10x10</Name>
+        <Menu>Cubic\Classic Rubiks\Super 10x10x10</Menu>
+        <Inventor>cuberus</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-10-24</Added>
+        <Link>https://www.cuberus.com/products/10x10x10-super-pochmann-black-supercube-sticker-mod-puzzle</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        W1 := W * 1.002;
+
+        D := W / 5;
+        DD := D * 0.2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-4*D; -3*D; -2*D; -D; 0; D; 2*D; 3*D; 4*D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddSticker" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " X; X; W1" />
+                    <Add Vector = " X - DD;  X - DD; W1" />
+                    <Add Vector = " X - DD;-(X - DD); W1" />
+                    <Add Vector = " X;-X; W1" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2;3" InvisibleEdges = "7" />
+                </Faces>
+            </Part>
+        </Macro>
+        <Macro Name = "AddStickers" >
+            <ExecMacro MacroName = "AddSticker" X = "D" />
+            <ExecMacro MacroName = "AddSticker" X = "2*D" />
+            <ExecMacro MacroName = "AddSticker" X = "3*D" />
+            <ExecMacro MacroName = "AddSticker" X = "4*D" />
+            <Turn NormVector = "1; 0; 0" Angle = "Pi/2" />
+        </Macro>
+
+        <Script> X := D; </Script>
+        <ExecMacro MacroName = "AddStickers" Color = "Colors[1]" Repeat = "4" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddStickers" Color = "Colors[5]" Repeat = "4" />
+        <Turn NormVector = "0; 0; 1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddStickers" Color = "Colors[2]" Repeat = "4" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddStickers" Color = "Colors[0]" Repeat = "4" />
+        <Turn NormVector = "0; 0; 1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddStickers" Color = "Colors[4]" Repeat = "4" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddStickers" Color = "Colors[3]" Repeat = "4" />
+        <Turn NormVector = "0; 0; 1" Angle = "Pi/2" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

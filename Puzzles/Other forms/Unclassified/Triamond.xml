@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triamond</Name>
+        <Menu>Other forms\Unclassified\Triamond</Menu>
+        <Inventor>Timur Evbatyrov</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-03-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1754</Link>
+    </Interface>
+
+    <Script>
+        clViolett    := '800080';
+        clLightBlue  := '2858AF';
+        clLightRed   := 'FF4040';
+        clLightGreen := '00FF00';
+
+        W := 0.5;
+        D := -W * sqrt(3) / 3;
+        D2 := W * sqrt(3) / 9;
+        DCut := D2 * 5;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D; D2" FixedLayers = "2" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = " 1; -1; -1" />
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = "-1;  1; -1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut Color = "clViolett   " > <Plane NormVector = "-1;-1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clLightRed  " > <Plane NormVector = "-1; 1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clLightBlue " > <Plane NormVector = " 1;-1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clLightGreen" > <Plane NormVector = " 1; 1;-1" NormDistance = "-DCut" /> </Cut>
+        <SplitByAxes/>
+    </Figure>
+</xml>

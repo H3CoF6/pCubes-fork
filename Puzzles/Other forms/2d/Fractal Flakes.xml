@@ -1,0 +1,188 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fractal Flakes</Name>
+        <Menu>Other forms\2d\Fractal Flakes</Menu>
+        <Inventor>Isaiah Tucker</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-12-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11590</Link>
+    </Interface>
+
+    <Script>
+        clWhite := 'FFFFFF';
+
+        Colors[0] := '777777'; // Gray
+        Colors[1] := '00E5A8'; // Cyan
+        Colors[2] := '0080E0'; // Blue
+        Colors[3] := '824A16'; // Brown
+        Colors[4] := '006600'; // Green
+
+        R1 := 0.5;
+        R2 := R1 * 0.8;
+        R3 := R1 * 0.4;
+        R4 := R1 * 0.4;
+
+        H1 := R1 * sin(Pi / 5);
+        H2 := H1 - R4 * tan(Pi / 10);
+        H3 := H1 / 7;
+
+        sAngle := 2*Pi / 5;
+        for i := 0 to 4 do begin
+            Ax[i] := R1 * cos(sAngle * i);
+            Ay[i] := R1 * sin(sAngle * i);
+        end;
+
+        procedure Add5Vectors(A_x,A_y);
+        begin
+            A_x := A_x * kx;
+            A_y := A_y * ky;
+            for i := 0 to 4 do begin
+                Angle := sAngle * (i - 1/4);
+                Vx[k] := A_x * cos(Angle) - A_y * sin(Angle);
+                Vy[k] := A_x * sin(Angle) + A_y * cos(Angle);
+                Inc(k);
+            end;
+        end;
+
+        kx := R1 / 7 * sin(Pi/5);
+        ky := R1 / 7 * cos(Pi/5);
+        k := 0;
+        Add5Vectors(-7,-7);
+        Add5Vectors(-5,-5);
+        Add5Vectors(-1,-7);
+        Add5Vectors( 1,-7);
+        Add5Vectors(-1,-3);
+        Add5Vectors( 1,-3);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-Ax[2]" FixedLayers = "0" >
+        <Axis NormVector = "-Ax[0];-Ay[0]; 0" />
+        <Axis NormVector = "-Ax[1];-Ay[1]; 0" />
+        <Axis NormVector = "-Ax[2];-Ay[2]; 0" />
+        <Axis NormVector = "-Ax[3];-Ay[3]; 0" />
+        <Axis NormVector = "-Ax[4];-Ay[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "H3" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "TopArrow" >
+            <Script>
+                Color := Colors[i];
+                v0 := 35;
+                v1 := i +  5;
+                v2 := i + 10;
+                v3 := i + 15;
+                v4 := i + 20;
+                v5 := i + 25;
+                v6 := i + 30;
+                v7 := (v1 + 1) mod 5 + 5;
+                v8 := v7 + 5;
+            </Script>
+            <Face Color = "clWhite" VertexIndexes = "v1;v3;v5;v2"    InvisibleEdges = "-2" />
+            <Face Color = "clWhite" VertexIndexes = "v4;v7;v8;v6"    InvisibleEdges = "-2" />
+            <Face Color = "Color  " VertexIndexes = "v2;v5;v0"       InvisibleEdges = "-1" />
+            <Face Color = "Color  " VertexIndexes = "v6;v8;v0"       InvisibleEdges = "-1" />
+            <Face Color = "Color  " VertexIndexes = "v5;v3;v4;v6;v0" InvisibleEdges = "-3" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Ax;Ay;-H1" />
+            <Vertices Vectors = "Vx;Vy; H1" />
+            <Vertices Vectors = "0 ;0 ; H1" />
+
+            <Faces>
+                <Face                   VertexIndexes = "8;7;0;1" />
+                <Face                   VertexIndexes = "9;8;1;2" />
+                <Face                   VertexIndexes = "5;9;2;3" />
+                <Face                   VertexIndexes = "6;5;3;4" />
+                <Face                   VertexIndexes = "7;6;4;0" />
+                <Face Color = "clWhite" VertexIndexes = "4;3;2;1;0" />
+
+                <ExecMacro MacroName = "TopArrow" i = "0" Repeat = "5" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "CreateCap">
+            <Part>
+                <Vertices>
+                    <Add Vector = " Ax[2]; Ay[2]; H1" />
+                    <Add Vector = " Ax[3]; Ay[3]; H1" />
+                    <Add Vector = " Ax[2]; Ay[2];-H1" />
+                    <Add Vector = " Ax[3]; Ay[3];-H1" />
+
+                    <Add Vector = " Ax[2] - R4; H2; H2" />
+                    <Add Vector = " Ax[3] - R4;-H2; H2" />
+                    <Add Vector = " Ax[2] - R4; H2;-H2" />
+                    <Add Vector = " Ax[3] - R4;-H2;-H2" />
+
+                    <Add Vector = " Ax[2] - R4; H2;-H3" />
+                    <Add Vector = " Ax[3] - R4;-H2;-H3" />
+                    <Add Vector = " Ax[2] - R4; H3;-H3" />
+                    <Add Vector = " Ax[3] - R4;-H3;-H3" />
+
+                    <Add Vector = " Ax[2] - R4; H3; H2" />
+                    <Add Vector = " Ax[3] - R4;-H3; H2" />
+                    <Add Vector = " Ax[2] - R4; H3;-H2" />
+                    <Add Vector = " Ax[3] - R4;-H3;-H2" />
+
+                    <Add Vector = " Ax[2];  H3; H1" />
+                    <Add Vector = " Ax[3]; -H3; H1" />
+                </Vertices>
+
+                <Faces>
+                    <Script>
+                        Color := Colors[c];
+                        Inc(c);
+                    </Script>
+
+                    <Face                   VertexIndexes = "0;1;3;2" />
+
+                    <Face Color = "clWhite" VertexIndexes = "3;1;5;7" />
+                    <Face Color = "clWhite" VertexIndexes = "2;3;7;6" />
+                    <Face Color = "clWhite" VertexIndexes = "0;2;6;4" />
+
+                    <Face Color = "clWhite" VertexIndexes = "0;4;12;16" InvisibleEdges = "4" />
+                    <Face Color = "clWhite" VertexIndexes = "5;1;17;13" InvisibleEdges = "4" />
+
+                    <Face Color = "clWhite" VertexIndexes = " 4; 8;12" InvisibleEdges = "2" />
+                    <Face Color = "clWhite" VertexIndexes = " 9; 5;13" InvisibleEdges = "4" />
+
+                    <Face Color = "clWhite" VertexIndexes = " 8; 6;14;10" InvisibleEdges = "12" />
+                    <Face Color = "clWhite" VertexIndexes = " 7; 9;11;15" InvisibleEdges = " 6" />
+
+                    <Face Color = "Color  " VertexIndexes = " 8;10;12" InvisibleEdges = "-1" />
+                    <Face Color = "Color  " VertexIndexes = "11; 9;13" InvisibleEdges = "-1" />
+
+                    <Face Color = "Color  " VertexIndexes = "12;13;17;16" InvisibleEdges = "10" />
+                    <Face Color = "Color  " VertexIndexes = "13;12;14;15" InvisibleEdges = "10" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "-sAngle" />
+        </Macro>
+
+        <Turn NormVector = "0;0;1" Angle = "-sAngle" />
+        <ExecMacro MacroName = "CreateCap" c = "0" Repeat = "5" />
+
+        <SplitByAxes/>
+        <Macro Name = "Split" >
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+            <Turn Axis = "1" Layer = "1" Angle = "Pi/2" />
+            <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+            <Turn Axis = "3" Layer = "1" Angle = "Pi/2" />
+            <Turn Axis = "4" Layer = "1" Angle = "Pi/2" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "3" />
+        <Undo Repeat = "15" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

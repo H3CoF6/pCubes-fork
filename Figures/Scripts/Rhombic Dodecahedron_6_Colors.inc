@@ -1,0 +1,12 @@
+        Colors[ 0] := 'FF800A'; // Orange
+        Colors[ 1] := '0000D8'; // LightBlue
+        Colors[ 2] := 'C80000'; // Red
+        Colors[ 3] := '00A600'; // LightGreen
+        Colors[ 4] := 'FFFF00'; // Yellow
+        Colors[ 5] := 'FFFFFF'; // White
+        Colors[ 6] := 'FFFF00'; // Yellow
+        Colors[ 7] := 'FFFFFF'; // White
+        Colors[ 8] := 'C80000'; // Red
+        Colors[ 9] := '00A600'; // LightGreen
+        Colors[10] := 'FF800A'; // Orange
+        Colors[11] := '0000D8'; // LightBlue

@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Sudoku</Name>
+        <Menu>Other cubes\Vertex Turning\Dino Sudoku</Menu>
+        <Inventor>Mark Lodge</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-07-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9006</Link>
+    </Interface>
+        
+    <Script>
+        Colors[0] := 'C80000'; // Red
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := '00A000'; // Green
+        Colors[3] := '0050C8'; // Blue
+
+        W := 0.5;
+        D := W / sqrt(3);
+    </Script>
+        
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W*1.1" Color = "-1" />
+        <SplitByAxes/>
+
+        <Macro Name = "Cut" >
+            <HideContaining Vector = "W; 0; W" />
+            <InvertVisibility/>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cut" c = "3" />
+        <ExecMacro MacroName = "Cut" c = "1" />
+        <ExecMacro MacroName = "Cut" c = "2" />
+        <ExecMacro MacroName = "Cut" c = "0" />
+
+        <Turn NormVector = " 1; 0; 0" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "Cut" c = "1" />
+        <ExecMacro MacroName = "Cut" c = "0" />
+        <ExecMacro MacroName = "Cut" c = "3" />
+        <ExecMacro MacroName = "Cut" c = "2" />
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi/2" />
+
+        <Turn NormVector = " 0; 1; 0" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "Cut" c = "2" />
+        <ExecMacro MacroName = "Cut" c = "0" />
+        <ExecMacro MacroName = "Cut" c = "1" />
+        <ExecMacro MacroName = "Cut" c = "3" />
+        <Turn NormVector = " 0; 1; 0" Angle = " Pi/2" />
+
+        <Turn NormVector = " 0; 1; 0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "Cut" c = "0" />
+        <ExecMacro MacroName = "Cut" c = "2" />
+        <ExecMacro MacroName = "Cut" c = "3" />
+        <ExecMacro MacroName = "Cut" c = "1" />
+        <Turn NormVector = " 0; 1; 0" Angle = "-Pi/2" />
+
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "Cut" c = "2" />
+        <ExecMacro MacroName = "Cut" c = "3" />
+        <ExecMacro MacroName = "Cut" c = "0" />
+        <ExecMacro MacroName = "Cut" c = "1" />
+        <Turn NormVector = " 1; 0; 0" Angle = "-Pi/2" />
+
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi" />
+        <ExecMacro MacroName = "Cut" c = "0" />
+        <ExecMacro MacroName = "Cut" c = "2" />
+        <ExecMacro MacroName = "Cut" c = "1" />
+        <ExecMacro MacroName = "Cut" c = "3" />
+        <Turn NormVector = " 1; 0; 0" Angle = "-Pi" />
+
+        <Cut ><Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut ><Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut ><Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut ><Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut ><Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut ><Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+    </Figure>
+
+    <Procedures CheckSolved = "EachFaceConsistsOfDifferentColors" />
+</xml>

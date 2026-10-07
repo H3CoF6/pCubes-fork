@@ -1,0 +1,155 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Multi Crystal Uranus</Name>
+        <Menu>Other forms\Multi-puzzles\Multi Crystal\Uranus</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-26</Added>
+        <Link>http://bbs.mf8-china.com/forum.php?mod=viewthread&amp;tid=116132</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0011EE'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := '8800BB'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        R2 := R * 0.71;
+
+        D1 := Rsin * As;
+        D2 := Rsin * R2 / R;
+        D3 := D2 * 1.002;
+
+        CutV := R * 0.785;
+        CutE := R * 0.81;
+
+        // Puck parameters
+        RP := R2 * 0.07;
+        RPuck := R2 * 0.295;
+        for i := 0 to 9 do begin
+            x1[i] := RP * cos(2 * Pi / 10 * i);
+            y1[i] := RP * sin(2 * Pi / 10 * i) + RPuck;
+        end;
+        z1 := D2 * 1.001;
+
+        // Gray circles
+        RC := R * 0.14;
+        Sc := 0.98;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; sAngle; sAngle; 0; sAngle; sAngle; sAngle" PlaneDistances = "-D3;-D2;-D1; D1; D2; D3" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "SplitV">
+            <HideContaining Vector = "Vx[id]; Vy[id]; Vz[id]" />
+            <InvertVisibility/>
+            <Split> <Plane NormVector = "-Vx[id]; -Vy[id]; -Vz[id]" NormDistance = "-CutV" /> </Split>
+            <Script>Inc(id);</Script>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "SplitV" Repeat = "20" id = "0" />
+
+        <Macro Name = "SplitE">
+            <HideContaining Vector = "Ex[id]; Ey[id]; Ez[id]" />
+            <InvertVisibility/>
+            <Split> <Plane NormVector = "-Ex[id]; -Ey[id]; -Ez[id]" NormDistance = "-CutE" /> </Split>
+            <Script>Inc(id);</Script>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "SplitE" Repeat = "30" id = "0" />
+
+        <HideContaining Vector = "Vx; Vy; Vz" />
+        <HideContaining Vector = "Ex; Ey; Ez" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        // Pucks
+
+        <Macro Name = "AddPuck">
+            <Part>
+                <Vertices Vectors = "x1; y1; z1" />
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;2;3;4;5;6;7;8;9" />
+                </Faces>
+            </Part>
+
+            <HideContaining Vector = "Cx[0]+RC/2; Cy[0]; Cz[0]" /> // hides gray cylinder (to remove artefacts)
+
+            <Turn NormVector = "0; 0; 1" Angle = "2*Pi / 10" />
+        </Macro>
+
+        <Macro Name = "AddPucks">
+            <HideAll/>
+
+            // gray cylinder
+            <Cylinder Radius = "RC" Base = "Cx[0] * Sc; Cy[0] * Sc; Cz[0] * Sc" Top = "Cx[0]; Cy[0]; Cz[0]" />
+            <SplitByAxes/>
+
+            <ExecMacro MacroName = "AddPuck" Repeat = "10" />
+            <Cut> <Plane NormVector = "0; 0;-1" NormDistance = "-z1" /> </Cut> // remove artefacts
+
+            <Turn NormVector = "Cx[i]; Cy[i]; Cz[i]" Angle = "sAngle" />
+        </Macro>
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 0]" i = "3" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 2]" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[10]" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 6]" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 4]" />
+        <Turn NormVector = "Cx[4]; Cy[4]; Cz[4]" Angle = "sAngle" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 3]" i = "4" />
+        <Turn NormVector = "Cx[4]; Cy[4]; Cz[4]" Angle = "2*sAngle" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 5]" i = "1" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 7]" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[11]" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 9]" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 1]" i = "2" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 8]" i = "4" />
+        <Turn NormVector = "Cx[2]; Cy[2]; Cz[2]" Angle = "-sAngle" />
+
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" R = "R2" />
+        <SplitByAxes/>
+        <ShowAll/>
+
+        <Connect Layers = "0;2" />
+        <Connect Layers = "4;6" />
+
+        <Macro Name = "Connect1" >
+            <Connect Axis = "ax" Layers = "0;1" />
+            <Connect Axis = "ax" Layers = "5;6" />
+        </Macro>
+        <ExecMacro MacroName = "Connect1" ax = "1" />
+        <ExecMacro MacroName = "Connect1" ax = "4" />
+        <ExecMacro MacroName = "Connect1" ax = "5" />
+        <ExecMacro MacroName = "Connect1" ax = "2" />
+
+        <Connect Axis = "0" Layers = "1;3;5" />
+        <Connect Axis = "3" Layers = "1;3;5" />
+    </Figure>
+</xml>

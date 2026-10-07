@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Hex</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Octahedron\Skewb Hex</Menu>
+        <Menu>Other forms\Skewb variants\Skewb Hex</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2019-05-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=766</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '0000FF'; // Blue  
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := 'FF6000'; // Orange
+        Colors[ 3] := 'FF0000'; // Red   
+        Colors[ 4] := 'F0F0F0'; // White 
+        Colors[ 5] := '008000'; // Green 
+        Colors[ 6] := 'FF69B4'; // Pink  
+        Colors[ 7] := '800000'; // Brown 
+        Colors[ 8] := '00FF00'; // Lime  
+        Colors[ 9] := '800080'; // Purple
+        Colors[10] := '808000'; // Olive 
+        Colors[11] := '00FFFF'; // Cyan  
+        Colors[12] := '000080'; // Navy  
+        Colors[13] := 'FF7F50'; // Coral 
+
+        W := 0.56;
+        C := W / 2;
+        DCut := W * 3 / 2 / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "CutV" >
+            <Cut Color = "Colors[v + 6]"> <Plane NormVector = "-Vx[v];-Vy[v];-Vz[v]" NormDistance = "-DCut" /></Cut>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" v = "0" Repeat = "8" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

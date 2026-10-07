@@ -1,0 +1,128 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super Looper 4</Name>
+        <Menu>Other forms\2d\Looper\Super Looper 4</Menu>
+        <Menu>Other forms\Prism\Nonagonal Prism\Super Looper 4</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-08-19</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clWhite   := 'FFFFFF';
+        clRed     := 'FF0000';
+        clOrange  := 'FF6000';
+        clYellow  := 'FFFF00';
+        clLime    := '00FF00';
+        clDeepSky := '00BFFF';
+        clPurple  := '8060B0';
+        clPink    := 'E099C7';
+        clBlack   := '333333';
+
+        R := 0.65;
+        H := 2 * R * sin(Pi / 18);
+        A := 2 * Pi / 9;
+
+        for i := 0 to 8 do begin
+            x[i] := R * cos(A * (i+0.5));
+            y[i] := R * sin(A * (i+0.5));
+        end;
+        for i := 0 to 4 do begin
+            ax[i] :=-cos(A * (i + 1));
+            ay[i] :=-sin(A * (i + 1));
+        end;
+
+        D := R * cos(2 * A);
+
+        Height := 0.001;
+
+        // dots
+        dr := 0.05;
+        dx := 0.65 * 0.55; dy := 0;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D" NormVectors = " ax; ay; 0" />
+
+    <Figure>
+        <Macro Name = "CreatePrism" >
+            <HideAll/>
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2;3;4;5;6;7;8" />
+                    <Face Color = "Color" VertexIndexes = "9;10;1;0" />
+                    <Face Color = "Color" VertexIndexes = "10;11;2;1" />
+                    <Face Color = "Color" VertexIndexes = "11;12;3;2" />
+                    <Face Color = "Color" VertexIndexes = "12;13;4;3" />
+                    <Face Color = "Color" VertexIndexes = "13;14;5;4" />
+                    <Face Color = "Color" VertexIndexes = "14;15;6;5" />
+                    <Face Color = "Color" VertexIndexes = "15;16;7;6" />
+                    <Face Color = "Color" VertexIndexes = "16;17;8;7" />
+                    <Face Color = "Color" VertexIndexes = "17; 9;0;8" />
+                    <Face Color = "Color" VertexIndexes = "17;16;15;14;13;12;11;10;9" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "CreateSector" >
+            <ExecMacro MacroName = "CreatePrism" />
+            <Cut> <Plane NormVector = " x[4]; y[4]; 0" NormDistance = " D" /> </Cut>
+            <Cut> <Plane NormVector = " x[5]; y[5]; 0" NormDistance = " D" /> </Cut>
+            <Cut> <Plane NormVector = "-x[6];-y[6]; 0" NormDistance = "-D" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = "-A" />
+        </Macro>
+
+        <Macro Name = "Unbandage" >
+            <Split> <Plane NormVector = " x[i]; y[i]; 0" NormDistance = " D" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "CreateSector" Color = "clRed    " />
+        <ExecMacro MacroName = "CreateSector" Color = "clOrange " />
+        <ExecMacro MacroName = "CreateSector" Color = "clYellow " />
+        <ExecMacro MacroName = "CreateSector" Color = "clLime   " />
+        <ExecMacro MacroName = "CreateSector" Color = "clDeepSky" />
+        <ExecMacro MacroName = "CreateSector" Color = "clPurple " />
+        <ExecMacro MacroName = "CreateSector" Color = "clPink   " />
+        <Turn NormVector = "0;0;1" Angle = "A*7" />
+
+        <ShowAll/>
+        <ExecMacro MacroName = "Unbandage" i = "0" Repeat = "9" />
+        <Hide Axis = "0" From = "1" />
+        <Hide Axis = "1" From = "1" />
+        <Cut  Axis = "3" From = "1" />
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clWhite" />
+        <ExecMacro MacroName = "Unbandage" i = "0" Repeat = "9" />
+        <RemoveContaining Vector = "0;0;0" />
+        <HideContaining Vector = " x[5]/R*D; y[5]/R*D; 0" />
+        <HideContaining Vector = " x[6]/R*D; y[6]/R*D; 0" />
+        <HideContaining Vector = " x[7]/R*D; y[7]/R*D; 0" />
+        <HideContaining Vector = " x[8]/R*D; y[8]/R*D; 0" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+
+        <Macro Name = "CreateDots" >
+            <Circle Radius = "DR * R" Color = "clBlack" Base = "-dx * R; -dy * R; H" Center = "-dx * R; -dy * R; H + Height" />
+            <Turn NormVector = "0;0;1" Angle = "-A" />
+        </Macro>
+
+        <ExecMacro MacroName = "CreateDots" Repeat = "6" />
+        <Turn NormVector = "0;0;1" Angle = "A * 6" />
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

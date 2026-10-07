@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Shard Madness</Name>
+        <Menu>Other forms\Tetrahedron\Shard Madness</Menu>
+        <Menu>Other forms\Skewb variants\Shard Madness</Menu>
+        <Inventor>Isaiah Tucker (TwistyTurtle)</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-14</Added>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clYellow := 'FFFF00';
+
+        W := 0.5;
+        s2 := sqrt(2);
+        A := W / s2;
+        RCut2 := W * 0.95;
+        RCut1 := RCut2 / s2;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" >
+        <Axis NormVector = "  0;-s2; 1" />
+        <Axis NormVector = "-s2;  0; 1" />
+        <Axis NormVector = "  0; s2; 1" />
+        <Axis NormVector = " s2;  0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " A;-A; W" />
+                <Add Vector = "-A; A; W" />
+                <Add Vector = " A; A;-W" />
+                <Add Vector = "-A;-A;-W" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue  " VertexIndexes = "1;2;3" />
+                <Face Color = "clGreen " VertexIndexes = "0;3;2" />
+                <Face Color = "clRed   " VertexIndexes = "0;1;3" />
+                <Face Color = "clYellow" VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <Cut><Plane NormVector = " 1; 0; 0" NormDistance = "-RCut1" /></Cut>
+        <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-RCut1" /></Cut>
+        <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "-RCut1" /></Cut>
+        <Cut><Plane NormVector = " 0;-1; 0" NormDistance = "-RCut1" /></Cut>
+        <Cut><Plane NormVector = " 0; 0; 1" NormDistance = "-RCut2" /></Cut>
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "-RCut2" /></Cut>
+    </Figure>
+</xml>

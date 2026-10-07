@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jr. Heli-Skewb</Name>
+        <Menu>Other cubes\Mixed\Jr. Heli-Skewb</Menu>
+        <Inventor>Jason Smith</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6566</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        C := W / sqrt(2);
+        CutV := W * sqrt(3) * 0.95;
+        CutE := W * sqrt(2) * 0.982;
+
+        A1 := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "A1" PlaneDistances = "-C; C" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

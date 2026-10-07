@@ -1,0 +1,101 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Quirky Gem II</Name>
+        <Menu>Other forms\Johnson Solids\(J15) Elongated square bipyramid\Quirky Gem II</Menu>
+        <Menu>Other forms\Unclassified\Quirky Gem\Quirky Gem II</Menu>
+        <Inventor>Chandler Griscom</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2021-07-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5568</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=30521</Link>
+    </Interface>
+
+    <Script>
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clNavy   := '000080';
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clGolden := 'DDBB20';
+        clLime   := '00FF00';
+        clTeal   := '008080';
+        clGreen  := '008000';
+        clPink   := 'FF69B4';
+        clPurple := '800080';
+
+        K   := 0.7;
+
+        H   := K;
+        H2  := K / 2;
+        R   := K * sqrt(3) / 2;
+
+        pA1 := 1;
+        pA2 := sqrt(3);
+
+        D   := K * sqrt(3) / 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " pA1;   0; pA2" />
+        <Axis NormVector = "   0; pA1; pA2" />
+        <Axis NormVector = "-pA1;   0; pA2" />
+        <Axis NormVector = "   0;-pA1; pA2" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " 0; 0;  H" />
+
+                <Add Vector = " R; 0; H2" />
+                <Add Vector = " 0;-R; H2" />
+                <Add Vector = "-R; 0; H2" />
+                <Add Vector = " 0; R; H2" />
+
+                <Add Vector = " R; 0;-H2" />
+                <Add Vector = " 0;-R;-H2" />
+                <Add Vector = "-R; 0;-H2" />
+                <Add Vector = " 0; R;-H2" />
+
+                <Add Vector = " 0; 0; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange" VertexIndexes = " 0; 2; 1" />
+                <Face Color = "clCyan  " VertexIndexes = " 0; 3; 2" />
+                <Face Color = "clLime  " VertexIndexes = " 0; 4; 3" />
+                <Face Color = "clPink  " VertexIndexes = " 0; 1; 4" />
+
+                <Face Color = "clRed   " VertexIndexes = " 1; 2; 6; 5" />
+                <Face Color = "clGreen " VertexIndexes = " 2; 3; 7; 6" />
+                <Face Color = "clBlue  " VertexIndexes = " 3; 4; 8; 7" />
+                <Face Color = "clYellow" VertexIndexes = " 4; 1; 5; 8" />
+
+                <Face Color = "clGolden" VertexIndexes = " 9; 5; 6" />
+                <Face Color = "clNavy  " VertexIndexes = " 9; 6; 7" />
+                <Face Color = "clTeal  " VertexIndexes = " 9; 7; 8" />
+                <Face Color = "clPurple" VertexIndexes = " 9; 8; 5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax1" Layers = "0;2" Angle = "Pi" />
+            <Split Axis = "Ax2" From  = "1" />
+            <Undo/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "4" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "3" Ax2 = "1" />
+        <ExecMacro MacroName = "Split" Ax1 = "5" Ax2 = "1" />
+    </Figure>
+</xml>

@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Face- and Corner-turning Icosahedron (20 colors)</Name>
+        <Menu>Other forms\Icosahedron\Mixed\Face- and Corner-turning Icosahedron (20 colors)</Menu>
+        <Inventor>Ryan Binter</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3496</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFF66'; // Yellow
+        Colors[ 1] := '00AAFF'; // Aqua
+        Colors[ 2] := '00EE88'; // Green02
+        Colors[ 3] := '00EECC'; // Green03
+        Colors[ 4] := '882200'; // Brown
+        Colors[ 5] := 'FFCC00'; // LightOrange
+        Colors[ 6] := '0000CC'; // DarkBlue
+        Colors[ 7] := '00FFAA'; // SGreen
+        Colors[ 8] := 'FFAAFF'; // Violett
+        Colors[ 9] := 'BB0000'; // Red
+        Colors[10] := '5500CC'; // DarkViolett
+        Colors[11] := 'FFBBDD'; // SLViolett
+        Colors[12] := 'DD0088'; // DarkPink
+        Colors[13] := 'DC0000'; // Red02
+        Colors[14] := '330088'; // DarkestViolett
+        Colors[15] := 'AA00DD'; // DarkerViolett
+        Colors[16] := 'FF55BB'; // Pink
+        Colors[17] := 'FFFFDD'; // White
+        Colors[18] := 'EE4400'; // Orange
+        Colors[19] := '0000FF'; // DarkAqua
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        i := 0;
+        procedure AddM(v1, v2);
+        begin
+            Mx[i] := (2 * Vx[v1] + Vx[v2]) / 3;
+            My[i] := (2 * Vy[v1] + Vy[v2]) / 3;
+            Mz[i] := (2 * Vz[v1] + Vz[v2]) / 3;
+            Inc(i);
+            Mx[i] := (2 * Vx[v2] + Vx[v1]) / 3;
+            My[i] := (2 * Vy[v2] + Vy[v1]) / 3;
+            Mz[i] := (2 * Vz[v2] + Vz[v1]) / 3;
+            Inc(i);
+        end;
+
+        AddM( 0, 1);
+        AddM( 0, 2);
+        AddM( 0, 3);
+        AddM( 0, 4);
+        AddM( 0, 5);
+        AddM( 1, 2);
+        AddM( 2, 3);
+        AddM( 3, 4);
+        AddM( 4, 5);
+        AddM( 5, 1);
+        AddM( 1, 6);
+        AddM( 2, 7);
+        AddM( 3, 8);
+        AddM( 4, 9);
+        AddM( 5,10);
+        AddM( 1,10);
+        AddM( 2, 6);
+        AddM( 3, 7);
+        AddM( 4, 8);
+        AddM( 5, 9);
+        AddM( 6, 7);
+        AddM( 7, 8);
+        AddM( 8, 9);
+        AddM( 9,10);
+        AddM(10, 6);
+        AddM(11, 6);
+        AddM(11, 7);
+        AddM(11, 8);
+        AddM(11, 9);
+        AddM(11,10);
+
+        D1 := R * sqrt((25 + 11 * sqrt(5)) / 30) / 2;
+        D2 := R * (5 + sqrt(5)) / 10;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi * 2 / 3" PlaneDistances = "D1" NormVectors = "Cx; Cy; Cz" />
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D2" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <HideContaining Vector = "Mx; My; Mz"/>
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 19 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Mx; My; Mz"/>
+        <ShowAll/>
+    </Figure>
+</xml>

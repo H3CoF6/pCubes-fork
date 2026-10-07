@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Five-Sided Sharp Cube</Name>
+        <Menu>Other forms\3x3x3 variants\Prism\Fisher Five-Sided Sharp Cube</Menu>
+        <Menu>Other forms\Prism\Triangular Prism\Fisher Five-Sided Sharp Cube</Menu>
+        <Inventor>Alexander Kiss</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9217</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF6000'; // Orange
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := 'A80000'; // Red
+        Colors[3] := '008000'; // Green
+        Colors[4] := '0000A0'; // Blue
+
+        R := 0.6;
+        D := R * 0.18;
+
+        Z1 := -R * 0.5;
+        Z2 :=  Z1 + R * sqrt(2);
+        H := R * (Z2 + D) / (Z2 - Z1) - D * sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0; 0; 1" Angle = "Pi / 4" />
+
+        <Part>
+            <Vertices>
+                <Add Vector = "-R;-H; Z1" />
+                <Add Vector = "-R; H; Z1" />
+                <Add Vector = " R;-H; Z1" />
+                <Add Vector = " R; H; Z1" />
+                <Add Vector = " 0;-H; Z2" />
+                <Add Vector = " 0; H; Z2" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "0;1;3;2" />
+                <Face Color = "Colors[1]" VertexIndexes = "1;0;4;5" />
+                <Face Color = "Colors[2]" VertexIndexes = "2;3;5;4" />
+                <Face Color = "Colors[3]" VertexIndexes = "0;2;4" />
+                <Face Color = "Colors[4]" VertexIndexes = "1;5;3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

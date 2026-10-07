@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fused Cubes 2</Name>
+        <Menu>Cubic\Multi-core\Fused Cubes 2</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=438</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 4;
+        D2 := D * 2;
+        A := Pi / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; A" PlaneDistances = "D" >
+        <Axis TurningAngles = "0; A" NormVector = "-1; 0; 0" BaseVector = "-D2; D2; D2" PlaneDistances = "0" />
+        <Axis TurningAngles = "0; A" NormVector = " 0; 1; 0" BaseVector = "-D2; D2; D2" PlaneDistances = "0" />
+        <Axis TurningAngles = "0; A" NormVector = " 0; 0; 1" BaseVector = "-D2; D2; D2" PlaneDistances = "0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; A" PlaneDistances = "D" >
+        <Axis TurningAngles = "0; A; A" NormVector = " 1; 0; 0" BaseVector = " D;-D;-D" PlaneDistances = "-D; D" />
+        <Axis TurningAngles = "0; A; A" NormVector = " 0;-1; 0" BaseVector = " D;-D;-D" PlaneDistances = "-D; D" />
+        <Axis TurningAngles = "0; A; A" NormVector = " 0; 0;-1" BaseVector = " D;-D;-D" PlaneDistances = "-D; D" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D * 2" WY = "WX" WZ = "WX" DWX = "-D2" DWY = "D2" DWZ = "D2" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D * 3" WY = "WX" WZ = "WX" DWX = " D " DWY = "-D" DWZ = "-D" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "-D; D; D" />
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D" WZ = "D" DWX = "-D" DWY = "D" DWZ = "D" />
+    </Figure>
+</xml>

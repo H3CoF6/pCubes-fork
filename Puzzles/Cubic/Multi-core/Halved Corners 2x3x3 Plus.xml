@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Halved Corners 2x3x3 Plus</Name>
+        <Menu>Cubic\Multi-core\Halved Corners 2x3x3 Plus</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-28</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0077EE'; // Blue
+        Colors[3] := '00CC00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        WX := W;
+        WY := W;
+        Ws := W * 2 / 3;
+        D := W / 3;
+
+        dAngle := 0.001;
+        t := Tan(dAngle);
+
+        WZ := 2 * D / cos(dAngle) - W * t;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi" AvailableAngles = "0; Pi/2 + dAngle; Pi; -Pi/2 + dAngle; Pi" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = "-1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = " Pi; Pi; 0; Pi; Pi" PlaneDistances = "-Ws/2*2.5; -Ws; Ws; Ws/2*2.5" >
+        <Axis NormVector = " 0;-t; 1" BaseVector = " D*2;   0; 0" />
+        <Axis NormVector = " 0; t; 1" BaseVector = "-D*2;   0; 0"/>
+        <Axis NormVector = "-t; 0; 1" BaseVector = "   0;-D*2; 0" />
+        <Axis NormVector = " t; 0; 1" BaseVector = "   0; D*2; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "SplitCorner" >
+            <HideContaining Vector = " W; W; 0" />
+            <InvertVisibility/>
+            <Split><Plane NormVector = "1;0;0" NormDistance = "2 * D" /></Split>
+            <Split><Plane NormVector = "1;0;0" NormDistance = "2.5 * D" /></Split>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "SplitCorner" Repeat = "4" />
+    </Figure>
+</xml>

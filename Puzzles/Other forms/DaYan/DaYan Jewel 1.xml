@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>DaYan Jewel 1</Name>
+        <Menu>Other forms\DaYan\DaYan Jewel 1</Menu>
+        <Menu>Other forms\Archimedean Solids\Truncated Tetrahedron\DaYan Jewel 1</Menu>
+        <Menu>Other forms\Archimedean Solids\DaYan\DaYan Jewel 1</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-12-23</Added>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clYellow := 'FFFF00';
+
+        D0 := 0.67;
+        DCut := D0 * 5 / 9 * sqrt(3);
+
+        D := D0 / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector=" 1; 0; 0" />
+        <Axis NormVector=" 0; 1; 0" />
+        <Axis NormVector=" 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " D0;-D0; D0" />
+                <Add Vector = "-D0; D0; D0" />
+                <Add Vector = " D0; D0;-D0" />
+                <Add Vector = "-D0;-D0;-D0" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "0;1;3" />
+                <Face Color = "clBlue  " VertexIndexes = "1;2;3" />
+                <Face Color = "clGreen " VertexIndexes = "0;3;2" />
+                <Face Color = "clYellow" VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "clRed   " > <Plane NormDistance = "-DCut" NormVector = "-1;-1; 1" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormDistance = "-DCut" NormVector = "-1; 1;-1" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormDistance = "-DCut" NormVector = " 1;-1;-1" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormDistance = "-DCut" NormVector = " 1; 1; 1" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octagonal Prism Skewb I</Name>
+        <Menu>Other forms\Prism\Octagonal Prism\Octagonal Prism Skewb I</Menu>
+        <Menu>Other forms\Skewb variants\Prism\Octagonal Prism Skewb I</Menu>
+        <Inventor>Tim Selkirk</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2042</Link>
+    </Interface>
+
+    <Script>
+        sAngle := PI * 2 / 8;
+        R := 0.5;
+        H := R * 0.85;
+
+        s2 := sqrt(2);
+
+        for i := 0 to 7 do begin
+            x[i] := R * sin(sAngle * (i + 0.5));
+            y[i] := R * cos(sAngle * (i + 0.5));
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0">
+        <Axis NormVector = " 1; s2;  0" />
+        <Axis NormVector = " 1;-s2;  0" />
+        <Axis NormVector = " 1;  0; s2" />
+        <Axis NormVector = " 1;  0;-s2" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Faces>
+                <Face Color = "FF0000" VertexIndexes = " 8; 9; 1; 0" />
+                <Face Color = "008000" VertexIndexes = " 9;10; 2; 1" />
+                <Face Color = "700070" VertexIndexes = "10;11; 3; 2" />
+                <Face Color = "0050FF" VertexIndexes = "11;12; 4; 3" />
+                <Face Color = "FF8000" VertexIndexes = "12;13; 5; 4" />
+                <Face Color = "80FF00" VertexIndexes = "13;14; 6; 5" />
+                <Face Color = "FF60A0" VertexIndexes = "14;15; 7; 6" />
+                <Face Color = "0000A0" VertexIndexes = "15; 8; 0; 7" />
+
+                <Face Color = "FFFF00" VertexIndexes = "0;1;2;3;4;5;6;7" />
+                <Face Color = "FFFFFF" VertexIndexes = "15;14;13;12;11;10;9;8" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

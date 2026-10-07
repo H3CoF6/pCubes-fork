@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Hexagonal Puckamid</Name>
+        <Menu>Other forms\Pyramid\Hexagonal Pyramid\Hexagonal Puckamid</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1812</Link>
+    </Interface>
+
+    <Script>
+        clRed          := 'FF0000';
+        clOrange       := 'FF6000';
+        clYellow       := 'FFFF00';
+        clGreen        := '008000';
+        clLightBlue    := '2828FF';
+        clBlue         := '0000A0';
+        clViolett      := '800080';
+
+        R := 0.6;
+
+        H := R * 1.0;
+        D := H/4;
+
+        RC := R * 0.5;
+        Delta := 0.001;
+
+        for i := 0 to 5 do begin
+            Vx[i] := R * sin(Pi/3 * i);
+            Vy[i] := R * cos(Pi/3 * i);
+        end;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0;Pi/6;0" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " 0; 0;  H" />
+
+                <Add Vector = " Vx[0]; Vy[0]; -D" />
+                <Add Vector = " Vx[1]; Vy[1]; -D" />
+                <Add Vector = " Vx[2]; Vy[2]; -D" />
+                <Add Vector = " Vx[3]; Vy[3]; -D" />
+                <Add Vector = " Vx[4]; Vy[4]; -D" />
+                <Add Vector = " Vx[5]; Vy[5]; -D" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed         " VertexIndexes = " 0; 2; 1" />
+                <Face Color = "clOrange      " VertexIndexes = " 0; 3; 2" />
+                <Face Color = "clYellow      " VertexIndexes = " 0; 4; 3" />
+                <Face Color = "clGreen       " VertexIndexes = " 0; 5; 4" />
+                <Face Color = "clLightBlue   " VertexIndexes = " 0; 6; 5" />
+                <Face Color = "clBlue        " VertexIndexes = " 0; 1; 6" />
+                <Face Color = "clViolett     " VertexIndexes = " 1;2;3;4;5;6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "1" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Undo Repeat = "5" />
+
+        <Circle Color = "clViolett" Radius = "RC" Center = "0; 0; - D - Delta" />
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octatero</Name>
+        <Aliases>Octatero</Aliases>
+        <Menu>Other forms\Octahedron\Mixed\Octatero</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8658</Link>
+        <Link>https://www.instagram.com/p/CK53BDwJQbY/</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE55BB'; // Rose
+        Colors[1] := '0066FF'; // LightBlue
+        Colors[2] := 'EE0000'; // Red
+        Colors[3] := 'FFEE00'; // Yellow
+        Colors[4] := 'FF6600'; // Orange
+        Colors[5] := 'FFFFFF'; // White
+        Colors[6] := 'AA00DD'; // Purple
+        Colors[7] := '00AA00'; // Green
+
+        W := 0.75;
+        D1 := W / 4;
+        D2 := W * 3 / 4;
+
+        RCut := W * 3 / 4 * 0.95;
+        RCut2 := W / 4 * 0.84;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D1; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+
+        <!-- cut parts for better control -->
+        <Macro Name = "Cut" >
+            <HideContaining Vector = " Vx[v]; Vy[v]; Vz[v]" />
+            <Cut> <Plane NormVector = "-Vx[v];-Vy[v];-Vz[v]" NormDistance = "-RCut" /> </Cut>
+            <ShowAll/>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" v = "0" Repeat = "6" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Cut2" >
+            <HideContaining Vector = " Vx[v]; Vy[v]; Vz[v]" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = "-Vx[vc1];-Vy[vc1];-Vz[vc1]" NormDistance = "-RCut2" /> </Cut>
+            <Cut> <Plane NormVector = "-Vx[vc2];-Vy[vc2];-Vz[vc2]" NormDistance = "-RCut2" /> </Cut>
+            <Cut> <Plane NormVector = "-Vx[vc3];-Vy[vc3];-Vz[vc3]" NormDistance = "-RCut2" /> </Cut>
+            <Cut> <Plane NormVector = "-Vx[vc4];-Vy[vc4];-Vz[vc4]" NormDistance = "-RCut2" /> </Cut>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Cut2" v = "0" vc1 = "2" vc2 = "3" vc3 = "4" vc4 = "5" />
+        <ExecMacro MacroName = "Cut2" v = "1" vc1 = "2" vc2 = "3" vc3 = "4" vc4 = "5" />
+        <ExecMacro MacroName = "Cut2" v = "2" vc1 = "0" vc2 = "1" vc3 = "4" vc4 = "5" />
+        <ExecMacro MacroName = "Cut2" v = "3" vc1 = "0" vc2 = "1" vc3 = "4" vc4 = "5" />
+        <ExecMacro MacroName = "Cut2" v = "4" vc1 = "0" vc2 = "1" vc3 = "2" vc4 = "3" />
+        <ExecMacro MacroName = "Cut2" v = "5" vc1 = "0" vc2 = "1" vc3 = "2" vc4 = "3" />
+    </Figure>
+</xml>

@@ -1,0 +1,102 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jet Star</Name>
+        <Menu>Other forms\Star\Stellated Octahedron\Jet Star</Menu>
+        <Inventor>A J Lu</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4653</Link>
+    </Interface>
+
+    <Script>
+        clBlue         := '0000C8';
+        clGreen        := '009600';
+        clRed          := 'C80000';
+        clOrange       := 'FF800A';
+        clYellow       := 'FFFF00';
+        clWhite        := 'FFFFFF';
+        clViolett      := '7700CD';
+        clLightViolett := 'FF00B0';
+
+        Colors[0] := clViolett;
+        Colors[1] := clGreen;
+        Colors[2] := clYellow;
+        Colors[3] := clOrange;
+        Colors[4] := clRed;
+        Colors[5] := clWhite;
+        Colors[6] := clBlue;
+        Colors[7] := clLightViolett;
+
+        W := 0.5;
+
+        D := W * 0.1;
+        DCut := W / sqrt(3);
+
+
+        dx := -D;
+        dy :=  D;
+        dz := -D;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+
+        <Part>
+            <Vertices>
+                 <Add Vector = "-W + dx; -W + dy; -W + dz" />
+                 <Add Vector = " W + dx; -W + dy;  W + dz" />
+                 <Add Vector = "-W + dx;  W + dy;  W + dz" />
+                 <Add Vector = " W + dx;  W + dy; -W + dz" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[1]" VertexIndexes = "1;2;0" />
+                <Face Color = "Colors[2]" VertexIndexes = "2;3;0" />
+                <Face Color = "Colors[4]" VertexIndexes = "3;1;0" />
+                <Face Color = "Colors[7]" VertexIndexes = "3;2;1" />
+            </Faces>
+        </Part>
+
+        <Split><Plane NormVector = " 1; 1; 1" NormDistance = "-DCut - D / sqrt(3)" /></Split>
+        <Split><Plane NormVector = " 1;-1;-1" NormDistance = "-DCut - D / sqrt(3)" /></Split>
+        <Split><Plane NormVector = "-1; 1;-1" NormDistance = "-DCut + D * sqrt(3)" /></Split>
+        <Split><Plane NormVector = "-1;-1; 1" NormDistance = "-DCut - D / sqrt(3)" /></Split>
+        <RemoveContaining Vector = "0; 0; 0" />
+
+        <Part>
+            <Vertices>
+                <Add Vector = "-W + dx; -W + dy;  W + dz" />
+                <Add Vector = "-W + dx;  W + dy; -W + dz" />
+                <Add Vector = " W + dx; -W + dy; -W + dz" />
+                <Add Vector = " W + dx;  W + dy;  W + dz" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "1;2;0" />
+                <Face Color = "Colors[5]" VertexIndexes = "2;3;0" />
+                <Face Color = "Colors[3]" VertexIndexes = "3;1;0" />
+                <Face Color = "Colors[6]" VertexIndexes = "3;2;1" />
+            </Faces>
+        </Part>
+
+        <Split><Plane NormVector = "-1;-1;-1" NormDistance = "-DCut + D / sqrt(3)" /></Split>
+        <Split><Plane NormVector = "-1; 1; 1" NormDistance = "-DCut + D / sqrt(3)" /></Split>
+        <Split><Plane NormVector = " 1;-1; 1" NormDistance = "-DCut - D * sqrt(3)" /></Split>
+        <Split><Plane NormVector = " 1; 1;-1" NormDistance = "-DCut + D / sqrt(3)" /></Split>
+        <RemoveContaining Vector = "0; 0; 0" />
+
+        <HideContaining Vector = " W + dx; -W + dy;  W + dz" />
+        <InvertVisibility/>
+        <SplitByAxes/>
+        <ShowAll/>
+
+    </Figure>
+</xml>

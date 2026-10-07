@@ -1,0 +1,106 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triple Octa Star</Name>
+        <Menu>Other forms\Star\Triple Octa Star</Menu>
+        <Menu>Other forms\Skewb variants\Star\Triple Octa Star</Menu>
+        <Inventor>Dario Dagné</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-06-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8954</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF7700'; // Orange
+        Colors[1] := 'BB00CC'; // Violett
+        Colors[2] := '00BB00'; // Green
+        Colors[3] := 'EE0000'; // Red
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := '0055EE'; // Blue
+        Colors[6] := '855c00'; // Gold
+
+        W := 0.7;
+        s2 := sqrt(2);
+        W1 := W / s2;
+
+        RCut1 := W / sqrt(3);
+        RCut2 := W * (s2 - 1);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Octo" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "-W;  0;  0" />
+                    <Add Vector = " W;  0;  0" />
+                    <Add Vector = " 0;-W1; W1" />
+                    <Add Vector = " 0; W1;-W1" />
+                    <Add Vector = " 0;-W1;-W1" />
+                    <Add Vector = " 0; W1; W1" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;2;5" />
+                    <Face Color = "Color" VertexIndexes = "5;2;1" />
+                    <Face Color = "Color" VertexIndexes = "5;1;3" />
+                    <Face Color = "Color" VertexIndexes = "5;3;0" />
+                    <Face Color = "Color" VertexIndexes = "4;2;0" />
+                    <Face Color = "Color" VertexIndexes = "4;1;2" />
+                    <Face Color = "Color" VertexIndexes = "4;3;1" />
+                    <Face Color = "Color" VertexIndexes = "4;0;3" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "OctoV" >
+            <ExecMacro MacroName = "Octo" />
+            <Split><Plane NormVector = " 0; -1; s2" NormDistance = "RCut1" /></Split>
+            <Split><Plane NormVector = " 0;-s2;  1" NormDistance = "RCut1" /></Split>
+            <Split><Plane NormVector = " 0;  1;-s2" NormDistance = "RCut1" /></Split>
+            <Split><Plane NormVector = " 0; s2; -1" NormDistance = "RCut1" /></Split>
+            <Split><Plane NormVector = " 0;  1;  1" NormDistance = "    0" /></Split>
+
+            <HideContaining Vector = " 0;-W1; W1" />
+            <HideContaining Vector = " 0; W1;-W1" />
+            <RemoveAllVisible/>
+            <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "OctoV" Color = "Colors[0]" />
+        <ExecMacro MacroName = "OctoV" Color = "Colors[1]" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+
+        <ExecMacro MacroName = "OctoV" Color = "Colors[2]" />
+        <ExecMacro MacroName = "OctoV" Color = "Colors[3]" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+
+        <ExecMacro MacroName = "OctoV" Color = "Colors[4]" />
+        <ExecMacro MacroName = "OctoV" Color = "Colors[5]" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+
+        <Macro Name = "OctoC" >
+            <ExecMacro MacroName = "Octo" />
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "RCut2" /></Split>
+            <Split><Plane NormVector = "-1; 0; 0" NormDistance = "RCut2" /></Split>
+            <RemoveContaining Vector = " 0; 0; 0" />
+            <Split><Plane NormVector = " 0; 1; 1" NormDistance = "    0" /></Split>
+            <Split><Plane NormVector = " 0; 1;-1" NormDistance = "    0" /></Split>
+            <HideAll/>
+            <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "OctoC" Color = "Colors[6]" Repeat = "3" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

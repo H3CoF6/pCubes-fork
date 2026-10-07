@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Lily Cube</Name>
+        <Menu>Other forms\Sphere\Lily Cube</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2539</Link>
+    </Interface>
+
+    <Script>
+        K := 0.6;
+	include 'Figures\Scripts\Cube_Coordinates.inc';
+        D := sqrt(2) / 3.31442;
+	Dcut := -0.60285;
+    </Script>
+
+    <Axes TurningAngles = "Pi"  JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+        
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "DCut" /> </Cut>
+	<Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "DCut" /> </Cut>
+	<Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "DCut" /> </Cut>
+	<Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "DCut" /> </Cut>
+	<Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "DCut" /> </Cut>
+	<Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "DCut" /> </Cut>        
+       
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>
+ 

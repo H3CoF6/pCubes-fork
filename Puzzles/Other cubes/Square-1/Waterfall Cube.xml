@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Waterfall Cube</Name>
+        <Menu>Other cubes\Square-1\Waterfall Cube</Menu>
+        <Inventor>Alexander Sosnovsky</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-11-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11678</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 16" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi / 16" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "-Pi / 8" />
+
+        <SplitByAxes/>
+
+        <Undo Repeat = "2" />
+
+        <Macro Name = "CutE" >
+            <HideContaining Vector = " 0; W; W" />
+            <HideContaining Vector = " 0; W;-W" />
+            <InvertVisibility/>
+            <Turn NormVector = "0;0;1" Angle = " 3 * Pi / 16" />
+            <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "D" /></Cut>
+            <Turn NormVector = "0;0;1" Angle = "-6 * Pi / 16" />
+            <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "D" /></Cut>
+            <Turn NormVector = "0;0;1" Angle = " 3 * Pi / 16" />
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = " Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "CutE" Repeat = "4" />
+
+        <HideContaining Vector = " 0; 0; D" />
+        <HideContaining Vector = " 0; 0;-D" />
+
+        <Hide><Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Hide>
+        <Hide><Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Hide>
+        <Hide><Plane NormVector = " 1; 0; 0" NormDistance = "-D" /></Hide>
+        <Hide><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Hide>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <HideContaining Vector = " 0; 0; W" />
+        <HideContaining Vector = " 0; 0;-W" />
+        <InvertVisibility/>
+        <Turn Axis = "0" Layers = "0;2" Angle = " Pi / 16" />
+        <Macro Name = "CutC" >
+            <Cut Axis = "1" From = "1" To = "2" />
+            <Turn Axis = "0" Layers = "0;2" Angle = " 2 * Pi / 16" />
+        </Macro>
+        <ExecMacro MacroName = "CutC" Repeat = "7" />
+        <Undo Repeat = "8" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

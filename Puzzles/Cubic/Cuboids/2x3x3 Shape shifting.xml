@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x3x3 Shape Shifting</Name>
+        <Menu>Cubic\Cuboids\2x3x3 Shape Shifting</Menu>
+        <Inventor>Traiphum Prungtaengkit</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-06-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1777</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W * 2 / 3;
+        D := W / 3*0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "2" From = "1" />
+
+        <SplitByAxes/>
+
+        <Hide Axis = "2" Layer = "1" />
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "D" /></Cut>
+        <ShowAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+            WZ := D;
+        </Script>
+
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <ShowAll/>
+    </Figure>
+</xml>

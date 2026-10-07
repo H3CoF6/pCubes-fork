@@ -1,0 +1,169 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Capella Cube</Name>
+        <Menu>Other cubes\Unclassified\Capella Cube</Menu>
+        <Inventor>Anthone Poole</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9203</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0055EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        D := W * 0.5;
+
+        A := W * 1.25;
+        B := W * 0.25;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                // cube
+                <Add Vector = "-W;-W;-W" />
+                <Add Vector = "-W; W;-W" />
+                <Add Vector = " W; W;-W" />
+                <Add Vector = " W;-W;-W" />
+                <Add Vector = "-W;-W; W" />
+                <Add Vector = "-W; W; W" />
+                <Add Vector = " W; W; W" />
+                <Add Vector = " W;-W; W" />
+
+                // white
+                <Add Vector = "-B; 0; A" />
+                <Add Vector = " 0; B; A" />
+                <Add Vector = " B; 0; A" />
+                <Add Vector = " 0;-B; A" />
+
+                // blue
+                <Add Vector = "-B;-A; 0" />
+                <Add Vector = " 0;-A; B" />
+                <Add Vector = " B;-A; 0" />
+                <Add Vector = " 0;-A;-B" />
+
+                // orange
+                <Add Vector = " A;-B; 0" />
+                <Add Vector = " A; 0; B" />
+                <Add Vector = " A; B; 0" />
+                <Add Vector = " A; 0;-B" />
+
+                // red
+                <Add Vector = "-A; B; 0" />
+                <Add Vector = "-A; 0; B" />
+                <Add Vector = "-A;-B; 0" />
+                <Add Vector = "-A; 0;-B" />
+
+                // green
+                <Add Vector = " B; A; 0" />
+                <Add Vector = " 0; A; B" />
+                <Add Vector = "-B; A; 0" />
+                <Add Vector = " 0; A;-B" />
+
+                // yellow
+                <Add Vector = "-B; 0;-A" />
+                <Add Vector = " 0;-B;-A" />
+                <Add Vector = " B; 0;-A" />
+                <Add Vector = " 0; B;-A" />
+            </Vertices>
+
+            <Faces>
+                // white - up
+                <Face Color = "Colors[5]" VertexIndexes = "7;6;5;4"/>
+
+                // blue - front
+                <Face Color = "Colors[2]" VertexIndexes = "15;14;13;12" InvisibleEdges = "15" />
+                <Face Color = "Colors[2]" VertexIndexes = "0;12;4"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[2]" VertexIndexes = "4;12;13"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[2]" VertexIndexes = "4;13;7"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[2]" VertexIndexes = "7;13;14"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[2]" VertexIndexes = "7;14;3"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[2]" VertexIndexes = "3;14;15"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[2]" VertexIndexes = "3;15;0"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[2]" VertexIndexes = "0;15;12"     InvisibleEdges = " 7" />
+
+                // orange - right
+                <Face Color = "Colors[1]" VertexIndexes = "19;18;17;16" InvisibleEdges = "15" />
+                <Face Color = "Colors[1]" VertexIndexes = "3;16;7"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[1]" VertexIndexes = "7;16;17"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[1]" VertexIndexes = "7;17;6"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[1]" VertexIndexes = "6;17;18"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[1]" VertexIndexes = "6;18;2"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[1]" VertexIndexes = "2;18;19"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[1]" VertexIndexes = "2;19;3"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[1]" VertexIndexes = "3;19;16"     InvisibleEdges = " 7" />
+
+                // red - left
+                <Face Color = "Colors[0]" VertexIndexes = "23;22;21;20" InvisibleEdges = "15" />
+                <Face Color = "Colors[0]" VertexIndexes = "1;20;5"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[0]" VertexIndexes = "5;20;21"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[0]" VertexIndexes = "5;21;4"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[0]" VertexIndexes = "4;21;22"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[0]" VertexIndexes = "4;22;0"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[0]" VertexIndexes = "0;22;23"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[0]" VertexIndexes = "0;23;1"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[0]" VertexIndexes = "1;23;20"     InvisibleEdges = " 7" />
+
+                // green - back
+                <Face Color = "Colors[3]" VertexIndexes = "27;26;25;24" InvisibleEdges = "15" />
+                <Face Color = "Colors[3]" VertexIndexes = "2;24;6"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[3]" VertexIndexes = "6;24;25"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[3]" VertexIndexes = "6;25;5"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[3]" VertexIndexes = "5;25;26"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[3]" VertexIndexes = "5;26;1"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[3]" VertexIndexes = "1;26;27"     InvisibleEdges = " 7" />
+                <Face Color = "Colors[3]" VertexIndexes = "1;27;2"      InvisibleEdges = " 3" />
+                <Face Color = "Colors[3]" VertexIndexes = "2;27;24"     InvisibleEdges = " 7" />
+
+                // yellow
+                <Face Color = "Colors[4]" VertexIndexes = "0;1;2;3" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Turn Axis = "2" Layers = "0;2" Angle = "Pi/6" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Turn Axis = "2" Layers = "0;2" Angle = "-Pi/3" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Undo Repeat = "2" />
+
+        <HideContaining Vector = " W; D*1.1; W" />
+        <HideContaining Vector = "-W; D*1.1; W" />
+        <HideContaining Vector = " W;-D*1.1; W" />
+        <HideContaining Vector = "-W;-D*1.1; W" />
+        <HideContaining Vector = " W; D*1.1;-W" />
+        <HideContaining Vector = "-W; D*1.1;-W" />
+        <HideContaining Vector = " W;-D*1.1;-W" />
+        <HideContaining Vector = "-W;-D*1.1;-W" />
+        <InvertVisibility/>
+        <Cut><Plane NormVector = " 0; 0; 1" NormDistance = "-W * 0.999" /></Cut>
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "-W * 0.999" /></Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

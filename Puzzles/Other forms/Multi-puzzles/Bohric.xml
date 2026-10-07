@@ -1,0 +1,154 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bohric</Name>
+        <Menu>Other forms\Sphere\Megaminx axes\Bohric</Menu>
+        <Menu>Other forms\Multi-puzzles\Bohric</Menu>
+        <Inventor>Mark Gagliano</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-08-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6295</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        R := 0.6;
+        include 'Figures\Scripts\Dodecahedron_Sq_Coordinates.inc';
+
+        RIn := R * 0.17;
+        D := R * 0.1;
+        C := D * 1.5;
+        B := R * 0.85;
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := R * sin(mAngle / 2);
+        cs := R * cos(mAngle / 2);
+
+        C38 := R * 0.5775995216706;
+
+        E := D * R / (cs-ss) / C38;
+        F := R * 0.84;
+        G := R * 0.9;
+
+        for i := 0 to 11 do begin
+            Cx[i] := Cx[i] * 1.2;
+            Cy[i] := Cy[i] * 1.2;
+            Cz[i] := Cz[i] * 1.2;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[0];Cy[0];Cz[0]" />
+        <Axis NormVector = "Cx[1];Cy[1];Cz[1]" />
+        <Axis NormVector = "Cx[2];Cy[2];Cz[2]" />
+        <Axis NormVector = "Cx[3];Cy[3];Cz[3]" />
+        <Axis NormVector = "Cx[4];Cy[4];Cz[4]" />
+        <Axis NormVector = "Cx[5];Cy[5];Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "CutCenter" >
+            <Split> <Plane NormVector = " Cx[i]; Cy[i]; Cz[i]" NormDistance = "B" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "MakeCenters" >
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" K = "R" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+
+            <HideContaining Vectors = "Cx;Cy;Cz" />
+            <RemoveAllVisible/>
+            <ShowAll/>
+            <ExecMacro MacroName = "CutCenter" i = "0" Repeat = "12" />
+            <RemoveGrayParts/>
+        </Macro>
+
+        <Macro Name = "SplitI" >
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" > <Plane NormDistance = "C" NormVector = " Cx[i]; Cy[i]; Cz[i]" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        // pentagon vertices
+
+        <ExecMacro MacroName = "MakeCenters" />
+        <ExecMacro MacroName = "SplitI" i = "0" Repeat = "12" />
+
+        <Macro Name = "HidePV" >
+            <Hide> <Plane NormVector = " Ex[i]; Ey[i]; Ez[i]" NormDistance = "-F" /> </Hide>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HidePV" i = "0" Repeat = "30" />
+
+        <RemoveAllVisible/>
+
+        // pentadon edges
+
+        <Macro Name = "MakeEdges" >
+            <ExecMacro MacroName = "MakeCenters" />
+            <HideContaining Vectors = "Cx;Cy;Cz" />
+            <InvertVisibility/>
+
+            <Turn NormVector = " Cx[10]; Cy[10]; Cz[10]" Angle = "2*Pi / 5 * i1" />
+            <Turn NormVector = "0;1;0" Angle = "Pi * i2" />
+
+            <ExecMacro MacroName = "SplitI" i = " 0" Repeat = "3" />
+            <ExecMacro MacroName = "SplitI" i = " 4" Repeat = "4" />
+            <ExecMacro MacroName = "SplitI" i = " 9" Repeat = "3" />
+
+            <HideContaining Vectors = "Cx;Cy;Cz" />
+            <RemoveAllVisible/>
+            <ShowAll/>
+            <HideContaining Vectors = "Cx;Cy;Cz" />
+            <InvertVisibility/>
+            <Cut> <Plane NormDistance = "-C" NormVector = " Cx[3]; Cy[3]; Cz[3]" /> </Cut>
+            <Cut> <Plane NormDistance = "-C" NormVector = " Cx[8]; Cy[8]; Cz[8]" /> </Cut>
+            <HideAll/>
+
+            <Turn NormVector = "0;1;0" Angle = "-Pi * i2" />
+            <Turn NormVector = " Cx[10]; Cy[10]; Cz[10]" Angle = "-2*Pi / 5 * i1" />
+            <Script>Inc(i1);</Script>
+        </Macro>
+        <ExecMacro MacroName = "MakeEdges" i1 = "0" i2 = "0" Repeat = "5" />
+        <ExecMacro MacroName = "MakeEdges" i1 = "0" i2 = "1" />
+
+        // main sphere (w/o centers)
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" K = "R" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        // inner cuts
+
+        <Macro Name = "CutEdges" >
+            <HideContaining Vector = " Ex[i]*G/R; Ey[i]*G/R; Ez[i]*G/R" />
+            <InvertVisibility/>
+            <Cut> <Plane NormDistance = "G" NormVector = " Ex[i]; Ey[i]; Ez[i]" /> </Cut>
+            <ShowAll/>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutEdges" i = "0" Repeat = "30" />
+
+        <Macro Name = "CutCorner" >
+            <HideContaining Vector = " Vx[i]*E; Vy[i]*E; Vz[i]*E" />
+            <InvertVisibility/>
+            <Cut> <Plane NormDistance = "F" NormVector = " Vx[i]; Vy[i]; Vz[i]" /> </Cut>
+            <ShowAll/>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutCorner" i = "0" Repeat = "20" />
+
+        // inner sphere
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" K = "RIn" />
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

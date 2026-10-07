@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Reuleaux Crystalminx</Name>
+        <Menu>Other forms\Pillowed\Tetrahedron\Reuleaux Crystalminx</Menu>
+        <Inventor>Anthone Poole</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7236</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0022'; // clRed
+        Colors[2] := '0099FF'; // clBlue2
+        Colors[1] := 'FFFF00'; // clYellow
+        Colors[3] := '00CC00'; // clGreen1
+
+        K := 0.6;
+
+        // D := K * 0.6655;
+        D := K * 0.6659677;
+
+        phi := (Sqrt(5) - 1) / 2; // The golden ratio
+
+        Pillow := 1.0;
+        // DCut := K * 1.4;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5"  PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "   0;  -1; Phi" />
+        <Axis NormVector = "   0;  -1;-Phi" />
+        <Axis NormVector = "-Phi;   0;  -1" />
+        <Axis NormVector = " Phi;   0;  -1" />
+        <Axis NormVector = "   1;-Phi;   0" />
+        <Axis NormVector = "   1; Phi;   0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "_Macro_Pillowed_Tetrahedron_v2.xml" />
+        <ExecMacro MacroName = "CalcCoordinates" />
+        <ExecMacro MacroName = "AddPillowedTetrahedron" />
+
+        <SplitByAxes/>
+<!--
+        remove artefacts
+        <Hide><Plane NormVector = "   0;  -1; Phi" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "   0;  -1;-Phi" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "-Phi;   0;  -1" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = " Phi;   0;  -1" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "   1;-Phi;   0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "   1; Phi;   0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "   0;   1;-Phi" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "   0;   1; Phi" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = " Phi;   0;   1" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "-Phi;   0;   1" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "  -1; Phi;   0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "  -1;-Phi;   0" NormDistance = "-DCut" /></Hide>
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+-->
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

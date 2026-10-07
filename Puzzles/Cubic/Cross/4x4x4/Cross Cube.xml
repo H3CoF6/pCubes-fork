@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cross Cube 4x4x4</Name>
+        <Menu>Cubic\Cross\4x4x4\Cross Cube</Menu>
+        <Inventor>Jonathan Nypan</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-09-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4992</Link>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+
+        D1 := W / 3;
+        D2 := D1 * 2;
+    </Script>
+    
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D1; 0; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Cubic\Cross\_Macro_For_Cross.xml" W1 = "D2" W2 = "W" />
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "D2" Color = "-1" />
+        <SplitByAxes/>
+        <Script> W := D1; include 'Figures\Scripts\Cube_Coordinates.inc'; </Script>
+        <RemoveContaining Vectors = " Cx; Cy; Cz" />
+    </Figure>
+</xml>

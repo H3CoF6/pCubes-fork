@@ -1,0 +1,102 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese Hexagonal Prism Plus</Name>
+        <Menu>Other forms\Multi-core\Siamese Hexagonal Prism Plus</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-12</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clLBlue  := '0055FF';
+        clGreen  := '009600';
+        clOrange := 'FF7700';
+        clBlue   := '0000EE';
+        clLGreen := '00CC00';
+        clYellow := 'FFEE00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.6;
+
+        H := R * 3 / 4;
+        sAngle := Pi * 2 / 6;
+        dx := R * sqrt(3)/4;
+        dy := R * 3 / 4;
+
+        for i := 0 to 5 do begin
+            x[i] := R * sin(sAngle * i) + dx;
+            y[i] := R * cos(sAngle * i);
+            xd[i] := -x[i];
+            yd[i] :=  y[i];
+        end;
+
+        for i := 0 to 1 do begin
+            xa[i] := R * sin(sAngle * (2*i+0.5));
+            ya[i] := R * cos(sAngle * (2*i+0.5));
+        end;
+
+        D1 := R * sqrt(3)/4;
+        D2 := H / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-2 * D1;-D1; 0; D1; 2 * D1" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>        
+
+    <Axes TurningAngles = "2*Pi/2" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D1" >
+        <Axis NormVector = " xa[0]; ya[0]; 0" BaseVector = " dx; 0; 0" />
+        <Axis NormVector = " xa[1]; ya[1]; 0" BaseVector = " dx; 0; 0" />
+        <Axis NormVector = "-xa[0];-ya[0]; 0" BaseVector = "-dx; 0; 0" />
+        <Axis NormVector = "-xa[1];-ya[1]; 0" BaseVector = "-dx; 0; 0" />        
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x;  y;-H" />
+            <Vertices Vectors = " x;  y; H" />
+            <Vertices Vectors = "xd; yd;-H" />
+            <Vertices Vectors = "xd; yd; H" />
+            <Vertices>
+                <Add Vector = "0;-dy;-H" />
+                <Add Vector = "0;-dy; H" />
+                <Add Vector = "0; dy;-H" />
+                <Add Vector = "0; dy; H" />        
+            </Vertices>        
+        
+            <Faces>
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 2; 3;24;15;14;13;12;26" />
+                <Face Color = "clWhite " VertexIndexes = "25; 9; 8; 7; 6;27;18;19;20;21" />
+
+                <Face Color = "clOrange" VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "clLGreen" VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "clBlue  " VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "clRed   " VertexIndexes = " 9;25;24; 3" />
+                <Face Color = "clLBlue " VertexIndexes = " 0;26;27; 6" />
+
+                <Face Color = "clBlue  " VertexIndexes = "15;24;25;21" />
+                <Face Color = "clOrange" VertexIndexes = "18;27;26;12" />
+                <Face Color = "clLBlue " VertexIndexes = "19;18;12;13" />
+                <Face Color = "clGreen " VertexIndexes = "20;19;13;14" />
+                <Face Color = "clRed   " VertexIndexes = "21;20;14;15" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+
+        <Hide Axis = "0" From = "1" To = "2" />
+        <Split><Plane NormVector = " xa[0]; ya[0]; 0" NormDistance = "-D1 / 2" /></Split>
+        <Split><Plane NormVector = " xa[1]; ya[1]; 0" NormDistance = "-D1 / 2" /></Split>
+        <ShowAll/>
+        <Hide Axis = "0" From = "3" To = "4" />
+        <Split><Plane NormVector = "-xa[0];-ya[0]; 0" NormDistance = "-D1 / 2" /></Split>
+        <Split><Plane NormVector = "-xa[1];-ya[1]; 0" NormDistance = "-D1 / 2" /></Split>
+        <ShowAll/>
+    </Figure>
+</xml>

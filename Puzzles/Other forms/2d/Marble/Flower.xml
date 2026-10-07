@@ -1,0 +1,100 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+   <Interface>
+        <Name>Flower</Name>
+        <Menu>Other forms\2d\Marble\Flower</Menu>
+        <Inventor>Clever Toys</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1436</Link>
+    </Interface>
+
+     <Script>
+        CubeColor := 'EEBBAA';
+        clRed     := 'EE0000';
+        clBlue    := '0055EE';
+        clGreen   := 'AAFF00';
+
+        W := 0.5;
+
+        H := W * 1.08;
+
+        sAngle := 2 * Pi / 7;
+
+        R1 := W * 0.25;
+        R2 := R1 * 0.8;
+        Shift := W * 0.5;
+        for i := 0 to 13 do begin
+            A := 2*Pi / 14 * i + Pi/4;
+            x1[i] := R1 * cos(A) + Shift;
+            y1[i] := R1 * sin(A) - Shift;
+            x2[i] := R2 * cos(A) + Shift;
+            y2[i] := R2 * sin(A) - Shift;
+        end;
+
+        D := 0.35;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+
+        for i := 0 to 5 do
+            Colors[i] := CubeColor;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "W" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3"  PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Split Axis = "3" From = "1" />
+
+        <Macro Name = "AddPucks">
+            <Part>
+                <Vertices Vectors = "x2; y2; H" />
+                <Vertices Vectors = "x1; y1; W" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11;12;13" />
+
+                    <Face Color = "cl" VertexIndexes = "14;15; 1; 0" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "15;16; 2; 1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "16;17; 3; 2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "17;18; 4; 3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "18;19; 5; 4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "19;20; 6; 5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "20;21; 7; 6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "21;22; 8; 7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "22;23; 9; 8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "23;24;10; 9" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "24;25;11;10" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "25;26;12;11" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "26;27;13;12" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "27;14; 0;13" InvisibleEdges = "10" />
+
+                    <Face VertexIndexes = "27;26;25;24;23;22;21;20;19;18;17;16;15;14" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0; 0; 1" Angle = "sAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddPucks" cl = "clGreen" Repeat = "7" />
+        <Turn NormVector = "1;-1; 1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddPucks" cl = "clBlue " Repeat = "7" />
+        <Turn NormVector = "1;-1; 1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddPucks" cl = "clRed  " Repeat = "7" />
+        <Turn NormVector = "1;-1; 1" Angle = "2*Pi/3" />
+        <SaveSolvedState/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

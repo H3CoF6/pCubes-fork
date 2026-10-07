@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentoid</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Face Turning\Pentoid</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-08-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9948</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF'; // White
+        Colors[1] := '008000'; // Green
+        Colors[2] := 'FF0000'; // Red
+        Colors[3] := 'FF6000'; // Orange
+        Colors[4] := '800080'; // Violett
+        Colors[5] := '0000A0'; // Blue
+        Colors[6] := 'FFFF00'; // Yellow
+
+        H := 0.4;
+        R := H * 1.7;
+
+        for i := 0 to 4 do begin
+            x[i] := R * cos(2 * Pi / 5 * i);
+            y[i] := R * sin(2 * Pi / 5 * i);
+        end;
+
+        D1 := H / 3;
+        D2 := R * 0.15;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5" NormVectors = " 0; 0; 1" PlaneDistances = "-D1; D1" />
+
+    <Axes TurningAngles = "Pi; 0" NormVectors = " x; y; 0" PlaneDistances = "-D2" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "Colors[1]" VertexIndexes = "5;6;1;0" />
+                <Face Color = "Colors[2]" VertexIndexes = "6;7;2;1" />
+                <Face Color = "Colors[3]" VertexIndexes = "7;8;3;2" />
+                <Face Color = "Colors[4]" VertexIndexes = "8;9;4;3" />
+                <Face Color = "Colors[5]" VertexIndexes = "9;5;0;4" />
+                <Face Color = "Colors[6]" VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

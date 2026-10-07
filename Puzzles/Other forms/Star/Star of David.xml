@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star of David</Name>
+        <Menu>Other forms\Star\Star of David</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2016-12-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2950</Link>
+    </Interface>
+
+    <Script>
+        K := 0.4;
+        H1 := K * 0.5;
+        H2 := K;
+        R1 := K;
+        R2 := K * sqrt(3);
+
+        for i := 0 to 5 do begin
+            x1[i] := R1 * sin(Pi/3 * i + Pi / 6);
+            y1[i] := R1 * cos(Pi/3 * i + Pi / 6);
+            x2[i] := R2 * sin(Pi/3 * i);
+            y2[i] := R2 * cos(Pi/3 * i);
+        end;
+
+        D1 := R2 / 4;
+        D2 := R2 / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi; 0; Pi; Pi/2" PlaneDistances = "D1; D2; -D2; -D1" >
+        <Axis NormVector = " x2[0]; y2[0]; 0" />
+        <Axis NormVector = " x2[2]; y2[2]; 0" />
+        <Axis NormVector = " x2[4]; y2[4]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x2; y2;  0" />
+            <Vertices Vectors = "x1; y1; H1" />
+            <Vertices Vectors = "x1; y1;-H1" />
+            <Vertices>
+                <Add Vector = " 0; 0; H2" />
+                <Add Vector = " 0; 0;-H2" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "5D8AA8" VertexIndexes = "3; 8;18; 9" />
+                <Face Color = "0F4D92" VertexIndexes = "4; 9;18;10" />
+                <Face Color = "89CFD0" VertexIndexes = "5;10;18;11" />
+                <Face Color = "21ABCD" VertexIndexes = "0;11;18; 6" />
+                <Face Color = "5070A0" VertexIndexes = "1; 6;18; 7" />
+                <Face Color = "80D0FF" VertexIndexes = "2; 7;18; 8" />
+
+                <Face Color = "E1A95F" VertexIndexes = "3;15;19;14" />
+                <Face Color = "E9D66B" VertexIndexes = "4;16;19;15" />
+                <Face Color = "FDFD96" VertexIndexes = "5;17;19;16" />
+                <Face Color = "FDCF3F" VertexIndexes = "0;12;19;17" />
+                <Face Color = "AF940C" VertexIndexes = "1;13;19;12" />
+                <Face Color = "E9D6AC" VertexIndexes = "2;14;19;13" />
+
+                <Face Color = "DF2FDF" VertexIndexes = "3;14; 8" />
+                <Face Color = "CC0000" VertexIndexes = "3; 9;15" />
+                <Face Color = "DB5154" VertexIndexes = "4;15; 9" />
+                <Face Color = "CC5500" VertexIndexes = "4;10;16" />
+                <Face Color = "ED872D" VertexIndexes = "5;16;10" />
+                <Face Color = "FFFF00" VertexIndexes = "5;11;17" />
+                <Face Color = "FFF960" VertexIndexes = "0;17;11" />
+                <Face Color = "009000" VertexIndexes = "0; 6;12" />
+                <Face Color = "66FF00" VertexIndexes = "1;12; 6" />
+                <Face Color = "000090" VertexIndexes = "1; 7;13" />
+                <Face Color = "6060FF" VertexIndexes = "2;13; 7" />
+                <Face Color = "900090" VertexIndexes = "2; 8;14" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "0" Angle = " Pi/2" />
+        <Turn Axis = "0" Layer = "4" Angle = " Pi/2" />
+        <Turn Axis = "1" Layer = "0" Angle = " Pi/2" />
+        <Turn Axis = "1" Layer = "4" Angle = " Pi/2" />
+        <Turn Axis = "2" Layer = "0" Angle = " Pi/2" />
+        <Turn Axis = "2" Layer = "4" Angle = " Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "0" Angle = "-Pi/2" />
+        <Turn Axis = "0" Layer = "4" Angle = "-Pi/2" />
+        <Turn Axis = "1" Layer = "0" Angle = "-Pi/2" />
+        <Turn Axis = "1" Layer = "4" Angle = "-Pi/2" />
+        <Turn Axis = "2" Layer = "0" Angle = "-Pi/2" />
+        <Turn Axis = "2" Layer = "4" Angle = "-Pi/2" />
+    </Figure>
+</xml>

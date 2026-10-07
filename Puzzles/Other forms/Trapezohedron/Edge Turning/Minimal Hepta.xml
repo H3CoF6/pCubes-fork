@@ -1,0 +1,118 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Minimal Hepta</Name>
+        <Menu>Other forms\Trapezohedron\Edge Turning\Minimal Hepta</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-04-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5685</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clOrange       := 'FF6000';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clWhite        := 'FFFFFF';
+        clGolden       := 'AABB20';
+        clLightViolett := 'FF0080';
+        clLightBlue    := '2828FF';
+        clViolett      := '800080';
+        clBrown        := '800000';
+        clLightGreen   := '00FF00';
+        clCyan         := '00DCB4';
+        clPink         := 'FF69B4';
+
+        K  := 0.5;
+
+        // http://dmccooey.com/polyhedra/HeptagonalTrapezohedron.html
+        C1 := K / (4 * cos(pi/14));              // K * 0.25642921
+        C2 := K * (1 + cos(pi/7)) * sqrt(7) / 7; // K * 0.71849869
+        C3 := K * cos(pi/7);                     // K * 0.90096886
+        C4 := K * cos(pi/7) / sin(pi/7) / 2;     // K * 1.03826069
+        C5 := K / (4 * sin(pi/14));              // K * 1.12348980
+        C6 := K / (2 * sin(pi/7));               // K * 1.15238243
+        C7 := K / 2;
+
+        H  := C6 / sqrt(-(cos(4 * Pi / 7) + cos(6 * Pi / 7)) / 2) / (1 - 1 / (2 / (1 - cos(Pi/7)) - 1)); // K * 1.62204270812382
+        CZ := H / (2 / (1 - cos(Pi/7)) - 1);
+
+        for i := 0 to 6 do begin
+            ax[i] := cos(2 * Pi / 7 * (i + 1/4));
+            ay[i] := sin(2 * Pi / 7 * (i + 1/4));
+        end;
+        az := C6 / (H-CZ);
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vx := y1 * z2 - y2 * z1;
+          vy := z1 * x2 - z2 * x1;
+          vz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+
+        A1 := Angle(ax[1],ay[1],az, ax[0],ay[0],az, ax[2],ay[2],az);
+        A2 := Angle(ax[0],ay[0],az, ax[2],ay[2],az, ax[5],ay[5],az);
+        A3 := Angle(ax[0],ay[0],az, ax[3],ay[3],az, ax[4],ay[4],az);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1;A2;A3" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " ax[0]; ay[0]; az" />
+        <Axis NormVector = " ax[1]; ay[1]; az" />
+        <Axis NormVector = " ax[2]; ay[2]; az" />
+        <Axis NormVector = " ax[3]; ay[3]; az" />
+        <Axis NormVector = " ax[4]; ay[4]; az" />
+        <Axis NormVector = " ax[5]; ay[5]; az" />
+        <Axis NormVector = " ax[6]; ay[6]; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;   0;   H" />
+                <Add Vector = "  0;   0;  -H" />
+                <Add Vector = " C5;  C1;  CZ" />
+                <Add Vector = " C5; -C1; -CZ" />
+                <Add Vector = "-C5;  C1;  CZ" />
+                <Add Vector = "-C5; -C1; -CZ" />
+                <Add Vector = " C3; -C2;  CZ" />
+                <Add Vector = " C3;  C2; -CZ" />
+                <Add Vector = "-C3; -C2;  CZ" />
+                <Add Vector = "-C3;  C2; -CZ" />
+                <Add Vector = " C7;  C4;  CZ" />
+                <Add Vector = " C7; -C4; -CZ" />
+                <Add Vector = "-C7;  C4;  CZ" />
+                <Add Vector = "-C7; -C4; -CZ" />
+                <Add Vector = "  0; -C6;  CZ" />
+                <Add Vector = "  0;  C6; -CZ" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue  "       VertexIndexes = " 0;  2;  7; 10" />
+                <Face Color = "clGreen "       VertexIndexes = " 0; 10; 15; 12" />
+                <Face Color = "clRed   "       VertexIndexes = " 0; 12;  9;  4" />
+                <Face Color = "clOrange"       VertexIndexes = " 0;  4;  5;  8" />
+                <Face Color = "clYellow"       VertexIndexes = " 0;  8; 13; 14" />
+                <Face Color = "clWhite "       VertexIndexes = " 0; 14; 11;  6" />
+                <Face Color = "clGolden"       VertexIndexes = " 0;  6;  3;  2" />
+
+                <Face Color = "clLightBlue"    VertexIndexes = " 1;  3;  6; 11" />
+                <Face Color = "clLightGreen"   VertexIndexes = " 1; 11; 14; 13" />
+                <Face Color = "clBrown "       VertexIndexes = " 1; 13;  8;  5" />
+                <Face Color = "clViolett"      VertexIndexes = " 1;  5;  4;  9" />
+                <Face Color = "clLightViolett" VertexIndexes = " 1;  9; 12; 15" />
+                <Face Color = "clCyan "        VertexIndexes = " 1; 15; 10;  7" />
+                <Face Color = "clPink "        VertexIndexes = " 1;  7;  2;  3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

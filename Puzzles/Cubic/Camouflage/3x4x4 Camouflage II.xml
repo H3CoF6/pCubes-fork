@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x4x4 Camouflage II</Name>
+        <Menu>Cubic\Camouflage\3x4x4 Camouflage II</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-05-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8409</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        D := W / 4;
+
+        WX := D * 3;
+        WY := D * 4;
+        WZ := D * 4;
+        DWY := -D;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = "0; 1; 0" NormDistance = "-D * 3" /></Split>
+        <Split><Plane NormVector = "0; 0; 1" NormDistance = "-D * 2" /></Split>
+        <Split><Plane NormVector = "0; 0; 1" NormDistance = " D * 2" /></Split>
+    </Figure>
+</xml>

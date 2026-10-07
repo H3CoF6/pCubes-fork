@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagram Octahedron</Name>
+        <Menu>Other forms\Octahedron\Mixed\Hexagram Octahedron</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-11</Added>
+        <Link>http://twistypuzzles.com/museum/museum_showitem.php?pkey=8687</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36549</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE55BB'; // Rose
+        Colors[1] := '0066FF'; // LightBlue
+        Colors[2] := 'EE0000'; // Red
+        Colors[3] := 'FFEE00'; // Yellow
+        Colors[4] := 'FF6600'; // Orange
+        Colors[5] := '333333'; // Black
+        Colors[6] := 'AA00DD'; // Purple
+        Colors[7] := '00AA00'; // Green
+
+        W := 0.75;
+        RCut := W * 0.76;
+        D := W / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "Cut" >
+            <HideContaining Vector = " Vx[v]; Vy[v]; Vz[v]" />
+            <Cut> <Plane NormVector = "-Vx[v];-Vy[v];-Vz[v]" NormDistance = "-RCut" /> </Cut>
+            <ShowAll/>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" v = "0" Repeat = "6" />
+    </Figure>
+</xml>

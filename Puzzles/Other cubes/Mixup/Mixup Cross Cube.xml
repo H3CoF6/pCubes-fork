@@ -1,0 +1,104 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup Cross Cube</Name>
+        <Menu>Other cubes\Mixup\Mixup Cross Cube</Menu>
+        <Inventor>Marcell Mágori</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11001</Link>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+        s3 := sqrt(3);
+
+        W1 := W * 2 / (1 + s3);
+        W2 := W;
+
+        D1 := W * (2 - s3);
+        D2 := W * 2 / (1 + s3);
+    </Script>
+
+    <Axes TurningAngles = " Pi/2; Pi/2; Pi/6; Pi/2; Pi/2" PlaneDistances = "-D2;-D1; D1; D2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "w2" WY = "w1" WZ = "w1" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "w1" WY = "w2" WZ = "w1" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "w1" WY = "w1" WZ = "w2" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "4" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <SplitByAxes/>
+
+        <Macro Name = "Unbandage1">
+            <Turn Axis = "j" Layer = "2" Angle = " Pi/6" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+            <Turn Axis = "j" Layer = "2" Angle = "-Pi/3" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+            <Undo Repeat = "2" />
+            <Script>j := (j+1) mod 3;</Script>
+        </Macro>
+
+        <Macro Name = "Unbandage2">
+            <Turn Axis = "i" Layer = "2" Angle = " Pi/6" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+            <ExecMacro MacroName = "Unbandage1" j = "(i+1) mod 3" Repeat = "2" />
+            <ExecMacro MacroName = "Unbandage1" j = "(i+2) mod 3" Repeat = "2" />
+            <Turn Axis = "i" Layer = "2" Angle = "-Pi/3" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+            <ExecMacro MacroName = "Unbandage1" j = "(i+1) mod 3" Repeat = "2" />
+            <ExecMacro MacroName = "Unbandage1" j = "(i+2) mod 3" Repeat = "2" />
+            <Undo Repeat = "2" />
+            <Script>inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Unbandage2" i = "0" Repeat = "3" />
+
+        <HideContaining Vector = " W1; W1; W1" />
+        <HideContaining Vector = " W1; W1;-W1" />
+        <HideContaining Vector = " W1;-W1; W1" />
+        <HideContaining Vector = " W1;-W1;-W1" />
+        <HideContaining Vector = "-W1; W1; W1" />
+        <HideContaining Vector = "-W1; W1;-W1" />
+        <HideContaining Vector = "-W1;-W1; W1" />
+        <HideContaining Vector = "-W1;-W1;-W1" />
+
+        <HideContaining Vector = " W1; W1;  0" />
+        <HideContaining Vector = " W1;-W1;  0" />
+        <HideContaining Vector = "-W1; W1;  0" />
+        <HideContaining Vector = "-W1;-W1;  0" />
+
+        <HideContaining Vector = " W1;  0; W1" />
+        <HideContaining Vector = " W1;  0;-W1" />
+        <HideContaining Vector = "-W1;  0; W1" />
+        <HideContaining Vector = "-W1;  0;-W1" />
+
+        <HideContaining Vector = "  0; W1; W1" />
+        <HideContaining Vector = "  0; W1;-W1" />
+        <HideContaining Vector = "  0;-W1; W1" />
+        <HideContaining Vector = "  0;-W1;-W1" />
+
+        <HideContaining Vector = " W2;  0;  0" />
+        <HideContaining Vector = "-W2;  0;  0" />
+        <HideContaining Vector = "  0; W2;  0" />
+        <HideContaining Vector = "  0;-W2;  0" />
+        <HideContaining Vector = "  0;  0; W2" />
+        <HideContaining Vector = "  0;  0;-W2" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+</xml>

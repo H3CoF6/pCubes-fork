@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-equal star Unbandaged</Name>
+        <Menu>Other forms\Square-1\Square-equal star Unbandaged</Menu>
+        <Inventor>Dario Dagné</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6719</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '8800CC'; // Violett
+        Colors[1] := 'EE5500'; // Orange
+        Colors[2] := '0077FF'; // Blue
+        Colors[3] := 'FFFFFF'; // White
+        Colors[4] := 'FF33BB'; // Pink
+        Colors[5] := 'CC0000'; // Red
+        Colors[6] := '00AA00'; // Green
+        Colors[7] := 'FFDD00'; // Yellow
+        Colors[8] := '8800CC'; // Violett
+
+        R := 0.65;
+        RIn := R * sin(45*Pi/180) / sin(112.5*Pi/180); // sqrt(2 - sqrt(2))
+
+        H := R * 0.65;
+        D := H / 3;
+
+        Angle := 2 * Pi / 8;
+
+        ca := cos(Angle/2);
+        sa := sin(Angle/2);
+    </Script>
+
+    <Axes TurningAngles = "Angle; Angle; Angle" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " 0;  0;  H" />
+                    <Add Vector = "r1 * ca; -r1 * sa;  H" />
+                    <Add Vector = "r2;  0;  H" />
+                    <Add Vector = " 0;  0; -H" />
+                    <Add Vector = "r1 * ca; -r1 * sa; -H" />
+                    <Add Vector = "r2;  0; -H" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2" />
+                    <Face                 VertexIndexes = "1;0;3;4" />
+                    <Face Color = "Color" VertexIndexes = "2;1;4;5" />
+                    <Face                 VertexIndexes = "0;2;5;3" />
+                    <Face Color = "Color" VertexIndexes = "5;4;3" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0; 0; 1" Angle = "Angle/2" />
+        </Macro>
+        <ExecMacro MacroName = "AddSector" Color = "Colors[6]" r1 = "R" r2 = "RIn" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[7]" r1 = "RIn" r2 = "R" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[7]" r1 = "R" r2 = "RIn" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[0]" r1 = "RIn" r2 = "R" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[0]" r1 = "R" r2 = "RIn" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[1]" r1 = "RIn" r2 = "R" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[1]" r1 = "R" r2 = "RIn" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[2]" r1 = "RIn" r2 = "R" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[2]" r1 = "R" r2 = "RIn" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[3]" r1 = "RIn" r2 = "R" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[3]" r1 = "R" r2 = "RIn" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[4]" r1 = "RIn" r2 = "R" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[4]" r1 = "R" r2 = "RIn" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[5]" r1 = "RIn" r2 = "R" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[5]" r1 = "R" r2 = "RIn" />
+        <ExecMacro MacroName = "AddSector" Color = "Colors[6]" r1 = "RIn" r2 = "R" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Latch Pyraminx (Hybrid type)</Name>
+        <Class>TLatch</Class>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Latch\Latch Pyraminx (Hybrid type)</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-01-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3653</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        Delta := W * 0.002; // only for textures
+        D := W * 2 * 2 * sqrt(3) / 9;
+        D0 := -W * sqrt(3) / 3;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D - delta; D0 + 2*D + delta" FixedLayers = "1">
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Cx[0]; Cy[0]; Cz[0]" />
+        <RemoveContaining Vector = "Cx[1]; Cy[1]; Cz[1]" />
+        <RemoveContaining Vector = "Cx[2]; Cy[2]; Cz[2]" />
+        <RemoveContaining Vector = "Cx[3]; Cy[3]; Cz[3]" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "BlackArrowEdge Lock CW"    File = "Puzzles\Other forms\Platonic solids\Tetrahedron\Vertex Turning\Latch\BlackArrowEdge.vec" />
+        <Texture Name = "WhiteArrowEdge Lock CCW"   File = "Puzzles\Other forms\Platonic solids\Tetrahedron\Vertex Turning\Latch\WhiteArrowEdge.vec" />
+        <Texture Name = "BlackArrowCorner Lock CW"  File = "Puzzles\Other forms\Platonic solids\Tetrahedron\Vertex Turning\Latch\BlackArrowCorner.vec" />
+        <Texture Name = "WhiteArrowCorner Lock CCW" File = "Puzzles\Other forms\Platonic solids\Tetrahedron\Vertex Turning\Latch\WhiteArrowCorner.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+
+        <!-- red side -->
+        WhiteArrowEdge Lock CCW = 8,1,2
+        WhiteArrowCorner Lock CCW = 1,1,0
+
+        <!-- green side -->
+        WhiteArrowEdge Lock CCW = 11,0,2
+        WhiteArrowCorner Lock CCW = 6,1,1
+
+        <!-- yellow side -->
+        BlackArrowEdge Lock CW = 11,1,2
+        BlackArrowCorner Lock CW = 3,2,2
+
+        <!-- blue side -->
+        BlackArrowEdge Lock CW = 8,0,1
+        BlackArrowCorner Lock CW = 10,0,1
+    </SetTextures>
+</xml>

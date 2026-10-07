@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2x2+Skewb+Curvy Copter</Name>
+        <Menu>Other cubes\Mixed\2x2x2+Skewb+Curvy Copter</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8200</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        C := sqrt(2) / 4 + 0.045;
+        CutV := W * sqrt(3) * 0.95;
+        CutE := W * sqrt(2) * 0.982;
+
+        A1 := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "A1" PlaneDistances = "-C; C" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <SplitByAxes/>
+        <HideContaining Vector = " 0; 0; 0" />
+
+        <Cut Color = "clOrange" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clRed   " > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite " > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+
+        <ShowAll/>
+
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax1" Layer = "0" Angle = "A * A1" />
+            <Turn  Axis = "Ax1" Layer = "2" Angle = "A * A1" />
+            <Turn  Axis = "Ax2" Layer = "0" Angle = "B * A1" />
+            <Turn  Axis = "Ax2" Layer = "2" Angle = "B * A1" />
+            <Split Axis = "Ax1" From  = "1" />
+            <Split Axis = "Ax1" From  = "2" />
+            <Turn  Axis = "Ax2" Layer = "2" Angle = "-B * A1" />
+            <Turn  Axis = "Ax2" Layer = "0" Angle = "-B * A1" />
+            <Turn  Axis = "Ax1" Layer = "2" Angle = "-A * A1" />
+            <Turn  Axis = "Ax1" Layer = "0" Angle = "-A * A1" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "5" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "3" Ax2 = "4" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "5" A = " 1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "4" A = " 1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "4" Ax2 = "0" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "3" Ax2 = "2" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "5" Ax2 = "0" A = "-1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" A = "-1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "3" A = "-1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "4" Ax2 = "1" A = " 1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "3" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "5" Ax2 = "1" A = " 1" B = "-1" />
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

@@ -1,0 +1,127 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triple Crazy Megaminx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Crazy\Triple Crazy Megaminx</Menu>
+        <Inventor>Mr. Fok</Inventor>
+        <Programmer>Boris, zergosaur</Programmer>
+        <Added>2025-01-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12499</Link>
+    </Interface>
+
+    <Script>
+        // MF8's colors scheme
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0000CC'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '007700'; // Green
+        Colors[ 5] := '800080'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2 * 1.1;
+        RC1 := R * 0.43;
+        RC2 := R * 0.37;
+        RC3 := R * 0.31;
+
+        L1 := 1.004;
+        L2 := L1^2;
+        L3 := L1^3;
+
+        D1 := RSin;
+        D2 := RSin * (L1 + L2) / 2;
+        D3 := RSin * (L2 + L3) / 2;
+    </Script>
+
+    <Axes TurningAngles = " 0; sAngle; sAngle; sAngle; sAngle" NormVectors = " Cx; Cy; Cz" PlaneDistances = " D; D1; D2; D3" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "AddCircles" >
+            <Circle Radius = "RC1" Color = "Colors[i]" Center = " Cx[i] * L1; Cy[i] * L1; Cz[i] * L1" />
+            <Circle Radius = "RC2" Color = "Colors[i]" Center = " Cx[i] * L2; Cy[i] * L2; Cz[i] * L2" />
+            <Circle Radius = "RC3" Color = "Colors[i]" Center = " Cx[i] * L3; Cy[i] * L3; Cz[i] * L3" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircles" Repeat = "12" i = "0" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <!-- Connections define circles behaviour-->
+        
+        <Macro Name = "Connect000" >
+            <Connect Axis = "ax" Layers = "0;2;3;4" />
+        </Macro>
+
+        <Macro Name = "Connect001" >
+            <Connect Axis = "ax" Layers = "1;2"   />
+            <Connect Axis = "ax" Layers = "0;3;4" />
+        </Macro>
+<!--
+        <Macro Name = "Connect010" >
+            <Connect Axis = " 0" Layers = "1;3"   />
+            <Connect Axis = " 0" Layers = "0;2;4" />
+        </Macro>
+-->
+        <Macro Name = "Connect011" >
+            <Connect Axis = "ax" Layers = "1;2;3" />
+            <Connect Axis = "ax" Layers = "0;4"   />
+        </Macro>
+<!--
+        <Macro Name = "Connect100" >
+            <Connect Axis = " 0" Layers = "1;4"   />
+            <Connect Axis = " 0" Layers = "0;2;3" />
+        </Macro>
+
+        <Macro Name = "Connect101" >
+            <Connect Axis = " 0" Layers = "1;2;4" />
+            <Connect Axis = " 0" Layers = "0;3"   />
+        </Macro>
+
+        <Macro Name = "Connect110" >
+            <Connect Axis = " 0" Layers = "1;3;4" />
+            <Connect Axis = " 0" Layers = "0;2"   />
+        </Macro>
+-->
+        <Macro Name = "Connect111" >
+            <Connect Axis = "ax" Layers = "1;2;3;4" />
+        </Macro>
+
+        <ExecMacro MacroName = "Connect111" ax = " 0" /> white      
+        <ExecMacro MacroName = "Connect000" ax = " 1" /> yellow     
+        <ExecMacro MacroName = "Connect001" ax = " 2" /> blue       
+        <ExecMacro MacroName = "Connect000" ax = " 3" /> red        
+        <ExecMacro MacroName = "Connect001" ax = " 4" /> green      
+        <ExecMacro MacroName = "Connect011" ax = " 5" /> violet     
+        <ExecMacro MacroName = "Connect011" ax = " 6" /> cream      
+        <ExecMacro MacroName = "Connect000" ax = " 7" /> light blue 
+        <ExecMacro MacroName = "Connect111" ax = " 8" /> orange     
+        <ExecMacro MacroName = "Connect011" ax = " 9" /> light green
+        <ExecMacro MacroName = "Connect111" ax = "10" /> pink       
+        <ExecMacro MacroName = "Connect001" ax = "11" /> gray       
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Center011" File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Crazy\Textures\Dot.vec" />
+        <Texture Name = "Center001" File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Crazy\Textures\Crazy001.vec" />
+        <Texture Name = "Center000" File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Crazy\Textures\Crazy000.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Center011 = 249,0,0, 282,0,0, 381,0,0
+        Center001 = 150,0,0, 216,0,0, 447,0,0
+        Center000 = 117,0,0, 183,0,0, 315,0,0
+    </SetTextures>
+</xml>

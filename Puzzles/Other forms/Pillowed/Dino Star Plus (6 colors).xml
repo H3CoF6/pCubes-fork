@@ -1,0 +1,99 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Star Plus (6 colors)</Name>
+        <Menu>Other forms\Pillowed\Dino Star Plus (6 colors)</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-25</Added>
+        <Link>http://www.ziicube.com/fs-Lim-222-Circle-Series</Link>
+        <Link>https://www.youtube.com/watch?v=cYEjNuZvyYg</Link>
+    </Interface>
+
+    <Script>
+        K := 0.5;
+        Colors[0] := 'EE0000';
+        Colors[1] := 'FFFFFF';
+        Colors[2] := '00BB00';
+        Colors[3] := '0055EE';
+        Colors[4] := 'FF7700';
+        Colors[5] := 'FFFF00';
+        Colors[6] := 'BB00BB';
+        Colors[7] := 'FF55CC';
+
+        K := 0.5;
+        D := K * 0.843;
+        f := K * 0.5;
+        DCut := K * 1.15;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+
+        <RemoveContaining Vector = " f; f; f" />
+        <RemoveContaining Vector = " f;-f;-f" />
+        <RemoveContaining Vector = "-f;-f; f" />
+        <RemoveContaining Vector = "-f; f;-f" />
+        <Turn NormVector = "0;-1;-1" Angle = "Pi" />
+        <InvertVisibility/>
+
+        <Script>
+            Colors[0] := Colors[4];
+            Colors[1] := Colors[5];
+            Colors[2] := Colors[6];
+            Colors[3] := Colors[7];
+        </Script>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+        <RemoveContaining Vector = " f; f; f" />
+        <RemoveContaining Vector = " f;-f;-f" />
+        <RemoveContaining Vector = "-f;-f; f" />
+        <RemoveContaining Vector = "-f; f;-f" />
+        <ShowAll/>
+        <Turn NormVector = "0;-1;-1" Angle = "-Pi" />
+
+        <SplitByAxes/>
+
+        <!-- cut -->
+
+        <Macro Name = "Cut" >
+            <Hide><Plane NormVector = "-1; 0; 0" NormDistance = " 0" /></Hide>
+            <Hide><Plane NormVector = " 0;-1; 0" NormDistance = " 0" /></Hide>
+            <Hide><Plane NormVector = " 0; 0;-1" NormDistance = " 0" /></Hide>
+            <Cut><Plane NormVector = " 2;-1;-1" NormDistance = "-DCut" /></Cut>
+            <Cut><Plane NormVector = "-1; 2;-1" NormDistance = "-DCut" /></Cut>
+            <Cut><Plane NormVector = "-1;-1; 2" NormDistance = "-DCut" /></Cut>
+            <ShowAll/>
+            <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

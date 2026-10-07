@@ -1,0 +1,116 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Kaleidoscope-3</Name>
+        <Menu>Other forms\2d\Kaleidoscope-3</Menu>
+        <Inventor>Karolis Kairys</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-01-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10708</Link>
+    </Interface>
+
+    <Script>
+        clDeepSky := '00BFFF';
+        clBlue    := '0000BB';
+        clRed     := 'FF0000';
+        clYellow  := 'FF9900';
+        clWhite   := 'FFFFFF';
+        clGreen   := '007700';
+        clBlack   := '333333';
+
+        for i := 0 to 5 do
+            Colors[i] := -1;
+        K := 0.6;
+        R := K * 0.05;
+        D1 := K * 0.65;
+        D2 := K * 0.85;
+        DCut := D1 - K * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = " D1; D2" FixedLayers = "0" >
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSphere" >
+            <Script>
+                Colors[0] := c1;
+                Colors[1] := c2;
+                Colors[2] := c3;
+                Colors[5] := c4;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1"> <Plane NormVector = " 1; 1; 0" NormDistance = "0" /> </Split>
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = "0" /> </Split>
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1"> <Plane NormVector = " 1; 0; 1" NormDistance = "0" /> </Split>
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1"> <Plane NormVector = " 1; 0;-1" NormDistance = "0" /> </Split>
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1"> <Plane NormVector = " 0; 1; 1" NormDistance = "0" /> </Split>
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1"> <Plane NormVector = " 0; 1;-1" NormDistance = "0" /> </Split>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSphere" c1 = "clBlue" c2 = "clYellow" c3 = "clYellow" c4 = "clDeepSky" />
+        <HideContaining Vector = " R; 0; R" />
+        <HideContaining Vector = "-R;-R; 0" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "AddSphere" c1 = "clDeepSky" c2 = "clRed" c3 = "clBlue" c4 = "clRed" />
+        <HideContaining Vector = "-R; 0; R" />
+        <HideContaining Vector = " R;-R; 0" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "AddSphere" c3 = "clGreen" c4 = "clWhite" />
+        <HideContaining Vector = " 0;-R; R" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <Hide Axis = "0" From = "1" To = "2" />
+        <Hide Axis = "1" From = "1" To = "2" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1; -1;  1" NormDistance = " DCut" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; -1;  1" NormDistance = " DCut" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1;  1; -1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = "-1; -1;  1" NormDistance = " DCut" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;  1; -1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1; -1;  1" NormDistance = " DCut" /> </Cut>
+        <ShowAll/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "2 * Pi / 3" />
+        <Turn Axis = "0" Layer = "2" Angle = "2 * Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "2 * Pi / 3" />
+        <Turn Axis = "1" Layer = "2" Angle = "2 * Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "2 * Pi / 3" />
+        <Turn Axis = "0" Layer = "2" Angle = "2 * Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "2 * Pi / 3" />
+        <Turn Axis = "1" Layer = "2" Angle = "2 * Pi / 3" />
+        <SplitByAxes/>
+        <Undo Repeat = "8" />
+        <SaveSolvedState/>
+
+        <Turn NormVector = "1;0;0" Angle = "Pi/4" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

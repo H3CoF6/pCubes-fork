@@ -1,0 +1,103 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Redi 2x2x2 Circle Edgeless</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\Redi\Redi 2x2x2 Circle Edgeless</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-28</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // clRed
+        Colors[1] := 'AA00AA'; // clViolett
+        Colors[2] := 'FF8800'; // clOrange
+        Colors[3] := 'FFFF00'; // clYellow
+        Colors[4] := '00DD00'; // clGreen
+        Colors[5] := '0066FF'; // clBlue
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.7;
+
+        A := W * 1.21; // = D * sqrt(3) - delta
+        B := W * 0.65;
+        C := W * 0.27;
+
+        RCut := W * 1.56;
+
+        R := W * 0.64; // = B - delta
+        WC := D * sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2; 0" PlaneDistances = "-A; 0; A" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed 2.xml" />
+
+        <Macro Name = "SplitV">
+            <Split Axis = "3" From = "1"/>
+            <Split Axis = "4" From = "1"/>
+            <Split Axis = "5" From = "1"/>
+            <Split Axis = "6" From = "1"/>
+            <Split Axis = "3" From = "2"/>
+            <Split Axis = "4" From = "2"/>
+            <Split Axis = "5" From = "2"/>
+            <Split Axis = "6" From = "2"/>
+        </Macro>
+        <ExecMacro MacroName = "SplitV" />
+
+        <HideContaining Vector = "Vx; Vy; Vz" />
+
+        <RemoveAllVisible/>
+
+        <Circle Radius = "R" Color = "Colors[0]" Center = "-WC;  0;  0" />
+        <Circle Radius = "R" Color = "Colors[1]" Center = " WC;  0;  0" />
+        <Circle Radius = "R" Color = "Colors[2]" Center = "  0;-WC;  0" />
+        <Circle Radius = "R" Color = "Colors[3]" Center = "  0; WC;  0" />
+        <Circle Radius = "R" Color = "Colors[4]" Center = "  0;  0;-WC" />
+        <Circle Radius = "R" Color = "Colors[5]" Center = "  0;  0; WC" />
+
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cube Pillowed 2.xml" />
+
+        <!-- cut vertices for better control -->
+        <Macro Name = "CutVertex">
+            <Cut> <Plane NormVector = "-Vx[v];-Vy[v];-Vz[v]" NormDistance = "-RCut" /> </Cut>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutVertex" Repeat = "8" v = "0" />
+
+        <ExecMacro MacroName = "SplitV" />
+
+        <HideContaining Vector = "Ex; Ey; Ez" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

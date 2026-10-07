@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Great Wall 7x7x7</Name>
+        <Menu>Cubic\Bandaged\Cube 7x7x7\Great Wall 7x7x7</Menu>
+        <Inventor>Alacoume</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-08-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10552</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=419102#p419102</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 7;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('211=100,400,160,460,102,402,162,462,104,404,164,464,106,406,166,466,001,501,061,561,003,503,063,563,005,505,065,565');
+        ParseTxt('311=201,261,203,263,205,265');
+        ParseTxt('121=110,210,310,410,510,140,240,340,440,540,116,216,316,416,516,146,246,346,446,546,011,013,015,041,043,045,611,613,615,641,643,645,000,650,050,602,002,652,052,604,004,654,054,600,006,656,056,606');
+        ParseTxt('131=020,620,022,622,024,624,026,626');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(7)" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+
+        <Macro Name = "Preset" >
+            <Turn Axis = "2" Layers = "1;3;5" Angle = "Pi/2" />
+            <Turn Axis = "0" Layers = "0;6" Angle = "Pi/2" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Preset" />
+            <Turn Axis = "1" Layers = "Random(3) + 2" Angle = "Pi/2" />
+            <Turn Axis = "1" Layers = "Random(3) + 2" Angle = "Pi/2" />
+            <Turn Axis = "2" Layers = "Random(3) * 2 + 1" Angle = "Pi/2" />
+            <Turn Axis = "2" Layers = "Random(3) * 2 + 1" Angle = "Pi/2" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "2000" />
+        </Macro>
+    </Macros>
+</xml>

@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star Wheel Octahedron</Name>
+        <Menu>Other forms\Octahedron\Mixed\Star Wheel Octahedron</Menu>
+        <Menu>Other forms\Wheel\Star Wheel Octahedron</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-07-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8042</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00CC00'; // Green
+        Colors[1] := '0000EE'; // Blue
+        Colors[2] := 'EE0000'; // Red
+        Colors[6] := 'FF7700'; // Orange
+        Colors[4] := 'CC00DD'; // Rose
+        Colors[5] := 'FFFFFF'; // White
+        Colors[3] := 'FFFF33'; // Yellow
+        Colors[7] := '0066FF'; // LightBlue
+
+        W := 1.5 * 0.5;
+
+        D1 := W * 0.52;
+        D2 := W / sqrt(3);
+        Sc := 1.1;
+        RC := (3 * D1 - W * Sc) * sqrt(2/3) * 0.99;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" Base = "Cx[i];Cy[i];Cz[i]" Top = "Cx[i]*Sc; Cy[i]*Sc; Cz[i]*Sc" >
+                <Top  Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "8" i = "0" />
+
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 7 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "ax" Layer = "0" Angle = "Pi/3" />
+            <Turn Axis = "ax" Layer = "2" Angle = "Pi/3" />
+            <Script> Inc(ax); </Script>
+        </Macro>
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Split" ax = "3" Repeat = "4" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

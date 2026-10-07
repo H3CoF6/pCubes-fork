@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dodecagonal Prism</Name>
+        <Menu>Other forms\Prism\Dodecagonal Prism\Dodecagonal Prism</Menu>
+        <Inventor>Anthony Greenhill</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-03-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=502</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'DDBB20'; // Golden
+        Colors[ 1] := 'ADFF2F'; // GreenYellow
+        Colors[ 2] := '00FFFF'; // Cyan
+        Colors[ 3] := '008080'; // Teal
+        Colors[ 4] := '00BFFF'; // DeepSky
+        Colors[ 5] := '0000FF'; // Blue
+        Colors[ 6] := '000080'; // Navy
+        Colors[ 7] := '8b0a50'; // DeepPink
+        Colors[ 8] := 'DC143C'; // Crimson
+        Colors[ 9] := 'FF0000'; // Red
+        Colors[10] := 'FF7F50'; // Coral
+        Colors[11] := 'FF6000'; // Orange
+        Colors[12] := 'F0F0F0'; // White
+        Colors[13] := 'FFFF00'; // Yellow
+
+        N := 12;
+        H := 0.6;
+        R := H;
+        D := H / 3;
+
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+        for i := 0 to N div 2 - 1 do begin
+            ax[i] := cos(2 * Pi / N * i);
+            ay[i] := sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" NormVectors = "ax; ay; 0" />
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[i-1]" VertexIndexes = "i1 + N; i2 + N; i2; i1" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                <Face Color = "Colors[12]" VertexIndexes = "FromTo(0, N - 1)" />
+                <Face Color = "Colors[13]" VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+        
+        <SplitByAxes/>
+    </Figure>
+</xml>

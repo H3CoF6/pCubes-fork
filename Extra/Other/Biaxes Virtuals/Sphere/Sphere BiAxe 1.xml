@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sphere BiAxe 1</Name>
+        <Menu>Other forms\Sphere\Biaxes Virtual\Sphere BiAxe 1</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-02-26</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        K := 0.7;
+
+//        Angle  := arccos(- (sqrt(5) - 1) / 2); // 2.237 = 128.17g
+//        AngleM := (Pi - Angle)/2;
+
+//        ax := sqrt(1 + sqrt(5)) / 2; // cos(AngleM)
+//        ay := sqrt(3 - sqrt(5)) / 2; // sin(AngleM)
+
+        ay := sqrt(sqrt(5) - 2);
+
+        A := Pi/2;
+
+        D := K * 0.1;  // 1 narrow parts
+    </Script>
+
+    <Axes TurningAngles = "A" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1; -ay; 0" />
+        <Axis NormVector = "-1; -ay; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn Axis = "0" Angle = " Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-Dt*A" Layer = "1" /> <SplitByAxes/>
+<!--            <Turn Axis = "0" Angle = " Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " Dt*A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-Dt*A" Layer = "1" /> <SplitByAxes/>-->
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart" Dt=" 1" Repeat = "20" />
+        <Undo Repeat = "40" />
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

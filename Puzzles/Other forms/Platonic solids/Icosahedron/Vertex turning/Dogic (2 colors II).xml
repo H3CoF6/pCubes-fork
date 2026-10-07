@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dogic (2 colors II)</Name>
+        <Menu>Other forms\Icosahedron\Vertex turning\Dogic (2 colors II)</Menu>
+        <Inventor>Uwe Mèffert</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-10-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2958</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        clWhite := 'FFFFFF';
+        clBlack := '303030';
+
+        for i := 0 to 9 do
+            Colors[i] := clWhite;
+        for i := 10 to 19 do
+            Colors[i] := clBlack;
+
+        D1 := (Rsin + R) / 2;
+        D2 := Rsin;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D1; D2" FixedLayers = "0" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <Macro Name = "AddSide" >
+            <Face Color = "Colors[c]" VertexIndexes = "v1;e1+32;c+12;e3+32" />
+            <Face Color = "Colors[c]" VertexIndexes = "v2;e2+32;c+12;e1+32" />
+            <Face Color = "Colors[c]" VertexIndexes = "v3;e3+32;c+12;e2+32" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Cx; Cy; Cz" />
+            <Vertices Vectors = "Ex; Ey; Ez" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddSide" c = " 0" v1 = " 0" v2 = " 1" v3 = " 5" e1 = " 0" e2 = " 9" e3 = " 4" />
+                <ExecMacro MacroName = "AddSide" c = " 1" v1 = " 0" v2 = " 2" v3 = " 1" e1 = " 1" e2 = " 5" e3 = " 0" />
+                <ExecMacro MacroName = "AddSide" c = " 2" v1 = " 0" v2 = " 3" v3 = " 2" e1 = " 2" e2 = " 6" e3 = " 1" />
+                <ExecMacro MacroName = "AddSide" c = " 3" v1 = " 0" v2 = " 4" v3 = " 3" e1 = " 3" e2 = " 7" e3 = " 2" />
+                <ExecMacro MacroName = "AddSide" c = " 4" v1 = " 0" v2 = " 5" v3 = " 4" e1 = " 4" e2 = " 8" e3 = " 3" />
+                <ExecMacro MacroName = "AddSide" c = " 5" v1 = " 1" v2 = "10" v3 = " 5" e1 = "15" e2 = "14" e3 = " 9" />
+                <ExecMacro MacroName = "AddSide" c = " 6" v1 = " 2" v2 = " 6" v3 = " 1" e1 = "16" e2 = "10" e3 = " 5" />
+                <ExecMacro MacroName = "AddSide" c = " 7" v1 = " 3" v2 = " 7" v3 = " 2" e1 = "17" e2 = "11" e3 = " 6" />
+                <ExecMacro MacroName = "AddSide" c = " 8" v1 = " 4" v2 = " 8" v3 = " 3" e1 = "18" e2 = "12" e3 = " 7" />
+                <ExecMacro MacroName = "AddSide" c = " 9" v1 = " 5" v2 = " 9" v3 = " 4" e1 = "19" e2 = "13" e3 = " 8" />
+                <ExecMacro MacroName = "AddSide" c = "10" v1 = "11" v2 = " 7" v3 = " 8" e1 = "26" e2 = "21" e3 = "27" />
+                <ExecMacro MacroName = "AddSide" c = "11" v1 = "11" v2 = " 8" v3 = " 9" e1 = "27" e2 = "22" e3 = "28" />
+                <ExecMacro MacroName = "AddSide" c = "12" v1 = "11" v2 = " 9" v3 = "10" e1 = "28" e2 = "23" e3 = "29" />
+                <ExecMacro MacroName = "AddSide" c = "13" v1 = "11" v2 = "10" v3 = " 6" e1 = "29" e2 = "24" e3 = "25" />
+                <ExecMacro MacroName = "AddSide" c = "14" v1 = "11" v2 = " 6" v3 = " 7" e1 = "25" e2 = "20" e3 = "26" />
+                <ExecMacro MacroName = "AddSide" c = "15" v1 = " 7" v2 = " 3" v3 = " 8" e1 = "17" e2 = "12" e3 = "21" />
+                <ExecMacro MacroName = "AddSide" c = "16" v1 = " 8" v2 = " 4" v3 = " 9" e1 = "18" e2 = "13" e3 = "22" />
+                <ExecMacro MacroName = "AddSide" c = "17" v1 = " 9" v2 = " 5" v3 = "10" e1 = "19" e2 = "14" e3 = "23" />
+                <ExecMacro MacroName = "AddSide" c = "18" v1 = "10" v2 = " 1" v3 = " 6" e1 = "15" e2 = "10" e3 = "24" />
+                <ExecMacro MacroName = "AddSide" c = "19" v1 = " 6" v2 = " 2" v3 = " 7" e1 = "16" e2 = "11" e3 = "20" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <Macro Name = "NewState" >
+            <Turn Axis = "(ax + 1) mod 5 + 1" Layers = "1;2" Angle = " -sAngle" />
+            <Turn Axis = "(ax + 4) mod 5 + 6" Layers = "1;2" Angle = "  sAngle" />
+            <Turn Axis = "(ax - 1) mod 5 + 1" Layers = "1;2" Angle = "  sAngle" />
+            <Turn Axis = "(ax + 4) mod 5 + 6" Layers = "1;2" Angle = "  sAngle" />
+            <Turn Axis = "(ax - 1) mod 5 + 1" Layers = "1;2" Angle = "2*sAngle" />
+            <Turn Axis = "(ax + 3) mod 5 + 1" Layers = "1;2" Angle = "  sAngle" />
+            <Turn Axis = "0"                  Layers = "1;2" Angle = "2*sAngle" />
+            <SaveSolvedState/>
+            <Undo Repeat = "7" />
+            <Script> Inc(Ax); </Script>
+        </Macro>
+        <SaveSolvedState/>
+        <ExecMacro MacroName = "NewState" Ax = "1" Repeat = "5" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

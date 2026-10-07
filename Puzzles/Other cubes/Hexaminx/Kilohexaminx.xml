@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Kilohexaminx</Name>
+        <Menu>Other Cubes\Hexaminx\Kilohexaminx</Menu>
+        <Inventor>Ben Streeter</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2440</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+
+        D := W * 0.63;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "  0; ss; cs" />
+        <Axis NormVector = "  0;-ss; cs" />
+        <Axis NormVector = " ss; cs;  0" />
+        <Axis NormVector = "-ss; cs;  0" />
+        <Axis NormVector = " cs;  0; ss" />
+        <Axis NormVector = " cs;  0;-ss" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Vx; Vy; Vz" />
+        <HideContaining Vector = "Ex; Ey; Ez" />
+        <HideContaining Vector = "0;0;0"/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+</xml>

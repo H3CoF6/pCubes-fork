@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>DaYan Gem 8</Name>
+        <Menu>Other forms\DaYan\DaYan Gem 8</Menu>
+        <Menu>Other forms\Archimedean Solids\DaYan\DaYan Gem 8</Menu>
+        <Menu>Other forms\Archimedean Solids\Truncated tetrahedron\DaYan Gem 8</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-04-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4962</Link>
+    </Interface>
+
+    <Script>
+        Scale := 1.1;
+        W := Scale / 2;
+        D := Scale * 2 * sqrt(3) / 3 / 6;
+        D0 := Scale * (-sqrt(3)) / 6;
+        DCut := -(D0 + 4 * D);
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D0 + D; D0 + 3 * D" >
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " W; -W;  W" />
+                <Add Vector = "-W;  W;  W" />
+                <Add Vector = " W;  W; -W" />
+                <Add Vector = "-W; -W; -W" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "C80000" VertexIndexes = "0;1;3" />
+                <Face Color = "0000C8" VertexIndexes = "1;2;3" />
+                <Face Color = "009600" VertexIndexes = "0;3;2" />
+                <Face Color = "FFFF00" VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "0000C7" > <Plane NormVector = "-1;  1; -1" NormDistance = "DCut" /> </Cut>
+        <Cut Color = "009500" > <Plane NormVector = " 1; -1; -1" NormDistance = "DCut" /> </Cut>
+        <Cut Color = "C70000" > <Plane NormVector = "-1; -1;  1" NormDistance = "DCut" /> </Cut>
+        <Cut Color = "FEFE00" > <Plane NormVector = " 1;  1;  1" NormDistance = "DCut" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

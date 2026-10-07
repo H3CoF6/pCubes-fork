@@ -1,0 +1,561 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+Надо разнообразить цвета и уточнить плоскости сечений
+
+
+    <Interface>
+        <Name>Pentagonal Hexecontahedron</Name>
+        <Menu>Grigr\Pentagonal Hexecontahedron</Menu>
+        <Inventor></Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-04-06</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clWhite       := 'F0F0F0';
+        clGainsboro   := 'C0C0C0';
+        clSilver      := 'A0A0A0';
+        clGray        := '707070';
+        clBlack       := '202020';
+
+        clCyan        := '00FFFF';
+        clDeepSky     := '00BFFF';
+        clTeal        := '008080';
+        clBlue        := '0000FF';
+        clNavy        := '000080';
+
+        clCoral       := 'FF7F50';
+        clRed         := 'FF0000';
+        clCrimson     := 'DC143C';
+        clIndian      := 'CD5C5C';
+        clBrown       := '800000';
+
+        clYellow      := 'FFFF00';
+        clOrange      := 'FF6000';
+        clKhaki       := 'F0E68C';
+        clGolden      := 'DDBB20';
+        clOlive       := '808000';
+
+        clGreenYellow := 'ADFF2F';
+        clLime        := '00FF00';
+        clSeaGreen    := '3cb371';
+        clGreen       := '008000';
+        clDarkGreen   := '006400';
+
+        clPink        := 'FF69B4';
+        clFuchsia     := 'FF00FF';
+        clPale        := 'D07090';
+        clOrchid      := 'DA70D6';
+        clPurple      := '800080';
+
+        K   := 0.3;
+        C0  := K * 0.192893711352;
+        C1  := K * 0.218483370127;
+        C2  := K * 0.374821658114;
+        C3  := K * 0.567715369466;
+        C4  := K * 0.728335176957;
+        C5  := K * 0.755467260516;
+        C6  := K * 0.824957552676;
+        C7  := K * 0.921228888309;
+        C8  := K * 0.959987701391;
+        C9  := K * 1.137066133860;
+        C10 := K * 1.167123436475;
+        C11 := K * 1.222371704903;
+        C12 := K * 1.272096282575;
+        C13 := K * 1.527703070858;
+        C14 := K * 1.646917940690;
+        C15 := K * 1.746186440985;
+        C16 := K * 1.865401310817;
+        C17 := K * 1.888445389283;
+        C18 := K * 1.977838965420;
+        C19 := K * 2.097053835252;
+
+        //         phi = (1 + sqrt(5)) / 2
+        //         x = cbrt((phi + sqrt(phi-5/27))/2) + cbrt((phi - sqrt(phi-5/27))/2)
+        // C0  = phi * sqrt(3 - (x^2)) / 2
+        // C1  = phi * sqrt((x - 1 - (1/x)) * phi) / (2 * x)
+        // C2  = phi * sqrt((x - 1 - (1/x)) * phi) / 2
+        // C3  = (x^2) * phi * sqrt(3 - (x^2)) / 2
+        // C4  = phi * sqrt(1 - x + (phi + 1) / x) / 2
+        // C5  = sqrt(x * (x + phi) + 1) / (2 * x)
+        // C6  = sqrt((x + 2) * phi + 2) / (2 * x)
+        // C7  = sqrt(-(x^2) * (phi + 2) + x * (3 * phi + 1) + 4) / 2
+        // C8  = (phi + 1) * sqrt(1 + (1/x)) / (2 * x)
+        // C9  = sqrt(3 * phi + 2 - 2 * x + (3/x)) / 2
+        // C10 = sqrt((x^2)*(225*phi + 392) + x*(670*phi + 249) + (157*phi + 470))/62
+        // C11 = phi * sqrt(x * (x + phi) + 1) / (2 * x)
+        // C12 = phi * sqrt((x^2) + x + phi + 1) / (2 * x)
+        // C13 = phi * sqrt((x^2) + 2 * x * phi + 2) / (2 * x)
+        // C14 = sqrt((x^2) * (2 * phi + 1) - phi) / 2
+        // C15 = phi * sqrt((x^2) + x) / 2
+        // C16 = (phi^3) * sqrt(x * (x + phi) + 1) / (2 * (x^2))
+        // C17 = sqrt((x^2)*(842*phi + 617) + x*(1589*phi + 919) + (784*phi + 627))/62
+        // C18 = (phi^2) * sqrt(x * (x + phi) + 1) / (2 * x)
+        // C19 = phi * sqrt(x * (x + phi) + 1) / 2
+
+        // Calcs normal to plane with 3 points
+        procedure Normal(x1, y1, z1, x2, y2, z2, x3, y3, z3, i);
+        begin
+          nx := (y1-y3) * (z2-z3) - (y2-y3) * (z1-z3);
+          ny := (z1-z3) * (x2-x3) - (z2-z3) * (x1-x3);
+          nz := (x1-x3) * (y2-y3) - (x2-x3) * (y1-y3);
+
+          // normalize vector
+          dn := sqrt(nx^2 + ny^2 + nz^2);
+          px[i] := nx / dn; py[i] := ny / dn; pz[i] := nz / dn;
+        end;
+
+        // Calc all Normal and fill array
+        Normal( C10, 0, C17,  C0,  C1, C19,  C3, -C6, C16,  0); // " 24;  0; ; ; 36 "
+        Normal( C10, 0, C17,  C3, -C6, C16, C13, -C4, C12,  1); // " 24; 36; ; ; 76 "
+        Normal( C10, 0, C17, C13, -C4, C12, C15,  C2,  C9,  2); // " 24; 76; ; ; 52 "
+        Normal( C10, 0, C17, C15,  C2,  C9,  C7,  C8, C14,  3); // " 24; 52; ; ; 60 "
+        Normal( C10, 0, C17,  C7,  C8, C14,  C0,  C1, C19,  4); // " 24; 60; ; ;  0 "
+        Normal(-C10, 0,-C17, -C0,  C1,-C19, -C3, -C6,-C16,  5); // " 27;  3; ; ; 39 "
+        Normal(-C10, 0,-C17, -C3, -C6,-C16,-C13, -C4,-C12,  6); // " 27; 39; ; ; 79 "
+        Normal(-C10, 0,-C17,-C13, -C4,-C12,-C15,  C2, -C9,  7); // " 27; 79; ; ; 55 "
+        Normal(-C10, 0,-C17,-C15,  C2, -C9, -C7,  C8,-C14,  8); // " 27; 55; ; ; 63 "
+        Normal(-C10, 0,-C17, -C7,  C8,-C14, -C0,  C1,-C19,  9); // " 27; 63; ; ;  3 "
+<!--
+ C10, 0.0, C17 /> 24 *
+  C0,  C1, C19 />  0 *
+  C3, -C6, C16 /> 36 *
+ C15,  C2,  C9 /> 52 *
+  C7,  C8, C14 /> 60 *
+ C13, -C4, C12 /> 76 *
+ -C0,  C1,-C19 />  3 **
+-C10, 0.0,-C17 /> 27 **
+ -C3, -C6,-C16 /> 39 **
+-C15,  C2, -C9 /> 55 **
+ -C7,  C8,-C14 /> 63 **
+-C13, -C4,-C12 /> 79 **
+-->
+
+        Normal( C10, 0,-C17,  C0, -C1,-C19,  C3,  C6,-C16, 10); // " 25;  1; ; ; 37 "
+        Normal( C10, 0,-C17,  C3,  C6,-C16, C13,  C4,-C12, 11); // " 25; 37; ; ; 77 "
+        Normal( C10, 0,-C17, C13,  C4,-C12, C15, -C2, -C9, 12); // " 25; 77; ; ; 53 "
+        Normal( C10, 0,-C17, C15, -C2, -C9,  C7, -C8,-C14, 13); // " 25; 53; ; ; 61 "
+        Normal( C10, 0,-C17,  C7, -C8,-C14,  C0, -C1,-C19, 14); // " 25; 61; ; ;  1 "
+        Normal(-C10, 0, C17, -C0, -C1, C19, -C3,  C6, C16, 15); // " 26;  2; ; ; 38 "
+        Normal(-C10, 0, C17, -C3,  C6, C16,-C13,  C4, C12, 16); // " 26; 38; ; ; 78 "
+        Normal(-C10, 0, C17,-C13,  C4, C12,-C15, -C2,  C9, 17); // " 26; 78; ; ; 54 "
+        Normal(-C10, 0, C17,-C15, -C2,  C9, -C7, -C8, C14, 18); // " 26; 54; ; ; 62 "
+        Normal(-C10, 0, C17, -C7, -C8, C14, -C0, -C1, C19, 19); // " 26; 62; ; ;  2 "
+<!--
+  C0, -C1,-C19 />  1 *
+ C10, 0.0,-C17 /> 25 *
+  C3,  C6,-C16 /> 37 *
+ C15, -C2, -C9 /> 53 *
+  C7, -C8,-C14 /> 61 *
+ C13,  C4,-C12 /> 77 *
+ -C0, -C1, C19 />  2 **
+-C10, 0.0, C17 /> 26 **
+ -C3,  C6, C16 /> 38 **
+-C15, -C2,  C9 /> 54 **
+ -C7, -C8, C14 /> 62 **
+-C13,  C4, C12 /> 78 **
+-->
+
+        Normal( C17, C10, 0, C19,  C0,  C1, C16,  C3, -C6, 20); // " 28;  4; ; ; 41 "
+        Normal( C17, C10, 0, C16,  C3, -C6, C12, C13, -C4, 21); // " 28; 41; ; ; 81 "
+        Normal( C17, C10, 0, C12, C13, -C4,  C9, C15,  C2, 22); // " 28; 81; ; ; 56 "
+        Normal( C17, C10, 0,  C9, C15,  C2, C14,  C7,  C8, 23); // " 28; 56; ; ; 64 "
+        Normal( C17, C10, 0, C14,  C7,  C8, C19,  C0,  C1, 24); // " 28; 64; ; ;  4 "
+        Normal(-C17,-C10, 0,-C19, -C0,  C1,-C16, -C3, -C6, 25); // " 31;  6; ; ; 43 "
+        Normal(-C17,-C10, 0,-C16, -C3, -C6,-C12,-C13, -C4, 26); // " 31; 43; ; ; 83 "
+        Normal(-C17,-C10, 0,-C12,-C13, -C4, -C9,-C15,  C2, 27); // " 31; 83; ; ; 58 "
+        Normal(-C17,-C10, 0, -C9,-C15,  C2,-C14, -C7,  C8, 28); // " 31; 58; ; ; 66 "
+        Normal(-C17,-C10, 0,-C14, -C7,  C8,-C19, -C0,  C1, 29); // " 31; 66; ; ;  6 "
+<!--
+ C19,  C0,  C1 />  4 *
+ C17, C10, 0.0 /> 28 *
+ C16,  C3, -C6 /> 41 *
+  C9, C15,  C2 /> 56 *
+ C14,  C7,  C8 /> 64 *
+ C12, C13, -C4 /> 81 *
+-C19, -C0,  C1 />  6 **
+-C17,-C10, 0.0 /> 31 **
+-C16, -C3, -C6 /> 43 **
+ -C9,-C15,  C2 /> 58 **
+-C14, -C7,  C8 /> 66 **
+-C12,-C13, -C4 /> 83 **
+-->
+
+        Normal( C17,-C10, 0, C19, -C0, -C1, C16, -C3,  C6, 30); // " 29;  5; ; ; 40 "
+        Normal( C17,-C10, 0, C16, -C3,  C6, C12,-C13,  C4, 31); // " 29; 40; ; ; 80 "
+        Normal( C17,-C10, 0, C12,-C13,  C4,  C9,-C15, -C2, 32); // " 29; 80; ; ; 57 "
+        Normal( C17,-C10, 0,  C9,-C15, -C2, C14, -C7, -C8, 33); // " 29; 57; ; ; 65 "
+        Normal( C17,-C10, 0, C14, -C7, -C8, C19, -C0, -C1, 34); // " 29; 65; ; ;  5 "
+        Normal(-C17, C10, 0,-C19,  C0, -C1,-C16,  C3,  C6, 35); // " 30;  7; ; ; 42 "
+        Normal(-C17, C10, 0,-C16,  C3,  C6,-C12, C13,  C4, 36); // " 30; 42; ; ; 82 "
+        Normal(-C17, C10, 0,-C12, C13,  C4, -C9, C15, -C2, 37); // " 30; 82; ; ; 59 "
+        Normal(-C17, C10, 0, -C9, C15, -C2,-C14,  C7, -C8, 38); // " 30; 59; ; ; 67 "
+        Normal(-C17, C10, 0,-C14,  C7, -C8,-C19,  C0, -C1, 39); // " 30; 67; ; ;  7 "
+<!--
+ C19, -C0, -C1 />  5 *
+ C17,-C10, 0.0 /> 29 *
+ C16, -C3,  C6 /> 40 *
+  C9,-C15, -C2 /> 57 *
+ C14, -C7, -C8 /> 65 *
+ C12,-C13,  C4 /> 80 *
+-C19,  C0, -C1 />  7 **
+-C17, C10, 0.0 /> 30 **
+-C16,  C3,  C6 /> 42 **
+ -C9, C15, -C2 /> 59 **
+-C14,  C7, -C8 /> 67 **
+-C12, C13,  C4 /> 82 **
+-->
+
+        Normal( 0, C17, C10,  C1, C19,  C0, -C6, C16,  C3, 40); // " 32;  8; ; ; 46 "
+        Normal( 0, C17, C10, -C6, C16,  C3, -C4, C12, C13, 41); // " 32; 46; ; ; 74 "
+        Normal( 0, C17, C10, -C4, C12, C13,  C2,  C9, C15, 42); // " 32; 74; ; ; 48 "
+        Normal( 0, C17, C10,  C2,  C9, C15,  C8, C14,  C7, 43); // " 32; 48; ; ; 68 "
+        Normal( 0, C17, C10,  C8, C14,  C7,  C1, C19,  C0, 44); // " 32; 68; ; ;  8 "
+        Normal( 0,-C17,-C10,  C1,-C19, -C0, -C6,-C16, -C3, 45); // " 35;  9; ; ; 47 "
+        Normal( 0,-C17,-C10, -C6,-C16, -C3, -C4,-C12,-C13, 46); // " 35; 47; ; ; 75 "
+        Normal( 0,-C17,-C10, -C4,-C12,-C13,  C2, -C9,-C15, 47); // " 35; 75; ; ; 49 "
+        Normal( 0,-C17,-C10,  C2, -C9,-C15,  C8,-C14, -C7, 48); // " 35; 49; ; ; 69 "
+        Normal( 0,-C17,-C10,  C8,-C14, -C7,  C1,-C19, -C0, 49); // " 35; 69; ; ;  9 "
+<!--
+  C1, C19,  C0 />  8 *
+ 0.0, C17, C10 /> 32 *
+ -C6, C16,  C3 /> 46 *
+  C2,  C9, C15 /> 48 *
+  C8, C14,  C7 /> 68 *
+ -C4, C12, C13 /> 74 *
+  C1,-C19, -C0 />  9 **
+ 0.0,-C17,-C10 /> 35 **
+ -C6,-C16, -C3 /> 47 **
+  C2, -C9,-C15 /> 49 **
+  C8,-C14, -C7 /> 69 **
+ -C4,-C12,-C13 /> 75 **
+-->
+
+        Normal( 0, C17,-C10, -C1, C19, -C0,  C6, C16, -C3, 50); // " 33; 11; ; ; 45 "
+        Normal( 0, C17,-C10,  C6, C16, -C3,  C4, C12,-C13, 51); // " 33; 45; ; ; 73 "
+        Normal( 0, C17,-C10,  C4, C12,-C13, -C2,  C9,-C15, 52); // " 33; 73; ; ; 51 "
+        Normal( 0, C17,-C10, -C2,  C9,-C15, -C8, C14, -C7, 53); // " 33; 51; ; ; 71 "
+        Normal( 0, C17,-C10, -C8, C14, -C7, -C1, C19, -C0, 54); // " 33; 71; ; ; 11 "
+
+        Normal( 0,-C17, C10, -C1,-C19,  C0,  C6,-C16,  C3, 55); // " 34; 10; ; ; 44 "
+        Normal( 0,-C17, C10,  C6,-C16,  C3,  C4,-C12, C13, 56); // " 34; 44; ; ; 72 "
+        Normal( 0,-C17, C10,  C4,-C12, C13, -C2, -C9, C15, 57); // " 34; 72; ; ; 50 "
+        Normal( 0,-C17, C10, -C2, -C9, C15, -C8,-C14,  C7, 58); // " 34; 50; ; ; 70 "
+        Normal( 0,-C17, C10, -C8,-C14,  C7, -C1,-C19,  C0, 59); // " 34; 70; ; ; 10 "
+<!--
+ -C1, C19, -C0 /> 11 **
+ 0.0, C17,-C10 /> 33 **
+  C6, C16, -C3 /> 45 **
+ -C2,  C9,-C15 /> 51 **
+ -C8, C14, -C7 /> 71 **
+  C4, C12,-C13 /> 73 **
+ -C1,-C19,  C0 /> 10 *
+ 0.0,-C17, C10 /> 34 *
+  C6,-C16,  C3 /> 44 *
+ -C2, -C9, C15 /> 50 *
+ -C8,-C14,  C7 /> 70 *
+  C4,-C12, C13 /> 72 *
+-->
+
+        // All angles there: http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;p=358806
+        A0 := 0.679776553; // 38,9483275
+        A1 := 1.079719619; // 61,8633772
+        A2 := 1.96430683;  // 112,546491
+        A3 := 2.159439239; // 123,7267545
+        A4 := 3.04402645;  // 174,4098683
+        A5 := 3.239158857; // 185,5901317
+        A6 := 4.123746068; // 236,2732455
+        A7 := 4.318878478; // 247,453509
+        A8 := 5.203465689; // 298,1366228
+
+        A9 := 0.970413899; // 55,6006208
+        A10:= 1.18902534;  // 68,1261337
+        A11:= 1.85500111;  // 106,2837346
+        A12:= 2.268744958; // 129,9895109
+        A13:= 4.014440349; // 230,0104891
+        A14:= 4.428184197; // 253,7162654
+        A15:= 5.094159967; // 291,8738663
+        A16:= 5.312771408; // 304,3993792
+
+        A17:= 2.601732844; // 149,0683114
+        A18:= 3.681452463; // 210,9316886
+
+        A19:= 0.49939703 ; // 28,6133421
+        A20:= 1.001709948; // 57,3937523
+        A21:= 1.311319546; // 75,1330756
+        A22:= 1.810716574; // 103,7464176
+        A23:= 2.313029494; // 132,5268279
+        A24:= 2.812426522; // 161,1401699
+        A25:= 3.470758785; // 198,8598301
+        A26:= 3.970155813; // 227,4731721
+        A27:= 4.472468733; // 256,2535824
+        A28:= 4.971865761; // 284,8669244
+        A29:= 5.281475359; // 302,6062477
+        A30:= 5.783788278; // 331,3866579
+
+        A31:= 1.489132882; // 85,3210293
+        A32:= 1.750025975; // 100,2691024
+        A33:= 4.533159332; // 259,7308976
+        A34:= 4.794052425; // 274,6789707
+
+        A35:= 0.831419817; // 47,6368465
+        A36:= 5.45176549;  // 312,3631535
+
+        //////////////////////////////////////////////////
+        D  := K * 1.93;   // 1 (0+8 ang)
+        D  := K * 1.87;   // 2
+        D  := K * 1.8205; // 3
+        D  := K * 1.808 ; // 4
+        D  := K * 1.7335 ;// 5 (+9+18 ang)
+        D  := K * 1.7168 ;// 6
+        D  := K * 1.645  ;// 7 (+19+34 ang)
+        D  := K * 1.565  ;// 8 (+35+36 ang)
+        D  := K * 1.49429;// 9
+
+        D  := K * 1.49429;// 9
+    </Script>
+
+    // -A8;-A7;-A6;-A5;-A4;-A3;-A2;-A1;-A0; 0; A0;A1;A2;A3;A4;A5;A6;A7;A8
+    // -A9;A9;-A10;A10;-A11;A11;-A12;A12;-A13;A13;-A14;A14;-A15;A15;-A16;A16;-A17;A17;-A18;A18;
+    // -A19;A19;-A20;A20;-A21;A21;-A22;A22;-A23;A23;-A24;A24;-A25;A25;-A26;A26;-A27;A27;-A28;A28;-A29;A29;-A30;A30;-A31;A31;-A32;A32;-A33;A33;-A34;A34;-A35;A35;-A36;A36
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = " -A8;-A7;-A6;-A5;-A4;-A3;-A2;-A1;-A0; 0; A0;A1;A2;A3;A4;A5;A6;A7;A8;   -A9;A9;-A10;A10;-A11;A11;-A12;A12;-A13;A13;-A14;A14;-A15;A15;-A16;A16;-A17;A17;-A18;A18;   -A19;A19;-A20;A20;-A21;A21;-A22;A22;-A23;A23;-A24;A24;-A25;A25;-A26;A26;-A27;A27;-A28;A28;-A29;A29;-A30;A30;-A31;A31;-A32;A32;-A33;A33;-A34;A34;  -A35;A35;-A36;A36;" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = " px[0]; py[0]; pz[0]" />
+        <Axis NormVector = " px[1]; py[1]; pz[1]" />
+        <Axis NormVector = " px[2]; py[2]; pz[2]" />
+        <Axis NormVector = " px[3]; py[3]; pz[3]" />
+        <Axis NormVector = " px[4]; py[4]; pz[4]" />
+        <Axis NormVector = " px[5]; py[5]; pz[5]" />
+        <Axis NormVector = " px[6]; py[6]; pz[6]" />
+        <Axis NormVector = " px[7]; py[7]; pz[7]" />
+        <Axis NormVector = " px[8]; py[8]; pz[8]" />
+        <Axis NormVector = " px[9]; py[9]; pz[9]" />
+
+        <Axis NormVector = " px[10]; py[10]; pz[10]" />
+        <Axis NormVector = " px[11]; py[11]; pz[11]" />
+        <Axis NormVector = " px[12]; py[12]; pz[12]" />
+        <Axis NormVector = " px[13]; py[13]; pz[13]" />
+        <Axis NormVector = " px[14]; py[14]; pz[14]" />
+        <Axis NormVector = " px[15]; py[15]; pz[15]" />
+        <Axis NormVector = " px[16]; py[16]; pz[16]" />
+        <Axis NormVector = " px[17]; py[17]; pz[17]" />
+        <Axis NormVector = " px[18]; py[18]; pz[18]" />
+        <Axis NormVector = " px[19]; py[19]; pz[19]" />
+
+        <Axis NormVector = " px[20]; py[20]; pz[20]" />
+        <Axis NormVector = " px[21]; py[21]; pz[21]" />
+        <Axis NormVector = " px[22]; py[22]; pz[22]" />
+        <Axis NormVector = " px[23]; py[23]; pz[23]" />
+        <Axis NormVector = " px[24]; py[24]; pz[24]" />
+        <Axis NormVector = " px[25]; py[25]; pz[25]" />
+        <Axis NormVector = " px[26]; py[26]; pz[26]" />
+        <Axis NormVector = " px[27]; py[27]; pz[27]" />
+        <Axis NormVector = " px[28]; py[28]; pz[28]" />
+        <Axis NormVector = " px[29]; py[29]; pz[29]" />
+
+        <Axis NormVector = " px[30]; py[30]; pz[30]" />
+        <Axis NormVector = " px[31]; py[31]; pz[31]" />
+        <Axis NormVector = " px[32]; py[32]; pz[32]" />
+        <Axis NormVector = " px[33]; py[33]; pz[33]" />
+        <Axis NormVector = " px[34]; py[34]; pz[34]" />
+        <Axis NormVector = " px[35]; py[35]; pz[35]" />
+        <Axis NormVector = " px[36]; py[36]; pz[36]" />
+        <Axis NormVector = " px[37]; py[37]; pz[37]" />
+        <Axis NormVector = " px[38]; py[38]; pz[38]" />
+        <Axis NormVector = " px[39]; py[39]; pz[39]" />
+
+        <Axis NormVector = " px[40]; py[40]; pz[40]" />
+        <Axis NormVector = " px[41]; py[41]; pz[41]" />
+        <Axis NormVector = " px[42]; py[42]; pz[42]" />
+        <Axis NormVector = " px[43]; py[43]; pz[43]" />
+        <Axis NormVector = " px[44]; py[44]; pz[44]" />
+        <Axis NormVector = " px[45]; py[45]; pz[45]" />
+        <Axis NormVector = " px[46]; py[46]; pz[46]" />
+        <Axis NormVector = " px[47]; py[47]; pz[47]" />
+        <Axis NormVector = " px[48]; py[48]; pz[48]" />
+        <Axis NormVector = " px[49]; py[49]; pz[49]" />
+
+        <Axis NormVector = " px[50]; py[50]; pz[50]" />
+        <Axis NormVector = " px[51]; py[51]; pz[51]" />
+        <Axis NormVector = " px[52]; py[52]; pz[52]" />
+        <Axis NormVector = " px[53]; py[53]; pz[53]" />
+        <Axis NormVector = " px[54]; py[54]; pz[54]" />
+        <Axis NormVector = " px[55]; py[55]; pz[55]" />
+        <Axis NormVector = " px[56]; py[56]; pz[56]" />
+        <Axis NormVector = " px[57]; py[57]; pz[57]" />
+        <Axis NormVector = " px[58]; py[58]; pz[58]" />
+        <Axis NormVector = " px[59]; py[59]; pz[59]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  C0;    C1;   C19" />
+                <Add Vector = "  C0;   -C1;  -C19" />
+                <Add Vector = " -C0;   -C1;   C19" />
+                <Add Vector = " -C0;    C1;  -C19" />
+                <Add Vector = " C19;    C0;    C1" />
+                <Add Vector = " C19;   -C0;   -C1" />
+                <Add Vector = "-C19;   -C0;    C1" />
+                <Add Vector = "-C19;    C0;   -C1" />
+                <Add Vector = "  C1;   C19;    C0" />
+                <Add Vector = "  C1;  -C19;   -C0" />
+                <Add Vector = " -C1;  -C19;    C0" />
+                <Add Vector = " -C1;   C19;   -C0" />
+                <Add Vector = "   0;    C5;   C18" />
+                <Add Vector = "   0;    C5;  -C18" />
+                <Add Vector = "   0;   -C5;   C18" />
+                <Add Vector = "   0;   -C5;  -C18" />
+                <Add Vector = " C18;     0;    C5" />
+                <Add Vector = " C18;     0;   -C5" />
+                <Add Vector = "-C18;     0;    C5" />
+                <Add Vector = "-C18;     0;   -C5" />
+                <Add Vector = "  C5;   C18;     0" />
+                <Add Vector = "  C5;  -C18;     0" />
+                <Add Vector = " -C5;   C18;     0" />
+                <Add Vector = " -C5;  -C18;     0" />
+                <Add Vector = " C10;     0;   C17" />
+                <Add Vector = " C10;     0;  -C17" />
+                <Add Vector = "-C10;     0;   C17" />
+                <Add Vector = "-C10;     0;  -C17" />
+                <Add Vector = " C17;   C10;     0" />
+                <Add Vector = " C17;  -C10;     0" />
+                <Add Vector = "-C17;   C10;     0" />
+                <Add Vector = "-C17;  -C10;     0" />
+                <Add Vector = "   0;   C17;   C10" />
+                <Add Vector = "   0;   C17;  -C10" />
+                <Add Vector = "   0;  -C17;   C10" />
+                <Add Vector = "   0;  -C17;  -C10" />
+                <Add Vector = "  C3;   -C6;   C16" />
+                <Add Vector = "  C3;    C6;  -C16" />
+                <Add Vector = " -C3;    C6;   C16" />
+                <Add Vector = " -C3;   -C6;  -C16" />
+                <Add Vector = " C16;   -C3;    C6" />
+                <Add Vector = " C16;    C3;   -C6" />
+                <Add Vector = "-C16;    C3;    C6" />
+                <Add Vector = "-C16;   -C3;   -C6" />
+                <Add Vector = "  C6;  -C16;    C3" />
+                <Add Vector = "  C6;   C16;   -C3" />
+                <Add Vector = " -C6;   C16;    C3" />
+                <Add Vector = " -C6;  -C16;   -C3" />
+                <Add Vector = "  C2;    C9;   C15" />
+                <Add Vector = "  C2;   -C9;  -C15" />
+                <Add Vector = " -C2;   -C9;   C15" />
+                <Add Vector = " -C2;    C9;  -C15" />
+                <Add Vector = " C15;    C2;    C9" />
+                <Add Vector = " C15;   -C2;   -C9" />
+                <Add Vector = "-C15;   -C2;    C9" />
+                <Add Vector = "-C15;    C2;   -C9" />
+                <Add Vector = "  C9;   C15;    C2" />
+                <Add Vector = "  C9;  -C15;   -C2" />
+                <Add Vector = " -C9;  -C15;    C2" />
+                <Add Vector = " -C9;   C15;   -C2" />
+                <Add Vector = "  C7;    C8;   C14" />
+                <Add Vector = "  C7;   -C8;  -C14" />
+                <Add Vector = " -C7;   -C8;   C14" />
+                <Add Vector = " -C7;    C8;  -C14" />
+                <Add Vector = " C14;    C7;    C8" />
+                <Add Vector = " C14;   -C7;   -C8" />
+                <Add Vector = "-C14;   -C7;    C8" />
+                <Add Vector = "-C14;    C7;   -C8" />
+                <Add Vector = "  C8;   C14;    C7" />
+                <Add Vector = "  C8;  -C14;   -C7" />
+                <Add Vector = " -C8;  -C14;    C7" />
+                <Add Vector = " -C8;   C14;   -C7" />
+                <Add Vector = "  C4;  -C12;   C13" />
+                <Add Vector = "  C4;   C12;  -C13" />
+                <Add Vector = " -C4;   C12;   C13" />
+                <Add Vector = " -C4;  -C12;  -C13" />
+                <Add Vector = " C13;   -C4;   C12" />
+                <Add Vector = " C13;    C4;  -C12" />
+                <Add Vector = "-C13;    C4;   C12" />
+                <Add Vector = "-C13;   -C4;  -C12" />
+                <Add Vector = " C12;  -C13;    C4" />
+                <Add Vector = " C12;   C13;   -C4" />
+                <Add Vector = "-C12;   C13;    C4" />
+                <Add Vector = "-C12;  -C13;   -C4" />
+                <Add Vector = " C11;   C11;   C11" />
+                <Add Vector = " C11;   C11;  -C11" />
+                <Add Vector = " C11;  -C11;   C11" />
+                <Add Vector = " C11;  -C11;  -C11" />
+                <Add Vector = "-C11;   C11;   C11" />
+                <Add Vector = "-C11;   C11;  -C11" />
+                <Add Vector = "-C11;  -C11;   C11" />
+                <Add Vector = "-C11;  -C11;  -C11" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite      " VertexIndexes = " 24;  0;  2; 14; 36 " /> *
+                <Face Color = "clGainsboro  " VertexIndexes = " 24; 36; 72; 86; 76 " />
+                <Face Color = "clSilver     " VertexIndexes = " 24; 76; 40; 16; 52 " />
+                <Face Color = "clGray       " VertexIndexes = " 24; 52; 64; 84; 60 " />
+                <Face Color = "clBlack      " VertexIndexes = " 24; 60; 48; 12;  0 " />
+                <Face Color = "clSilver     " VertexIndexes = " 27;  3;  1; 15; 39 " />
+                <Face Color = "clGainsboro  " VertexIndexes = " 27; 39; 75; 91; 79 " />
+                <Face Color = "clWhite      " VertexIndexes = " 27; 79; 43; 19; 55 " />
+                <Face Color = "clBlack      " VertexIndexes = " 27; 55; 67; 89; 63 " />
+                <Face Color = "clGray       " VertexIndexes = " 27; 63; 51; 13;  3 " />
+
+                <Face Color = "clCyan       " VertexIndexes = " 25;  1;  3; 13; 37 " /> *
+                <Face Color = "clDeepSky    " VertexIndexes = " 25; 37; 73; 85; 77 " />
+                <Face Color = "clTeal       " VertexIndexes = " 25; 77; 41; 17; 53 " />
+                <Face Color = "clBlue       " VertexIndexes = " 25; 53; 65; 87; 61 " />
+                <Face Color = "clNavy       " VertexIndexes = " 25; 61; 49; 15;  1 " />
+                <Face Color = "clTeal       " VertexIndexes = " 26;  2;  0; 12; 38 " />
+                <Face Color = "clDeepSky    " VertexIndexes = " 26; 38; 74; 88; 78 " />
+                <Face Color = "clCyan       " VertexIndexes = " 26; 78; 42; 18; 54 " />
+                <Face Color = "clNavy       " VertexIndexes = " 26; 54; 66; 90; 62 " />
+                <Face Color = "clBlue       " VertexIndexes = " 26; 62; 50; 14;  2 " />
+
+                <Face Color = "clGreenYellow" VertexIndexes = " 28;  4;  5; 17; 41 " /> *
+                <Face Color = "clLime       " VertexIndexes = " 28; 41; 77; 85; 81 " />
+                <Face Color = "clSeaGreen   " VertexIndexes = " 28; 81; 45; 20; 56 " />
+                <Face Color = "clGreen      " VertexIndexes = " 28; 56; 68; 84; 64 " />
+                <Face Color = "clDarkGreen  " VertexIndexes = " 28; 64; 52; 16;  4 " />
+                <Face Color = "clSeaGreen   " VertexIndexes = " 31;  6;  7; 19; 43 " />
+                <Face Color = "clLime       " VertexIndexes = " 31; 43; 79; 91; 83 " />
+                <Face Color = "clGreenYellow" VertexIndexes = " 31; 83; 47; 23; 58 " />
+                <Face Color = "clDarkGreen  " VertexIndexes = " 31; 58; 70; 90; 66 " />
+                <Face Color = "clGreen      " VertexIndexes = " 31; 66; 54; 18;  6 " />
+
+                <Face Color = "clPink       " VertexIndexes = " 29;  5;  4; 16; 40 " /> *
+                <Face Color = "clFuchsia    " VertexIndexes = " 29; 40; 76; 86; 80 " />
+                <Face Color = "clPale       " VertexIndexes = " 29; 80; 44; 21; 57 " />
+                <Face Color = "clOrchid     " VertexIndexes = " 29; 57; 69; 87; 65 " />
+                <Face Color = "clPurple     " VertexIndexes = " 29; 65; 53; 17;  5 " />
+                <Face Color = "clPale       " VertexIndexes = " 30;  7;  6; 18; 42 " />
+                <Face Color = "clFuchsia    " VertexIndexes = " 30; 42; 78; 88; 82 " />
+                <Face Color = "clPink       " VertexIndexes = " 30; 82; 46; 22; 59 " />
+                <Face Color = "clPurple     " VertexIndexes = " 30; 59; 71; 89; 67 " />
+                <Face Color = "clOrchid     " VertexIndexes = " 30; 67; 55; 19;  7 " />
+
+                <Face Color = "clCoral      " VertexIndexes = " 32;  8; 11; 22; 46 " /> *
+                <Face Color = "clRed        " VertexIndexes = " 32; 46; 82; 88; 74 " />
+                <Face Color = "clCrimson    " VertexIndexes = " 32; 74; 38; 12; 48 " />
+                <Face Color = "clIndian     " VertexIndexes = " 32; 48; 60; 84; 68 " />
+                <Face Color = "clBrown      " VertexIndexes = " 32; 68; 56; 20;  8 " />
+                <Face Color = "clCrimson    " VertexIndexes = " 35;  9; 10; 23; 47 " />
+                <Face Color = "clRed        " VertexIndexes = " 35; 47; 83; 91; 75 " />
+                <Face Color = "clCoral      " VertexIndexes = " 35; 75; 39; 15; 49 " />
+                <Face Color = "clBrown      " VertexIndexes = " 35; 49; 61; 87; 69 " />
+                <Face Color = "clIndian     " VertexIndexes = " 35; 69; 57; 21;  9 " />
+
+                <Face Color = "clYellow     " VertexIndexes = " 33; 11;  8; 20; 45 " />
+                <Face Color = "clOrange     " VertexIndexes = " 33; 45; 81; 85; 73 " />
+                <Face Color = "clKhaki      " VertexIndexes = " 33; 73; 37; 13; 51 " />
+                <Face Color = "clGolden     " VertexIndexes = " 33; 51; 63; 89; 71 " />
+                <Face Color = "clOlive      " VertexIndexes = " 33; 71; 59; 22; 11 " />
+                <Face Color = "clKhaki      " VertexIndexes = " 34; 10;  9; 21; 44 " />
+                <Face Color = "clOrange     " VertexIndexes = " 34; 44; 80; 86; 72 " />
+                <Face Color = "clYellow     " VertexIndexes = " 34; 72; 36; 14; 50 " />
+                <Face Color = "clOlive      " VertexIndexes = " 34; 50; 62; 90; 70 " />
+                <Face Color = "clGolden     " VertexIndexes = " 34; 70; 58; 23; 10 " />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

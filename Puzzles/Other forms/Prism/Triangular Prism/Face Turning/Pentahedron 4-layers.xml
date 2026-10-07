@@ -1,0 +1,133 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Pentahedron 4-layers</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Face Turning\Pentahedron 4-layers</Menu>
+        <Inventor>ShengShou</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-07-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11847</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := '30FF30'; // Green
+        Colors[2] := '0070F0'; // Blue
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        R := 0.7;
+        H := R * 0.6;
+
+        // axes
+        sAngle := 2 * Pi / 3;
+        for i := 0 to 2 do begin
+            ax[i] := R * sin(sAngle * i + Pi/6);
+            ay[i] := R * cos(sAngle * i + Pi/6);
+        end;
+        D1 := 0;
+        D2 := R * 0.22;
+        D3 := H / 2;
+
+        // figure
+        S := 3; // S sides
+        // every side divided into MxN faces
+        N := 8; // must be even to hide centers
+        M := 9;
+        PH := 0.6; // horizontal pillow
+        PV := 0.9; // vertical pillow
+
+        MS := M * S; // FacesPerRow
+
+        A := 2 * Pi / S;
+        sa := sin(A/2);
+        ca := cos(A/2);
+
+        function QInterpolate(xi, x1, y1, x2, y2, x3, y3);
+        begin
+            Result :=
+                y1 * (xi - x2) * (xi - x3) / (x1 - x2) / (x1 - x3) +
+                y2 * (xi - x3) * (xi - x1) / (x2 - x3) / (x2 - x1) +
+                y3 * (xi - x1) * (xi - x2) / (x3 - x1) / (x3 - x2);
+        end;
+
+        for i := 0 to N do begin // vertical curve
+            HZ[i] := H * (-1 + 2 / N * i);
+            RZ[i] := R * QInterpolate(HZ[i], -H,PV, 0,1, H,PV)
+        end;
+
+        for i := 0 to M do begin // horizontal curve
+            SX[i] := sa * (-1 + 2 / M * i);
+            SY[i] := QInterpolate(SX[i], -sa,ca, 0,PH, sa,ca);
+        end;
+
+        id := 0;
+        for k := 0 to N do begin
+            for j := 0 to S - 1 do begin
+                A1 := Pi/2 + A * j;
+                cA1 := cos(A1);
+                sA1 := sin(A1);
+                for i := 0 to M - 1 do begin
+                    x[Id] := (SX[i] * cA1 + SY[i] * sA1) * RZ[k];
+                    y[Id] := (SY[i] * cA1 - SX[i] * sA1) * RZ[k];
+                    z[Id] := HZ[k];
+                    Inc(Id);
+                end;
+            end;
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1;-D2" NormVectors = "ax; ay; 0" />
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D3; 0; D3" NormVectors = "0; 0; 1" />
+
+    <Figure>
+
+        <Macro Name = "AddFace" >
+            <Script>
+                is := i + Seg * M;
+                ir := Row * MS;
+                i1 := is + ir;
+                i2 := (is + 1) mod MS + ir;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[Seg]" VertexIndexes = "i2; i1; i1 + MS; i2 + MS" InvisibleEdges = "ie" />
+        </Macro>
+
+        <Macro Name = "AddRow" >
+            <ExecMacro MacroName = "AddFace" i = "0"     ie = "13 and ia" />
+            <ExecMacro MacroName = "AddFace" i = "1"     ie = "15 and ia" Repeat = "M - 2" />
+            <ExecMacro MacroName = "AddFace" i = "M - 1" ie = " 7 and ia" />
+            <Script> Row := Row + 1; </Script>
+        </Macro>
+
+        <Macro Name = "AddSegment" >
+            <ExecMacro MacroName = "AddRow" Row = "0"     ia = "14" /> bottom
+            <ExecMacro MacroName = "AddRow" Row = "1"     ia = "15" Repeat = "N - 2" /> center
+            <ExecMacro MacroName = "AddRow" Row = "N - 1" ia = "11" /> top
+            <Script> Inc(Seg); </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x;y;z" />
+
+            <Faces>
+                <Face Color = "clWhite"  VertexIndexes = "FromTo(0, MS - 1)" />
+                <ExecMacro MacroName = "AddSegment" Seg = "0" Repeat = "3" />
+                <Face Color = "clYellow" VertexIndexes = "FromTo((N + 1) * MS - 1, N * MS)" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

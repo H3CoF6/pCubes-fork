@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Void Octagonal Prism</Name>
+        <Menu>Other forms\Void\Prism\Octagonal Prism</Menu>
+        <Programmer>Knightcrawler</Programmer>
+        <Added>2016-10-24</Added>
+    </Interface>
+
+    <Script>
+        R := 0.6;
+        sAngle := PI * 2 / 8;
+        H := R * sin(sAngle/2) * 2;
+
+        for i := 0 to 7 do begin
+            ax[i] := sin(sAngle * i);
+            ay[i] := cos(sAngle * i);
+        end;
+        for i := 0 to 7 do begin
+            x[i] := R * sin(sAngle * (i + 0.5));
+            y[i] := R * cos(sAngle * (i + 0.5));
+        end;
+
+        D1 := H / 6;
+        D2 := R * (cos(sAngle/2) - sin(sAngle/2) * 2 / 3 * sin(sAngle));
+        S := 0.9 * R;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " ax[0]; ay[0]; 0" />
+        <Axis NormVector = " ax[1]; ay[1]; 0" />
+        <Axis NormVector = " ax[2]; ay[2]; 0" />
+        <Axis NormVector = " ax[3]; ay[3]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 8;" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0];  H / 2" />
+                <Add Vector = "x[1]; y[1];  H / 2" />
+                <Add Vector = "x[2]; y[2];  H / 2" />
+                <Add Vector = "x[3]; y[3];  H / 2" />
+                <Add Vector = "x[4]; y[4];  H / 2" />
+                <Add Vector = "x[5]; y[5];  H / 2" />
+                <Add Vector = "x[6]; y[6];  H / 2" />
+                <Add Vector = "x[7]; y[7];  H / 2" />
+                <Add Vector = "x[0]; y[0]; -H / 2" />
+                <Add Vector = "x[1]; y[1]; -H / 2" />
+                <Add Vector = "x[2]; y[2]; -H / 2" />
+                <Add Vector = "x[3]; y[3]; -H / 2" />
+                <Add Vector = "x[4]; y[4]; -H / 2" />
+                <Add Vector = "x[5]; y[5]; -H / 2" />
+                <Add Vector = "x[6]; y[6]; -H / 2" />
+                <Add Vector = "x[7]; y[7]; -H / 2" />
+            </Vertices>
+            <Faces>
+                <Face Color = "FFFFFF" VertexIndexes = "7;6;5;4;3;2;1;0" />
+                <Face Color = "FF0000" VertexIndexes = "0;1; 9; 8" />
+                <Face Color = "008000" VertexIndexes = "1;2;10; 9" />
+                <Face Color = "700070" VertexIndexes = "2;3;11;10" />
+                <Face Color = "0050FF" VertexIndexes = "3;4;12;11" />
+                <Face Color = "FF8000" VertexIndexes = "4;5;13;12" />
+                <Face Color = "80FF00" VertexIndexes = "5;6;14;13" />
+                <Face Color = "FF60A0" VertexIndexes = "6;7;15;14" />
+                <Face Color = "0000A0" VertexIndexes = "7;0; 8;15" />
+                <Face Color = "FFFF00" VertexIndexes = "8;9;10;11;12;13;14;15" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "          0;          0;    0" />
+        <RemoveContaining Vector = "          0;          0;  H/2" />
+        <RemoveContaining Vector = "          0;          0; -H/2" />
+        <RemoveContaining Vector = "  ax[0] * S;  ay[0] * S;    0" />
+        <RemoveContaining Vector = "  ax[1] * S;  ay[1] * S;    0" />
+        <RemoveContaining Vector = "  ax[2] * S;  ay[2] * S;    0" />
+        <RemoveContaining Vector = "  ax[3] * S;  ay[3] * S;    0" />
+        <RemoveContaining Vector = " -ax[0] * S; -ay[0] * S;    0" />
+        <RemoveContaining Vector = " -ax[1] * S; -ay[1] * S;    0" />
+        <RemoveContaining Vector = " -ax[2] * S; -ay[2] * S;    0" />
+        <RemoveContaining Vector = " -ax[3] * S; -ay[3] * S;    0" />-->
+    </Figure>
+</xml>

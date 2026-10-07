@@ -1,0 +1,106 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cake Z</Name>
+        <Menu>Other forms\Cylinder\Cake Z</Menu>
+        <Inventor>limCube</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-08-20</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=37066</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFF00'; // Yellow
+        Colors[1] := 'FFFFFF'; // White
+        Colors[2] := 'FF7700'; // Orange
+        Colors[3] := 'EE22BB'; // Pink
+        Colors[4] := 'DD0011'; // Red
+        Colors[5] := '00AA00'; // Green
+        Colors[6] := '0033EE'; // Blue
+        Colors[7] := '9900DD'; // Violett
+
+        R := 0.6;
+        H := R / sqrt(2);
+
+        N := 30;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        DCut := R / 6;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+        az := sqrt(2) / 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "0" > <!-- yellow center is a core(?) -->
+        <Axis NormVector = " ax[0]; ay[0]; az" />
+        <Axis NormVector = " ax[1]; ay[1]; az" />
+        <Axis NormVector = " ax[2]; ay[2]; az" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "1" > <!-- yellow center is a core(?) -->
+        <Axis NormVector = " ax[0]; ay[0];-az*2" />
+        <Axis NormVector = " ax[1]; ay[1];-az*2" />
+        <Axis NormVector = " ax[2]; ay[2];-az*2" />
+
+        <Axis NormVector = " 0; 0;-1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i;
+                i2 := (i + d) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "AddSegment">
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Colors[c1]" VertexIndexes = "1;2;3;4;5;6;7;8;9;20" />
+                    <ExecMacro MacroName = "AddFace" i = "1" Repeat = "8" d = "1" />
+                    <ExecMacro MacroName = "AddFace" i = "9" d = "11" />
+                    <ExecMacro MacroName = "AddFace" i = "20" d = "11" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "39;38;37;36;35;34;33;32;31;50" />
+                </Faces>
+            </Part>
+            <SplitByAxes/>
+            <Cut><Plane NormVector = " ax[0]; ay[0]; az" /></Cut>
+            <Cut><Plane NormVector = " ax[1]; ay[1]; az" /></Cut>
+            <HideAll/>
+            <Turn NormVector = "0;0;1" Angle = "2 * Pi / 3"/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[2]" c1 = "1" c2 = "0" />
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[3]" />
+        <ShowAll/>
+        <RemoveContaining Vector = " 0; 0; H" />
+        <HideAll/>
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[4]" />
+        <Turn NormVector = "0;1;0" Angle = "Pi"/>
+
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[5]" c1 = "0" c2 = "1" />
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[6]" />
+        <ShowAll/>
+        <RemoveContaining Vector = " 0; 0; H" />
+        <HideAll/>
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[7]" />
+        <Turn NormVector = "0;1;0" Angle = "Pi"/>
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Camouflage 2x2x2 4-colors v3</Name>
+        <Menu>Cubic\Camouflage\2x2x2 4-colors v3</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-22</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clViolett := '800080';
+        clBlue    := '0000C8';
+        clYellow  := 'FFFF00';
+        clGreen   := '009600';
+
+        W := 0.5;
+        W1 := W * 3 / 4;
+        W2 := W * 5 / 4;
+
+        D := W / 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W2" Color = "clViolett" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+
+        <Hide Axis = "0" Layer = "0" />
+        <Hide Axis = "1" Layer = "2" />
+        <Hide Axis = "2" Layers = "0;1" />
+        <SplitByAxes/>
+        <Cut Color = "clBlue  " > <Plane NormVector = "-1; 0; 0" NormDistance = "-W1" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = " 0; 1; 0" NormDistance = "-W1" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W1" /> </Cut>
+        <ShowAll/>
+
+        <Cut Color = "clViolett" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W1" /> </Cut>
+        <Cut Color = "clViolett" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W1" /> </Cut>
+        <Cut Color = "clViolett" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W1" /> </Cut>
+
+        <HideContaining Vector = " 0; 0; 0" />
+        <InvertVisibility/>
+        <Split Axis = "1" From = "1" />
+        <Hide Axis = "1" Layer = "0" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

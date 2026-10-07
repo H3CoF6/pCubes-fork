@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Penta Crazy Edge</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Mixed\Penta Crazy Edge</Menu>
+        <Inventor>Alexandr Bezrukov</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8118</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red
+        Colors[1] := '0000C8'; // Blue
+        Colors[2] := '009600'; // Green
+        Colors[3] := '800080'; // Purple
+        Colors[4] := 'FF6000'; // Orange
+        Colors[5] := 'FFFF00'; // Yellow
+        Colors[6] := 'FFFFFF'; // White
+
+        R := 0.65;
+        H := R * sin(Pi / 5);
+        D1 := R * 0.35;
+        D2 := R * 0.85;
+        D3 := H / 3;
+
+        sAngle := Pi * 2 / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-D1;D2" NormVectors = " x; y; 0" />
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "-D3; D3" NormVectors = "0; 0; 1" />
+
+    <Figure>
+        <Macro Name = "AddPrism" >
+            <Part>
+                <Vertices Vectors = " x; y;-H" />
+                <Vertices Vectors = " x; y; H" />
+                <Faces>
+                    <Face Color = "Colors[0]" VertexIndexes = "5;6;1;0" />
+                    <Face Color = "Colors[1]" VertexIndexes = "6;7;2;1" />
+                    <Face Color = "Colors[2]" VertexIndexes = "7;8;3;2" />
+                    <Face Color = "Colors[3]" VertexIndexes = "8;9;4;3" />
+                    <Face Color = "Colors[4]" VertexIndexes = "9;5;0;4" />
+                    <Face Color = "c1" VertexIndexes = "0;1;2;3;4" />
+                    <Face Color = "c2" VertexIndexes = "9;8;7;6;5" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "AddPrism" c1 = "Colors[5]" c2 = "Colors[6]" />
+        <Cut Axis = "0" To = "2" />
+        <Cut Axis = "1" To = "2" />
+        <Cut Axis = "2" To = "2" />
+        <Cut Axis = "3" To = "2" />
+        <Cut Axis = "4" To = "2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddPrism" c1 = "-1" c2 = "-1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "3" From = "2" />
+        <Split Axis = "4" From = "2" />
+        <RemoveContaining Vector = "0;0;0" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

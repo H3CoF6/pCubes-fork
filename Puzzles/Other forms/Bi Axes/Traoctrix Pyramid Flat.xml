@@ -1,0 +1,125 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Traoctrix Pyramid Flat</Name>
+        <Menu>Other forms\Bi Axes\Traoctrix Pyramid Flat</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2024-02-13</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?t=32731</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Vectors.inc';
+
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clGreen  := '008000';
+        clBlue   := '0000FF';
+        clBlack1 := '010101';
+        clBlack2 := '010102';
+
+        K := 0.5;
+
+        s2 := sqrt(2);
+        Angle  := Arccos(1 - 2 / 3 * (1 + s2)); // angle between axes
+        AngleM := (Pi - Angle) / 2;
+        ax := cos(AngleM); // sqrt((1 + s2) / 3)
+        ay := sin(AngleM); // sqrt((2 - s2) / 3)
+
+        pX := K * sqrt(2 + 3 / s2);
+        pY := K / s2;
+        pZ := K * sqrt((s2 + 1) / 2));
+
+        DCut := K * sqrt((10 - s2) / 6);
+
+        sAngle := 2*Pi / 3;
+
+        D := ay * Py * 1.0;
+    L := - ay*(Py + K) / ax; // -K / sqrt(s2)
+
+        // octagon's centers
+        cY :=-K * (2 - s2) / 2;
+        cZ := K * sqrt((s2 - 1) / 2); // cY * sqrt(3) * ax;
+        dX := K * (s2 - 1) / sqrt(s2);
+        dY := K * (s2 - 1);
+
+
+        VectorRotatePoint( -L, -K, 0,  ax,-ay, 0, -sAngle, False);
+        VectorNormalToPlane( L, -K, 0, Ans_X, Ans_Y, Ans_Z, Ans_X, Ans_Y,-Ans_Z);
+
+<!--        VectorRotatePoint( 0, cY, cZ,  ax,-ay, 0, -sAngle, False);-->
+//ShowMessage(Ans_X/Ans_Y);
+//ShowMessage(-Ans_Y);
+//ShowMessage(-Ans_Z);
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D" FixedLayers = "0" >
+        <Axis NormVector = " ax;-ay; 0" />
+        <Axis NormVector = "-ax;-ay; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " Px; -K;  0" />
+                <Add Vector = "-Px; -K;  0" />
+                <Add Vector = "  0; Py; Pz" />
+                <Add Vector = "  0; Py;-Pz" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "0;2;1" />
+                <Face Color = "clYellow" VertexIndexes = "1;3;0" />
+                <Face Color = "clGreen " VertexIndexes = "0;3;2" />
+                <Face Color = "clBlue  " VertexIndexes = "1;2;3" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "clBlack1" ><Plane NormVector = "-Px;K;0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clBlack2" ><Plane NormVector = " Px;K;0" NormDistance = "-DCut" /></Cut>
+
+<!--        <Macro Name = "CutAndTurn" >
+            <Cut Color = "FFFFFF" ><Plane NormVector = " dx; K; 0" NormDistance = "-0.42" /></Cut>
+             <Cut1><Plane NormVector = "-dx; K; 0" NormDistance = "-0.415" /></Cut1>
+            <Turn NormVector = "0;Cy;Cz" Angle = "Pi/4" />
+        </Macro>
+        <ExecMacro MacroName = "CutAndTurn" Repeat = "8" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutAndTurn" Repeat = "8" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />-->
+<!--            <Turn NormVector = " ax;-ay; 0" Angle = " sAngle" />
+        <ExecMacro MacroName = "CutAndTurn" Repeat = "8" />
+            <Turn NormVector = " ax;-ay; 0" Angle = "-sAngle" />
+            <Turn NormVector = "-ax;-ay; 0" Angle = "-sAngle" />
+        <ExecMacro MacroName = "CutAndTurn" Repeat = "8" />
+            <Turn NormVector = "-ax;-ay; 0" Angle = " sAngle" />
+-->
+
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn Axis = "0" Angle = " Dt * sAngle" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-Dt * sAngle" Layer = "1" /> <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart" Dt = " 1" Repeat = "7" />
+        <Undo Repeat = "400" />
+        <ExecMacro MacroName = "SplitPart" Dt = "-1" Repeat = "7" />
+        <Undo Repeat = "400" />
+
+        <Turn Axis = "0" Angle = " sAngle" Layer = "1" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "-sAngle" Layer = "1" /> <SplitByAxes/>
+
+        <ExecMacro MacroName = "SplitPart" Dt = "-1" Repeat = "9" />
+        <Undo Repeat = "400" />
+<Circle1 Radius = "0.1" Center = " L; -K; 0" />
+<Circle1 Radius = "0.01" Center = "-Ans_X;-Ans_Y;-Ans_Z" />
+
+<!--        <Cut><Plane NormVector = " dx; K; 0" NormDistance = "-0.415" /></Cut>
+        <Cut><Plane NormVector = "-dx; K; 0" NormDistance = "-0.415" /></Cut>-->
+
+    </Figure>
+</xml>

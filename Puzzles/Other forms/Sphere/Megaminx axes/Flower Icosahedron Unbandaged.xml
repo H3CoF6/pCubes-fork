@@ -1,0 +1,162 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Flower Icosahedron Unbandaged</Name>
+        <Menu>Other forms\Sphere\Megaminx axes\Flower Icosahedron Unbandaged</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-02-02</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF3300'; // Orange
+        Colors[ 1] := 'AAAAAA'; // Gray
+        Colors[ 2] := '00AA88'; // Green1
+        Colors[ 3] := 'FFFF00'; // Yellow
+        Colors[ 4] := '0022FF'; // Blue
+        Colors[ 5] := 'FFFFCC'; // Cream
+        Colors[ 6] := '9900CC'; // Purple
+        Colors[ 7] := '008833'; // Green2
+        Colors[12] := '663333'; // Brown
+        Colors[13] := 'FF66CC'; // Pink2
+        Colors[18] := 'CC66FF'; // LightPurple
+        Colors[19] := '00FFEE'; // Cyan
+        Colors[21] := 'FF33AA'; // Pink1
+        Colors[22] := '55DDFF'; // LightBlue3
+        Colors[25] := '0077FF'; // LightBlue1
+        Colors[30] := 'EE0000'; // Red
+        Colors[31] := '00EE00'; // LightGreen
+        Colors[32] := 'AA6600'; // LightBrown
+        Colors[33] := 'FF8800'; // Orange2
+        Colors[34] := '00AAFF'; // LightBlue2
+        Colors[17] := Colors[ 0]; // Orange
+        Colors[24] := Colors[ 0]; // Orange
+        Colors[11] := Colors[ 1]; // Gray
+        Colors[16] := Colors[ 1]; // Gray
+        Colors[ 9] := Colors[ 2]; // Green1
+        Colors[10] := Colors[ 2]; // Green1
+        Colors[ 8] := Colors[ 3]; // Yellow
+        Colors[28] := Colors[ 3]; // Yellow
+        Colors[20] := Colors[ 4]; // Blue
+        Colors[27] := Colors[ 4]; // Blue
+        Colors[14] := Colors[ 5]; // Cream
+        Colors[52] := Colors[ 5]; // Cream
+        Colors[48] := Colors[ 6]; // Purple
+        Colors[53] := Colors[ 6]; // Purple
+        Colors[29] := Colors[ 7]; // Green2
+        Colors[49] := Colors[ 7]; // Green2
+        Colors[15] := Colors[12]; // Brown
+        Colors[55] := Colors[12]; // Brown
+        Colors[51] := Colors[13]; // Pink2
+        Colors[56] := Colors[13]; // Pink2
+        Colors[23] := Colors[18]; // LightPurple
+        Colors[36] := Colors[18]; // LightPurple
+        Colors[37] := Colors[19]; // Cyan
+        Colors[59] := Colors[19]; // Cyan
+        Colors[26] := Colors[21]; // Pink1
+        Colors[43] := Colors[21]; // Pink1
+        Colors[35] := Colors[22]; // LightBlue3
+        Colors[44] := Colors[22]; // LightBlue3
+        Colors[42] := Colors[25]; // LightBlue1
+        Colors[45] := Colors[25]; // LightBlue1
+        Colors[47] := Colors[30]; // Red
+        Colors[54] := Colors[30]; // Red
+        Colors[41] := Colors[31]; // LightGreen
+        Colors[46] := Colors[31]; // LightGreen
+        Colors[39] := Colors[32]; // LightBrown
+        Colors[40] := Colors[32]; // LightBrown
+        Colors[38] := Colors[33]; // Orange2
+        Colors[58] := Colors[33]; // Orange2
+        Colors[50] := Colors[34]; // LightBlue2
+        Colors[57] := Colors[34]; // LightBlue2
+
+        K := 0.65;
+
+        D1 := K * 0.92;
+        D2 := K * 0.9175;
+
+        s5 := sqrt(5);
+        Phi := (s5 - 1) / 2; // The golden ratio
+
+        mAngle := ArcTan(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "mAngle" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+
+        <Axis NormVector = "  -Phi;    -1; Phi-1" />
+        <Axis NormVector = "  -Phi;    -1;-Phi-1" />
+        <Axis NormVector = "   Phi;    -1;-Phi-1" />
+        <Axis NormVector = " Phi+1;  -Phi;    -1" />
+        <Axis NormVector = " Phi+1;   Phi;    -1" />
+        <Axis NormVector = "-Phi+1;   Phi;    -1" />
+        <Axis NormVector = "     1;-Phi-1;  -Phi" />
+        <Axis NormVector = "     1;-Phi-1;   Phi" />
+        <Axis NormVector = "   Phi;     1; Phi-1" />
+        <Axis NormVector = "  -Phi;     1;-Phi-1" />
+        <Axis NormVector = " Phi+1;  -Phi;     1" />
+        <Axis NormVector = " Phi+1;   Phi;     1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/5"  PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = "   0;  -1; Phi" />
+        <Axis NormVector = "   0;  -1;-Phi" />
+        <Axis NormVector = "-Phi;   0;  -1" />
+        <Axis NormVector = " Phi;   0;  -1" />
+        <Axis NormVector = "   1;-Phi;   0" />
+        <Axis NormVector = "   1; Phi;   0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere (60 colors).xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "unbandage">
+            <Turn Axis = "a1" Layer = "l1" Angle = "mAngle" />
+            <Turn Axis = "a2" Layer = "l2" Angle = "Pi" />
+            <Turn Axis = "a1" Layer = "l1" Angle = "-mAngle" />
+            <SplitByAxes/>
+            <Undo Repeat = "3" />
+
+            <Turn Axis = "a2" Layer = "l1" Angle = "-mAngle" />
+            <Turn Axis = "a1" Layer = "l2" Angle = "Pi" />
+            <Turn Axis = "a2" Layer = "l1" Angle = "mAngle" />
+            <SplitByAxes/>
+            <Undo Repeat = "3" />
+        </Macro>
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = "13" a2 = "14" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 7" a2 = " 6" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 8" a2 = " 7" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 1" a2 = "11" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 8" a2 = "12" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = "13" a2 = "10" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 4" a2 = " 5" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 6" a2 = " 5" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 0" a2 = " 7" />
+
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "0" a1 = "13" a2 = "14" />
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "0" a1 = " 7" a2 = " 6" />
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "0" a1 = " 8" a2 = " 7" />
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "0" a1 = " 1" a2 = "11" />
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "0" a1 = " 8" a2 = "12" />
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "0" a1 = "13" a2 = "10" />
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "0" a1 = " 4" a2 = " 5" />
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "0" a1 = " 6" a2 = " 5" />
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "0" a1 = " 0" a2 = " 7" />
+
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "2" a1 = "14" a2 = " 3" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "0" a1 = "14" a2 = " 3" />
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "2" a1 = " 4" a2 = " 2" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "0" a1 = " 4" a2 = " 2" />
+        <ExecMacro MacroName = "unbandage" l1 = "0" l2 = "2" a1 = " 9" a2 = " 1" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "0" a1 = " 9" a2 = " 1" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

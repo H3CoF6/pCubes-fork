@@ -1,0 +1,96 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4x4 Cutaway Cube</Name>
+        <Menu>Cubic\Bandaged\4x4 Cutaway Cube</Menu>
+        <Inventor>Tim Fitzrandolph</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-04</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=397563</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W1 := W * 0.95;
+
+        D1 := W / 6;
+        D2 := W / 2;
+
+        clMark1 := '111110';
+        clMark2 := '111111';
+        clMark3 := '111112';
+        clMark4 := '111113';
+        clMark5 := '111114';
+        clMark6 := '111115';
+        dMark := 0.006;
+        WMark := D1 * 1.006;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2; D1; D2" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Macro Name = "Split1">
+            <Split><Plane NormDistance = "-D1" NormVector = "Cx[id]; Cy[id]; Cz[id]" /></Split>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split1" Repeat = "6" id = "0" />
+
+        <RemoveContaining Vector = "0;0;0" />
+
+        <RemoveContaining Vectors = "Cx; Cy; Cz" />
+
+        <HideContaining Vectors = "Ex; Ey; Ez" />
+
+        <InvertVisibility/>
+        <SplitByAxes/>
+
+        <RemoveContaining Vectors = "Ex; Ey; Ez" />
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "6" id = "0" />
+
+        <ShowAll/>
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "6" id = "0" />
+
+        <InvertVisibility/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "W1" />
+
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Split1" Repeat = "4" id = "1" />
+
+        <HideContaining Vector = "Ex; Ey; Ez" />
+
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "D1" />
+
+        <Cut Color = "clMark1" > <Plane NormVector = "-1; dMark;-dMark" NormDistance = "-WMark" /> </Cut>
+        <Cut Color = "clMark2" > <Plane NormVector = " 1; dMark;-dMark" NormDistance = "-WMark" /> </Cut>
+        <Cut Color = "clMark3" > <Plane NormVector = " dMark;-1;-dMark" NormDistance = "-WMark" /> </Cut>
+        <Cut Color = "clMark4" > <Plane NormVector = " dMark; 1;-dMark" NormDistance = "-WMark" /> </Cut>
+        <Cut Color = "clMark5" > <Plane NormVector = " dMark; dMark;-1" NormDistance = "-WMark" /> </Cut>
+        <Cut Color = "clMark6" > <Plane NormVector = " dMark; dMark; 1" NormDistance = "-WMark" /> </Cut>
+
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

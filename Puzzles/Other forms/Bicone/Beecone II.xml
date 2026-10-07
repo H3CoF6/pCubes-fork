@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Beecone II</Name>
+        <Menu>Other forms\Bicone\Beecone II</Menu>
+        <Menu>Other forms\2x2x2 variants\Beecone II</Menu>
+        <Inventor>Mark Segedin</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-06-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2368</Link>
+    </Interface>
+
+    <Script>
+        Color0 := 'DDAA00'; // Gold
+        Color1 := '444444'; // Black
+
+        H := 0.7;
+        R := H;
+
+        N := 60;
+
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace1" >
+            <Face Color = "Color0" VertexIndexes = "0; i + 2; (i + 1) mod N + 2" InvisibleEdges = "5" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "AddFace2" >
+            <Face Color = "Color1" VertexIndexes = "1; (i + 1) mod N + 2; i + 2" InvisibleEdges = "5" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "0; 0; H" />
+            <Vertices Vectors = "0; 0;-H" />
+            <Vertices Vectors = "x; y; 0" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace1" i = "0" Repeat = "N" />
+                <ExecMacro MacroName = "AddFace2" i = "0" Repeat = "N" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

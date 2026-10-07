@@ -1,0 +1,115 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crewmate Skewb (Random Color)</Name>
+        <Menu>Other forms\Skewb variants\Crewmate Skewb (Random Color)</Menu>
+        <Menu>Other forms\Unclassified\Crewmate\Crewmate Skewb (Random Color)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-25</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'C71111'; // Red
+        Colors[ 1] := 'C71111'; // Blue
+        Colors[ 2] := '10802D'; // Green
+        Colors[ 3] := 'EE55BA'; // Pink
+        Colors[ 4] := 'F17D0E'; // Orange
+        Colors[ 5] := 'F6F757'; // Yellow
+        Colors[ 6] := '3F484E'; // Black
+        Colors[ 7] := 'D6E1F0'; // White
+        Colors[ 8] := '6B30BC'; // Purple
+        Colors[ 9] := '72491E'; // Brown
+        Colors[10] := '39E2DD'; // Cyan
+        Colors[11] := '50F038'; // Lime
+        Colors[12] := '6B2B3C'; // Maroon
+        Colors[13] := 'ECC0D3'; // Rose
+        Colors[14] := 'FFFEBE'; // Banana
+        Colors[15] := '8397A7'; // Gray
+        Colors[16] := '928776'; // Tan
+        Colors[17] := 'EC7578'; // Coral
+        clBody := Colors[Random(18)];
+        clEyes := '95CADC';     // Light Blue
+        for i := 0 to 5 do
+            Colors[i] := clBody;
+
+        K := 0.35;
+
+        BodyRadius := K;
+        BodyTop    := K;
+        BodyBottom :=-K;
+
+        LegsRadius := K / 3;
+        LegsBottom :=-K * 1.75;
+        LegsY := K * 2 / 3;
+
+        GlassRadius := K * 0.9;
+        GlassX := K * 0.35;
+        GlassCut := (BodyRadius^2 - GlassRadius^2 + GlassX^2) / (2*GlassX);
+        GlassTop := BodyTop + K * 0.5;
+        GlassBottom := BodyTop - K * 0.5;
+
+        BagTop := BodyTop;
+        BagBottom := -K * 2 / 3;
+        BagX := -K * 0.8;
+        WX := K * 0.3;
+        WY := K * 0.8;
+        WZ := (BagTop - BagBottom) / 2;
+        DWX := BagX - WX;
+        DWZ := (BagTop + BagBottom) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        // Head
+        <Transfer Vector = " 0; 0;-BodyTop" />
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBody" K = "BodyRadius" />
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 0; 0; 1" /> </Cut>
+        <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = " 0; 0; 1" NormDistance = " GlassTop - BodyTop" /> </Split>
+        <HideContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-GlassCut" /> </Cut>
+        <Transfer Vector = " 0; 0; BodyTop" />
+        <HideAll/>
+
+        // Body
+        <Cylinder Radius = "BodyRadius" Color = "clBody" Base = " 0; 0; BodyBottom" BaseColor = "clBody" Top = " 0; 0; BodyTop + 0.1" />
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 0; 0;-1" NormDistance = "-BodyTop" /> </Cut>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = " 0; 0; 1" NormDistance = "GlassBottom" /> </Split>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = " 0; 0; 1" NormDistance = "BagBottom" /> </Split>
+        <ShowAll/>
+        <HideContaining Vector = " 0; 0; BodyTop" />
+        <InvertVisibility/>
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-GlassCut" /> </Cut>
+        <ShowAll/>
+        <HideContaining Vector = " 0; 0; GlassBottom" />
+        <InvertVisibility/>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "BagX" /> </Cut>
+
+        // Legs
+        <Cylinder Radius = "LegsRadius" Color = "clBody" Base = " 0; LegsY; LegsBottom" BaseColor = "clBody" Top = " 0; LegsY; BodyBottom" />
+        <Cylinder Radius = "LegsRadius" Color = "clBody" Base = " 0;-LegsY; LegsBottom" BaseColor = "clBody" Top = " 0;-LegsY; BodyBottom" />
+        <HideAll/>
+
+        // Glass
+        <Cylinder Radius = "GlassRadius" Color = "clEyes" Base = " GlassX; 0; GlassBottom" BaseColor = "clEyes" Top = " GlassX; 0; GlassTop" TopColor = "clEyes" />
+        <Cut Color = "clEyes" > <Plane NormVector = " 1; 0; 0" NormDistance = "GlassCut" /> </Cut>
+        <ShowAll/>
+
+        // Bag
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

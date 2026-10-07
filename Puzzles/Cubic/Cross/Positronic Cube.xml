@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Positronic Cube</Name>
+        <Menu>Cubic\Cross\Positronic Cube</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-04-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8823</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+        D := W / 5;
+        H := D * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi;Pi;0;Pi;Pi" PlaneDistances = "-D*3;-D; D; D*3" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "W" WZ = "H" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "D" WZ = "H" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D" WZ = "H" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

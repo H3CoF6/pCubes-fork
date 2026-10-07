@@ -1,0 +1,101 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fang-10</Name>
+        <Menu>Other forms\Dipyramid\Pentagonal\Fang-10</Menu>
+        <Menu>Other forms\Johnson Solids\(J13) Pentagonal Dipyramid\Fang-10</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3464</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clViolett      := '800080';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clOrange       := 'FF6000';
+        clLightBlue    := '2828FF';
+        clLightViolett := 'FF0080';
+        clBrown        := '800000';
+        clLightGreen   := '00FF00';
+
+        R := 0.7;
+        H := R * 0.94;
+        s5 := sqrt(5);
+
+        for i := 0 to 4 do begin
+            ax[i] := sin(i * 2*Pi/5);
+            ay[i] := cos(i * 2*Pi/5);
+            x[i] := ax[i] * R;
+            y[i] := ay[i] * R;
+        end;
+        az := sqrt((5 - s5) / 8);
+
+        D := H * sqrt((15 - 2 *  s5) / 41);
+        A1 := ArcCos(-(5 - s5    ) /  8);
+        A2 := ArcCos(-(5 * s5 + 1) / 16);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi*2" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "D" NormVectors = " ax; ay; az" />
+    <Axes TurningAngles = "0; Pi*2" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "D" NormVectors = " ax; ay;-az" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " 0; 0; H" />
+            <Vertices Vectors = " x; y; 0" />
+            <Vertices Vectors = " 0; 0;-H" />
+            <Faces>
+                <Face Color = "clRed         " VertexIndexes = " 0; 2; 1" />
+                <Face Color = "clLightViolett" VertexIndexes = " 0; 3; 2" />
+                <Face Color = "clBrown       " VertexIndexes = " 0; 4; 3" />
+                <Face Color = "clOrange      " VertexIndexes = " 0; 5; 4" />
+                <Face Color = "clYellow      " VertexIndexes = " 0; 1; 5" />
+
+                <Face Color = "clBlue        " VertexIndexes = " 6; 1; 2" />
+                <Face Color = "clViolett     " VertexIndexes = " 6; 2; 3" />
+                <Face Color = "clLightBlue   " VertexIndexes = " 6; 3; 4" />
+                <Face Color = "clGreen       " VertexIndexes = " 6; 4; 5" />
+                <Face Color = "clLightGreen  " VertexIndexes = " 6; 5; 1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <HideContaining Vector = "(x[0]+x[1])/4;(y[0]+y[1])/4;H/2" />
+            <InvertVisibility/>
+            <Turn NormVector = "0;1;az" Angle = " A1" />
+            <Split><Plane NormVector = "ax[1];ay[1]; az" NormDistance = "D" /></Split>
+            <Split><Plane NormVector = "ax[1];ay[1];-az" NormDistance = "D" /></Split>
+            <Turn NormVector = "0;1;az" Angle = "-A1" />
+            <Turn NormVector = "0;0;1" Angle = "2*Pi/5" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "5" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "Split" Repeat = "5" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+ 
+        <Macro Name = "Cut" >
+            <HideContaining Vector = "x[0]/2;y[0]/2;H/2" />
+            <InvertVisibility/>
+            <Turn NormVector = "0;1;az" Angle = " A1" />
+            <Cut><Plane NormVector = "-ax[1];-ay[1]; az" NormDistance = "-D" /></Cut>
+            <Turn NormVector = "0;1;az" Angle = "-A1" />
+            <Turn NormVector = "0;1;az" Angle = "-A1" />
+            <Cut><Plane NormVector = "-ax[4];-ay[4]; az" NormDistance = "-D" /></Cut>
+            <Turn NormVector = "0;1;az" Angle = " A1" />
+
+            <Turn NormVector = "0;0;1" Angle = "2*Pi/5" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "5" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+    </Figure>
+</xml>

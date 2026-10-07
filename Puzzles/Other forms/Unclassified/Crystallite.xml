@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crystallite</Name>
+        <Menu>Other forms\Unclassified\Crystallite</Menu>
+        <Inventor>Raphaël Mouflin</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7721</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0077EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        Wx := W;
+        Wy := W;
+        Wz := W;
+
+        A := 0.5;
+        x := W * 0.14;
+
+        D1 := (-x + W) / sqrt(3);
+        D2 := (3 * x + W) / sqrt(3);
+        DCut := (5 * x * A + W) / sqrt(1 + 2 * A^2);
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D2;-D1; D1; D2" FixedLayers = "2" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Color" ><Plane NormVector = "-A;-A;-1" NormDistance = "-DCut" /></Cut>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cut" Repeat = "4" Color = "Colors[5]" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" Color = "Colors[3]" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" Color = "Colors[0]" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" Color = "Colors[4]" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" Color = "Colors[2]" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" Color = "Colors[1]" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

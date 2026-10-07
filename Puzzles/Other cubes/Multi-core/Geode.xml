@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Geode</Name>
+        <Menu>Other cubes\Multi-core\Geode</Menu>
+        <Inventor>Adam Brown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1806</Link>
+    </Interface>
+
+    <Script>
+        W := 0.3;
+        D := W / 3;
+        T := W * 2 / 3;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi/2;Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1;-2;-2" BaseVector = "-T;-T;-T" />
+        <Axis NormVector = "-2; 1;-2" BaseVector = "-T;-T;-T" />
+        <Axis NormVector = "-2;-2; 1" BaseVector = "-T;-T;-T" />
+    </Axes>
+
+    <Axes TurningAngles = "0;Pi/2;Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" BaseVector = " T; T; T" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = " T; T; T" />
+        <Axis NormVector = " 0; 0; 1" BaseVector = " T; T; T" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " T; T; T" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <Cut><Plane NormVector = "-1;-1;-1" NormDistance = "-W * 2 / sqrt(3)" /></Cut>
+        <HideAll/>
+        <Transfer Vector = "-T*2;-T*2;-T*2" />
+        <Turn NormVector = "-1;-1;-1" Angle = "Pi" />
+
+        <Script>
+            Colors[0] := 'C80001';
+            Colors[1] := 'FF810A';
+            Colors[2] := '0001C8';
+            Colors[3] := '009601';
+            Colors[4] := 'FFFF01';
+            Colors[5] := 'FFFFFE';
+        </Script>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <Cut><Plane NormVector = " 1; 1; 1" NormDistance = "-W * 2 / sqrt(3)" /></Cut>
+        <ShowAll/>
+        <Turn NormVector = "-1;-1;-1" Angle = "Pi" />
+        <Transfer Vector = " T; T; T" />
+    </Figure>
+</xml>

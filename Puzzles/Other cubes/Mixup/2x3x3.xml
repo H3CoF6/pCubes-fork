@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup 2x3x3</Name>
+        <Menu>Other cubes\Mixup\2x3x3</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-01-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2610</Link>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+        D := W * 2 / 3 / sqrt(3);
+
+        WX := W;
+        WY := W;
+        WZ := W * 2 / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; Pi/3; Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "1" Angle = "Pi/3" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-2*Pi/3" Layer = "1" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+
+            <Turn Axis = "2" Angle = "Pi/3" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "2" Angle = "-2*Pi/3" Layer = "1" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split"/>
+        <RemoveContaining Vector = " W; 0; 0" />
+        <RemoveContaining Vector = "-W; 0; 0" />
+        <RemoveContaining Vector = " 0; W; 0" />
+        <RemoveContaining Vector = " 0;-W; 0" />
+
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/3" />
+        <ExecMacro MacroName = "Split"/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/3" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat = "2" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/3" />
+        <ExecMacro MacroName = "Split"/>
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/3" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat = "2" />
+    </Figure>
+</xml>

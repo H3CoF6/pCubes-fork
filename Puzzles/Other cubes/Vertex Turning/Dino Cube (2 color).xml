@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Cube (2 color)</Name>
+        <Menu>Other cubes\Vertex Turning\Dino Cube (2 color)</Menu>
+        <Inventor>S. Y. Liou</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-11-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=858</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        W := 0.5;
+        D := W / sqrt(3);
+        sAngle := 2 * Pi / 3;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = " 1; -1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+    </Axes>
+
+    <Figure>
+
+        <Macro Name = "AddCube" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "-W; -W; -W" />
+                    <Add Vector = " W; -W; -W" />
+                    <Add Vector = " W; -W;  W" />
+                    <Add Vector = "-W; -W;  W" />
+                    <Add Vector = "-W;  W; -W" />
+                    <Add Vector = " W;  W; -W" />
+                    <Add Vector = " W;  W;  W" />
+                    <Add Vector = "-W;  W;  W" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2;3" />
+                    <Face Color = "Color" VertexIndexes = "7;6;5;4" />
+                    <Face Color = "Color" VertexIndexes = "0;4;5;1" />
+                    <Face Color = "Color" VertexIndexes = "1;5;6;2" />
+                    <Face Color = "Color" VertexIndexes = "2;6;7;3" />
+                    <Face Color = "Color" VertexIndexes = "3;7;4;0" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddDinoState" >
+            <RemoveAllVisible/>
+            <ExecMacro MacroName = "AddCube" Color = "clYellow" />
+            <Cut><Plane NormVector = " ex; ey; ez" /></Cut>
+            <HideAll/>
+            <ExecMacro MacroName = "AddCube" Color = "clWhite" />
+            <Cut><Plane NormVector = "-ex;-ey;-ez" /></Cut>
+            <ShowAll/>
+            <SplitByAxes/>
+            <SaveSolvedState/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddDinoState" ex = " 0" ey = " 1" ez = " 1" />
+        <ExecMacro MacroName = "AddDinoState" ex = " 0" ey = " 1" ez = "-1" />
+        <ExecMacro MacroName = "AddDinoState" ex = " 1" ey = " 0" ez = " 1" />
+        <ExecMacro MacroName = "AddDinoState" ex = "-1" ey = " 0" ez = " 1" />
+        <ExecMacro MacroName = "AddDinoState" ex = " 1" ey = " 1" ez = " 0" />
+        <ExecMacro MacroName = "AddDinoState" ex = " 1" ey = "-1" ez = " 0" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

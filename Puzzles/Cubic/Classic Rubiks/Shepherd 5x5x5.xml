@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Shepherd 5x5x5</Name>
+        <Menu>Cubic\Classic Rubiks\Shepherd 5x5x5</Menu>
+        <Inventor>Alistair Shepherd</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-09-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2407</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        da := 0.001;
+        D := W / 5;
+
+        Color := 'FFFFFF';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-3 * D; -D; D; 3 * D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "Color" />
+
+        <Cut Color = "Color"> <Plane NormVector = " 1;-da;  0" NormDistance = "-W" />  </Cut>
+        <Cut Color = "Color"> <Plane NormVector = "-1; da;  0" NormDistance = "-W" />  </Cut>
+        <Cut Color = "Color"> <Plane NormVector = " 0;  1;-da" NormDistance = "-W" />  </Cut>
+        <Cut Color = "Color"> <Plane NormVector = " 0; -1; da" NormDistance = "-W" />  </Cut>
+        <Cut Color = "Color"> <Plane NormVector = " da; 0;  1" NormDistance = "-W" />  </Cut>
+        <Cut Color = "Color"> <Plane NormVector = "-da; 0; -1" NormDistance = "-W" />  </Cut>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Arrow" File = "Textures\Arrow.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Arrow =  4,1,1, 29,0,0, 45,0,0, 61,0,0, 77,1,1
+        Arrow =  3,1,3, 28,0,3, 44,0,3, 60,0,3, 76,1,3
+        Arrow =  2,1,3, 27,0,3, 43,0,3, 59,0,3, 75,1,3
+        Arrow =  1,1,3, 26,0,3, 42,0,3, 58,0,3, 74,1,3
+        Arrow =  0,1,3, 25,0,3, 41,0,3, 57,0,3, 73,1,2
+
+        Arrow = 24,2,3, 40,1,3, 56,1,3, 72,1,3, 97,2,0
+        Arrow = 19,1,2, 35,0,2, 51,0,2, 67,0,2, 92,1,2
+        Arrow = 14,1,2, 33,0,2, 49,0,2, 65,0,2, 87,1,2
+        Arrow =  9,1,2, 31,0,2, 47,0,2, 63,0,2, 82,1,2
+        Arrow =  4,2,2, 29,1,2, 45,1,2, 61,1,2, 77,2,1
+
+        Arrow = 77,0,2, 82,0,1, 87,0,1, 92,0,1, 97,0,2
+        Arrow = 76,0,0, 81,0,0, 86,0,0, 91,0,0, 96,0,0
+        Arrow = 75,0,0, 80,0,0, 85,0,0, 90,0,0, 95,0,0
+        Arrow = 74,0,0, 79,0,0, 84,0,0, 89,0,0, 94,0,0
+        Arrow = 73,0,0, 78,0,0, 83,0,0, 88,0,0, 93,0,3
+
+        Arrow = 24,0,2, 19,0,2, 14,0,2,  9,0,2,  4,0,2
+        Arrow = 23,0,0, 18,0,0, 13,0,0,  8,0,0,  3,0,0
+        Arrow = 22,0,0, 17,0,0, 12,0,0,  7,0,0,  2,0,0
+        Arrow = 21,0,0, 16,0,0, 11,0,0,  6,0,0,  1,0,0
+        Arrow = 20,0,0, 15,0,3, 10,0,3,  5,0,3,  0,0,3
+
+        Arrow = 97,1,3, 72,0,3, 56,0,3, 40,0,3, 24,1,3
+        Arrow = 96,1,1, 71,0,1, 55,0,1, 39,0,1, 23,1,1
+        Arrow = 95,1,1, 70,0,1, 54,0,1, 38,0,1, 22,1,1
+        Arrow = 94,1,1, 69,0,1, 53,0,1, 37,0,1, 21,1,1
+        Arrow = 93,1,1, 68,0,0, 52,0,0, 36,0,0, 20,1,0
+
+        Arrow =  0,2,1, 25,1,1, 41,1,1, 57,1,1, 73,2,2
+        Arrow =  5,1,2, 30,0,2, 46,0,2, 62,0,2, 78,1,2
+        Arrow = 10,1,2, 32,0,2, 48,0,2, 64,0,2, 83,1,2
+        Arrow = 15,1,2, 34,0,2, 50,0,2, 66,0,2, 88,1,2
+        Arrow = 20,2,0, 36,1,0, 52,1,0, 68,1,0, 93,2,3
+    </SetTextures>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

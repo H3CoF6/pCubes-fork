@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Edgeosaurus</Name>
+        <Aliases>Dino Cube (6 colors)</Aliases>
+        <Menu>Other cubes\Vertex Turning\Edgeosaurus</Menu>
+        <Inventor>Mark Lodge</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9297</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        D := W / sqrt(3);
+        sAngle := 2 * Pi / 3;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Ex; Ey; Ez" />
+
+        <Macro Name = "AddPiece" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "-W; W; W" />
+                    <Add Vector = " 0; 0; W" />
+                    <Add Vector = " 0; W; W" />
+                    <Add Vector = " 0; W; 0" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2" InvisibleEdges = "6" />
+                    <Face Color = "Color" VertexIndexes = "0;2;3" InvisibleEdges = "3" />
+                    <Face Color = "Color" VertexIndexes = "0;3;1" InvisibleEdges = "0" />
+                    <Face Color = "Color" VertexIndexes = "1;3;2" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+            <Turn NormVector = " 1; 0; 0" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "AddPiece" Color = "clRed   " Repeat = "4" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddPiece" Color = "clOrange" Repeat = "4" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <Turn NormVector = " 1; 1; 1" Angle = "-2*Pi/3" />
+
+        <ExecMacro MacroName = "AddPiece" Color = "clBlue  " Repeat = "4" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddPiece" Color = "clGreen" Repeat = "4" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <Turn NormVector = " 1; 1; 1" Angle = "-2*Pi/3" />
+
+        <ExecMacro MacroName = "AddPiece" Color = "clYellow" Repeat = "4" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddPiece" Color = "clWhite " Repeat = "4" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <Turn NormVector = " 1; 1; 1" Angle = "-2*Pi/3" />
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

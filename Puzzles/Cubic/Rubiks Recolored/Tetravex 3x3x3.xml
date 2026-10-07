@@ -1,0 +1,143 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tetravex 3x3x3</Name>
+        <Menu>Cubic\Rubiks Recolored\Tetravex 3x3x3</Menu>
+        <Inventor>Brian Deplae</Inventor>
+        <Programmer>Skallos, Boris</Programmer>
+        <Added>2022-07-14</Added>
+        <Link>http://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4581</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'EE0000'; // Red
+        Colors[ 2] := '00CC00'; // Green
+        Colors[ 3] := '0055EE'; // Light Blue
+        Colors[ 4] := 'FFFF00'; // Yellow
+
+        sColors[ 0] := '      01030            ';
+        sColors[ 1] := '      3 2 2            ';
+        sColors[ 2] := '      04 10            ';
+        sColors[ 3] := '      2 3 3            ';
+        sColors[ 4] := '      01020            ';
+        sColors[ 5] := '02010 03020 03020 03010';
+        sColors[ 6] := '1 4 3 2 1 3 1 1 1 2 2 2';
+        sColors[ 7] := '02 10 04 20 03 20 03 10';
+        sColors[ 8] := '3 3 2 3 3 1 2 4 3 1 4 3';
+        sColors[ 9] := '02010 01020 03010 03010';
+        sColors[10] := '      01020            ';
+        sColors[11] := '      2 4 1            ';
+        sColors[12] := '      01 20            ';
+        sColors[13] := '      3 3 3            ';
+        sColors[14] := '      01020            ';
+
+        W := 0.5;
+        D := W / 3;
+
+        N := 6;
+        c := 0;
+        for i := 0 to N do
+            for j := 0 to N do
+                for k := 0 to N do
+                    if ((i = 0) or (j = 0) or (k = 0) or (i = N) or (j = N) or (k = N)) and ((i + j + k) mod 2 = 0) then begin
+                        Vx[c] := D * i - W;
+                        Vy[c] := D * j - W;
+                        Vz[c] := D * k - W;
+                        Idx[i,j,k] := IntToStr(c);
+                        inc(c);
+                    end;
+
+        function GetSIdx(x2, y2);
+        begin
+            Result := Idx[x + dx1 * x2 + dx2 * y2, y + dy1 * x2 + dy2 * y2, z + dz1 * x2 + dz2 * y2] + ';';
+        end;
+
+        function GetColor(x3, y3);
+        begin
+            substr := copy(sColors[y3], x3, 1);
+            Result := Colors[StrToInt(substr)];
+        end;
+
+        procedure MakeColoredFace(i, j);
+        begin
+            S[c] := GetSIdx(i + 1, j) + GetSIdx(i, j - 1) + GetSIdx(i - 1, j) + GetSIdx(i, j + 1);
+            Cl[c] := GetColor(cx + i - 1, cy + j - 1);
+            IE[c] := -1;
+            Inc(c);
+        end;
+
+        procedure MakeCornerFace(kx1, ky1, kx2, ky2, kx3, ky3, kc1, kc2);
+        begin
+            S[c] := GetSIdx(kx1, ky1) + GetSIdx(kx2, ky2) + GetSIdx(kx3, ky3);
+            Cl[c] := GetColor(cx + kc1, cy + kc2);
+            IE[c] := 2;
+            Inc(c);
+        end;
+
+        procedure MakeEdgeFace(kx1, ky1, kx2, ky2, kx3, ky3, kc1, kc2);
+        begin
+            S[c] := GetSIdx(kx1, ky1) + GetSIdx(kx2, ky2) + GetSIdx(kx3, ky3);
+            Cl[c] := GetColor(cx + kc1, cy + kc2);
+            IE[c] := 3;
+            Inc(c);
+        end;
+
+        procedure MakeSide(x, y, z, dx1, dy1, dz1, dx2, dy2, dz2, cx, cy);
+        // x, y, z - left-top point of side
+        // dx1, dy1, dz1 - 1st counting vector
+        // dx2, dy2, dz2 - 2nd counting vector
+        // cx, cy - left-top letter in sColors
+        begin
+            for i := 1 to N - 1 do
+                for j := 1 to N - 1 do
+                    if (i + j) mod 2 = 1 then
+                        MakeColoredFace(i,j);
+
+            MakeCornerFace(0,0, 0,2, 2,0,  0,0);
+            MakeCornerFace(6,0, 4,0, 6,2,  4,0);
+            MakeCornerFace(6,6, 6,4, 4,6,  4,4);
+            MakeCornerFace(0,6, 2,6, 0,4,  0,4);
+
+            MakeEdgeFace(2,0, 3,1, 4,0,  2,0);
+            MakeEdgeFace(6,2, 5,3, 6,4,  4,2);
+            MakeEdgeFace(4,6, 3,5, 2,6,  2,4);
+            MakeEdgeFace(0,4, 1,3, 0,2,  0,2);
+        end;
+
+        c := 0;
+        MakeSide( 0, N, N,  1, 0, 0,  0,-1, 0,   7, 0); // up
+        MakeSide( 0, 0, N,  1, 0, 0,  0, 0,-1,   7, 5); // face
+        MakeSide( 0, N, N,  0,-1, 0,  0, 0,-1,   1, 5); // left
+        MakeSide( N, 0, N,  0, 1, 0,  0, 0,-1,  13, 5); // right
+        MakeSide( N, N, N, -1, 0, 0,  0, 0,-1,  19, 5); // back
+        MakeSide( 0, 0, 0,  1, 0, 0,  0, 1, 0,   7,10); // bottom
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Cl[i]" VertexIndexes = "S[i]" InvisibleEdges = "IE[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "c" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "AdjoiningFacesHaveSameColors" />
+</xml>

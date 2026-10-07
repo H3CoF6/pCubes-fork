@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Pentagonal Prism 4x7</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Face Turning\Pentagonal Prism 4x7</Menu>
+        <Inventor>Alexandr Bezrukov</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2025-07-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12799</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+
+        R := 0.62;
+
+        sAngle := PI * 2 / 5;
+        for i := 0 to 4 do begin
+            ax[i] :=-sin(sAngle * i);
+            ay[i] :=-cos(sAngle * i);
+            x[i] :=-R * ax[i];
+            y[i] :=-R * ay[i];
+        end;
+
+        D1 := (R * cos(Pi/5) * 6 + R * cos(3*Pi/5) * 1) / 7;
+        D2 := (R * cos(Pi/5) * 5 + R * cos(3*Pi/5) * 2) / 7;
+        D3 := (R * cos(Pi/5) * 4 + R * cos(3*Pi/5) * 3) / 7;
+
+        H := R * sin(Pi / 5) / 7 * 4;
+        DH := H / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = " D1; D2; D3" NormVectors = " ax; ay; 0" FixedLayers = "0" />
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "-DH; 0; DH" NormVectors = " 0; 0; 1" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x; y;-H" />
+            <Vertices Vectors = " x; y; H" />
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "5;6;1;0" />
+                <Face Color = "clBlue  " VertexIndexes = "6;7;2;1" />
+                <Face Color = "clGreen " VertexIndexes = "7;8;3;2" />
+                <Face Color = "clOrange" VertexIndexes = "8;9;4;3" />
+                <Face Color = "clPurple" VertexIndexes = "9;5;0;4" />
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clWhite " VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

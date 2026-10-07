@@ -1,0 +1,96 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Ladder Cube</Name>
+        <Menu>Other cubes\Mixed\Edge-Vertex\Ladder Cube</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-02-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7772</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 3 / 2 / sqrt(2);
+        D2 := W / 2;
+
+        A1 := Arctan(sqrt(2));
+        A2 := 2*Pi / 3;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" JumbleAngle = "A1" PlaneDistances = "D" NormVectors = "Ex; Ey; Ez" />
+
+    <Axes TurningAngles = "0; A2" PlaneDistances = "0" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "SplitC" >
+            <Split><Plane NormVector = "Cx[i];Cy[i];Cz[i]" NormDistance = "D2" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitC" i = "0" Repeat = "6" />
+
+        <RemoveGrayParts/>
+        <RemoveContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <InvertVisibility/>
+
+        <Macro Name = "SplitE" >
+            <Split><Plane NormVector = "Ex[i];Ey[i];Ez[i]" NormDistance = "D" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitE" i = "0" Repeat = "12" />
+
+        <ShowAll/>
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <InvertVisibility/>
+
+        <Split><Plane NormVector = " 1; 0; 0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" /></Split>
+        <InvertVisibility/>
+        <SplitByAxes/>
+        <R1emoveGrayParts/>
+
+        <HideAll/>
+        <LoadFrom File = "Figures\Cube.xml" W = "D2 * 3 / 2" />
+        <ExecMacro MacroName = "SplitC" i = "0" Repeat = "6" />
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "ax1" Layer = "1" Angle = " A1 + Pi * Random(2)" />
+            <Turn Axis = "ax2" Layer = "1" Angle = "-A1 + Pi * Random(2)" />
+            <Turn Axis = "ax3" Layer = "1" Angle = " A1 + Pi * Random(2)" />
+            <Turn Axis = "ax4" Layer = "1" Angle = "-A1 + Pi * Random(2)" />
+            <Turn Axis = "ax5" Layer = "1" Angle = " A1 + Pi * Random(2)" />
+            <Turn Axis = "ax6" Layer = "1" Angle = "-A1 + Pi * Random(2)" />
+            <Turn Axis = "ax0" Layer = "1" Angle = "-A2 * Random(3)" />
+            <Turn Axis = "ax1" Layer = "1" Angle = "-A1" />
+            <Turn Axis = "ax2" Layer = "1" Angle = " A1" />
+            <Turn Axis = "ax3" Layer = "1" Angle = "-A1" />
+            <Turn Axis = "ax4" Layer = "1" Angle = " A1" />
+            <Turn Axis = "ax5" Layer = "1" Angle = "-A1" />
+            <Turn Axis = "ax6" Layer = "1" Angle = " A1" />
+        </Macro>
+        <Macro Name = "Sc2" >
+            <ExecMacro MacroName = "Sc1" ax0 = "12" ax1 = " 0" ax2 = " 4" ax3 = " 8" ax4 = " 6" ax5 = "10" ax6 = " 2" />
+            <ExecMacro MacroName = "Sc1" ax0 = "15" ax1 = " 3" ax2 = " 5" ax3 = " 6" ax4 = " 9" ax5 = "11" ax6 = " 0" />
+            <ExecMacro MacroName = "Sc1" ax0 = "14" ax1 = " 2" ax2 = " 1" ax3 = " 5" ax4 = " 8" ax5 = " 7" ax6 = "11" />
+            <ExecMacro MacroName = "Sc1" ax0 = "13" ax1 = " 1" ax2 = " 3" ax3 = " 4" ax4 = " 7" ax5 = " 9" ax6 = "10" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script> A1 := Arctan(sqrt(2)); A2 := 2*Pi / 3; </Script>
+            <ExecMacro MacroName = "Sc2" Repeat = "10" />
+        </Macro>
+    </Macros>
+</xml>

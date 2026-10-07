@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hiper 4</Name>
+        <Menu>Cubic\Classic Rubiks\Hiper 4</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Knightcrawler</Programmer>
+        <Added>2016-09-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9223</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        W := 0.5;
+        W1 := W * 1.2;
+        D := W / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <HideAll/>
+
+        <Script> WX := W1; WY := D; WZ := D; </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Script> WX := D; WY := W1; WZ := D; </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Script> WX := D; WY := D; WZ := W1; </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "W" /> </Split>
+        <Split> <Plane NormVector = "-1; 0; 0" NormDistance = "W" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "W" /> </Split>
+        <Split> <Plane NormVector = " 0;-1; 0" NormDistance = "W" /> </Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "W" /> </Split>
+        <Split> <Plane NormVector = " 0; 0;-1" NormDistance = "W" /> </Split>
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

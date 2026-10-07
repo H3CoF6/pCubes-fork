@@ -1,0 +1,38 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Globall Flower</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Globall Flower</Menu>
+        <Inventor>Zbyněk Pieter</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-02-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3720</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        D := R * sin(dAngle) * sin(mAngle);
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "cx[0]; cy[0]; cz[0]" />
+        <Axis NormVector = "cx[1]; cy[1]; cz[1]" />
+        <Axis NormVector = "cx[2]; cy[2]; cz[2]" />
+        <Axis NormVector = "cx[3]; cy[3]; cz[3]" />
+        <Axis NormVector = "cx[4]; cy[4]; cz[4]" />
+        <Axis NormVector = "cx[5]; cy[5]; cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Remove" >
+            <RemoveContaining Vector = "Ex[i]; Ey[i]; Ez[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Remove" Repeat = "30" i = "0" />
+    </Figure>
+</xml>

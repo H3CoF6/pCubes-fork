@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sphere In Cube</Name>
+        <Menu>Other forms\Unclassified\Ball in a cube\Sphere In Cube</Menu>
+        <Menu>Other forms\3x3x3 variants\Sphere In Cube</Menu>
+        <Inventor>Jean-Claude Constantin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=445</Link>
+    </Interface>                   
+
+    <Script>
+        W := 0.5;
+        D  := W / 3;
+        K := W * 1.25;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = " D; D; D"/>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "2" From = "1" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

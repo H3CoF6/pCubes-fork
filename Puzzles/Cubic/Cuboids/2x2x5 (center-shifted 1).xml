@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2x5 (center-shifted 1)</Name>
+        <Menu>Cubic\Cuboids\Center-shifted\2x2x5 (center-shifted 1)</Menu>
+        <Inventor>You YuChun</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-12-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7111</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 5;
+
+        WX := D * 2;
+        WY := D * 2;
+        WZ := W;
+        DWZ := D * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-5*D;-3*D;-D; D; 3*D; 5*D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <!-- add invisible bandaging parts -->
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" WZ = "D * 3" DWZ = "-D * 4" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <InvertVisibility/>
+    </Figure>
+</xml>

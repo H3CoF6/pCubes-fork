@@ -1,0 +1,112 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Six</Name>
+        <Menu>Cubic\Crazy\Crazy Six</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2019-11-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1569</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        Delta := W * 0.002;
+        W1 := W + Delta;
+        W2 := W1 + Delta;
+        W3 := W2 + Delta;
+
+        D1 := W / 3;
+        D2 := W * 2 / 3;
+        D3 := (W1 + W2) / 2;
+
+        R1 := D2;
+        R2 := D1;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D3; -W; -D2; -D1; 0; D1; D2; W; D3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Split" >
+            <Split Axis = "0" From = "3" />
+            <Split Axis = "0" From = "7" />
+            <Split Axis = "1" From = "3" />
+            <Split Axis = "1" From = "7" />
+            <Split Axis = "2" From = "3" />
+            <Split Axis = "2" From = "7" />
+        </Macro>
+
+        <!-- Make cube with gray centers -->
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <ExecMacro MacroName = "Split" />
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+        <RemoveContaining Vector = "0;0;0" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <ExecMacro MacroName = "Split" />
+        <HideContaining Vector = "Cx;Cy;Cz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+
+        <!-- big circles -->
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "R" Color = "Colors[i]" Center = "Cx[i] * Dist / W; Cy[i] * Dist / W; Cz[i] * Dist / W" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" R = "R1" Dist = "W1" i = "0" Repeat = "6" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "RemoveCenters">
+            <RemoveContaining Vector = "Cx[i] * Dist / W; Cy[i] * Dist / W; Cz[i] * Dist / W" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" Dist = "W1" i = "0" Repeat = "6" />
+
+        <Macro Name = "AddGrayCenters">
+            <Part>
+                <Vertices>
+                    <Add Vector = " W1; D1; D1" />
+                    <Add Vector = " W1;-D1; D1" />
+                    <Add Vector = " W1;-D1;-D1" />
+                    <Add Vector = " W1; D1;-D1" />
+                </Vertices>
+
+                <Faces>
+                    <Face VertexIndexes = "0;1;2;3" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "1;1;1" Angle = "Pi * 2  / 3" />
+        </Macro>
+        <ExecMacro MacroName = "AddGrayCenters" Repeat = "3" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "AddGrayCenters" Repeat = "3" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <SplitByAxes/>
+
+        <!-- small circles -->
+
+        <ExecMacro MacroName = "AddCircle" R = "R2" Dist = "W3" i = "0" Repeat = "6" />
+        <SplitByAxes/>
+
+        <Connect Layers = "0;4" />
+        <Connect Layers = "1;3" />
+        <Connect Layers = "6;8" />
+        <Connect Layers = "5;9" />
+    </Figure>
+</xml>

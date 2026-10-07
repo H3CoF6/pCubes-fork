@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Doppelkreis (3 colors)</Name>
+        <Menu>Other forms\2d\Marble\Doppelkreis (3 colors)</Menu>
+        <Inventor>William Churchill</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3239</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'EE0000';
+        clGreen  := '00BB00';
+        clWhite  := 'FFFFFF';
+        clYellow := 'FFFF00';
+
+        R := 0.55;
+
+        C1 := R * 0.4;
+        C2 := R * 0.5;
+        C3 := R * 0.64;
+
+        WX := (C3 - C2) / 2;
+        WY := WX;
+        WZ := WX;
+        DWX := (C3 + C2) / 2;
+        DWY := DWX;
+        DWZ := DWX;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/6; 0" PlaneDistances = " C2; C3" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddBody" >
+            <HideAll/>
+            <Cylinder Radius = "R" Color = "clYellow" >
+                <Base X = "C1" Y = "0" Z = "0" Color = "clYellow"/>
+                <Top  X = "C2" Y = "0" Z = "0" Color = "clYellow" />
+            </Cylinder>
+
+            <SplitByAxes/>
+            <Split> <Plane NormVector = " 1;-1; 0" NormDistance = " 0" /> </Split>
+            <RemoveContaining Vector = "C1; C2; 0" />
+            <Turn NormVector = "1;1;0" Angle = "Pi" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddBody" Repeat = "2" />
+        <ShowAll/>
+
+        <Macro Name = "AddPuck" >
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := cl;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Turn Axis = "ax" Layer = "1" Angle = " Pi/6" />
+        </Macro>
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/6" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = "3" cl ="clWhite" />
+        <ExecMacro MacroName = "AddPuck" ax = "0" Repeat = "8" cl ="clGreen" />
+
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = "1" cl ="clWhite" />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = "8" cl ="clRed" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/6" />
+        <ExecMacro MacroName = "AddPuck" ax = "1" Repeat = "2" cl ="clWhite" />
+
+        <Turn NormVector = "0;0;1" Angle = "-135 * Pi/180" />
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

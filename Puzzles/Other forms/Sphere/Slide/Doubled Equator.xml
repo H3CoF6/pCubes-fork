@@ -1,0 +1,136 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Doubled Equator</Name>
+        <Menu>Other forms\Sphere\Slide\Doubled Equator</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-11-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4930</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Octahedron_Standard_Colors.inc';
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        R := 0.6;
+        N := 20;
+        Dx := sqrt((1 - cos(2 * Pi / N)) / (3 - cos(2 * Pi / N)));
+        D := R * Dx * 2;
+        RC1 := R * 0.69;
+        RC2 := R * 1.01;
+        RC := R * 0.155;
+        Ax := ArcSin(Dx);
+
+        for i := 0 to 15 do begin
+            Rx[i] := Rc * sin(i * 2 * Pi / 16);
+            Ry[i] := -R;
+            Rz[i] := -Rc * cos(i * 2 * Pi / 16);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi / N; 2*Pi / N; 0" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCircle" >
+            <Turn NormVector = "1; 0; 0" Angle = " x * 2*Pi / N" />
+            <Turn NormVector = "0; 1; 0" Angle = " y * 2*Pi / N" />
+            <Turn NormVector = "0; 0; 1" Angle = " z * 2*Pi / N" />
+
+            <Turn NormVector = "1; 0; 0" Angle = "Pi / N" />
+            <Turn NormVector = "0; 0; 1" Angle = "Ax" />
+
+            <Part>
+                <Vertices Vectors = "Rx; Ry; Rz" >
+                    <Add Vector = "0; -RC1; 0" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15" />
+                    <Face VertexIndexes = " 1; 0;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 2; 1;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 3; 2;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 4; 3;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 5; 4;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 6; 5;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 7; 6;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 8; 7;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 9; 8;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "10; 9;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "11;10;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "12;11;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "13;12;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "14;13;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "15;14;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 0;15;16" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+
+            <Turn NormVector = "0; 0; 1" Angle = "-Ax" />
+            <Turn NormVector = "1; 0; 0" Angle = "-Pi / N" />
+
+            <Turn NormVector = "0; 0; 1" Angle = "-z * 2*Pi / N" />
+            <Turn NormVector = "0; 1; 0" Angle = "-y * 2*Pi / N" />
+            <Turn NormVector = "1; 0; 0" Angle = "-x * 2*Pi / N" />
+        </Macro>
+
+        <Macro Name = "AddSector" >
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 0" y = " 0" z = " 0" />
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 0" y = " 0" z = " 1" />
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 0" y = " 0" z = " 2" />
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 0" y = " 0" z = " 3" />
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 0" y = " 0" z = " 4" />
+
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 1" y = " 0" z = " 0" />
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 2" y = " 0" z = " 0" />
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 3" y = " 0" z = " 0" />
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 4" y = " 0" z = " 0" />
+
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 0" y = "-1" z = " 4" />
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 0" y = "-2" z = " 4" />
+            <ExecMacro MacroName = "AddCircle" c0 = "0" x = " 0" y = "-3" z = " 4" />
+
+            <Turn NormVector = "1; 0; 0" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSector" c0 = "0" x = "0" y = "-3" z = " 4" Color = "Colors[0]" />
+        <ExecMacro MacroName = "AddSector" c0 = "0" x = "0" y = "-3" z = " 4" Color = "Colors[3]" />
+        <ExecMacro MacroName = "AddSector" c0 = "0" x = "0" y = "-3" z = " 4" Color = "Colors[7]" />
+        <ExecMacro MacroName = "AddSector" c0 = "0" x = "0" y = "-3" z = " 4" Color = "Colors[4]" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi" />
+        <Turn Axis = "1" From = "0" To = "3" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSector" c0 = "0" x = "0" y = "-3" z = " 4" Color = "Colors[5]" />
+        <ExecMacro MacroName = "AddSector" c0 = "0" x = "0" y = "-3" z = " 4" Color = "Colors[6]" />
+        <ExecMacro MacroName = "AddSector" c0 = "0" x = "0" y = "-3" z = " 4" Color = "Colors[2]" />
+        <ExecMacro MacroName = "AddSector" c0 = "0" x = "0" y = "-3" z = " 4" Color = "Colors[1]" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi" />
+
+        <Macro Name = "AddSector2" >
+            <HideAll/>
+            <Script>K := RC2; Color := Colors[c]</Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = "Cx[k1]; Cy[k1]; Cz[k1]" NormDistance = "D" /> </Cut>
+            <Cut> <Plane NormVector = "Cx[k2]; Cy[k2]; Cz[k2]" NormDistance = "D" /> </Cut>
+            <Cut> <Plane NormVector = "Cx[k3]; Cy[k3]; Cz[k3]" NormDistance = "D" /> </Cut>
+        </Macro>
+        <ExecMacro MacroName = "AddSector2" c = "4" k1 = "0" k2 = "2" k3 = "4" />
+        <ExecMacro MacroName = "AddSector2" c = "0" k1 = "0" k2 = "2" k3 = "5" />
+        <ExecMacro MacroName = "AddSector2" c = "7" k1 = "0" k2 = "3" k3 = "4" />
+        <ExecMacro MacroName = "AddSector2" c = "3" k1 = "0" k2 = "3" k3 = "5" />
+        <ExecMacro MacroName = "AddSector2" c = "5" k1 = "1" k2 = "2" k3 = "4" />
+        <ExecMacro MacroName = "AddSector2" c = "1" k1 = "1" k2 = "2" k3 = "5" />
+        <ExecMacro MacroName = "AddSector2" c = "6" k1 = "1" k2 = "3" k3 = "4" />
+        <ExecMacro MacroName = "AddSector2" c = "2" k1 = "1" k2 = "3" k3 = "5" />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

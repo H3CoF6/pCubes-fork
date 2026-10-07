@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup Kites Plus</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Mixup Kites Plus</Menu>
+        <Inventor>Sam Jiang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-09-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6959</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_24_Colors.inc';
+
+        W  := 0.45;
+
+//        D := W * (6 + sqrt(2)) / 17;
+        D := W * 0.35;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "CutPart" >
+            <HideContaining Vector = " 0; 0; W" />
+            <InvertVisibility/>
+            <Split><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Split>
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-D" /></Split>
+            <Cut><Plane NormVector = "-1; 0; 1" NormDistance = " D" /></Cut>
+            <Cut><Plane NormVector = " 1; 0; 1" NormDistance = " D" /></Cut>
+            <Cut><Plane NormVector = " 0;-1; 1" NormDistance = " D" /></Cut>
+            <Cut><Plane NormVector = " 0; 1; 1" NormDistance = " D" /></Cut>
+            <ShowAll/>
+            <Turn NormVector = "0;1;0" Angle = "Pi/4" />
+        </Macro>
+        <ExecMacro MacroName = "CutPart" Repeat = "8" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "CutPart" Repeat = "8" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "CutPart" Repeat = "8" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+    </Figure>
+</xml>

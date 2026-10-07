@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circle Curvy Copter unbandaged</Name>
+        <Menu>Other cubes\Mixed\Face-Edge\Circle Curvy Copter unbandaged</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-15</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        A := W * 1.5;
+        B := W * 0.20;
+        D := A / sqrt(2);
+        D2 := A * 0.825;
+
+        JumAngle := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "JumAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split1">
+            <Hide><Plane NormVector = " 1; 0; 1" NormDistance = "D" /></Hide>
+            <Hide><Plane NormVector = " 0;-1; 1" NormDistance = "D" /></Hide>
+            <Turn NormVector = " 1; 0; 1" Angle = "JumAngle" />
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "D2" /></Split>
+            <Split><Plane NormVector = " 0;-1; 1" NormDistance = "D" /></Split>
+            <Turn NormVector = " 1; 0; 1" Angle = "-JumAngle" />
+            <ShowAll/>
+            <Turn NormVector = " 1;-1; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <Macro Name = "Split3">
+            <ExecMacro MacroName = "Split1" Repeat = "3" />
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "Split3" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "Split3" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

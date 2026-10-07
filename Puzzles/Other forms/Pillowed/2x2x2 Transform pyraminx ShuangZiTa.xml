@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2x2 Transform pyraminx ShuangZiTa</Name>
+        <Menu>Other forms\Pillowed\2x2x2 Transform pyraminx ShuangZiTa</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6471</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000';
+        Colors[1] := 'FFFFFF';
+        Colors[2] := '00BB00';
+        Colors[3] := '0055EE';
+
+        Colors[4] := 'FF7700';
+        Colors[5] := 'FFFF00';
+        Colors[6] := 'BB00BB';
+        Colors[7] := 'FF55CC';
+
+        K := 0.5;
+
+        D := K * 1.25;
+        DR := K * 0.4;
+        DCut := K * 1.44;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "MakeHalf" >
+            <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+            <RemoveContaining Vector = " DR; DR; DR" />
+            <RemoveContaining Vector = " DR;-DR;-DR" />
+            <RemoveContaining Vector = "-DR;-DR; DR" />
+            <RemoveContaining Vector = "-DR; DR;-DR" />
+
+            <Turn NormVector = "0;-1;-1" Angle = "Pi" />
+        </Macro>
+
+        <ExecMacro MacroName = "MakeHalf" />
+        <InvertVisibility/>
+
+        <Script>
+            Colors[0] := Colors[4];
+            Colors[1] := Colors[5];
+            Colors[2] := Colors[6];
+            Colors[3] := Colors[7];
+        </Script>
+
+        <ExecMacro MacroName = "MakeHalf" />
+        <ShowAll/>
+
+        <Turn NormVector = "0;-1;-1" Angle = "-Pi" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = " 0; 0; 0" />
+
+        <Cut> <Plane NormVector = " 1; 1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 1" NormDistance = "-DCut" /> </Cut>
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

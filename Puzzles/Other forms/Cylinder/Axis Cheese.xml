@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Axis Cheese</Name>
+        <Menu>Other forms\Cylinder\Axis Cheese</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7937</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF7700'; // Orange
+        Colors[1] := 'FFFFFF'; // White
+        Colors[2] := 'FFFF00'; // Yellow
+
+        R := 0.6;
+        H := R * 0.5;
+        A := 0.9; // incline
+
+        N := 40;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" NormVectors = " ax; ay; 0" />
+
+    <Figure>
+        <Turn NormVector = "0;1;0" Angle = "A" />
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[0]" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "Colors[1]" VertexIndexes = "FromTo(0, N - 1)" />
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "40" />
+                <Face Color = "Colors[2]" VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

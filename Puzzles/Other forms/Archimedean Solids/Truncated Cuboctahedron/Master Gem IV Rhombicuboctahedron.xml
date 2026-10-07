@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Master Gem IV Rhombicuboctahedron</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Cuboctahedron\Master Gem IV Rhombicuboctahedron</Menu>
+        <Inventor>Ilya Toporgilka</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-09-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9832</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 6] := '00FF00';
+        Colors[ 7] := 'FFBF80';
+        Colors[ 8] := '00FFFF';
+        Colors[ 9] := 'FF7E7E';
+
+        Colors[10] := '003F00';
+        Colors[11] := '804000';
+        Colors[12] := '00007E';
+        Colors[13] := '7E0000';
+
+        Colors[14] := '7E7E00';
+        Colors[15] := 'AAAA55';
+        Colors[16] := 'FF7E3F';
+        Colors[17] := 'FF007E';
+
+        Colors[18] := 'BD7E00';
+        Colors[19] := 'C3C388';
+        Colors[20] := 'FF7EFF';
+        Colors[21] := 'FF00FF';
+
+        Colors[22] := '7E3F00';
+        Colors[23] := '7E007E';
+        Colors[24] := 'FF3F3F';
+        Colors[25] := '77773C';
+
+        W := 0.55;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.30;
+
+	VCut := (D * 3 + W) / sqrt(3);
+        ECut := (D * 2.5 + W) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D*2;-D; 0; D; D*2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "W" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveAllVisible/>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Ex;Ey;Ez" />
+        <ShowAll/>
+
+        <Macro Name = "CutV" >
+            <Cut Color = "Colors[i + 6]" ><Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "-VCut" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+        <Macro Name = "CutE" >
+            <Cut Color = "Colors[i + 14]" ><Plane NormVector = " Ex[i]; Ey[i]; Ez[i]" NormDistance = "-ECut" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

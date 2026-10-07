@@ -1,0 +1,123 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Coin Icosahedron</Name>
+        <Menu>Other forms\Icosahedron\Mixed\Coin Icosahedron</Menu>
+        <Inventor>Kevin Uhrik</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-06</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFF66'; // clYellow
+        Colors[ 1] := 'FFFFFF'; // clWhite
+        Colors[ 2] :='00DDDDD'; // clLightCyan
+        Colors[ 3] := '00FFAA'; // clSGreen
+        Colors[ 4] := '00FF55'; // clLighterGreen
+        Colors[ 5] := 'FFCC00'; // clLightOrange
+        Colors[ 6] := 'FFBBDD'; // clSLViolett
+        Colors[ 7] := '00AAFF'; // clAqua
+        Colors[ 8] := '00AAAA'; // clCyan
+        Colors[ 9] := '008000'; // clGreen
+        Colors[10] := '0000CC'; // clDarkBlue
+        Colors[11] := 'AAAAAA'; // clGray
+        Colors[12] := 'FF0000'; // clRed
+        Colors[13] := 'AA0022'; // clDarkRed
+        Colors[14] := 'AA00CC'; // clDarkViolett
+        Colors[15] := '0044DD'; // clBlue
+        Colors[16] := '007744'; // clDarkGreen
+        Colors[17] := 'FF8800'; // clOrange
+        Colors[18] := 'FF0088'; // clLightViolett
+        Colors[19] := 'BB88DD'; // clViolett
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := R * 0.742;
+
+        RC := R * 0.238;
+        Sc := 1.06;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3"  PlaneDistances = "-RIn; RIn" FixedLayers = "1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+        <Axis NormVector = "Cx[6]; Cy[6]; Cz[6]" />
+        <Axis NormVector = "Cx[7]; Cy[7]; Cz[7]" />
+        <Axis NormVector = "Cx[8]; Cy[8]; Cz[8]" />
+        <Axis NormVector = "Cx[9]; Cy[9]; Cz[9]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Icosahedron" >
+            <Part>
+                <Vertices Vectors = "Vx; Vy; Vz" />
+
+                <Faces>
+                    <Face Color = "Colors[ 0]" VertexIndexes = " 0; 1; 5" />
+                    <Face Color = "Colors[ 1]" VertexIndexes = " 0; 2; 1" />
+                    <Face Color = "Colors[ 2]" VertexIndexes = " 0; 3; 2" />
+                    <Face Color = "Colors[ 3]" VertexIndexes = " 0; 4; 3" />
+                    <Face Color = "Colors[ 4]" VertexIndexes = " 0; 5; 4" />
+                    <Face Color = "Colors[ 5]" VertexIndexes = " 1;10; 5" />
+                    <Face Color = "Colors[ 6]" VertexIndexes = " 2; 6; 1" />
+                    <Face Color = "Colors[ 7]" VertexIndexes = " 3; 7; 2" />
+                    <Face Color = "Colors[ 8]" VertexIndexes = " 4; 8; 3" />
+                    <Face Color = "Colors[ 9]" VertexIndexes = " 5; 9; 4" />
+                    <Face Color = "Colors[10]" VertexIndexes = "11; 7; 8" />
+                    <Face Color = "Colors[11]" VertexIndexes = "11; 8; 9" />
+                    <Face Color = "Colors[12]" VertexIndexes = "11; 9;10" />
+                    <Face Color = "Colors[13]" VertexIndexes = "11;10; 6" />
+                    <Face Color = "Colors[14]" VertexIndexes = "11; 6; 7" />
+                    <Face Color = "Colors[15]" VertexIndexes = " 7; 3; 8" />
+                    <Face Color = "Colors[16]" VertexIndexes = " 8; 4; 9" />
+                    <Face Color = "Colors[17]" VertexIndexes = " 9; 5;10" />
+                    <Face Color = "Colors[18]" VertexIndexes = "10; 1; 6" />
+                    <Face Color = "Colors[19]" VertexIndexes = " 6; 2; 7" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "Icosahedron" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" >
+            <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+            <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "20" i = "0" />
+
+        <SplitByAxes/>
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 19 do
+                Colors[i] := '-1';
+        </Script>
+
+        <ExecMacro MacroName = "Icosahedron" />
+        <SplitByAxes/>
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+</xml>

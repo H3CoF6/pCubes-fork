@@ -1,0 +1,96 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Melty D unbandaged</Name>
+        <Menu>Other forms\Unclassified\Melty\Melty D unbandaged</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Evgeniy Grigoriev, Boris</Programmer>
+        <Added>2018-09-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7852</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;t=33164</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D  := W / 3;
+        DCut := W;
+
+        s := cos(85 * Pi / 180);  // 85 degrees
+        // Solve (a - b - a * b) / (1 + a^2 + b^2) = s
+        a := -1 + 1 / sqrt((2 + 4 * s) / (5 + s - 3 * sqrt(1 - 6 * s - 7 * s^2)));
+        b := a * (a + 1) / (a + 3);
+
+        ax[0] :=-1; ay[0] :=-b; az[0] :=-a;
+        ax[1] := 1; ay[1] :=-a; az[1] :=-b;
+        ax[2] :=-b; ay[2] :=-1; az[2] := a;
+        ax[3] :=-a; ay[3] := 1; az[3] := b;
+        ax[4] := b; ay[4] := a; az[4] :=-1;
+        ax[5] := a; ay[5] := b; az[5] := 1;
+
+        function AngleI(i1, i2, i3);
+        begin
+            vx1 := ay[i1] * az[i2] - ay[i2] * az[i1];
+            vy1 := az[i1] * ax[i2] - az[i2] * ax[i1];
+            vz1 := ax[i1] * ay[i2] - ax[i2] * ay[i1];
+            wx := ay[i1] * az[i3] - ay[i3] * az[i1];
+            wy := az[i1] * ax[i3] - az[i3] * ax[i1];
+            wz := ax[i1] * ay[i3] - ax[i3] * ay[i1];
+            Result := ArcCos((vx1*wx + vy1*wy + vz1*wz) / (vx1^2 + vy1^2 + vz1^2));
+        end;
+
+        A1 := AngleI(1,2,5);
+        A2 := AngleI(1,2,4);
+        A3 := AngleI(1,4,5);
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D" NormVectors = "ax; ay; az" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" W = "W * 2" />
+
+        <Macro Name = "CutSide" >
+            <Cut Color = "Colors[i]" ><Plane NormVector = "-ax[i];-ay[i];-az[i]" NormDistance = "-DCut" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutSide" i = "0" Repeat = "6" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split1" >
+            <Turn Axis = "ax1" Layer = "1" Angle = "-A1" />
+            <Turn Axis = "ax2" Layer = "1" Angle = " A1" />
+            <Split Axis = "ax1" From = "1" />
+            <Undo Repeat = "2" />
+        </Macro>
+        <ExecMacro MacroName = "Split1" ax1 = "2" ax2 = "1" />
+        <ExecMacro MacroName = "Split1" ax1 = "1" ax2 = "5" />
+        <ExecMacro MacroName = "Split1" ax1 = "5" ax2 = "2" />
+        <ExecMacro MacroName = "Split1" ax1 = "0" ax2 = "3" />
+        <ExecMacro MacroName = "Split1" ax1 = "3" ax2 = "4" />
+        <ExecMacro MacroName = "Split1" ax1 = "4" ax2 = "0" />
+
+        <Macro Name = "Split2" >
+            <Turn Axis = "ax1" Layer = "1" Angle = "-A2" />
+            <Turn Axis = "ax2" Layer = "1" Angle = "-A1" />
+            <Split Axis = "ax1" From = "1" />
+            <Undo Repeat = "2" />
+        </Macro>
+        <ExecMacro MacroName = "Split2" ax1 = "1" ax2 = "2" />
+        <ExecMacro MacroName = "Split2" ax1 = "2" ax2 = "5" />
+        <ExecMacro MacroName = "Split2" ax1 = "5" ax2 = "1" />
+        <ExecMacro MacroName = "Split2" ax1 = "3" ax2 = "0" />
+        <ExecMacro MacroName = "Split2" ax1 = "4" ax2 = "3" />
+        <ExecMacro MacroName = "Split2" ax1 = "0" ax2 = "4" />
+    </Figure>
+
+    <Macros>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(6)" Layer = "1" Angle = "Random * 2 * Pi" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns" Repeat = "20000" />
+        </Macro>
+    </Macros>
+</xml>

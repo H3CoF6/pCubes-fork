@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Deranged Dark Matter</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Deranged Dark Matter</Menu>
+        <Inventor>k3DW (Braden Ganetsky)</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-12-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7124</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_24_Colors.inc';
+        clBody := -1;
+
+        W  := 0.45;
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_Coordinates.inc'; // for axes
+
+        A1 := ArcCos( sqrt(2) / 8 + 0.25);
+        A2 := ArcCos( sqrt(2) / 4 - 0.5 );
+        A3 := ArcCos(-s2 / 2 - 0.25); // = A1 + A2
+
+        D := W * 1.13;
+
+        DC := D * sqrt(7 - 4 * s2);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Cx;Cy;Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+
+        <Macro Name = "CutV" >
+            <Cut Color = "clBody" ><Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "-DC" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "18" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "SplitEdge" >
+            <HideContaining Vector = "(Vx[ 5] + Vx[16]) / 2; (Vy[ 5] + Vy[16]) / 2; (Vz[ 5] + Vz[16]) / 2" />
+            <HideContaining Vector = "(Vx[11] + Vx[20]) / 2; (Vy[11] + Vy[20]) / 2; (Vz[11] + Vz[20]) / 2" />
+            <InvertVisibility/>
+            <Turn NormVector = " C2;-C3; C2" Angle = " A1" />
+            <Split><Plane NormVector = " C3;-C2; C2" NormDistance = "D" /> </Split>
+            <Split><Plane NormVector = "-C2;-C3; C2" NormDistance = "D" /> </Split>
+            <Turn NormVector = " C2;-C3; C2" Angle = "-2*A1" />
+            <Split><Plane NormVector = "-C2;-C3; C2" NormDistance = "D" /> </Split>
+            <Turn NormVector = " C2;-C3; C2" Angle = " A1" />
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+        <Macro Name = "SplitEdges" >
+            <ExecMacro MacroName = "SplitEdge" Repeat = "4" />
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+            <ExecMacro MacroName = "SplitEdge" Repeat = "4" />
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+            <Turn NormVector = " 1; 1; 1" Angle = "2*Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "SplitEdges" Repeat = "3" />
+    </Figure>
+</xml>

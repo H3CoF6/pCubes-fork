@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Spinning Top</Name>
+        <Menu>Other forms\3x3x3 variants\Spinning Top</Menu>
+        <Inventor>rline</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2018-02-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3889</Link>
+    </Interface>
+
+    <Script>
+        clLightGreen   := '40ee40';
+        clSkyBlue      := '87ceeb';
+        clPurple       := '800080';
+        clPink         := 'ffc0cb';
+        clGray         := '808080';
+        clGold         := 'ffd700';
+
+        W := 0.5;
+
+        DCut1 := 5 * sqrt(3) / 18;
+        DCut2 := 5 / 2 / sqrt(19);
+
+        n1 := 1/sqrt(19);
+        n2 := 3 * n1;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-1/6; 1/6" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Cut Color = "clPurple    " ><Plane NormVector = " -1;  1; -1" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "clLightGreen" ><Plane NormVector = "  1;  1;  1" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "clSkyBlue   " ><Plane NormVector = "  1; -1; -1" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "clPink      " ><Plane NormVector = "-n2; n1; n2" NormDistance = "-DCut2" /></Cut>
+        <Cut Color = "clGold      " ><Plane NormVector = "-n2;-n2;-n1" NormDistance = "-DCut2" /></Cut>
+        <Cut Color = "clGray      " ><Plane NormVector = " n1;-n2; n2" NormDistance = "-DCut2" /></Cut>
+
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+</xml>

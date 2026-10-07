@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>True Ivy+Dino</Name>
+        <Menu>Other cubes\Vertex Turning\True Ivy+Dino</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9009</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        A := W * 0.9;
+        B := W - A;
+
+        D := W / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <HideContaining   Vector = "Ex;Ey;Ez" />
+        <RemoveContaining Vector = " W;-W; W" />
+        <RemoveContaining Vector = "-W; W; W" />
+        <RemoveContaining Vector = " W; W;-W" />
+        <RemoveContaining Vector = "-W;-W;-W" />
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "Ex;Ey;Ez" />
+        <HideContaining   Vector = " W;-W; W" />
+        <HideContaining   Vector = "-W; W; W" />
+        <HideContaining   Vector = " W; W;-W" />
+        <HideContaining   Vector = "-W;-W;-W" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

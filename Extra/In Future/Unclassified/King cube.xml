@@ -1,0 +1,151 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+need new graphics engine and new intersection mechanism
+
+
+    <Interface>
+        <Name>King cube</Name>
+        <Menu>Test\King cube</Menu>
+        <Menu>Cubic\Bandaged\King cube</Menu>
+        <Inventor>Mozhi</Inventor>
+        <Programmer>Boris</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5533</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        W := 0.5;
+        d1 := -3 / 5 * W;
+        d2 := -1 / 5 * W;
+        d3 :=  1 / 5 * W;
+        d4 :=  3 / 5 * W;
+        d5 :=  5 / 5 * W;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "d2; d3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+<!-- center -->
+        <Part>
+            <Vertices>
+                <Add Vector = "d1; d1; d2" />
+                <Add Vector = "d4; d1; d2" />
+                <Add Vector = "d1; d1; d3" />
+                <Add Vector = "d4; d1; d3" />
+                <Add Vector = "d1; d4; d2" />
+                <Add Vector = "d4; d4; d2" />
+                <Add Vector = "d1; d4; d3" />
+                <Add Vector = "d4; d4; d3" />
+            </Vertices>
+
+            <Faces>
+                <Face Color="clBlue" VertexIndexes = "0;1;3;2" />
+                <Face Color="clGreen" VertexIndexes = "5;4;6;7" />
+                <Face VertexIndexes = "1;0;4;5" />
+                <Face VertexIndexes = "2;3;7;6" />
+                <Face Color="clRed" VertexIndexes = "0;2;6;4" />
+                <Face Color="clOrange" VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+
+<!-- up-down -->
+        <Part>
+            <Vertices>
+                <Add Vector = "d2; d2; d1" />
+                <Add Vector = "d3; d2; d1" />
+                <Add Vector = "d2; d2; d4" />
+                <Add Vector = "d3; d2; d4" />
+                <Add Vector = "d2; d3; d1" />
+                <Add Vector = "d3; d3; d1" />
+                <Add Vector = "d2; d3; d4" />
+                <Add Vector = "d3; d3; d4" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = "0;1;3;2" />
+                <Face VertexIndexes = "5;4;6;7" />
+                <Face Color="clYellow" VertexIndexes = "1;0;4;5" />
+                <Face Color="clWhite" VertexIndexes = "2;3;7;6" />
+                <Face VertexIndexes = "0;2;6;4" />
+                <Face VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Add^" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "d2; d1; d3" />
+                    <Add Vector = "d3; d1; d3" />
+                    <Add Vector = "d1; d1; d4" />
+                    <Add Vector = "d2; d1; d4" />
+                    <Add Vector = "d3; d1; d4" />
+                    <Add Vector = "d1; d1; d5" />
+                    <Add Vector = "d2; d1; d5" />
+                    <Add Vector = "d3; d1; d5" />
+
+                    <Add Vector = "d2; d2; d3" />
+                    <Add Vector = "d3; d2; d3" />
+                    <Add Vector = "d1; d2; d4" />
+                    <Add Vector = "d2; d2; d4" />
+                    <Add Vector = "d3; d2; d4" />
+                    <Add Vector = "d1; d2; d5" />
+                    <Add Vector = "d2; d2; d5" />
+                    <Add Vector = "d3; d2; d5" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "C1" VertexIndexes = "0;1;4;3" />
+                    <Face Color = "C1" VertexIndexes = "2;3;6;5" />
+                    <Face Color = "C1" VertexIndexes = "3;4;7;6" />
+
+                    <Face VertexIndexes = "9;8;11;12" />
+                    <Face VertexIndexes = "11;10;13;14" />
+                    <Face VertexIndexes = "12;11;14;15" />
+
+                    <Face VertexIndexes = "1;0;8;9" />
+                    <Face VertexIndexes = "0;3;11;8" />
+                    <Face VertexIndexes = "3;2;10;11" />
+                    <Face Color = "C2" VertexIndexes = "2;5;13;10" />
+                    <Face Color = "C3" VertexIndexes = "5;6;14;13" />
+                    <Face Color = "C3" VertexIndexes = "6;7;15;14" />
+                    <Face VertexIndexes = "7;4;12;15" />
+                    <Face VertexIndexes = "4;1;9;12" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Add^" C1 = "clBlue  " C2 = "clRed   " C3 = "clWhite " />
+        <ExecMacro MacroName = "Add^" C1 = "clRed   " C2 = "clGreen " C3 = "clWhite " />
+        <ExecMacro MacroName = "Add^" C1 = "clGreen " C2 = "clOrange" C3 = "clWhite " />
+        <ExecMacro MacroName = "Add^" C1 = "clOrange" C2 = "clBlue  " C3 = "clWhite " />
+
+        <Turn NormVector = "1; 0; 0" Angle = "Pi" />
+
+        <ExecMacro MacroName = "Add^" C1 = "clGreen " C2 = "clRed   " C3 = "clYellow" />
+        <ExecMacro MacroName = "Add^" C1 = "clRed   " C2 = "clBlue  " C3 = "clYellow" />
+        <ExecMacro MacroName = "Add^" C1 = "clBlue  " C2 = "clOrange" C3 = "clYellow" />
+        <ExecMacro MacroName = "Add^" C1 = "clOrange" C2 = "clGreen " C3 = "clYellow" />
+
+        <Turn NormVector = "1; 0; 0" Angle = "Pi" />
+
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameDirection" />
+</xml>

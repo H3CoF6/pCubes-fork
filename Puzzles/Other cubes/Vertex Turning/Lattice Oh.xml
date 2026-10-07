@@ -1,0 +1,37 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Lattice Oh</Name>
+        <Menu>Other cubes\Vertex Turning\Lattice Oh</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5778</Link>
+        <Added>2024-04-22</Added>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        A := 2*Pi / 3;
+        D1 := W / sqrt(3); // appr. W * 0.57
+        D2 := W * 0.84;
+    </Script>
+
+    <Axes TurningAngles = " 0; A; A" PlaneDistances = "D1; D2" NormVectors = " Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = " Vx; Vy; Vz" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " Vx; Vy; Vz" />
+        <ShowAll/>
+    </Figure>
+</xml>

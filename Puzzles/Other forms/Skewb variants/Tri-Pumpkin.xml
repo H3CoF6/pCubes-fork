@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tri-Pumpkin</Name>
+        <Menu>Other forms\Skewb variants\Tri-Pumpkin</Menu>
+        <Menu>Other forms\Bifrustum\Triangular Bifrustum\Tri-Pumpkin</Menu>
+        <Inventor>Mickey Chow (周昊)</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4566</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'EDFF11';
+        clRed    := 'C80000';
+        clGreen  := '009600';
+        clBlue   := '0000C8';
+        clWhite  := 'FFFFFF';
+
+        R := 0.7;
+        sAngle := Pi * 2 / 3;
+        for i := 0 to 2 do begin
+            ax[i] := R * sin(sAngle * i);
+            ay[i] := R * cos(sAngle * i);
+            vx[i] := ax[i] / 2;
+            vy[i] := ay[i] / 2;
+        end;
+
+        H := R / sqrt(2) / 2;
+        az := H;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+        <Axis NormVector = "ax[0]; ay[0];-az" />
+        <Axis NormVector = "ax[1]; ay[1];-az" />
+        <Axis NormVector = "ax[2]; ay[2];-az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "vx; vy;-H" />
+            <Vertices Vectors = "ax; ay; 0" />
+            <Vertices Vectors = "vx; vy; H" />
+            <Faces>
+                <Face Color = "clWhite " VertexIndexes = "0;1;2" />
+                <Face Color = "clYellow" VertexIndexes = "7;6;8" />
+                <Face Color = "clGreen " VertexIndexes = "0;3;4;1" />
+                <Face Color = "clGreen " VertexIndexes = "3;6;7;4" />
+                <Face Color = "clBlue  " VertexIndexes = "1;4;5;2" />
+                <Face Color = "clBlue  " VertexIndexes = "4;7;8;5" />
+                <Face Color = "clRed   " VertexIndexes = "2;5;3;0" />
+                <Face Color = "clRed   " VertexIndexes = "5;8;6;3" />
+            </Faces>
+        </Part>
+        <Split Axis = "0" From = "1" />
+        <Turn Axis = "0" Angle = " Pi / 3" Layer = "0" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "-Pi / 3" Layer = "0" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

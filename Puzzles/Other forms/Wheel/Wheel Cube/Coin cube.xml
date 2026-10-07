@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Coin cube</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Coin cube</Menu>
+        <Inventor>Yukang Wu</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-08-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6861</Link>
+    </Interface>
+
+    <Script>
+        W := 0.425;
+
+        CylinderWidth := W / 3;
+        RC := W * 1.0;
+        Wc := W + CylinderWidth;
+        Sc := 1.3;
+
+        D1 := W *1.33;
+        D2 := W;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2; 0; Pi / 2" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 3; 0; 2 * Pi / 3" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0; 0; 0" />
+   </Figure>
+</xml>

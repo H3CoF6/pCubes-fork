@@ -1,0 +1,101 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Augmented Tridiminished Radio Chop</Name>
+        <Menu>Other forms\Johnson Solids\(J64) Augmented Tridiminished Icosahedron\Augmented Tridiminished Radio Chop</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-02-10</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '3030FF';
+        clGreen   := '00C000';
+        clRed1    := 'FF0000';
+        clRed2    := 'FF0001';
+        clRed3    := 'FF0100';
+        clYellow1 := 'FFFF01';
+        clBlue1   := '3030FE';
+        clGreen1  := '00C001';
+        clOrange  := 'FF6A00';
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        C0 := R * (1 + sqrt(5)) / 4;
+        C1 := R * (3 + 4 * sqrt(2) + sqrt(5)) / 12;
+        C2 := R / 2;
+
+        S0 := C2 + 2 * C0;
+        S1 := C0 + 2 * C2;
+        S2 := C2 - 2 * C0;
+
+        Sc := R / RSin / 5;
+
+        X := 0;
+        Y := S1 * Sc;
+        Z := S2 * Sc;
+
+        X1 := X;
+        X2 := X - C0 - C2;
+        Y1 := Y;
+        Y2 := Y + C2;
+        Z1 := Z - 2 * C0;
+        Z2 := Z - C0;
+
+        jumAngle := Arcsin(1/4) + Pi/6;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" JumbleAngle = "jumAngle" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " C0; S0;  0" />
+        <Axis NormVector = " S0;  0; C0" />
+        <Axis NormVector = "  0; C0; S0" />
+        <Axis NormVector = " C1; C1; C1" />
+        <Axis NormVector = " X1; Y1; Z1" />
+        <Axis NormVector = " X2; Y2; Z2" />
+        <Axis NormVector = " Y1; Z1; X1" />
+        <Axis NormVector = " Y2; Z2; X2" />
+        <Axis NormVector = " Z1; X1; Y1" />
+        <Axis NormVector = " Z2; X2; Y2" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " C0; C2;  0" />
+                <Add Vector = "  0; C0; C2" />
+                <Add Vector = " C2;  0; C0" />
+                <Add Vector = "-C0; C2;  0" />
+                <Add Vector = "  0;-C0; C2" />
+                <Add Vector = " C2;  0;-C0" />
+                <Add Vector = "-C0;-C2;  0" />
+                <Add Vector = "  0;-C0;-C2" />
+                <Add Vector = "-C2;  0;-C0" />
+                <Add Vector = " C1; C1; C1" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange"  VertexIndexes = "6;8;7" />
+                <Face Color = "clBlue1"   VertexIndexes = "6;7;4" />
+                <Face Color = "clYellow1" VertexIndexes = "8;6;3" />
+                <Face Color = "clGreen1"  VertexIndexes = "7;8;5" />
+                <Face Color = "clRed1"    VertexIndexes = "9;0;1" />
+                <Face Color = "clRed2"    VertexIndexes = "9;1;2" />
+                <Face Color = "clRed3"    VertexIndexes = "9;2;0" />
+
+                <Face Color = "clBlue"    VertexIndexes = "0;5;8;3;1" />
+                <Face Color = "clGreen"   VertexIndexes = "1;3;6;4;2" />
+                <Face Color = "clYellow"  VertexIndexes = "2;4;7;5;0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/4" />
+        <Turn NormVector = "1;0;0" Angle = "arctan(sqrt(2))" />
+    </Figure>
+</xml>

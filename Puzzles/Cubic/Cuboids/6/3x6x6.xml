@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cuboid 3x6x6</Name>
+        <Menu>Cubic\Cuboids\6\3x6x6</Menu>
+        <Inventor>Traiphum Prungtaengkit</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6315</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        X := 6;
+        Y := 6;
+        Z := 3;
+        Add := 1.5;
+
+        N := Max(x, y);
+        WD := W / (N / 2 + Add);
+        for i := 0 to N - 2 do
+            D[i] := WD * i - WD * (N / 2 - 1);
+        for i := 0 to Z - 2 do
+            DZ[i] := WD * i - WD * (Z / 2 - 1);
+
+        WX := WD * (X / 2 + Add);
+        WY := WD * (Y / 2 + Add);
+        WZ := WD * (Z / 2 + Add);
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "DZ" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Cx[c];Cy[c];Cz[c]" NormDistance = "WD * (-L / 2 + i)" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" c = "1" L = "X" i = "1" Repeat = "X - 1" />
+        <ExecMacro MacroName = "Split" c = "3" L = "Y" i = "1" Repeat = "Y - 1" />
+        <ExecMacro MacroName = "Split" c = "5" L = "Z" i = "1" Repeat = "Z - 1" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

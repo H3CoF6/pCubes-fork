@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Edge Turning Corner 3x3x3</Name>
+        <Menu>Other cubes\Multi-core\Edge Turning Corner 3x3x3</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-05</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0077EE'; // Blue
+        Colors[3] := '00CC00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D1 := W / 5;
+        D2 := D1 * 3;
+        D3 := D1 * sqrt(2);
+        D4 := D3 * 4;
+ 
+        dAngle := 0.001;
+        t := Tan(dAngle);
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = " 0; Pi/4 + dAngle; Pi*2/4; Pi*3/4 + dAngle; Pi; Pi*5/4 + dAngle; Pi*6/4; Pi*7/4 + dAngle" PlaneDistances = " D1" NormVectors = " Cx; Cy; Cz" />
+
+    <Axes TurningAngles = "Pi;0;Pi" PlaneDistances = "-D4; D4" >
+        <Axis NormVector = " 0;-t; 1" BaseVector = " D2;  0;  0" />
+        <Axis NormVector = " 0; t; 1" BaseVector = "-D2;  0;  0" />
+        <Axis NormVector = " 0; 1;-t" BaseVector = "-D2;  0;  0" />
+        <Axis NormVector = " 0; 1; t" BaseVector = " D2;  0;  0" />
+        <Axis NormVector = " 1; 0;-t" BaseVector = "  0; D2;  0" />
+        <Axis NormVector = " 1; 0; t" BaseVector = "  0;-D2;  0" />
+        <Axis NormVector = "-t; 0; 1" BaseVector = "  0;-D2;  0" />
+        <Axis NormVector = " t; 0; 1" BaseVector = "  0; D2;  0" />
+        <Axis NormVector = "-t; 1; 0" BaseVector = "  0;  0; D2" />
+        <Axis NormVector = " t; 1; 0" BaseVector = "  0;  0;-D2" />
+        <Axis NormVector = " 1;-t; 0" BaseVector = "  0;  0;-D2" />
+        <Axis NormVector = " 1; t; 0" BaseVector = "  0;  0; D2" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+
+        <Macro Name = "SplitCorner" >
+            <Hide> <Plane NormVector = " 0; 0; 1" NormDistance = "D1" /></Hide>
+            <Split><Plane NormVector = " 1; 1; 0" NormDistance = "D4" /></Split>
+            <Hide> <Plane NormVector = " 1; 1; 0" NormDistance = "D4" /></Hide>
+            <Split><Plane NormVector = " 1; 0;-1" NormDistance = "D3" /></Split>
+            <Split><Plane NormVector = " 0; 1;-1" NormDistance = "D3" /></Split>
+            <ShowAll/>
+            <Turn NormVector = "1;1;1" Angle = "2*Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "SplitCorner" Repeat = "3" />
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+    </Figure>
+</xml>

@@ -1,0 +1,132 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>SixCylinder Megaminx V2</Name>
+        <Menu>Other forms\Steinmetz\SixCylinder\SixCylinder Megaminx V2</Menu>
+        <Menu>Other forms\Star\SixCylinder Megaminx V2</Menu>
+        <Inventor>Alexandr Abalikhin</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-11-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5560</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '707070'; // Gray
+        Colors[ 1] := 'FF6000'; // Orange
+        Colors[ 2] := '202020'; // Black
+        Colors[ 3] := '00BFFF'; // DeepSky
+        Colors[ 4] := 'A0A0A0'; // Silver
+
+        Colors[ 5] := '800080'; // Purple
+        Colors[ 6] := 'DA70D6'; // Orchid
+        Colors[ 7] := 'FFFF00'; // Yellow
+        Colors[ 8] := '00FFFF'; // Cyan
+        Colors[ 9] := 'F0E68C'; // Khaki
+
+        Colors[10] := 'DC143C'; // Crimson
+        Colors[11] := 'ADFF2F'; // GreenYellow
+        Colors[12] := 'FF0000'; // Red
+        Colors[13] := 'F0F0F0'; // White
+        Colors[14] := 'CD5C5C'; // Indian
+
+        Colors[15] := '808000'; // Olive
+        Colors[16] := 'DDBB20'; // Golden
+        Colors[17] := '00FF00'; // Lime
+        Colors[18] := 'C0C0C0'; // Gainsboro
+        Colors[19] := '006400'; // DarkGreen
+
+        Colors[20] := 'FF00FF'; // Fuchsia
+        Colors[21] := '0000FF'; // Blue
+        Colors[22] := 'FF69B4'; // Pink
+        Colors[23] := '008000'; // Green
+        Colors[24] := 'D07090'; // Pale
+
+        Colors[25] := '800000'; // Brown
+        Colors[26] := 'FF7F50'; // Coral
+        Colors[27] := '008080'; // Teal
+        Colors[28] := '3cb371'; // SeaGreen
+        Colors[29] := '000080'; // Navy
+
+        R := 0.35;
+
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * 1.05;
+
+        N := 10;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <Macro Name = "Cut" >
+            <Cut Color = "cl" InvisibleEdges = "-1" ><Plane NormVector = "0; 1; -2" NormDistance = "-R" /></Cut>
+            <Turn NormVector = "0; 2; 1" Angle = " 2 * Pi / N / 5" />   <!-- <0; 1; -2> = (C0 x C1) x (C1) -->
+        </Macro>
+        <Macro Name = "Cut10" >
+            <Turn NormVector = "0; 2; 1" Angle = " Pi / 5 * (1 / N - 1)" /> <!-- "<0; 2; 1> = <Cx[1];Cy[1];Cz[1]> -->
+            <ExecMacro MacroName = "Cut" Repeat = "N" />
+            <Turn NormVector = "0; 2; 1" Angle = "-Pi / 5 * (1 / N + 1)" />
+        </Macro>
+        <Macro Name = "CutShard" >
+            <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "R * 2" />
+            <ExecMacro MacroName = "Cut10" cl = "cl1" />
+            <Turn NormVector = "Ex[0];Ey[0];Ez[0]" Angle = " Pi" />
+            <ExecMacro MacroName = "Cut10" cl = "cl2" />
+            <Turn NormVector = "Ex[0];Ey[0];Ez[0]" Angle = " Pi" />
+            <Cut>  <Plane NormVector = " Ex[ 7]; Ey[ 7]; Ez[ 7]" NormDistance = "0" /></Cut>
+            <Cut>  <Plane NormVector = " Ex[ 9]; Ey[ 9]; Ez[ 9]" NormDistance = "0" /></Cut>
+            <Cut>  <Plane NormVector = " Ex[11]; Ey[11]; Ez[11]" NormDistance = "0" /></Cut>
+            <Cut>  <Plane NormVector = "-Ex[12];-Ey[12];-Ez[12]" NormDistance = "0" /></Cut>
+            <Split><Plane NormVector = " Ex[ 8]; Ey[ 8]; Ez[ 8]" NormDistance = "0" /></Split>
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" ><Plane NormVector = " Ex[14]; Ey[14]; Ez[14]" NormDistance = "0" /></Split>
+            <HideAll/>
+        </Macro>
+
+        <Macro Name = "CreateShardAndOpposite" >
+            <ExecMacro MacroName = "CutShard" />
+            <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+            <ExecMacro MacroName = "CutShard" />
+            <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        </Macro>
+
+        <Macro Name = "Shard5" >
+            <ExecMacro MacroName = "CreateShardAndOpposite" cl1 = "Colors[c + 0]" cl2 = "Colors[c + 1]" />
+            <Turn NormVector = " 0; 0; 1" Angle = " 2 * Pi / 5" />
+            <ExecMacro MacroName = "CreateShardAndOpposite" cl1 = "Colors[c + 2]" cl2 = "Colors[c + 3]" />
+            <Turn NormVector = " 0; 0; 1" Angle = "-4 * Pi / 5" />
+            <ExecMacro MacroName = "CreateShardAndOpposite" cl1 = "Colors[c + 4]" cl2 = "Colors[c + 5]" />
+            <Turn NormVector = " 0; 0; 1" Angle = " 2 * Pi / 5" />
+            <Turn NormVector = "Cx[1]; Cy[1]; Cz[1]" Angle = " 2 * Pi / 5" />
+            <ExecMacro MacroName = "CreateShardAndOpposite" cl1 = "Colors[c + 6]" cl2 = "Colors[c + 7]" />
+            <Turn NormVector = "Cx[1]; Cy[1]; Cz[1]" Angle = "-4 * Pi / 5" />
+            <ExecMacro MacroName = "CreateShardAndOpposite" cl1 = "Colors[c + 8]" cl2 = "Colors[c + 9]" />
+            <Turn NormVector = "Cx[1]; Cy[1]; Cz[1]" Angle = " 2 * Pi / 5" />
+        </Macro>
+
+        <ExecMacro MacroName = "Shard5" c = "0" />
+        <Turn NormVector = "Vx[2]; Vy[2]; Vz[2]" Angle = "-2 * Pi / 3" />
+        <ExecMacro MacroName = "Shard5" c = "10" />
+        <Turn NormVector = "Vx[4]; Vy[4]; Vz[4]" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "Shard5" c = "20" />
+        <Turn NormVector = "Vx[4]; Vy[4]; Vz[4]" Angle = "-2 * Pi / 3" />
+        <Turn NormVector = "Vx[2]; Vy[2]; Vz[2]" Angle = " 2 * Pi / 3" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <!-- Remove invisible core -->
+        <Macro Name = "HideSide" >
+            <Hide Axis = "i" From = "1" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideSide" i = "0" Repeat = "12" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

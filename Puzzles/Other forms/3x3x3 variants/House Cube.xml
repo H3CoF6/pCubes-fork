@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>House Cube</Name>
+        <Menu>Other forms\3x3x3 variants\House Cube</Menu>
+        <Inventor>Nikola Tutic</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2833</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        Colors[0] := clBlue;
+        Colors[1] := clGreen;
+        Colors[2] := clWhite;
+        Colors[3] := clYellow;
+        Colors[4] := clOrange;
+
+        W := 0.5;
+        D := W / 3;
+        DCut := (W + D) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W * 1.5" DWZ = "W * 0.5"  />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <HideContaining Vector = "-W; 0; W" />
+        <Cut Color = "clRed" ><Plane NormVector = "-1; 0;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = " 1; 0;-1" NormDistance = "-DCut" /></Cut>
+        <InvertVisibility/>
+        <Cut Color = "clRed" ><Plane NormVector = " 0; 0;-1" NormDistance = "-W" /></Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

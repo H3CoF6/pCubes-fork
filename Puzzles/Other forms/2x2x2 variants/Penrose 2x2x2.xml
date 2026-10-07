@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Penrose 2x2x2</Name>
+        <Menu>Other forms\2x2x2 variants\Penrose 2x2x2</Menu>
+        <Inventor>Zigor Martinez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8905</Link>
+    </Interface>
+ 
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        Colors[2] := clYellow;
+        Colors[3] := clRed;
+        Colors[5] := clOrange;
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <RemoveContaining Vector = "-W; W;-W" />
+        <RemoveContaining Vector = "-W;-W;-W" />
+        <RemoveContaining Vector = " W;-W;-W" />
+        <RemoveContaining Vector = " W;-W; W" />
+        <RemoveContaining Vector = " W; W; W" />
+        <RemoveContaining Vector = "-W; W; W" />
+
+        <RemoveContaining Vector = " 0;-W;-W" />
+        <RemoveContaining Vector = " W; 0; W" />
+        <RemoveContaining Vector = "-W; W; 0" />
+
+        <InvertVisibility/>
+
+        <Cylinder Radius = "W" Color = "clOrange" Base = " 0;-W; 0" BaseColor = "clYellow" Top = " 0; W; 0" TopColor = "clRed" />
+        <Cut> <Plane NormVector = " 1; 0; 0" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+        <HideAll/>
+        <Cylinder Radius = "W" Color = "clYellow" Base = "-W; 0; 0" BaseColor = "clRed" Top = " W; 0; 0" TopColor = "clOrange" />
+        <Cut> <Plane NormVector = " 0;-1; 0" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" /> </Cut>
+        <HideAll/>
+        <Cylinder Radius = "W" Color = "clRed" Base = " 0; 0; W" BaseColor = "clOrange" Top = " 0; 0;-W" TopColor = "clYellow" />
+        <Cut> <Plane NormVector = "-1; 0; 0" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = ' W; W;-W' />
+        <HideContaining Vector = '-W;-W; W' />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

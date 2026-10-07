@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Void Icosidodecahedron</Name>
+        <Menu>Other forms\Void\Archimedean\Icosidodecahedron</Menu>
+        <Programmer>Knightcrawler</Programmer>
+        <Added>2016-10-24</Added>
+    </Interface>
+
+    <Script>        
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        vColors[ 0] := '4070F1';
+        vColors[ 1] := '00F200';
+        vColors[ 2] := 'FFF3FF';
+        vColors[ 3] := 'FFF400';
+        vColors[ 4] := '004070';
+        vColors[ 5] := '800070';
+        vColors[ 6] := 'BF8050';
+        vColors[ 7] := '309070';
+        vColors[ 8] := 'FE0000';
+        vColors[ 9] := 'FE0080';
+        vColors[10] := '80CF80';
+        vColors[11] := 'FF700A';
+        vColors[12] := '4D1340';
+        vColors[13] := '9E0000';
+        vColors[14] := '7F7040';
+        vColors[15] := 'C1C4C7';
+        vColors[16] := 'FACD05';
+        vColors[17] := '734092';
+        vColors[18] := 'E23475';
+        vColors[19] := '008200';
+        
+        Cut := (sqrt(5)/6 + 1/2) * R;
+
+        D1 := 0.55;
+        D2 := D1 * sqrt((5 - sqrt(5)) * 3 / 10);
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D1;D1" FixedLayers = "1" >
+        <Axis NormVector = "vx[0]; vy[0]; vz[0]" />
+        <Axis NormVector = "vx[1]; vy[1]; vz[1]" />
+        <Axis NormVector = "vx[2]; vy[2]; vz[2]" />
+        <Axis NormVector = "vx[3]; vy[3]; vz[3]" />
+        <Axis NormVector = "vx[4]; vy[4]; vz[4]" />
+        <Axis NormVector = "vx[5]; vy[5]; vz[5]" />
+        <Axis NormVector = "vx[6]; vy[6]; vz[6]" />
+        <Axis NormVector = "vx[7]; vy[7]; vz[7]" />
+        <Axis NormVector = "vx[8]; vy[8]; vz[8]" />
+        <Axis NormVector = "vx[9]; vy[9]; vz[9]" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 5" PlaneDistances = "-D2;D2" FixedLayers = "1" >
+        <Axis NormVector = "cx[0]; cy[0]; cz[0]" />
+        <Axis NormVector = "cx[1]; cy[1]; cz[1]" />
+        <Axis NormVector = "cx[2]; cy[2]; cz[2]" />
+        <Axis NormVector = "cx[3]; cy[3]; cz[3]" />
+        <Axis NormVector = "cx[4]; cy[4]; cz[4]" />
+        <Axis NormVector = "cx[5]; cy[5]; cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "CutVertex" >
+            <Cut Color="vColors[i]" > <Plane NormVector = "-vx[i];-vy[i];-vz[i]" NormDistance = "-Cut" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutVertex" i = "0" Repeat = "20" />
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "Remove5" >
+            <RemoveContaining Vector = "cx[i]; cy[i]; cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Remove5" i = "0" Repeat = "12" />
+
+        <Macro Name = "Remove3" >
+            <RemoveContaining Vector = "vx[i]*K; vy[i]*K; vz[i]*K" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Remove3" i = "0" Repeat = "20" K = "0.8" />
+
+    </Figure>
+</xml>

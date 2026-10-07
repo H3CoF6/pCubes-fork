@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star Pentagram II</Name>
+        <Menu>Other forms\Star\Star Pentagram II</Menu>
+        <Inventor>Dario Dagné</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7133</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF'; // White
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := '00AA00'; // Green
+        Colors[3] := 'FF7700'; // Orange
+        Colors[4] := 'EE0000'; // Red
+        Colors[5] := 'AA00AA'; // Purple
+        Colors[6] := '0033FF'; // Blue
+
+        R := 0.7;
+
+        R1 := R * 0.63;
+
+        sAngle := Pi * 2 / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+            xi[i] := R1 * sin(sAngle * (i + 0.5));
+            yi[i] := R1 * cos(sAngle * (i + 0.5));
+        end;
+
+        H := (xi[0] - xi[4]) / 4;
+        D := R1 * cos(Pi / 5);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+        <Axis NormVector = "x[3]; y[3]; 0" />
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "  x;  y; H" />
+            <Vertices Vectors = "  x;  y;-H" />
+            <Vertices Vectors = " xi; yi; H" />
+            <Vertices Vectors = " xi; yi;-H" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "14; 4;13; 3;12; 2;11; 1;10; 0" />
+                <Face Color = "Colors[1]" VertexIndexes = " 5;15; 6;16; 7;17; 8;18; 9;19" />
+                <Face Color = "Colors[2]" VertexIndexes = " 5; 0;10;15" />
+                <Face Color = "Colors[2]" VertexIndexes = " 1; 6;15;10" />
+                <Face Color = "Colors[3]" VertexIndexes = " 6; 1;11;16" />
+                <Face Color = "Colors[3]" VertexIndexes = " 2; 7;16;11" />
+                <Face Color = "Colors[6]" VertexIndexes = " 7; 2;12;17" />
+                <Face Color = "Colors[6]" VertexIndexes = " 3; 8;17;12" />
+                <Face Color = "Colors[5]" VertexIndexes = " 8; 3;13;18" />
+                <Face Color = "Colors[5]" VertexIndexes = " 4; 9;18;13" />
+                <Face Color = "Colors[4]" VertexIndexes = " 9; 4;14;19" />
+                <Face Color = "Colors[4]" VertexIndexes = " 0; 5;19;14" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "3" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "4" Layer = "1" Angle = " Pi/2" />
+        <Split Axis = "5" From = "1" />
+        <Undo Repeat = "5" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

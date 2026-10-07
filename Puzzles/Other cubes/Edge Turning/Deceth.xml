@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Deceth</Name>
+        <Menu>Other cubes\Edge Turning\Deceth</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-09-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6782</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W / sqrt(8);
+        jumAngle := Arccos(1/3);
+
+        DX := W * 0.9;
+        DZ := (W - D * sqrt(2)) * 0.9;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "jumAngle" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Cut" >
+            <HideContaining Vector = "-DX;-W; DZ" />
+            <InvertVisibility/>
+            <Turn NormVector = " 0; 1; 1" Angle = "jumAngle" />
+            <Cut><Plane NormVector = " 1; 0; 1" NormDistance = " D" /></Cut>
+            <Turn NormVector = " 0; 1; 1" Angle = "-jumAngle" />
+            <ShowAll/>
+
+            <HideContaining Vector = " DX;-W; DZ" />
+            <InvertVisibility/>
+            <Turn NormVector = " 0; 1; 1" Angle = "-jumAngle" />
+            <Cut><Plane NormVector = "-1; 0; 1" NormDistance = " D" /></Cut>
+            <Turn NormVector = " 0; 1; 1" Angle = "jumAngle" />
+
+            <ShowAll/>
+            <RemoveContaining Vector = "-DZ;-DX; 0" />
+
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+    </Figure>
+
+    <Macros>
+        <Macro Name = "RandomTurns180" >
+            <Turn Axis = "Random(6)" Layer = "Random(3)" Angle = "Pi"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(6)" Layer = "Random(2)*2" Angle = "2*Pi * Random"/>
+        </Macro>
+        <Macro Name = "Scramble180" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns180" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble180" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "200" />
+        </Macro>
+    </Macros>
+</xml>

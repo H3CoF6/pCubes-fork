@@ -1,0 +1,102 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Face Turning Master (Pochmann Coloring)</Name>
+        <Menu>Other forms\Octahedron\Face Turning\Face Turning Master (Pochmann Coloring)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2026-01-11</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Octahedron_Standard_Colors.inc';
+
+        W := 0.75;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+
+        D := W / sqrt(3) / 2;
+
+        A := W * 5 / 6;
+        B := W / 12;
+
+        E := W * 5 / 12;
+        F := W * 7 / 24;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Side" >
+            <Face Color = "Colors[c0]" VertexIndexes = "w1;w2;w3"    InvisibleEdges = "-1" />
+            <Face Color = "Colors[c1]" VertexIndexes = "v1;v2;w2;w1" InvisibleEdges = "14" />
+            <Face Color = "Colors[c2]" VertexIndexes = "v2;v3;w3;w2" InvisibleEdges = "14" />
+            <Face Color = "Colors[c3]" VertexIndexes = "v3;v1;w1;w3" InvisibleEdges = "14" />
+        </Macro>
+
+        <Macro Name = "MakeOctahedron">
+            <Part>
+                <Vertices Vectors = "Vx;Vy;Vz" />
+                <Vertices>
+                    <Add Vector = " S; T; T" />
+                    <Add Vector = " T; S; T" />
+                    <Add Vector = " T; T; S" />
+                    <Add Vector = " S; T;-T" />
+                    <Add Vector = " T; S;-T" />
+                    <Add Vector = " T; T;-S" />
+                    <Add Vector = " S;-T; T" />
+                    <Add Vector = " T;-S; T" />
+                    <Add Vector = " T;-T; S" />
+                    <Add Vector = " S;-T;-T" />
+                    <Add Vector = " T;-S;-T" />
+                    <Add Vector = " T;-T;-S" />
+                    <Add Vector = "-S; T; T" />
+                    <Add Vector = "-T; S; T" />
+                    <Add Vector = "-T; T; S" />
+                    <Add Vector = "-S; T;-T" />
+                    <Add Vector = "-T; S;-T" />
+                    <Add Vector = "-T; T;-S" />
+                    <Add Vector = "-S;-T; T" />
+                    <Add Vector = "-T;-S; T" />
+                    <Add Vector = "-T;-T; S" />
+                    <Add Vector = "-S;-T;-T" />
+                    <Add Vector = "-T;-S;-T" />
+                    <Add Vector = "-T;-T;-S" />
+                </Vertices>
+
+                <Faces>
+                    <ExecMacro MacroName = "Side" c0 = "0" c1 = "4" c2 = "1" c3 = "3" v1 = " 0" v2 = " 2" v3 = " 5" w1 = "24" w2 = "25" w3 = "26" />
+                    <ExecMacro MacroName = "Side" c0 = "1" c1 = "0" c2 = "5" c3 = "2" v1 = " 5" v2 = " 2" v3 = " 1" w1 = "14" w2 = "13" w3 = "12" />
+                    <ExecMacro MacroName = "Side" c0 = "2" c1 = "1" c2 = "6" c3 = "3" v1 = " 5" v2 = " 1" v3 = " 3" w1 = " 8" w2 = " 6" w3 = " 7" />
+                    <ExecMacro MacroName = "Side" c0 = "3" c1 = "2" c2 = "7" c3 = "0" v1 = " 5" v2 = " 3" v3 = " 0" w1 = "20" w2 = "19" w3 = "18" />
+                    <ExecMacro MacroName = "Side" c0 = "4" c1 = "5" c2 = "0" c3 = "7" v1 = " 4" v2 = " 2" v3 = " 0" w1 = "29" w2 = "28" w3 = "27" />
+                    <ExecMacro MacroName = "Side" c0 = "5" c1 = "6" c2 = "1" c3 = "4" v1 = " 4" v2 = " 1" v3 = " 2" w1 = "17" w2 = "15" w3 = "16" />
+                    <ExecMacro MacroName = "Side" c0 = "6" c1 = "7" c2 = "2" c3 = "5" v1 = " 4" v2 = " 3" v3 = " 1" w1 = "11" w2 = "10" w3 = " 9" />
+                    <ExecMacro MacroName = "Side" c0 = "7" c1 = "4" c2 = "3" c3 = "6" v1 = " 4" v2 = " 0" v3 = " 3" w1 = "23" w2 = "21" w3 = "22" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "MakeOctahedron" S = "A" T = "B" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <RemoveContaining Vector = "Cx; Cy; Cz" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "MakeOctahedron" S = "E" T = "F" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Cx; Cy; Cz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

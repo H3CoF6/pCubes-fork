@@ -1,0 +1,147 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fractal Twist</Name>
+        <Menu>Other forms\2d\Fractal Twist</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-11-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7012</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clOrange := 'FF6000';
+        clYellow := 'FFFF00';
+        clGreen  := '008000';
+        clBlue   := '0000A0';
+        clBlack  := '333333';
+
+        R := 0.5;
+        H := R / 6;
+
+        An := Pi / 30;
+        A[0] := -23 * An; //  0
+        A[1] := -17 * An; // +6
+        A[2] :=  -9 * An; // +8
+        A[3] :=   1 * An; // +10
+        A[4] :=  13 * An; // +12
+
+        for i := 0 to 4 do begin
+            Ax[i] := cos(A[i]);
+            Ay[i] := sin(A[i]);
+        end;
+
+        D1 := R * cos(An *  5);
+        D2 := R * cos(An *  7);
+        D3 := R * cos(An *  9);
+        D4 := R * cos(An * 11);
+        D5 := R * cos(An * 13);
+
+        // Cylinder
+
+        N := 60;
+        An := 2*Pi / N;
+
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(An * i);
+            y[i] := R * sin(An * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" >
+        <Axis NormVector = " Ax[0]; Ay[0]; 0" PlaneDistances = "D1" />
+        <Axis NormVector = " Ax[1]; Ay[1]; 0" PlaneDistances = "D2" />
+        <Axis NormVector = " Ax[2]; Ay[2]; 0" PlaneDistances = "D3" />
+        <Axis NormVector = " Ax[3]; Ay[3]; 0" PlaneDistances = "D4" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "Cylinder" >
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                    <Face Color = "Color" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "Cylinder" Color = "clBlue" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cylinder" Color = "clGreen" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "2" To   = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cylinder" Color = "clYellow" />
+        <Cut Axis = "2" From = "1" />
+        <Cut Axis = "3" To   = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cylinder" Color = "clOrange" />
+        <Cut Axis = "3" From = "1" />
+        <Cut> <Plane NormVector = "-Ax[4];-Ay[4]; 0" NormDistance = "-D5" /> </Cut>
+        <Turn Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split> <Plane NormVector = "-Ax[4];-Ay[4]; 0" NormDistance = "-D5" /> </Split>
+        <Undo/>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cylinder" Color = "clRed" />
+        <Cut Axis = "3" From = "1" />
+        <Cut> <Plane NormVector = " Ax[4]; Ay[4]; 0" NormDistance = " D5" /> </Cut>
+        <Turn Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split> <Plane NormVector = "-Ax[4];-Ay[4]; 0" NormDistance = "-D5" /> </Split>
+        <Undo/>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cylinder" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <ShowAll/>
+
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "0" Layer = "1" Angle = " Pi" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = " Pi" />
+            <SplitByAxes/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi" />
+            <SplitByAxes/>
+            <Turn Axis = "3" Layer = "1" Angle = " Pi" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" Repeat = "6" />
+        <Undo Repeat = "24" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

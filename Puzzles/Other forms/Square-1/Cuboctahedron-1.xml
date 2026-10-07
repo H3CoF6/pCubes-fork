@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cuboctahedron-1</Name>
+        <Menu>Other forms\Archimedean Solids\Cuboctahedron\Cuboctahedron-1</Menu>
+        <Menu>Other forms\Square-1\Cuboctahedron-1</Menu>
+        <Inventor>Matthew Ray</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2339</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '009600'; // Green
+        Colors[1] := '0000C8'; // Blue
+        Colors[2] := 'FFCC00'; // Yellow
+        Colors[3] := 'C80000'; // Red
+        Colors[4] := Colors[3];
+        Colors[5] := Colors[2];
+        Colors[6] := Colors[1];
+        Colors[7] := Colors[0];
+
+        W := 0.5;
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        D := W / 3;
+        DCut := W * 2 / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi / 12" />
+
+        <Macro Name = "AddCorner" >
+            <Face Color = "Color" VertexIndexes = "C0; E0; V; E1" InvisibleEdges = "9" />
+            <Face Color = "Color" VertexIndexes = "C1; E1; V; E2" InvisibleEdges = "9" />
+            <Face Color = "Color" VertexIndexes = "C2; E2; V; E0" InvisibleEdges = "9" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Cx; Cy; Cz" />
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Ex; Ey; Ez" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddCorner" Color = "Colors[0]" V = " 6" C0 = "0" C1 = "2" C2 = "4" E0 = "23" E1 = "25" E2 = "21" />
+                <ExecMacro MacroName = "AddCorner" Color = "Colors[1]" V = " 7" C0 = "5" C1 = "2" C2 = "0" E0 = "16" E1 = "14" E2 = "25" />
+                <ExecMacro MacroName = "AddCorner" Color = "Colors[2]" V = " 8" C0 = "3" C1 = "0" C2 = "4" E0 = "20" E1 = "24" E2 = "23" />
+                <ExecMacro MacroName = "AddCorner" Color = "Colors[3]" V = " 9" C0 = "0" C1 = "3" C2 = "5" E0 = "16" E1 = "24" E2 = "15" />
+                <ExecMacro MacroName = "AddCorner" Color = "Colors[4]" V = "10" C0 = "1" C1 = "4" C2 = "2" E0 = "18" E1 = "22" E2 = "21" />
+                <ExecMacro MacroName = "AddCorner" Color = "Colors[5]" V = "11" C0 = "1" C1 = "2" C2 = "5" E0 = "17" E1 = "18" E2 = "14" />
+                <ExecMacro MacroName = "AddCorner" Color = "Colors[6]" V = "12" C0 = "1" C1 = "3" C2 = "4" E0 = "22" E1 = "19" E2 = "20" />
+                <ExecMacro MacroName = "AddCorner" Color = "Colors[7]" V = "13" C0 = "1" C1 = "5" C2 = "3" E0 = "19" E1 = "17" E2 = "15" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Colors[v]" > <Plane NormVector = " Vx[v]; Vy[v]; Vz[v]" NormDistance = "-DCut" /> </Cut>
+            <Script> Inc(v); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" v = "0" Repeat = "8" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

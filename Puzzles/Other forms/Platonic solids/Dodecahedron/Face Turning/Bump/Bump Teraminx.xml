@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bump Teraminx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bump\Bump Teraminx</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-03-16</Added>
+    </Interface>
+
+    <Script>
+        clColor := 'EEEEEE';
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := (8 * Rsin + 4 * R2sin) / 12;
+        D2 := (7 * Rsin + 5 * R2sin) / 12;
+        D3 := (6 * Rsin + 6 * R2sin) / 12;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; sAngle; sAngle" PlaneDistances = "D3; D2; D1" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "R" />
+        <SplitByAxes/>
+
+        <Macro Name = "CutFaces" >
+            <Cut Color = "clColor" > <Plane NormVector = "Cx[i];Cy[i];Cz[i]" NormDistance = "-Rsin+0.0094*i" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "CutFaces" Repeat = "12" i = "0" />
+
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 12" />
+</xml>

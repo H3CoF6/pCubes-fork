@@ -1,0 +1,141 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Twisty Euro</Name>
+        <Menu>Other forms\Unclassified\Twisty Euro</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-12-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9408</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00AAAA'; // Cyan
+        Colors[1] := '0000C8'; // Blue
+        Colors[2] := 'E0C07D'; // Gold
+        Colors[3] := 'FFFFFF'; // White
+        Colors[4] := 'FF8080'; // LightRed
+
+        W := 0.5;
+        WY := W / 5;
+
+<!--// converting coordinates of profile Euro.vec:
+Size 362x315
+Line 332,-178, 312,-185, 292,-192, 272,-196, 248,-199, 227,-201, 207,-199, 189,-196, 173,-191, 160,-185, 148,-178, 135,-170, 123,-159, 117,-152, 109,-143, 101,-131, 95,-118, 90,-106, 85,-88, 71,-23, 70,23, 82,88, 87,105, 94,122, 102,137, 110,149, 120,160, 129,168, 140,176, 152,183, 167,190, 181,195, 193,198, 207,200, 224,201, 239,201, 254,200, 269,198, 283,196, 296,193, 309,189, 320,185, 330,181, 340,177
+Line 358,-283, 336,-292, 314,-298, 287,-305, 257,-309, 229,-310, 200,-310, 166,-306, 139,-301, 111,-292, 86,-280, 62,-266, 38,-248, 14,-226, -9,-199, -27,-173, -44,-139, -52,-117, -60,-88, -70,-23, -70,23, -62,88, -57,113, -50,133, -39,162, -25,188, -4,216, 17,239, 41,260, 66,276, 89,288, 114,298, 141,306, 171,312, 198,314, 226,315, 245,314, 268,311, 288,307, 307,302, 321,298, 334,293, 348,287, 362,280
+Line -60,-88, -122,-88, -122,-23, -70,-23, 70,-23, 317,-23, 317,-88, 85,-88, -60,-88
+Line -70,23, -122,23, -122,88, -62,88, 82,88, 317,88, 317,23, 70,23, -70,23-->
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', S);
+          if p = 0 then begin
+            substr := S;
+            S := '';
+          end else begin
+            substr := copy(S, 1, p-1);
+            Delete(S, 1, p);
+          end;
+          Result := StrToInt(substr);
+        end;
+
+        ProfileSize := 315;
+
+        function GetCoords(idx, S): integer;
+        begin
+          i := 0;
+          while Length(S) > 0 do begin
+            x[idx, i] := GetInt / ProfileSize * W;
+            z[idx, i] :=-GetInt / ProfileSize * W;
+            Inc(i);
+          end;
+          Result := i;
+        end;
+
+        Count1 := GetCoords(0, '332,-178, 312,-185, 292,-192, 272,-196, 248,-199, 227,-201, 207,-199, 189,-196, 173,-191, 160,-185, 148,-178, 135,-170, 123,-159, 117,-152, 109,-143, 101,-131, 95,-118, 90,-106, 85,-88, 71,-23, 70,23, 82,88, 87,105, 94,122, 102,137, 110,149, 120,160, 129,168, 140,176, 152,183, 167,190, 181,195, 193,198, 207,200, 224,201, 239,201, 254,200, 269,198, 283,196, 296,193, 309,189, 320,185, 330,181, 340,177');
+        Count2 := GetCoords(1, '358,-283, 336,-292, 314,-298, 287,-305, 257,-309, 229,-310, 200,-310, 166,-306, 139,-301, 111,-292, 86,-280, 62,-266, 38,-248, 14,-226, -9,-199, -27,-173, -44,-139, -52,-117, -60,-88, -70,-23, -70,23, -62,88, -57,113, -50,133, -39,162, -25,188, -4,216, 17,239, 41,260, 66,276, 89,288, 114,298, 141,306, 171,312, 198,314, 226,315, 245,314, 268,311, 288,307, 307,302, 321,298, 334,293, 348,287, 362,280');
+        Count3 := GetCoords(2, '-60,-88, -122,-88, -122,-23, -70,-23, 70,-23, 317,-23, 317,-88, 85,-88, -60,-88');
+        Count4 := GetCoords(3, '-70,23, -122,23, -122,88, -62,88, 82,88, 317,88, 317,23, 70,23, -70,23');
+
+        D := (z[3, 0] + z[3, 2]) / 2;
+
+        Count4 := Count1 + 4;
+        x[0, Count1 + 0] := x[2, 5]; z[0, Count1 + 0] := z[2, 5];
+        x[0, Count1 + 1] := x[2, 4]; z[0, Count1 + 1] := z[2, 4];
+        x[0, Count1 + 2] := x[2, 3]; z[0, Count1 + 2] := z[2, 3];
+        x[0, Count1 + 3] := x[2, 2]; z[0, Count1 + 3] := z[2, 2];
+        x[1, Count1 + 0] := x[2, 6]; z[1, Count1 + 0] := z[2, 6];
+        x[1, Count1 + 1] := x[2, 7]; z[1, Count1 + 1] := z[2, 7];
+        x[1, Count1 + 2] := x[2, 0]; z[1, Count1 + 2] := z[2, 0];
+        x[1, Count1 + 3] := x[2, 1]; z[1, Count1 + 3] := z[2, 1];
+
+        x[0, Count4 + 0] := x[3, 5]; z[0, Count4 + 0] := z[3, 5];
+        x[0, Count4 + 1] := x[3, 4]; z[0, Count4 + 1] := z[3, 4];
+        x[0, Count4 + 2] := x[3, 3]; z[0, Count4 + 2] := z[3, 3];
+        x[0, Count4 + 3] := x[3, 2]; z[0, Count4 + 3] := z[3, 2];
+        x[1, Count4 + 0] := x[3, 6]; z[1, Count4 + 0] := z[3, 6];
+        x[1, Count4 + 1] := x[3, 7]; z[1, Count4 + 1] := z[3, 7];
+        x[1, Count4 + 2] := x[3, 0]; z[1, Count4 + 2] := z[3, 0];
+        x[1, Count4 + 3] := x[3, 1]; z[1, Count4 + 3] := z[3, 1];
+    </Script>
+
+    <Axes TurningAngles = "Pi"  PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; 0; D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector">
+            <Part>
+                <Vertices>
+                    <Add Vector = "x[0, i    ]; Y1; z[0, i    ]" />
+                    <Add Vector = "x[0, i + 1]; Y1; z[0, i + 1]" />
+                    <Add Vector = "x[1, i    ]; Y1; z[1, i    ]" />
+                    <Add Vector = "x[1, i + 1]; Y1; z[1, i + 1]" />
+                    <Add Vector = "x[0, i    ]; Y2; z[0, i    ]" />
+                    <Add Vector = "x[0, i + 1]; Y2; z[0, i + 1]" />
+                    <Add Vector = "x[1, i    ]; Y2; z[1, i    ]" />
+                    <Add Vector = "x[1, i + 1]; Y2; z[1, i + 1]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "c0" VertexIndexes = "0;1;3;2" InvisibleEdges = "ie0" />
+                    <Face Color = "c1" VertexIndexes = "5;4;6;7" InvisibleEdges = "ie1" />
+                    <Face Color = "c2" VertexIndexes = "1;0;4;5" InvisibleEdges = "ie2" />
+                    <Face Color = "c3" VertexIndexes = "2;3;7;6" InvisibleEdges = "ie3" />
+                    <Face Color = "c4" VertexIndexes = "0;2;6;4" InvisibleEdges = "ie4" />
+                    <Face Color = "c5" VertexIndexes = "3;1;5;7" InvisibleEdges = "ie5" />
+                </Faces>
+            </Part>
+
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "AddHalf" >
+            <ExecMacro MacroName = "AddSector" i = " 0" Repeat = " 1"         c2 = "Colors[2]" c3 = "Colors[3]" c4 = "Colors[4]" c5 = "-2"        ie0 = " 2" ie1 = " 8" ie2 = " 8" ie3 = " 2" ie4 = " 0" ie5 = "-1" />
+            <ExecMacro MacroName = "AddSector" i = " 1" Repeat = "Count1 - 3"                                   c4 = "-2"        c5 = "-2"        ie0 = "10" ie1 = "10" ie2 = "10" ie3 = "10" ie4 = "-1" ie5 = "-1" />
+            <ExecMacro MacroName = "AddSector" i = "Count1 - 2" Repeat = " 1"                                   c4 = "-2"        c5 = "Colors[4]" ie0 = " 8" ie1 = " 2" ie2 = " 2" ie3 = " 8" ie4 = "-1" ie5 = " 0" />
+            <RemoveContaining Vector = " 0; (Y1 + Y2) / 2; D" />
+            <RemoveContaining Vector = " 0; (Y1 + Y2) / 2;-D" />
+
+            <ExecMacro MacroName = "AddSector" i = " Count1    " Repeat = "1"                                   c4 = "Colors[4]" c5 = "-2"        ie0 = "02" ie1 = "08" ie2 = "00" ie3 = "00" ie4 = " 0" ie5 = "-1" />
+            <ExecMacro MacroName = "AddSector" i = " Count1 + 1" Repeat = "1" c2 = "-2"        c3 = "-2"        c4 = "-2"        c5 = "-2"        ie0 = "-1" ie1 = "-1" ie2 = "-1" ie3 = "-1" ie4 = "-1" ie5 = "-1" />
+            <ExecMacro MacroName = "AddSector" i = " Count1 + 2" Repeat = "1" c2 = "Colors[2]" c3 = "Colors[3]" c4 = "-2"        c5 = "Colors[3]" ie0 = "08" ie1 = "02" ie2 = "00" ie3 = "00" ie4 = "-1" ie5 = " 0" />
+
+            <ExecMacro MacroName = "AddSector" i = " Count1 + 4" Repeat = "1"                                   c4 = "Colors[4]" c5 = "-2"        ie0 = "02" ie1 = "08" ie2 = "00" ie3 = "00" ie4 = " 0" ie5 = "-1" />
+            <ExecMacro MacroName = "AddSector" i = " Count1 + 5" Repeat = "1" c2 = "-2"        c3 = "-2"        c4 = "-2"        c5 = "-2"        ie0 = "-1" ie1 = "-1" ie2 = "-1" ie3 = "-1" ie4 = "-1" ie5 = "-1" />
+            <ExecMacro MacroName = "AddSector" i = " Count1 + 6" Repeat = "1" c2 = "Colors[2]" c3 = "Colors[3]" c4 = "-2"        c5 = "Colors[3]" ie0 = "08" ie1 = "02" ie2 = "00" ie3 = "00" ie4 = "-1" ie5 = " 0" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddHalf" Y1 = " 0" Y2 = "-WY" c0 = "-1" c1 = "Colors[1]" />
+        <ExecMacro MacroName = "AddHalf" Y1 = "WY" Y2 = "0"   c0 = "Colors[0]" c1 = "-1" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

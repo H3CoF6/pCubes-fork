@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Junior Delta Prism</Name>
+        <Menu>Other forms\Cross\Junior Delta Prism</Menu>
+        <Inventor>Sukjae Lee</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4895</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'EDFF11';
+        clRed    := 'C80000';
+        clRed1   := 'C80001';
+        clRed2   := 'C80002';
+        clGreen  := '009600';
+        clGreen1 := '009601';
+        clGreen2 := '009602';
+        clBlue   := '0000C8';
+        clBlue1  := '0000C7';
+        clBlue2  := '0000C6';
+        clWhite  := 'FFFFFF';
+
+        sAngle := PI * 2 / 3;
+
+        H := sqrt(3)/4;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "1/4">
+        <Axis NormVector = " 0;   -1; 0" />
+        <Axis NormVector = " H; 0.25; 0" />
+        <Axis NormVector = "-H; 0.25; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0  ;  0.5  ; H" />
+                <Add Vector = "   H/2;  0.625; H" />
+                <Add Vector = " 3*H/2; -0.125; H" />
+                <Add Vector = "   H; -0.25 ; H" />
+                <Add Vector = "   H; -0.5  ; H" />
+                <Add Vector = "  -H; -0.5  ; H" />
+                <Add Vector = "  -H; -0.25 ; H" />
+                <Add Vector = "-3*H/2; -0.125; H" />
+                <Add Vector = "  -H/2;  0.625; H" />
+
+                <Add Vector = "   0  ;  0.5  ; -H" />
+                <Add Vector = "   H/2;  0.625; -H" />
+                <Add Vector = " 3*H/2; -0.125; -H" />
+                <Add Vector = "   H  ; -0.25 ; -H" />
+                <Add Vector = "   H  ; -0.5  ; -H" />
+                <Add Vector = "  -H  ; -0.5  ; -H" />
+                <Add Vector = "  -H  ; -0.25 ; -H" />
+                <Add Vector = "-3*H/2; -0.125; -H" />
+                <Add Vector = "  -H/2;  0.625; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clYellow" VertexIndexes = "8;7;6;5;4;3;2;1;0" />
+                <Face Color = "clWhite " VertexIndexes = "9;10;11;12;13;14;15;16;17" />
+
+                <Face Color = "clRed   " VertexIndexes = "0;1;10; 9" />
+                <Face Color = "clBlue  " VertexIndexes = "1;2;11;10" />
+                <Face Color = "clGreen " VertexIndexes = "2;3;12;11" />
+                <Face Color = "clBlue1 " VertexIndexes = "3;4;13;12" />
+                <Face Color = "clGreen1" VertexIndexes = "4;5;14;13" />
+                <Face Color = "clRed1  " VertexIndexes = "5;6;15;14" />
+                <Face Color = "clGreen2" VertexIndexes = "6;7;16;15" />
+                <Face Color = "clRed2  " VertexIndexes = "7;8;17;16" />
+                <Face Color = "clBlue2 " VertexIndexes = "8;0; 9;17" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi/2" />
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <Turn  Axis = "3" Layer = "1" Angle = "Pi/2" />
+        <Split Axis = "0" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "-Pi/2" />
+        <Turn  Axis = "2" Layer = "1" Angle = "-Pi/2" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-Pi/2" />
+    </Figure>
+</xml>

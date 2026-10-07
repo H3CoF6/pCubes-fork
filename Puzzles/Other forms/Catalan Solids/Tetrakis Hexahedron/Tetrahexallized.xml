@@ -1,0 +1,96 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tetrahexallized</Name>
+        <Menu>Other forms\Catalan Solids\Tetrakis Hexahedron\Tetrahexallized</Menu>
+        <Inventor>Nathan Sachleben</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-02-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12497</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'F0F0F0'; // White
+        Colors[ 1] := 'C0C0C0'; // Silver
+        Colors[ 2] := '808080'; // Gray
+        Colors[ 3] := '202020'; // Black
+        Colors[ 4] := 'FF0000'; // Red
+        Colors[ 5] := '800000'; // Brown
+        Colors[ 6] := 'FF7F50'; // Coral
+        Colors[ 7] := 'CD5C5C'; // Indian
+        Colors[ 8] := '00FF00'; // Lime
+        Colors[ 9] := '008000'; // Green
+        Colors[10] := '006400'; // DarkGreen
+        Colors[11] := 'ADFF2F'; // GreenYellow
+        Colors[12] := '00FFFF'; // Cyan
+        Colors[13] := '008080'; // Teal
+        Colors[14] := '0000FF'; // Blue
+        Colors[15] := '000080'; // Navy
+        Colors[16] := 'FFFF00'; // Yellow
+        Colors[17] := '808000'; // Olive
+        Colors[18] := 'FF6000'; // Orange
+        Colors[19] := 'DDBB20'; // Golden
+        Colors[20] := 'FF00FF'; // Fuchsia
+        Colors[21] := '800080'; // Purple
+        Colors[22] := 'FF69B4'; // Pink
+        Colors[23] := 'DB7093'; // Pale
+
+        W  := 0.425;
+        C0 := W;
+        C1 := W * 3 / 2;
+
+        sAngle := 2 * Pi / 5;
+        phi := (sqrt(5) - 1) / 2; // The golden ratio
+
+        D := W * 3 * sqrt((25 - 11 * sqrt(5)) / 10);
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1">
+        <Axis NormVector = "   0; phi;   1" />
+        <Axis NormVector = "   0;-phi;   1" />
+        <Axis NormVector = " phi;   1;   0" />
+        <Axis NormVector = "-phi;   1;   0" />
+        <Axis NormVector = "   1;   0; phi" />
+        <Axis NormVector = "   1;   0;-phi" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Side" >
+            <Face Color = "Colors[c + 0]" VertexIndexes = "v0;v1;v2" />
+            <Face Color = "Colors[c + 1]" VertexIndexes = "v0;v2;v3" />
+            <Face Color = "Colors[c + 2]" VertexIndexes = "v0;v3;v4" />
+            <Face Color = "Colors[c + 3]" VertexIndexes = "v0;v4;v1" />
+        </Macro>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;  0; C1" />
+                <Add Vector = "  0;  0;-C1" />
+                <Add Vector = " C1;  0;  0" />
+                <Add Vector = "-C1;  0;  0" />
+                <Add Vector = "  0; C1;  0" />
+                <Add Vector = "  0;-C1;  0" />
+                <Add Vector = " C0; C0; C0" />
+                <Add Vector = " C0; C0;-C0" />
+                <Add Vector = " C0;-C0; C0" />
+                <Add Vector = " C0;-C0;-C0" />
+                <Add Vector = "-C0; C0; C0" />
+                <Add Vector = "-C0; C0;-C0" />
+                <Add Vector = "-C0;-C0; C0" />
+                <Add Vector = "-C0;-C0;-C0" />
+            </Vertices>
+
+            <Faces>
+                <ExecMacro MacroName = "Side" c = " 0" v0 = "0" v1 = " 6" v2 = "10" v3 = "12" v4 = " 8" />
+                <ExecMacro MacroName = "Side" c = " 4" v0 = "1" v1 = " 7" v2 = " 9" v3 = "13" v4 = "11" />
+                <ExecMacro MacroName = "Side" c = " 8" v0 = "2" v1 = " 6" v2 = " 8" v3 = " 9" v4 = " 7" />
+                <ExecMacro MacroName = "Side" c = "12" v0 = "3" v1 = "10" v2 = "11" v3 = "13" v4 = "12" />
+                <ExecMacro MacroName = "Side" c = "16" v0 = "4" v1 = " 6" v2 = " 7" v3 = "11" v4 = "10" />
+                <ExecMacro MacroName = "Side" c = "20" v0 = "5" v1 = " 8" v2 = "12" v3 = "13" v4 = " 9" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

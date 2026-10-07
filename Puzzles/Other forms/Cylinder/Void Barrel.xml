@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Void Barrel</Name>
+        <Menu>Other forms\Cylinder\Void Barrel</Menu>
+        <Menu>Other forms\3x3x3 variants\Cylinder\Void Barrel</Menu>
+        <Menu>Other forms\Void\Void Barrel</Menu>
+        <Inventor>Silvestre Cruz Quiroz</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-09-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10338</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF'; // White
+        Colors[1] := 'C80000'; // Red
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := '009900'; // Green
+        Colors[4] := '0000C8'; // Blue
+
+        R := 0.5;
+        H := R;
+        D := R / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Radius = "R" Color = "Colors[1]" Base = " 0; 0; D" BaseColor = "-1"        Top = " 0; 0; H" TopColor = "Colors[0]" />
+        <Cylinder Radius = "R" Color = "Colors[2]" Base = " 0; 0;-D" BaseColor = "-1"        Top = " 0; 0; D" TopColor = "-1" />
+        <Cylinder Radius = "R" Color = "Colors[3]" Base = " 0; 0;-H" BaseColor = "Colors[4]" Top = " 0; 0;-D" TopColor = "-1" />
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "-D; 0; 0" />
+        <RemoveContaining Vector = " D; 0; 0" />
+        <RemoveContaining Vector = " 0;-D; 0" />
+        <RemoveContaining Vector = " 0; D; 0" />
+        <RemoveContaining Vector = " 0; 0;-D" />
+        <RemoveContaining Vector = " 0; 0; D" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

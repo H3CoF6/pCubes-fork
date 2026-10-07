@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Nautilus 8</Name>
+        <Class>TSquare1</Class> <!-- Scramble -->
+        <Menu>Other forms\Square-1\Nautilus\Nautilus 8</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-04-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9397</Link>
+    </Interface>
+
+    <Script>
+        NautilusExpansion := 1.5; 
+        W := 0.4;
+        H := W * 0.5;
+        D := H / 3;
+        mAngle := 10 * Pi/180; // minimal angle, 10 degrees
+        sCount := 8;  // segments count
+        AxisDirection := -10 * Pi/180;
+
+        angles[0] := 10 * Pi/180; Colors[0] := 'B40078'; // DarkViolett
+        angles[1] := 20 * Pi/180; Colors[1] := '0000C8'; // Blue
+        angles[2] := 30 * Pi/180; Colors[2] := '0080FF'; // SkyBlue
+        angles[3] := 40 * Pi/180; Colors[3] := '009600'; // Green
+        angles[4] := 50 * Pi/180; Colors[4] := 'E6C800'; // Yellow
+        angles[5] := 60 * Pi/180; Colors[5] := 'FF9600'; // Orange
+        angles[6] := 70 * Pi/180; Colors[6] := 'DC0000'; // Red
+        angles[7] := 80 * Pi/180; Colors[7] := 'FF0080'; // Violett
+    </Script>
+
+    <Axes TurningAngles = "mAngle" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "cos(AxisDirection); sin(AxisDirection); 0" />
+    </Axes>
+
+    <Figure>
+        <Script>SumAngle := 0; H1 := -H; H2 := H; </Script>
+
+        <Macro Name = "AddSegment" >
+            <HideAll/>
+            <Script>Color := Colors[index];</Script>
+            <LoadFrom File = "Puzzles\Other forms\Square-1\Nautilus\_Macro_For_Nautilus.xml" />
+            <Cut Color = "Color"><Plane NormVector = "-sin(SumAngle); -cos(SumAngle); 0" /></Cut>
+            <Script>SumAngle := SumAngle + angles[index]</Script>
+            <Cut Color = "Color"><Plane NormVector = "sin(SumAngle); cos(SumAngle); 0" /></Cut>
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "2" />
+            <Script>Inc(index); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSegment" index = "0" Repeat = "sCount" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

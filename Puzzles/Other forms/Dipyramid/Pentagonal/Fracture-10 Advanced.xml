@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fracture-10 Advanced</Name>
+        <Menu>Other forms\Dipyramid\Pentagonal\Fracture-10 Advanced</Menu>
+        <Inventor></Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-04-24</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clViolett      := '800080';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clOrange       := 'FF6000';
+        clLightBlue    := '2828FF';
+        clLightViolett := 'FF0080';
+        clBrown        := '800000';
+        clLightGreen   := '00FF00';
+
+        R := 0.5;
+        C0 := R * sqrt(5 * (5 - 2 * sqrt(5))) / 5;
+        C1 := R * (sqrt(5) - 1) / 2;
+        C2 := R * sqrt(10 * (5 + sqrt(5))) / 10;
+        C3 := R * sqrt(10 * (5 - sqrt(5))) / 5;
+        C4 := R * (5 + sqrt(5)) / 5;
+
+        //Normal( C1,  C2,  0,  0, -C3,  0);
+        D1 := R * sqrt((-2 * sqrt(5) + 5) / 5);
+        D2 := D1 + 0.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D1;D2" FixedLayers = "0" >
+        <Axis NormVector = "  R; -C0;  0" />
+        <Axis NormVector = " -R; -C0;  0" />
+        <Axis NormVector = " C1;  C2;  0" />
+        <Axis NormVector = "-C1;  C2;  0" />
+        <Axis NormVector = "  0; -C3;  0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;   0;  C4" />
+                <Add Vector = "  0;   0; -C4" />
+                <Add Vector = "  R; -C0;   0" />
+                <Add Vector = " -R; -C0;   0" />
+                <Add Vector = " C1;  C2;   0" />
+                <Add Vector = "-C1;  C2;   0" />
+                <Add Vector = "  0; -C3;   0" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed         " VertexIndexes = " 0; 2; 4" />
+                <Face Color = "clLightViolett" VertexIndexes = " 0; 4; 5" />
+                <Face Color = "clBrown       " VertexIndexes = " 0; 5; 3" />
+                <Face Color = "clOrange      " VertexIndexes = " 0; 3; 6" />
+                <Face Color = "clYellow      " VertexIndexes = " 0; 6; 2" />
+
+                <Face Color = "clBlue        " VertexIndexes = " 1; 2; 6" />
+                <Face Color = "clViolett     " VertexIndexes = " 1; 6; 3" />
+                <Face Color = "clLightBlue   " VertexIndexes = " 1; 3; 5" />
+                <Face Color = "clGreen       " VertexIndexes = " 1; 5; 4" />
+                <Face Color = "clLightGreen  " VertexIndexes = " 1; 4; 2" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Hide  Axis = "Ax1" Layer = "1" />
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "-Pi/2" />
+            <Split Axis = "Ax1" From = "1"/>
+            <Turn  Axis = "Ax2" Layer = "1" Angle = " Pi  " />
+            <Split Axis = "Ax1" From = "1"/>
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "-Pi/2" />
+            <ShowAll/>
+
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "-Pi/2" />
+            <Split Axis = "Ax2" From = "1"/>
+            <Split Axis = "Ax3" From = "1"/>
+            <Undo Repeat = "1" />
+        </Macro>
+
+        /////////////////////
+
+        <ExecMacro MacroName = "SplitPart" Ax1 = "0" Ax2 = "2" Ax3 = "4" />
+        <ExecMacro MacroName = "SplitPart" Ax1 = "1" Ax2 = "4" Ax3 = "3" />
+        <ExecMacro MacroName = "SplitPart" Ax1 = "2" Ax2 = "3" Ax3 = "0" />
+        <ExecMacro MacroName = "SplitPart" Ax1 = "3" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "SplitPart" Ax1 = "4" Ax2 = "0" Ax3 = "1" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

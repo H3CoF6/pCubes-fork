@@ -1,0 +1,132 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bubblarian</Name>
+        <Menu>Other forms\Dodecahedron\Truncated\Bubblarian</Menu>
+        <Inventor>Diogo Sousa</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7359</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        D1 := R * (5 + sqrt(5)) / 12; <!-- Polar  Cut Depth -->
+        D2 := R * (7 + sqrt(5)) / 12; <!-- Radial Cut Depth -->
+
+        h    := R2sin * (5 + sqrt(5)) / 4; <!-- Axis Shift -->
+        Scos := R2Sin * (3 + sqrt(5)) / 2; <!-- Top Radius -->
+
+        for i := 0 to 4 do begin
+            Wx[i] := Scos * sin(sAngle * (i - 0.5));
+            Wy[i] := Scos * cos(sAngle * (i - 0.5));
+            Wz[i] := Rsin + h*(1-As);
+        end;
+
+        for i := 15 to 19 do begin
+            Wx[i] := Scos * sin(sAngle * i);
+            Wy[i] := Scos * cos(sAngle * i);
+            Wz[i] := -Rsin - h*(1-As);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "D1" >
+        <Axis NormVector = " Vx[0]; Vy[0]; Vz[0]" BaseVector = "0; 0; h"/>
+        <Axis NormVector = " Vx[1]; Vy[1]; Vz[1]" BaseVector = "0; 0; h"/>
+        <Axis NormVector = " Vx[2]; Vy[2]; Vz[2]" BaseVector = "0; 0; h"/>
+        <Axis NormVector = " Vx[3]; Vy[3]; Vz[3]" BaseVector = "0; 0; h"/>
+        <Axis NormVector = " Vx[4]; Vy[4]; Vz[4]" BaseVector = "0; 0; h"/>
+        <Axis NormVector = "-Vx[0];-Vy[0];-Vz[0]" BaseVector = "0; 0;-h"/>
+        <Axis NormVector = "-Vx[1];-Vy[1];-Vz[1]" BaseVector = "0; 0;-h"/>
+        <Axis NormVector = "-Vx[2];-Vy[2];-Vz[2]" BaseVector = "0; 0;-h"/>
+        <Axis NormVector = "-Vx[3];-Vy[3];-Vz[3]" BaseVector = "0; 0;-h"/>
+        <Axis NormVector = "-Vx[4];-Vy[4];-Vz[4]" BaseVector = "0; 0;-h"/>
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+        <Axis NormVector = "Vx[6]; Vy[6]; Vz[6]" />
+        <Axis NormVector = "Vx[7]; Vy[7]; Vz[7]" />
+        <Axis NormVector = "Vx[8]; Vy[8]; Vz[8]" />
+        <Axis NormVector = "Vx[9]; Vy[9]; Vz[9]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "wx[ 0]; wy[ 0]; wz[ 0]" />
+                <Add Vector = "wx[ 1]; wy[ 1]; wz[ 1]" />
+                <Add Vector = "wx[ 2]; wy[ 2]; wz[ 2]" />
+                <Add Vector = "wx[ 3]; wy[ 3]; wz[ 3]" />
+                <Add Vector = "wx[ 4]; wy[ 4]; wz[ 4]" />
+                <Add Vector = "vx[ 5]; vy[ 5]; vz[ 5]" />
+                <Add Vector = "vx[ 6]; vy[ 6]; vz[ 6]" />
+                <Add Vector = "vx[ 7]; vy[ 7]; vz[ 7]" />
+                <Add Vector = "vx[ 8]; vy[ 8]; vz[ 8]" />
+                <Add Vector = "vx[ 9]; vy[ 9]; vz[ 9]" />
+                <Add Vector = "vx[10]; vy[10]; vz[10]" />
+                <Add Vector = "vx[11]; vy[11]; vz[11]" />
+                <Add Vector = "vx[12]; vy[12]; vz[12]" />
+                <Add Vector = "vx[13]; vy[13]; vz[13]" />
+                <Add Vector = "vx[14]; vy[14]; vz[14]" />
+                <Add Vector = "wx[15]; wy[15]; wz[15]" />
+                <Add Vector = "wx[16]; wy[16]; wz[16]" />
+                <Add Vector = "wx[17]; wy[17]; wz[17]" />
+                <Add Vector = "wx[18]; wy[18]; wz[18]" />
+                <Add Vector = "wx[19]; wy[19]; wz[19]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = "4;3;2;1;0" />
+
+                <Face Color = "Colors[ 1]" VertexIndexes = "0;1;6;10;5" />
+                <Face Color = "Colors[ 2]" VertexIndexes = "1;2;7;11;6" />
+                <Face Color = "Colors[ 3]" VertexIndexes = "2;3;8;12;7" />
+                <Face Color = "Colors[ 4]" VertexIndexes = "3;4;9;13;8" />
+                <Face Color = "Colors[ 5]" VertexIndexes = "4;0;5;14;9" />
+
+                <Face Color = "Colors[ 6]" VertexIndexes = "18;17;12;8;13" />
+                <Face Color = "Colors[ 7]" VertexIndexes = "19;18;13;9;14" />
+                <Face Color = "Colors[ 8]" VertexIndexes = "15;19;14;5;10" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "16;15;10;6;11" />
+                <Face Color = "Colors[10]" VertexIndexes = "17;16;11;7;12" />
+
+                <Face Color = "Colors[11]" VertexIndexes = "15;16;17;18;19" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "SplitTop">
+            <Turn  Axis = "i  " Layer = "L" Angle = " D * 2*Pi/3" />
+            <Turn  Axis = "i+5" Layer = "L" Angle = "-D * 2*Pi/3" />
+            <SplitByAxes/>
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "SplitMiddle">
+            <Turn  Axis = "i" Layer = "L" Angle = "D * 2*Pi/3" />
+            <SplitByAxes/>
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <SplitByAxes/>
+
+        <ExecMacro MacroName = "SplitTop"    Repeat = "5" i = " 0" L = "1" D = " 1" />
+        <ExecMacro MacroName = "SplitTop"    Repeat = "5" i = " 0" L = "1" D = " 1" />
+        <ExecMacro MacroName = "SplitTop"    Repeat = "5" i = " 0" L = "1" D = " 1" />
+        <ExecMacro MacroName = "SplitTop"    Repeat = "1" i = " 0" L = "1" D = "-1" />
+        <ExecMacro MacroName = "SplitTop"    Repeat = "5" i = " 0" L = "1" D = " 1" />
+
+        <ExecMacro MacroName = "SplitMiddle" Repeat = "5" i = "10" L = "0" D = " 1" />
+        <ExecMacro MacroName = "SplitMiddle" Repeat = "5" i = "10" L = "0" D = " 1" />
+        <ExecMacro MacroName = "SplitMiddle" Repeat = "5" i = "10" L = "2" D = " 1" />
+        <ExecMacro MacroName = "SplitMiddle" Repeat = "5" i = "10" L = "2" D = " 1" />
+        <ExecMacro MacroName = "SplitMiddle" Repeat = "5" i = "10" L = "0" D = "-1" />
+        <ExecMacro MacroName = "SplitMiddle" Repeat = "5" i = "10" L = "2" D = "-1" />
+
+        <Undo Repeat = "72" />
+   </Figure>
+</xml>

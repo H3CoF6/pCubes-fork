@@ -1,0 +1,102 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rainbow Ball - Large</Name>
+        <Aliases>Orbo 20 Holes</Aliases>
+        <Menu>Other forms\Icosahedron\Edge Turning\Rainbow Ball - Large</Menu>
+        <Menu>Other forms\Moving Hole\Rainbow Ball - Large</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-12-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10627</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '734092';
+        Colors[ 1] := 'E23475';
+        Colors[ 2] := '008200';
+        Colors[ 3] := 'FFFFFF';
+        Colors[ 4] := '00F200';
+        Colors[ 5] := '4070F1';
+        Colors[ 6] := 'FFF400';
+        Colors[ 7] := '004070';
+        Colors[ 8] := '800070';
+        Colors[ 9] := 'BF8050';
+        Colors[10] := '309070';
+        Colors[11] := 'FE0000';
+        Colors[12] := 'FE0080';
+        Colors[13] := '80CF80';
+        Colors[14] := 'FF700A';
+        Colors[15] := '4D1340';
+        Colors[16] := '9E0000';
+        Colors[17] := '7F7040';
+        Colors[18] := 'C1C4C7';
+        Colors[19] := 'FACD05';
+        OuterColor := 'FFFFFF'; // White
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        s5 := sqrt(5);
+        D := R * sqrt(1 + 2 / s5) / 2;
+        RC := R / sqrt(6 * (5 + s5));
+
+        DCut := RCos * 1.001;
+        RIn := R * 0.805; 
+        ROut := R; 
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D" TurnAxesWithLayer = "1" FixedLayers = "0">
+        <Axis NormVector = " Ex[2]; Ey[2]; Ez[2]" />
+        <Axis NormVector = " Ex[3]; Ey[3]; Ez[3]" />
+        <Axis NormVector = " Ex[7]; Ey[7]; Ez[7]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = " Cx[i]; Cy[i]; Cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "20" i = "0" />
+
+        <LoadFrom File = "Figures\Icosahedron.xml" R = "RIn" />
+
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 19 do
+                Colors[i] := OuterColor;
+        </Script>
+
+        <LoadFrom File = "Figures\Icosahedron.xml" R = "ROut" />
+
+        <Macro Name = "CutEnds" >
+            <Cut Color = "OuterColor"> <Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "-DCut" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutEnds" Repeat = "12" i = "0" />
+
+        <Macro Name = "Split1" >
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1"> <Plane NormVector = " Ex[i]; Ey[i]; Ez[i]" NormDistance = " D" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split1" Repeat = "30" i = "0" />
+
+        <Macro Name = "Split2" >
+            <Split> <Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "0" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split2" Repeat = "6" i = "0" />
+
+        <RemoveGrayParts/>
+        <RemoveContaining Vector = " Cx; Cy; Cz" />
+
+        <ShowAll/>
+
+        <RemoveContaining Vector = "Cx[3]; Cy[3]; Cz[3]" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

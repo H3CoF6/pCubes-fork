@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bin-5 Pocket</Name>
+        <Menu>Cubic\Bandaged\Cube 5x5x5\Bin-5 Pocket</Menu>
+        <Inventor>Evgeniy Benek</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2014-04-26</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=335871#p335871</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 5;
+        W_D := W / N;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('121=022, 002, 024, 402, 422, 020, 421, 401, 021, 423, 023, 300, 400, 330, 430, 403');
+        ParseTxt('211=324, 120, 100, 140, 124, 110, 114, 130, 320, 134, 334, 043, 044, 343, 344, 314');
+        ParseTxt('112=203, 101, 301, 201, 241, 041, 441, 141, 341, 243, 103, 000, 010, 003, 013, 303');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+
+        // split and glue paradox element
+        <HideContaining Vector = " W;-W; W/2" />
+        <InvertVisibility/>
+        <Split Axis = "1" From = "1" Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" />
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W_D" WY = "W_D*2" WZ = "W_D" DWX = " W_D * 4" DWY = "-W_D * 3" DWZ = " W_D * 2" />
+        <InvertVisibility/>
+    </Figure>
+</xml>

@@ -1,0 +1,112 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+   <Interface>
+        <Name>Viginti Cube (AC) (Random Color)</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Viginti Cube (AC) (Random Color)</Menu>
+        <Inventor>Tim Fitzrandolph</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-05-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7437</Link>
+    </Interface>
+
+     <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        case Random(3) of
+            0: begin Color0 := 'FF95C2'; Color1 := 'FFE5F0'; end; // Pink
+            1: begin Color0 := 'C2FF95'; Color1 := 'F0FFE5'; end; // Bright Green
+            2: begin Color0 := '95C2FF'; Color1 := 'E5F0FF'; end; // Baby Blue
+        end;
+
+        W := 0.48;
+        D := W / 3;
+
+        // Puck parameters
+        H := W * (1 + 0.08);
+        R1 := W * 0.1;
+        R2 := R1 * 0.8;
+        R3 := W * 0.75;
+
+        for i := 0 to 9 do begin
+            x1[i] := R1 * cos(2 * Pi / 10 * i);
+            y1[i] := R1 * sin(2 * Pi / 10 * i) - R3;
+            x2[i] := R2 * cos(2 * Pi / 10 * i);
+            y2[i] := R2 * sin(2 * Pi / 10 * i) - R3;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/10; Pi/2; Pi/2; Pi/2; Pi/10" PlaneDistances = "-W;-D; D; W" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := Color1;
+        </Script>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " Vx; Vy; Vz" />
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := Color0;
+        </Script>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = " Vx; Vy; Vz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <RemoveGrayParts/>
+
+        <Macro Name = "AddPuck">
+            <Part>
+                <Vertices Vectors = "x2; y2; H" />
+                <Vertices Vectors = "x1; y1; W" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;2;3;4;5;6;7;8;9" />
+
+                    <Face Color = "cl" VertexIndexes = "10;11;1;0" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "11;12;2;1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "12;13;3;2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "13;14;4;3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "14;15;5;4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "15;16;6;5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "16;17;7;6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "17;18;8;7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "18;19;9;8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "19;10;0;9" InvisibleEdges = "10" />
+
+                    <Face VertexIndexes = "19;18;17;16;15;14;13;12;11;10" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddPucks">
+            <ExecMacro MacroName = "AddPuck" />
+            <Turn Axis = "2" Layer = "4" Angle = "Pi/10" />
+        </Macro>
+
+        <Macro Name = "Add20Pucks" >
+            <ExecMacro MacroName = "AddPucks" Repeat = "20" />
+            <Turn Axis = "ax" Layers = "1-3" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Add20Pucks" cl = "clWhite " ax = "0" />
+        <ExecMacro MacroName = "Add20Pucks" cl = "clGreen " ax = "1" />
+        <ExecMacro MacroName = "Add20Pucks" cl = "clRed   " ax = "0" />
+        <ExecMacro MacroName = "Add20Pucks" cl = "clYellow" ax = "1" />
+        <ExecMacro MacroName = "Add20Pucks" cl = "clBlue  " ax = "0" />
+        <ExecMacro MacroName = "Add20Pucks" cl = "clOrange" ax = "1" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

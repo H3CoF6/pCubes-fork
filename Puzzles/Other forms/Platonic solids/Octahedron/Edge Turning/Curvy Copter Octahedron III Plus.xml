@@ -1,0 +1,111 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Curvy Copter Octahedron III Plus</Name>
+        <Menu>Other forms\Octahedron\Edge Turning\Curvy Copter Octahedron III Plus</Menu>
+        <Inventor>Seth Holiday</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7282</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Octahedron_Standard_Colors.inc';
+
+        W := 1.5 * 0.5;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+
+        JumAngle := Arccos(1/3);
+
+        P := 1.18;
+        D := W * 0.435;
+
+        for i := 0 to 7 do begin
+            CPx[i] := Cx[i] * P;
+            CPy[i] := Cy[i] * P;
+            CPz[i] := Cz[i] * P;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "JumAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " Ex[0]; Ey[0]; Ez[0]" />
+        <Axis NormVector = " Ex[1]; Ey[1]; Ez[1]" />
+        <Axis NormVector = " Ex[2]; Ey[2]; Ez[2]" />
+        <Axis NormVector = " Ex[3]; Ey[3]; Ez[3]" />
+        <Axis NormVector = " Ex[4]; Ey[4]; Ez[4]" />
+        <Axis NormVector = " Ex[5]; Ey[5]; Ez[5]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "CPx; CPy; CPz" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "0;2;6" InvisibleEdges = "6" />
+                <Face Color = "Colors[0]" VertexIndexes = "2;5;6" InvisibleEdges = "6" />
+                <Face Color = "Colors[0]" VertexIndexes = "5;0;6" InvisibleEdges = "6" />
+
+                <Face Color = "Colors[1]" VertexIndexes = "5;2;7" InvisibleEdges = "6" />
+                <Face Color = "Colors[1]" VertexIndexes = "2;1;7" InvisibleEdges = "6" />
+                <Face Color = "Colors[1]" VertexIndexes = "1;5;7" InvisibleEdges = "6" />
+
+                <Face Color = "Colors[2]" VertexIndexes = "5;1;8" InvisibleEdges = "6" />
+                <Face Color = "Colors[2]" VertexIndexes = "1;3;8" InvisibleEdges = "6" />
+                <Face Color = "Colors[2]" VertexIndexes = "3;5;8" InvisibleEdges = "6" />
+
+                <Face Color = "Colors[3]" VertexIndexes = "5;3;9" InvisibleEdges = "6" />
+                <Face Color = "Colors[3]" VertexIndexes = "3;0;9" InvisibleEdges = "6" />
+                <Face Color = "Colors[3]" VertexIndexes = "0;5;9" InvisibleEdges = "6" />
+
+                <Face Color = "Colors[4]" VertexIndexes = "4;2;10" InvisibleEdges = "6" />
+                <Face Color = "Colors[4]" VertexIndexes = "2;0;10" InvisibleEdges = "6" />
+                <Face Color = "Colors[4]" VertexIndexes = "0;4;10" InvisibleEdges = "6" />
+
+                <Face Color = "Colors[5]" VertexIndexes = "4;1;11" InvisibleEdges = "6" />
+                <Face Color = "Colors[5]" VertexIndexes = "1;2;11" InvisibleEdges = "6" />
+                <Face Color = "Colors[5]" VertexIndexes = "2;4;11" InvisibleEdges = "6" />
+
+                <Face Color = "Colors[6]" VertexIndexes = "4;3;12" InvisibleEdges = "6" />
+                <Face Color = "Colors[6]" VertexIndexes = "3;1;12" InvisibleEdges = "6" />
+                <Face Color = "Colors[6]" VertexIndexes = "1;4;12" InvisibleEdges = "6" />
+
+                <Face Color = "Colors[7]" VertexIndexes = "4;0;13" InvisibleEdges = "6" />
+                <Face Color = "Colors[7]" VertexIndexes = "0;3;13" InvisibleEdges = "6" />
+                <Face Color = "Colors[7]" VertexIndexes = "3;4;13" InvisibleEdges = "6" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax1" Layer = "0" Angle = "A * JumAngle" />
+            <Turn  Axis = "Ax1" Layer = "2" Angle = "A * JumAngle" />
+            <Turn  Axis = "Ax2" Layer = "0" Angle = "B * JumAngle" />
+            <Turn  Axis = "Ax2" Layer = "2" Angle = "B * JumAngle" />
+            <Split Axis = "Ax1" From  = "1" />
+            <Split Axis = "Ax1" From  = "2" />
+            <Turn  Axis = "Ax2" Layer = "2" Angle = "-B * JumAngle" />
+            <Turn  Axis = "Ax2" Layer = "0" Angle = "-B * JumAngle" />
+            <Turn  Axis = "Ax1" Layer = "2" Angle = "-A * JumAngle" />
+            <Turn  Axis = "Ax1" Layer = "0" Angle = "-A * JumAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "3" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "3" Ax2 = "0" A = "-1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "5" A = "-1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "4" A = "-1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "4" Ax2 = "1" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "0" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "3" A = "-1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "3" Ax2 = "2" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "4" A = " 1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "5" Ax2 = "1" A = " 1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "5" A = " 1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "5" Ax2 = "2" A = "-1" B = "-1" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

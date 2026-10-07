@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rebel Cube</Name>
+        <Menu>Cubic\Void\Rebel Cube (Void 4x4x4)</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-04-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4784</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 4;
+
+        WD := 2 * W / N;
+        D[0] := -W + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <RemoveContaining Vector = " W; 0; 0" />
+        <RemoveContaining Vector = "-W; 0; 0" />
+        <RemoveContaining Vector = " 0; W; 0" />
+        <RemoveContaining Vector = " 0;-W; 0" />
+        <RemoveContaining Vector = " 0; 0; W" />
+        <RemoveContaining Vector = " 0; 0;-W" />
+    </Figure>
+</xml>

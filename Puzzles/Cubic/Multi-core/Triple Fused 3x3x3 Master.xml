@@ -1,0 +1,128 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triple Fused 3x3x3 Master</Name>
+        <Menu>Cubic\Multi-core\Triple Fused 3x3x3 Master</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-27</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Color[0] := 'EE0000'; // Red
+        Color[1] := 'FF6600'; // Orange
+        Color[2] := '0033EE'; // Blue
+        Color[3] := '00BB00'; // Green
+        Color[4] := 'FFEE00'; // Yellow
+        Color[5] := 'FFFFFF'; // White
+
+        W := 0.2;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        R := W * 4.0;
+        H := W;
+        D := W / 3;
+        L := 2 * D; // Length of cutting area
+
+        R0 := R - (L * sqrt(3) - (2 * W - L)) / sqrt(2); // center of cuboid
+
+        sAngle := 2 * Pi / 3;
+        for i := 0 to 2 do begin
+            x[i] := -R * sin(sAngle * i);
+            y[i] := -R * cos(sAngle * i);
+            x1[i] := R/2 * sin(sAngle * i);
+            y1[i] := R/2 * cos(sAngle * i);
+        end;
+
+        A0 := 0;
+        A1 := 2*Pi / 3;
+        A2 :=-2*Pi / 3;
+
+        B1 :=-Pi/4;
+        B2 := Pi/4;
+    </Script>
+
+    <Axes TurningAngles = " 0; Pi/2; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "sin(A0 + B1);-cos(A0 + B1); 0" BaseVector = "R0 * sin(A0);-R0 * cos(A0); 0" />
+        <Axis NormVector = "sin(A0 + B2);-cos(A0 + B2); 0" BaseVector = "R0 * sin(A0);-R0 * cos(A0); 0" />
+
+        <Axis NormVector = "sin(A1 + B1);-cos(A1 + B1); 0" BaseVector = "R0 * sin(A1);-R0 * cos(A1); 0" />
+        <Axis NormVector = "sin(A1 + B2);-cos(A1 + B2); 0" BaseVector = "R0 * sin(A1);-R0 * cos(A1); 0" />
+
+        <Axis NormVector = "sin(A2 + B1);-cos(A2 + B1); 0" BaseVector = "R0 * sin(A2);-R0 * cos(A2); 0" />
+        <Axis NormVector = "sin(A2 + B2);-cos(A2 + B2); 0" BaseVector = "R0 * sin(A2);-R0 * cos(A2); 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-H/3; H/3" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        // Triangle
+        <Part>
+            <Vertices Vectors = " x;  y;-H" />
+            <Vertices Vectors = " x;  y; H" />
+            <Vertices Vectors = "x1; y1;-H" />
+            <Vertices Vectors = "x1; y1; H" />
+            <Vertices Vectors = " 0;  0;-H" />
+            <Vertices Vectors = " 0;  0; H" />
+
+            <Faces>
+                <Face Color = "Color[1]" VertexIndexes = " 0; 8;12; 7" />
+                <Face Color = "Color[5]" VertexIndexes = " 1; 6;12; 8" />
+                <Face Color = "Color[3]" VertexIndexes = " 2; 7;12; 6" />
+
+                <Face Color = "Color[0]" VertexIndexes = " 3;10;13;11" />
+                <Face Color = "Color[2]" VertexIndexes = " 5; 9;13;10" />
+                <Face Color = "Color[4]" VertexIndexes = " 4;11;13; 9" />
+
+                <Face Color = "Color[2]" VertexIndexes = " 1; 0; 3; 4" />
+                <Face Color = "Color[0]" VertexIndexes = " 2; 1; 4; 5" />
+                <Face Color = "Color[5]" VertexIndexes = " 0; 2; 5; 3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <Split Axis = "6" From = "2" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut Axis = "4" To = "1" />
+        <Cut Axis = "5" To = "1" />
+
+        // Cuboids
+        <Macro Name = "AddCuboid" >
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := Color[Cols div 10^(5-i) mod 10];
+            </Script>
+
+            // turn scene to make cuboid centered
+            <Turn NormVector = "0;0;1" BaseVector = "0;-R0/2;0" Angle = "Pi" />
+            <Turn NormVector = "0;0;1" Angle = "Pi * 3 / 4" />
+
+            <HideAll/>
+            <LoadFrom File = "Figures\Cube.xml" />
+            <SplitByAxes/>
+            <RemoveContaining Vector = " W; W; D" />
+            <RemoveContaining Vector = " W; W;-D" />
+
+            // restore scene
+            <Turn NormVector = "0;0;1" Angle = "-Pi * 3 / 4" />
+            <Turn NormVector = "0;0;1" BaseVector = "0;-R0/2;0" Angle = "Pi" />
+
+            <Turn NormVector = "0;0;1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "AddCuboid" Cols = "453210" />
+        <ExecMacro MacroName = "AddCuboid" Cols = "321054" />
+        <ExecMacro MacroName = "AddCuboid" Cols = "104532" />
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

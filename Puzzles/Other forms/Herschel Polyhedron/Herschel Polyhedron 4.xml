@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Herschel Polyhedron 4</Name>
+        <Menu>Other forms\Herschel Polyhedron\Herschel Polyhedron 4</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-11-06</Added>
+        <Link>https://en.wikipedia.org/wiki/Herschel_graph#/media/File:Herschel_enneahedron.png</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '0000A0';
+        clOrange  := 'FF6000';
+        clRed     := 'FF0000';
+        clGreen   := '008000';
+        clViolett := '800080';
+        clPink    := 'FF69B4';
+        clCoral   := 'FF7F50';
+        clLime    := '00FF00';
+
+        R := 1.4;
+        H := R / sqrt(5);
+        RC := R / 3;
+
+        for i := 0 to 2 do begin
+            x[i] := R * sin(2 * Pi / 3 * i);
+            y[i] := R * cos(2 * Pi / 3 * i);
+        end;
+
+        for i := 0 to 2 do begin
+            nx[i] := sin(2*Pi/3 * i);
+            ny[i] := cos(2*Pi/3 * i);
+        end;
+        nz := sqrt(5) / 2;
+
+        A1 := ArcCos( 1/4);
+        A2 := ArcCos(-11/16);
+        A3 := ArcCos(-7/8);
+
+        B1 := ArcCos( 1/4);
+        B2 := ArcCos(-1/4);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1;0;A1;A2;A3" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " nx[0]; ny[0]; nz" />
+        <Axis NormVector = " nx[1]; ny[1]; nz" />
+        <Axis NormVector = " nx[2]; ny[2]; nz" />
+        <Axis NormVector = " nx[0]; ny[0];-nz" />
+        <Axis NormVector = " nx[1]; ny[1];-nz" />
+        <Axis NormVector = " nx[2]; ny[2];-nz" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-B2;-B1;0;B1;B2;Pi" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " nx[0]; ny[0]; 0" />
+        <Axis NormVector = " nx[1]; ny[1]; 0" />
+        <Axis NormVector = " nx[2]; ny[2]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0];  0" />  0
+                <Add Vector = "x[1]; y[1];  0" />  1
+                <Add Vector = "x[2]; y[2];  0" />  2
+                <Add Vector = "   0;    0;  H" />  3
+                <Add Vector = "   0;    0; -H" />  4
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange " VertexIndexes = "0;3;1" />
+                <Face Color = "clYellow " VertexIndexes = "1;3;2" />
+                <Face Color = "clRed    " VertexIndexes = "2;3;0" />
+                <Face Color = "clViolett" VertexIndexes = "0;1;4" />
+                <Face Color = "clGreen  " VertexIndexes = "1;2;4" />
+                <Face Color = "clBlue   " VertexIndexes = "2;0;4" />
+            </Faces>
+        </Part>
+
+        <Cut Color = " clPink " ><Plane NormVector = "-x[0]; -y[0]; 0" NormDistance = "-RC" /></Cut>
+        <Cut Color = " clCoral "><Plane NormVector = "-x[1]; -y[1]; 0" NormDistance = "-RC" /></Cut>
+        <Cut Color = " clLime " ><Plane NormVector = "-x[2]; -y[2]; 0" NormDistance = "-RC" /></Cut>
+
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

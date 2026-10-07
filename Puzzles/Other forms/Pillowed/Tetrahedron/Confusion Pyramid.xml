@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Confusion Pyramid</Name>
+        <Menu>Other forms\Pillowed\Tetrahedron\Confusion Pyramid</Menu>
+        <Inventor>Matthew Ray</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3041</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'AFAF00';
+        Colors[1] := '0000FF';
+        Colors[2] := 'FF0000';
+        Colors[3] := 'AAAAAA';
+
+        K := 0.5;
+
+        D := K * 0.6;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D/3" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+
+        <HideContaining Vector = " K;-K; K" />
+        <HideContaining Vector = "-K; K; K" />
+        <HideContaining Vector = " K; K;-K" />
+        <HideContaining Vector = "-K;-K;-K" />
+
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+
+        <RemoveContaining Vector = " K;-K; K" />
+        <RemoveContaining Vector = "-K; K; K" />
+        <RemoveContaining Vector = " K; K;-K" />
+        <RemoveContaining Vector = "-K;-K;-K" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

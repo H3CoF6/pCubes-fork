@@ -1,0 +1,116 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>O Octahedron</Name>
+        <Menu>Other forms\Octahedron\Vertex Turning\O Octahedron</Menu>
+        <Inventor>Cubes Made Easy</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-20</Added>
+        <Link>https://www.youtube.com/watch?v=YW7nn7ceDjA</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00BBBB'; // Cyan
+        Colors[1] := 'EE0000'; // Red
+        Colors[2] := '00BB00'; // Green
+        Colors[3] := 'FFFF33'; // Yellow
+        Colors[4] := '3333EE'; // Blue
+        Colors[5] := 'FFFFFF'; // White
+        Colors[6] := '9900CC'; // Violett
+        Colors[7] := 'FF6600'; // Orange
+        clLabel   := '333333'; // Black
+
+        W := 0.75;
+
+        D1 := W * 0.27;
+        D2 := W * 0.4;
+        L1 := D2 * 0.92;
+        L2 := (W - 2 * D1) * 1.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D1; D1; D2" FixedLayers = "0;2;4" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "L1" /> </Split>
+        <Split> <Plane NormVector = " 0; 0;-1" NormDistance = "L1" /> </Split>
+        <HideContaining Vector = " Ex; Ey; Ez" />
+        <HideContaining Vector = " Vx; Vy; Vz" />
+        <HideContaining Vector = " Cx; Cy; Cz" />
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 7 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " Ex; Ey; Ez" />
+        <RemoveContaining Vector = " Vx; Vy; Vz" />
+        <RemoveContaining Vector = " Cx; Cy; Cz" />
+        <ShowAll/>
+
+        <HideContaining Vector = " 0; 0; W" />
+        <HideContaining Vector = " 0; 0;-W" />
+        <InvertVisibility/>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "L2" /> </Split>
+        <Split> <Plane NormVector = " 0; 0;-1" NormDistance = "L2" /> </Split>
+        <HideContaining Vector = " 0; 0; W" />
+        <HideContaining Vector = " 0; 0;-W" />
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 7 do
+                Colors[i] := clLabel;
+        </Script>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+
+        <Cut>   <Plane NormVector = "0; 0; 1" NormDistance = "-L2" /> </Cut>
+        <Cut>   <Plane NormVector = "0; 0;-1" NormDistance = "-L2" /> </Cut>
+        <Split> <Plane NormVector = "0; 0; 1" NormDistance = " L1 " /> </Split>
+        <Split> <Plane NormVector = "0; 0;-1" NormDistance = " L1 " /> </Split>
+        <RemoveGrayParts/>
+        <HideContaining Vector = " 0; 0; L2" />
+        <HideContaining Vector = " 0; 0;-L2" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-D2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-D2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-D2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-D2" /> </Cut>
+
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "L1" /> </Split>
+        <Split> <Plane NormVector = " 0; 0;-1" NormDistance = "L1" /> </Split>
+        <RemoveContaining  Vector = " 0; 0; 0" />
+        <SplitByAxes/>
+
+        <RemoveContaining  Vector = "  0;  0; D2" />
+        <RemoveContaining  Vector = "  0; D2; D2" />
+        <RemoveContaining  Vector = " D2;  0; D2" />
+        <RemoveContaining  Vector = "  0;-D2; D2" />
+        <RemoveContaining  Vector = "-D2;  0; D2" />
+        <RemoveContaining  Vector = "  0;  0;-D2" />
+        <RemoveContaining  Vector = "  0; D2;-D2" />
+        <RemoveContaining  Vector = " D2;  0;-D2" />
+        <RemoveContaining  Vector = "  0;-D2;-D2" />
+        <RemoveContaining  Vector = "-D2;  0;-D2" />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

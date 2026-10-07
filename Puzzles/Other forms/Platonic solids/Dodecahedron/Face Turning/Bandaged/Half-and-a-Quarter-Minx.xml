@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Half-and-a-Quarter-Minx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bandaged\Half-and-a-Quarter-Minx</Menu>
+        <Inventor>Kevin Cruijssen</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-11-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5339</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+    </Axes>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" >
+        <Axis NormVector = "Cx[9]; Cy[9]; Cz[9]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "SplitLayer" >
+            <Turn Axis = "axis" Layer = "layer" Angle = "sAngle" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "SplitLayer" axis = "0" layer = "2" Repeat = "5" />
+        <ExecMacro MacroName = "SplitLayer" axis = "0" layer = "0" Repeat = "5" />
+        <ExecMacro MacroName = "SplitLayer" axis = "1" layer = "2" Repeat = "5" />
+        <ExecMacro MacroName = "SplitLayer" axis = "1" layer = "0" Repeat = "5" />
+        <ExecMacro MacroName = "SplitLayer" axis = "2" layer = "1" Repeat = "5" />
+    </Figure>
+</xml>

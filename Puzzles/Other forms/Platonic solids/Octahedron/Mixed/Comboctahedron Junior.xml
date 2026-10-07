@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Comboctahedron Junior</Name>
+        <Menu>Other forms\Octahedron\Mixed\Comboctahedron Junior</Menu>
+        <Inventor>Leo Staley (Lionside)</Inventor>
+        <Programmer>Leo Staley</Programmer>
+        <Added>2020-02-07</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        W := 1.5 * 0.5;
+        RCut := W / 2 * 0.87;
+        D := W / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "Cut" >
+            <HideContaining Vector = "Vx[v];  Vy[v];  Vz[v]" />
+            <HideContaining Vector = " 0; 0; 0" />
+            <Cut> <Plane NormVector = "-Vx[v]; -Vy[v]; -Vz[v]" NormDistance = "-RCut" /> </Cut>
+            <ShowAll/>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" v = "0" Repeat = "6" />
+    </Figure>
+</xml>

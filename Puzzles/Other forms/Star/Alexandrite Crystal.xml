@@ -1,0 +1,155 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Alexandrite Crystal</Name>
+        <Menu>Other forms\Star\Alexandrite Crystal</Menu>
+        <Inventor>Alexandr Bezrukov</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8765</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=9&amp;t=36735</Link>
+        <Link>https://www.youtube.com/watch?v=vtdQimfEOug</Link>
+    </Interface>
+
+    <Script>
+        clBlue1   := '000078';
+        clBlue2   := '0000D8';
+        clBlue3   := '0000A8';
+        clGreen1  := '00C600';
+        clGreen2  := '006600';
+        clGreen3  := '009600';
+        clRed1    := 'C80000';
+        clRed2    := '680000';
+        clRed3    := '980000';
+        clOrange1 := 'FF8000';
+        clOrange2 := '9F5000';
+        clOrange3 := 'CF6800';
+        clYellow1 := '9F9F00';
+        clYellow2 := 'FFFF00';
+        clYellow3 := 'CFCF00';
+        clWhite1  := 'FFFFFF';
+        clWhite2  := '9F9F9F';
+        clWhite3  := 'CFCFCF';
+        clPink1   := 'FF00FF';
+        clPink2   := 'D86CA2';
+        clPink3   := 'FF7FBD';
+        clCyan1   := '00FFFF';
+        clCyan2   := 'A3FFFF';
+        clCyan3   := '9BD5FF';
+
+        W := 0.4;
+        W2 := W / 2;
+        H := W * sqrt(3)/2;
+        D := W2 / 2;
+
+        for i := 0 to 5 do
+            Colors[i] := -1;
+        WX := W2;
+        WY := W2;
+        WZ := H;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-H; 0; H" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-H; 0; H" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; 0; Pi/2" PlaneDistances = "-H; H" >
+        <Axis NormVector = "  H;  0; W2" />
+        <Axis NormVector = " W2;  0;  H" />
+        <Axis NormVector = " -H;  0; W2" />
+        <Axis NormVector = "-W2;  0;  H" />
+        <Axis NormVector = " W2;  H;  0" />
+        <Axis NormVector = "  H; W2;  0" />
+        <Axis NormVector = " W2; -H;  0" />
+        <Axis NormVector = "  H;-W2;  0" />
+        <Axis NormVector = "  0; W2;  H" />
+        <Axis NormVector = "  0;  H; W2" />
+        <Axis NormVector = "  0; W2; -H" />
+        <Axis NormVector = "  0;  H;-W2" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Macro Name = "Side">
+            <Part>
+                <Vertices>
+                    <Add Vector = " W;-W2; 0" />
+                    <Add Vector = "W2;-W2; H" />
+                    <Add Vector = "W2;-W2;-H" />
+                    <Add Vector = " W; W2; 0" />
+                    <Add Vector = "W2; W2; H" />
+                    <Add Vector = "W2; W2;-H" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color1" VertexIndexes = " 0; 1; 2" />
+                    <Face Color = "Color2" VertexIndexes = " 5; 4; 3" />
+                    <Face                  VertexIndexes = " 1; 0; 3; 4" />
+                    <Face                  VertexIndexes = " 2; 1; 4; 5" />
+                    <Face                  VertexIndexes = " 0; 2; 5; 3" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "Side" Color1 = "clBlue1  " Color2 = "clOrange1" />
+        <ExecMacro MacroName = "Side" Color1 = "clRed1   " Color2 = "clBlue1  " />
+        <ExecMacro MacroName = "Side" Color1 = "clGreen1 " Color2 = "clRed1   " />
+        <ExecMacro MacroName = "Side" Color1 = "clOrange1" Color2 = "clGreen1 " />
+
+        <Macro Name = "Pyramide">
+            <Part>
+                <Vertices>
+                    <Add Vector = " W2; W2; H" />
+                    <Add Vector = "-W2; W2; H" />
+                    <Add Vector = "-W2;-W2; H" />
+                    <Add Vector = " W2;-W2; H" />
+                    <Add Vector = "  0;  0; 2*H" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color1" VertexIndexes = "0;1;4" />
+                    <Face Color = "Color2" VertexIndexes = "1;2;4" />
+                    <Face Color = "Color3" VertexIndexes = "2;3;4" />
+                    <Face Color = "Color4" VertexIndexes = "3;0;4" />
+                    <Face                  VertexIndexes = "3;2;1;0" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;1;0" Angle = "Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "Pyramide" Color1 = "clWhite3 " Color2 = "clPink1  " Color3 = "clYellow1" Color4 = "clCyan1  " />
+        <ExecMacro MacroName = "Pyramide" Color1 = "clGreen2 " Color2 = "clCyan3  " Color3 = "clRed2   " Color4 = "clPink1  " />
+        <ExecMacro MacroName = "Pyramide" Color1 = "clGreen3 " Color2 = "clPink2  " Color3 = "clRed3   " Color4 = "clCyan3  " />
+        <ExecMacro MacroName = "Pyramide" Color1 = "clWhite2 " Color2 = "clCyan2  " Color3 = "clYellow2" Color4 = "clPink2  " />
+        <ExecMacro MacroName = "Pyramide" Color1 = "clOrange3" Color2 = "clPink3  " Color3 = "clBlue3  " Color4 = "clCyan2  " />
+        <ExecMacro MacroName = "Pyramide" Color1 = "clOrange2" Color2 = "clCyan1  " Color3 = "clBlue2  " Color4 = "clPink3  " />
+        <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+        <Turn NormVector = "0;1;0" Angle = "Pi / 3" />
+        <ExecMacro MacroName = "Pyramide" Color1 = "clOrange2" Color2 = "clYellow3" Color3 = "clGreen2 " Color4 = "clWhite3 " />
+        <ExecMacro MacroName = "Pyramide" Color1 = "clOrange3" Color2 = "clWhite2 " Color3 = "clGreen3 " Color4 = "clYellow3" />
+        <Turn NormVector = "0;1;0" Angle = "Pi / 3" />
+        <ExecMacro MacroName = "Pyramide" Color1 = "clBlue3  " Color2 = "clWhite1 " Color3 = "clRed3   " Color4 = "clYellow2" />
+        <ExecMacro MacroName = "Pyramide" Color1 = "clBlue2  " Color2 = "clYellow1" Color3 = "clRed2   " Color4 = "clWhite1 " />
+        <Turn NormVector = "0;0;1" Angle = "-Pi / 2" />
+
+        <Split Axis = "0" From  = "2" />
+        <Split Axis = "1" From  = "2" />
+        <Split Axis = "2" From  = "2" />
+        <Turn Axis = "3" Layers = "0;2" Angle = "Pi/2" />
+        <Turn Axis = "5" Layers = "0;2" Angle = "Pi/2" />
+        <Turn Axis = "12" Layers = "0;2" Angle = "Pi/2" />
+        <Turn Axis = "14" Layers = "0;2" Angle = "Pi/2" />
+        <Split Axis = "0" From  = "2" />
+        <Split Axis = "1" From  = "2" />
+        <Undo Repeat = "4" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

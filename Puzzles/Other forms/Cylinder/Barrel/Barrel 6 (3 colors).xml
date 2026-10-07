@@ -1,0 +1,109 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Barrel #6 (3 colors)</Name>
+        <Menu>Other forms\Cylinder\Barrel\Barrel #6 (3 colors)</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4753</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'AA00CC';
+        Colors[1] := 'EE0011';
+        Colors[2] := '00CC00';
+
+        H := 0.5115;
+        R := H * 0.734;
+        D := H * 0.154;
+
+        for i := 0 to 29 do begin
+            x[i] := R * cos(2 * Pi / 30 * i);
+            y[i] := R * sin(2 * Pi / 30 * i);
+        end;
+
+        az := sqrt(2) / 4;
+        bz := sqrt(3) / 2;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D;D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "   0;  0; -1" />
+        <Axis NormVector = "   1;  0; az" />
+        <Axis NormVector = "-1/2;-bz; az" />
+        <Axis NormVector = "-1/2; bz; az" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Body">
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "FromTo(0, 29)" />
+
+                    <Face Color = "Color" VertexIndexes = "30;31; 1; 0" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "31;32; 2; 1" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "32;33; 3; 2" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "33;34; 4; 3" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "34;35; 5; 4" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "35;36; 6; 5" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "36;37; 7; 6" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "37;38; 8; 7" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "38;39; 9; 8" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "39;40;10; 9" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "40;41;11;10" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "41;42;12;11" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "42;43;13;12" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "43;44;14;13" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "44;45;15;14" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "45;46;16;15" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "46;47;17;16" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "47;48;18;17" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "48;49;19;18" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "49;50;20;19" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "50;51;21;20" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "51;52;22;21" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "52;53;23;22" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "53;54;24;23" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "54;55;25;24" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "55;56;26;25" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "56;57;27;26" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "57;58;28;27" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "58;59;29;28" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "59;30; 0;29" InvisibleEdges = "10" />
+
+                    <Face Color = "Color" VertexIndexes = "FromTo(59, 30)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "Body" Color = "Colors[2]" />
+        <Cut Axis = "0" To = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Body" Color = "Colors[1]" />
+        <Cut Axis = "0" From = "1" To = "2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Body" Color = "Colors[0]" />
+        <Cut Axis = "0" From = "2" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

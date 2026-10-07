@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circle Master Pyraminx</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Crazy\Circle Master Pyraminx</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-14</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=397892</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0066EE'; // clBlue
+        Colors[1] := '009900'; // clGreen
+        Colors[2] := 'FF1100'; // clRed
+        Colors[3] := 'FFEE00'; // clYellow
+
+        W := 0.5;
+        include 'Figures\Scripts\Tetrahedron_Coordinates.inc';
+
+        RC := W * 0.625;
+
+        Sc := 1.0015;
+
+        D := sqrt(3) / 6;
+        D0 := -sqrt(3) / 6;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "D0; D0 + D; D0 + 2*D; D0 + 3*D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+         <Part>
+            <Vertices>
+                <Add Vector = "Vx[0]; Vy[0]; Vz[0]" />
+                <Add Vector = "Vx[1]; Vy[1]; Vz[1]" />
+                <Add Vector = "Vx[2]; Vy[2]; Vz[2]" />
+                <Add Vector = "Vx[3]; Vy[3]; Vz[3]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "1;2;3" /> // clBlue
+                <Face Color = "Colors[1]" VertexIndexes = "0;3;2" /> // clGreen
+                <Face Color = "Colors[2]" VertexIndexes = "0;1;3" /> // clRed
+                <Face Color = "Colors[3]" VertexIndexes = "0;2;1" /> // clYellow
+            </Faces>
+        </Part>
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = "Cx[i] * Sc; Cy[i] * Sc; Cz[i] * Sc" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "4" i = "0" />
+
+        <SplitByAxes/>
+
+        // Remove small artefacts
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <Hide Axis = "2" Layer = "1" />
+        <Hide Axis = "3" Layer = "1" />
+        <Cut Axis = "0" To = "3" />
+        <Cut Axis = "1" To = "3" />
+        <Cut Axis = "2" To = "3" />
+        <Cut Axis = "3" To = "3" />
+        <ShowAll/>
+
+        <Connect Layers = "0;2" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Triangle" File = "Puzzles\Other forms\Platonic solids\Tetrahedron\Vertex Turning\Crazy\Triangle.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Triangle = 42,0,0, 55,0,0, 68,0,0, 81,0,0
+    </SetTextures>
+</xml>

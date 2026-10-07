@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>UltraX</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\UltraX</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8201</Link>
+        <Link>http://bbs.mf8-china.com/forum.php?mod=viewthread&amp;tid=116014&amp;extra=page%3D1</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0055EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'CCCCCC'; // LightGray
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.29;
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.985;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; 0; D"  FixedLayer-s = "1" > // ??????
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

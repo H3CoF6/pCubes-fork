@@ -1,0 +1,128 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Senior Barrel Crazy</Name>
+        <Menu>Other forms\Cylinder\Senior Barrel Crazy</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>xchemist, Boris</Programmer>
+        <Added>2020-04-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7050</Link>
+    </Interface>
+
+    <Script>
+        Colors[2] := 'DD0000'; // Red   
+        Colors[1] := 'FF7700'; // Orange
+        Colors[4] := '8800CC'; // Purple
+        Colors[0] := 'AAAAAA'; // Gray  
+        Colors[3] := '009900'; // Green 
+        Colors[5] := '0022EE'; // Blue  
+        Colors[6] := '222222'; // Black 
+        Colors[7] := 'FFFF00'; // Yellow
+
+        sAngle := Pi * 2 / 3;
+        for i := 0 to 2 do begin
+            ax[i] := sin(sAngle * i);
+            ay[i] := cos(sAngle * i);
+        end;
+
+        R := 0.55;
+        H := R * 0.8;
+
+        N := 60; // nuber of sides of cylinders, must be divisible by 6
+        N1 := 4; // must be even
+        N2 := N div 3 - N1;
+
+        D := H / 3;
+        RC := D * 1.59; // must be > D * sqrt(2) 
+        D1 := R * cos(Pi / N * N2);
+        D2 := sqrt(R^2 - Rc^2) * 0.999;
+
+        for i := 0 to N - 1 do begin
+            A := 2 * Pi / N * i;
+            x[i] := R * cos(A);
+            y[i] := R * sin(A);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" TurnAxesWithLayer = "1">
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2" PlaneDistances = " D1; D2" NormVectors = " ax; ay; 0" />
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <!-- main cylinder -->
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "Colors[7]" VertexIndexes = "FromTo(0, N - 1)" />
+                <ExecMacro Color = "Colors[0]" MacroName = "AddFace" Repeat = "N1" i = "5 - N1 div 2" />
+                <ExecMacro Color = "Colors[1]" MacroName = "AddFace" Repeat = "N2" />
+                <ExecMacro Color = "Colors[2]" MacroName = "AddFace" Repeat = "N1" />
+                <ExecMacro Color = "Colors[3]" MacroName = "AddFace" Repeat = "N2" />
+                <ExecMacro Color = "Colors[4]" MacroName = "AddFace" Repeat = "N1" />
+                <ExecMacro Color = "Colors[5]" MacroName = "AddFace" Repeat = "N2" />
+                <Face Color = "Colors[6]" VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <!-- small cylinders -->
+
+        <Macro Name = "CutCylinder" >
+            <Cut Color = "0" InvisibleEdges = "0" > <Plane NormVector = " 0; 0;-1" NormDistance = "-RC" /> </Cut>
+            <Turn NormVector = "0;1;0" Angle = "2*Pi/N" />
+        </Macro>
+
+        <Macro Name = "SplitSector" >
+            <Split Color1 = "Color" InvisibleEdges1 = "10" > <Plane NormVector = " 0;-1; 0" NormDistance = "-D2" /> </Split>
+            <Hide> <Plane NormVector = " 0; 1; 0" NormDistance = " D2" /> </Hide>
+            <ExecMacro MacroName = "CutCylinder" Repeat = "N" />
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "SplitSector" Color = "Colors[1]" />
+        <ExecMacro MacroName = "SplitSector" Color = "Colors[5]" />
+        <ExecMacro MacroName = "SplitSector" Color = "Colors[3]" />
+
+        <!-- additional cuts -->
+
+        <SplitByAxes/>
+        <Turn Axis = "1" Layers = "1;2" Angle = "Pi/2" />
+        <Turn Axis = "2" Layers = "1;2" Angle = "Pi/2" />
+        <Turn Axis = "3" Layers = "1;2" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+
+        <!-- connect green circle to base, others to surrounding parts -->
+
+        <Connect Axis = "3" Layers = "0;2" />
+        <Connect Axis = "1" Layers = "1;2" />
+        <Connect Axis = "2" Layers = "1;2" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

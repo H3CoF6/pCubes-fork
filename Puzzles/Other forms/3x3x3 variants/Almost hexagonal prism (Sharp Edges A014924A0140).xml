@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Almost hexagonal prism (Sharp Edges A014924A0140)</Name>
+        <Menu>Other forms\3x3x3 variants\Almost hexagonal prism (Sharp Edges A014924A0140)</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-12-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3770</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF0000'; // Red
+        Colors[ 1] := 'FF5C00'; // Orange
+        Colors[ 2] := '0000FF'; // Blue
+        Colors[ 3] := '1D9F00'; // Green
+        Colors[ 4] := 'FFFF00'; // Yellow
+        Colors[ 5] := 'FFFFFF'; // White
+        Colors[ 6] := '800080'; // Purple
+        Colors[ 7] := 'FFA500'; // Bright Orange
+        Colors[ 8] := '00FFFF'; // Aqua
+        Colors[ 9] := '708090'; // Light Gray
+        Colors[10] := 'A020F0'; // Light Purple
+        Colors[11] := '87FF4A'; // Bright Green
+        Colors[12] := 'D2B48C'; // Tan
+        Colors[13] := '4169E1'; // Light Blue
+
+        D := 0.14;
+        W := D * 5;
+        DCut1 := D * 4;
+        DCut2 := D * 2.7;
+        ax := 0.08;
+        ay := 0.12;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <Turn NormVector = "0;0;1" Angle = "Pi/4" />
+        <Turn NormVector = "1;0;0" Angle = "ArcTan(sqrt(2))" />
+
+        <Cut Color = "Colors[0]" ><Plane NormVector = " 0; 0;-1" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "Colors[1]" ><Plane NormVector = " 0; 0; 1" NormDistance = "-DCut1" /> </Cut>
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Colors[i  ]" ><Plane NormVector = " 1; ax; ay" NormDistance = "-DCut2" /> </Cut>
+            <Cut Color = "Colors[i+1]" ><Plane NormVector = " 1;-ax;-ay" NormDistance = "-DCut2" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = "Pi/3" />
+            <Cut Color = "Colors[i+2]" ><Plane NormVector = " 1; ax;-ay" NormDistance = "-DCut2" /> </Cut>
+            <Cut Color = "Colors[i+3]" ><Plane NormVector = " 1;-ax; ay" NormDistance = "-DCut2" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = "Pi/3" />
+            <Script>i := i + 4;</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "2" Repeat = "3" />
+    </Figure>
+</xml>

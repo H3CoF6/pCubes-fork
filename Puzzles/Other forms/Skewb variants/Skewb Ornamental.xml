@@ -1,0 +1,150 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Ornamental</Name>
+        <Menu>Other forms\Skewb variants\Skewb Ornamental</Menu>
+        <Inventor>Jean-Claude Constantin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-03-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3785</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '800040'; // DarkViolett
+        Colors[ 1] := 'FF800A'; // Orange
+        Colors[ 2] := 'BF8040'; // Brown
+        Colors[ 3] := 'FFFFFF'; // White
+        Colors[ 4] := '005600'; // DarkGreen
+        Colors[ 5] := '000078'; // DarkBlue
+        Colors[ 6] := '808000'; // Olive
+        Colors[ 7] := '0000D8'; // LightBlue
+        Colors[ 8] := '00A600'; // LightGreen
+        Colors[ 9] := 'FFFF00'; // Yellow
+        Colors[10] := 'FF0080'; // LightViolett
+        Colors[11] := 'C80000'; // Red
+
+        W := 0.5;
+        D := W / 2;
+        A := W * 1.5;
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.98;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCorner" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " 0; 0; 0" />
+                    <Add Vector = " W; W; W" />
+                    <Add Vector = " 0; W; W" />
+                    <Add Vector = " W; 0; W" />
+                    <Add Vector = " W; W; 0" />
+                    <Add Vector = " W; D; D" />
+                    <Add Vector = " D; W; D" />
+                    <Add Vector = " D; D; W" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "Colors[c0]" VertexIndexes = "1;6;2" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c1]" VertexIndexes = "1;7;3" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "1;5;4" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c0]" VertexIndexes = "7;1;2" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c1]" VertexIndexes = "5;1;3" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "6;1;4" InvisibleEdges = "1" />
+                    <Face VertexIndexes = "0;3;2"/>
+                    <Face VertexIndexes = "0;4;3"/>
+                    <Face VertexIndexes = "0;2;4"/>
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "AddCorner" c0 = " 6" c1 = " 9" c2 = " 0" />
+        <ExecMacro MacroName = "AddCorner" c0 = " 9" c1 = " 8" c2 = " 1" />
+        <ExecMacro MacroName = "AddCorner" c0 = " 8" c1 = " 7" c2 = "10" />
+        <ExecMacro MacroName = "AddCorner" c0 = " 7" c1 = " 6" c2 = "11" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCorner" c0 = " 2" c1 = " 5" c2 = " 1" />
+        <ExecMacro MacroName = "AddCorner" c0 = " 5" c1 = " 4" c2 = " 0" />
+        <ExecMacro MacroName = "AddCorner" c0 = " 4" c1 = " 3" c2 = "11" />
+        <ExecMacro MacroName = "AddCorner" c0 = " 3" c1 = " 2" c2 = "10" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <Macro Name = "AddCenter" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " 0; 0; 0" />
+                    <Add Vector = " 0; W; W" />
+                    <Add Vector = " W; W; 0" />
+                    <Add Vector = " 0; W;-W" />
+                    <Add Vector = "-W; W; 0" />
+                    <Add Vector = " D; W; D" />
+                    <Add Vector = "-D; W; D" />
+                    <Add Vector = "-D; W;-D" />
+                    <Add Vector = " D; W;-D" />
+                    <Add Vector = "-D; A; D" />
+                    <Add Vector = " D; A;-D" />
+                    <Add Vector = " 0; A; 0" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "Colors[c0]" VertexIndexes = "11; 5; 2;10" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c1]" VertexIndexes = " 5;11; 9; 1" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "11; 7; 4; 9" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c3]" VertexIndexes = " 7;11;10; 3" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c0]" VertexIndexes = " 8;10; 2" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c1]" VertexIndexes = " 9; 6; 1" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c2]" VertexIndexes = " 6; 9; 4" InvisibleEdges = "1" />
+                    <Face Color = "Colors[c3]" VertexIndexes = "10; 8; 3" InvisibleEdges = "1" />
+                    <Face VertexIndexes = "0;2;1"/>
+                    <Face VertexIndexes = "0;3;2"/>
+                    <Face VertexIndexes = "0;4;3"/>
+                    <Face VertexIndexes = "0;1;4"/>
+                </Faces>
+            </Part>
+        </Macro>
+        <Turn NormVector = "0;1;0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "AddCenter" c0 = " 6" c1 = "11" c2 = " 4" c3 = " 0" />
+        <Turn NormVector = "0;1;0" Angle = "-Pi/2" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <Turn NormVector = "0;1;0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "AddCenter" c0 = " 0" c1 = " 5" c2 = " 1" c3 = " 9" />
+        <Turn NormVector = "0;1;0" Angle = "-Pi/2" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <Turn NormVector = "0;1;0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "AddCenter" c0 = " 9" c1 = " 8" c2 = " 7" c3 = " 6" />
+        <Turn NormVector = "0;1;0" Angle = "-Pi/2" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCenter" c0 = "10" c1 = " 3" c2 = "11" c3 = " 7" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddCenter" c0 = " 2" c1 = "10" c2 = " 8" c3 = " 1" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddCenter" c0 = " 3" c1 = " 2" c2 = " 5" c3 = " 4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

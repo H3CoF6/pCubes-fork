@@ -1,0 +1,228 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Entramado 3x3x3</Name>
+        <Menu>Cubic\Rubiks Recolored\Entramado 3x3x3</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-07-30</Added>
+        <Link>http://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9314</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0080'; // pink
+        Colors[1] := 'F80000'; // red
+        Colors[2] := 'F67F05'; // orange
+        Colors[3] := 'FFFF00'; // yellow
+        Colors[4] := '005600'; // green
+        Colors[5] := '000078'; // blue
+        Colors[6] := 'FFFFFF'; // white
+        Colors[7] := '800080'; // violett
+        Colors[8] := '222222'; // black
+
+        sColors[0] := '    053        ';
+        sColors[1] := '    481        ';
+        sColors[2] := '    627        ';
+        sColors[3] := '056 647 723 310';
+        sColors[4] := '284 182 581 485';
+        sColors[5] := '713 350 046 627';
+        sColors[6] := '    310        ';
+        sColors[7] := '    285        ';
+        sColors[8] := '    746        ';
+
+        W := 0.5;
+        D := W / 3;
+
+        N := 10;
+        step := W * 2 / N; // minimal step in coordinates
+        cv := 0; // Vertex Count
+
+        function GetId(xc, yc);
+        begin
+            xi := x + dx1 * xc + dx2 * yc;
+            yi := y + dy1 * xc + dy2 * yc;
+            zi := z + dz1 * xc + dz2 * yc;
+            if VarExists('Idx[' + IntToStr(xi) + ',' + IntToStr(yi) + ',' + IntToStr(zi) + ']') then
+                Result := Idx[xi, yi, zi]
+            else begin
+                Vx[cv] := xi * step - W;
+                Vy[cv] := yi * step - W;
+                Vz[cv] := zi * step - W;
+                Result := IntToStr(cv) + ';';
+                Idx[xi, yi, zi] := Result;
+                Inc(cv);
+            end;
+        end;
+
+        function GetColor(x3, y3);
+        begin
+            char := copy(sColors[sy + y3], sx + x3, 1);
+            Result := Colors[StrToInt(char)];
+        end;
+
+        procedure Polygon(ids);
+        begin
+            S[cf] := ids;
+            Cl[cf] := BrushColor;
+            Inc(cf);
+        end;
+
+        procedure MakeSide(x, y, z, dx1, dy1, dz1, dx2, dy2, dz2, sx, sy);
+        // x, y, z - left-top point of side
+        // dx1, dy1, dz1 - 1st counting vector
+        // dx2, dy2, dz2 - 2nd counting vector
+        // sx, sy - left-top letter in sColors
+        begin
+            Id_00_00 := GetId(00,00);
+            Id_00_01 := GetId(00,01);
+            Id_00_03 := GetId(00,03);
+            Id_00_05 := GetId(00,05);
+            Id_00_07 := GetId(00,07);
+            Id_00_09 := GetId(00,09);
+            Id_00_10 := GetId(00,10);
+            Id_01_00 := GetId(01,00);
+            Id_01_02 := GetId(01,02);
+            Id_01_04 := GetId(01,04);
+            Id_01_06 := GetId(01,06);
+            Id_01_08 := GetId(01,08);
+            Id_01_10 := GetId(01,10);
+            Id_02_01 := GetId(02,01);
+            Id_02_03 := GetId(02,03);
+            Id_02_05 := GetId(02,05);
+            Id_02_07 := GetId(02,07);
+            Id_02_09 := GetId(02,09);
+            Id_03_00 := GetId(03,00);
+            Id_03_02 := GetId(03,02);
+            Id_03_04 := GetId(03,04);
+            Id_03_06 := GetId(03,06);
+            Id_03_08 := GetId(03,08);
+            Id_03_10 := GetId(03,10);
+            Id_04_01 := GetId(04,01);
+            Id_04_03 := GetId(04,03);
+            Id_04_05 := GetId(04,05);
+            Id_04_07 := GetId(04,07);
+            Id_04_09 := GetId(04,09);
+            Id_05_00 := GetId(05,00);
+            Id_05_02 := GetId(05,02);
+            Id_05_04 := GetId(05,04);
+            Id_05_06 := GetId(05,06);
+            Id_05_08 := GetId(05,08);
+            Id_05_10 := GetId(05,10);
+            Id_06_01 := GetId(06,01);
+            Id_06_03 := GetId(06,03);
+            Id_06_05 := GetId(06,05);
+            Id_06_07 := GetId(06,07);
+            Id_06_09 := GetId(06,09);
+            Id_07_00 := GetId(07,00);
+            Id_07_02 := GetId(07,02);
+            Id_07_04 := GetId(07,04);
+            Id_07_06 := GetId(07,06);
+            Id_07_08 := GetId(07,08);
+            Id_07_10 := GetId(07,10);
+            Id_08_01 := GetId(08,01);
+            Id_08_03 := GetId(08,03);
+            Id_08_05 := GetId(08,05);
+            Id_08_07 := GetId(08,07);
+            Id_08_09 := GetId(08,09);
+            Id_09_00 := GetId(09,00);
+            Id_09_02 := GetId(09,02);
+            Id_09_04 := GetId(09,04);
+            Id_09_06 := GetId(09,06);
+            Id_09_08 := GetId(09,08);
+            Id_09_10 := GetId(09,10);
+            Id_10_00 := GetId(10,00);
+            Id_10_01 := GetId(10,01);
+            Id_10_03 := GetId(10,03);
+            Id_10_05 := GetId(10,05);
+            Id_10_07 := GetId(10,07);
+            Id_10_09 := GetId(10,09);
+            Id_10_10 := GetId(10,10);
+
+            BrushColor := GetColor(1,1);
+            Polygon(Id_00_00 + Id_00_01 + Id_01_02 + Id_02_01 + Id_01_00);
+            Polygon(Id_05_00 + Id_04_01 + Id_05_02 + Id_06_01);
+            Polygon(Id_10_00 + Id_09_00 + Id_08_01 + Id_09_02 + Id_10_01);
+            Polygon(Id_06_05 + Id_05_04 + Id_04_05 + Id_05_06);
+            Polygon(Id_10_05 + Id_09_04 + Id_08_05 + Id_09_06);
+            Polygon(Id_02_05 + Id_01_04 + Id_00_05 + Id_01_06);
+            Polygon(Id_00_10 + Id_01_10 + Id_02_09 + Id_01_08 + Id_00_09);
+            Polygon(Id_05_08 + Id_04_09 + Id_05_10 + Id_06_09);
+            Polygon(Id_10_10 + Id_10_09 + Id_09_08 + Id_08_09 + Id_09_10);
+            Polygon(Id_03_02 + Id_02_03 + Id_03_04 + Id_04_03);
+            Polygon(Id_07_02 + Id_06_03 + Id_07_04 + Id_08_03);
+            Polygon(Id_03_06 + Id_02_07 + Id_03_08 + Id_04_07);
+            Polygon(Id_07_06 + Id_06_07 + Id_07_08 + Id_08_07);
+
+            BrushColor := GetColor(2,2);
+            Polygon(Id_07_08 + Id_08_09 + Id_10_07 + Id_10_05);
+            Polygon(Id_06_09 + Id_05_10 + Id_07_10);
+
+            BrushColor := GetColor(1,2);
+            Polygon(Id_01_10 + Id_03_10 + Id_02_09);
+            Polygon(Id_03_08 + Id_04_09 + Id_07_06 + Id_06_05);
+            Polygon(Id_07_04 + Id_08_05 + Id_10_03 + Id_10_01);
+
+            BrushColor := GetColor(1,0);
+            Polygon(Id_00_09 + Id_03_06 + Id_02_05 + Id_00_07);
+            Polygon(Id_03_04 + Id_04_05 + Id_07_02 + Id_06_01);
+            Polygon(Id_07_00 + Id_08_01 + Id_09_00);
+
+            BrushColor := GetColor(0,0);
+            Polygon(Id_00_03 + Id_00_05 + Id_03_02 + Id_02_01);
+            Polygon(Id_03_00 + Id_04_01 + Id_05_00);
+
+            BrushColor := GetColor(0,2);
+            Polygon(Id_00_05 + Id_00_07 + Id_01_06);
+            Polygon(Id_02_07 + Id_01_08 + Id_03_10 + Id_05_10);
+
+            BrushColor := GetColor(0,1);
+            Polygon(Id_00_01 + Id_00_03 + Id_01_02);
+            Polygon(Id_02_03 + Id_01_04 + Id_04_07 + Id_05_06);
+            Polygon(Id_06_07 + Id_05_08 + Id_07_10 + Id_09_10);
+
+            BrushColor := GetColor(2,1);
+            Polygon(Id_03_00 + Id_01_00 + Id_04_03 + Id_05_02);
+            Polygon(Id_06_03 + Id_05_04 + Id_08_07 + Id_09_06);
+            Polygon(Id_09_08 + Id_10_09 + Id_10_07);
+
+            BrushColor := GetColor(2,0);
+            Polygon(Id_07_00 + Id_05_00 + Id_08_03 + Id_09_02);
+            Polygon(Id_10_03 + Id_09_04 + Id_10_05);
+        end;
+
+        cf := 0;
+        MakeSide( 0, N, N,  1, 0, 0,  0,-1, 0,  5, 0); // up
+        MakeSide( 0, 0, N,  1, 0, 0,  0, 0,-1,  5, 3); // face
+        MakeSide( 0, N, N,  0,-1, 0,  0, 0,-1,  1, 3); // left
+        MakeSide( N, 0, N,  0, 1, 0,  0, 0,-1,  9, 3); // right
+        MakeSide( N, N, N, -1, 0, 0,  0, 0,-1, 13, 3); // back
+        MakeSide( 0, 0, 0,  1, 0, 0,  0, 1, 0,  5, 6); // bottom
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Cl[i]" VertexIndexes = "S[i]" InvisibleEdges = "-1" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "cf" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "AdjoiningFacesHaveSameColors" />
+</xml>

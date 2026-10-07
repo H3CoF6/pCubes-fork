@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-2 Barrel AC</Name>
+        <Menu>Other forms\Cylinder\Square-2 Barrel AC</Menu>
+        <Inventor>Lee Zhen Xing</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-04-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10337</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFF00'; // Yellow
+        Colors[1] := 'FFFFFF'; // White
+
+        W := 0.5;
+        D := W / 3;
+        H := W;
+        R := W;
+
+        N := 60;
+        for i := 0 to N - 1 do begin
+            A := 2 * Pi / N * i;
+            x[i] := R * sin(A);
+            y[i] :=-R * cos(A);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "FromTo(0, N div 2)" />
+                <Face Color = "Colors[1]" VertexIndexes = "FromTo(N div 2, N - 1) + '';0''" />
+                <ExecMacro MacroName = "AddFace" c = "0" i = "0" Repeat = "N div 2" />
+                <ExecMacro MacroName = "AddFace" c = "1" Repeat = "N div 2" />
+                <Face Color = "Colors[1]" VertexIndexes = "IntToStr(N) + '';'' + FromTo(2 * N - 1, N div 2 * 3)" />
+                <Face Color = "Colors[0]" VertexIndexes = "FromTo(N div 2 * 3, N)" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "1" From  = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi / 2" />
+
+        <Macro Name = "Split" >
+            <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "6" />
+        <Undo Repeat = "6" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

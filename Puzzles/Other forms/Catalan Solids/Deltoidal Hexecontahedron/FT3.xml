@@ -1,0 +1,260 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Deltoidal Hexecontahedron FT3</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Hexecontahedron\FT3</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-04-05</Added>
+        <Link>http://dmccooey.com/polyhedra/DeltoidalHexecontahedron.html</Link>
+    </Interface>
+
+    <Script>
+        clWhite       := 'F0F0F0';
+        clGainsboro   := 'C0C0C0';
+        clSilver      := 'A0A0A0';
+        clGray        := '707070';
+        clBlack       := '202020';
+
+        clCyan        := '00FFFF';
+        clDeepSky     := '00BFFF';
+        clTeal        := '008080';
+        clBlue        := '0000FF';
+        clNavy        := '000080';
+
+        clCoral       := 'FF7F50';
+        clRed         := 'FF0000';
+        clCrimson     := 'DC143C';
+        clIndian      := 'CD5C5C';
+        clBrown       := '800000';
+
+        clYellow      := 'FFFF00';
+        clOrange      := 'FF6000';
+        clKhaki       := 'F0E68C';
+        clGolden      := 'DDBB20';
+        clOlive       := '808000';
+
+        clGreenYellow := 'ADFF2F';
+        clLime        := '00FF00';
+        clSeaGreen    := '3cb371';
+        clGreen       := '008000';
+        clDarkGreen   := '006400';
+
+        clPink        := 'FF69B4';
+        clFuchsia     := 'FF00FF';
+        clPale        := 'D07090';
+        clOrchid      := 'DA70D6';
+        clPurple      := '800080';
+
+        K  := 0.65;
+        C0 := K * (sqrt(5) - 1) / 4;
+        C1 := K * (3 * sqrt(5) + 1) / 22;
+        C2 := K * 1 / 2;
+        C3 := K * (sqrt(5) + 1) / 6;
+        C4 := K * (sqrt(5) + 4) / 11;
+        C5 := K * (sqrt(5) + 1) / 4;
+        C6 := K * (sqrt(5) + 3) / 6;
+        C7 := K * (5 * sqrt(5) + 9) / 22;
+        C8 := K;
+
+        pA1 := 3 - sqrt(5);
+        pA2 := sqrt(5) + 1;
+        pB1 := sqrt(5) - 1;
+        pB2 := 2;
+        pB3 := 2 * sqrt(5) - 2;
+        pC  := 5 - sqrt(5);
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vx := y1 * z2 - y2 * z1;
+          vy := z1 * x2 - z2 * x1;
+          vz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+
+        A1 := Angle(pB1,-pB3, pB2, -pA1,-pA2, pA1, -pB1,-pB3, pB2); // 0.67587634; 
+        A2 := Angle(pB1,-pB3, pB2,  pB2,-pB1, pB3,  pB3,-pB2, pB1); // 1.07741483; 
+        A3 := Angle(pB1,-pB3, pB2,  pB3,-pB2, pB1,  pA1,-pA2, pA1); // 1.62360728; 
+        A4 := Angle(pB1,-pB3, pB2,  pA1,-pA2, pA1,    0,-pB2, pC ); // 1.95855593; 
+        A5 := Angle(pB1,-pB3, pB2,  pB2,-pB1, pB3,  pA1,-pA2, pA1); // 2.70102211; 
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A5;-A4;-A3;-A2;-A1;0;A1;A2;A3;A4;A5" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " pA1;-pA1; pA2" />
+        <Axis NormVector = " pA1; pA1; pA2" />
+        <Axis NormVector = " pB2;-pB1; pB3" />
+        <Axis NormVector = " pB2; pB1; pB3" />
+        <Axis NormVector = " pC ;   0; pB2" />
+        <Axis NormVector = "-pA1;-pA1; pA2" />
+        <Axis NormVector = "-pA1; pA1; pA2" />
+        <Axis NormVector = "-pB2;-pB1; pB3" />
+        <Axis NormVector = "-pB2; pB1; pB3" />
+        <Axis NormVector = "-pC ;   0; pB2" />
+        <Axis NormVector = "   0;-pB2; pC " />  
+        <Axis NormVector = " pB1;-pB3; pB2" />
+        <Axis NormVector = "-pB1;-pB3; pB2" />
+        <Axis NormVector = " pA1;-pA2; pA1" />
+        <Axis NormVector = "-pA1;-pA2; pA1" />
+        <Axis NormVector = "   0; pB2; pC " />
+        <Axis NormVector = " pB1; pB3; pB2" />
+        <Axis NormVector = "-pB1; pB3; pB2" />
+        <Axis NormVector = " pA1; pA2; pA1" />
+        <Axis NormVector = "-pA1; pA2; pA1" />
+        <Axis NormVector = " pB2; pC ;   0" />
+        <Axis NormVector = " pB3; pB2; pB1" />
+        <Axis NormVector = " pB3; pB2;-pB1" />
+        <Axis NormVector = " pA2; pA1; pA1" />
+        <Axis NormVector = " pA2; pA1;-pA1" />
+        <Axis NormVector = " pB2;-pC ;   0" />
+        <Axis NormVector = " pB3;-pB2; pB1" />
+        <Axis NormVector = " pB3;-pB2;-pB1" />
+        <Axis NormVector = " pA2;-pA1; pA1" />
+        <Axis NormVector = " pA2;-pA1;-pA1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;   0;  C8" />
+                <Add Vector = "  0;   0; -C8" />
+                <Add Vector = " C8;   0;   0" />
+                <Add Vector = "-C8;   0;   0" />
+                <Add Vector = "  0;  C8;   0" />
+                <Add Vector = "  0; -C8;   0" />
+                <Add Vector = "  0;  C1;  C7" />
+                <Add Vector = "  0;  C1; -C7" />
+                <Add Vector = "  0; -C1;  C7" />
+                <Add Vector = "  0; -C1; -C7" />
+                <Add Vector = " C7;   0;  C1" />
+                <Add Vector = " C7;   0; -C1" />
+                <Add Vector = "-C7;   0;  C1" />
+                <Add Vector = "-C7;   0; -C1" />
+                <Add Vector = " C1;  C7;   0" />
+                <Add Vector = " C1; -C7;   0" />
+                <Add Vector = "-C1;  C7;   0" />
+                <Add Vector = "-C1; -C7;   0" />
+                <Add Vector = " C3;   0;  C6" />
+                <Add Vector = " C3;   0; -C6" />
+                <Add Vector = "-C3;   0;  C6" />
+                <Add Vector = "-C3;   0; -C6" />
+                <Add Vector = " C6;  C3;   0" />
+                <Add Vector = " C6; -C3;   0" />
+                <Add Vector = "-C6;  C3;   0" />
+                <Add Vector = "-C6; -C3;   0" />
+                <Add Vector = "  0;  C6;  C3" />
+                <Add Vector = "  0;  C6; -C3" />
+                <Add Vector = "  0; -C6;  C3" />
+                <Add Vector = "  0; -C6; -C3" />
+                <Add Vector = " C0;  C2;  C5" />
+                <Add Vector = " C0;  C2; -C5" />
+                <Add Vector = " C0; -C2;  C5" />
+                <Add Vector = " C0; -C2; -C5" />
+                <Add Vector = "-C0;  C2;  C5" />
+                <Add Vector = "-C0;  C2; -C5" />
+                <Add Vector = "-C0; -C2;  C5" />
+                <Add Vector = "-C0; -C2; -C5" />
+                <Add Vector = " C5;  C0;  C2" />
+                <Add Vector = " C5;  C0; -C2" />
+                <Add Vector = " C5; -C0;  C2" />
+                <Add Vector = " C5; -C0; -C2" />
+                <Add Vector = "-C5;  C0;  C2" />
+                <Add Vector = "-C5;  C0; -C2" />
+                <Add Vector = "-C5; -C0;  C2" />
+                <Add Vector = "-C5; -C0; -C2" />
+                <Add Vector = " C2;  C5;  C0" />
+                <Add Vector = " C2;  C5; -C0" />
+                <Add Vector = " C2; -C5;  C0" />
+                <Add Vector = " C2; -C5; -C0" />
+                <Add Vector = "-C2;  C5;  C0" />
+                <Add Vector = "-C2;  C5; -C0" />
+                <Add Vector = "-C2; -C5;  C0" />
+                <Add Vector = "-C2; -C5; -C0" />
+                <Add Vector = " C4;  C4;  C4" />
+                <Add Vector = " C4;  C4; -C4" />
+                <Add Vector = " C4; -C4;  C4" />
+                <Add Vector = " C4; -C4; -C4" />
+                <Add Vector = "-C4;  C4;  C4" />
+                <Add Vector = "-C4;  C4; -C4" />
+                <Add Vector = "-C4; -C4;  C4" />
+                <Add Vector = "-C4; -C4; -C4" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite      " VertexIndexes = " 18;  0;  8; 32" />
+                <Face Color = "clGainsboro  " VertexIndexes = " 18; 32; 56; 40" />
+                <Face Color = "clSilver     " VertexIndexes = " 18; 40; 10; 38" />
+                <Face Color = "clGray       " VertexIndexes = " 18; 38; 54; 30" />
+                <Face Color = "clBlack      " VertexIndexes = " 18; 30;  6;  0" />
+                <Face Color = "clBlack      " VertexIndexes = " 21;  1;  9; 37" />
+                <Face Color = "clGray       " VertexIndexes = " 21; 37; 61; 45" />
+                <Face Color = "clSilver     " VertexIndexes = " 21; 45; 13; 43" />
+                <Face Color = "clGainsboro  " VertexIndexes = " 21; 43; 59; 35" />
+                <Face Color = "clWhite      " VertexIndexes = " 21; 35;  7;  1" />
+
+                <Face Color = "clYellow     " VertexIndexes = " 22;  2; 11; 39" />
+                <Face Color = "clOrange     " VertexIndexes = " 22; 39; 55; 47" />
+                <Face Color = "clKhaki      " VertexIndexes = " 22; 47; 14; 46" />
+                <Face Color = "clGolden     " VertexIndexes = " 22; 46; 54; 38" />
+                <Face Color = "clOlive      " VertexIndexes = " 22; 38; 10;  2" />
+                <Face Color = "clOlive      " VertexIndexes = " 25;  3; 13; 45" />
+                <Face Color = "clGolden     " VertexIndexes = " 25; 45; 61; 53" />
+                <Face Color = "clKhaki      " VertexIndexes = " 25; 53; 17; 52" />
+                <Face Color = "clOrange     " VertexIndexes = " 25; 52; 60; 44" />
+                <Face Color = "clYellow     " VertexIndexes = " 25; 44; 12;  3" />
+
+                <Face Color = "clCyan       " VertexIndexes = " 19;  1;  7; 31" />
+                <Face Color = "clDeepSky    " VertexIndexes = " 19; 31; 55; 39" />
+                <Face Color = "clTeal       " VertexIndexes = " 19; 39; 11; 41" />
+                <Face Color = "clBlue       " VertexIndexes = " 19; 41; 57; 33" />
+                <Face Color = "clNavy       " VertexIndexes = " 19; 33;  9;  1" />
+                <Face Color = "clNavy       " VertexIndexes = " 20;  0;  6; 34" />
+                <Face Color = "clBlue       " VertexIndexes = " 20; 34; 58; 42" />
+                <Face Color = "clTeal       " VertexIndexes = " 20; 42; 12; 44" />
+                <Face Color = "clDeepSky    " VertexIndexes = " 20; 44; 60; 36" />
+                <Face Color = "clCyan       " VertexIndexes = " 20; 36;  8;  0" />
+
+                <Face Color = "clGreenYellow" VertexIndexes = " 23;  2; 10; 40" />
+                <Face Color = "clLime       " VertexIndexes = " 23; 40; 56; 48" />
+                <Face Color = "clSeaGreen   " VertexIndexes = " 23; 48; 15; 49" />
+                <Face Color = "clGreen      " VertexIndexes = " 23; 49; 57; 41" />
+                <Face Color = "clDarkGreen  " VertexIndexes = " 23; 41; 11;  2" />
+                <Face Color = "clDarkGreen  " VertexIndexes = " 24;  3; 12; 42" />
+                <Face Color = "clGreen      " VertexIndexes = " 24; 42; 58; 50" />
+                <Face Color = "clSeaGreen   " VertexIndexes = " 24; 50; 16; 51" />
+                <Face Color = "clLime       " VertexIndexes = " 24; 51; 59; 43" />
+                <Face Color = "clGreenYellow" VertexIndexes = " 24; 43; 13;  3" />
+
+                <Face Color = "clCoral      " VertexIndexes = " 26;  4; 16; 50" />
+                <Face Color = "clRed        " VertexIndexes = " 26; 50; 58; 34" />
+                <Face Color = "clCrimson    " VertexIndexes = " 26; 34;  6; 30" />
+                <Face Color = "clIndian     " VertexIndexes = " 26; 30; 54; 46" />
+                <Face Color = "clBrown      " VertexIndexes = " 26; 46; 14;  4" />
+                <Face Color = "clBrown      " VertexIndexes = " 29;  5; 17; 53" />
+                <Face Color = "clIndian     " VertexIndexes = " 29; 53; 61; 37" />
+                <Face Color = "clCrimson    " VertexIndexes = " 29; 37;  9; 33" />
+                <Face Color = "clRed        " VertexIndexes = " 29; 33; 57; 49" />
+                <Face Color = "clCoral      " VertexIndexes = " 29; 49; 15;  5" />
+
+                <Face Color = "clPink       " VertexIndexes = " 27;  4; 14; 47" />
+                <Face Color = "clFuchsia    " VertexIndexes = " 27; 47; 55; 31" />
+                <Face Color = "clPale       " VertexIndexes = " 27; 31;  7; 35" />
+                <Face Color = "clOrchid     " VertexIndexes = " 27; 35; 59; 51" />
+                <Face Color = "clPurple     " VertexIndexes = " 27; 51; 16;  4" />
+                <Face Color = "clPurple     " VertexIndexes = " 28;  5; 15; 48" />
+                <Face Color = "clOrchid     " VertexIndexes = " 28; 48; 56; 32" />
+                <Face Color = "clPale       " VertexIndexes = " 28; 32;  8; 36" />
+                <Face Color = "clFuchsia    " VertexIndexes = " 28; 36; 60; 52" />
+                <Face Color = "clPink       " VertexIndexes = " 28; 52; 17;  5" />
+
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

@@ -1,0 +1,250 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Kilominx in a Kilominx Master</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Multi-puzzles\Kilominx in a Kilominx Master</Menu>
+        <Menu>Other forms\Multi-puzzles\Kilominx in a Kilominx Master</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-16</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+        R1 := 0.7;
+        D1 := (3 * Rsin + 1 * R2sin) / 4;
+        D2 := (2 * Rsin + 2 * R2sin) / 4;
+        R2 := R * 11 * R2sin / 3 / (RSin + R2Sin);
+        delta := 0.015;
+        DCut := RSin;
+        mAngle := ArcTan(0.5);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+        sAngle := PI * 2 / 5;
+        for i := 1 to 5 do begin
+            xa[i] := sin(sAngle * (i - 1)) * Ac;
+            ya[i] := cos(sAngle * (i - 1)) * Ac;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; sAngle; 0; sAngle; sAngle" PlaneDistances = "-D1; -D2; D2; D1" >
+        <Axis NormVector = "cx[0]; cy[0]; cz[0]" />
+        <Axis NormVector = "cx[1]; cy[1]; cz[1]" />
+        <Axis NormVector = "cx[2]; cy[2]; cz[2]" />
+        <Axis NormVector = "cx[3]; cy[3]; cz[3]" />
+        <Axis NormVector = "cx[4]; cy[4]; cz[4]" />
+        <Axis NormVector = "cx[5]; cy[5]; cz[5]" />
+    </Axes>
+
+    <Figure>
+
+
+
+    <Script>
+        R := 0.522;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+        R1 := 0.7;
+        D1 := (3 * Rsin + 1 * R2sin) / 4;
+        D2 := (2 * Rsin + 2 * R2sin) / 4;
+        R2 := R * 11 * R2sin / 3 / (RSin + R2Sin);
+        delta := 0.015;
+        DCut := RSin;
+        mAngle := ArcTan(0.5);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+        sAngle := PI * 2 / 5;
+        for i := 1 to 5 do begin
+            xa[i] := sin(sAngle * (i - 1)) * Ac;
+            ya[i] := cos(sAngle * (i - 1)) * Ac;
+        end;
+    </Script>
+
+    <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Macro Name = "Split">
+            <Split Axis = "id" From = "2" />
+            <Split Axis = "id" From = "3" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "6" id = "0" />
+
+        <Macro Name = "Hide">
+            <HideContaining Vector = "vx[id]; vy[id]; vz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" Repeat = "20" id = "0" />
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "12" id = "0" />
+
+        <ShowAll/>
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "12" id = "0" />
+
+        <SplitByAxes/>
+
+        <Script>
+            R := 0.7;
+            include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+            include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+            R1 := 0.7;
+            D1 := (3 * Rsin + 1 * R2sin) / 4;
+            D2 := (2 * Rsin + 2 * R2sin) / 4;
+            R2 := R * 11 * R2sin / 3 / (RSin + R2Sin);
+            delta := 0.015;
+            DCut := RSin;
+            mAngle := ArcTan(0.5);
+            As := sin(mAngle);
+            Ac := cos(mAngle);
+            sAngle := PI * 2 / 5;
+            for i := 1 to 5 do begin
+                xa[i] := sin(sAngle * (i - 1)) * Ac;
+                ya[i] := cos(sAngle * (i - 1)) * Ac;
+            end;
+        </Script>
+
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Split Axis = "0" From  = "1" />
+        <Split Axis = "1" From  = "1" />
+        <Split Axis = "2" From  = "1" />
+        <Split Axis = "3" From  = "1" />
+        <Split Axis = "4" From  = "1" />
+        <Split Axis = "5" From  = "1" />
+
+        <Split Axis = "0" From  = "4" />
+        <Split Axis = "1" From  = "4" />
+        <Split Axis = "2" From  = "4" />
+        <Split Axis = "3" From  = "4" />
+        <Split Axis = "4" From  = "4" />
+        <Split Axis = "5" From  = "4" />
+
+        <RemoveContaining Vector = "0; 0; 0" />
+        <RemoveContaining Vector = "0; 0;  D1" />
+        <RemoveContaining Vector = "0; 0; -D1" />
+        <RemoveContaining Vector = " xa[1] * D1;  ya[1] * D1;  As * D1" />
+        <RemoveContaining Vector = " xa[2] * D1;  ya[2] * D1;  As * D1" />
+        <RemoveContaining Vector = " xa[3] * D1;  ya[3] * D1;  As * D1" />
+        <RemoveContaining Vector = " xa[4] * D1;  ya[4] * D1;  As * D1" />
+        <RemoveContaining Vector = " xa[5] * D1;  ya[5] * D1;  As * D1" />
+        <RemoveContaining Vector = "-xa[1] * D1; -ya[1] * D1; -As * D1" />
+        <RemoveContaining Vector = "-xa[2] * D1; -ya[2] * D1; -As * D1" />
+        <RemoveContaining Vector = "-xa[3] * D1; -ya[3] * D1; -As * D1" />
+        <RemoveContaining Vector = "-xa[4] * D1; -ya[4] * D1; -As * D1" />
+        <RemoveContaining Vector = "-xa[5] * D1; -ya[5] * D1; -As * D1" />
+
+        <SplitByAxes/>
+        <Macro Name = "Hide">
+            <HideContaining Vector = "0.9*ex[id]; 0.9*ey[id]; 0.9*ez[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" Repeat = "30" id = "0" />
+        <InvertVisibility/>
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-DCut+0.00026" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "12" id = "0" />
+
+        <Script>
+            R := 0.85;
+            DCut1 := RSin - delta;
+            DCut2 := RSin;
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[0]; Cy[0]; Cz[0]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[1]; Cy[1]; Cz[1]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[2]; Cy[2]; Cz[2]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "-Cx[0]; Cy[0]; Cz[0]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[1]; Cy[1]; Cz[1]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[2]; Cy[2]; Cz[2]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[0]; Cy[0]; -Cz[0]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[1]; -Cy[1]; -Cz[1]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[2]; -Cy[2]; -Cz[2]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "-Cx[0]; Cy[0]; -Cz[0]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[1]; -Cy[1]; -Cz[1]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[2]; -Cy[2]; -Cz[2]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[0]; -Cy[0]; Cz[0]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[4]; Cy[4]; Cz[4]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[5]; Cy[5]; Cz[5]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[0]; -Cy[0]; Cz[0]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[4]; Cy[4]; Cz[4]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[5]; Cy[5]; Cz[5]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[0]; -Cy[0]; Cz[0]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[4]; Cy[4]; Cz[4]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[3]; Cy[3]; Cz[3]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[0]; -Cy[0]; -Cz[0]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[2]; -Cy[2]; -Cz[2]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[3]; -Cy[3]; -Cz[3]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[0]; -Cy[0]; -Cz[0]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[4]; -Cy[4]; -Cz[4]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[5]; -Cy[5]; -Cz[5]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[0]; Cy[0]; -Cz[0]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[3]; -Cy[3]; -Cz[3]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[4]; -Cy[4]; -Cz[4]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[1]; Cy[1]; Cz[1]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[5]; Cy[5]; Cz[5]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[3]; -Cy[3]; -Cz[3]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "-Cx[1]; Cy[1]; Cz[1]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[5]; Cy[5]; Cz[5]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[3]; -Cy[3]; -Cz[3]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "-Cx[1]; Cy[1]; Cz[1]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[3]; -Cy[3]; -Cz[3]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[4]; -Cy[4]; -Cz[4]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "-Cx[1]; -Cy[1]; -Cz[1]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[3]; Cy[3]; Cz[3]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[4]; Cy[4]; Cz[4]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "-Cx[1]; -Cy[1]; -Cz[1]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[3]; Cy[3]; Cz[3]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[5]; -Cy[5]; -Cz[5]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[1]; -Cy[1]; -Cz[1]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[3]; Cy[3]; Cz[3]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[5]; -Cy[5]; -Cz[5]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[2]; Cy[2]; Cz[2]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[3]; Cy[3]; Cz[3]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[5]; -Cy[5]; -Cz[5]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "Cx[2]; Cy[2]; Cz[2]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[4]; -Cy[4]; -Cz[4]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[5]; -Cy[5]; -Cz[5]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "-Cx[2]; -Cy[2]; -Cz[2]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[4]; Cy[4]; Cz[4]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[5]; Cy[5]; Cz[5]" NormDistance = "D2" /> </Cut>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Not_Super.xml" />
+        <Cut> <Plane NormVector = "-Cx[2]; -Cy[2]; -Cz[2]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "-Cx[3]; -Cy[3]; -Cz[3]" NormDistance = "D2" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[5]; Cy[5]; Cz[5]" NormDistance = "D2" /> </Cut>
+        <ShowAll/>
+
+    </Figure>
+</xml>

@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 2x2x3 Plus</Name>
+        <Class>TCrazy</Class>
+        <Menu>Cubic\Crazy\Cuboid\Crazy 2x2x3 Plus</Menu>
+        <Inventor>mf8</Inventor>
+        <Programmer>Skallos</Programmer>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        Delta := 0.002;
+        R := 0.35;
+        D := 0.5 + Delta;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-1/2; 0; 1/2" TurnAxesWithPartNo = "7" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-1/2; -1/6; 1/6; 1/2" TurnAxesWithPartNo = "7" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+           <Circle Radius = "R" Color = "clOrange" > <Center X =  "D" Y =  "0" Z =  "0" /> </Circle>
+           <Circle Radius = "R" Color =    "clRed" > <Center X = "-D" Y =  "0" Z =  "0" /> </Circle>
+           <Circle Radius = "R" Color =  "clGreen" > <Center X =  "0" Y =  "D" Z =  "0" /> </Circle>
+           <Circle Radius = "R" Color =   "clBlue" > <Center X =  "0" Y = "-D" Z =  "0" /> </Circle>
+           <Circle Radius = "R" Color =  "clWhite" > <Center X =  "0" Y =  "0" Z =  "D" /> </Circle>
+           <Circle Radius = "R" Color = "clYellow" > <Center X =  "0" Y =  "0" Z = "-D" /> </Circle>
+
+        <SplitByAxes/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameDirection" />
+</xml>

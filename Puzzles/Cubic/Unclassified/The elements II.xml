@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>The elements II</Name>
+        <Menu>Cubic\Unclassified\The elements II</Menu>
+        <Inventor>Patrick Timmerman</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-08-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5235</Link>
+    </Interface>
+ 
+    <Script>
+        Colors[0] := '0000C8'; // clBlue
+        Colors[1] := 'FFFFFF'; // clWhite
+        Colors[2] := 'C80000'; // clRed
+        Colors[3] := 'FFFF00'; // clYellow
+        Colors[4] := '009600'; // clGreen
+
+        W := 0.55;
+        D := W / 2;
+        Delta := 0.002;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Cut Color = "Colors[0]" ><Plane NormVector = " 0; 0;-1" NormDistance = "-D - Delta" /></Cut>
+        <Cut Color = "Colors[4]" ><Plane NormVector = " 0; 0; 1" NormDistance = "-2*D - Delta" /></Cut>
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "1" />
+        <Macro Name = "CutLayer" >
+            <Hide Axis = "2" From = "L1" To = "L2" />
+            <InvertVisibility />
+            <Cut Color = "Colors[c]" ><Plane NormVector = "-1; 0; 0" NormDistance = "-2*D" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 1; 0; 0" NormDistance = "-2*D" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0;-1; 0" NormDistance = "-D - Delta" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0; 1; 0" NormDistance = "-D - Delta" /></Cut>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "CutLayer" L1 = "0" L2 = "0" c = "3" />
+        <ExecMacro MacroName = "CutLayer" L1 = "1" L2 = "1" c = "2" />
+        <ExecMacro MacroName = "CutLayer" L1 = "2" L2 = "3" c = "1" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

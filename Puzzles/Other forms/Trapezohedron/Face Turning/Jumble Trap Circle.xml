@@ -1,0 +1,96 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jumble Trap Circle</Name>
+        <Menu>Other forms\Trapezohedron\Face Turning\Jumble Trap Circle</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-06-09</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clYellow    := 'FFFF00';
+        clBlue      := '0000A0';
+        clOrange    := 'FF6000';
+        clRed       := 'FF0000';
+        clGreen     := '008000';
+        clWhite     := 'FFFFFF';
+        clViolett   := '800080';
+        clLightBlue := '2868FF';
+
+        R := 0.55;
+        H := R * (sqrt(2) + 1) / 2 * 2^0.25;
+        z := R * (sqrt(2) - 1) / 2 * 2^0.25;
+
+        for i := 0 to 7 do begin
+            x[i] := R * cos(Pi / 4 * (i + 0.5));
+            y[i] := R * sin(Pi / 4 * (i + 0.5));
+        end;
+
+        az := R / 8^0.25;
+
+        A1 := ArcCos((sqrt(2) - 1) /2);
+        A2 := 2 * A1;
+        A3 := ArcCos(sqrt(2) - 2);
+
+        D1 := R * sqrt(1 - sqrt(2) / 4) / sqrt(7);
+        D2 := R * sqrt((5 * sqrt(2) + 8) / 7) / 2;
+
+        RC := R * 0.42;
+
+        Delta := 1.004;
+        KC := (sqrt(2) + 3) / 7 * Delta;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3" PlaneDistances = "D1; D2" FixedLayers = "0;2" >
+        <Axis NormVector = " x[0]; y[0];  az" />
+        <Axis NormVector = " x[1]; y[1]; -az" />
+        <Axis NormVector = " x[2]; y[2];  az" />
+        <Axis NormVector = " x[3]; y[3]; -az" />
+        <Axis NormVector = " x[4]; y[4];  az" />
+        <Axis NormVector = " x[5]; y[5]; -az" />
+        <Axis NormVector = " x[6]; y[6];  az" />
+        <Axis NormVector = " x[7]; y[7]; -az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;    0;  H" />
+                <Add Vector = "x[0]; y[0]; -z" />
+                <Add Vector = "x[1]; y[1];  z" />
+                <Add Vector = "x[2]; y[2]; -z" />
+                <Add Vector = "x[3]; y[3];  z" />
+                <Add Vector = "x[4]; y[4]; -z" />
+                <Add Vector = "x[5]; y[5];  z" />
+                <Add Vector = "x[6]; y[6]; -z" />
+                <Add Vector = "x[7]; y[7];  z" />
+                <Add Vector = "   0;    0; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue     " VertexIndexes = "0;6;7;8" />
+                <Face Color = "clGreen    " VertexIndexes = "0;4;5;6" />
+                <Face Color = "clRed      " VertexIndexes = "0;2;3;4" />
+                <Face Color = "clOrange   " VertexIndexes = "0;8;1;2" />
+                <Face Color = "clYellow   " VertexIndexes = "9;1;8;7" />
+                <Face Color = "clWhite    " VertexIndexes = "9;7;6;5" />
+                <Face Color = "clViolett  " VertexIndexes = "9;5;4;3" />
+                <Face Color = "clLightBlue" VertexIndexes = "9;3;2;1" />
+            </Faces>
+        </Part>
+
+        <Circle Color = "clOrange   " Radius = "RC" Center = " x[0] * KC; y[0] * KC;  az * KC" />
+        <Circle Color = "clLightBlue" Radius = "RC" Center = " x[1] * KC; y[1] * KC; -az * KC" />
+        <Circle Color = "clRed      " Radius = "RC" Center = " x[2] * KC; y[2] * KC;  az * KC" />
+        <Circle Color = "clViolett  " Radius = "RC" Center = " x[3] * KC; y[3] * KC; -az * KC" />
+        <Circle Color = "clGreen    " Radius = "RC" Center = " x[4] * KC; y[4] * KC;  az * KC" />
+        <Circle Color = "clWhite    " Radius = "RC" Center = " x[5] * KC; y[5] * KC; -az * KC" />
+        <Circle Color = "clBlue     " Radius = "RC" Center = " x[6] * KC; y[6] * KC;  az * KC" />
+        <Circle Color = "clYellow   " Radius = "RC" Center = " x[7] * KC; y[7] * KC; -az * KC" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

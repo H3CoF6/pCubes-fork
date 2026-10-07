@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tetrahedral Twins</Name>
+        <Menu>Other forms\Cross\Tetrahedral Twins</Menu>
+        <Menu>Other forms\Star\Stellated octahedron\Tetrahedral Twins</Menu>
+        <Inventor>Tom van der Zanden</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1656</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '008000'; // Green 
+        Colors[1] := 'F0F0F0'; // White 
+        Colors[2] := '00FFFF'; // Cyan  
+        Colors[3] := 'FF0000'; // Red   
+        Colors[4] := '800080'; // Purple
+        Colors[5] := '0000FF'; // Blue  
+        Colors[6] := 'FFFF00'; // Yellow
+        Colors[7] := 'FF6000'; // Orange
+
+        W  := 0.5;
+        D  := W / sqrt(3);
+        D2 := D * 2;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "-D2;-D; 0; D; D2" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <Cut Color = "Colors[0]" Axis = "0" From = "2" />
+        <Cut Color = "Colors[1]" Axis = "1" From = "2" />
+        <Cut Color = "Colors[2]" Axis = "2" From = "2" />
+        <Cut Color = "Colors[3]" Axis = "3" From = "2" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <Cut Color = "Colors[4]" Axis = "0" To = "4" />
+        <Cut Color = "Colors[5]" Axis = "1" To = "4" />
+        <Cut Color = "Colors[6]" Axis = "2" To = "4" />
+        <Cut Color = "Colors[7]" Axis = "3" To = "4" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <HideAll/>
+
+        <!-- gray core -->
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <Cut Axis = "0" From = "2" />
+        <Cut Axis = "1" From = "2" />
+        <Cut Axis = "2" From = "2" />
+        <Cut Axis = "3" From = "2" />
+        <Cut Axis = "0" To = "4" />
+        <Cut Axis = "1" To = "4" />
+        <Cut Axis = "2" To = "4" />
+        <Cut Axis = "3" To = "4" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

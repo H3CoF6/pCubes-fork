@@ -1,0 +1,121 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octacle Crystal</Name>
+        <Menu>Other forms\Pillowed\Octahedron\Octacle Crystal</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6163</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF6000'; // Orange
+        Colors[1] := '0088FF'; // Blue2
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := '00FF00'; // Green1
+        Colors[4] := '8800DD'; // Violett
+        Colors[5] := 'FF0000'; // Red
+        Colors[6] := '007700'; // Green3
+        Colors[7] := '0000EE'; // Blue3
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        K := 0.4;
+
+        A1 := ArcCos(11/21);
+        A2 := ArcCos(2/7);
+        A3 := ArcCos(-1/9);
+        A4 := ArcCos(-2/3);
+        A5 := ArcCos(-19/21);
+
+        D := K * 1.29725;
+        DHide := K * 1.0;
+        DCut := K * 1.5875;
+
+        f1 := K * 0.1;
+        Pillow := 1.49;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A5; -A4; -A3; -A2; -A1; 0; A1; A2; A3; A4; A5" PlaneDistances = "-D;D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 2" />
+        <Axis NormVector = " 1; 0; 2" />
+        <Axis NormVector = " 0;-1; 2" />
+        <Axis NormVector = "-1; 0; 2" />
+
+        <Axis NormVector = " 0; 2; 1" />
+        <Axis NormVector = " 1; 2; 0" />
+        <Axis NormVector = " 0; 2;-1" />
+        <Axis NormVector = "-1; 2; 0" />
+
+        <Axis NormVector = " 2; 0; 1" />
+        <Axis NormVector = " 2; 1; 0" />
+        <Axis NormVector = " 2; 0;-1" />
+        <Axis NormVector = " 2;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "..\Tetrahedron\_Macro_Pillowed_Tetrahedron_v2.xml" />
+        <ExecMacro MacroName = "CalcCoordinates" />
+
+        <Macro Name = "AddHalf">
+            <ExecMacro MacroName = "AddPillowedTetrahedron" />
+
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+
+            <RemoveContaining Vector = "-f1;-f1;-f1" />
+            <RemoveContaining Vector = " f1;-f1; f1" />
+            <RemoveContaining Vector = " f1; f1;-f1" />
+            <RemoveContaining Vector = "-f1; f1; f1" />
+        </Macro>
+        <ExecMacro MacroName = "AddHalf" />
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+
+        <HideAll/>
+
+        <Script>
+            Colors[0] := Colors[4];
+            Colors[1] := Colors[5];
+            Colors[2] := Colors[6];
+            Colors[3] := Colors[7];
+        </Script>
+
+        <ExecMacro MacroName = "AddHalf" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Hide><Plane NormVector = " 1; 1; 1" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = "-1;-1;-1" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = "-1; 1; 1" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = " 1;-1;-1" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = " 1;-1; 1" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = "-1; 1;-1" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = " 1; 1;-1" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = "-1;-1; 1" NormDistance = "-DHide" /></Hide>
+
+        <Hide><Plane NormVector = " 1; 0; 0" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = "-1; 0; 0" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = " 0; 1; 0" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = " 0;-1; 0" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = " 0; 0; 1" NormDistance = "-DHide" /></Hide>
+        <Hide><Plane NormVector = " 0; 0;-1" NormDistance = "-DHide" /></Hide>
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-Vx[id]; -Vy[id]; -Vz[id]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "8" id = "0" />
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

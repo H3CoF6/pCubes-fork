@@ -1,0 +1,70 @@
+﻿<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Oblique Skewb</Name>
+        <Menu>Other cubes\Multi-core\Dino Oblique Skewb</Menu>
+        <Menu>Other cubes\Vertex Turning\Skewb\Dino Oblique Skewb</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>madartilect</Programmer>
+        <Added>2024-04-08</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        WX := W * 0.75;
+        WY := WX;
+
+        D2 := sqrt(3) / 8;
+        D1 := sqrt(3) / 24;
+        AZ := W * 0.25;
+
+        sAngle := 2*Pi / 3;
+    </Script>
+
+    <Axes>
+        <Axis TurningAngles = " 0; sAngle" NormVector = " 1; 1; 1" BaseVector = " 0; 0; AZ" PlaneDistances = "D1" />
+        <Axis TurningAngles = " 0; sAngle" NormVector = "-1;-1;-1" BaseVector = " 0; 0;-AZ" PlaneDistances = "D1" />
+
+        <Axis TurningAngles = " 0; sAngle" NormVector = " 1;-1; 1" BaseVector = " 0; 0; AZ" PlaneDistances = "D2" />
+        <Axis TurningAngles = " 0; sAngle" NormVector = "-1; 1; 1" BaseVector = " 0; 0; AZ" PlaneDistances = "D2" />
+
+        <Axis TurningAngles = " 0; sAngle" NormVector = " 1;-1;-1" BaseVector = " 0; 0;-AZ" PlaneDistances = "D2" />
+        <Axis TurningAngles = " 0; sAngle" NormVector = "-1; 1;-1" BaseVector = " 0; 0;-AZ" PlaneDistances = "D2" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split1" >
+            <Turn Axis = "ax" Layer = "1" Angle = " sAngle" />
+            <SplitByAxes/>
+            <Turn Axis = "ax" Layer = "1" Angle = " sAngle" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split1" ax = "0" />
+        <ExecMacro MacroName = "Split1" ax = "1" />
+        <ExecMacro MacroName = "Split1" ax = "2" />
+        <ExecMacro MacroName = "Split1" ax = "3" />
+        <ExecMacro MacroName = "Split1" ax = "4" />
+        <ExecMacro MacroName = "Split1" ax = "5" />
+
+        <Macro Name = "Split2" >
+            <Turn Axis = "ax0" Layer = "1" Angle = " sAngle" />
+            <Turn Axis = "ax1" Layer = "1" Angle = " sAngle" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+
+            <Turn Axis = "ax0" Layer = "1" Angle = "-sAngle" />
+            <Turn Axis = "ax2" Layer = "1" Angle = "-sAngle" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+        </Macro>
+        <ExecMacro MacroName = "Split2" ax0 = "0" ax1 = "3" ax2 = "2" />
+        <ExecMacro MacroName = "Split2" ax0 = "1" ax1 = "5" ax2 = "4" />
+    </Figure>
+</xml>

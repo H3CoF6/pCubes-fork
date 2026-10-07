@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Sisyphus Stone 12 colors</Name>
+        <Menu>grigr\Sisyphus Stone (12 colors)</Menu>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-10-29</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=33607</Link>
+    </Interface>
+
+    <Script>
+        clRed          := 'FF0000';
+        clOrange       := 'FF6000';
+        clYellow       := 'FFFF00';
+        clGreen        := '008000';
+        clLightBlue    := '2828FF';
+        clBlue         := '0000A0';
+        clViolett      := '800080';
+        clLime         := '00FF00';
+        clCyan         := '00FFFF';
+        clTeal         := '008080';
+        clFuchsia      := 'FF00FF';
+        clPink         := 'FF69B4';
+        clBlack        := '202020';
+        clWhite        := 'F0F0F0';
+        Colors[0]  := clBlack;
+        Colors[1]  := clPink;              
+        Colors[2]  := clOrange;     
+        Colors[3]  := clLime;           
+        Colors[4]  := clCyan;         
+        Colors[5]  := clTeal;            
+        Colors[6]  := clFuchsia;    
+        Colors[7]  := clRed;    
+        Colors[8]  := clYellow; 
+        Colors[9]  := clGreen;  
+        Colors[10] := clBlue;   
+        Colors[11] := clWhite;  
+        Colors[12] := clViolett; 
+
+        NN:= 6;
+        K := 0.4;
+        nAngle := Pi/NN;
+
+        for i := -2 to NN+3 do begin
+            x[i] := K * cos(2 * nAngle * i);
+            y[i] := K * sin(2 * nAngle * i);
+        end;
+
+        D:= K* 0.623;
+
+        A1 := Arccos(1/3);
+        A2 := 2 * Arccos(1/3);
+        A3 := Pi - A1;
+        A4 := Pi - A2;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles="-A4; -A3; -A2; -A1; 0; A1; A2; A3; A4; Pi" PlaneDistances = "-D; D" FixedLayers = "1">
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+    <Axes TurningAngles = "2*Pi/NN" PlaneDistances = "0">
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script>Color := Colors[0];</Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+
+        <Macro Name = "RemoveSector" >
+            <Cut> <Plane NormVector = " x[i]; y[i]; 0" NormDistance = "-D" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveSector" i = "0" Repeat = "NN" />
+
+        <Hide Axis = "0" From = "0" To = "NN" />
+
+        <Macro Name = "AddSector" >
+            <Script>Color := Colors[i];</Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = " x[i];   y[i]; 0" NormDistance = "D" /> </Cut>
+            <Cut> <Plane NormVector = " x[i-2]; y[i-2]; 0" NormDistance = "-D" /> </Cut>
+            <Cut> <Plane NormVector = " x[i+2]; y[i+2]; 0" NormDistance = "-D" /> </Cut>
+            <Hide Axis = "0" From = "0" To = "NN" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "1" Repeat = "6" />
+
+        <Macro Name = "AddSector2" >
+            <Script>Color := Colors[i+6];</Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = " x[i];   y[i]; 0" NormDistance = "D" /> </Cut>
+            <Cut> <Plane NormVector = " x[i+1]; y[i+1]; 0" NormDistance = "D" /> </Cut>
+            <Hide Axis = "0" From = "0" To = "NN" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector2" i = "1" Repeat = "6" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        ///////////////////// ///////////////////// /////////////////////
+
+        <Turn  Axis = "0" Layer = "0" Angle = "-A1" />
+        <Turn  Axis = "0" Layer = "2" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2"/>
+        <Turn  Axis = "1" Layer = "0" Angle = "-A1" />
+        <Turn  Axis = "1" Layer = "2" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2"/>
+        <Turn  Axis = "2" Layer = "0" Angle = "-A1" />
+        <Turn  Axis = "2" Layer = "2" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2"/>
+        ///////////////////// ///////////////////// /////////////////////
+
+        <Hide Axis = "0" From = "0" To = "1" />
+        <Hide Axis = "1" From = "0" To = "1" />
+        <Turn  Axis = "0" Layer = "2" Angle = "-A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <Turn  Axis = "1" Layer = "2" Angle = "-A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "0" From = "1" To = "2" />
+        <Hide Axis = "1" From = "1" To = "2" />
+        <Turn  Axis = "0" Layer = "0" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <Turn  Axis = "1" Layer = "0" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+
+        <Hide Axis = "1" From = "0" To = "1" />
+        <Hide Axis = "2" From = "0" To = "1" />
+        <Turn  Axis = "1" Layer = "2" Angle = "-A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <Turn  Axis = "2" Layer = "2" Angle = "-A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "1" From = "1" To = "2" />
+        <Hide Axis = "2" From = "1" To = "2" />
+        <Turn  Axis = "1" Layer = "0" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <Turn  Axis = "2" Layer = "0" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+
+        <Hide Axis = "2" From = "0" To = "1" />
+        <Hide Axis = "0" From = "1" To = "2" />
+        <Turn  Axis = "2" Layer = "2" Angle = "-A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <Turn  Axis = "0" Layer = "0" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "2" From = "1" To = "2" />
+        <Hide Axis = "0" From = "0" To = "1" />
+        <Turn  Axis = "2" Layer = "0" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <Turn  Axis = "0" Layer = "2" Angle = "-A1" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        ///////////////////// ///////////////////// /////////////////////
+
+        <Hide Axis = "0" From = "0" To = "0" />
+        <Hide Axis = "1" From = "1" To = "2" />
+        <Hide Axis = "2" From = "0" To = "0" />
+        <Turn Axis = "1" Layer = "0" Angle = "-A1" />
+        <Hide Axis = "0" From = "1" To = "2" />
+        <Undo/>
+        <Turn Axis = "1" Layer = "0" Angle = "-A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "0" From = "0" To = "0" />
+        <Hide Axis = "1" From = "1" To = "2" />
+        <Hide Axis = "2" From = "0" To = "0" />
+        <Turn Axis = "1" Layer = "0" Angle = "-A1" />
+        <Hide Axis = "2" From = "1" To = "2" />
+        <Undo/>
+        <Turn Axis = "1" Layer = "0" Angle = "-A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "0" From = "0" To = "0" />
+        <Hide Axis = "1" From = "1" To = "2" />
+        <Hide Axis = "2" From = "0" To = "0" />
+        <Turn Axis = "1" Layer = "0" Angle = "-A1" />
+        <Turn Axis = "0" Layer = "0" Angle = "-A1" />
+        <Turn Axis = "2" Layer = "0" Angle = "-A1" />
+        <SplitByAxes/>
+        <Undo Repeat = "3"/>
+        <ShowAll/>
+
+        <Hide Axis = "2" From = "0" To = "0" />
+        <Hide Axis = "0" From = "0" To = "1" />
+        <Hide Axis = "1" From = "2" To = "2" />
+        <Turn Axis = "0" Layer = "2" Angle = " A1" />
+        <Hide Axis = "2" From = "1" To = "2" />
+        <Undo/>
+        <Turn Axis = "0" Layer = "2" Angle = " A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "2" From = "0" To = "0" />
+        <Hide Axis = "0" From = "0" To = "1" />
+        <Hide Axis = "1" From = "2" To = "2" />
+        <Turn Axis = "0" Layer = "2" Angle = " A1" />
+        <Hide Axis = "1" From = "0" To = "1" />
+        <Undo/>
+        <Turn Axis = "0" Layer = "2" Angle = " A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "2" From = "0" To = "0" />
+        <Hide Axis = "0" From = "0" To = "1" />
+        <Hide Axis = "1" From = "2" To = "2" />
+        <Turn Axis = "0" Layer = "2" Angle = " A1" />
+        <Turn Axis = "2" Layer = "0" Angle = "-A1" />
+        <Turn Axis = "1" Layer = "2" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo Repeat = "3"/>
+        <ShowAll/>
+
+        <Hide Axis = "1" From = "2" To = "2" />
+        <Hide Axis = "2" From = "0" To = "1" />
+        <Hide Axis = "0" From = "0" To = "0" />
+        <Turn Axis = "2" Layer = "2" Angle = " A1" />
+        <Hide Axis = "1" From = "0" To = "1" />
+        <Undo/>
+        <Turn Axis = "2" Layer = "2" Angle = " A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "1" From = "2" To = "2" />
+        <Hide Axis = "2" From = "0" To = "1" />
+        <Hide Axis = "0" From = "0" To = "0" />
+        <Turn Axis = "2" Layer = "2" Angle = " A1" />
+        <Hide Axis = "0" From = "1" To = "2" />
+        <Undo/>
+        <Turn Axis = "2" Layer = "2" Angle = " A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "1" From = "2" To = "2" />
+        <Hide Axis = "2" From = "0" To = "1" />
+        <Hide Axis = "0" From = "0" To = "0" />
+        <Turn Axis = "2" Layer = "2" Angle = " A1" />
+        <Turn Axis = "1" Layer = "2" Angle = " A1" />
+        <Turn Axis = "0" Layer = "0" Angle = "-A1" />
+        <SplitByAxes/>
+        <Undo Repeat = "3"/>
+        <ShowAll/>
+
+
+        <Hide Axis = "1" From = "0" To = "0" />
+        <Hide Axis = "2" From = "1" To = "2" />
+        <Hide Axis = "0" From = "2" To = "2" />
+        <Turn Axis = "2" Layer = "0" Angle = "-A1" />
+        <Hide Axis = "1" From = "1" To = "2" />
+        <Undo/>
+        <Turn Axis = "2" Layer = "0" Angle = "-A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "1" From = "0" To = "0" />
+        <Hide Axis = "2" From = "1" To = "2" />
+        <Hide Axis = "0" From = "2" To = "2" />
+        <Turn Axis = "2" Layer = "0" Angle = "-A1" />
+        <Hide Axis = "0" From = "0" To = "1" />
+        <Undo/>
+        <Turn Axis = "2" Layer = "0" Angle = "-A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "1" From = "0" To = "0" />
+        <Hide Axis = "2" From = "1" To = "2" />
+        <Hide Axis = "0" From = "2" To = "2" />
+        <Turn Axis = "2" Layer = "0" Angle = "-A1" />
+        <Turn Axis = "1" Layer = "0" Angle = "-A1" />
+        <Turn Axis = "0" Layer = "2" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo Repeat = "3"/>
+        <ShowAll/>
+
+        <Hide Axis = "0" From = "2" To = "2" />
+        <Hide Axis = "1" From = "0" To = "1" />
+        <Hide Axis = "2" From = "2" To = "2" />
+        <Turn Axis = "1" Layer = "2" Angle = " A1" />
+        <Hide Axis = "0" From = "0" To = "1" />
+        <Undo/>
+        <Turn Axis = "1" Layer = "2" Angle = " A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "0" From = "2" To = "2" />
+        <Hide Axis = "1" From = "0" To = "1" />
+        <Hide Axis = "2" From = "2" To = "2" />
+        <Turn Axis = "1" Layer = "2" Angle = " A1" />
+        <Hide Axis = "2" From = "0" To = "1" />
+        <Undo/>
+        <Turn Axis = "1" Layer = "2" Angle = " A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "0" From = "2" To = "2" />
+        <Hide Axis = "1" From = "0" To = "1" />
+        <Hide Axis = "2" From = "2" To = "2" />
+        <Turn Axis = "1" Layer = "2" Angle = " A1" />
+        <Turn Axis = "0" Layer = "2" Angle = " A1" />
+        <Turn Axis = "2" Layer = "2" Angle = " A1" />
+        <SplitByAxes/>
+        <Undo Repeat = "3"/>
+        <ShowAll/>
+
+        <Hide Axis = "2" From = "2" To = "2" />
+        <Hide Axis = "0" From = "1" To = "2" />
+        <Hide Axis = "1" From = "0" To = "0" />
+        <Turn Axis = "0" Layer = "0" Angle = "-A1" />
+        <Hide Axis = "2" From = "0" To = "1" />
+        <Undo/>
+        <Turn Axis = "0" Layer = "0" Angle = "-A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "2" From = "2" To = "2" />
+        <Hide Axis = "0" From = "1" To = "2" />
+        <Hide Axis = "1" From = "0" To = "0" />
+        <Turn Axis = "0" Layer = "0" Angle = "-A1" />
+        <Hide Axis = "1" From = "1" To = "2" />
+        <Undo/>
+        <Turn Axis = "0" Layer = "0" Angle = "-A2" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+        <Hide Axis = "2" From = "2" To = "2" />
+        <Hide Axis = "0" From = "1" To = "2" />
+        <Hide Axis = "1" From = "0" To = "0" />
+        <Turn Axis = "0" Layer = "0" Angle = "-A1" />
+        <Turn Axis = "2" Layer = "2" Angle = " A1" />
+        <Turn Axis = "1" Layer = "0" Angle = "-A1" />
+        <SplitByAxes/>
+        <Undo Repeat = "3"/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

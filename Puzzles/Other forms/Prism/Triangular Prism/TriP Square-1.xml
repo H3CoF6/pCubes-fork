@@ -1,0 +1,117 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>TriP Square-1</Name>
+        <Menu>Other forms\Prism\Triangular Prism\TriP Square-1</Menu>
+        <Inventor>Jack.S.N.Triton</Inventor>
+        <Programmer>Jack Triton</Programmer>
+        <Added>2023-02-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11187</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+        clCyan   := '00FFFF';
+
+        Colors[3] := -1;
+        Colors[4] := clYellow;
+        Colors[5] := clWhite;
+
+        R := 0.5;
+
+        H := R * 0.7;
+        sAngle := 2*Pi / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D := R / 2;
+
+        WX := R * 0.6;
+        WY := R * 0.2;
+        WZ := WX;
+        DWY := -R/2 - WY;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 12; 0" PlaneDistances = "-D" NormVectors = "x; y; 0" />
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 3; 4; 1; 0" />
+                <Face Color = "clBlue  " VertexIndexes = " 4; 5; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = " 5; 3; 0; 2" />
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 2" />
+                <Face Color = "clWhite " VertexIndexes = " 5; 4; 3" />
+            </Faces>
+        </Part>
+
+        <Split><Plane NormVector = "x[0];y[0];0" NormDistance = "D" /></Split>
+        <Split><Plane NormVector = "x[1];y[1];0" NormDistance = "D" /></Split>
+        <Split><Plane NormVector = "x[2];y[2];0" NormDistance = "D" /></Split>
+
+        <Macro Name = "AddCross" >
+            <Script>
+                Colors[0] := c1;
+                Colors[1] := c2;
+                Colors[2] := c3;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Turn NormVector = "0;0;1" Angle = "sAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCross" Axis = "1" c1 = "clGreen" c2 = "clRed  " c3 = "clBlue " />
+        <ExecMacro MacroName = "AddCross" Axis = "2" c1 = "clRed  " c2 = "clBlue " c3 = "clGreen" />
+        <ExecMacro MacroName = "AddCross" Axis = "3" c1 = "clBlue " c2 = "clGreen" c3 = "clRed  " />
+
+        <Macro Name = "Turn" >
+            <Turn Axis = "0" Layer = "0" Angle = "Pi/12 * N" />
+            <Turn Axis = "1" Layer = "0" Angle = "Pi/12 * N" />
+            <Turn Axis = "2" Layer = "0" Angle = "Pi/12 * N" />
+            <Split Axis = "3" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Turn" N = "1" />
+        <ExecMacro MacroName = "Turn" N = "4" />
+        <ExecMacro MacroName = "Turn" N = "2" />
+        <ExecMacro MacroName = "Turn" N = "4" />
+        <Undo Repeat = "12" />
+    </Figure>
+
+    <Macros>
+        <Macro Name = "Sc1" >
+            <Script> i := Random(2) * 2 - 1; </Script>
+            <Turn Axis = "0" Layer = "0" Angle = "Pi/12 * i + Pi/2 * (Random(3) + 1)" />
+            <Turn Axis = "1" Layer = "0" Angle = "Pi/12 * i + Pi/2 * (Random(3) + 1)" />
+            <Turn Axis = "2" Layer = "0" Angle = "Pi/12 * i + Pi/2 * (Random(3) + 1)" />
+
+            <Turn Axis = "3" Layer = "Random(2)" Angle = "2 * Pi * Random" />
+
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/12 * i" />
+            <Turn Axis = "1" Layer = "0" Angle = "-Pi/12 * i" />
+            <Turn Axis = "2" Layer = "0" Angle = "-Pi/12 * i" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(4)" Layer = "0" Angle = "2 * Pi * Random" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "500" />
+        </Macro>
+    </Macros>
+</xml>

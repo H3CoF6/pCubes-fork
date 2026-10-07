@@ -1,0 +1,104 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Ultimatestar</Name>
+        <Menu>Other forms\Star\Ultimatestar</Menu>
+        <Menu>Other forms\Skewb variants\Star\Ultimatestar</Menu>
+        <Inventor>Jose Manuel Garcia Mouzo</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-06-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1613</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'CD5C5C'; //Indian
+        Colors[ 1] := 'FF0000'; //Red
+        Colors[ 2] := '008080'; //Teal
+        Colors[ 3] := '202020'; //Black
+        Colors[ 4] := 'FF7F50'; //Coral
+        Colors[ 5] := 'A0A0A0'; //Silver
+        Colors[ 6] := 'FF6000'; //Orange
+        Colors[ 7] := '800080'; //Purple
+        Colors[ 8] := 'DA70D6'; //Orchid
+        Colors[ 9] := 'D07090'; //Pale
+        Colors[10] := '0000FF'; //Blue
+        Colors[11] := '800000'; //Brown
+        Colors[12] := 'F0E68C'; //Khaki
+        Colors[13] := '808000'; //Olive
+        Colors[14] := '6495ed'; //CornflowerBlue
+        Colors[15] := '00BFFF'; //DeepSky
+        Colors[16] := '000080'; //Navy
+        Colors[17] := 'F0F0F0'; //White
+        Colors[18] := '7fffd4'; //Aquamarine
+        Colors[19] := 'DC143C'; //Crimson
+
+        Colors[20] := '00FFFF'; //Cyan
+        Colors[21] := '8a2be2'; //BlueViolet
+        Colors[22] := '00FF00'; //Lime
+        Colors[23] := 'FF00FF'; //Fuchsia
+        Colors[24] := '0000BB'; //Blue
+        Colors[25] := '008000'; //Green
+        Colors[26] := 'ADFF2F'; //GreenYellow
+        Colors[27] := '006400'; //DarkGreen
+        Colors[28] := 'FFFF00'; //Yellow
+        Colors[29] := '3cb371'; //SeaGreen
+        Colors[30] := 'DDBB20'; //Golden
+        Colors[31] := 'FF69B4'; //Pink
+        Colors[32] := 'CCCCCC'; //Gray
+
+        R := 0.7;
+
+        Ri := R;
+        Rd := R / sqrt((sqrt(5) - 1) / 6 + 1);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "b^2/R" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <!-- Icosahedron -->
+
+        <LoadFrom File = "Figures\IcosahedronSq.xml" R = "Ri" />
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "12" />
+        <RemoveContaining Vector = "0;0;0"/>
+
+        <!-- Dodecahedron -->
+
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := Colors[i + 20];
+        </Script>
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+
+        <LoadFrom File = "Figures\DodecaSq.xml" R = "Rd" />
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "20" />
+        <RemoveContaining Vector = "0;0;0"/>
+
+<!--
+        // Gray body
+        <HideAll/>
+        <Script>
+            for i := 0 to 19 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\DodecaSq.xml" />
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "20" />
+        <RemoveContaining Vector = "Vx;Vy;Vz" />
+        <ShowAll/>
+-->
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

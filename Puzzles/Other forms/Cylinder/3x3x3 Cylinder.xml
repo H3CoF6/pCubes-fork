@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3x3 Cylinder</Name>
+        <Menu>Other forms\Cylinder\3x3x3 Cylinder</Menu>
+        <Menu>Other forms\3x3x3 variants\Cylinder\3x3x3 Cylinder</Menu>
+        <Inventor>Nikola Tutic</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-09-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1672</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '009600'; // Green
+        Colors[1] := 'C80000'; // Red
+        Colors[2] := '0000C8'; // Blue
+        Colors[3] := 'FF800A'; // Orange
+
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.5;
+        H := R;
+
+        D := R / 3;
+
+        for i := 0 to 39 do begin
+            x[i] := R * cos(2 * Pi / 40 * i);
+            y[i] := R * sin(2 * Pi / 40 * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i;
+                i2 := (i + 1) mod 40;
+                Color := Colors[(i+35) mod 40 div 10];
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + 40; i2 + 40; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "clWhite" VertexIndexes = "FromTo(0, 39)" />
+                <Face Color = "clYellow" VertexIndexes = "FromTo(79, 40)" />
+
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "40" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Puck IQ</Name>
+        <Menu>Other forms\Cylinder\Puck\Puck IQ</Menu>
+        <Menu>Other forms\Square-1\Puck IQ</Menu>
+        <Inventor>Zoltán Pataki, Udulo Mszmp and Géza Csomós</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-02-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3072</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'E9C023';
+        clBlack  := '202020';
+        Colors[0] := 'E9C023'; // Yellow;
+        Colors[1] := 'E9C024';
+        Colors[2] := clBlack;
+
+        R := 0.6;
+        R1 := R / 2;
+//        R2 := R1 * 0.85;
+        H := R * 0.25;
+        H2 := H + 0.0003;
+
+        C := 0.001;
+        DC := (H - R * C) / sqrt(C^2 + 1) * 0.99;
+        Angle := Pi/6;
+    </Script>
+
+    <Axes TurningAngles = "0; Angle; 0" PlaneDistances = "-H; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+
+        <Turn NormVector = "0; 0; 1" Angle = "Angle / 2" />
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "R" Color = "Colors[0]" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Colors[1]"/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Colors[0]" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "-cos(Pi/12); -sin(Pi/12); 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " cos(Pi/12); -sin(Pi/12); 0" NormDistance = "0" /> </Cut>
+
+            <Turn NormVector = "0; 0; 1" Angle = "Angle" />
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "12" />
+        <Turn NormVector = "0; 0; 1" Angle = "-Angle / 2" />
+
+        <ShowAll/>
+
+        <Cut Color = "Colors[1]" > <Plane NormVector = "-C; 0; -1" NormDistance = "-DC" /> </Cut>
+
+        <Circle Radius = "R1" Color = "Colors[2]" Center =  "0; 0;  H2" />
+        <Circle Radius = "R1" Color = "Colors[0]" Center =  "0; 0; -H2" />
+
+        <SplitByAxes/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_06.vec" />
+        <Texture Name = "tm_07" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_07.vec" />
+        <Texture Name = "tm_08" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_08.vec" />
+        <Texture Name = "tm_09" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_09.vec" />
+        <Texture Name = "tm_10" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_10.vec" />
+        <Texture Name = "tm_11" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_11.vec" />
+        <Texture Name = "tm_12" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_12.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 =  6,9,2 
+        tm_02 =  7,9,2 
+        tm_03 =  8,9,2 
+        tm_04 =  9,9,2 
+        tm_05 = 10,9,2
+        tm_06 = 11,9,2
+        tm_07 =  0,9,2 
+        tm_08 =  1,9,2 
+        tm_09 =  2,9,2 
+        tm_10 =  3,9,2 
+        tm_11 =  4,9,2 
+        tm_12 =  5,9,2 
+    </SetTextures>
+</xml>

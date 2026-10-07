@@ -1,0 +1,186 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Nova Pentultimate 4</Name>
+        <Menu>Other forms\Dodecahedron\Other\Nova Pentultimate 4</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-08</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // clWhite
+        Colors[ 1] := 'FFFF00'; // clYellow
+        Colors[ 2] := '0000CC'; // clBlue
+        Colors[ 3] := 'FF0000'; // clRed
+        Colors[ 4] := '00AA00'; // clGreen
+        Colors[ 5] := '800080'; // clViolett
+        Colors[ 6] := 'FFFFAA'; // clCream
+        Colors[ 7] := '0066CC'; // clLightBlue
+        Colors[ 8] := 'FF6000'; // clOrange
+        Colors[ 9] := '00FF00'; // clLightGreen
+        Colors[10] := 'FF88CC'; // clLightViolett
+        Colors[11] := '666666'; // clGray
+
+        R := 0.7;
+
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * 0.8445;
+        S := R * 0.3475;
+
+        // Rotate p around normalized v
+        procedure RotatePoint(Angle);
+        begin
+            Xp := Ex[e];
+            Yp := Ey[e];
+            Zp := Ez[e];
+            Xv := Cx[c] / RSin; // normalize v
+            Yv := Cy[c] / RSin;
+            Zv := Cz[c] / RSin;
+
+            ca := Cos(Angle);
+            sa := Sin(Angle);
+            c2 := 1 - ca;
+
+            px[ind] := Xp * (Xv * c2 * Xv + ca) +
+                       Yp * (Yv * c2 * Xv - sa * Zv) +
+                       Zp * (Zv * c2 * Xv + sa * Yv);
+
+            py[ind] := Xp * (Xv * c2 * Yv + sa * Zv) +
+                       Yp * (Yv * c2 * Yv + ca) +
+                       Zp * (Zv * c2 * Yv - sa * Xv);
+
+            pz[ind] := Xp * (Xv * c2 * Zv - sa * Yv) +
+                       Yp * (Yv * c2 * Zv + sa * Xv) +
+                       Zp * (Zv * c2 * Zv + ca);
+            Inc(ind);
+        end;
+
+        procedure CalcPlaneAxes(e, c, A);
+        begin
+            for i := 0 to 4 do
+                RotatePoint((i * 2 + 1) * A);
+        end;
+
+        ind := 0;
+        CalcPlaneAxes(10, 0, Pi/10);
+        CalcPlaneAxes( 9, 1, Pi/10);
+        CalcPlaneAxes( 8, 2,-Pi/10);
+        CalcPlaneAxes( 6, 3, Pi/10);
+        CalcPlaneAxes( 7, 4, Pi/10);
+        CalcPlaneAxes( 2, 5,-Pi/10);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/10" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/4; 0; Pi/4" PlaneDistances = "-D; D" NormVectors = " px; py; pz" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = " 4; 3; 2; 1; 0" />
+                <Face Color = "Colors[ 1]" VertexIndexes = " 0; 1; 6;10; 5" />
+                <Face Color = "Colors[ 2]" VertexIndexes = " 1; 2; 7;11; 6" />
+                <Face Color = "Colors[ 3]" VertexIndexes = " 2; 3; 8;12; 7" />
+                <Face Color = "Colors[ 4]" VertexIndexes = " 3; 4; 9;13; 8" />
+                <Face Color = "Colors[ 5]" VertexIndexes = " 4; 0; 5;14; 9" />
+                <Face Color = "Colors[ 6]" VertexIndexes = "18;17;12; 8;13" />
+                <Face Color = "Colors[ 7]" VertexIndexes = "19;18;13; 9;14" />
+                <Face Color = "Colors[ 8]" VertexIndexes = "15;19;14; 5;10" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "16;15;10; 6;11" />
+                <Face Color = "Colors[10]" VertexIndexes = "17;16;11; 7;12" />
+                <Face Color = "Colors[11]" VertexIndexes = "15;16;17;18;19" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "Split1" >
+            <Split Axis = "ax" From = "1" />
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split1" ax = "0" Repeat = "6" />
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <InvertVisibility/>
+
+        <Macro Name = "Split2" >
+            <Turn Axis = "ax0" Layer = "0" Angle = "2*pi/10" />
+            <Split Axis = "ax" From = "1" To = "1" />
+            <Split Axis = "ax+1" From = "2" To = "2" />
+            <Split Axis = "ax+2" From = "1" To = "1" />
+            <Split Axis = "ax+3" From = "2" To = "2" />
+            <Split Axis = "ax+4" From = "1" To = "1" />
+            <Undo/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split2" ax0 = "0" ax = " 6" />
+        <ExecMacro MacroName = "Split2" ax0 = "1" ax = "11" />
+        <ExecMacro MacroName = "Split2" ax0 = "2" ax = "16" />
+        <ExecMacro MacroName = "Split2" ax0 = "3" ax = "21" />
+        <ExecMacro MacroName = "Split2" ax0 = "4" ax = "26" />
+        <ExecMacro MacroName = "Split2" ax0 = "5" ax = "31" />
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <ExecMacro MacroName = "Split2" ax0 = "0" ax = "6" />
+        <ExecMacro MacroName = "Split2" ax0 = "1" ax = "11" />
+        <ExecMacro MacroName = "Split2" ax0 = "2" ax = "16" />
+        <ExecMacro MacroName = "Split2" ax0 = "3" ax = "21" />
+        <ExecMacro MacroName = "Split2" ax0 = "4" ax = "26" />
+        <ExecMacro MacroName = "Split2" ax0 = "5" ax = "31" />
+
+        <RemoveContaining Vector = "Ex;Ey;Ez" />
+        <HideContaining Vector = "Cx;Cy;Cz" />
+        <HideContaining Vector = "Vx;Vy;Vz" />
+
+        <Macro Name = "Split3" >
+            <Split><Plane NormVector = "Cx[i]; Cy[i]; Cz[i]" NormDistance = "S" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split3" i = "0" Repeat = "12" />
+
+        <Macro Name = "RemoveEdges" >
+            <RemoveContaining Vector = "f*Ex[i];f*Ey[i];f*Ez[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveEdges" i = "0" Repeat = "30" f = "2 * D / RSin / sqrt(5)" />
+
+        <ShowAll/>
+
+        <Macro Name = "Turn">
+            <Turn Axis = "id" Layer = "0" Angle = "Pi/4" />
+            <Turn Axis = "id" Layer = "2" Angle = "Pi/4" />
+            <Script>Inc(id);</Script>
+        </Macro>
+
+        <Macro Name = "Split3">
+            <Turn Axis = "ax0" Layer = "0" Angle = "2*Pi/10" />
+            <ExecMacro MacroName = "Turn" id = "ax" Repeat = "5" />
+            <Split Axis = "ax0" From = "1" />
+            <ExecMacro MacroName = "Turn" id = "ax" Repeat = "5" />
+            <Split Axis = "ax0" From = "1 "/>
+            <ExecMacro MacroName = "Turn" id = "ax" Repeat = "5" />
+            <Split Axis = "ax0" From = "1 "/>
+            <Undo Repeat = "31" />
+        </Macro>
+        <ExecMacro MacroName = "Split3" ax0 = "0" ax = " 6" />
+        <ExecMacro MacroName = "Split3" ax0 = "1" ax = "11" />
+        <ExecMacro MacroName = "Split3" ax0 = "2" ax = "16" />
+        <ExecMacro MacroName = "Split3" ax0 = "3" ax = "21" />
+        <ExecMacro MacroName = "Split3" ax0 = "4" ax = "26" />
+        <ExecMacro MacroName = "Split3" ax0 = "5" ax = "31" />
+    </Figure>
+</xml>

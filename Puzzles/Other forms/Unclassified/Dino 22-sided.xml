@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino 22-sided</Name>
+        <Menu>Other forms\Unclassified\Dino 22-sided</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-08-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8013</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 6] := '00BFFF'; //clDeepSky
+        Colors[ 7] := '008080'; //clTeal
+        Colors[ 8] := '0000FF'; //clBlue
+        Colors[ 9] := '000080'; //clNavy
+        Colors[10] := 'FF7F50'; //clCoral
+        Colors[11] := 'FF0000'; //clRed
+        Colors[12] := 'DC143C'; //clCrimson
+        Colors[13] := 'CD5C5C'; //clIndian
+        Colors[14] := '800000'; //clBrown
+        Colors[15] := 'FFFF70'; //clYellow
+        Colors[16] := 'FF6000'; //clOrange
+        Colors[17] := 'F0E68C'; //clKhaki
+        Colors[18] := 'DDBB20'; //clGolden
+        Colors[19] := '808000'; //clOlive
+        Colors[20] := 'ADFF2F'; //clGreenYellow
+        Colors[21] := '00FF00'; //clLime
+
+        W := 0.5;
+        D := W / sqrt(3);
+        x := W * (2 - sqrt(3));
+        RCut := W * 1.0670601667; // root of 18 x^4 - 30 x^2 + 57 x - 50 = 0 near x = 1.067
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Cut Color = "Colors[ 6]"><Plane NormVector = "-1;-1;-1" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[ 7]"><Plane NormVector = "-1; 1; 1" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[ 8]"><Plane NormVector = " 1; 1;-1" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[ 9]"><Plane NormVector = " 1;-1; 1" NormDistance = "-W" /></Cut>
+
+        <Cut Color = "Colors[10]"><Plane NormVector = " x;-W;-W" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[11]"><Plane NormVector = "-x; W;-W" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[12]"><Plane NormVector = " x; W; W" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[13]"><Plane NormVector = "-x;-W; W" NormDistance = "-RCut" /></Cut>
+
+        <Cut Color = "Colors[14]"><Plane NormVector = "-W; x;-W" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[15]"><Plane NormVector = "-W;-x; W" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[16]"><Plane NormVector = " W; x; W" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[17]"><Plane NormVector = " W;-x;-W" NormDistance = "-RCut" /></Cut>
+
+        <Cut Color = "Colors[18]"><Plane NormVector = "-W;-W; x" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[19]"><Plane NormVector = " W;-W;-x" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[20]"><Plane NormVector = " W; W; x" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[21]"><Plane NormVector = "-W; W;-x" NormDistance = "-RCut" /></Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

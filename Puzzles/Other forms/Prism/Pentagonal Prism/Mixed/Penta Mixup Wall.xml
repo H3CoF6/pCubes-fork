@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Penta Mixup Wall</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Mixed\Penta Mixup Wall</Menu>
+        <Inventor>k3DW (Braden Ganetsky)</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8530</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36448</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0033EE';
+        clGreen  := '00BB00';
+        clRed    := 'DD0000';
+        clPurple := '8800BB';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6600';
+
+        R := 0.65;
+        H := R * 0.6;
+
+        sAngle := Pi * 2 / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * (i-0.5));
+            y[i] := R * cos(sAngle * (i-0.5));
+        end;
+
+        D1 := (y[1] + y[2]) / 2;
+        D2 := R * 0.25;
+
+        DCut := R * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0" PlaneDistances = "-D1" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+        <Axis NormVector = "x[3]; y[3]; 0" />
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/10" PlaneDistances = "-D2; D2" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+
+            <Faces>
+                <Face Color = "clBlue  " VertexIndexes = "5;6;1;0" />
+                <Face Color = "clRed   " VertexIndexes = "6;7;2;1" />
+                <Face Color = "clGreen " VertexIndexes = "7;8;3;2" />
+                <Face Color = "clPurple" VertexIndexes = "8;9;4;3" />
+                <Face Color = "clOrange" VertexIndexes = "9;5;0;4" />
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clWhite " VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "5" From = "1" />
+        <Split Axis = "5" From = "2" />
+
+        <Turn Axis = "5" Angle = "Pi/10" Layer = "1" />
+        <SplitByAxes/>
+        <Undo />
+        <Turn Axis = "5" Angle = "-Pi/10" Layer = "1" />
+        <SplitByAxes/>
+        <Undo />
+        <Hide><Plane NormVector = "x[0]; y[0]; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "x[1]; y[1]; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "x[2]; y[2]; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "x[3]; y[3]; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "x[4]; y[4]; 0" NormDistance = "-DCut" /></Hide>
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+</xml>

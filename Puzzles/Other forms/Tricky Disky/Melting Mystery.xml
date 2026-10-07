@@ -1,0 +1,97 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Melting Mystery</Name>
+        <Menu>Other forms\Tricky Disky\Melting Mystery</Menu>
+        <Inventor>Michael Womack</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5257</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '008800'; // clGreen
+        Colors[1] := 'DD0000'; // clRed
+        Colors[2] := 'FFFF00'; // clYellow
+        Colors[3] := '00BBFF'; // clLightBlue
+        Colors[4] := '7700DD'; // clViolett
+        Colors[5] := 'EE0099'; // clPink
+
+        Colors[6] := '0000EE'; // clBlue
+
+        R := 0.4;
+        H := R * 0.32;
+        HC := H * 1.002;
+
+        R1 := R * 1.275;
+        R2 := R * 2.025;
+
+        RC := R * 0.09;
+        RC1 := RC * 3.25;
+        RC2 := R * 0.425;
+        RCut := R * 0.13;
+
+        c6 := cos(Pi/6);
+        s6 := sin(Pi/6);
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(Pi / 3 * i);
+            ay[i] := sin(Pi / 3 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2;0;Pi/2" PlaneDistances = "-R1; R1" >
+        <Axis NormVector = "ax[0]; ay[0]; 0" />
+        <Axis NormVector = "ax[1]; ay[1]; 0" />
+        <Axis NormVector = "ax[2]; ay[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0; 0; 1" Angle = "Pi/6" />
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "RC1" >
+                <Base X = "0" Y = "-R1" Z = "0" />
+                <Top  X = "0" Y = "-R2" Z = "0" />
+            </Cylinder>
+
+            <Cut Color = "Colors[i]"> <Plane NormVector = "0; 0; 1" NormDistance = "-RCut" /> </Cut>
+            <Cut Color = "Colors[i]"> <Plane NormVector = "0; 0; -1" NormDistance = "-RCut" /> </Cut>
+            <Split> <Plane NormVector = "1; 0; 0" /> </Split>
+
+            <Cylinder Radius = "R" Color = "Colors[i]" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Colors[i]"/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Colors[i]" />
+            </Cylinder>
+
+            <Cut> <Plane NormVector = "-c6;-s6; 0" /> </Cut>
+            <Cut> <Plane NormVector = " c6;-s6; 0" /> </Cut>
+
+            <Cylinder Radius = "RC" >
+                <Base X = "0" Y = "-R" Z = "0" />
+                <Top  X = "0" Y = "-R1" Z = "0" />
+            </Cylinder>
+
+            <Turn NormVector = "0; 0; 1" Angle = "Pi/3" />
+            <HideAll/>
+
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "6" />
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi/6" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <Circle Radius = "RC2" Color = "Colors[6]" Center = "0; 0; HC" />
+        <Circle Radius = "RC2" Color = "Colors[6]" Center = "0; 0;-HC" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,131 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Zeppelin</Name>
+        <Menu>Other forms\Square-1\Zeppelin</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-12-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4022</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0000CC'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := '800080'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        W := 0.6;
+
+        a := W;
+        k := 0.7; // oval
+        D := 2 * W / 6.8;
+
+        z[0] :=-W;
+        r[0] := 0;
+        for i := 1 to 7 do begin
+            z[i] := D * (i - 4);
+            r[i] := sqrt(W^2 - z[i]^2) * k;
+        end;
+        z[8] := W;
+        r[8] := 0;
+
+        for i := 0 to 5 do begin
+            ax[i] := sin(i * Pi/6);
+            ay[i] := cos(i * Pi/6);
+        end;
+
+        xc[0] := 0;
+        yc[0] := 0;
+        zc[0] := z[0];
+        c := 1;
+        for i := 1 to 7 do begin
+            for j := 0 to 11 do begin
+                xc[c] := r[i] * sin(j * Pi/6);
+                yc[c] := r[i] * cos(j * Pi/6);
+                zc[c] := z[i];
+                Inc(c);
+            end;
+        end;
+        xc[c] := 0;
+        yc[c] := 0;
+        zc[c] := z[8];
+    </Script>
+
+    <Axes TurningAngles = " Pi/6" PlaneDistances = "-D*2;-D; 0; D; D*2" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" NormVectors = "ax; ay; 0" TurnAxesWithPartNo = "0" />
+
+    <Figure>
+
+        <Macro Name = "AddFace4" >
+            <Script>
+                i1 := row * 12 + (c + 1) mod 12 + 1;
+                i2 := row * 12 + c + 1;
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "i1; i2; i2 + 12; i1 + 12" InvisibleEdges = "-1" />
+            <Script> Inc(c); </Script>
+        </Macro>
+
+        <Macro Name = "AddFace3Bottom" >
+            <Script>
+                i1 := (c + 1) mod 12 + 1;
+                i2 := c + 1;
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "0; i2; i1" InvisibleEdges = "-1" />
+            <Script> Inc(c); </Script>
+        </Macro>
+
+        <Macro Name = "AddFace3Top" >
+            <Script>
+                i1 := row * 12 + (c + 1) mod 12 + 1;
+                i2 := row * 12 + c + 1;
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "85; i1; i2" InvisibleEdges = "-1" />
+            <Script> Inc(c); </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "xc; yc; zc" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace3Bottom" row = "0" c = "0" Repeat = "12" />
+                <ExecMacro MacroName = "AddFace4"       row = "0" c = "0" Repeat = "12" />
+                <ExecMacro MacroName = "AddFace4"       row = "1" c = "0" Repeat = "12" />
+                <ExecMacro MacroName = "AddFace4"       row = "2" c = "0" Repeat = "12" />
+                <ExecMacro MacroName = "AddFace4"       row = "3" c = "0" Repeat = "12" />
+                <ExecMacro MacroName = "AddFace4"       row = "4" c = "0" Repeat = "12" />
+                <ExecMacro MacroName = "AddFace4"       row = "5" c = "0" Repeat = "12" />
+                <ExecMacro MacroName = "AddFace3Top"    row = "6" c = "0" Repeat = "12" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "5" From = "1" />
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = " 0; 1; 0" Angle = " Pi / 2" />
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

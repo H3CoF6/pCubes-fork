@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>House 2x2x2</Name>
+        <Menu>Other forms\2x2x2 variants\House 2x2x2</Menu>
+        <Inventor>Jean-Claude Constantin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-08-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2832</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clBlue   := '0000C8';
+        clYellow := 'FFFF00';
+
+        Colors[0] := clOrange;
+        Colors[1] := clOrange;
+        Colors[2] := clYellow;
+        Colors[3] := clYellow;
+        Colors[4] := clBlue;
+        Colors[5] := -1;
+
+        W := 0.7;
+        D := W / 2;
+        H := D * 0.75;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <Cut                 ><Plane NormVector = " 0; 0; 1" NormDistance = " 0" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = "-1; 0;-1" NormDistance = "-W / sqrt(2)" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = " 1; 0;-1" NormDistance = "-W / sqrt(2)" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Cut>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "-D" /></Split>
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D" WZ = "H" DWZ = "-H" />
+        <Script>
+            Colors[0] := -1;
+            Colors[1] := -1;
+            Colors[4] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D" WZ = "D/2" DWZ = "D/2" />
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+
+        <Turn Axis = "1" Layers = "0" type = "LayerTurn" Angle = " Pi  "/>
+        <Turn Axis = "2" Layers = "0" type = "LayerTurn" Angle = " Pi  "/>
+        <Turn Axis = "1" Layers = "1" type = "LayerTurn" Angle = "-Pi/2"/>
+        <Turn Axis = "0" Layers = "0" type = "LayerTurn" Angle = "-Pi  "/>
+        <Turn Axis = "1" Layers = "0" type = "LayerTurn" Angle = "-Pi  "/>
+        <SaveSolvedState/>
+
+
+        <Turn Axis = "2" Layers = "0" type = "LayerTurn" Angle = " Pi  "/>
+        <Turn Axis = "0" Layers = "1" type = "LayerTurn" Angle = " Pi  "/>
+        <SaveSolvedState/>
+
+        <Turn Axis = "1" Layers = "1" type = "LayerTurn" Angle = " Pi  "/>
+        <Turn Axis = "2" Layers = "1" type = "LayerTurn" Angle = " Pi  "/>
+        <Turn Axis = "1" Layers = "1" type = "LayerTurn" Angle = " Pi/2"/>
+        <Turn Axis = "0" Layers = "0" type = "LayerTurn" Angle = " Pi  "/>
+        <Turn Axis = "1" Layers = "0" type = "LayerTurn" Angle = " Pi  "/>
+        <SaveSolvedState/>
+
+        <Turn Axis = "0" Layers = "0" type = "LayerTurn" Angle = " Pi/2"/>
+        <Turn Axis = "1" Layers = "0" type = "LayerTurn" Angle = " Pi  "/>
+        <Turn Axis = "0" Layers = "1" type = "LayerTurn" Angle = " Pi  "/>
+        <SaveSolvedState/>
+
+        <Turn Axis = "1" Layers = "1" type = "LayerTurn" Angle = " Pi/2"/>
+        <SaveSolvedState/>
+
+        <Undo Repeat = "16" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

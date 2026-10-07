@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Jumble Intersect</Name>
+        <Menu>Other forms\Unclassified\Jumble Intersect</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-09-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5526</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '0000A0';
+        clOrange  := 'FF6000';
+        clRed     := 'FF0000';
+        clGreen   := '008000';
+        clViolett := '800080';
+
+        clBlack   := '202020';
+
+        R := 0.6;
+        R2 := R * sqrt(3)/2;
+
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi/3 * i);
+            y[i] := R * sin(Pi/3 * i);
+
+            x2[i] := R2 * cos(Pi/3 * i + Pi/6);
+            y2[i] := R2 * sin(Pi/3 * i + Pi/6);
+        end;
+        az := R / sqrt(2);
+
+        A1 := ArcCos(-4/5);
+
+        H := R * sqrt(2);
+        H2 := H /3;
+
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1; -Pi/2; 0; Pi/2; A1; pi" PlaneDistances = "0" TurnAxesWithPartNo = "4" >
+        <Axis NormVector = " x[0]; y[0]; az" />
+        <Axis NormVector = " x[1]; y[1]; az" />
+        <Axis NormVector = " x[2]; y[2]; az" />
+        <Axis NormVector = " x[3]; y[3]; az" />
+        <Axis NormVector = " x[4]; y[4]; az" />
+        <Axis NormVector = " x[5]; y[5]; az" />
+    </Axes>
+
+    <Figure>
+
+        <Macro Name = "TopPart" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "     0 ;     0 ;  H" />
+                    <Add Vector = "  x[i1];  y[i1]; H2" />
+                    <Add Vector = " x2[i1]; y2[i1];  0" />
+                    <Add Vector = " x2[i2]; y2[i2];  0" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "c1" VertexIndexes = "0;1;2" />
+                    <Face Color = "c2" VertexIndexes = "0;3;1" />
+                    <Face Color = "c3" VertexIndexes = "1;3;2" />
+                    <Face              VertexIndexes = "0;2;3" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "TopPart" i1 = "0" i2 = "5" c1 = "clGreen " c2 = "clYellow" c3 = "clOrange " />
+        <ExecMacro MacroName = "TopPart" i1 = "1" i2 = "0" c1 = "-1      " c2 = "-1      " c3 = "-1       " />
+        <ExecMacro MacroName = "TopPart" i1 = "2" i2 = "1" c1 = "clRed   " c2 = "clGreen " c3 = "clViolett" />
+        <ExecMacro MacroName = "TopPart" i1 = "3" i2 = "2" c1 = "-1      " c2 = "-1      " c3 = "-1       " />
+        <ExecMacro MacroName = "TopPart" i1 = "4" i2 = "3" c1 = "clYellow" c2 = "clRed   " c3 = "clBlue   " />
+        <ExecMacro MacroName = "TopPart" i1 = "5" i2 = "4" c1 = "-1      " c2 = "-1      " c3 = "-1       " />
+
+        <Macro Name = "BottomPart" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "     0 ;     0 ;  -H" />
+                    <Add Vector = "  x[i1];  y[i1]; -H2" />
+                    <Add Vector = " x2[i1]; y2[i1];   0" />
+                    <Add Vector = " x2[i2]; y2[i2];   0" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "c1" VertexIndexes = "0;2;1" />
+                    <Face Color = "c2" VertexIndexes = "0;1;3" />
+                    <Face Color = "c3" VertexIndexes = "1;2;3" />
+                    <Face              VertexIndexes = "0;3;2" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "BottomPart" i1 = "0" i2 = "5" c1 = "-1       " c2 = "-1       " c3 = "-1      " />
+        <ExecMacro MacroName = "BottomPart" i1 = "1" i2 = "0" c1 = "clViolett" c2 = "clOrange " c3 = "clGreen " />
+        <ExecMacro MacroName = "BottomPart" i1 = "2" i2 = "1" c1 = "-1       " c2 = "-1       " c3 = "-1      " />
+        <ExecMacro MacroName = "BottomPart" i1 = "3" i2 = "2" c1 = "clBlue   " c2 = "clViolett" c3 = "clRed   " />
+        <ExecMacro MacroName = "BottomPart" i1 = "4" i2 = "3" c1 = "-1       " c2 = "-1       " c3 = "-1      " />
+        <ExecMacro MacroName = "BottomPart" i1 = "5" i2 = "4" c1 = "clOrange " c2 = "clBlue   " c3 = "clYellow" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

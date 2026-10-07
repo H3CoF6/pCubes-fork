@@ -1,0 +1,106 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Sudoku Pyraminx</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Pyraminx\Sudoku Pyraminx</Menu>
+        <Inventor>juanan</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-05-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8044</Link>
+    </Interface>
+
+    <Script>
+        Colors[1] := 'C80000'; // clRed
+        Colors[2] := 'FF8E01'; // clOrange
+        Colors[3] := 'ECE300'; // clYellow
+        Colors[4] := '04A42A'; // clGreen
+        Colors[5] := '64CBFC'; // clCyan
+        Colors[6] := '0019FF'; // clBlue
+        Colors[7] := 'C2009E'; // clViolett
+        Colors[8] := 'FFFFFF'; // clWhite
+        Colors[9] := '101010'; // clDark
+
+        ColorsS := 'roygcbvwd';
+
+        W := 0.5;
+        W1 := 0.55;
+        D := W * 4 * sqrt(3) / 9;
+        D0 := -W / sqrt(3);
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', SColors);
+          if p = 0 then begin
+            substr := Trim(SColors);
+            SColors := '';
+          end else begin
+            substr := Trim(copy(SColors, 1, p-1));
+            Delete(SColors, 1, p);
+          end;
+          Result := Pos(substr, ColorsS);
+        end;
+
+        SColors1 := 'c, d,y,g, w,r,v,b,o';
+        SColors2 := 'v, d,o,b, w,r,y,c,g';
+        SColors3 := 'r, w,o,g, d,y,c,v,b';
+        SColors4 := 'o, b,w,r, d,v,c,g,y';
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2*D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " W1;-W1; W1" />
+                <Add Vector = "-W1; W1; W1" />
+                <Add Vector = " W1; W1;-W1" />
+                <Add Vector = "-W1;-W1;-W1" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = "1;2;3" />
+                <Face VertexIndexes = "0;3;2" />
+                <Face VertexIndexes = "0;1;3" />
+                <Face VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "CutCubie" >
+            <HideContaining Vector = "x; y; z" />
+            <InvertVisibility />
+            <Cut Color = "Colors[GetInt]"><Plane NormVector = "-1;-1;-1" NormDistance = "D0" /></Cut>
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "CutFace" >
+            <ExecMacro MacroName = "CutCubie" x = "-W  " y = " W  " z = " W  " />
+            <ExecMacro MacroName = "CutCubie" x = " 0  " y = " 0  " z = " W  " />
+            <ExecMacro MacroName = "CutCubie" x = " 0  " y = " W/2" z = " W/2" />
+            <ExecMacro MacroName = "CutCubie" x = " 0  " y = " W  " z = " 0  " />
+            <ExecMacro MacroName = "CutCubie" x = " W  " y = "-W  " z = " W  " />
+            <ExecMacro MacroName = "CutCubie" x = " W/2" y = " 0  " z = " W/2" />
+            <ExecMacro MacroName = "CutCubie" x = " W  " y = " 0  " z = " 0  " />
+            <ExecMacro MacroName = "CutCubie" x = " W/2" y = " W/2" z = " 0  " />
+            <ExecMacro MacroName = "CutCubie" x = " W  " y = " W  " z = "-W  " />
+            <Cut><Plane NormVector = "-1;-1;-1" NormDistance = "D0" /></Cut>
+        </Macro>
+
+        <ExecMacro MacroName = "CutFace" SColors = "SColors1" />
+        <Turn NormVector = "-1; 1; 1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColors2" />
+        <Turn NormVector = "-1; 1; 1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColors3" />
+        <Turn NormVector = "-1; 1; 1" Angle = "-2*Pi/3" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColors4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "-Pi" />
+    </Figure>
+    <Procedures CheckSolved="EachFaceConsistsOfDifferentColors" />
+</xml>

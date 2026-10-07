@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Slide Rule Duel (Rotocross, cylinder)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Rotocross (cylinder)</Menu>
+        <Menu>Other forms\Cylinder\Slide Rule Duel (Rotocross)</Menu>
+        <Inventor>Douglas A. Engel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4557</Link>
+    </Interface>
+
+    <Script>
+        clBrown  := '88653F';
+        clRed    := 'FF0000';
+        clWhite  := 'FFFFFF';
+        clBlue   := '4444FF';
+        clYellow := 'FFFF00';
+        clBlack  := '333333';
+
+        R := 1 / 2;
+        H := R / 2;
+
+        D := R / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Add3" >
+            <Cylinder Radius = "R" Color = "Color1" Base = "0;0;0" Top = "0;0;H" TopColor = "Color1" />
+            <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "D" /> </Cut>
+            <HideAll/>
+
+            <Cylinder Radius = "R" Color = "Color2" Base = "0;0;0" Top = "0;0;H" TopColor = "Color2" />
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-D" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-D" /> </Cut>
+            <HideAll/>
+
+            <Cylinder Radius = "R" Color = "Color3" Base = "0;0;0" Top = "0;0;H" TopColor = "Color3" />
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "D" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0; 1; 0" Angle = "Pi" />
+        </Macro>
+        <ExecMacro MacroName = "Add3" Color1 = "clBlue" Color2 = "clWhite" Color3 = "clRed" />
+        <ExecMacro MacroName = "Add3" Color1 = "clWhite" Color2 = "clBlack" Color3 = "clYellow" />
+
+        <ShowAll/>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = " D" /> </Split>
+
+        <Hide Axis = "0" Layer = "1" />
+        <Cut Axis = "1" From = "1" />
+        <HideAll/>
+
+        <Cylinder Radius = "R" Color = "clBrown" Base = "0;0;0" Top = "0;0;-H" TopColor = "clBrown" />
+        <Cut Axis = "1" To = "1" />
+        <ShowAll/>
+        <SaveSolvedState/>
+
+        <!-- form 2nd solved state with yellow and white exchanged -->
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "0" />
+        <RemoveAllVisible/>
+        <Turn NormVector = "0; 1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "Add3" Color1 = "clYellow" Color2 = "clBlack" Color3 = "clWhite" />
+        <ShowAll/>
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "0" />
+        <Cut Axis = "1" From = "1" />
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = " D" /> </Split>
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2x2 Anti Cube</Name>
+        <Menu>Cubic\Rubiks Recolored\2x2x2 Anti Cube</Menu>
+        <Inventor>Adam Zamora</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-12-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1927</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        WZ := W * 0.01;
+        WX := W / 2 - WZ;
+        WY := W / 2 - WZ;
+        DWX := -WX - 2 * WZ;
+        DWY := -WY - 2 * WZ;
+        DWZ :=  WZ;
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "-W;-W; W" />
+
+        <Script>
+            for i := 0 to 4 do
+                Colors[i] := -1;
+        </Script>
+
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Turn NormVector = "-1;-1; 1" Angle = "2 * Pi / 3" />
+        <Script>
+            Colors[5] := clBlue;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Turn NormVector = "-1;-1; 1" Angle = "2 * Pi / 3" />
+        <Script>
+            Colors[5] := clRed;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Turn NormVector = "-1;-1; 1" Angle = "2 * Pi / 3" />
+    </Figure>
+</xml>

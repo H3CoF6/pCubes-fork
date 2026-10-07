@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cubes on a Disk</Name>
+        <Menu>Cubic\Multi-core\Cubes on a Disk</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-08-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2957</Link>
+    </Interface>
+
+    <Script>
+        W := 0.20;
+        D := W / 2;
+        A := Pi / 2;
+    </Script>
+
+    <Axes TurningAngles = "0;A;A;A;A" PlaneDistances = "-W;-D; 0; D" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-W; 2*W; 0"/>
+        <Axis NormVector = " 1; 0; 0" BaseVector = " W;-2*W; 0"/>
+    </Axes>
+    <Axes TurningAngles = "0;A" PlaneDistances = "D" >
+        <Axis NormVector = " 0; 1; 0" BaseVector = "-W; 2*W; 0"/>
+        <Axis NormVector = " 0;-1; 0" BaseVector = " W;-2*W; 0"/>
+    </Axes>
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W" DWX = "-W" DWY = " 2*W" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W" DWX = " W" DWY = "-2*W" />
+        <SplitByAxes/>
+
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-D*3" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-D*4" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = " D*3" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = " D*4" /></Split>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

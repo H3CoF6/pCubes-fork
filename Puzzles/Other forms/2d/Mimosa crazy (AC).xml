@@ -1,0 +1,110 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mimosa crazy (AC)</Name>
+        <Menu>Other forms\2d\Mimosa crazy (AC)</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-04-22</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clBlack  := '333333';
+
+        K := 0.6;
+        phi := (sqrt(5) - 1) / 2; // The golden ratio
+        
+        C7  := K * 0.1546251069104;
+        C34 := K * 0.5307631976640;
+        C44 := K * 0.6594528785997;
+        C51 := K * 0.7565114351862;
+        C57 := K * 0.8587928937980;
+        C63 := K * 0.9345756579487;
+        C69 := K * 0.9911488400207;
+        C71 := K * 1.0028680188979;
+        
+        t := (C63 - C71) / (C69 - C71 - C7 * Phi);
+        
+        D1 := C63 / sqrt(1 + Phi^2);
+        D2 := ((C69 * t + C71 * (1 - t)) * (Phi + 1) - C7 * t * Phi) / 2;
+        
+        s := (2 * D2 - C44 * (Phi + 1) - C51 * Phi) / ((C57 - C44) * (Phi + 1) + (C34 - C51) * Phi);
+        
+        D3 := ((C57 * s + C44 * (1 - s)) + Phi * (C34 * s + C51 * (1 - s))) / sqrt(1 + Phi^2);
+        
+        DCut1 := D1 - K * 0.05;
+        DCut2 := D2 - K * 0.05;
+    </Script>
+
+    <Axes TurningAngles = " 0; 2*Pi/5; 2*Pi/5" PlaneDistances = "D1;D3" >
+        <Axis NormVector = " 0;-1; phi" />
+    </Axes>
+
+    <Axes TurningAngles = " 0; Pi" PlaneDistances = "D2" >
+        <Axis NormVector = " 1;-phi-1; phi" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSphere" >
+            <Script>
+                for i := 0 to 11 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clRed" />
+        <Cut Axis = "0" From = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" From = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlack" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;     1;-phi" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1;-phi-1; phi" NormDistance = " DCut2" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-phi-1; phi" NormDistance = " DCut2" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;    -1; phi" NormDistance = " DCut1" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; phi+1;-phi" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;    -1; phi" NormDistance = " DCut1" /> </Cut>
+        <ShowAll/>
+
+        <Macro Name = "Unbandage" >
+            <SplitByAxes/>
+            <Turn Axis = "0" Layer = "1" Angle = "2*Pi/5" />
+            <Turn Axis = "0" Layer = "2" Angle = "2*Pi/5" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        </Macro>
+
+        <ExecMacro MacroName = "Unbandage" Repeat = "12" />
+        <Undo Repeat = "36" />
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "1;0;0" Angle = "ArcTan(phi)" />
+        <Turn NormVector = "0;1;0" Angle = "-Pi/10" />
+        <Turn NormVector = "0;0;1" Angle = "-ArcTan(phi) / 2" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

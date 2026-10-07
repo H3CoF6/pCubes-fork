@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx 3x3x5</Name>
+        <Menu>Other forms\Dodecahedron\Truncated\Megaminx 3x3x5</Menu>
+        <Inventor>Justin Costa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-10</Added>
+        <Link>https://www.instagram.com/p/Be51KwQFPcP/</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; //clWhite
+        Colors[ 1] := 'FFFF00'; //clYellow
+        Colors[ 2] := '0000CC'; //clBlue
+        Colors[ 3] := 'FF0000'; //clRed
+        Colors[ 4] := '00AA00'; //clGreen
+        Colors[ 5] := '800080'; //clViolett
+        Colors[ 6] := 'FFFFAA'; //clCream
+        Colors[ 7] := '0066CC'; //clLightBlue
+        Colors[ 8] := 'FF6000'; //clOrange
+        Colors[ 9] := '00FF00'; //clLightGreen
+        Colors[10] := 'FF88CC'; //clLightViolett
+        Colors[11] := '666666'; //clGray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := (3 * Rsin + 1 * R2sin) / 4;
+        D2 := (2 * Rsin + 2 * R2sin) / 4;
+        RCut := D1 + 0.001;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; sAngle; 0; sAngle; sAngle" PlaneDistances = "-D1; -D2; D2; D1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Cut Color = "Colors[ 0]" > <Plane NormVector = "-Cx[ 0];-Cy[ 0];-Cz[ 0]" NormDistance = "-RSin" /> </Cut>
+        <Cut Color = "Colors[11]" > <Plane NormVector = "-Cx[11];-Cy[11];-Cz[11]" NormDistance = "-RSin" /> </Cut>
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Colors[Id]" > <Plane NormVector = "-Cx[Id];-Cy[Id];-Cz[Id]" NormDistance = "-RCut" /> </Cut>
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Id = "1" Repeat = "10" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

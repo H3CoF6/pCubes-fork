@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x3x4 Bump Cuboid</Name>
+        <Menu>Cubic\Bump\Cuboids\2x3x4 Bump Cuboid</Menu>
+        <Inventor>Alberto Quevedo</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6420</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'E0C07D';
+
+        for i := 0 to 5 do
+            Colors[i] := MirrorColor;
+
+        W := 0.5;
+        D := W / 5;
+
+        X := 4;
+        Y := 3;
+        Z := 2;
+
+        Add := 1.1;
+
+        WX := D * (X + Add);
+        WY := D * (Y + Add);
+        WZ := D * (Z + Add);
+
+        DWX := W * 0.04;
+        DWY := W * 0.08;
+        DWZ := W * 0.12;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D*2; 0; D*2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

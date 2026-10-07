@@ -1,0 +1,88 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Curvy Dino Bram 1 unbandaged Plus</Name>
+        <Menu>Other forms\Archimedean Solids\Rhombicuboctahedron\Curvy Dino Bram\Curvy Dino Bram 1 unbandaged Plus</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-04-12</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+        s2 := sqrt(2);
+        s1 := s2 + 1;
+        A := W * (s2 - 1);
+        D := W * 0.9;
+
+        A1 := ArcCos((s2 + 2) / 8);
+        A2 := ArcCos((s2 - 2) / 4);
+        A3 := A1 + A2;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "  1;  1; s1" />
+        <Axis NormVector = "  1;  1;-s1" />
+        <Axis NormVector = "  1; -1; s1" />
+        <Axis NormVector = "  1; -1;-s1" />
+        <Axis NormVector = " s1;  1;  1" />
+        <Axis NormVector = " s1;  1; -1" />
+        <Axis NormVector = " s1; -1;  1" />
+        <Axis NormVector = " s1; -1; -1" />
+        <Axis NormVector = "  1; s1;  1" />
+        <Axis NormVector = "  1; s1; -1" />
+        <Axis NormVector = "  1;-s1;  1" />
+        <Axis NormVector = "  1;-s1; -1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "..\Figures\Rhombicuboctahedron.xml" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0"/>
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 26 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "..\Figures\Rhombicuboctahedron.xml" />
+
+        <SplitByAxes/>
+        <HideContaining Vector = "0;0;0"/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "Split" >
+            <Hide><Plane NormVector = "-1;-s1; 1" NormDistance = "D" /> </Hide>
+            <Hide><Plane NormVector = " 1;-s1; 1" NormDistance = "D" /> </Hide>
+            <Turn NormVector = " 1; s1; -1" Angle = "-A1" />
+            <Split><Plane NormVector = " 1;-s1; 1" NormDistance = "D" /> </Split>
+            <Turn NormVector = " 1; s1;-1" Angle = " A1" />
+            <ShowAll/>
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi/2" />
+        </Macro>
+
+        <Macro Name = "SplitSide" >
+            <Turn NormVector = "  0; 0; 1" Angle = "-Pi/4 * X" />
+            <Turn NormVector = "  1; 0; 0" Angle = " Pi/4 * Z" />
+            <ExecMacro MacroName = "Split" Repeat = "4" />
+            <Turn NormVector = "  1; 0; 0" Angle = "-Pi/4 * Z" />
+            <Turn NormVector = "  0; 0; 1" Angle = " Pi/4 * X" />
+            <Script>Inc(X);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitSide" X = "0" Z = "0" Repeat = "8" />
+        <ExecMacro MacroName = "SplitSide" X = "0" Z = "1" />
+        <ExecMacro MacroName = "SplitSide" X = "2" Z = "1" />
+        <ExecMacro MacroName = "SplitSide" X = "4" Z = "1" />
+        <ExecMacro MacroName = "SplitSide" X = "6" Z = "1" />
+        <ExecMacro MacroName = "SplitSide" X = "0" Z = "2" />
+        <ExecMacro MacroName = "SplitSide" X = "0" Z = "-1" />
+        <ExecMacro MacroName = "SplitSide" X = "2" Z = "-1" />
+        <ExecMacro MacroName = "SplitSide" X = "4" Z = "-1" />
+        <ExecMacro MacroName = "SplitSide" X = "6" Z = "-1" />
+        <ExecMacro MacroName = "SplitSide" X = "0" Z = "-2" />
+    </Figure>
+</xml>

@@ -1,0 +1,111 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hex Cube</Name>
+        <Menu>Other forms\Johnson Solids\(J27) Triangular Orthobicupola\Hex Cube</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-09-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2768</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000FF';
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clGreen  := '008000';
+        clBrown  := '800000';
+        clSilver := 'A0A0A0';
+        clOrange := 'FF6000';
+        clPink   := 'FF69B4';
+
+        W := 0.55;
+
+        pA := W;
+        pB := W / sqrt(3);
+        pC := pB * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "-pB; pB"  TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddQuarter" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "-pB; -pC;  0" />
+                    <Add Vector = "-pB; -pB; pA" />
+                    <Add Vector = " pB; -pC;  0" />
+                    <Add Vector = " pB; -pB; pA" />
+                    <Add Vector = "  0; -pC;  0" />
+                    <Add Vector = "  0; -pB; pA" />
+                    <Add Vector = "  0; -pB; pA/3" />
+                </Vertices>
+                <Faces>
+                    <Face                  VertexIndexes = "0;1;6" />
+                    <Face                  VertexIndexes = "1;3;6" />
+                    <Face                  VertexIndexes = "3;2;6" />
+                    <Face                  VertexIndexes = "2;0;6" />
+                    <Face Color = "Color1" VertexIndexes = "0;4;5;1" />
+                    <Face Color = "Color2" VertexIndexes = "2;3;5;4" />
+                </Faces>
+            </Part>
+            <Part>
+                <Vertices>
+                    <Add Vector = " pB; -pC;  0" />
+                    <Add Vector = " pC; -pB;  0" />
+                    <Add Vector = " pB; -pB; pA" />
+                    <Add Vector = " pB; -pB;  0" />
+                </Vertices>
+                <Faces>
+                    <Face                  VertexIndexes = "0;2;3" />
+                    <Face                  VertexIndexes = "2;1;3" />
+                    <Face                  VertexIndexes = "1;0;3" />
+                    <Face Color = "Color2" VertexIndexes = "0;1;2" />
+                </Faces>
+            </Part>
+            <Part>
+                <Vertices>
+                    <Add Vector = " pB; -pB; pA" />
+                    <Add Vector = " pB;   0; pA" />
+                    <Add Vector = "  0;   0; pA" />
+                    <Add Vector = "  0; -pB; pA" />
+                    <Add Vector = "  0;   0; pA*2/3" />
+                </Vertices>
+                <Faces>
+                    <Face                  VertexIndexes = "3;2;4" />
+                    <Face                  VertexIndexes = "2;1;4" />
+                    <Face                  VertexIndexes = "1;0;4" />
+                    <Face                  VertexIndexes = "0;3;4" />
+                    <Face Color = "Color2" VertexIndexes = "0;1;2;3" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "-Pi / 2" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddQuarter" Color1 = "clGreen " Color2 = "clRed   " />
+        <ExecMacro MacroName = "AddQuarter" Color1 = "clRed   " Color2 = "clYellow" />
+        <ExecMacro MacroName = "AddQuarter" Color1 = "clYellow" Color2 = "clBlue  " />
+        <ExecMacro MacroName = "AddQuarter" Color1 = "clBlue  " Color2 = "clGreen " />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+
+        <ExecMacro MacroName = "AddQuarter" Color1 = "clPink  " Color2 = "clBrown " />
+        <ExecMacro MacroName = "AddQuarter" Color1 = "clBrown " Color2 = "clSilver" />
+        <ExecMacro MacroName = "AddQuarter" Color1 = "clSilver" Color2 = "clOrange" />
+        <ExecMacro MacroName = "AddQuarter" Color1 = "clOrange" Color2 = "clPink  " />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

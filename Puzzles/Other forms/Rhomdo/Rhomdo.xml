@@ -1,0 +1,105 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhomdo</Name>
+        <Menu>Other forms\Rhomdo\Rhomdo</Menu>
+        <Inventor>Eric Vergo</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2016-12-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1983</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clOrange       := 'FF6000';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clWhite        := 'FFFFFF';
+        clLightViolett := 'FF0080';
+        clLightBlue    := '2828FF';
+        clViolett      := '800080';
+        clBrown        := '800000';
+        clLightGreen   := '00FF00';
+        clCyan         := '00DCB4';
+
+        R := 0.6;
+
+        pA := R;
+        pB := R / 2;
+        pC := R * sqrt(3) / 2;
+
+        nA := sqrt(3) / 2;
+        nB := 1 / 2;
+        az := sqrt(2);
+
+        H  := R * sqrt(2) * 3 / 4;
+        H1 := H / 3;
+        H2 := H * 2 / 3;
+
+        D  := R * sqrt(3) / 3;
+        A1 := Arccos(1/3);
+        A2 := 2 * A1;
+    </Script>
+
+    <Axes TurningAngles = "Pi" AvailableAngles = "-Pi + A1; -A2; -A1; 0; A1; A2; Pi - A1; Pi" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "  0;  1; 0" />
+        <Axis NormVector = "-nA;-nB; 0" />
+        <Axis NormVector = " nA;-nB; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "A1" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "  1;  0; az" />
+        <Axis NormVector = "-nB;-nA; az" />
+        <Axis NormVector = "-nB; nA; az" />
+        <Axis NormVector = "  1;  0;-az" />
+        <Axis NormVector = "-nB;-nA;-az" />
+        <Axis NormVector = "-nB; nA;-az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;   0;   H" />
+
+                <Add Vector = " -pA;   0;  H2" />
+                <Add Vector = "  pB;  pC;  H2" />
+                <Add Vector = "  pB; -pC;  H2" />
+
+                <Add Vector = " -pB;  pC;  H1" />
+                <Add Vector = "  pA;   0;  H1" />
+                <Add Vector = " -pB; -pC;  H1" />
+
+                <Add Vector = " -pB;  pC; -H1" />
+                <Add Vector = "  pA;   0; -H1" />
+                <Add Vector = " -pB; -pC; -H1" />
+
+                <Add Vector = " -pA;   0; -H2" />
+                <Add Vector = "  pB;  pC; -H2" />
+                <Add Vector = "  pB; -pC; -H2" />
+
+                <Add Vector = "   0;   0;  -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue        " VertexIndexes = "0;2;4;1" />
+                <Face Color = "clGreen       " VertexIndexes = "0;3;5;2" />
+                <Face Color = "clViolett     " VertexIndexes = "0;1;6;3" />
+
+                <Face Color = "clOrange      " VertexIndexes = "1;4;7;10" />
+                <Face Color = "clRed         " VertexIndexes = "2;11;7;4" />
+                <Face Color = "clWhite       " VertexIndexes = "2;5;8;11" />
+                <Face Color = "clYellow      " VertexIndexes = "3;12;8;5" />
+                <Face Color = "clCyan        " VertexIndexes = "3;6;9;12" />
+                <Face Color = "clBrown       " VertexIndexes = "1;10;9;6" />
+
+                <Face Color = "clLightBlue   " VertexIndexes = "13;10;7;11" />
+                <Face Color = "clLightGreen  " VertexIndexes = "13;11;8;12" />
+                <Face Color = "clLightViolett" VertexIndexes = "13;12;9;10" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

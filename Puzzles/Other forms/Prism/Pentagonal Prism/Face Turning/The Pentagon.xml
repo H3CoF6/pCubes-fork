@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>The Pentagon</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Face Turning\The Pentagon</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-02-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2662</Link>
+    </Interface>
+
+    <Script>
+        clRed     := 'C80000';
+        clGreen   := '009600';
+        clBlue    := '0000C8';
+        clOrange  := 'FF800A';
+        clViolett := '800080';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        R := 0.65;
+        H := 0.2;
+
+        for i := 0 to 4 do begin
+            x[i] := R * cos(2 * Pi / 5 * i);
+            y[i] := R * sin(2 * Pi / 5 * i);
+        end;
+
+        Da := (x[1]+x[2])/2;
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0" PlaneDistances = "Da" FixedLayers = "1" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+        <Axis NormVector = "x[3]; y[3]; 0" />
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0];  R" />
+                <Add Vector = "x[1]; y[1];  R" />
+                <Add Vector = "x[2]; y[2];  R" />
+                <Add Vector = "x[3]; y[3];  R" />
+                <Add Vector = "x[4]; y[4];  R" />
+                <Add Vector = "x[0]; y[0]; -R" />
+                <Add Vector = "x[1]; y[1]; -R" />
+                <Add Vector = "x[2]; y[2]; -R" />
+                <Add Vector = "x[3]; y[3]; -R" />
+                <Add Vector = "x[4]; y[4]; -R" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed    " VertexIndexes = "1;0;5;6" />
+                <Face Color = "clGreen  " VertexIndexes = "2;1;6;7" />
+                <Face Color = "clBlue   " VertexIndexes = "3;2;7;8" />
+                <Face Color = "clOrange " VertexIndexes = "4;3;8;9" />
+                <Face Color = "clViolett" VertexIndexes = "0;4;9;5" />
+                <Face Color = "clYellow " VertexIndexes = "9;8;7;6;5" />
+                <Face Color = "clWhite  " VertexIndexes = "0;1;2;3;4" />
+            </Faces>
+        </Part>
+        
+        <SplitByAxes/>
+        
+        <HideContaining Vector = "x[0]; y[0];  0" />
+        <HideContaining Vector = "x[1]; y[1];  0" />
+        <HideContaining Vector = "x[2]; y[2];  0" />
+        <HideContaining Vector = "x[3]; y[3];  0" />
+        <HideContaining Vector = "x[4]; y[4];  0" />
+
+        <Cut> <Plane NormVector = "0; 0;  1" NormDistance = "-H" /> </Cut>
+        <Cut> <Plane NormVector = "0; 0; -1" NormDistance = "-H" /> </Cut>
+
+        <ShowAll/>
+
+        <Cut Color = "clYellow" > <Plane NormVector = "0; 0;  1" NormDistance = "-H" /> </Cut>
+        <Cut Color = "clWhite " > <Plane NormVector = "0; 0; -1" NormDistance = "-H" /> </Cut>
+    </Figure>
+</xml>

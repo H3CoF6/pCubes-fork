@@ -1,0 +1,178 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Celtic Cube Junior Unbandaged (24 colors)</Name>
+        <Menu>Other forms\Sphere\Celtic Cube Junior Unbandaged (24 colors)</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-14</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Col[ 0] := 'FF9900'; // Orange
+        Col[11] := 'FF8800'; // Orange
+        Col[12] := 'FFBB00'; // Orange
+        Col[23] := 'FFAA00'; // Orange
+
+        Col[ 1] := '8800DD'; // Purple
+        Col[ 4] := '7700CC'; // Purple
+        Col[ 7] := 'AA00FF'; // Purple
+        Col[10] := '9900EE'; // Purple
+
+        Col[ 2] := '0055FF'; // Blue
+        Col[ 3] := '0066FF'; // Blue
+        Col[20] := '0077FF'; // Blue
+        Col[21] := '0044FF'; // Blue
+
+        Col[ 5] := 'FF0000'; // Red
+        Col[ 6] := 'CC0000'; // Red
+        Col[17] := 'DD0000'; // Red
+        Col[18] := 'EE0000'; // Red
+
+        Col[ 8] := '00EE00'; // Green
+        Col[ 9] := '00FF00'; // Green
+        Col[14] := '00CC00'; // Green
+        Col[15] := '00DD00'; // Green
+
+        Col[13] := 'EEEE00'; // Yellow
+        Col[16] := 'DDDD00'; // Yellow
+        Col[19] := 'CCCC00'; // Yellow
+        Col[22] := 'FFFF00'; // Yellow
+
+        Colors[1] := -1;
+        Colors[2] := -1;
+        Colors[4] := -1;
+
+        K  := 0.6;
+
+        s2 := sqrt(2);
+
+        C0 := K * (4 + s2) / 7;
+        C1 := K * s2;
+
+        nA := 1;
+        n0 := s2 + 1;
+
+        A1 := ArcCos( s2 / 8 + 0.25);
+        A2 := ArcCos( s2 / 4 - 0.5 );
+        A3 := ArcCos(-s2 / 2 - 0.25);
+
+        C29 := K * 1.00517373279507; // from _Macro_For_Cubic_Sphere
+        D := C29 * n0/sqrt(nA^2+nA^2+n0^2);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " nA; nA; n0" />
+        <Axis NormVector = "-nA; nA; n0" />
+        <Axis NormVector = " nA;-nA; n0" />
+        <Axis NormVector = "-nA;-nA; n0" />
+
+        <Axis NormVector = " nA; n0; nA" />
+        <Axis NormVector = "-nA; n0; nA" />
+        <Axis NormVector = " nA; n0;-nA" />
+        <Axis NormVector = "-nA; n0;-nA" />
+
+        <Axis NormVector = " n0; nA; nA" />
+        <Axis NormVector = " n0;-nA; nA" />
+        <Axis NormVector = " n0; nA;-nA" />
+        <Axis NormVector = " n0;-nA;-nA" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <Script>
+                Colors[0] := Col[c];
+                Colors[5] := Col[c+1];
+                Colors[3] := Col[c+2];
+                c := c + 3;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0; 0" NormDistance = "0" /> </Cut>
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" c = "0" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSegment" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "unbandage1" >
+            <Turn Axis = "ax1" Layer = "l1" Angle = "an1" />
+            <Turn Axis = "ax2" Layer = "l2" Angle = "an2" />
+            <Turn Axis = "ax1" Layer = "l1" Angle = "-an1" />
+            <Turn Axis = "ax2" Layer = "l2" Angle = "-an2" />
+            <SplitByAxes />
+            <Undo Repeat = "4" />
+        </Macro>
+        <ExecMacro MacroName = "unbandage1" ax1 = " 3" ax2 = " 2" l1 = "2" l2 = "2" an1 = " A3" an2 = "-A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 2" ax2 = " 0" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 0" ax2 = " 1" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 1" ax2 = " 3" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 5" ax2 = " 4" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 4" ax2 = " 6" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 6" ax2 = " 7" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 7" ax2 = " 5" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = "10" ax2 = " 8" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 8" ax2 = " 9" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 9" ax2 = "11" />
+        <ExecMacro MacroName = "unbandage1" ax1 = "11" ax2 = "10" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 2" ax2 = " 3" l1 = "0" l2 = "0" an1 = "-A3" an2 = " A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 0" ax2 = " 2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 1" ax2 = " 0" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 3" ax2 = " 1" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 4" ax2 = " 5" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 6" ax2 = " 4" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 7" ax2 = " 6" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 5" ax2 = " 7" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 8" ax2 = "10" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 9" ax2 = " 8" />
+        <ExecMacro MacroName = "unbandage1" ax1 = "11" ax2 = " 9" />
+        <ExecMacro MacroName = "unbandage1" ax1 = "10" ax2 = "11" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 3" ax2 = " 2" l1 = "2" l2 = "2" an1 = " A3" an2 = "-A3" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 2" ax2 = " 0" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 0" ax2 = " 1" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 1" ax2 = " 3" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 5" ax2 = " 4" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 4" ax2 = " 6" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 6" ax2 = " 7" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 7" ax2 = " 5" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = "10" ax2 = " 8" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 8" ax2 = " 9" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 9" ax2 = "11" />
+        <ExecMacro MacroName = "unbandage1" ax1 = "11" ax2 = "10" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 2" ax2 = " 3" l1 = "0" l2 = "0" an1 = "-A3" an2 = "A3" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 0" ax2 = " 2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 1" ax2 = " 0" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 3" ax2 = " 1" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 4" ax2 = " 5" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 6" ax2 = " 4" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 7" ax2 = " 6" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 5" ax2 = " 7" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 8" ax2 = "10" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 9" ax2 = " 8" />
+        <ExecMacro MacroName = "unbandage1" ax1 = "11" ax2 = " 9" />
+        <ExecMacro MacroName = "unbandage1" ax1 = "10" ax2 = "11" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

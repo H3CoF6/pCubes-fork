@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+<!-- key part defined by TurnAxesWithPartNo and Connect directives -->
+
+    <Interface>
+        <Name>Crazy 2x2x2 - Jupiter</Name>
+        <Menu>Cubic\Crazy\Crazy 2x2x2\Jupiter</Menu>
+        <Inventor>Mf8</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-10-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11825</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        R := W * 0.7;
+        WC := W * 1.004;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W; 0; W" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <!-- cutting to assign "0" to block cube -->
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = " 0" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = " 0" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = " 0" /></Split>
+
+        <Circle Radius = "R" Color = "Colors[0]" Center = "-WC;  0;  0" />
+        <Circle Radius = "R" Color = "Colors[1]" Center = " WC;  0;  0" />
+        <Circle Radius = "R" Color = "Colors[2]" Center = "  0;-WC;  0" />
+        <Circle Radius = "R" Color = "Colors[3]" Center = "  0; WC;  0" />
+        <Circle Radius = "R" Color = "Colors[4]" Center = "  0;  0;-WC" />
+        <Circle Radius = "R" Color = "Colors[5]" Center = "  0;  0; WC" />
+
+        <SplitByAxes/>
+
+        <Connect Axis = "0" Layers = "0;1" />
+        <Connect Axis = "0" Layers = "2;3" />
+        <Connect Axis = "1" Layers = "0;1" />
+        <Connect Axis = "1" Layers = "2;3" />
+        <Connect Axis = "2" Layers = "0;2;3" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Lock" File = "Puzzles\Cubic\Crazy\2x2x2 Lock.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Lock = 0,0,0, 0,1,0, 0,2,0
+    </SetTextures>
+</xml>

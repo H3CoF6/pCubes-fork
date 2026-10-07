@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyra+Cube II</Name>
+        <Menu>Other forms\3x3x3 variants\Pyra+Cube\Pyra+Cube II</Menu>
+        <Inventor>Andrey Yerashkevich</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-07-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3300</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'E0C07D';
+        W := 0.5;
+        D := W * 0.25;
+        DCut := W / sqrt(3);
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = " W;-W; W"/>
+        <HideContaining Vector = "-W;-W;-W"/>
+        <HideContaining Vector = " W; W;-W"/>
+        <HideContaining Vector = " D;-D;-D"/>
+
+        <InvertVisibility/>
+
+
+        <Cut Color = "MirrorColor" ><Plane NormVector = "-1;-1;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "MirrorColor" ><Plane NormVector = "-1; 1; 1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "MirrorColor" ><Plane NormVector = " 1;-1; 1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "MirrorColor" ><Plane NormVector = " 1; 1;-1" NormDistance = "-DCut" /></Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

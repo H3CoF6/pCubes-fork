@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Knot 3x3x3</Name>
+        <Menu>Cubic\3x3x3 variants\Knot 3x3x3</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-06-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8922</Link>
+    </Interface>
+
+    <Script>
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clYellow := 'FFFF00';
+
+        D := 0.12;
+
+        WX := D;
+        WY := D;
+        WZ := D * 2;
+        DWX := 0;
+
+        procedure SetColor(Color);
+        begin
+            for i := 0 to 5 do
+                Colors[i] := Color;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" K = "D * 2.1" Color = "222222" />
+        <SplitByAxes/>
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <Hide Axis = "2" Layer = "1" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "AddCuboid1" >
+            <Script> SetColor (cl); </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" DWY = "-D*2" DWZ = " D*3" />
+            <LoadFrom File = "Figures\Cuboid.xml" DWY = " 0  " DWZ = " D*3" />
+            <LoadFrom File = "Figures\Cuboid.xml" DWY = " D*2" DWZ = " D*3" />
+            <LoadFrom File = "Figures\Cuboid.xml" DWY = "-D*2" DWZ = "-D*3" />
+            <LoadFrom File = "Figures\Cuboid.xml" DWY = " 0  " DWZ = "-D*3" />
+            <LoadFrom File = "Figures\Cuboid.xml" DWY = " D*2" DWZ = "-D*3" />
+            <Turn NormVector = " 1; 1; 1" Angle = "2*Pi/3" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCuboid1" cl = "clRed   " />
+        <ExecMacro MacroName = "AddCuboid1" cl = "clYellow" />
+        <ExecMacro MacroName = "AddCuboid1" cl = "clGreen " />
+
+        <SaveSolvedState/>
+    </Figure>
+    
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

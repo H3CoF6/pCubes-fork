@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Reach-Out Cube</Name>
+        <Menu>Cubic\Cross\2x2x2\Reach-Out Cube</Menu>
+        <Inventor>Tom Van Laethem</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-10-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3056</Link>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+        D := W / 5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D*3; 0; D*3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script> include 'Figures\Scripts\Cube_Standard_Colors.inc'; </Script>
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "D*2" WZ = "D*2" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D*2" WY = "W" WZ = "D*2" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D*2" WY = "D*2" WZ = "W" />
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "D*2" /></Split>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "D*2" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "D*2" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "D*2" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "D*2" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "D*2" /></Split>
+        <RemoveContaining Vector = "0;0;0" />
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "D*2" Color = "-1" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

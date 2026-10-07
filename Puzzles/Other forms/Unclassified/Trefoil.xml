@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Trefoil</Name>
+        <Menu>Other forms\Unclassified\Trefoil</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-11</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36097</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'EDFF11';
+        clRed    := 'CC0000';
+        clGreen  := '00AA00';
+        clBlue   := '0011FF';
+        clWhite  := 'FFFFFF';
+        clRose   := 'DD55EE';
+        clPink   := 'DD00CC';
+        clBlue1  := '0077FF';
+        clBlue2  := '0044FF';
+        clGreen1 := '00CC00';
+        clGreen2 := '007700';
+
+        R := 0.45;
+        H := R * sqrt(3) / 2;
+
+        sAngle := PI * 2 / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+            xa[i] := R * sin(sAngle * (i+0.25));
+            ya[i] := R * cos(sAngle * (i+0.25));
+        end;
+
+        D := R / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "0" NormVectors = "0; 0; 1" />
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" NormVectors = "xa; ya; 0" />
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-D; D" NormVectors = "x; y; 0" />
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1.2" Color = "-1" />
+
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "5" From = "1" />
+        <Split Axis = "6" From = "1" />
+
+        <Cut Color = "clYellow" ><Plane NormVector = "0;0;-1" NormDistance = "-H" /></Cut>
+        <Cut Color = "clWhite " ><Plane NormVector = "0;0;1" NormDistance = "-H" /></Cut>
+        <Cut Color = "clGreen " ><Plane NormVector = "x[0]; y[0]; 0" NormDistance = "-(D+H)" /></Cut>
+        <Cut Color = "clRed   " ><Plane NormVector = "x[1]; y[1]; 0" NormDistance = "-(D+H)" /></Cut>
+        <Cut Color = "clBlue  " ><Plane NormVector = "x[2]; y[2]; 0" NormDistance = "-(D+H)" /></Cut>
+        <Hide Axis = "4" From = "1" To = "2" />
+        <Cut Color = "clPink" ><Plane NormVector = "xa[2]; ya[2]; 0" NormDistance = "-H" /></Cut>
+        <Cut Color = "clBlue1 " ><Plane NormVector = "-xa[2];-ya[2]; 0" NormDistance = "-H" /></Cut>
+        <ShowAll/>
+        <Hide Axis = "5" From = "1" To = "2" />
+        <Cut Color = "clBlue2 " ><Plane NormVector = "xa[0]; ya[0]; 0" NormDistance = "-H" /></Cut>
+        <Cut Color = "clGreen1" ><Plane NormVector = "-xa[0];-ya[0]; 0" NormDistance = "-H" /></Cut>
+        <ShowAll/>
+        <Hide Axis = "6" From = "1" To = "2" />
+        <Cut Color = "clGreen2" ><Plane NormVector = "xa[1]; ya[1]; 0" NormDistance = "-H" /></Cut>
+        <Cut Color = "clRose" ><Plane NormVector = "-xa[1];-ya[1]; 0" NormDistance = "-H" /></Cut>
+        <ShowAll/>
+
+        <Split Axis = "0" From = "1"/>
+        <Split Axis = "1" From = "1"/>
+        <Split Axis = "2" From = "1"/>
+        <Split Axis = "3" From = "1"/>
+    </Figure>
+</xml>

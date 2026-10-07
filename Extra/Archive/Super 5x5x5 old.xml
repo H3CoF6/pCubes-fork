@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super 5x5x5 old</Name>
+        <Menu>Cubic\Classic Rubiks\Super 5x5x5 old</Menu>
+        <Inventor>Stefan Pochmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-07-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1344</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        W1 := W * 1.06;
+        W2 := W1 + (W1 - W);
+
+        D1 := W / 5;
+        D2 := W * 3 / 5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2; -D1; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Script> WE := D2; DCut1 := W; DCut2 := W1; </Script>
+        <LoadFrom File = "Puzzles\Cubic\Classic Rubiks\_Macro_For_Super.xml" />
+
+        <Script> WE := D1; DCut1 := W1; DCut2 := W2; </Script>
+        <LoadFrom File = "Puzzles\Cubic\Classic Rubiks\_Macro_For_Super.xml" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

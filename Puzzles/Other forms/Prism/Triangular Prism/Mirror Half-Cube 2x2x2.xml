@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mirror Half-Cube 2x2x2</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Mirror Half-Cube 2x2x2</Menu>
+        <Inventor>Dario Dagné</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-04-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6764</Link>
+    </Interface>
+
+    <Script>
+        Color := 'E0C07D';
+
+        W := 0.9;
+
+        W1 := W / 3;
+        W2 := W;
+        H :=  W * 0.4;
+
+        dx := W * 0.05;
+        dy :=-W * 0.025;
+        dz :=-W * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-W1 + dx;-W1 + dy;-H + dz" />
+                <Add Vector = " W2 + dx;-W1 + dy;-H + dz" />
+                <Add Vector = "-W1 + dx; W2 + dy;-H + dz" />
+                <Add Vector = "-W1 + dx;-W1 + dy; H + dz" />
+                <Add Vector = " W2 + dx;-W1 + dy; H + dz" />
+                <Add Vector = "-W1 + dx; W2 + dy; H + dz" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Color" VertexIndexes = "2;1;0" />
+                <Face Color = "Color" VertexIndexes = "3;4;5" />
+                <Face Color = "Color" VertexIndexes = "0;1;4;3" />
+                <Face Color = "Color" VertexIndexes = "1;2;5;4" />
+                <Face Color = "Color" VertexIndexes = "2;0;3;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "0" Angle = "Pi/2" />
+        <Split Axis = "1" From = "1"/>
+        <Undo/>
+        <Turn Axis = "1" Layer = "0" Angle = "Pi/2" />
+        <Split Axis = "0" From = "1"/>
+        <Undo/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 5" />
+</xml>

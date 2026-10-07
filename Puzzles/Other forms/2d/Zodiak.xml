@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Zodiak</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Zodiak</Menu>
+        <Menu>Other forms\2d\Zodiak</Menu>
+        <Inventor>Karolis Kairys</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-05-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11820</Link>
+    </Interface>
+
+    <Script>
+        clBody := '333333';
+
+        Colors[ 0] := clBody;
+        Colors[ 1] := clBody;
+        Colors[ 2] := 'FF00FF'; // Fuchsia
+        Colors[ 3] := 'FF69B4'; // Pink
+        Colors[ 4] := clBody;
+        Colors[ 5] := clBody;
+        Colors[ 6] := 'F4A460'; // SandyBrown
+        Colors[ 7] := 'C26519'; // Chocolate
+        Colors[ 8] := clBody;
+        Colors[ 9] := clBody;
+        Colors[10] := 'A0A0A0'; // Silver
+        Colors[11] := 'F0F0F0'; // White
+        Colors[12] := clBody;
+        Colors[13] := clBody;
+        Colors[14] := '00FF00'; // Lime
+        Colors[15] := '006400'; // DarkGreen
+        Colors[16] := clBody;
+        Colors[17] := clBody;
+        Colors[18] := clBody;
+        Colors[19] := clBody;
+        Colors[20] := '00FFFF'; // Cyan
+        Colors[21] := '000080'; // Navy
+        Colors[22] := '800000'; // Brown
+        Colors[23] := 'CD5C5C'; // Indian
+
+        W := 0.45;
+
+        A := W * (4 + sqrt(2)) / 7;
+        D := W * (12 + 2 * sqrt(2)) / 17 * 3 / 4;
+        E := W * 0.2184;
+        R := W * 0.233;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/4; 0; Pi/4; 0" PlaneDistances = "-D;-E; E; D" >
+        <Axis NormVector = "1; 0; 0" MinAngles = "0; -Pi/4; 0; -Pi/4; 0" MaxAngles = "0; Pi/4; 0; Pi/4; 0" />
+        <Axis NormVector = "0; 0; 1" MinAngles = "0; -Pi/4; 0; -Pi/4; 0" MaxAngles = "0; Pi/4; 0; Pi/4; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+
+        <Split Color1 = "clBody" Color2 = "clBody" Axis = "0" From = "1" />
+        <Split Color1 = "clBody" Color2 = "clBody" Axis = "0" From = "2" />
+        <Split Color1 = "clBody" Color2 = "clBody" Axis = "0" From = "3" />
+        <Split Color1 = "clBody" Color2 = "clBody" Axis = "0" From = "4" />
+        <Split Color1 = "clBody" Color2 = "clBody" Axis = "1" From = "1" />
+        <Split Color1 = "clBody" Color2 = "clBody" Axis = "1" From = "2" />
+        <Split Color1 = "clBody" Color2 = "clBody" Axis = "1" From = "3" />
+        <Split Color1 = "clBody" Color2 = "clBody" Axis = "1" From = "4" />
+
+        <HideContaining Vector = " A; A; A" />
+        <HideContaining Vector = " A; A;-A" />
+        <HideContaining Vector = "-A; A; A" />
+        <HideContaining Vector = "-A; A;-A" />
+        <HideContaining Vector = " 0; 0; A" />
+        <HideContaining Vector = " 0; 0;-A" />
+        <HideContaining Vector = " A; 0; 0" />
+        <HideContaining Vector = "-A; 0; 0" />
+        <HideContaining Vector = " 0; 0; 0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "R" Color = "Colors[i]" Center = " Cx[i]; Cy[i]; Cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "24" />
+        <SaveSolvedState/>
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

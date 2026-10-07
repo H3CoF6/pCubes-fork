@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher 2x4x6</Name>
+        <Menu>Other cubes\Mixed\Fisher\Fisher 2x4x6</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-07-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8300</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36035</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0055EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        WZ := 0.55;
+        WX := WZ / sqrt(2)*1.1;
+        WY := WX;
+
+        D := WZ / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-2*D;-D; 0; D; 2*D" >
+        <Axis NormVector = "1; 1; 0" />
+        <Axis NormVector = "1;-1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+
+        <Split Axis = "1" From = "3" />
+
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <Split Axis = "2" From = "5" />
+    </Figure>
+
+    <Macros>
+        <Macro Name = "Random180" >
+            <Turn Axis = "Random(3)" Layer = "Random(6)" Angle = "Pi"/>
+        </Macro>
+        <Macro Name = "Random1" >
+            <Turn Axis = "0" Layer = "Random(4) + 1" Angle = "Pi/2"/>
+            <Turn Axis = "2" Layer = "Random(6)" Angle = "Pi"/>
+        </Macro>
+        <Macro Name = "RandomTurn" >
+            <Turn Axis = "Random(3)" Layer = "Random(6)" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" Description = "Replacing of standard scrambling" Sequence = "" >
+            <ExecMacro MacroName = "Random180" Repeat = "100" />
+            <ExecMacro MacroName = "Random1" Repeat = "20" />
+            <ExecMacro MacroName = "RandomTurn" Repeat = "2000" />
+        </Macro>
+    </Macros>
+</xml>

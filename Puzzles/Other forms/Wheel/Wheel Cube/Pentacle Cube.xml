@@ -1,0 +1,162 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentacle Cube</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Pentacle Cube</Menu>
+        <Programmer>Skallos</Programmer>
+        <Inventor>Yukang Wu</Inventor>
+        <Added>2017-11-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6508</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.425;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        RC := W * 1.0;
+        Sc := 1.3;
+        D := W / 2.8;
+        sAngle := 2 * Pi / 5;
+    </Script>
+
+    <Axes TurningAngles = "Pi/10; Pi/2; 0; Pi/2; Pi/10" PlaneDistances = "-W; -D; D; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+
+        <HideContaining Vector = "Ex; Ey; Ez" />
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "6" id = "0" />
+
+        <ShowAll/>
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "6" id = "0" />
+
+        <Macro Name = "AddCircle" >
+            <HideAll/>
+
+            <Cylinder Radius = "RC" Color = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+
+            <Script>
+                ax := i div 2;
+                Layer := (i mod 2) * 4;
+                cut := (ax + 1) mod 3;
+            </Script>
+
+            <Split Axis = "cut" From  = "2" />
+            <Turn  Axis = "ax"  Layer = "Layer" Angle = "sAngle" />
+            <Split Axis = "cut" From  = "2" />
+            <Turn  Axis = "ax"  Layer = "Layer" Angle = "sAngle" />
+            <Split Axis = "cut" From  = "2" />
+            <Turn  Axis = "ax"  Layer = "Layer" Angle = "sAngle" />
+            <Split Axis = "cut" From  = "2" />
+            <Turn  Axis = "ax"  Layer = "Layer" Angle = "sAngle" />
+            <Split Axis = "cut" From  = "2" />
+            <Undo/>
+
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+
+        <ShowAll/>
+    </Figure>
+
+    <Macros>
+        <Macro Name = "Red" >
+            <Turn Axis = "1" Layer = "0" Angle = " Pi/10"/>
+            <Turn Axis = "1" Layer = "4" Angle = " Pi/10"/>
+            <Turn Axis = "0" Layer = "1" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "1" Layer = "4" Angle = "-Pi/10"/>
+            <Turn Axis = "1" Layer = "0" Angle = "-Pi/10"/>
+            <Turn Axis = "0" Layer = "0" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+        <Macro Name = "Orange" >
+            <Turn Axis = "1" Layer = "0" Angle = "-Pi/10"/>
+            <Turn Axis = "2" Layer = "4" Angle = "-Pi/5"/>
+            <Turn Axis = "2" Layer = "0" Angle = " Pi/5"/>
+            <Turn Axis = "1" Layer = "4" Angle = "-Pi/10"/>
+            <Turn Axis = "0" Layer = "3" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "1" Layer = "4" Angle = " Pi/10"/>
+            <Turn Axis = "2" Layer = "0" Angle = "-Pi/5"/>
+            <Turn Axis = "2" Layer = "4" Angle = " Pi/5"/>
+            <Turn Axis = "1" Layer = "0" Angle = " Pi/10"/>
+            <Turn Axis = "0" Layer = "4" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+        <Macro Name = "Blue" >
+            <Turn Axis = "2" Layer = "0" Angle = " Pi/10"/>
+            <Turn Axis = "2" Layer = "4" Angle = " Pi/10"/>
+            <Turn Axis = "1" Layer = "1" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layer = "4" Angle = "-Pi/10"/>
+            <Turn Axis = "2" Layer = "0" Angle = "-Pi/10"/>
+            <Turn Axis = "1" Layer = "0" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+        <Macro Name = "Green" >
+            <Turn Axis = "2" Layer = "0" Angle = "-Pi/10"/>
+            <Turn Axis = "2" Layer = "4" Angle = "-Pi/10"/>
+            <Turn Axis = "0" Layer = "0" Angle = " Pi/5"/>
+            <Turn Axis = "0" Layer = "4" Angle = "-Pi/5"/>
+            <Turn Axis = "1" Layer = "3" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "0" Layer = "4" Angle = " Pi/5"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/5"/>
+            <Turn Axis = "2" Layer = "4" Angle = " Pi/10"/>
+            <Turn Axis = "2" Layer = "0" Angle = " Pi/10"/>
+            <Turn Axis = "1" Layer = "4" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+        <Macro Name = "Yellow" >
+            <Turn Axis = "0" Layer = "0" Angle = " Pi/10"/>
+            <Turn Axis = "0" Layer = "4" Angle = " Pi/10"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "0" Layer = "4" Angle = "-Pi/10"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/10"/>
+            <Turn Axis = "2" Layer = "0" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+        <Macro Name = "White" >
+            <Turn Axis = "1" Layer = "0" Angle = " Pi/5"/>
+            <Turn Axis = "0" Layer = "4" Angle = "-Pi/10"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/10"/>
+            <Turn Axis = "1" Layer = "4" Angle = "-Pi/5"/>
+            <Turn Axis = "2" Layer = "3" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "1" Layer = "4" Angle = " Pi/5"/>
+            <Turn Axis = "0" Layer = "0" Angle = " Pi/10"/>
+            <Turn Axis = "0" Layer = "4" Angle = " Pi/10"/>
+            <Turn Axis = "1" Layer = "0" Angle = "-Pi/5"/>
+            <Turn Axis = "2" Layer = "4" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+
+        <Macro Name = "RandomTurn" >
+            <ExecMacro MacroName = "Red" />
+            <ExecMacro MacroName = "Orange" />
+            <ExecMacro MacroName = "Blue" />
+            <ExecMacro MacroName = "Green" />
+            <ExecMacro MacroName = "Yellow" />
+            <ExecMacro MacroName = "White" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" Description = "Replacing of standard scrambling" Sequence = "" >
+            <ExecMacro MacroName = "RandomTurn" Repeat = "20" />
+        </Macro>
+    </Macros>
+</xml>

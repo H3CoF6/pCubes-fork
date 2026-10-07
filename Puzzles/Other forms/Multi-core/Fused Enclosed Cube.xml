@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fused Enclosed Cube</Name>
+        <Menu>Other forms\Multi-core\Fused Enclosed Cube</Menu>
+        <Inventor>Josh Bostick</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-01-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2175</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+        W := 0.5;
+        D := W / 4;
+        D2 := D * 2;
+        s2 := sqrt(2);
+        DCut := D * 2 * s2;
+
+        WX := W * 3 / 4;
+        WY := WX;
+        WZ := WX;
+        DWX := -D;
+        DWY :=  D;
+        DWZ :=  D;
+    </Script>
+ 
+    <Axes>
+        <Axis TurningAngles = "Pi / 2; 0" NormVector = " 1; 0; 0" BaseVector = "-D; D; D" PlaneDistances = "-D" />
+        <Axis TurningAngles = "0; Pi / 2" NormVector = " 0; 1; 0" BaseVector = "-D; D; D" PlaneDistances = " D" />
+        <Axis TurningAngles = "0; Pi / 2" NormVector = " 0; 0; 1" BaseVector = "-D; D; D" PlaneDistances = " D" />
+
+        <Axis TurningAngles = "0; Pi / 2" NormVector = " 1; 0; 0" BaseVector = " D;-D;-D" PlaneDistances = " D" />
+        <Axis TurningAngles = "Pi / 2; 0" NormVector = " 0; 1; 0" BaseVector = " D;-D;-D" PlaneDistances = "-D" />
+        <Axis TurningAngles = "Pi / 2; 0" NormVector = " 0; 0; 1" BaseVector = " D;-D;-D" PlaneDistances = "-D" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Script>DWX := DWX + D2; DWY := DWY - D2; DWZ := DWZ - D2;</Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0; 0; 0" />
+
+        <Split><Plane NormVector = "1;0;0"/></Split>
+        <Split><Plane NormVector = "0;1;0"/></Split>
+        <Split><Plane NormVector = "0;0;1"/></Split>
+
+        <!-- gray core -->
+        <Part>
+            <Vertices>
+                <Add Vector = "-D2;-D2;-D2" />
+                <Add Vector = "-D2;-D2; D2" />
+                <Add Vector = "-D2; D2;-D2" />
+                <Add Vector = "-D2; D2; D2" />
+                <Add Vector = " D2;-D2;-D2" />
+                <Add Vector = " D2;-D2; D2" />
+                <Add Vector = " D2; D2;-D2" />
+                <Add Vector = " D2; D2; D2" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = "0;1;3;2" />
+                <Face VertexIndexes = "5;4;6;7" />
+                <Face VertexIndexes = "1;0;4;5" />
+                <Face VertexIndexes = "2;3;7;6" />
+                <Face VertexIndexes = "0;2;6;4" />
+                <Face VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "Colors[ 6]"><Plane NormVector = " 0;-1; 1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[ 7]"><Plane NormVector = " 0; 1;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[ 8]"><Plane NormVector = " 1; 0; 1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[ 9]"><Plane NormVector = "-1; 0;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[10]"><Plane NormVector = " 1; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[11]"><Plane NormVector = "-1;-1; 0" NormDistance = "-DCut" /></Cut>
+
+    </Figure>
+</xml>

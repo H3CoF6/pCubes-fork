@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb + Crazy 4x4x4</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\Skewb + Crazy 4x4x4</Menu>
+        <Inventor>limCube</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8553</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36462</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 2;
+        R := W * 0.36;
+        WC := W * 1.004;
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.985;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W;-D; 0; D; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Circle Radius = "R" Color = "clRed   " Center = "-WC;  0;  0" />
+        <Circle Radius = "R" Color = "clOrange" Center = " WC;  0;  0" />
+        <Circle Radius = "R" Color = "clBlue  " Center = "  0;-WC;  0" />
+        <Circle Radius = "R" Color = "clGreen " Center = "  0; WC;  0" />
+        <Circle Radius = "R" Color = "clYellow" Center = "  0;  0;-WC" />
+        <Circle Radius = "R" Color = "clWhite " Center = "  0;  0; WC" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Connect Layers = "0;2" />
+        <Connect Layers = "3;5" />
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

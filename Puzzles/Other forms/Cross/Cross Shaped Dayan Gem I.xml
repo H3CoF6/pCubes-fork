@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cross Shaped Dayan Gem I</Name>
+        <Menu>Other forms\Cross\Cross Shaped Dayan Gem I</Menu>
+        <Inventor>Justin Eplett</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-01-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1841</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        L := W / 2;
+        D := W / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "D" NormVectors = " Ex; Ey; Ez" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "ColorSplit" >
+            <Split Color2 = "Colors[i]" > <Plane NormDistance = "L" NormVector = "Cx[i]; Cy[i]; Cz[i]" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "ColorSplit" i = "0" Repeat = "6" />
+
+        <HideContaining Vectors = "Cx; Cy; Cz" />
+
+        <RemoveAllVisible/>
+
+        <!-- gray core -->
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "L" Color = "-1" />
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

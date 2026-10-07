@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octahedron Megaminx Pillowed</Name>
+        <Menu>Other forms\Pillowed\Octahedron\Octahedron Megaminx Pillowed</Menu>
+        <Inventor>Josh Bostick</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-05-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2183</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF'; // White
+        Colors[1] := 'C80000'; // Red
+        Colors[2] := '0000C8'; // Blue
+        Colors[3] := '5F5F5F'; // Gray
+        Colors[4] := '640064'; // Violett
+        Colors[5] := '009600'; // Green
+        Colors[6] := 'FF800A'; // Orange
+        Colors[7] := 'FFFF00'; // Yellow
+
+        K := 0.5;
+        f := K * 0.5;
+
+        phi := (sqrt(5) - 1) / 2; // The golden ratio
+
+        D := K * 0.766;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5; 0; 2*Pi/5" PlaneDistances = "-D; D" >
+        <Axis NormVector = "   1; phi;   0" />
+        <Axis NormVector = "   1;-phi;   0" />
+        <Axis NormVector = "   0;   1; phi" />
+        <Axis NormVector = "   0;   1;-phi" />
+        <Axis NormVector = " phi;   0;   1" />
+        <Axis NormVector = "-phi;   0;   1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = " 1; 0; 0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" /></Split>
+
+        <RemoveContaining Vector = "-f;-f;-f" />
+        <RemoveContaining Vector = " f;-f; f" />
+        <RemoveContaining Vector = " f; f;-f" />
+        <RemoveContaining Vector = "-f; f; f" />
+
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := Colors[i + 4];
+        </Script>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = " 1; 0; 0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" /></Split>
+
+        <RemoveContaining Vector = "-f;-f;-f" />
+        <RemoveContaining Vector = " f;-f; f" />
+        <RemoveContaining Vector = " f; f;-f" />
+        <RemoveContaining Vector = "-f; f; f" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super Master Pyraminx</Name>
+        <Menu>Other forms\Tetrahedron\Mixed\Super Master Pyraminx</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-07-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8352</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36226</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        RCut := 0.47;
+        D := W  / sqrt(3);
+
+        ISize := W * 0.05;
+
+        WX := ISize;
+        WY := ISize;
+        WZ := ISize;
+        DWX := W / 3;
+        DWY := W / 3;
+        DWZ := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-2*D; -D; 0; D; 2*D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <SplitByAxes/>
+
+        <!-- cut edges and vertices for better control -->
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-RCut" /> </Cut>
+
+        <!-- Make some invisible parts -->
+        <HideAll/>
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+
+        <Macro Name = "AddCubies" >
+            <LoadFrom File = "Figures\Cuboid.xml" DWX = " W / 3" DWY = " W / 3" DWZ = " W / 3" />
+            <LoadFrom File = "Figures\Cuboid.xml" DWX = " 2*W/3" DWY = " W / 6" DWZ = " W / 6" />
+            <LoadFrom File = "Figures\Cuboid.xml" DWX = " W / 6" DWY = " 2*W/3" DWZ = " W / 6" />
+            <LoadFrom File = "Figures\Cuboid.xml" DWX = " W / 6" DWY = " W / 6" DWZ = " 2*W/3" />
+            <Turn NormVector = "1;0;0" Angle = "Pi" />
+        </Macro>
+        <ExecMacro MacroName = "AddCubies" Repeat = "2" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCubies" Repeat = "2" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <InvertVisibility/>
+    </Figure>
+</xml>

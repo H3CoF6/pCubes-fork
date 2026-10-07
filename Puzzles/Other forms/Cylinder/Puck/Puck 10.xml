@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Puck 10</Name>
+        <Menu>Other forms\Cylinder\Puck\Puck 10</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-07-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7528</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // clRed
+        Colors[1] := 'FF800A'; // clOrange
+        Colors[2] := 'FFFF00'; // clYellow
+        Colors[3] := '00FF00'; // clLightGreen
+        Colors[4] := '009600'; // clGreen
+        Colors[5] := '0000C8'; // clBlue
+        Colors[6] := '3868BF'; // clLightBlue
+        Colors[7] := 'FF0080'; // clLightViolett
+        Colors[8] := '800080'; // clViolett
+        Colors[9] := '800000'; // clBrown
+
+        Colors[10] := '7F7F7F'; // clGray
+        Colors[11] := 'FFFFFF'; // clWhite
+
+        N := 10;
+
+        R := 0.6;
+        R1 := R * 0.6;
+        R2 := R * 0.3;
+        H := R * 0.25;
+        H1 := H + 0.0003;
+        H2 := H1 + H1 - H;
+        Angle := 2 * Pi / N;
+    </Script>
+
+    <Axes TurningAngles = "0; Angle; 0" PlaneDistances = "-H; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+
+        <Turn NormVector = "0; 0; 1" Angle = "Angle / 2" />
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "R" Color = "Colors[i]" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Colors[i]"/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Colors[i]" />
+            </Cylinder>
+            <Cylinder Radius = "R1" >
+               <Base X = "0" Y = "0" Z = "H"/>
+               <Top  X = "0" Y = "0" Z = "H1" Color = "Colors[i]" />
+            </Cylinder>
+            <Cylinder Radius = "R1" >
+               <Base X = "0" Y = "0" Z = "-H"/>
+               <Top  X = "0" Y = "0" Z = "-H1" Color = "Colors[i]" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "-cos(Angle / 2); -sin(Angle / 2); 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " cos(Angle / 2); -sin(Angle / 2); 0" NormDistance = "0" /> </Cut>
+            <Turn NormVector = "0; 0; 1" Angle = "Angle" />
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "N" />
+
+        <ShowAll/>
+        <Turn NormVector = "0; 0; 1" Angle = "-Angle / 2" />
+
+        <Cylinder Radius = "R2" >
+           <Base X = "0" Y = "0" Z = "-H1"/>
+           <Top  X = "0" Y = "0" Z = "-H2" Color = "Colors[N]" />
+        </Cylinder>
+        <Cylinder Radius = "R2" >
+           <Base X = "0" Y = "0" Z = "H1"/>
+           <Top  X = "0" Y = "0" Z = "H2" Color = "Colors[N + 1]" />
+        </Cylinder>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

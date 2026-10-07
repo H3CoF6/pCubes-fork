@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4Cubes</Name>
+        <Menu>Cubic\Multi-core\4Cubes</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2018-11-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2413</Link>
+    </Interface>
+
+    <Script>
+        W := 0.20;
+
+        Ax[0] :=  3*W;
+        Ay[0] :=    W;
+        Az[0] :=    0;
+        Ax[1] :=   -W;
+        Ay[1] :=  3*W;
+        Az[1] :=    0;
+        Ax[2] := -3*W;
+        Ay[2] :=   -W;
+        Az[2] :=    0;
+        Ax[3] :=    W;
+        Ay[3] := -3*W;
+        Az[3] :=    0;
+
+        Wx := W;
+        Wy := W;
+        Wz := W;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi/2;Pi/2;Pi/2;0" PlaneDistances = "-W;-W/3; W/3; W" >
+        <Axis NormVector = " 0; 1; 0" BaseVector = "Ax[0]; Ay[0]; 0"/>
+        <Axis NormVector = " 0;-1; 0" BaseVector = "Ax[2]; Ay[2]; 0"/>
+        <Axis NormVector = "-1; 0; 0" BaseVector = "Ax[1]; Ay[1]; 0"/>
+        <Axis NormVector = " 1; 0; 0" BaseVector = "Ax[3]; Ay[3]; 0"/>
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-W/3; W/3" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddP">
+            <Script>
+                DWx := Ax[i];
+                DWy := Ay[i];
+                Inc(i);
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+        <ExecMacro MacroName = "AddP" i = "0" Repeat = "4" />
+
+        <SplitByAxes/>
+        <Turn Axis = "0" From = "1" To = "3" Angle = "Pi / 2" />
+        <Turn Axis = "1" From = "1" To = "3" Angle = "Pi / 2" />
+        <Turn Axis = "2" From = "1" To = "3" Angle = "Pi / 2" />
+        <Turn Axis = "3" From = "1" To = "3" Angle = "Pi / 2" />
+        <SplitByAxes/>
+        <Undo Repeat = "4" />
+    </Figure>
+</xml>

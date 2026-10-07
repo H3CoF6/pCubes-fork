@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Lattice X</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\Lattice X</Menu>
+        <Inventor>Ola Jansson</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2018-10-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1981</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := 1 / sqrt(3);
+
+        RCut := sqrt(3) / 2 - 0.04;
+        RCu2 := sqrt(3) / 3 - 0.04;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0">
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi*2/3" PlaneDistances = "-D; -D/2; D/2; D" FixedLayers = "2" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "Hide" >
+            <HideContaining Vector = "Cx[i]; Cy[i]; Cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" i = "0" Repeat = "6" />
+
+        <Macro Name = "Split" >
+            <Split> <Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-RCu2" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "8" />
+
+        <Macro Name = "Remove" >
+            <RemoveContaining Vector = "Ex[i]; Ey[i]; Ez[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Remove" i = "0" Repeat = "12" />
+
+        <Macro Name = "RemoveC" >
+            <Cut> <Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "-RCut" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveC" i = "0" Repeat = "8" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

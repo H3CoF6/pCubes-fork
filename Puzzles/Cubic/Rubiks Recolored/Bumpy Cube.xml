@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bumpy Cube</Name>
+        <Menu>Cubic\Rubiks Recolored\Bumpy Cube</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-04</Added>
+        <Link>https://www.magiccubemall.com/p/3Pcs-Qiyi-3x3x3-Cube-Set-Sandwich-Cube-Bumpy-Cube-Unicorn-Cube_2830075.html</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        Colors[0] := 'FF0000';
+        Colors[1] := 'FF9900';
+        Colors[2] := '00AAFF';
+        Colors[3] := '00EE00';
+        Colors[4] := 'FFFF00';
+        Colors[5] := 'FFFFFF';
+        D := W / 3;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <Cut Axis = "2" From = "1" />
+        <RemoveContaining Vector = "Ex[4]; Ey[4]; Ez[4]" />
+        <RemoveContaining Vector = "Ex[5]; Ey[5]; Ez[5]" />
+        <RemoveContaining Vector = "Ex[10]; Ey[10]; Ez[10]" />
+        <RemoveContaining Vector = "Ex[11]; Ey[11]; Ez[11]" />
+        <RemoveContaining Vector = "0; 0; 0" />
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := Colors[4];
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <Cut Axis = "2" To = "2" />
+        <RemoveContaining Vector = "Cx[1]; Cy[1]; Cz[1]" />
+        <RemoveContaining Vector = "Cx[2]; Cy[2]; Cz[2]" />
+        <RemoveContaining Vector = "Cx[3]; Cy[3]; Cz[3]" />
+        <RemoveContaining Vector = "Cx[0]; Cy[0]; Cz[0]" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>
+
+
+
+

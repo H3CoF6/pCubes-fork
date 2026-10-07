@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circus Skewb</Name>
+        <Menu>Other cubes\Morph\Circus Skewb</Menu>
+        <Menu>Other cubes\Skewb variants\Circus Skewb</Menu>
+        <Inventor>Jair Bravo</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7208</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        s2 := sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "Pi/4" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W * 1.1" WY = "W * 1.1" WZ = "W" />
+        <SplitByAxes/>
+
+        <Macro Name = "Cut" >
+            <Hide><Plane NormVector = "  0;-s2;-1" /></Hide>
+            <Hide><Plane NormVector = " s2;  0; 1" /></Hide>
+            <Cut Color = "Color" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+            <Cut Color = "Color" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Cut" Color = "Colors[1]" />
+        <ExecMacro MacroName = "Cut" Color = "Colors[2]" />
+        <ExecMacro MacroName = "Cut" Color = "Colors[0]" />
+        <ExecMacro MacroName = "Cut" Color = "Colors[3]" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

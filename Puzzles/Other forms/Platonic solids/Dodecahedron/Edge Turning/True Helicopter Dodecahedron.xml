@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>True Helicopter Dodecahedron</Name>
+        <Menu>Other forms\Dodecahedron\Edge Turning\True Helicopter Dodecahedron</Menu>
+        <Inventor>Mathew Ray</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-07-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1722</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        D := R * sqrt(3) * (Sqrt(5) + 3) / 12;
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0; Pi" JumbleAngle = "arctan(2)" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Ex[ 0]; Ey[ 0]; Ez[ 0]" />
+        <Axis NormVector = "Ex[ 1]; Ey[ 1]; Ez[ 1]" />
+        <Axis NormVector = "Ex[ 2]; Ey[ 2]; Ez[ 2]" />
+        <Axis NormVector = "Ex[ 3]; Ey[ 3]; Ez[ 3]" />
+        <Axis NormVector = "Ex[ 4]; Ey[ 4]; Ez[ 4]" />
+                                             
+        <Axis NormVector = "Ex[ 5]; Ey[ 5]; Ez[ 5]" />
+        <Axis NormVector = "Ex[ 6]; Ey[ 6]; Ez[ 6]" />
+        <Axis NormVector = "Ex[ 7]; Ey[ 7]; Ez[ 7]" />
+        <Axis NormVector = "Ex[ 8]; Ey[ 8]; Ez[ 8]" />
+        <Axis NormVector = "Ex[ 9]; Ey[ 9]; Ez[ 9]" />
+
+        <Axis NormVector = "Ex[10]; Ey[10]; Ez[10]" />
+        <Axis NormVector = "Ex[11]; Ey[11]; Ez[11]" />
+        <Axis NormVector = "Ex[12]; Ey[12]; Ez[12]" />
+        <Axis NormVector = "Ex[13]; Ey[13]; Ez[13]" />
+        <Axis NormVector = "Ex[14]; Ey[14]; Ez[14]" />
+
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0; 0; 0" />
+
+        <Macro Name = "Hide">
+            <HideContaining Vector = "Ex[i] * K; Ey[i] * K; Ez[i] * K" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" Repeat = "30" i = "0" K = "0.99" />
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[i]" > <Plane NormVector = "-Cx[i]; -Cy[i]; -Cz[i]" NormDistance = "-RSin" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "12" i = "0" />
+
+        <ShowAll/>
+
+        <Macro Name = "Cut">
+            <Cut > <Plane NormVector = "-Cx[i]; -Cy[i]; -Cz[i]" NormDistance = "-RSin" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "12" i = "0" />
+
+    </Figure>
+</xml>

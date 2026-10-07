@@ -1,0 +1,120 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jumble circle 4x4x4</Name>
+        <Menu>Grigr\Jumble circle 4x4x4</Menu>
+        <Inventor>Daniel Kwan</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-09-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5122</Link>
+    </Interface>
+
+Scramble is not working
+
+    <Script>
+        Delta := 0.02;
+        R := 1 / sqrt(8);
+        D1 := 0.5;
+        D2 := 0.5 + Delta;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2;Pi/4;Pi/2;Pi/2;Pi/4;Pi/2" PlaneDistances = "-1/2; -1/4; 0; 1/4; 1/2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script> W := 0.6; </Script>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Script> W := 0.5; </Script>
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "4" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Macro Name = "HideCenter">
+            <HideContaining Vector = "Cx[i];Cy[i];Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenter" Repeat = "6" i = "0" />
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[i]" > <Plane NormVector = "-Cx[i]; -Cy[i]; -Cz[i]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "6" i = "0" />
+
+        <ShowAll/>
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-Cx[i]; -Cy[i]; -Cz[i]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "6" i = "0" />
+
+<!--        <Circle Radius = "R" Color = "Colors[0]" > <Center X = "-D2" Y = " 0" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[1]" > <Center X = " D2" Y = " 0" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[2]" > <Center X = " 0" Y = "-D2" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[3]" > <Center X = " 0" Y = " D2" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[4]" > <Center X = " 0" Y = " 0" Z = "-D2" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[5]" > <Center X = " 0" Y = " 0" Z = " D2" /> </Circle>-->
+
+!--        <Cylinder Radius = "R" Color = "clOrange" >
+            <Base X = "D1" Y = "0" Z = "0" />
+            <Top  X = "D2" Y = "0" Z = "0" Color = "clOrange" />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clRed" >
+            <Base X = "-D1" Y = "0" Z = "0" />
+            <Top  X = "-D2" Y = "0" Z = "0" Color = "clRed" />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clGreen" >
+            <Base X = "0" Y = "D1" Z = "0" />
+            <Top  X = "0" Y = "D2" Z = "0" Color = "clGreen" />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clBlue" >
+            <Base X = "0" Y = "-D1" Z = "0" />
+            <Top  X = "0" Y = "-D2" Z = "0" Color = "clBlue" />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clWhite" >
+            <Base X = "0" Y = "0" Z = "D1" />
+            <Top  X = "0" Y = "0" Z = "D2" Color = "clWhite" />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clYellow" >
+            <Base X = "0" Y = "0" Z = "-D1" />
+            <Top  X = "0" Y = "0" Z = "-D2" Color = "clYellow" />
+        </Cylinder>
+-->
+
+
+        <SplitByAxes/>
+
+        <Connect Layers = "0;2" />
+        <Connect Layers = "3;5" />
+
+        <Macro Name = "SplitPart">
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "Pi/4" />
+            <Turn  Axis = "Ax1" Layer = "4" Angle = "Pi/4" />
+            <Split Axis = "0" From = "3"/>
+            <Split Axis = "1" From = "3"/>
+            <Split Axis = "2" From = "3"/>
+            <Undo Repeat = "2"/>
+        </Macro>
+
+        /////////////////////
+
+        <ExecMacro MacroName = "SplitPart" Ax1 = "0" />
+        <ExecMacro MacroName = "SplitPart" Ax1 = "1" />
+        <ExecMacro MacroName = "SplitPart" Ax1 = "2" />
+    </Figure>
+</xml>

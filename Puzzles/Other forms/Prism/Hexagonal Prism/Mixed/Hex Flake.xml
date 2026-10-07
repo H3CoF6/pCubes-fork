@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hex Flake</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Mixed\Hex Flake</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5206</Link>
+    </Interface>
+
+    <Script>
+        D := 0.6;
+        H := 0.9;
+        for i := 0 to 5 do begin
+            x[i] := D * cos(Pi / 3 * (i + 0.5));
+            y[i] := D * sin(Pi / 3 * (i + 0.5));
+        end;
+        Da := D * sqrt(3) / 4;
+        for i := 0 to 2 do begin
+            ax[i] := cos(Pi / 3 * i);
+            ay[i] := sin(Pi / 3 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-Da; Da" FixedLayers = "1" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "Ax[0]; Ay[0]; 0" />
+        <Axis NormVector = "Ax[1]; Ay[1]; 0" />
+        <Axis NormVector = "Ax[2]; Ay[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "Ay[0]; Ax[0]; 0" />
+        <Axis NormVector = "Ay[1]; Ax[1]; 0" />
+        <Axis NormVector = "Ay[2]; Ax[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+              <Vertices>
+                  <Add Vector = "x[0]; y[0]; H / 2" />
+                  <Add Vector = "x[1]; y[1]; H / 2" />
+                  <Add Vector = "x[2]; y[2]; H / 2" />
+                  <Add Vector = "x[3]; y[3]; H / 2" />
+                  <Add Vector = "x[4]; y[4]; H / 2" />
+                  <Add Vector = "x[5]; y[5]; H / 2" />
+                  <Add Vector = "x[0]; y[0]; -H / 2" />
+                  <Add Vector = "x[1]; y[1]; -H / 2" />
+                  <Add Vector = "x[2]; y[2]; -H / 2" />
+                  <Add Vector = "x[3]; y[3]; -H / 2" />
+                  <Add Vector = "x[4]; y[4]; -H / 2" />
+                  <Add Vector = "x[5]; y[5]; -H / 2" />
+            </Vertices>
+            <Faces>
+                <Face Color = "FFFF00" VertexIndexes = "1;0;6;7" />
+                <Face Color = "FF64FF" VertexIndexes = "2;1;7;8" />
+                <Face Color = "FF6000" VertexIndexes = "3;2;8;9" />
+                <Face Color = "00FF00" VertexIndexes = "4;3;9;10" />
+                <Face Color = "0064FF" VertexIndexes = "5;4;10;11" />
+                <Face Color = "FF0000" VertexIndexes = "0;5;11;6" />
+                <Face Color = "646464" VertexIndexes = "11;10;9;8;7;6" />
+                <Face Color = "C8C8C8" VertexIndexes = "0;1;2;3;4;5" />
+            </Faces>
+        </Part>
+        
+        <SplitByAxes/>
+
+           <Turn Axis = "0" Angle = "Pi / 2" Layer = "0" />
+           <Turn Axis = "1" Angle = "Pi / 2" Layer = "2" />
+           <Turn Axis = "2" Angle = "Pi / 2" Layer = "2" />
+           <Split Axis = "3" From = "1" />
+           <Turn Axis = "2" Angle = "-Pi / 2" Layer = "2" />
+           <Turn Axis = "1" Angle = "-Pi / 2" Layer = "2" />
+           <Turn Axis = "0" Angle = "-Pi / 2" Layer = "0" />
+
+           <Turn Axis = "0" Angle = "Pi / 2" Layer = "2" />
+           <Turn Axis = "1" Angle = "Pi / 2" Layer = "0" />
+           <Turn Axis = "2" Angle = "Pi / 2" Layer = "0" />
+           <Split Axis = "3" From = "1" />
+           <Turn Axis = "2" Angle = "-Pi / 2" Layer = "0" />
+           <Turn Axis = "1" Angle = "-Pi / 2" Layer = "0" />
+           <Turn Axis = "0" Angle = "-Pi / 2" Layer = "2" />
+    </Figure>
+</xml>

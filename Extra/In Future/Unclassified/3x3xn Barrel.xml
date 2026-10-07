@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+Solving??
+
+    <Interface>
+        <Name>3x3xn Barrel</Name>
+        <Menu>Skallos\3x3xn Barrel</Menu>
+        <Menu>Other forms\3x3x3 variants\3x3xn Barrel</Menu>
+        <Inventor></Inventor>
+        <Programmer>Skallos</Programmer>
+    </Interface>
+
+    <Script>
+        n := 7;
+
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        R := 1.5 / n;
+        Delta := 0.002;
+        H1 := 0.5;
+        H2 := H1 + Delta;
+        D := 1 / 2 / n;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Radius = "R" Color = "clRed   " >
+            <Base X = "0" Y = "0" Z = " H1" Color = "clWhite "/>
+            <Top  X = "0" Y = "0" Z = "-H1" Color = "clYellow" />
+        </Cylinder>
+        <Cut> <Plane NormVector = " 1; 1; 0" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 0" NormDistance = "0" /> </Cut>
+        <HideContaining Vector = "0; 0; 0" />
+        <Cylinder Radius = "R" Color = "clGreen " >
+            <Base X = "0" Y = "0" Z = " H1" Color = "clWhite "/>
+            <Top  X = "0" Y = "0" Z = "-H1" Color = "clYellow" />
+        </Cylinder>
+        <Cut> <Plane NormVector = " 1; 1; 0" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1; 0" NormDistance = "0" /> </Cut>
+        <HideContaining Vector = "0; 0; 0" />
+        <Cylinder Radius = "R" Color = "clOrange" >
+            <Base X = "0" Y = "0" Z = " H1" Color = "clWhite "/>
+            <Top  X = "0" Y = "0" Z = "-H1" Color = "clYellow" />
+        </Cylinder>
+        <Cut> <Plane NormVector = "-1;-1; 0" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1; 0" NormDistance = "0" /> </Cut>
+        <HideContaining Vector = "0; 0; 0" />
+        <Cylinder Radius = "R" Color = "clBlue  " >
+            <Base X = "0" Y = "0" Z = " H1" Color = "clWhite "/>
+            <Top  X = "0" Y = "0" Z = "-H1" Color = "clYellow" />
+        </Cylinder>
+        <Cut> <Plane NormVector = "-1;-1; 0" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 0" NormDistance = "0" /> </Cut>
+        <ShowAll/>
+        <Circle Radius = "R" Color = "clWhite " > <Center X =  "0" Y =  "0" Z = " H2" /> </Circle>
+        <Circle Radius = "R" Color = "clYellow" > <Center X =  "0" Y =  "0" Z = "-H2" /> </Circle>
+        <SplitByAxes/>
+    </Figure>
+</xml>

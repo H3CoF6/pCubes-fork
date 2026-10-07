@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Biconeminx (12 colors)</Name>
+        <Menu>Other forms\Bicone\Biconeminx (12 colors)</Menu>
+        <Inventor>Alexandr Bezrukov</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7203</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FF0000'; // Red
+        Colors[ 2] := '00AA00'; // Green
+        Colors[ 3] := 'FFEE00'; // Yellow
+        Colors[ 4] := 'AA00CC'; // Violett
+        Colors[ 5] := '0033EE'; // Blue
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := 'FF66DD'; // LightViolett
+        Colors[ 8] := '0077FF'; // LightBlue
+        Colors[ 9] := '777777'; // Gray
+        Colors[10] := 'FF6000'; // Orange
+        Colors[11] := '00DD00'; // LightGreen
+
+        H := 0.7;
+        R := H * 0.725;
+
+        s3 := sqrt(3);
+        s5 := sqrt(5);
+
+        D := R * sqrt((5 - s5) / 10);
+
+        for i := 0 to 59 do begin
+            x[i] := R * cos(2 * Pi / 60 * (i+5));
+            y[i] := R * sin(2 * Pi / 60 * (i+5));
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-s3;-1; (3 + s5) / 2" />
+        <Axis NormVector = " s3;-1; (3 + s5) / 2" />
+        <Axis NormVector = "-s3; 1; (3 - s5) / 2" />
+        <Axis NormVector = " s3; 1; (3 - s5) / 2" />
+        <Axis NormVector = "  0; 3 - s5; 1" />
+        <Axis NormVector = "  0;-3 - s5; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace1" >
+            <Face Color = "Colors[i div 10]" VertexIndexes = "0; i + 2; (i + 1) mod 60 + 2" InvisibleEdges = "5" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "AddFace2" >
+            <Face Color = "Colors[i div 10 + 6]" VertexIndexes = "1; (i + 1) mod 60 + 2; i + 2" InvisibleEdges = "5" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "0; 0; H" />
+            <Vertices Vectors = "0; 0;-H" />
+            <Vertices Vectors = "x; y; 0" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace1" i = "0" Repeat = "60" />
+                <ExecMacro MacroName = "AddFace2" i = "0" Repeat = "60" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

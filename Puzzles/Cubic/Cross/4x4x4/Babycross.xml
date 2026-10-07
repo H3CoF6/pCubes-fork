@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Babycross 4x4x4</Name>
+        <Menu>Cubic\Cross\4x4x4\Babycross</Menu>
+        <Inventor>Owen Lennon</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-08-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5472</Link>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+
+        D := W / 3;
+
+        W1 := D;
+        W2 := D * 2;
+        W3 := D * 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D*2;-D; 0; D; D*2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" W = "W2" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+        <RemoveContaining Vector = "0;0;0" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W2" Color = "-1" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Cx;Cy;Cz" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Cubic\Classic Rubiks\_Macro_For_Super.xml" WE = "W1" DCut1 = "W2" DCut2 = "W3" />
+        <SplitByAxes/>
+        <ShowAll/>
+    </Figure>
+</xml>

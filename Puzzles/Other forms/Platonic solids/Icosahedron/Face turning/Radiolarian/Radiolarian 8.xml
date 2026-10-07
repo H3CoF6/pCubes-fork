@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Radiolarian 8 (Radio Jam)</Name>
+        <Menu>Other forms\Icosahedron\Face turning\Radiolarian\Radiolarian 8 (Radio Jam)</Menu>
+        <Inventor>Jason Smith</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-04-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3685</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := 0.25;
+
+        jumAngle := Arcsin(1/4) + Pi/6;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi / 3" JumbleAngle = "jumAngle" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+
+    <Macros>
+        <Macro Name = "RandomTurns120" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "2*Pi/3"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "Pi/12 * Random(24)"/>
+        </Macro>
+        <Macro Name = "Scramble120" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns120" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble120" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+</xml>

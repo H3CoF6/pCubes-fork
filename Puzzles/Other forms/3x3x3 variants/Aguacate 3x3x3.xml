@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Aguacate 3x3x3</Name>
+        <Menu>Other forms\3x3x3 variants\Aguacate 3x3x3</Menu>
+        <Inventor>Javier Alla La</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-08-11</Added>
+        <Link>http://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9382</Link>
+    </Interface>
+
+    <Script>
+        clGreen := '7C9F69';
+        clShell := '333333';
+        clBlack := '222222';
+
+        K1 := 0.7;
+        K2 := 0.4;
+        D := 0.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Egg\_Macro_For_Egg.xml" Color = "clShell" K = "K1" />
+        <Cut Color = "clGreen" Axis = "0" To = "2" />
+        <HideAll/>
+
+        <Script> K := 0.4; </Script>
+        <LoadFrom File = "Puzzles\Other forms\Egg\_Macro_For_Egg.xml" Color = "clBlack" K = "K2" />
+        <Cut Axis = "0" From = "2" />
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;1;0" Angle = "-Pi/2" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

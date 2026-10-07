@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siabry</Name>
+        <Menu>Cubic\Multi-core\Siabry</Menu>
+        <Inventor>Andrey Yerashkevich</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-08-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6803</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 4;
+        D2 := D * 2;
+        D3 := D * 3;
+        A := Pi / 2;
+    </Script>
+ 
+    <Axes>
+        <Axis TurningAngles = "A; 0" NormVector = " 1; 0; 0" BaseVector = "-D; D; D" PlaneDistances = "-D" />
+        <Axis TurningAngles = "0; A" NormVector = " 0; 1; 0" BaseVector = "-D; D; D" PlaneDistances = " D" />
+        <Axis TurningAngles = "0; A" NormVector = " 0; 0; 1" BaseVector = "-D; D; D" PlaneDistances = " D" />
+
+        <Axis TurningAngles = "0; A" NormVector = " 1; 0; 0" BaseVector = " D;-D;-D" PlaneDistances = " D" />
+        <Axis TurningAngles = "A; 0" NormVector = " 0; 1; 0" BaseVector = " D;-D;-D" PlaneDistances = "-D" />
+        <Axis TurningAngles = "A; 0" NormVector = " 0; 0; 1" BaseVector = " D;-D;-D" PlaneDistances = "-D" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D3" WY = "WX" WZ = "WX" DWX = "-D" DWY = " D" DWZ = " D" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D3" WY = "WX" WZ = "WX" DWX = " D" DWY = "-D" DWZ = "-D" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0; 0; 0" />
+
+        <HideContaining Vector = "-W; 0; 0" />
+        <HideContaining Vector = " 0; W; 0" />
+        <HideContaining Vector = " 0; 0; W" />
+        <HideContaining Vector = " W;-W; 0" />
+        <HideContaining Vector = " 0;-W;-W" />
+        <HideContaining Vector = " W; 0;-W" />
+        <Split><Plane NormVector = "1;0;0"/></Split>
+        <Split><Plane NormVector = "0;1;0"/></Split>
+        <Split><Plane NormVector = "0;0;1"/></Split>
+        <ShowAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "D2" />
+    </Figure>
+</xml>

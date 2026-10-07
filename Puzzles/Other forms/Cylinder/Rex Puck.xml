@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rex Puck</Name>
+        <Menu>Other forms\Cylinder\Rex Puck</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2388</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0033EE';
+        clGreen  := '00AA00';
+        clRed    := 'DD0000';
+        clOrange := 'FF7700';
+        clYellow := 'FFEE00';
+
+        R := 0.5;
+
+        sAngle := Pi * 2 / 3;
+        N := 60;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        az := sqrt(2) / 4;
+        bz := sqrt(3) / 2;
+        H := 2 * R * az * 1.5;
+        D := H/3;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "   0;  0; -1" />
+        <Axis NormVector = "   1;  0; az" />
+        <Axis NormVector = "-1/2;-bz; az" />
+        <Axis NormVector = "-1/2; bz; az" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "Cylinder">
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "clBlue" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" Repeat = "N" />
+                    <Face Color = "clGreen" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+
+            <SplitByAxes/>
+            <Hide Axis = "0" Layer = "l" />
+            <RemoveAllVisible/>
+        </Macro>
+
+        <ExecMacro MacroName = "Cylinder" Color = "clOrange" l = "0"  />
+        <ExecMacro MacroName = "Cylinder" Color = "clYellow" l = "1"  />
+        <ExecMacro MacroName = "Cylinder" Color = "clRed"    l = "2"  />
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

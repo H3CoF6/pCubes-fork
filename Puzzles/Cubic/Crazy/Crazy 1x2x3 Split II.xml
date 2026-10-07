@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 1x2x3 Split II</Name>
+        <Menu>Cubic\Crazy\Crazy 1x2x3 Split II</Menu>
+        <Inventor>Marcell Mágori</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-10-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8457</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W * 2 / 3;
+        D := W / 3;
+
+        R := WX * 0.75;
+        ZC := WZ * 1.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = " Pi/2" PlaneDistances = "-WZ; 0; WZ" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Cylinder Radius = "R" Color = "clWhite " TopColor = "clWhite " Base = " 0; 0; WZ" Top = " 0; 0; ZC" />
+        <Cylinder Radius = "R" Color = "clYellow" TopColor = "clYellow" Base = " 0; 0;-WZ" Top = " 0; 0;-ZC" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "3" />
+    </Figure>
+</xml>

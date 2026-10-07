@@ -1,0 +1,179 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x5x5 Edge Breaker Christmas Cube-Octahedron</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Cube\3x5x5 Edge Breaker Christmas Cube-Octahedron</Menu>
+        <Inventor>Joshua Riegel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-06-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8834</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FE0000';
+        Colors[1] := '222222';
+        Colors[2] := 'FFFFFF';
+        Colors[3] := '0000FE';
+        Colors[4] := 'FFFF00';
+        Colors[5] := '333333';
+        Colors[6] := 'C1C5C8';
+
+        W := 0.5;
+        W1 := W * 1.002;
+
+        DCut := W * 11/5/sqrt(3);
+
+        D1 := W / 5;
+        D2 := W * 3 / 5;
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', sProfile);
+          if p = 0 then begin
+            substr := sProfile;
+            sProfile := '';
+          end else begin
+            substr := copy(sProfile, 1, p-1);
+            Delete(sProfile, 1, p);
+          end;
+          Result := StrToInt(substr);
+        end;
+
+        procedure PrepareProfile(Color, ProfileSize, sProfile, reverse);
+        begin
+            pCount := 0;
+            sIndexes := '';
+            while Length(sProfile) > 0 do begin
+              px[pCount] := GetInt / ProfileSize * W * 2 - W;
+              pz[pCount] := -GetInt / ProfileSize * W * 2 + W;
+              if reverse then
+                sIndexes := IntToStr(pCount) + ';' + sIndexes
+              else
+                sIndexes := sIndexes + IntToStr(pCount) + ';';
+              Inc(pCount);
+            end;
+        end;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D1; D1; D2" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "CutVertex" >
+            <Cut Color = "Colors[6]" ><Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "-DCut" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutVertex" i = "0" Repeat = "8" />
+
+
+
+        <Macro Name = "AddVector" >
+            <Add Vector = "px[i];-W1; pz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "AddFace" >
+            <Part>
+                <Vertices>
+                    <ExecMacro MacroName = "AddVector" i = "0" Repeat = "pCount" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "sIndexes" InvisibleEdges = "-1" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        // Tree
+        <Script> PrepareProfile('EAC664', 50, '22,41, 28,41, 28,35, 22,35', False); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Script> PrepareProfile('206B65', 50, '11,35, 39,35, 31,25, 36,25, 28,15, 33,15, 25,5, 17,15, 22,15, 14,25, 19,25', False); </Script>
+        <ExecMacro MacroName = "AddFace" />
+
+        // Sock
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+        <Script> PrepareProfile('EE1A2C', 50, '17,13, 33,13, 33,34, 32,36, 30,37, 10,37, 8,36, 6,33, 6,30, 8,27, 10,26, 15,24, 17,21', True); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Script> PrepareProfile('FFFFFF', 50, '14,8, 36,8, 36,13, 14,13', True); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Turn NormVector = "0;0;1" Angle = " Pi/2" />
+
+        // Star
+        <Turn NormVector = "1;0;0" Angle = " Pi/2" />
+        <Script> PrepareProfile('EEED00', 50, '0,24, 0,26, 18,28, 14,36, 22,33, 24,50, 26,50, 28,33, 35,36, 32,28, 50,26, 50,24, 32,22, 36,14, 28,18, 26,0, 24,0, 22,18, 14,14, 18,22', False); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+
+        // Star
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <Script> PrepareProfile('101010', 50, '0,24, 0,26, 18,28, 14,36, 22,33, 24,50, 26,50, 28,33, 35,36, 32,28, 50,26, 50,24, 32,22, 36,14, 28,18, 26,0, 24,0, 22,18, 14,14, 18,22', False); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Turn NormVector = "1;0;0" Angle = " Pi/2" />
+
+        // Present
+        <Turn NormVector = "0;0;1" Angle = " Pi/2" />
+        <Script> PrepareProfile('297D73', 210, '97,97, 97,63, 31,63, 31,97', False); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Script> PrepareProfile('297D73', 210, '179,97, 179,63, 113,63, 113,97', False); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Script> PrepareProfile('297D73', 210, '97,147, 97,113, 31,113, 31,147', False); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Script> PrepareProfile('297D73', 210, '179,147, 179,113, 113,113, 113,147', False); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Script> PrepareProfile('F5E5E5', 210, '31,113, 179,113, 179,97, 31,97', False); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Script> PrepareProfile('F5E5E5', 210, '113,63, 97,63, 97,147, 113,147', False); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Script> PrepareProfile('F5E5E5', 210, '113,63, 120,54, 123,44, 123,41, 121,37, 116,35, 111,37, 109,41, 106,57, 104,57, 101,41, 99,37, 94,35, 89,37, 87,41, 87,44, 90,54, 97,63', False); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+
+        // SnowFlake
+        <Turn NormVector = "0;0;1" Angle = " Pi" />
+        <Script> PrepareProfile('FFFFFF', 1000, '530,500, 646,567, 727,521, 742,530, 742,547, 676,584, 742,623, 742,640, 727,648, 662,610, 662,686, 647,694, 633,686, 633,594, 515,526, 515,661, 595,707, 595,724, 580,733, 515,696, 515,771, 500,780, 485,771, 485,696, 420,733, 405,724, 405,707, 485,661, 485,526, 367,594, 367,686, 353,694, 338,686, 338,610, 273,648, 258,640, 258,623, 324,584, 258,547, 258,530, 273,521, 354,567, 470,500, 354,433, 273,479, 258,470, 258,453, 324,416, 258,377, 258,360, 273,352, 338,390, 338,314, 353,306, 367,314, 367,406, 485,474, 485,339, 405,293, 405,276, 420,267, 485,304, 485,229, 500,220, 515,229, 515,304, 580,267, 595,276, 595,293, 515,339, 515,474, 633,406, 633,314, 647,306, 662,314, 662,390, 727,352, 742,360, 742,377, 676,416, 742,453, 742,470, 727,479, 646,433', True); </Script>
+        <ExecMacro MacroName = "AddFace" />
+        <Turn NormVector = "0;0;1" Angle = " Pi" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+
+        <Hide><Plane NormVector = "1;0;0" NormDistance = "W" /> </Hide>
+        <HideContaining Vector = "W1; 0; D2" />
+        <Split Axis = "2" From = "4" />
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

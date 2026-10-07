@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>I-Cube</Name>
+        <Menu>Cubic\Cross\3x3x3\I-Cube</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-05-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4392</Link>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+
+        W1 := W * 3 / 5;
+
+        D1 := W / 5;
+        D2 := D1 * 3;
+
+        delta := 1.001;
+        WX := W1 * delta;
+
+        function GetSize(C);
+        begin
+            if C = 0 then
+                Result := W1
+            else
+                Result := W;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D1; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WY = "WX" WZ = "WX" />
+        <Macro Name = "AddSide" >
+            <HideContaining Vector = " 0; 0; 0" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "-Cx[i];-Cy[i];-Cz[i]" NormDistance = "-W1" /></Cut>
+            <HideAll/>
+            <LoadFrom File = "Figures\Cuboid.xml" WX = "GetSize(Cx[i])" WY = "GetSize(Cy[i])" WZ = "GetSize(Cz[i])" />
+            <Cut><Plane NormVector = "Cx[i]; Cy[i]; Cz[i]" NormDistance = "W1" /></Cut>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddSide" i = "1" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+
+        <Script> W := W1; include 'Figures\Scripts\Cube_Coordinates.inc'; </Script>
+        <RemoveContaining Vectors = " 0; 0; 0" />
+        <HideContaining Vectors = " Cx; Cy; Cz" />
+        <InvertVisibility/>
+        <RemoveGrayParts/>
+        <SplitByAxes/>
+        <ShowAll/>
+    </Figure>
+</xml>

@@ -1,0 +1,123 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Double Lotica</Name>
+        <Menu>Other forms\2d\Lotica\Double Lotica</Menu>
+        <Inventor>Karolis Kairys</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6884</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0000FF';
+        Colors[1] := 'FF0000';
+        Colors[2] := '00BB00';
+        Colors[3] := '0099FF';
+        Colors[4] := 'FFFFFF';
+        Colors[5] := 'AAAAAA';
+
+        K := 0.6;
+
+        D := K * 0.7115;
+        DCut := D - K * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        </Macro>
+
+        <Macro Name = "AddColor" >
+            <ExecMacro MacroName = "AddSegment" />
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = " D" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 0; 1" NormDistance = "-D" /> </Cut>
+            <Split> <Plane NormVector = "-1; 1; 0" NormDistance = "-D" /> </Split>
+            <Split> <Plane NormVector = "-1;-1; 0" NormDistance = "-D" /> </Split>
+            <Split> <Plane NormVector = "-1; 0;-1" NormDistance = "-D" /> </Split>
+            <RemoveContaining Vector = "K*0.8; side * K*0.4; 0" />
+            <RemoveContaining Vector = "K; 0; 0" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[0]" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" From = "1" />
+
+        <ExecMacro MacroName = "AddColor" Color = "Colors[1]" side = "1" />
+        <Turn NormVector = "1; 0; 0" Angle = " Pi" />
+        <ExecMacro MacroName = "AddColor" Color = "Colors[2]" side = "1" />
+        <Turn NormVector = "1; 0; 0" Angle = " Pi" />
+
+        <Turn NormVector = "1;-1; 0" Angle = " Pi" />
+
+        <ExecMacro MacroName = "AddColor" Color = "Colors[3]" side = "-1" />
+        <Turn NormVector = "1; 0; 0" Angle = " Pi" />
+        <ExecMacro MacroName = "AddColor" Color = "Colors[4]" side = "-1" />
+        <Turn NormVector = "1; 0; 0" Angle = " Pi" />
+
+        <Turn NormVector = "1;-1; 0" Angle = " Pi" />
+
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[5]" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[5]"  > <Plane NormVector = " 1; 0; 0" NormDistance = " DCut" /> </Cut>
+
+        <ExecMacro MacroName = "AddSegment" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1; 0; 0" NormDistance = " DCut" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = " DCut" /> </Cut>
+
+        <ExecMacro MacroName = "AddSegment" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[5]"  > <Plane NormVector = " 1;-1; 0" NormDistance = " DCut" /> </Cut>
+
+        <ExecMacro MacroName = "AddSegment" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = " DCut" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = " DCut" /> </Cut>
+
+        <ExecMacro MacroName = "AddSegment" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[5]"  > <Plane NormVector = " 0;-1; 0" NormDistance = " DCut" /> </Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <Turn Axis = "2" Layer = "1" Angle = " Pi  " />
+        <Turn Axis = "1" Layer = "1" Angle = "-Pi/2" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "2" Layer = "1" Angle = " Pi  " />
+        <SaveSolvedState/>
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "1" Layer = "1" Angle = "-Pi/2" />
+        <SaveSolvedState/>
+        <Undo Repeat = "6" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "1" Layer = "1" Angle = "-Pi/2" />
+        <SaveSolvedState/>
+        <Undo Repeat = "2" />
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi / 180 * 45" />
+        <Turn NormVector = "1;0;0" Angle = "-Pi / 180 * 20" />
+        <Turn NormVector = "0;0;1" Angle = " Pi / 180 * 30" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

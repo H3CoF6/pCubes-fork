@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dibow Cube</Name>
+        <Menu>Other forms\Half Truncated Cube\Dibow Cube</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2020-04-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1889</Link>
+    </Interface>
+
+    <Script>
+        clPayneGrey          := '536878';
+        clPersianBlue        := '1C39BB';
+        clWine               := '722F37';
+        clBritishRacingGreen := '004225';
+
+        W := 0.5;
+        D := W / sqrt(3);
+        DCut := D * 2;
+    </Script>
+	
+	<Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Cut Color = "clPayneGrey         " > <Plane NormVector = " 1; 1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clPersianBlue       " > <Plane NormVector = " 1;-1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clBritishRacingGreen" > <Plane NormVector = "-1; 1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clWine              " > <Plane NormVector = "-1;-1; 1" NormDistance = "-DCut" /> </Cut>
+    </Figure>
+</xml>

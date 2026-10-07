@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fused 3x4</Name>
+        <Menu>Cubic\Multi-core\Fused 3x4</Menu>
+        <Inventor>Ton Dennenbroek</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2765</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 6;
+        D23 := D * 2 / 3;
+        D2  := D * 2;
+        D4  := D * 4;
+        A := Pi / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; A" PlaneDistances = "D4/3" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-D2; D2;-D2" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = "-D2; D2;-D2" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = "-D2; D2;-D2" />
+    </Axes>
+
+    <Axes TurningAngles = "0; A; A" PlaneDistances = "0; D2" >
+        <Axis NormVector = " 1; 0; 0" BaseVector = " D2;-D2; D2" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = " D2;-D2; D2" />
+        <Axis NormVector = " 0; 0; 1" BaseVector = " D2;-D2; D2" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D4" WY = "WX" WZ = "WX" DWX = " D2" DWY = "-D2" DWZ = " D2" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0; 0; 0" />
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "0" /></Split>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D4" WY = "WX" WZ = "WX" DWX = "-D2" DWY = " D2" DWZ = "-D2" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "D23" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "D23" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "D23" /></Split>
+
+        <RemoveContaining Vector = "0; 0; 0" />
+        <ShowAll/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

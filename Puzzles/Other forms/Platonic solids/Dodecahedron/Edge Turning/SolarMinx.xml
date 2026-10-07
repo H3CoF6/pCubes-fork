@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>SolarMinx</Name>
+        <Menu>Other forms\Dodecahedron\Edge Turning\SolarMinx</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5941</Link>
+        <Added>2016-11-12</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * sqrt(3) * (5 * Sqrt(5) + 13) / 66;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" JumbleAngle = "arctan(2)" PlaneDistances = "D" NormVectors = "Ex; Ey; Ez" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+    </Figure>
+
+    <Macros>
+        <Macro Name = "RandomTurns180" >
+            <Turn Axis = "Random(30)" Layer = "1" Angle = "Pi"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(30)" Layer = "1" Angle = "Pi/6 * Random(12)"/>
+        </Macro>
+        <Macro Name = "Scramble180" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns180" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble180" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+
+</xml>

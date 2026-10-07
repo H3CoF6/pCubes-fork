@@ -1,0 +1,34 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bratwurstminx</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Bandaged\Bratwurstminx</Menu>
+        <Inventor>Jean-Marc Haché</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2125</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D0 := -W / sqrt(3);
+        D := -D0 * 4 / 3;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D" TurnAxesWithPartNo = "0">
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <Macro Name = "TurnAndSplit" >
+            <SplitByAxes/>
+            <Turn Axis = "ax" Layer = "1" Angle = " 2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "TurnAndSplit" ax = "0" Repeat = "3" />
+        <ExecMacro MacroName = "TurnAndSplit" ax = "1" Repeat = "3" />
+    </Figure>
+</xml>

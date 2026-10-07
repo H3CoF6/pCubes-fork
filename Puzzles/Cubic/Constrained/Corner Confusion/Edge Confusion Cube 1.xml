@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Edge Confusion Cube 1</Name>
+        <Menu>Cubic\Constrained\Corner Confusion\Edge Confusion Cube 1</Menu>
+        <Class>TTenon</Class>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2026-01-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7416</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        D := W * 0.45;
+        D2 := (W - D) / 2; // size of small cubies
+        WD := (W + D) / 2; // center of cubies
+    </Script>
+
+<!--
+    <Script> ShowTextures := True; </Script>
+    <Textures>
+        <Texture Name = "Tenon" File = "..\Linked Cubes\Textures\Tenon.vec" />
+        <Texture Name = "Groove" File = "..\Linked Cubes\Textures\Groove.vec" />
+    </Textures>-->
+
+    <Axes TurningAngles = " Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "_Macro_For_Mayan.xml" />
+
+        // Make Colored cube with gaps and with some big parts (Side^Place, ...)
+        <ExecMacro MacroName = "MakeCube" Places = "'05,17,31'" />
+
+    <Script>
+        AddTenon(-W,-W, 0,  1, 0, 0);
+        AddTenon(-W,-W, 0,  0, 1, 0);
+        AddTenon( 0, W, W,  0,-1, 0);
+        AddTenon( 0, W, W,  0, 0,-1);
+        AddTenon( W, 0,-W, -1, 0, 0);
+        AddTenon( W, 0,-W,  0, 0, 1);
+    </Script>
+
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

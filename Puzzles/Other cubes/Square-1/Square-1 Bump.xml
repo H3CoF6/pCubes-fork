@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-1 Bump</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other cubes\Square-1\Bump</Menu>
+        <Inventor>Dr. Vojtech Kopsky, Dr. Harel Hrsel</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-09-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1014</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'E0C07D';
+
+        for i := 0 to 5 do
+            Colors[i] := MirrorColor;
+
+        S15 := sin (Pi / 12); // 15 degrees
+        C15 := cos (Pi / 12);
+
+        W := 0.5;
+
+        WX := W;
+        WY := W;
+        WZ := W / C15;
+
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "C15; S15; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "0" Angle = "Pi / 6" />
+        <Turn Axis = "0" Layer = "2" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "0" Angle = "Pi / 3" />
+        <Turn Axis = "0" Layer = "2" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "0" Angle = "Pi / 6" />
+        <Turn Axis = "0" Layer = "2" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "0" Angle = "-Pi * 2 / 3" />
+        <Turn Axis = "0" Layer = "2" Angle = "-Pi * 2 / 3" />
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

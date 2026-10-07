@@ -1,0 +1,279 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fairly Twisted</Name>
+        <Menu>Other forms\Unclassified\Fairly Twisted</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2020-07-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3252</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000FF';
+        clGreen  := '008000';
+        clOrange := 'FF6000';
+        clPink   := 'FF69B4';
+        clPurple := '800080';
+        clRed    := 'FF0000';
+        clSilver := 'A0A0A0';
+        clWhite  := 'F0F0F0';
+        clYellow := 'FFFF00';
+
+        R := 0.5;
+
+        s3 := sqrt(3);
+        s5 := sqrt(5);
+
+        n1 := sqrt((5 + 2 * s5) / 5);
+        n2 := 1;
+        n3 := sqrt((5 - 2 * s5) / 5);
+        n4 := sqrt((5 - s5) / 10);
+        n5 := sqrt((3 + s5) / 2);
+        n6 := sqrt(2 * (5 + s5) / 5);
+
+        C1  := R * 1.0661408512011672875;  // 1/5   * s3 * sqrt(5 + 2 * s5)
+        C2  := R * 0.81445913672820349352; // 1/5   * s3 * sqrt(2 * (5 - s5))
+        C3  := R * 0.32945564141853277035; // 1/10  * s3 * sqrt(1/2 * (5 + s5))
+        C4  := R * 1.0139602038233318562;  // 1/2   * s3 * sqrt(1/10 * (7 + 3 * s5))
+        C5  := R * 0.86252606701911641408; // 1/10  * s3 * sqrt(1/2 * (25 + 11 * s5))
+        C6  := R * 0.62666186920259016764; // 1/2   * s3 * sqrt(1/10 * (3 + s5))
+        C7  := R * 1.3178225656741310814;  // 1/5   * s3 * sqrt(2 * (5 + s5))
+        C8  := R * 0.25168171447296379394; // 1/5   * s3 * sqrt(5 - 2 * s5)
+        C9  := R * 0.40722956836410174676; // 1/5   * s3 * sqrt((5 - s5) / 2)
+        C10 := R * 1.2533237384051803353;  //         s3 * sqrt(1/10 * (3 + s5))
+        C11 := R * 1.0661408512011672875;  // =C1
+        C12 := R * 0.77459666924148337704; //         s3 / s5
+        C13 := R * 0.58113735589149656429; // 1/10  * s3 * sqrt(1/2 * (65 - 19 * s5))
+        C14 := R * 0.65891128283706554070; // 1/5   * s3 * sqrt(1/2 * (5 + s5))
+        C15 := R * 0.47872706916369695825; //         s3 * sqrt(1/10 * (3 - s5))
+        C16 := R * 0.81445913672820349352; // =C2
+        C17 := R * 1.1468589304078246468;  // 3/11  * s3 * sqrt(1/5 * (25 + 2 * s5))
+        C18 := R * 0.27774726218800838990; // 1/11  * s3 * (4 - s5)
+        C19 := R * 0.38228631013594154892; // 1/11  * s3 * sqrt(1/5 * (25 + 2 * s5))
+        C20 := R * 0.85481817633153217317; // 1/11  * s3 * sqrt(1 * (25 + 2 * s5))
+        C21 := R * 0.52830668717408778572; // 1/22  * s3 * sqrt(2 * (65 - 19 * s5))
+        C22 := R * 0.72715177269043445181; // 1/22  * s3 * (7  + s5)
+        C23 := R * 0.76457262027188309785; // 2/11  * s3 * sqrt(1/5 * (25 + 2 * s5))
+        C24 := R * 0.89880902100485212382; // 1/11  * s3 * sqrt(2 * (23 - 3 * s5))
+        C25 := R * 1.1439147781467362639;  // 1/10  * s3 * sqrt(1/2 * (85 + s5))
+        C26 := R * 0.23936353458184847912; // 1/2   * s3 * sqrt(1/10 * (3 - s5))
+        C27 := R * 1.0910841094293274853;  // 1/11  * s3 * sqrt(1/10 * (545 - 29 * s5))
+        C28 := R * 0.44940451050242606191; // 1/22  * s3 * (3 * s5 - 1)
+        C29 := R * 0.64349550146189705889; // 1/55  * s3 * sqrt(905 - 218 * s5)
+        C30 := R * 0.89517721593486085283; // 1/55  * s3 * sqrt(2 * (205 + 89 * s5))
+        C31 := R * 0.19885104575555501537; // 1/110 * s3 * sqrt(1/2 * (3805 - 1559 * s5))
+        C32 := R * 0.61200058987195471947; // 1/22  * s3 * sqrt(1/10 * (687 - 37 * s5))
+        C33 := R * 0.52059879648650354481; // 1/110 * s3 * sqrt(1/2 * (1625 + 251 * s5))
+        C34 := R * 0.37823716567585267407; // 1/22  * s3 * sqrt(1/10 * (1123 - 399 * s5))
+        C35 := R * 0.97589529514151821213; // 1/55  * s3 * sqrt(2 * (545 - 29 * s5))
+        C36 := R * 0.51289090579891930390; // 3/55  * s3 * sqrt(25 + 2 * s5)
+        C37 := R * 0.93553625553818953248; // 1/55  * s3 * sqrt(565 + 142 * s5)
+        C38 := R * 0.07676745521231982156; // 1/11  * s3 * sqrt(1/10 * (103 - 45 * s5))
+        C39 := R * 0.57819320363040818140; // 1/55  * s3 * sqrt(1/2 * (985 - 139 * s5))
+        C40 := R * 0.71174195155447431927; // 1/110 * s3 * sqrt(1/2 * (3145 + 421 * s5))
+        C41 := R * 0.78951587850004329568; // 1/55  * s3 * sqrt(1/2 * (745 + 229 * s5))
+        C42 := R * 0.57361686226579480869; // 1/11  * s3 * sqrt(1/10 * (287 - 69 * s5))
+        C43 := R * 0.80198750761412339460; // 1/110 * s3 * sqrt(1/2  * (5365 - 79 * s5))
+        C44 := R * 0.48778823810858597269; // 3/22  * s3 * sqrt(1/10 * (27 + 7 * s5))
+        C45 := R * 0.83351409043418692557; // 1/11  * s3 * sqrt(2/5 * (2125 - 919 * s5))
+        C46 := R * 0.74326853437453785024; // 1/11  * s3 * sqrt(1/5 * (2665 - 1142 * s5))
+
+        A1 := ArcCos(1/4);     // 75.5
+        A2 := 2 * Pi / 3;      // 120
+        A3 := 4 * Pi / 3 - A1; // 164.5
+
+        D  := R * (3 + 2 * s5) / 11;
+//ShowMessage(D);
+//ShowMessage(A1+A2); //1.318 (75)
+//ShowMessage((A1+A3)/Pi); //2.094 (120)
+//ShowMessage(2*A1+A3); //2.871
+//ShowMessage(2*A2+A3); 
+
+//a1 + a3 = 4*Pi/3
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = " n1;-n2;-n3" />
+        <Axis NormVector = " n1; n2;-n3" />
+        <Axis NormVector = "-n4; n5;-n3" />
+        <Axis NormVector = "-n4;-n5;-n3" />
+        <Axis NormVector = " n3;-n2; n1" />
+        <Axis NormVector = " n3; n2; n1" />
+    </Axes>
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3; -A2; 0; A1; A3" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = "-n6;  0;-n3" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  C1;   0; -C2" />
+                <Add Vector = "  C3;  C4; -C2" />
+                <Add Vector = " -C5;  C6; -C2" />
+                <Add Vector = " -C5; -C6; -C2" />
+                <Add Vector = "  C3; -C4; -C2" />
+                <Add Vector = "  C7;   0;  C8" />
+                <Add Vector = "  C9; C10;  C8" />
+                <Add Vector = "-C11; C12;  C8" />
+                <Add Vector = "-C11;-C12;  C8" />
+                <Add Vector = "  C9;-C10;  C8" />
+                <Add Vector = " -C8;   0;  C7" />
+                <Add Vector = "-C13; -C4; C14" />
+                <Add Vector = "-C13;  C4; C14" />
+                <Add Vector = "  C1;-C15; C14" />
+                <Add Vector = "  C1; C15; C14" />
+                <Add Vector = " C16;   0;  C1" />
+
+                <Add Vector = " C17;-C18; C19" />
+                <Add Vector = " C17; C18; C19" />
+                <Add Vector = " C20;-C18; C20" />
+                <Add Vector = " C20; C18; C20" />
+                <Add Vector = " C20;-C18;-C20" />
+                <Add Vector = " C20; C18;-C20" />
+                <Add Vector = " C21;-C22;-C20" />
+                <Add Vector = " C21; C22;-C20" />
+                <Add Vector = "-C19;-C18; C17" />
+                <Add Vector = "-C19; C18; C17" />
+                <Add Vector = "-C21;-C22; C20" />
+                <Add Vector = "-C21; C22; C20" />
+
+                <Add Vector = "-C23;-C24; C19" />
+                <Add Vector = "-C23; C24; C19" />
+                <Add Vector = "-C21;-C22;-C20" />
+                <Add Vector = "-C21; C22;-C20" />
+                <Add Vector = "   0;-C24;-C20" />
+                <Add Vector = "   0; C24;-C20" />
+                <Add Vector = "-C20;-C18;-C20" />
+                <Add Vector = "-C20; C18;-C20" />
+                <Add Vector = "-C25;-C26; C14" />
+                <Add Vector = "-C27;-C28; C19" />
+
+                <Add Vector = " C29;   0;-C30" />
+                <Add Vector = " C31; C32;-C30" />
+                <Add Vector = "-C33; C34;-C30" />
+                <Add Vector = "-C33;-C34;-C30" />
+                <Add Vector = " C31;-C32;-C30" />
+
+                <Add Vector = " C35;   0; C36" />
+                <Add Vector = " C30;   0; C29" />
+                <Add Vector = " C37;-C38; C39" />
+                <Add Vector = " C37; C38; C39" />
+                <Add Vector = "-C36;   0; C35" />
+                <Add Vector = "-C40;-C32; C39" />
+                <Add Vector = "-C40; C32; C39" />
+
+                <Add Vector = "-C41;-C42; C36" />
+                <Add Vector = "-C20;-C18; C20" />
+                <Add Vector = "-C43;-C44; C39" />
+                <Add Vector = "-C41; C42; C36" />
+                <Add Vector = "-C45;   0; C46" />
+            </Vertices>
+
+            <Faces>
+                // turning faces
+                <Face Color = "clPink"   VertexIndexes = "  0; 21; 23;  1;  6; 14; 17;  5" />
+                <Face Color = "clWhite"  VertexIndexes = "  0;  5; 16; 13;  9;  4; 22; 20" />
+                <Face Color = "clSilver" VertexIndexes = "  1; 33; 31;  2;  7; 29; 12;  6" />
+                <Face Color = "clBlue"   VertexIndexes = "  3; 30; 32;  4;  9; 11; 28;  8" />
+                <Face Color = "clGreen"  VertexIndexes = "  2; 35; 34;  3;  8; 37; 36;  7" />
+                <Face Color = "clPurple" VertexIndexes = "  6; 12; 27; 25; 10; 15; 19; 14" />
+                <Face Color = "clOrange" VertexIndexes = "  9; 13; 18; 15; 10; 24; 26; 11" />
+
+                // pentagon
+                <Face Color = "clYellow" VertexIndexes = "  0; 20; 38; 21" />
+                <Face Color = "clYellow" VertexIndexes = "  1; 23; 39; 33" />
+                <Face Color = "clYellow" VertexIndexes = "  2; 31; 40; 35" />
+                <Face Color = "clYellow" VertexIndexes = "  3; 34; 41; 30" />
+                <Face Color = "clYellow" VertexIndexes = "  4; 32; 42; 22" />
+
+                <Face Color = "clYellow" VertexIndexes = " 21; 38; 39; 23" />
+                <Face Color = "clYellow" VertexIndexes = " 22; 42; 38; 20" />
+                <Face Color = "clYellow" VertexIndexes = " 30; 41; 42; 32" />
+                <Face Color = "clYellow" VertexIndexes = " 35; 40; 41; 34" />
+                <Face Color = "clYellow" VertexIndexes = " 33; 39; 40; 31" />
+                <Face Color = "clYellow" VertexIndexes = " 42; 41; 40; 39; 38" />
+
+                // small square
+                <Face Color = "clYellow" VertexIndexes = "  5; 17; 43; 16" />
+                <Face Color = "clYellow" VertexIndexes = " 14; 19; 46; 17" />
+                <Face Color = "clYellow" VertexIndexes = " 15; 18; 44; 19" />
+                <Face Color = "clYellow" VertexIndexes = " 13; 16; 45; 18" />
+                <Face Color = "clYellow" VertexIndexes = " 17; 46; 43" />
+                <Face Color = "clYellow" VertexIndexes = " 19; 44; 46" />
+                <Face Color = "clYellow" VertexIndexes = " 18; 45; 44" />
+                <Face Color = "clYellow" VertexIndexes = " 16; 43; 45" />
+                <Face Color = "clYellow" VertexIndexes = " 43; 46; 44; 45" />
+
+                // irregular
+                <Face Color = "clRed"    VertexIndexes = " 10; 25; 47; 24" />
+                <Face Color = "clRed"    VertexIndexes = " 11; 26; 48; 28" />
+                <Face Color = "clRed"    VertexIndexes = " 12; 29; 49; 27" />
+                <Face Color = "clRed"    VertexIndexes = " 24; 47; 48; 26" />
+                <Face Color = "clRed"    VertexIndexes = " 27; 49; 47; 25" />
+                <Face Color = "clRed"    VertexIndexes = "  7; 36; 51; 54; 53; 29" />
+                <Face Color = "clRed"    VertexIndexes = "  8; 28; 50; 37" />
+                <Face Color = "clRed"    VertexIndexes = " 36; 37; 52; 51" />
+                <Face Color = "clRed"    VertexIndexes = " 37; 50; 52" />
+                <Face Color = "clRed"    VertexIndexes = " 28; 48; 50" />
+                <Face Color = "clRed"    VertexIndexes = " 29; 53; 49" />
+                <Face Color = "clRed"    VertexIndexes = " 49; 53; 54; 47" InvisibleEdges = "4" />
+                <Face Color = "clRed"    VertexIndexes = " 47; 54; 50; 48" InvisibleEdges = "1" />
+
+                // back
+                <Face                    VertexIndexes = "51; 52; 50; 54" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Hide  Axis = "ax1" Layer = "0" />
+            <Hide  Axis = "ax2" Layer = "0" />
+            <Turn  Axis = "ax1" Layer = "1" Angle = "angle" />
+            <Split Axis = "ax2" From = "1" />
+            <Undo Repeat = "1" />
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax1 = " 0" ax2 = " 1" angle = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 0" ax2 = " 3" angle = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 0" ax2 = " 4" angle = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 0" ax2 = " 1" angle = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 1" ax2 = " 5" angle = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 1" ax2 = " 2" angle = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 2" ax2 = " 5" angle = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 2" ax2 = " 6" angle = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 3" ax2 = " 4" angle = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 3" ax2 = " 6" angle = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 4" ax2 = " 5" angle = " A1" />
+
+        <Hide  Axis = "4" Layer = "0" />
+        <Hide  Axis = "5" Layer = "0" />
+        <Turn  Axis = "4" Layer = "1" Angle = "A3" />
+        <Split Axis = "0" From = "1" />
+        <Undo Repeat = "1" />
+        <ShowAll/>
+
+        <Hide  Axis = "3" Layer = "0" />
+        <Hide  Axis = "6" Layer = "0" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A2" />
+        <Split Axis = "0" From = "1" />
+        <Undo Repeat = "1" />
+        <ShowAll/>
+
+        <Turn  Axis = "6" Layer = "1" Angle = " A1" />
+        <Split Axis = "2" From = "1" />
+        <Hide  Axis = "6" Layer = "0" />
+        <Hide  Axis = "2" Layer = "0" />
+        <Turn  Axis = "2" Layer = "1" Angle = " A2" />
+        <Split Axis = "1" From = "1" />
+        <Undo Repeat = "2" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octoloid 1</Name>
+        <Menu>Other forms\Unclassified\Octoloid\Octoloid 1</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-11-11</Added>
+    </Interface>
+
+    <Script>
+        clCyan   := '0080A8';
+        clBlue   := '0000FF';
+        clRed    := 'FF0000';
+        clBrown  := '800000';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clLime   := '00FF00';
+        clGreen  := '008000';
+
+        R := 0.5;
+        pA := R * sqrt( 10*(sqrt(5) + 2) ) / 4;
+        pB := R * sqrt(5) / 2;
+        pC := R * sqrt((5 * sqrt(5) - 10) / 8);
+
+        ax := sqrt(sqrt(5) - 1);
+        ay := sqrt(sqrt(5) + 1); 
+        az := 1;
+
+        // Calc all Jumble Angle
+        A1 := ArcCos((7 * sqrt(5) - 5) / 20);
+        A2 := ArcCos(-(5 - sqrt(5)) / 4);
+        A3 := ArcCos(-(11 * sqrt(5) - 5) / 20);
+
+        D  :=  R * 0.3;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1;A2;A3" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = "  ax; -ay;  az" />
+        <Axis NormVector = " -ax; -ay;  az" />
+        <Axis NormVector = " -ax;  ay;  az" />
+        <Axis NormVector = "  ax;  ay;  az" />
+        <Axis NormVector = "  ay; -ax; -az" />
+        <Axis NormVector = " -ay; -ax; -az" />
+        <Axis NormVector = " -ay;  ax; -az" />
+        <Axis NormVector = "  ay;  ax; -az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;   0;  pA" />
+                <Add Vector = "  0;   0; -pA" />
+                <Add Vector = " pB;   0;  pC" />
+                <Add Vector = "  0; -pB; -pC" />
+                <Add Vector = "-pB;   0;  pC" />
+                <Add Vector = "  0;  pB; -pC" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "0; 3; 2" />
+                <Face Color = "clBrown " VertexIndexes = "0; 4; 3" />
+                <Face Color = "clYellow" VertexIndexes = "0; 2; 5" />
+                <Face Color = "clOrange" VertexIndexes = "0; 5; 4" />
+
+                <Face Color = "clGreen " VertexIndexes = "2; 3; 1" />
+                <Face Color = "clLime  " VertexIndexes = "5; 2; 1" />
+                <Face Color = "clCyan  " VertexIndexes = "3; 4; 1" />
+                <Face Color = "clBlue  " VertexIndexes = "4; 5; 1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

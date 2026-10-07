@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dia-7</Name>
+        <Menu>Cubic\Bandaged\Cube 7x7x7\Dia-7</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2014-06-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4684</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 7;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('121=023, 633, 330, 050, 606, 120, 126, 530, 536, 613, 106, 510, 516, 140, 146, 550, 631, 611, 635, 615, 426, 010, 326, 626, 021, 025, 216, 420, 043, 030, 646, 041, 045, 230, 236, 440, 622, 052, 602, 642, 012, 032, 624, 054, 604, 644, 014, 034');
+        ParseTxt('211=303, 063, 103, 503, 310, 316, 110, 250, 256, 456, 301, 501, 061, 101, 305, 065, 105, 505, 263, 160, 206, 261, 265, 463, 360, 406, 461, 465, 220, 346, 202, 402, 162, 362, 204, 404, 164, 364');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(7)" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns" Repeat = "30000" />
+        </Macro>
+    </Macros>
+</xml>

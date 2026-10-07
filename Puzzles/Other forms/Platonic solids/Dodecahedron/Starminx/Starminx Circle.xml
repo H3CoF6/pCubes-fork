@@ -1,0 +1,39 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Starminx Circle</Name>
+        <Menu>Other forms\Dodecahedron\Starminx\Starminx Circle</Menu>
+        <Menu>Other forms\Dodecahedron\Face Turning\Starminx Circle</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2017-07-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6296</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R2sin;
+        D1 := RSin;
+
+        RC := 0.27;
+        L := 1.004;
+    </Script>
+
+    <Axes TurningAngles = " 0; sAngle; 0" PlaneDistances = " D; D1" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" > <Center X = "Cx[i] * L" Y =  "Cy[i] * L" Z =  "Cz[i] * L" /> </Circle>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "12" i = "0" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

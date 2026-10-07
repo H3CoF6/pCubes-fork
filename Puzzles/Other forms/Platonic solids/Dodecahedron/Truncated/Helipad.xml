@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Helipad</Name>
+        <Menu>Other forms\Dodecahedron\Truncated\Helipad</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-04-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4502</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * sqrt(3) * (Sqrt(5) + 3) / 12;
+
+        jumAngle := arctan(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "jumAngle" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "Ex[0]; Ey[0]; Ez[0]" />
+        <Axis NormVector = "Ex[1]; Ey[1]; Ez[1]" />
+        <Axis NormVector = "Ex[2]; Ey[2]; Ez[2]" />
+        <Axis NormVector = "Ex[3]; Ey[3]; Ez[3]" />
+        <Axis NormVector = "Ex[4]; Ey[4]; Ez[4]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Cut Color = "404040" > <Plane NormVector = "Cx[0]; Cy[0]; Cz[0]" NormDistance = "(R2sin + Rsin) / 2" /> </Cut>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo/>
+        <Undo/>
+
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "3" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo/>
+        <Undo/>
+
+        <Turn Axis = "4" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

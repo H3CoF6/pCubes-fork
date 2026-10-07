@@ -1,0 +1,104 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Slide Rule Duel (Rotocross, sphere).xml</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Rotocross (sphere)</Menu>
+        <Inventor>Douglas A. Engel</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4557</Link>
+    </Interface>
+
+    <Script>
+        Color1 := '0033FF';
+        Color2 := 'FFFFFF';
+        Color3 := 'EE0000';
+        Color4 := 'FFFF00';
+        Color5 := '444444';
+        Color6 := 'FFFFFF';
+
+        K := 0.6;
+        D0 := 0.085;
+        D := K * 0.73;
+    </Script>
+
+    <Axes TurningAngles = " Pi / 2" AvailableAngles = "-Pi/2; 0" PlaneDistances = "-D0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "-Pi/2; -Pi/2" MaxAngles = "0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0;Pi / 2" PlaneDistances = " D">
+        <Axis1 NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color1" />
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = " D0" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = " D " /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color2" />
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-D0" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-D0" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = " D " /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color3" />
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = " D0" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = " D " /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color4" />
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-D0" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = " D " /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = " D0" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color5" />
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-D0" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = " D " /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-D0" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-D0" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color6" />
+        <Cut> <Plane NormVector = " 0; 0;1" NormDistance = "-D0" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "D" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = " D0" /> </Cut>
+        <ShowAll/>
+
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "-D0" /> </Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = " D0" /> </Split>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "-1" />
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "-D0" /> </Split>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-D" /> </Cut>
+        <Hide Axis = "0" Layer = "0" />
+        <Cut> <Plane NormVector = " -1; 0; 0" NormDistance = "-D" /> </Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-45 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Macros>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "0" Layer = "0" Angle = "Pi/2" />
+            <Turn Axis = "1" Layer = "1" Angle = "2*Pi*Random" />
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/2" />
+            <Turn Axis = "1" Layer = "1" Angle = "2*Pi*Random" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

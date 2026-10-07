@@ -1,0 +1,102 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Celtic Fraud</Name>
+        <Menu>Other cubes\Unclassified\Celtic Fraud</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6191</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        A := W * 1.35;
+        B := W * 0.3;
+        D := (3 * A - B) / sqrt(11);
+
+        A1 := ArcCos(7 / 18); // 1.171
+        A2 := ArcCos(-5 / 6); // 2.556 // a1 + 2*a2 = 2*Pi
+    </Script>
+
+    <Axes TurningAngles = "2*Pi; 0; 2*Pi" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "D;-D" >
+        <Axis NormVector = " 1;-1; 3" />
+        <Axis NormVector = " 1;-3; 1" />
+        <Axis NormVector = " 3;-1; 1" />
+        <Axis NormVector = " 1; 1;-3" />
+        <Axis NormVector = " 1; 3;-1" />
+        <Axis NormVector = " 3; 1;-1" />
+        <Axis NormVector = "-1; 1; 3" />
+        <Axis NormVector = "-1; 3; 1" />
+        <Axis NormVector = "-3; 1; 1" />
+        <Axis NormVector = "-1;-1;-3" />
+        <Axis NormVector = "-1;-3;-1" />
+        <Axis NormVector = "-3;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+
+    <Macros>
+        <Macro Name = "CentersExchange" Public = "1" >
+            <Script> A2 := ArcCos(-5 / 6); </Script>
+            <Turn Axis = "1" Layers = "2" Angle = " A2" />
+            <Turn Axis = "2" Layers = "2" Angle = "-A2" />
+            <Turn Axis = "1" Layers = "2" Angle = "-A2" />
+            <Turn Axis = "2" Layers = "2" Angle = " A2" />
+            <Turn Axis = "4" Layers = "0" Angle = " A2" />
+            <Turn Axis = "5" Layers = "0" Angle = "-A2" />
+            <Turn Axis = "4" Layers = "0" Angle = "-A2" />
+            <Turn Axis = "5" Layers = "0" Angle = " A2" />
+            <Turn Axis = "2" Layers = "2" Angle = "-A2" />
+            <Turn Axis = "1" Layers = "2" Angle = " A2" />
+            <Turn Axis = "2" Layers = "2" Angle = " A2" />
+            <Turn Axis = "1" Layers = "2" Angle = "-A2" />
+            <Turn Axis = "5" Layers = "0" Angle = "-A2" />
+            <Turn Axis = "4" Layers = "0" Angle = " A2" />
+            <Turn Axis = "5" Layers = "0" Angle = " A2" />
+            <Turn Axis = "4" Layers = "0" Angle = "-A2" />
+        </Macro>
+
+        <Macro Name = "CentersCornersExchange" Public = "1" >
+            <Script> A2 := ArcCos(-5 / 6); </Script>
+            <Turn Axis = "10" Layers = "2" Angle = " A2" />
+            <Turn Axis = " 1" Layers = "2" Angle = "-A2" />
+            <Turn Axis = "10" Layers = "2" Angle = "-A2" />
+            <Turn Axis = " 1" Layers = "2" Angle = " A2" />
+            <Turn Axis = " 1" Layers = "2" Angle = " A2" />
+            <Turn Axis = " 2" Layers = "2" Angle = "-A2" />
+            <Turn Axis = " 1" Layers = "2" Angle = "-A2" />
+            <Turn Axis = " 2" Layers = "2" Angle = " A2" />
+        </Macro>
+
+        <Macro Name = "EdgesExchange" Public = "1" >
+            <Script> A2 := ArcCos(-5 / 6); </Script>
+            <Turn Axis = " 4" Layers = "0" Angle = " A2" />
+            <Turn Axis = " 0" Layers = "2" Angle = "-A2" />
+            <Turn Axis = " 4" Layers = "0" Angle = "-A2" />
+            <Turn Axis = " 0" Layers = "2" Angle = " A2" />
+            <Turn Axis = " 0" Layers = "2" Angle = " A2" />
+            <Turn Axis = "11" Layers = "0" Angle = "-A2" />
+            <Turn Axis = " 0" Layers = "2" Angle = "-A2" />
+            <Turn Axis = "11" Layers = "0" Angle = " A2" />
+        </Macro>
+
+        <Macro Name = "RandomTurn" >
+            <Turn Axis = "Random(12)" Layer = "Random(2)*2" Angle = "2*Pi * Random"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" Description = "Replacing of standard scrambling" Sequence = "test" >
+            <ExecMacro MacroName = "RandomTurn" Repeat = "10000" />
+        </Macro>
+    </Macros>
+
+</xml>

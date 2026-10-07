@@ -1,0 +1,206 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Matrioshka3 crazy5</Name>
+        <Menu>Other forms\2d\Matrioshka\Matrioshka3 crazy5</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-09-19</Added>
+        <Link>https://twistypuzzles.com/forum/viewtopic.php?p=430459</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clGreen  := '007700';
+        clBlue   := '004488';
+        clBlack  := '333333';
+
+        K := 0.6;
+
+        D1 := K * 0.951;
+        D2 := K * 0.820;
+        D3 := K * 1.050;
+        D4 := K * 0.983;
+
+        DCut1 := D2 - K * 0.2;
+        DCut2 := D1 - K * 0.2;
+
+        R1 := K  * 0.42;
+        H1 := D1 * 1.10;
+
+        R2 := K  * 0.20;
+        H2 := D3 * 1.02;
+
+        Ang := Arccos(4 / sqrt(17));
+
+        N := 40;
+
+        procedure CalcCylinder( R, H, D);
+        begin
+            for i := 0 to N - 1 do begin
+                x[i] := R * cos(2*Pi / N * i);
+                y[i] := R * sin(2*Pi / N * i);
+            end;
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = " 0; 2*Pi/5; 2*Pi/5" PlaneDistances = " D1; D4" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = " 0; Pi/2" PlaneDistances = "D2" >
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = " 0; Pi" PlaneDistances = "D3" >
+        <Axis NormVector = " 1;-4; 0" />
+        <Axis NormVector = "-1;-4; 0" />
+        <Axis NormVector = " 0;-4; 1" />
+        <Axis NormVector = " 0;-4;-1" />
+    </Axes>
+
+    <Figure>
+        // definitions
+        <Macro Name = "A"  > <Turn Axis = "1" Layer  = "1"   Angle = "  -Pi / 2" /> </Macro>
+        <Macro Name = "A'" > <Turn Axis = "1" Layer  = "1"   Angle = "   Pi / 2" /> </Macro>
+        <Macro Name = "B"  > <Turn Axis = "0" Layer  = "1"   Angle = "-2*Pi / 5" /> </Macro>
+        <Macro Name = "B'" > <Turn Axis = "0" Layer  = "1"   Angle = " 2*Pi / 5" /> </Macro>
+        <Macro Name = "Bb" > <Turn Axis = "0" Layers = "1-2" Angle = "-2*Pi / 5" /> </Macro>
+        <Macro Name = "Bb'"> <Turn Axis = "0" Layers = "1-2" Angle = " 2*Pi / 5" /> </Macro>
+        <Macro Name = "C"  > <Turn Axis = "2" Layer  = "1"   Angle = "   Pi"     /> </Macro>
+        <Macro Name = "CutA1-"  > <Cut   Axis = "1" To    = "1" /> </Macro>
+        <Macro Name = "CutA1+"  > <Cut   Axis = "1" From  = "1" /> </Macro>
+        <Macro Name = "CutB1-"  > <Cut   Axis = "0" To    = "1" /> </Macro>
+        <Macro Name = "CutB1+"  > <Cut   Axis = "0" From  = "1" /> </Macro>
+        <Macro Name = "CutB2+"  > <Cut   Axis = "0" From  = "2" /> </Macro>
+        <Macro Name = "CutB2-"  > <Cut   Axis = "0" To    = "2" /> </Macro>
+        <Macro Name = "CutC1C"  > <Cut   Axis = "2" To    = "1" Color = "cl" /> </Macro>
+        <Macro Name = "SplitA1" > <Split Axis = "1" From  = "1" /> </Macro>
+        <Macro Name = "SplitB1" > <Split Axis = "0" From  = "1" /> </Macro>
+        <Macro Name = "SplitB2" > <Split Axis = "0" From  = "2" /> </Macro>
+        <Macro Name = "Undo" > <Undo /> </Macro>
+        <Macro Name = "Hide" > <HideAll /> </Macro>
+        <Macro Name = "RemovePart" > <RemoveContaining Vector = "-R;-D; 0" /> </Macro>
+
+        <Macro Name = "AddSphere" >
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSphere CutB1-" Color = "clBlack" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1;-1; 0" NormDistance = " DCut2" /> </Cut>
+
+        <ExecMacro MacroName = "AddSphere CutB1- CutA1-" Color = "clBlack" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = " DCut1" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = " DCut2" /> </Cut>
+
+        <ExecMacro MacroName = "AddSphere CutA1-" Color = "clBlack" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;-1; 0" NormDistance = " DCut1" /> </Cut>
+
+        <ExecMacro MacroName = "AddSphere CutB1- CutA1+ A' CutB1- A' CutB1- A' CutB1- Undo Undo Undo Hide" Color = "clGreen" />
+
+        // cylinder's macros
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "cl" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "Cylinder" >
+            <Part>
+                <Vertices Vectors = " x;-H; y" />
+                <Vertices Vectors = " x;-D; y" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                    <Face VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        // big cylinders
+
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/4" />
+            <Script> CalcCylinder( R1, H1, D1); </Script>
+
+            <Macro Name = "CutSplit" >
+                <ExecMacro MacroName = "CutC1C SplitA1 Bb'" Repeat = "5" />
+                <ExecMacro MacroName = "SplitB2" />
+                <ExecMacro MacroName = "RemovePart B'" Repeat = "5" />
+                <Undo Repeat = "10" />
+                <HideAll/>
+            </Macro>
+
+            // yellow
+            <ExecMacro MacroName = "Cylinder CutB2+ CutSplit Hide" cl = "clYellow" />
+
+            // blue
+            <ExecMacro MacroName = "Cylinder CutB2- CutSplit Hide" cl = "clBlue" />
+
+            // 3 green
+            <ExecMacro MacroName = "A' Cylinder CutA1+ CutA2- CutSplit" cl = "clGreen" Repeat = "3" />
+            <Undo Repeat = "3" />
+        <Turn NormVector = " 0; 0; 1" Angle = " Pi/4" />
+
+        // small cylinders
+
+        <Turn NormVector = " 0; 0; 1" Angle = "-Ang" />
+            <Script> CalcCylinder( R2, H2, D3); </Script>
+
+            <Macro Name = "SplitSegment" >
+                <ExecMacro MacroName = "B' SplitA1 SplitA2 Undo B SplitA1 SplitA2 Undo SplitB2" />
+                <RemoveContaining Vector = "R * 0.9; -H; R * 0.2" />
+                <RemoveContaining Vector = "R * 0.9; -H;-R * 0.2" />
+            </Macro>
+
+            <Macro Name = "AddSegment" >
+                <ExecMacro MacroName = "Cylinder CutB1+ SplitSegment" />
+            </Macro>
+
+            // small geen segments
+            <ExecMacro MacroName = "A' Bb' AddSegment Undo Bb AddSegment Undo CutA1+ Hide" cl = "clGreen" Repeat = "3" />
+            <Undo Repeat = "3" />
+
+            // yellow/blue segments
+            <ExecMacro MacroName = "Bb' AddSegment CutB2+ Hide   " Repeat = "4" cl = "clYellow" />
+            <ExecMacro MacroName = "    AddSegment CutB2- Hide Bb" Repeat = "4" cl = "clBlue"   />
+            <Undo Repeat = "8" />
+
+            // geen segments
+            <ExecMacro MacroName = "A  AddSegment Undo Hide A' AddSegment Undo Hide" cl = "clGreen" />
+
+            // red segments
+            <ExecMacro MacroName = "A A Cylinder SplitB1 SplitSegment C SplitB1 SplitSegment Undo Hide" cl = "clRed" Repeat = "2" />
+            <Undo Repeat = "4" />
+
+            <ShowAll/>
+        <Turn NormVector = " 0; 0; 1" Angle = " Ang" />
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/8" />
+        <SaveSolvedState/>
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+     </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

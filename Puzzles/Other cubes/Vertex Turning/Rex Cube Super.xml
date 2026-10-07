@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rex Cube Super</Name>
+        <Menu>Other Cubes\Vertex Turning\Rex Cube Super</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-31</Added>
+        <Link>https://oliverstickers.com/super-rex-cube.html</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.3;
+
+        CutV := W * sqrt(3) * 0.95;
+        CutE := W * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "Pi*2/3; 0; Pi*2/3" PlaneDistances = "-D; D">
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <SplitByAxes/>
+        <Script> WE := W * 3 / 8; DCut1 := W; DCut2 := W * 1.08; </Script>
+        <LoadFrom File = "Puzzles\Cubic\Classic Rubiks\_Macro_For_Super.xml" />
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "Vx; Vy; Vz" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Vx; Vy; Vz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

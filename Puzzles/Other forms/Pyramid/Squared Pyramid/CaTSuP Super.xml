@@ -1,0 +1,99 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>CaTSuP Super</Name>
+        <Menu>Other forms\Pyramid\Squared Pyramid\CaTSuP Super</Menu>
+        <Menu>Other forms\Johnson Solids\(J1) Square Pyramid\CaTSuP Super</Menu>
+        <Inventor>Braden Ganetsky (k3DW)</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-09-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6056</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clGreen  := '008000';
+        clBlue   := '0000A0';
+        clWhite  := 'FFFFFF';
+
+        L := 0.6;
+        M := 0.3;
+        H  := L * sqrt(2);
+        D1 := -L * 0.2;
+        dH :=-L * 0.52;
+        D2 := D1 * (dH/L + L/dH) / sqrt(2 + (dh/L)^2);
+
+        // Calc jumble Angle
+        A1 := ArcCos(-1 / ((dH/L)^2 + 1)); // Angle( L, L, dH,  -L, L, dH,  L,-L, dH);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1; 0; A1" PlaneDistances = "D2" FixedLayers = "0">
+        <Axis NormVector = " L; L; dH" />
+        <Axis NormVector = " L;-L; dH" />
+        <Axis NormVector = "-L;-L; dH" />
+        <Axis NormVector = "-L; L; dH" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " 0;  0; H+dH" />
+                <Add Vector = " L;  L;   dH" />
+                <Add Vector = " L; -L;   dH" />
+                <Add Vector = "-L; -L;   dH" />
+                <Add Vector = "-L;  L;   dH" />
+                <Add Vector = "-M;  M;   dH" />
+                <Add Vector = "-M; -M;   dH" />
+                <Add Vector = " M; -M;   dH" />
+                <Add Vector = " M;  M;   dH" />
+                <Add Vector = " 0;  0;   dH" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite " VertexIndexes = "5;6;3;4" InvisibleEdges = "11" />
+                <Face Color = "clWhite " VertexIndexes = "7;2;3;6" InvisibleEdges = "13" />
+                <Face Color = "clWhite " VertexIndexes = "1;2;7;8" InvisibleEdges = "14" />
+                <Face Color = "clWhite " VertexIndexes = "1;8;5;4" InvisibleEdges = " 7" />
+                <Face Color = "clYellow" VertexIndexes = "0;2;1" />
+                <Face Color = "clYellow" VertexIndexes = "7;9;8" InvisibleEdges = "7" />
+                <Face Color = "clGreen " VertexIndexes = "0;3;2" />
+                <Face Color = "clGreen " VertexIndexes = "6;9;7" InvisibleEdges = "7" />
+                <Face Color = "clRed   " VertexIndexes = "0;4;3" />
+                <Face Color = "clRed   " VertexIndexes = "5;9;6" InvisibleEdges = "7" />
+                <Face Color = "clBlue  " VertexIndexes = "0;1;4" />
+                <Face Color = "clBlue  " VertexIndexes = "8;9;5" InvisibleEdges = "7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "2" Layer = "1" Angle = "-A1" />
+        <Turn Axis = "3" Layer = "1" Angle = " A1" />
+        <Turn Axis = "2" Layer = "1" Angle = " A1" />
+        <Turn Axis = "3" Layer = "1" Angle = "-A1" />
+        <Split Axis = "0" From  = "1" />
+        <Turn Axis = "3" Layer = "1" Angle = " A1" />
+        <Turn Axis = "2" Layer = "1" Angle = "-A1" />
+        <Turn Axis = "3" Layer = "1" Angle = "-A1" />
+        <Turn Axis = "2" Layer = "1" Angle = " A1" />
+
+        <Turn Axis = "4" Layer = "1" Angle = "-A1" />
+        <Turn Axis = "1" Layer = "1" Angle = " A1" />
+        <Turn Axis = "4" Layer = "1" Angle = " A1" />
+        <Turn Axis = "1" Layer = "1" Angle = "-A1" />
+        <Split Axis = "0" From  = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = " A1" />
+        <Turn Axis = "4" Layer = "1" Angle = "-A1" />
+        <Turn Axis = "1" Layer = "1" Angle = "-A1" />
+        <Turn Axis = "4" Layer = "1" Angle = " A1" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Edge Cube</Name>
+        <Menu>Other forms\3x3x3 variants\Edge Cube</Menu>
+        <Inventor>Nathan Wilson</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-03</Added>
+        <Link>https://www.youtube.com/watch?v=P4PHb4HqvDs</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        Colors[ 0] := 'FFAADD'; // clRose
+        Colors[ 1] := '00AA00'; // clGreen
+        Colors[ 2] := 'AAAAAA'; // clGray
+        Colors[ 3] := '0088FF'; // clLightBlue
+        Colors[ 4] := '7700EE'; // clViolet
+        Colors[ 5] := 'FFDD00'; // clYellow
+        Colors[ 6] := 'FF6600'; // clOrange
+        Colors[ 7] := 'FF88DD'; // clPink
+        Colors[ 8] := 'EE1100'; // clRed
+        Colors[ 9] := 'FF9900'; // clLightOrange
+        Colors[10] := '66EEDD'; // clCyan
+        Colors[11] := 'FFFFFF'; // clWhite
+
+        clSilver   := 'DDDDDD';
+
+        RCu2 := W * (sqrt(2) - 0.2);
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Cut Color = "clSilver" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clSilver" > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clSilver" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clSilver" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clSilver" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clSilver" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+
+        <Macro Name = "Cut">
+            <Cut Color = "Colors[Id]" > <Plane NormVector = "Ex[Id]; Ey[Id]; Ez[Id]" NormDistance = "-RCu2" /> </Cut>
+            <Script>Inc(Id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Id = "0" Repeat = "12" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

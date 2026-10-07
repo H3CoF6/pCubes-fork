@@ -1,0 +1,192 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Flower Copter Skewb</Name>
+        <Menu>Other cubes\Mixed\Edge-Vertex\Flower Copter Skewb</Menu>
+        <Inventor>Seth Holiday</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2019-04-26</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=34446</Link>
+    </Interface>
+
+    <Script>
+        clGreen  := '009600';
+        clYellow := 'FFFF00';
+        clBlue   := '0000C8';
+        clRed    := 'FF0000';
+        clOrange := 'FF800A';
+        clWhite  := 'FFFFFF';
+
+        clUp    := clWhite;
+        clDown  := clYellow;
+        clLeft  := clRed;
+        clRight := clOrange;
+        clFront := clBlue;
+        clBack  := clGreen;
+
+        W := 0.5;
+        A := W * 1.3;
+
+        D1 := sqrt(2) / 2 * A;
+        D2 := sqrt(3) / 3 * A;
+        D3 := (d1 * sqrt(2) + d2 * sqrt(3)) / 3;
+        A1 := W - D1 * sqrt(3);
+
+        jA := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "jA" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " 0;  1; 1" />
+        <Axis NormVector = " 1;  0; 1" />
+        <Axis NormVector = " 0; -1; 1" />
+        <Axis NormVector = "-1;  0; 1" />
+        <Axis NormVector = "-1;  1; 0" />
+        <Axis NormVector = " 1;  1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "-D2; 0; D2" >
+        <Axis NormVector = "1;  1;  1" />
+        <Axis NormVector = "1;  1; -1" />
+        <Axis NormVector = "1; -1;  1" />
+        <Axis NormVector = "1; -1; -1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+
+                // cube
+                <Add Vector = "-W; -W; -W" />
+                <Add Vector = "-W;  W; -W" />
+                <Add Vector = " W;  W; -W" />
+                <Add Vector = " W; -W; -W" />
+                <Add Vector = "-W; -W;  W" />
+                <Add Vector = "-W;  W;  W" />
+                <Add Vector = " W;  W;  W" />
+                <Add Vector = " W; -W;  W" />
+
+                <Add Vector = " 0;  0;  A" /> // white
+                <Add Vector = " 0; -A;  0" /> // blue
+                <Add Vector = " A;  0;  0" /> // orange
+                <Add Vector = "-A;  0;  0" /> // red
+                <Add Vector = " 0;  A;  0" /> // green
+                <Add Vector = " 0;  0; -A" /> // yellow
+            </Vertices>
+
+            <Faces>
+
+                // white
+                <Face Color = "clUp   " VertexIndexes = "5;4; 8" InvisibleEdges = "6" />
+                <Face Color = "clUp   " VertexIndexes = "6;5; 8" InvisibleEdges = "6" />
+                <Face Color = "clUp   " VertexIndexes = "7;6; 8" InvisibleEdges = "6" />
+                <Face Color = "clUp   " VertexIndexes = "4;7; 8" InvisibleEdges = "6" />
+
+                // blue
+                <Face Color = "clFront" VertexIndexes = "4;0; 9" InvisibleEdges = "6" />
+                <Face Color = "clFront" VertexIndexes = "7;4; 9" InvisibleEdges = "6" />
+                <Face Color = "clFront" VertexIndexes = "3;7; 9" InvisibleEdges = "6" />
+                <Face Color = "clFront" VertexIndexes = "0;3; 9" InvisibleEdges = "6" />
+
+                // orange
+                <Face Color = "clRight" VertexIndexes = "7;3;10" InvisibleEdges = "6" />
+                <Face Color = "clRight" VertexIndexes = "6;7;10" InvisibleEdges = "6" />
+                <Face Color = "clRight" VertexIndexes = "2;6;10" InvisibleEdges = "6" />
+                <Face Color = "clRight" VertexIndexes = "3;2;10" InvisibleEdges = "6" />
+
+                // red
+                <Face Color = "clLeft " VertexIndexes = "5;1;11" InvisibleEdges = "6" />
+                <Face Color = "clLeft " VertexIndexes = "4;5;11" InvisibleEdges = "6" />
+                <Face Color = "clLeft " VertexIndexes = "0;4;11" InvisibleEdges = "6" />
+                <Face Color = "clLeft " VertexIndexes = "1;0;11" InvisibleEdges = "6" />
+
+                // blue
+                <Face Color = "clBack " VertexIndexes = "6;2;12" InvisibleEdges = "6" />
+                <Face Color = "clBack " VertexIndexes = "5;6;12" InvisibleEdges = "6" />
+                <Face Color = "clBack " VertexIndexes = "1;5;12" InvisibleEdges = "6" />
+                <Face Color = "clBack " VertexIndexes = "2;1;12" InvisibleEdges = "6" />
+
+                // yellow
+                <Face Color = "clDown " VertexIndexes = "0;1;13" InvisibleEdges = "6" />
+                <Face Color = "clDown " VertexIndexes = "3;0;13" InvisibleEdges = "6" />
+                <Face Color = "clDown " VertexIndexes = "2;3;13" InvisibleEdges = "6" />
+                <Face Color = "clDown " VertexIndexes = "1;2;13" InvisibleEdges = "6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " A1; W; W" />
+        <RemoveContaining Vector = "-A1; W; W" />
+        <RemoveContaining Vector = " A1; W;-W" />
+        <RemoveContaining Vector = "-A1; W;-W" />
+        <RemoveContaining Vector = " A1;-W; W" />
+        <RemoveContaining Vector = "-A1;-W; W" />
+        <RemoveContaining Vector = " A1;-W;-W" />
+        <RemoveContaining Vector = "-A1;-W;-W" />
+
+        <RemoveContaining Vector = " W; A1; W" />
+        <RemoveContaining Vector = " W;-A1; W" />
+        <RemoveContaining Vector = " W; A1;-W" />
+        <RemoveContaining Vector = " W;-A1;-W" />
+        <RemoveContaining Vector = "-W; A1; W" />
+        <RemoveContaining Vector = "-W;-A1; W" />
+        <RemoveContaining Vector = "-W; A1;-W" />
+        <RemoveContaining Vector = "-W;-A1;-W" />
+
+        <RemoveContaining Vector = " W; W; A1" />
+        <RemoveContaining Vector = " W; W;-A1" />
+        <RemoveContaining Vector = " W;-W; A1" />
+        <RemoveContaining Vector = " W;-W;-A1" />
+        <RemoveContaining Vector = "-W; W; A1" />
+        <RemoveContaining Vector = "-W; W;-A1" />
+        <RemoveContaining Vector = "-W;-W; A1" />
+        <RemoveContaining Vector = "-W;-W;-A1" />
+
+        <HideContaining Vector = " A;  0;  0" />
+        <HideContaining Vector = "-A;  0;  0" />
+        <InvertVisibility/>
+        <HideContaining Vector = " 0; -A;  0" />
+        <HideContaining Vector = " 0;  A;  0" />
+        <HideContaining Vector = " 0;  0;  A" />
+        <HideContaining Vector = " 0;  0; -A" />
+
+        <Cut><Plane NormVector = " 0; -A;  0" NormDistance = "-D3" /> </Cut>
+        <Cut><Plane NormVector = " 0;  A;  0" NormDistance = "-D3" /> </Cut>
+        <Cut><Plane NormVector = " 0;  0;  A" NormDistance = "-D3" /> </Cut>
+        <Cut><Plane NormVector = " 0;  0; -A" NormDistance = "-D3" /> </Cut>
+        <ShowAll/>
+
+        <HideContaining Vector = " 0; -A;  0" />
+        <HideContaining Vector = " 0;  A;  0" />
+        <InvertVisibility/>
+        <HideContaining Vector = " A;  0;  0" />
+        <HideContaining Vector = "-A;  0;  0" />
+        <HideContaining Vector = " 0;  0;  A" />
+        <HideContaining Vector = " 0;  0; -A" />
+
+        <Cut><Plane NormVector = " A;  0;  0" NormDistance = "-D3" /> </Cut>
+        <Cut><Plane NormVector = "-A;  0;  0" NormDistance = "-D3" /> </Cut>
+        <Cut><Plane NormVector = " 0;  0;  A" NormDistance = "-D3" /> </Cut>
+        <Cut><Plane NormVector = " 0;  0; -A" NormDistance = "-D3" /> </Cut>
+        <ShowAll/>
+
+        <HideContaining Vector = " 0;  0;  A" />
+        <HideContaining Vector = " 0;  0; -A" />
+        <InvertVisibility/>
+        <HideContaining Vector = " A;  0;  0" />
+        <HideContaining Vector = "-A;  0;  0" />
+        <HideContaining Vector = " 0; -A;  0" />
+        <HideContaining Vector = " 0;  A;  0" />
+
+        <Cut><Plane NormVector = " A;  0;  0" NormDistance = "-D3" /> </Cut>
+        <Cut><Plane NormVector = "-A;  0;  0" NormDistance = "-D3" /> </Cut>
+        <Cut><Plane NormVector = " 0; -A;  0" NormDistance = "-D3" /> </Cut>
+        <Cut><Plane NormVector = " 0;  A;  0" NormDistance = "-D3" /> </Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

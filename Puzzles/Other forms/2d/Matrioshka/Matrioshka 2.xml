@@ -1,0 +1,211 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Matrioshka 2</Name>
+        <Menu>Other forms\2d\Matrioshka\Matrioshka 2</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8068</Link>
+    </Interface>
+
+    <Script>
+        clWhite := 'F0F0F0';
+        clBlue  := '0000FF';
+        clRed   := 'FF0000';
+        clNavy  := '000080';
+
+        K  := 0.13;
+        s2 := sqrt(2);
+        s22 := sqrt(2 + s2);
+        C0 := K * s22;
+        C1 := K * s2 * s22;
+        C2 := K * (2 - s2 + 2 * sqrt(2 * (2 - s2)));
+        C3 := K * s2 * (1 + s22);
+
+        D1 := (C1 + C3) / 2;
+        D2 := (C3 + C1/2 + C0) / sqrt(3);
+        D3 := (4*C3 + 3*C1) / 4 / sqrt(3);
+        D4 := D3 - D1 + C2;
+
+        TX := 3*C0/5;
+        TY := -(4*C3 + C0) / 5;
+        TZ := (2*C0 + 2*C1 + C3) / 5;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/4" PlaneDistances = "D1" >
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; 2*Pi/3; 2*Pi/3" PlaneDistances = "D2; D3" >
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "CreateShape" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " C1;  0; C3" />
+                    <Add Vector = " C1;  0;-C3" />
+                    <Add Vector = "-C1;  0; C3" />
+                    <Add Vector = "-C1;  0;-C3" />
+                    <Add Vector = " C3; C1;  0" />
+                    <Add Vector = " C3;-C1;  0" />
+                    <Add Vector = "-C3; C1;  0" />
+                    <Add Vector = "-C3;-C1;  0" />
+                    <Add Vector = "  0; C3; C1" />
+                    <Add Vector = "  0; C3;-C1" />
+                    <Add Vector = "  0;-C3; C1" />
+                    <Add Vector = "  0;-C3;-C1" />
+                    <Add Vector = "  0; C1; C3" />
+                    <Add Vector = "  0; C1;-C3" />
+                    <Add Vector = "  0;-C1; C3" />
+                    <Add Vector = "  0;-C1;-C3" />
+                    <Add Vector = " C3;  0; C1" />
+                    <Add Vector = " C3;  0;-C1" />
+                    <Add Vector = "-C3;  0; C1" />
+                    <Add Vector = "-C3;  0;-C1" />
+                    <Add Vector = " C1; C3;  0" />
+                    <Add Vector = " C1;-C3;  0" />
+                    <Add Vector = "-C1; C3;  0" />
+                    <Add Vector = "-C1;-C3;  0" />
+                    <Add Vector = " C0; C0; C3" />
+                    <Add Vector = " C0; C0;-C3" />
+                    <Add Vector = " C0;-C0; C3" />
+                    <Add Vector = " C0;-C0;-C3" />
+                    <Add Vector = "-C0; C0; C3" />
+                    <Add Vector = "-C0; C0;-C3" />
+                    <Add Vector = "-C0;-C0; C3" />
+                    <Add Vector = "-C0;-C0;-C3" />
+                    <Add Vector = " C3; C0; C0" />
+                    <Add Vector = " C3; C0;-C0" />
+                    <Add Vector = " C3;-C0; C0" />
+                    <Add Vector = " C3;-C0;-C0" />
+                    <Add Vector = "-C3; C0; C0" />
+                    <Add Vector = "-C3; C0;-C0" />
+                    <Add Vector = "-C3;-C0; C0" />
+                    <Add Vector = "-C3;-C0;-C0" />
+                    <Add Vector = " C0; C3; C0" />
+                    <Add Vector = " C0; C3;-C0" />
+                    <Add Vector = " C0;-C3; C0" />
+                    <Add Vector = " C0;-C3;-C0" />
+                    <Add Vector = "-C0; C3; C0" />
+                    <Add Vector = "-C0; C3;-C0" />
+                    <Add Vector = "-C0;-C3; C0" />
+                    <Add Vector = "-C0;-C3;-C0" />
+                    <Add Vector = " C2; C2; C2" />
+                    <Add Vector = " C2; C2;-C2" />
+                    <Add Vector = " C2;-C2; C2" />
+                    <Add Vector = " C2;-C2;-C2" />
+                    <Add Vector = "-C2; C2; C2" />
+                    <Add Vector = "-C2; C2;-C2" />
+                    <Add Vector = "-C2;-C2; C2" />
+                    <Add Vector = "-C2;-C2;-C2" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = " 0;24;12;28; 2;30;14;26" />
+                    <Face Color = "Color" VertexIndexes = " 1;27;15;31; 3;29;13;25" />
+                    <Face Color = "Color" VertexIndexes = " 4;32;16;34; 5;35;17;33" />
+                    <Face Color = "Color" VertexIndexes = " 6;37;19;39; 7;38;18;36" />
+                    <Face Color = "Color" VertexIndexes = " 8;40;20;41; 9;45;22;44" />
+                    <Face Color = "Color" VertexIndexes = "10;46;23;47;11;43;21;42" />
+
+                    <Face Color = "Color" VertexIndexes = "48;24; 0;16;32" />
+                    <Face Color = "Color" VertexIndexes = "48;32; 4;20;40" />
+                    <Face Color = "Color" VertexIndexes = "48;40; 8;12;24" />
+
+                    <Face Color = "Color" VertexIndexes = "49;25;13; 9;41" />
+                    <Face Color = "Color" VertexIndexes = "49;41;20; 4;33" />
+                    <Face Color = "Color" VertexIndexes = "49;33;17; 1;25" />
+
+                    <Face Color = "Color" VertexIndexes = "50;26;14;10;42" />
+                    <Face Color = "Color" VertexIndexes = "50;42;21; 5;34" />
+                    <Face Color = "Color" VertexIndexes = "50;34;16; 0;26" />
+
+                    <Face Color = "Color" VertexIndexes = "51;27; 1;17;35" />
+                    <Face Color = "Color" VertexIndexes = "51;35; 5;21;43" />
+                    <Face Color = "Color" VertexIndexes = "51;43;11;15;27" />
+
+                    <Face Color = "Color" VertexIndexes = "52;28;12; 8;44" />
+                    <Face Color = "Color" VertexIndexes = "52;44;22; 6;36" />
+                    <Face Color = "Color" VertexIndexes = "52;36;18; 2;28" />
+
+                    <Face Color = "Color" VertexIndexes = "53;29; 3;19;37" />
+                    <Face Color = "Color" VertexIndexes = "53;37; 6;22;45" />
+                    <Face Color = "Color" VertexIndexes = "53;45; 9;13;29" />
+
+                    <Face Color = "Color" VertexIndexes = "54;30; 2;18;38" />
+                    <Face Color = "Color" VertexIndexes = "54;38; 7;23;46" />
+                    <Face Color = "Color" VertexIndexes = "54;46;10;14;30" />
+
+                    <Face Color = "Color" VertexIndexes = "55;31;15;11;47" />
+                    <Face Color = "Color" VertexIndexes = "55;47;23; 7;39" />
+                    <Face Color = "Color" VertexIndexes = "55;39;19; 3;31" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "CreateShape" Color = "clWhite" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1;-1" NormDistance = "-D4" /> </Cut>
+        <Cut Color = "clWhite"    > <Plane NormVector = " 0;-1; 0" NormDistance = " C2" /> </Cut>
+        <Cut Axis = "0" To = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreateShape" Color = "clWhite" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 1" NormDistance = " D4" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = " C2" /> </Cut>
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreateShape" Color = "clWhite" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-C2" /> </Cut>
+        <Cut Color = "clWhite"    > <Plane NormVector = " 1;-1; 1" NormDistance = " D4" /> </Cut>
+        <Cut Axis = "1" To = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreateShape" Color = "clBlue" />
+        <Cut>   <Plane NormVector = "-1; 1;-1" NormDistance = "-D2" /> </Cut>
+        <Cut>   <Plane NormVector = " 1;-1; 1" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreateShape" Color = "clNavy" />
+        <Cut>   <Plane NormVector = " 1;-1; 1" NormDistance = " D2" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreateShape" Color = "clRed" />
+        <Cut>   <Plane NormVector = " 0;-1; 0" NormDistance = " D1" /> </Cut>
+        <Cut>   <Plane NormVector = "-1; 1;-1" NormDistance = "-D3" /> </Cut>
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Unbandage1" >
+            <SplitByAxes/>
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/4" />
+        </Macro>
+
+        <Macro Name = "RemovePart" >
+            <RemoveContaining Vector = "TX; TY; TZ" />
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/4" />
+        </Macro>
+
+        <Macro Name = "Unbandage2" >
+            <SplitByAxes/>
+            <ExecMacro MacroName = "Unbandage1" Repeat = "8" />
+            <ExecMacro MacroName = "RemovePart" Repeat = "8" />
+            <Turn Axis = "1" Layer = "1" Angle = " 2*Pi/3" />
+            <Turn Axis = "1" Layer = "2" Angle = " 2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Unbandage2" Repeat = "3" />
+
+        <Turn NormVector = "0;1;0" Angle = " Pi/4" />
+        <Turn NormVector = "0;0;1" Angle = "-ArcTan(s2) / 2" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+</xml>

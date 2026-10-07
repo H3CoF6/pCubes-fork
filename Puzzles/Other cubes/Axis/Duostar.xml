@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Duostar</Name>
+        <Menu>Other cubes\Axis\Duostar</Menu>
+        <Inventor>Javier Alla La</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9076</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        Colors[0] := clYellow;
+        Colors[1] := clWhite;
+        Colors[2] := clYellow;
+        Colors[3] := clWhite;
+        Colors[4] := clYellow;
+        Colors[5] := clWhite;
+
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "-1; 2; 2" />
+        <Axis NormVector = " 2;-1; 2" />
+        <Axis NormVector = " 2; 2;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+        <HideContaining Vector = "W;0;0" />
+        <HideContaining Vector = "0;W;0" />
+        <HideContaining Vector = "0;0;W" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "-W; W; 0" />
+        <RemoveContaining Vector = " W;-W; 0" />
+        <RemoveContaining Vector = "-W; 0; W" />
+        <RemoveContaining Vector = " W; 0;-W" />
+        <RemoveContaining Vector = " 0;-W; W" />
+        <RemoveContaining Vector = " 0; W;-W" />
+        <HideAll/>
+
+        <Script>
+            Colors[0] := clOrange;
+            Colors[1] := clRed;
+            Colors[2] := clOrange;
+            Colors[3] := clRed;
+            Colors[4] := clOrange;
+            Colors[5] := clRed;
+        </Script>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = "-W; W; 0" />
+        <HideContaining Vector = " W;-W; 0" />
+        <HideContaining Vector = "-W; 0; W" />
+        <HideContaining Vector = " W; 0;-W" />
+        <HideContaining Vector = " 0;-W; W" />
+        <HideContaining Vector = " 0; W;-W" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

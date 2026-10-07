@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Raptor Pillar</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Vertex Turning\Raptor\Raptor Pillar</Menu>
+        <Inventor>Seth Holiday</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-07-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11293</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Rhombic Dodecahedron_12_Colors.inc';
+
+        CutColors[ 0] := 'ADFF2F'; // GreenYellow
+        CutColors[ 1] := '8b0a50'; // DeepPink   
+        CutColors[ 2] := '00FFFF'; // Cyan       
+        CutColors[ 3] := '008080'; // Teal       
+        CutColors[ 4] := 'FF7F50'; // Coral      
+        CutColors[ 5] := 'DC143C'; // Crimson    
+
+        CutSide[0] := 0;
+        CutSide[1] := 0;
+        CutSide[2] := 1;
+        CutSide[3] := 1;
+        CutSide[4] := 1;
+        CutSide[5] := 1;
+
+        R := 0.7;
+        D := R / 2;
+
+        W := D * 1.01;
+        D1 := R * 0.37;
+        D2 := D1 * sqrt(3);
+        A := 0.5;
+        DA := D * (A + 1) / sqrt(A^2 + 1);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi / 3" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "CutLeft" >
+            <Cut Color = "Color" ><Plane NormVector = " 1;-A; 0" NormDistance = "-DA" /></Cut>
+            <Cut Color = "Color" ><Plane NormVector = " 1; A; 0" NormDistance = "-DA" /></Cut>
+            <Cut Color = "Color" InvisibleEdges = "6" ><Plane NormVector = " 1; 0;-A" NormDistance = "-DA" /></Cut>
+            <Cut Color = "Color" InvisibleEdges = "6" ><Plane NormVector = " 1; 0; A" NormDistance = "-DA" /></Cut>
+        </Macro>
+
+        <Macro Name = "SplitLeft" >
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-D2" /></Split>
+        </Macro>
+
+        <Macro Name = "CheckLeft" >
+            <ExecMacro MacroName = "CutLeft" Color = "CutColors[i]" Repeat = "CutSide[i]"     /> <!-- if CutSide[i] then CutLeft -->
+            <ExecMacro MacroName = "SplitLeft"                      Repeat = "1 - CutSide[i]" /> <!-- else SplitLeft -->
+            <Turn NormVector = "0;0;1" Angle = "Pi" /> 
+        </Macro>
+
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+        <ExecMacro MacroName = "CheckLeft" i = "0" />
+        <ExecMacro MacroName = "CheckLeft" i = "1" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" /> 
+        <ExecMacro MacroName = "CheckLeft" i = "2" />
+        <ExecMacro MacroName = "CheckLeft" i = "3" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" /> 
+        <ExecMacro MacroName = "CheckLeft" i = "4" />
+        <ExecMacro MacroName = "CheckLeft" i = "5" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" /> 
+
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "3" From = "2" />
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "4" From = "2" />
+        <Split Axis = "5" From = "1" />
+        <Split Axis = "5" From = "2" />
+        <Split Axis = "6" From = "1" />
+        <Split Axis = "6" From = "2" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

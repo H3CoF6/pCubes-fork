@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Plane Bump Square-1</Name>
+        <Menu>Other cubes\Square-1\Plane Bump Square-1</Menu>
+        <Class>TSquare1</Class>
+        <Inventor>Vadim Grishin</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2684</Link>
+    </Interface>
+
+    <Script>
+        Color1 := 'FF0000';
+        Color2 := 'FFFFFF';
+        Color3 := '00AA00';
+
+        S15 := sin (Pi / 12); // 15 degrees
+        C15 := cos (Pi / 12);
+
+        WX := 0.5;
+        WY := WX;
+        WZ := WX;
+        DWZ := -WX/6;
+
+        D := WX * 4/13;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0">
+        <Axis NormVector = "C15; S15; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Body" >
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Split Color1 = "Color" Color2 = "Color"> <Plane NormVector = " C15; S15; 0" /> </Split>
+        </Macro>
+
+        <Macro Name = "Split" >
+            <Split Color1 = "Color" Color2 = "Color"> <Plane NormVector = "-C15; S15; 0" /> </Split>
+            <Split Color1 = "Color" Color2 = "Color"> <Plane NormVector = " S15; C15; 0" /> </Split>
+            <Split Color1 = "Color" Color2 = "Color"> <Plane NormVector = " S15;-C15; 0" /> </Split>
+        </Macro>
+
+        <ExecMacro MacroName = "Body" Color = "Color1" />
+        <Cut Color = "Color"> <Plane NormVector = "0;0;1" NormDistance = "D" /> </Cut>
+        <ExecMacro MacroName = "Split" />
+        <HideAll/>
+        
+        <ExecMacro MacroName = "Body" Color = "Color2" />
+        <Cut Color = "Color"> <Plane NormVector = "0;0;-1" NormDistance = "-D" /> </Cut>
+        <Cut Color = "Color"> <Plane NormVector = "0;0; 1" NormDistance = "-D" /> </Cut>
+        <HideAll/>
+        
+        <ExecMacro MacroName = "Body" Color = "Color3" />
+        <Cut Color = "Color"> <Plane NormVector = "0;0;-1" NormDistance = "D" /> </Cut>
+        <ExecMacro MacroName = "Split" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/6" />
+        <SaveSolvedState/>
+        <Undo Repeat = "4" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

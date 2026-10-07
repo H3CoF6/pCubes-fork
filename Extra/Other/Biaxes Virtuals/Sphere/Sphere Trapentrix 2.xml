@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sphere Trapentrix 2</Name>
+        <Menu>Other forms\Sphere\Biaxes Virtual\Sphere Trapentrix 2</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-02-26</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        K := 0.7;
+
+        AngleD := 138.18968503;
+
+        Angle  := AngleD * Pi/180;
+        AngleM := (Pi - Angle)/2;
+        x := cos(AngleM);
+        y := sin(AngleM);
+
+        A := Pi*2/3;
+
+        D := K * 0.18683; // 2 middle point
+    </Script>
+
+    <Axes TurningAngles = "A" PlaneDistances = "-D" FixedLayers = "0" >
+        <Axis NormVector = " x; -y; 0" />
+        <Axis NormVector = "-x; -y; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart" Repeat = "5" />
+        <Undo Repeat = "40" />
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

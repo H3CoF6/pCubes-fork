@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Snub Disphenoid Chop</Name>
+        <Menu>Other forms\Johnson Solids\(J84) Snub Disphenoid\Snub Disphenoid Chop</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-21</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'F0F0F0';
+        clYellow := 'FFFF00';
+        clRed    := 'FF0000';
+        clBlue   := '0000FF';
+        clGreen  := '008000';
+        clGray   := '808080';
+        clLime   := '00FF00';
+        clPurple := '800080';
+        clPink   := 'FF69B4';
+        clGolden := 'DDBB20';
+        clNavy   := '000080';
+        clCyan   := '00FFFF';
+
+        k := 0.5;
+
+        q := 0.169022229424176; // 2*q^3+11*q^2+4*q-1=0, q=sqrt(97)/3 * sin( Pi/6 + arccos(881/(97*sqrt(97)))/3 ) - 11/6;
+        r := k * sqrt(q);
+        s := k * sqrt((1 - q) / q / 2);
+        t := k * sqrt((1 - q) * 2);
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vx := y1 * z2 - y2 * z1;
+          vy := z1 * x2 - z2 * x1;
+          vz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+
+        A1 := Angle( t, r, 0,  0,-r, t,  0,-r,-t);
+        A2 := Angle( t, r, 0,  0, s, k,  0, s,-k);
+        A3 := Angle( k,-s, 0,  0,-r, t,  0,-r,-t);
+        A4 := Angle( k,-s, 0,  t, r, 0,  0,-r, t);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 2*s;  k;    0" />
+        <Axis NormVector = "-2*s;  k;    0" />
+        <Axis NormVector = "   0; -k;  2*s" />
+        <Axis NormVector = "   0; -k; -2*s" />
+    </Axes>
+    <Axes TurningAngles = "2 * Pi" AvailableAngles = "-A4; -A3; 0; A3; A4" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " k;-s; 0" />
+        <Axis NormVector = "-k;-s; 0" />
+        <Axis NormVector = " 0; s; k" />
+        <Axis NormVector = " 0; s;-k" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " t; r; 0" />
+                <Add Vector = "-t; r; 0" />
+                <Add Vector = " 0;-r; t" />
+                <Add Vector = " 0;-r;-t" />
+                <Add Vector = " k;-s; 0" />
+                <Add Vector = "-k;-s; 0" />
+                <Add Vector = " 0; s; k" />
+                <Add Vector = " 0; s;-k" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite"  VertexIndexes = "1;5;2" />
+                <Face Color = "clYellow" VertexIndexes = "1;3;5" />
+                <Face Color = "clRed"    VertexIndexes = "1;7;3" />
+                <Face Color = "clBlue"   VertexIndexes = "1;6;7" />
+                <Face Color = "clGreen"  VertexIndexes = "1;2;6" />
+                <Face Color = "clGray"   VertexIndexes = "4;2;5" />
+                <Face Color = "clLime"   VertexIndexes = "3;4;5" />
+                <Face Color = "clPurple" VertexIndexes = "3;0;4" />
+                <Face Color = "clPink"   VertexIndexes = "0;2;4" />
+                <Face Color = "clGolden" VertexIndexes = "6;0;7" />
+                <Face Color = "clNavy"   VertexIndexes = "6;2;0" />
+                <Face Color = "clCyan"   VertexIndexes = "7;0;3" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+    </Figure>
+</xml>

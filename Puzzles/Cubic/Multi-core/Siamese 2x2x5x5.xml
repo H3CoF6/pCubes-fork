@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese 2x2x5x5</Name>
+        <Menu>Cubic\Multi-core\Siamese 2x2x5x5</Menu>
+        <Inventor>Joshua Hawking</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5732</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 7;
+        D05 := D * 0.5;
+        D2  := D * 2;
+        D25 := D * 2.5;
+        D3  := D * 3;
+        D4  := D * 4;
+        D5  := D * 5;
+        A := Pi / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; A" PlaneDistances = "0" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-D25;-D25; D25" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "-D25;-D25; D25" />
+        <Axis NormVector = " 0; 0; 1" BaseVector = "-D25;-D25; D25" />
+    </Axes>
+
+    <Axes TurningAngles = "0; A; A; A" PlaneDistances = "-D;D;D3" >
+        <Axis NormVector = " 1; 0; 0" BaseVector = " D25; D25;-D25" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = " D25; D25;-D25" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = " D25; D25;-D25" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D5" WY = "WX" WZ = "WX" DWX = " D25" DWY = " D25" DWZ = "-D25" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-D05" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-D05" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "-D05" /></Split>
+
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D4" WY = "WX" WZ = "WX" DWX = "-D25" DWY = "-D25" DWZ = " D25" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <RemoveContaining Vector = "-D05;-D05; D05" />
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D2" WY = "D2" WZ = "D2" DWX = "-D05" DWY = "-D05" DWZ = "D05" />
+    </Figure>
+</xml>

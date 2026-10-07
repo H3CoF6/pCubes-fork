@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>X-Cube 2 (flat)</Name>
+        <Menu>Cubic\Cross\X-Cube 2 (flat)</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10959</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+        D := W / 2;
+        H := D;
+        L := W / 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "L" WZ = "H" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "L" WY = "W" WZ = "H" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <Split><Plane NormVector = "1;0;0" /></Split>
+        <Split><Plane NormVector = "0;1;0" /></Split>
+
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D" WZ = "L" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

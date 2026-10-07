@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewby Rhombic</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Skewby Rhombic</Menu>
+        <Inventor>Léo Lepage</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-06-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11242</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+
+        D := R * 0.6;
+        DCut := D * sqrt(2);
+        DCut2 := D * 0.9;
+
+        JumAngle := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-DCut" /> </Cut>
+        <ShowAll/>
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <InvertVisibility/>
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-DCut2" /> </Cut>
+        <ShowAll/>
+    </Figure>
+</xml>

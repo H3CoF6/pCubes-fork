@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Abanderado 3x3x3</Name>
+        <Menu>Cubic\Rubiks Recolored\Abanderado 3x3x3</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9096</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // clRed
+        Colors[1] := 'FF8E01'; // clOrange
+        Colors[2] := '0019FF'; // clBlue
+        Colors[3] := '04A42A'; // clGreen
+        Colors[4] := 'ECE300'; // clYellow
+        Colors[5] := 'FFFFFF'; // clWhite
+
+        ColorsS := 'robgyw';
+
+        W := 0.5;
+        D := W / 3;
+
+        function GetInt(): integer;
+        begin
+          substr := copy(SColors, 1, 1);
+          Delete(SColors, 1, 1);
+          if substr = ' ' then begin
+            substr := copy(SColors, 1, 1);
+            Delete(SColors, 1, 1);
+          end;
+          Result := Pos(substr, ColorsS) - 1;
+        end;
+
+        SColorsUp    := 'yyy www ggg';
+        SColorsLeft  := 'bbb rrr www';
+        SColorsFace  := 'ybw ybw ybw';
+        SColorsRight := 'rrr ooo ggg';
+        SColorsDown  := 'ooo yyy rrr';
+        SColorsBack  := 'ogb ogb ogb';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W * 1.1" Color = "-1" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "CutRow" >
+            <HideContaining Vector = "(x - 1) * 2 * D; (y - 1) * 2 * D; W" />
+            <InvertVisibility />
+            <Cut Color = "Colors[GetInt]"><Plane NormVector = "0;0;-1" NormDistance = "-W" /></Cut>
+            <ShowAll/>
+            <Script>Inc(x);</Script>
+        </Macro>
+
+        <Macro Name = "CutFace" >
+            <ExecMacro MacroName = "CutRow" x = "0" y = "2" Repeat = "3" />
+            <ExecMacro MacroName = "CutRow" x = "0" y = "1" Repeat = "3" />
+            <ExecMacro MacroName = "CutRow" x = "0" y = "0" Repeat = "3" />
+        </Macro>
+
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsUp" />
+
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsFace" />
+
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsLeft" />
+        
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsRight" />
+
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsDown" />
+
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsBack" />
+        
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

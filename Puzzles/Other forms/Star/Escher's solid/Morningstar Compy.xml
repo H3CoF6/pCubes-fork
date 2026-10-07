@@ -1,0 +1,122 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Morningstar Compy</Name>
+        <Menu>Other forms\Star\Escher's solid\Morningstar Compy</Menu>
+        <Inventor>Seth Holiday</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-12-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6468</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFF00'; // Yellow
+        Colors[ 1] := '008000'; // Green
+        Colors[ 2] := '0000C8'; // Blue
+        Colors[ 3] := 'FF800A'; // Orange
+        Colors[ 4] := '800080'; // Purple
+        Colors[ 5] := '00AFAF'; // Cyan
+        Colors[ 6] := 'F0F0F0'; // White
+        Colors[ 7] := '00C800'; // Lime
+        Colors[ 8] := '000060'; // Navy
+        Colors[ 9] := 'C80000'; // Red
+        Colors[10] := 'FF69B4'; // Pink
+        Colors[11] := '202020'; // Black
+
+        W  := 0.5;
+        D1 := W / 2;
+        D2 := W / sqrt(2);
+        D3 := W / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "-D3; D3" FixedLayers = "1">
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+
+        <Macro Name = "AddPart" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "  0;  0;  W" />
+                    <Add Vector = "  0; -W;  W" />
+                    <Add Vector = "  0; -W;  0" />
+                    <Add Vector = " D1;-D1; D1" />
+                    <Add Vector = "-D1;-D1; D1" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "Colors[c0]" VertexIndexes = " 0; 4; 1" />
+                    <Face Color = "Colors[c1]" VertexIndexes = " 0; 1; 3" />
+                    <Face Color = "Colors[c2]" VertexIndexes = " 1; 4; 2" />
+                    <Face Color = "Colors[c3]" VertexIndexes = " 1; 2; 3" />
+                    <Face                      VertexIndexes = " 3; 2; 4; 0" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "1; 0; 0" Angle = "Pi / 2" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddPart" c0 = "1" c1 = "9" c2 = "8" c3 = "0" />
+        <ExecMacro MacroName = "AddPart" c0 = "6" c1 = "2" c2 = "1" c3 = "9" />
+        <ExecMacro MacroName = "AddPart" c0 = "3" c1 = "7" c2 = "6" c3 = "2" />
+        <ExecMacro MacroName = "AddPart" c0 = "8" c1 = "0" c2 = "3" c3 = "7" />
+
+        <Turn NormVector = "1; 0; 0" Angle = "-Pi / 2" />
+        <Turn NormVector = "0; 0; 1" Angle = " Pi / 2" />
+
+        <ExecMacro MacroName = "AddPart" c0 = " 5" c1 = "10" c2 = " 1" c3 = " 3" />
+        <ExecMacro MacroName = "AddPart" c0 = " 9" c1 = " 7" c2 = " 5" c3 = "10" />
+        <ExecMacro MacroName = "AddPart" c0 = " 4" c1 = "11" c2 = " 9" c3 = " 7" />
+        <ExecMacro MacroName = "AddPart" c0 = " 1" c1 = " 3" c2 = " 4" c3 = "11" />
+
+        <Turn NormVector = "1; 0; 0" Angle = "-Pi / 2" />
+        <Turn NormVector = "0; 0; 1" Angle = " Pi / 2" />
+
+        <ExecMacro MacroName = "AddPart" c0 = " 8" c1 = " 6" c2 = " 5" c3 = " 4" />
+        <ExecMacro MacroName = "AddPart" c0 = "10" c1 = "11" c2 = " 8" c3 = " 6" />
+        <ExecMacro MacroName = "AddPart" c0 = " 0" c1 = " 2" c2 = "10" c3 = "11" />
+        <ExecMacro MacroName = "AddPart" c0 = " 5" c1 = " 4" c2 = " 0" c3 = " 2" />
+
+        <Turn NormVector = "1; 0; 0" Angle = "-Pi / 2" />
+
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;  0;  W" />
+                <Add Vector = " D1; D1; D1" />
+                <Add Vector = " D1;-D1; D1" />
+                <Add Vector = "-D1;-D1; D1" />
+                <Add Vector = "-D1; D1; D1" />
+                <Add Vector = "  W;  0;  0" />
+                <Add Vector = "  0; -W;  0" />
+                <Add Vector = " -W;  0;  0" />
+                <Add Vector = "  0;  W;  0" />
+                <Add Vector = " D1; D1;-D1" />
+                <Add Vector = " D1;-D1;-D1" />
+                <Add Vector = "-D1;-D1;-D1" />
+                <Add Vector = "-D1; D1;-D1" />
+                <Add Vector = "  0;  0; -W" />
+            </Vertices>
+            <Faces>
+                <Face VertexIndexes = " 0; 2; 5; 1" />
+                <Face VertexIndexes = " 0; 3; 6; 2" />
+                <Face VertexIndexes = " 0; 4; 7; 3" />
+                <Face VertexIndexes = " 0; 1; 8; 4" />
+
+                <Face VertexIndexes = " 5; 2; 6;10" />
+                <Face VertexIndexes = " 6; 3; 7;11" />
+                <Face VertexIndexes = " 7; 4; 8;12" />
+                <Face VertexIndexes = " 8; 1; 5; 9" />
+
+                <Face VertexIndexes = "13; 9; 5;10" />
+                <Face VertexIndexes = "13;10; 6;11" />
+                <Face VertexIndexes = "13;11; 7;12" />
+                <Face VertexIndexes = "13;12; 8; 9" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

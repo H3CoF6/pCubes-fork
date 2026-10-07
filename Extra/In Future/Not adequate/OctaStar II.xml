@@ -1,0 +1,107 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+Sometimes vertex turn is blocked while in reality it's possible
+
+    <Interface>
+        <Name>OctaStar II</Name>
+        <Menu>Other forms\Octahedron\Edge Turning\OctaStar II</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-11-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4261</Link>
+    </Interface>
+
+    <Script>
+        W := 1.5 * 0.5;
+        D := W / 2;
+        Delta := W * 0.05;
+        DCut := D - Delta;
+        DD := W / SQRT(3);
+        DE := (W - Delta) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1;  1;  0" />
+        <Axis NormVector = " 1; -1;  0" />
+        <Axis NormVector = " 0;  1;  1" />
+        <Axis NormVector = " 0;  1; -1" />
+        <Axis NormVector = " 1;  0;  1" />
+        <Axis NormVector = "-1;  0;  1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+
+        <Split Axis = "6"  From = "1" />
+        <Split Axis = "6"  From = "2" />
+        <Hide  Axis = "6" Layer = "1" />
+        <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 0;-1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 0; 0; 1" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "-DCut" /></Cut>
+        <ShowAll/>
+
+        <Split Axis = "7"  From = "1" />
+        <Split Axis = "7"  From = "2" />
+        <Hide  Axis = "7" Layer = "1" />
+        <Cut><Plane NormVector = " 1; 0; 0" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 0; 0; 1" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "-DCut" /></Cut>
+        <ShowAll/>
+
+        <Split Axis = "8"  From = "1" />
+        <Split Axis = "8"  From = "2" />
+        <Hide  Axis = "8" Layer = "1" />
+        <Cut><Plane NormVector = " 1; 0; 0" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 0;-1; 0" NormDistance = "-DCut" /></Cut>
+        <ShowAll/>
+
+        <RemoveContaining Vector = "0;0;0" />
+
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "BigW" />
+        <Cut><Plane NormVector = " Cx[0]; Cy[0]; Cz[0]" NormDistance = "-DD" /></Cut>
+        <Cut><Plane NormVector = " Cx[1]; Cy[1]; Cz[1]" NormDistance = "-DD" /></Cut>
+        <Cut><Plane NormVector = " Cx[2]; Cy[2]; Cz[2]" NormDistance = "-DD" /></Cut>
+        <Cut><Plane NormVector = " Cx[3]; Cy[3]; Cz[3]" NormDistance = "-DD" /></Cut>
+        <Cut><Plane NormVector = " Cx[4]; Cy[4]; Cz[4]" NormDistance = "-DD" /></Cut>
+        <Cut><Plane NormVector = " Cx[5]; Cy[5]; Cz[5]" NormDistance = "-DD" /></Cut>
+        <Cut><Plane NormVector = " Cx[6]; Cy[6]; Cz[6]" NormDistance = "-DD" /></Cut>
+        <Cut><Plane NormVector = " Cx[7]; Cy[7]; Cz[7]" NormDistance = "-DD" /></Cut>
+        <Cut><Plane NormVector = " 1; 0; 0" NormDistance = "-D" /></Cut>
+        <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Cut>
+        <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Cut>
+        <Cut><Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Cut>
+        <Cut><Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Cut>
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "-D" /></Cut>
+
+        <Cut><Plane NormVector = " Ex[ 0]; Ey[ 0]; Ez[ 0]" NormDistance = "-DE" /></Cut>
+        <Cut><Plane NormVector = " Ex[ 1]; Ey[ 1]; Ez[ 1]" NormDistance = "-DE" /></Cut>
+        <Cut><Plane NormVector = " Ex[ 2]; Ey[ 2]; Ez[ 2]" NormDistance = "-DE" /></Cut>
+        <Cut><Plane NormVector = " Ex[ 3]; Ey[ 3]; Ez[ 3]" NormDistance = "-DE" /></Cut>
+        <Cut><Plane NormVector = " Ex[ 4]; Ey[ 4]; Ez[ 4]" NormDistance = "-DE" /></Cut>
+        <Cut><Plane NormVector = " Ex[ 5]; Ey[ 5]; Ez[ 5]" NormDistance = "-DE" /></Cut>
+        <Cut><Plane NormVector = " Ex[ 6]; Ey[ 6]; Ez[ 6]" NormDistance = "-DE" /></Cut>
+        <Cut><Plane NormVector = " Ex[ 7]; Ey[ 7]; Ez[ 7]" NormDistance = "-DE" /></Cut>
+        <Cut><Plane NormVector = " Ex[ 8]; Ey[ 8]; Ez[ 8]" NormDistance = "-DE" /></Cut>
+        <Cut><Plane NormVector = " Ex[ 9]; Ey[ 9]; Ez[ 9]" NormDistance = "-DE" /></Cut>
+        <Cut><Plane NormVector = " Ex[10]; Ey[10]; Ez[10]" NormDistance = "-DE" /></Cut>
+        <Cut><Plane NormVector = " Ex[11]; Ey[11]; Ez[11]" NormDistance = "-DE" /></Cut>
+
+        <ShowAll/>
+
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,190 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentominoe</Name>
+        <Menu>Cubic\Rubiks Recolored\Pentominoe</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-03-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=200</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF0000'; // Red
+        Colors[ 1] := '009600'; // Green
+        Colors[ 2] := 'DD5500'; // Brown
+        Colors[ 3] := 'FF88DD'; // Rose
+        Colors[ 4] := '00DD00'; // Lime
+        Colors[ 5] := 'FF8800'; // Orange
+        Colors[ 6] := 'AA00C8'; // Purple
+        Colors[ 7] := 'FFFF00'; // Yellow
+        Colors[ 8] := 'AAAA88'; // Gray
+        Colors[ 9] := '0000FF'; // Blue
+        Colors[10] := 'FFFFFF'; // White
+        Colors[11] := '00AAFF'; // LightBlue
+
+        sColors[ 0] := '     0047          ';
+        sColors[ 1] := '     0047          ';
+        sColors[ 2] := '     0544          ';
+        sColors[ 3] := '     5514          ';
+        sColors[ 4] := '0051 5143 4778 4009';
+        sColors[ 5] := '9a52 1113 3678 8999';
+        sColors[ 6] := '9a52 2123 3677 8889';
+        sColors[ 7] := '9aab 2223 3666 78ba';
+        sColors[ 8] := '     2236          ';
+        sColors[ 9] := '     bb36          ';
+        sColors[10] := '     abb6          ';
+        sColors[11] := '     aab8          ';
+
+        W := 0.5;
+        D := W / 3;
+
+        N := 3;
+        vv := 0; // Vertex Count
+        cv := 0; // Vertex Count
+
+        function GetId(xc, yc);
+        begin
+            xi := x + dx1 * xc + dx2 * yc;
+            yi := y + dy1 * xc + dy2 * yc;
+            zi := z + dz1 * xc + dz2 * yc;
+            xv := xi * D * 2 - W;
+            yv := yi * D * 2 - W;
+            zv := zi * D * 2 - W;
+
+            if VarExists('Idx[' + IntToStr(xi) + ',' + IntToStr(yi) + ',' + IntToStr(zi) + ']') then
+                Result := Idx[xi, yi, zi]
+            else begin
+                Vx[vv] := xv;
+                Vy[vv] := yv;
+                Vz[vv] := zv;
+                Result := IntToStr(vv) + ';';
+                Idx[xi, yi, zi] := Result;
+                Inc(vv);
+            end;
+        end;
+
+        function AddVertex(xc, yc);
+        begin
+            xv := x * D * 2 - W;
+            yv := y * D * 2 - W;
+            zv := z * D * 2 - W;
+
+            Wx[cv] := xv + fx1 * xc + fx2 * yc;
+            Wy[cv] := yv + fy1 * xc + fy2 * yc;
+            Wz[cv] := zv + fz1 * xc + fz2 * yc;
+
+            Result := IntToStr(cv + 32) + ';';
+            Inc(cv);
+        end;
+
+        function GetColor(x3, y3);
+        begin
+            char := copy(sColors[sy + y3], sx + x3, 1);
+            Result := Colors[HexToInt(char)];
+        end;
+
+        procedure Polygon( cx, cy, ids, ies);
+        begin
+            BrushColor := GetColor( cx, cy);
+            S[cf] := ids;
+            Cl[cf] := BrushColor;
+            IE[cf] := ies;
+            Inc(cf);
+        end;
+
+        procedure MakeSide(x, y, z, dx1, dy1, dz1, dx2, dy2, dz2, sx, sy);
+        // x, y, z - left-top point of side
+        // dx1, dy1, dz1 - 1st counting vector
+        // dx2, dy2, dz2 - 2nd counting vector
+        // sx, sy - left-top letter in sColors
+        begin
+            fx1 := ( dx1 * 0.6 + dx2 * 0.2) * W;
+            fy1 := ( dy1 * 0.6 + dy2 * 0.2) * W;
+            fz1 := ( dz1 * 0.6 + dz2 * 0.2) * W;
+
+            fx2 := (-dx1 * 0.2 + dx2 * 0.6) * W;
+            fy2 := (-dy1 * 0.2 + dy2 * 0.6) * W;
+            fz2 := (-dz1 * 0.2 + dz2 * 0.6) * W;
+
+            Id_0_0 := GetId( 0, 0);
+            Id_1_0 := GetId( 1, 0);
+            Id_2_0 := GetId( 2, 0);
+            Id_3_0 := GetId( 3, 0);
+            Id_0_1 := GetId( 0, 1);
+            Id_3_1 := GetId( 3, 1);
+            Id_0_2 := GetId( 0, 2);
+            Id_3_2 := GetId( 3, 2);
+            Id_0_3 := GetId( 0, 3);
+            Id_1_3 := GetId( 1, 3);
+            Id_2_3 := GetId( 2, 3);
+            Id_3_3 := GetId( 3, 3);
+
+            Ic_0_0 := AddVertex( 1, 0);
+            Ic_1_0 := AddVertex( 2, 0);
+            Ic_2_0 := AddVertex( 3, 0);
+            Ic_0_1 := AddVertex( 1, 1);
+            Ic_1_1 := AddVertex( 2, 1);
+            Ic_2_1 := AddVertex( 3, 1);
+            Ic_0_2 := AddVertex( 1, 2);
+            Ic_1_2 := AddVertex( 2, 2);
+            Ic_2_2 := AddVertex( 3, 2);
+
+            Polygon( 0, 0, Id_0_0 + Ic_0_0 + Id_1_0, 3);
+            Polygon( 1, 0, Id_1_0 + Ic_0_0 + Ic_1_0 + Id_2_0, 7);
+            Polygon( 2, 0, Id_2_0 + Ic_1_0 + Ic_2_0 + Id_3_0, 7);
+            Polygon( 3, 0, Id_3_0 + Ic_2_0 + Id_3_1, 3);
+
+            Polygon( 0, 1, Id_0_0 + Id_0_1 + Ic_0_1 + Ic_0_0, 14);
+            Polygon( 1, 1, Ic_0_0 + Ic_0_1 + Ic_1_1 + Ic_1_0, 15);
+            Polygon( 2, 1, Ic_1_0 + Ic_1_1 + Ic_2_1 + Ic_2_0, 15);
+            Polygon( 3, 1, Ic_2_0 + Ic_2_1 + Id_3_2 + Id_3_1, 11);
+
+            Polygon( 0, 2, Id_0_1 + Id_0_2 + Ic_0_2 + Ic_0_1, 14);
+            Polygon( 1, 2, Ic_0_1 + Ic_0_2 + Ic_1_2 + Ic_1_1, 15);
+            Polygon( 2, 2, Ic_1_1 + Ic_1_2 + Ic_2_2 + Ic_2_1, 15);
+            Polygon( 3, 2, Ic_2_1 + Ic_2_2 + Id_3_3 + Id_3_2, 11);
+
+            Polygon( 0, 3, Id_0_2 + Id_0_3 + Ic_0_2, 6);
+            Polygon( 1, 3, Ic_0_2 + Id_0_3 + Id_1_3 + Ic_1_2,13);
+            Polygon( 2, 3, Ic_1_2 + Id_1_3 + Id_2_3 + Ic_2_2,13);
+            Polygon( 3, 3, Ic_2_2 + Id_2_3 + Id_3_3, 5);
+        end;
+
+        cf := 0;
+        MakeSide( 0, N, N,  1, 0, 0,  0,-1, 0,  6, 0); // up
+        MakeSide( 0, 0, N,  1, 0, 0,  0, 0,-1,  6, 4); // face
+        MakeSide( 0, N, N,  0,-1, 0,  0, 0,-1,  1, 4); // left
+        MakeSide( N, 0, N,  0, 1, 0,  0, 0,-1, 11, 4); // right
+        MakeSide( N, N, N, -1, 0, 0,  0, 0,-1, 16, 4); // back
+        MakeSide( 0, 0, 0,  1, 0, 0,  0, 1, 0,  6, 8); // bottom
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Cl[i]" VertexIndexes = "S[i]" InvisibleEdges = "IE[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " Vx; Vy; Vz" />
+            <Vertices Vectors = " Wx; Wy; Wz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "cf" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "AdjoiningFacesHaveSameColors" />
+</xml>

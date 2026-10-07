@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+	<Interface>
+		<Name>Curvy Copter III (Jumbling)</Name>
+        	<Class>THeli</Class>
+		<Menu>Other forms\Fat Cubes\Curvy Copter III (Jumbling)</Menu>
+	</Interface>
+	<Script>
+		clGreen		:= '009600';
+		clYellow	:= 'FFFF00';
+		clBlue		:= '0000C8';
+		clRed		:= 'FF0000';
+		clOrange	:= 'FF800A';
+		clWhite		:= 'FFFFFF';
+		clGold		:= 'E0C07D';
+		clSilver	:= 'C0C0C0';
+
+		clUp	:= clWhite;
+		clDown	:= clYellow;
+		clLeft	:= clRed;
+		clRight := clOrange;
+		clFront	:= clBlue;
+		clBack	:= clGreen;
+
+		B0:=0.066; 
+
+		A1:=0.565; //distance from face + 0.5
+		B1:=0.0001; //distance from edge midpoint
+		C1:=0.3500; //distance from center
+
+		A2:=0.6501; //distance from face + 0.5
+		B2:=0.0831; //distance from edge midpoint
+		C2:=0.0832; //distance from center
+		edgeCut:=0.4 ;
+	</Script>
+
+	<Axes TurningAngles = "Pi" PlaneDistances = "-edgeCut;edgeCut" FixedLayer = "1">
+		<Axis NormVector = "-1; -1; 0"/>
+		<Axis NormVector = "1; -1; 0"/>
+		<Axis NormVector = "-1; 0; -1"/>
+		<Axis NormVector = "-1; 0; 1"/>
+		<Axis NormVector = "0; -1; -1"/>
+		<Axis NormVector = "0; 1; -1"/>
+	</Axes>
+	<Figure>
+		<Part>
+			<Vertices>
+
+				cube vertex
+				<Add Vector = "-0.5; -0.5; -0.5"/>0
+				<Add Vector = "-0.5; 0.5; -0.5"/>1
+				<Add Vector = "0.5; 0.5; -0.5"/>2
+				<Add Vector = "0.5; -0.5; -0.5"/>3
+				<Add Vector = "-0.5; -0.5; 0.5"/>4
+				<Add Vector = "-0.5; 0.5; 0.5"/>5
+				<Add Vector = "0.5; 0.5; 0.5"/>6
+				<Add Vector = "0.5; -0.5; 0.5"/>7	
+
+				up
+				outer hexagon points
+				<Add Vector = "-0.5; -B0; 0.5"/>8
+				<Add Vector = "-0.5; B0; 0.5"/>9
+				<Add Vector = "-B0; 0.5; 0.5"/>10
+				<Add Vector = "B0; 0.5; 0.5"/>11
+				<Add Vector = "0.5; B0; 0.5"/>12
+				<Add Vector = "0.5; -B0; 0.5"/>13
+				<Add Vector = "B0; -0.5; 0.5"/>14
+				<Add Vector = "-B0; -0.5; 0.5"/>15
+				mid hexagon points
+				<Add Vector = "-C1; -B1; A1"/>16
+				<Add Vector = "-C1; B1; A1"/>17
+				<Add Vector = "-B1; C1; A1"/>18
+				<Add Vector = "B1; C1; A1"/>19
+				<Add Vector = "C1; B1; A1"/>20
+				<Add Vector = "C1; -B1; A1"/>21
+				<Add Vector = "B1; -C1; A1"/>22
+				<Add Vector = "-B1; -C1; A1"/>23
+				inner hexagon points
+				<Add Vector = "-C2; -B2; A2"/>24
+				<Add Vector = "-C2; B2; A2"/>25
+				<Add Vector = "-B2; C2; A2"/>26
+				<Add Vector = "B2; C2; A2"/>27
+				<Add Vector = "C2; B2; A2"/>28
+				<Add Vector = "C2; -B2; A2"/>29
+				<Add Vector = "B2; -C2; A2"/>30
+				<Add Vector = "-B2; -C2; A2"/>31
+
+
+				down
+				<Add Vector = "-0.5; B0; -0.5"/>32
+				<Add Vector = "-0.5; -B0; -0.5"/>
+				<Add Vector = "-B0; -0.5; -0.5"/>
+				<Add Vector = "B0; -0.5; -0.5"/>
+				<Add Vector = "0.5; -B0; -0.5"/>
+				<Add Vector = "0.5; B0; -0.5"/>
+				<Add Vector = "B0; 0.5; -0.5"/>
+				<Add Vector = "-B0; 0.5; -0.5"/>
+
+				<Add Vector = "-C1; B1; -A1"/>
+				<Add Vector = "-C1; -B1; -A1"/>
+				<Add Vector = "-B1; -C1; -A1"/>
+				<Add Vector = "B1; -C1; -A1"/>
+				<Add Vector = "C1; -B1; -A1"/>
+				<Add Vector = "C1; B1; -A1"/>
+				<Add Vector = "B1; C1; -A1"/>
+				<Add Vector = "-B1; C1; -A1"/>
+
+				<Add Vector = "-C2; B2; -A2"/>
+				<Add Vector = "-C2; -B2; -A2"/>
+				<Add Vector = "-B2; -C2; -A2"/>
+				<Add Vector = "B2; -C2; -A2"/>
+				<Add Vector = "C2; -B2; -A2"/>
+				<Add Vector = "C2; B2; -A2"/>
+				<Add Vector = "B2; C2; -A2"/>
+				<Add Vector = "-B2; C2; -A2"/>
+
+				front
+				<Add Vector = "-0.5; -0.5; -B0"/>
+				<Add Vector = "-0.5; -0.5; B0"/>
+				<Add Vector = "-B0; -0.5; 0.5"/>
+				<Add Vector = "B0; -0.5; 0.5"/>
+				<Add Vector = "0.5; -0.5; B0"/>
+				<Add Vector = "0.5; -0.5; -B0"/>
+				<Add Vector = "B0; -0.5; -0.5"/>
+				<Add Vector = "-B0; -0.5; -0.5"/>
+
+				<Add Vector = "-C1; -A1; -B1"/>
+				<Add Vector = "-C1; -A1; B1"/>
+				<Add Vector = "-B1; -A1; C1"/>
+				<Add Vector = "B1; -A1; C1"/>
+				<Add Vector = "C1; -A1; B1"/>
+				<Add Vector = "C1; -A1; -B1"/>
+				<Add Vector = "B1; -A1; -C1"/>
+				<Add Vector = "-B1; -A1; -C1"/>
+
+				<Add Vector = "-C2; -A2; -B2"/>
+				<Add Vector = "-C2; -A2; B2"/>
+				<Add Vector = "-B2; -A2; C2"/>
+				<Add Vector = "B2; -A2; C2"/>
+				<Add Vector = "C2; -A2; B2"/>
+				<Add Vector = "C2; -A2; -B2"/>
+				<Add Vector = "B2; -A2; -C2"/>
+				<Add Vector = "-B2; -A2; -C2"/>
+
+				back
+				<Add Vector = "0.5; 0.5; -B0"/>
+				<Add Vector = "0.5; 0.5; B0"/>
+				<Add Vector = "B0; 0.5; 0.5"/>
+				<Add Vector = "-B0; 0.5; 0.5"/>
+				<Add Vector = "-0.5; 0.5; B0"/>
+				<Add Vector = "-0.5; 0.5; -B0"/>
+				<Add Vector = "-B0; 0.5; -0.5"/>
+				<Add Vector = "B0; 0.5; -0.5"/>
+
+				<Add Vector = "C1; A1; -B1"/>
+				<Add Vector = "C1; A1; B1"/>
+				<Add Vector = "B1; A1; C1"/>
+				<Add Vector = "-B1; A1; C1"/>
+				<Add Vector = "-C1; A1; B1"/>
+				<Add Vector = "-C1; A1; -B1"/>
+				<Add Vector = "-B1; A1; -C1"/>
+				<Add Vector = "B1; A1; -C1"/>
+
+				<Add Vector = "C2; A2; -B2"/>
+				<Add Vector = "C2; A2; B2"/>
+				<Add Vector = "B2; A2; C2"/>
+				<Add Vector = "-B2; A2; C2"/>
+				<Add Vector = "-C2; A2; B2"/>
+				<Add Vector = "-C2; A2; -B2"/>
+				<Add Vector = "-B2; A2; -C2"/>
+				<Add Vector = "B2; A2; -C2"/>
+
+				right
+				<Add Vector = "0.5; -0.5; -B0"/>
+				<Add Vector = "0.5; -0.5; B0"/>
+				<Add Vector = "0.5; -B0; 0.5"/>
+				<Add Vector = "0.5; B0; 0.5"/>
+				<Add Vector = "0.5; 0.5; B0"/>
+				<Add Vector = "0.5; 0.5; -B0"/>
+				<Add Vector = "0.5; B0; -0.5"/>
+				<Add Vector = "0.5; -B0; -0.5"/>
+
+				<Add Vector = "A1; -C1; -B1"/>
+				<Add Vector = "A1; -C1; B1"/>
+				<Add Vector = "A1; -B1; C1"/>
+				<Add Vector = "A1; B1; C1"/>
+				<Add Vector = "A1; C1; B1"/>
+				<Add Vector = "A1; C1; -B1"/>
+				<Add Vector = "A1; B1; -C1"/>
+				<Add Vector = "A1; -B1; -C1"/>
+
+				<Add Vector = "A2; -C2; -B2"/>
+				<Add Vector = "A2; -C2; B2"/>
+				<Add Vector = "A2; -B2; C2"/>
+				<Add Vector = "A2; B2; C2"/>
+				<Add Vector = "A2; C2; B2"/>
+				<Add Vector = "A2; C2; -B2"/>
+				<Add Vector = "A2; B2; -C2"/>
+				<Add Vector = "A2; -B2; -C2"/>
+
+				left
+				<Add Vector = "-0.5; 0.5; -B0"/>
+				<Add Vector = "-0.5; 0.5; B0"/>
+				<Add Vector = "-0.5; B0; 0.5"/>
+				<Add Vector = "-0.5; -B0; 0.5"/>
+				<Add Vector = "-0.5; -0.5; B0"/>
+				<Add Vector = "-0.5; -0.5; -B0"/>
+				<Add Vector = "-0.5; -B0; -0.5"/>
+				<Add Vector = "-0.5; B0; -0.5"/>
+
+				<Add Vector = "-A1; C1; -B1"/>
+				<Add Vector = "-A1; C1; B1"/>
+				<Add Vector = "-A1; B1; C1"/>
+				<Add Vector = "-A1; -B1; C1"/>
+				<Add Vector = "-A1; -C1; B1"/>
+				<Add Vector = "-A1; -C1; -B1"/>
+				<Add Vector = "-A1; -B1; -C1"/>
+				<Add Vector = "-A1; B1; -C1"/>
+
+				<Add Vector = "-A2; C2; -B2"/>
+				<Add Vector = "-A2; C2; B2"/>
+				<Add Vector = "-A2; B2; C2"/>
+				<Add Vector = "-A2; -B2; C2"/>
+				<Add Vector = "-A2; -C2; B2"/>
+				<Add Vector = "-A2; -C2; -B2"/>
+				<Add Vector = "-A2; -B2; -C2"/>
+				<Add Vector = "-A2; B2; -C2"/>
+
+	   		</Vertices>
+
+	   		<Faces>
+
+			<Face Color = "clUp" VertexIndexes = "9;10;5"/>
+			<Face Color = "clUp" VertexIndexes = "11;12;6"/>
+			<Face Color = "clUp" VertexIndexes = "13;14;7"/>
+			<Face Color = "clUp" VertexIndexes = "15;8;4"/>
+			<Face Color = "clUp" VertexIndexes = "16;17;9;8"/>
+			<Face Color = "clUp" VertexIndexes = "17;18;10;9"/>
+			<Face Color = "clUp" VertexIndexes = "18;19;11;10"/>
+			<Face Color = "clUp" VertexIndexes = "19;20;12;11"/>
+			<Face Color = "clUp" VertexIndexes = "20;21;13;12"/>
+			<Face Color = "clUp" VertexIndexes = "21;22;14;13"/>
+			<Face Color = "clUp" VertexIndexes = "22;23;15;14"/>
+			<Face Color = "clUp" VertexIndexes = "23;16;8;15"/>
+			<Face Color = "clUp" VertexIndexes = "24;25;17;16"/>
+			<Face Color = "clUp" VertexIndexes = "25;26;18;17"/>
+			<Face Color = "clUp" VertexIndexes = "26;27;19;18"/>
+			<Face Color = "clUp" VertexIndexes = "27;28;20;19"/>
+			<Face Color = "clUp" VertexIndexes = "28;29;21;20"/>
+			<Face Color = "clUp" VertexIndexes = "29;30;22;21"/>
+			<Face Color = "clUp" VertexIndexes = "30;31;23;22"/>
+			<Face Color = "clUp" VertexIndexes = "31;24;16;23"/>
+			<Face Color = "clUp" VertexIndexes = "31;30;29;28;27;26;25;24"/>
+			
+			<Face Color = "clDown" VertexIndexes = "33;34;0"/>
+			<Face Color = "clDown" VertexIndexes = "35;36;3"/>
+			<Face Color = "clDown" VertexIndexes = "37;38;2"/>
+			<Face Color = "clDown" VertexIndexes = "39;32;1"/>
+			<Face Color = "clDown" VertexIndexes = "40;41;33;32"/>
+			<Face Color = "clDown" VertexIndexes = "41;42;34;33"/>
+			<Face Color = "clDown" VertexIndexes = "42;43;35;34"/>
+			<Face Color = "clDown" VertexIndexes = "43;44;36;35"/>
+			<Face Color = "clDown" VertexIndexes = "44;45;37;36"/>
+			<Face Color = "clDown" VertexIndexes = "45;46;38;37"/>
+			<Face Color = "clDown" VertexIndexes = "46;47;39;38"/>
+			<Face Color = "clDown" VertexIndexes = "47;40;32;39"/>
+			<Face Color = "clDown" VertexIndexes = "48;49;41;40"/>
+			<Face Color = "clDown" VertexIndexes = "49;50;42;41"/>
+			<Face Color = "clDown" VertexIndexes = "50;51;43;42"/>
+			<Face Color = "clDown" VertexIndexes = "51;52;44;43"/>
+			<Face Color = "clDown" VertexIndexes = "52;53;45;44"/>
+			<Face Color = "clDown" VertexIndexes = "53;54;46;45"/>
+			<Face Color = "clDown" VertexIndexes = "54;55;47;46"/>
+			<Face Color = "clDown" VertexIndexes = "55;48;40;47"/>
+			<Face Color = "clDown" VertexIndexes = "55;54;53;52;51;50;49;48"/>
+			
+			<Face Color = "clFront" VertexIndexes = "57;58;4"/>
+			<Face Color = "clFront" VertexIndexes = "59;60;7"/>
+			<Face Color = "clFront" VertexIndexes = "61;62;3"/>
+			<Face Color = "clFront" VertexIndexes = "63;56;0"/>
+			<Face Color = "clFront" VertexIndexes = "64;65;57;56"/>
+			<Face Color = "clFront" VertexIndexes = "65;66;58;57"/>
+			<Face Color = "clFront" VertexIndexes = "66;67;59;58"/>
+			<Face Color = "clFront" VertexIndexes = "67;68;60;59"/>
+			<Face Color = "clFront" VertexIndexes = "68;69;61;60"/>
+			<Face Color = "clFront" VertexIndexes = "69;70;62;61"/>
+			<Face Color = "clFront" VertexIndexes = "70;71;63;62"/>
+			<Face Color = "clFront" VertexIndexes = "71;64;56;63"/>
+			<Face Color = "clFront" VertexIndexes = "72;73;65;64"/>
+			<Face Color = "clFront" VertexIndexes = "73;74;66;65"/>
+			<Face Color = "clFront" VertexIndexes = "74;75;67;66"/>
+			<Face Color = "clFront" VertexIndexes = "75;76;68;67"/>
+			<Face Color = "clFront" VertexIndexes = "76;77;69;68"/>
+			<Face Color = "clFront" VertexIndexes = "77;78;70;69"/>
+			<Face Color = "clFront" VertexIndexes = "78;79;71;70"/>
+			<Face Color = "clFront" VertexIndexes = "79;72;64;71"/>
+			<Face Color = "clFront" VertexIndexes = "79;78;77;76;75;74;73;72"/>
+			
+			<Face Color = "clBack" VertexIndexes = "81;82;6"/>
+			<Face Color = "clBack" VertexIndexes = "83;84;5"/>
+			<Face Color = "clBack" VertexIndexes = "85;86;1"/>
+			<Face Color = "clBack" VertexIndexes = "87;80;2"/>
+			<Face Color = "clBack" VertexIndexes = "88;89;81;80"/>
+			<Face Color = "clBack" VertexIndexes = "89;90;82;81"/>
+			<Face Color = "clBack" VertexIndexes = "90;91;83;82"/>
+			<Face Color = "clBack" VertexIndexes = "91;92;84;83"/>
+			<Face Color = "clBack" VertexIndexes = "92;93;85;84"/>
+			<Face Color = "clBack" VertexIndexes = "93;94;86;85"/>
+			<Face Color = "clBack" VertexIndexes = "94;95;87;86"/>
+			<Face Color = "clBack" VertexIndexes = "95;88;80;87"/>
+			<Face Color = "clBack" VertexIndexes = "96;97;89;88"/>
+			<Face Color = "clBack" VertexIndexes = "97;98;90;89"/>
+			<Face Color = "clBack" VertexIndexes = "98;99;91;90"/>
+			<Face Color = "clBack" VertexIndexes = "99;100;92;91"/>
+			<Face Color = "clBack" VertexIndexes = "100;101;93;92"/>
+			<Face Color = "clBack" VertexIndexes = "101;102;94;93"/>
+			<Face Color = "clBack" VertexIndexes = "102;103;95;94"/>
+			<Face Color = "clBack" VertexIndexes = "103;96;88;95"/>
+			<Face Color = "clBack" VertexIndexes = "103;102;101;100;99;98;97;96"/>
+			
+			<Face Color = "clRight" VertexIndexes = "105;106;7"/>
+			<Face Color = "clRight" VertexIndexes = "107;108;6"/>
+			<Face Color = "clRight" VertexIndexes = "109;110;2"/>
+			<Face Color = "clRight" VertexIndexes = "111;104;3"/>
+			<Face Color = "clRight" VertexIndexes = "112;113;105;104"/>
+			<Face Color = "clRight" VertexIndexes = "113;114;106;105"/>
+			<Face Color = "clRight" VertexIndexes = "114;115;107;106"/>
+			<Face Color = "clRight" VertexIndexes = "115;116;108;107"/>
+			<Face Color = "clRight" VertexIndexes = "116;117;109;108"/>
+			<Face Color = "clRight" VertexIndexes = "117;118;110;109"/>
+			<Face Color = "clRight" VertexIndexes = "118;119;111;110"/>
+			<Face Color = "clRight" VertexIndexes = "119;112;104;111"/>
+			<Face Color = "clRight" VertexIndexes = "120;121;113;112"/>
+			<Face Color = "clRight" VertexIndexes = "121;122;114;113"/>
+			<Face Color = "clRight" VertexIndexes = "122;123;115;114"/>
+			<Face Color = "clRight" VertexIndexes = "123;124;116;115"/>
+			<Face Color = "clRight" VertexIndexes = "124;125;117;116"/>
+			<Face Color = "clRight" VertexIndexes = "125;126;118;117"/>
+			<Face Color = "clRight" VertexIndexes = "126;127;119;118"/>
+			<Face Color = "clRight" VertexIndexes = "127;120;112;119"/>
+			<Face Color = "clRight" VertexIndexes = "127;126;125;124;123;122;121;120"/>
+			
+			<Face Color = "clLeft" VertexIndexes = "129;130;5"/>
+			<Face Color = "clLeft" VertexIndexes = "131;132;4"/>
+			<Face Color = "clLeft" VertexIndexes = "133;134;0"/>
+			<Face Color = "clLeft" VertexIndexes = "135;128;1"/>
+			<Face Color = "clLeft" VertexIndexes = "136;137;129;128"/>
+			<Face Color = "clLeft" VertexIndexes = "137;138;130;129"/>
+			<Face Color = "clLeft" VertexIndexes = "138;139;131;130"/>
+			<Face Color = "clLeft" VertexIndexes = "139;140;132;131"/>
+			<Face Color = "clLeft" VertexIndexes = "140;141;133;132"/>
+			<Face Color = "clLeft" VertexIndexes = "141;142;134;133"/>
+			<Face Color = "clLeft" VertexIndexes = "142;143;135;134"/>
+			<Face Color = "clLeft" VertexIndexes = "143;136;128;135"/>
+			<Face Color = "clLeft" VertexIndexes = "144;145;137;136"/>
+			<Face Color = "clLeft" VertexIndexes = "145;146;138;137"/>
+			<Face Color = "clLeft" VertexIndexes = "146;147;139;138"/>
+			<Face Color = "clLeft" VertexIndexes = "147;148;140;139"/>
+			<Face Color = "clLeft" VertexIndexes = "148;149;141;140"/>
+			<Face Color = "clLeft" VertexIndexes = "149;150;142;141"/>
+			<Face Color = "clLeft" VertexIndexes = "150;151;143;142"/>
+			<Face Color = "clLeft" VertexIndexes = "151;144;136;143"/>
+			<Face Color = "clLeft" VertexIndexes = "151;150;149;148;147;146;145;144"/>
+
+	   		</Faces>
+	   	</Part>
+		<SplitByAxes/>
+	</Figure>
+</xml>

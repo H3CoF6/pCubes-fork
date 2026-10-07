@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Shapeshifting 3x3x6</Name>
+        <Menu>Cubic\Cuboids\Shapeshifting 3x3x6</Menu>
+        <Inventor>Ben Streeter</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-09-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3792</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.6;
+        D := W / 5;
+
+        WX := D * 3 * 1.001;
+        WY := WX;
+        WZ := W;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D*3;-D; 0; D; D*3" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <Split Axis = "2" From = "5" />
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(2)" Layer = "Random(N)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(4)" Angle = "Pi/2*Random(4)" />
+        </Macro>
+        <Macro Name = "Sc2" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "2*Pi * Random" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script> N := 6; </Script>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "Sc2" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

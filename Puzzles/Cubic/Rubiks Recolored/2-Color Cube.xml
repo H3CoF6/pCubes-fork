@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2-Color Cube</Name>
+        <Menu>Cubic\Rubiks Recolored\2-Color Cube</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-03</Added>
+        <Link>https://www.youtube.com/watch?v=dRs2MMC2yHQ</Link>
+    </Interface>
+
+    <Script>
+        C1 := 'AA00AA';
+        C2 := '00DD00';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices>
+                <Add Vector = "-W;-W; 0" />
+                <Add Vector = "-W; W; 0" />
+                <Add Vector = " W;-W; 0" />
+                <Add Vector = " W; W; 0" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "C1" VertexIndexes = " 1; 5; 7; 3" />
+                <Face Color = "C1" VertexIndexes = " 5; 1; 8;10" InvisibleEdges = "4" />
+                <Face Color = "C1" VertexIndexes = " 7; 5;10;11" InvisibleEdges = "4" />
+                <Face Color = "C1" VertexIndexes = " 3; 7;11; 9" InvisibleEdges = "4" />
+                <Face Color = "C1" VertexIndexes = " 1; 3; 9; 8" InvisibleEdges = "4" />
+
+                <Face Color = "C2" VertexIndexes = " 2; 6; 4; 0" />
+                <Face Color = "C2" VertexIndexes = " 6; 2; 9;11" InvisibleEdges = "4" />
+                <Face Color = "C2" VertexIndexes = " 4; 6;11;10" InvisibleEdges = "4" />
+                <Face Color = "C2" VertexIndexes = " 0; 4;10; 8" InvisibleEdges = "4" />
+                <Face Color = "C2" VertexIndexes = " 2; 0; 8; 9" InvisibleEdges = "4" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

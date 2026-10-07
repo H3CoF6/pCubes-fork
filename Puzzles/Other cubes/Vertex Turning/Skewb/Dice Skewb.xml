@@ -1,0 +1,119 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dice Skewb</Name>
+        <Menu>Other cubes\Vertex Turning\Skewb\Dice Skewb</Menu>
+        <Inventor>Justin Eplett</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7908</Link>
+    </Interface>
+
+    <Script>
+        Color1 := '1E1F1F';
+        Color2 := 'FFFFFF';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        WC := W * 1.005;
+        RC := W * 0.2;
+        DC := W * 0.69;
+       
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "Color1" />
+        <SplitByAxes/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+
+        <Macro Name = "AddCenterDot" >
+            <Circle Color = "Color2" Radius = "RC" Base = "0;0;0" Center = "0;0;WC"/>
+        </Macro>
+
+        <Macro Name = "AddCornerDot" >
+            <Circle Color = "Color2" Radius = "RC" Base = "DC;DC;0" Center = "DC;DC;WC"/>
+        </Macro>
+
+        <Macro Name = "AddEdgeDot" >
+            <Circle Color = "Color2" Radius = "RC" Base = "DC;0;0" Center = "DC;0;WC"/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddCenterDot" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCenterDot" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <ExecMacro MacroName = "AddEdgeDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddEdgeDot" />
+
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCornerDot" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddCenterDot" />
+
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

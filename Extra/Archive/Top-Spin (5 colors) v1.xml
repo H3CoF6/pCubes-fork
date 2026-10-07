@@ -1,0 +1,149 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+   <Interface>
+        <Name>Top-Spin (5 colors) v1</Name>
+        <Menu>Other forms\Top-Spin (5 colors) v1</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added></Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=892</Link>
+    </Interface>
+
+     <Script>
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        W := 0.48;
+        H := W * (1 + 0.08);
+        B := 0.03;
+        R1 := W * 0.060;
+        R2 := R1 * 0.001;
+
+        delta := W * 0.875;
+        for i := 0 to 9 do begin
+            x1[i] := R1 * cos(2 * Pi / 10 * i);
+            y1[i] := R1 * sin(2 * Pi / 10 * i) - delta;
+            x2[i] := R2 * cos(2 * Pi / 10 * i);
+            y2[i] := R2 * sin(2 * Pi / 10 * i) - delta;
+        end;
+        D := W / 1.43;
+
+        Colorbg := '0099EE';
+        clRed    := 'EE0000';
+        clOrange := 'FF6600';
+        clBlue   := '0099EE';
+        clGreen  := '00DD00';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+    </Script>
+
+    <Axes TurningAngles = "0; 0; 0" PlaneDistances = "-W; W" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; 0; Pi/10" PlaneDistances = "-B; B" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0;Pi" PlaneDistances = "D" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "BigW" />
+
+        <Split Axis = "2" From = "1" To = "1" />
+        <Hide Axis = "2" From = "1" To = "1" />
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colorbg" > <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-B" /> </Cut>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" id = "2" />
+        <ExecMacro MacroName = "CutColor" id = "3" />
+
+        <Macro Name = "CutColor1">
+            <Cut Color = "Colorbg" > <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-W" /> </Cut>
+        </Macro>
+        <ExecMacro MacroName = "CutColor1" id = "0" />
+        <ExecMacro MacroName = "CutColor1" id = "1" />
+        <ExecMacro MacroName = "CutColor1" id = "4" />
+        <ExecMacro MacroName = "CutColor1" id = "5" />
+
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "CutColor" id = "2" Colorbg = "clGreen" />
+        <ExecMacro MacroName = "CutColor" id = "3" />
+        <ExecMacro MacroName = "CutColor1" id = "0" />
+        <ExecMacro MacroName = "CutColor1" id = "1" />
+        <ExecMacro MacroName = "CutColor1" id = "4" />
+        <ExecMacro MacroName = "CutColor1" id = "5" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "AddPuck">
+            <Part>
+                <Vertices Vectors = "x2; y2; B + 0.025" />
+                <Vertices Vectors = "x1; y1; B" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;2;3;4;5;6;7;8;9" />
+
+                    <Face Color = "cl" VertexIndexes = "10;11;1;0" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "11;12;2;1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "12;13;3;2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "13;14;4;3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "14;15;5;4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "15;16;6;5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "16;17;7;6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "17;18;8;7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "18;19;9;8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "19;10;0;9" InvisibleEdges = "10" />
+
+                    <Face VertexIndexes = "19;18;17;16;15;14;13;12;11;10" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddPucks">
+            <ExecMacro MacroName = "AddPuck" />
+            <Turn NormVector = "0; 0; 1" Angle = " Pi/10" />
+        </Macro>
+
+        <Macro Name = "AddPucks2">
+            <ExecMacro MacroName = "AddPuck" />
+            <Turn NormVector = "0; 0; 1" Angle = "-Pi/10" />
+        </Macro>
+
+        <Turn NormVector = "0; 0; 1" Angle = "Pi/20" />
+
+        <Turn Axis = "0" From = "0" To = "2" Angle = "Pi/2" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clGreen " Repeat = "2" />
+        <ExecMacro MacroName = "AddPucks" cl = "clYellow" Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks" cl = "clOrange" Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks" cl = "clWhite " Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks" cl = "clRed   " Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks" cl = "clGreen " Repeat = "2" />
+
+        <Turn NormVector = "0; 1; 0" Angle = "Pi" />
+
+
+        <ExecMacro MacroName = "AddPucks2" cl = "clGreen " Repeat = "2" />
+        <ExecMacro MacroName = "AddPucks2" cl = "clYellow" Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks2" cl = "clOrange" Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks2" cl = "clWhite " Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks2" cl = "clRed   " Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks2" cl = "clGreen " Repeat = "2" />
+
+        <Turn Axis = "0" From = "0" To = "2" Angle = "-Pi/2" />
+
+        <Turn NormVector = "0; 1; 0" Angle = "Pi" />
+        <Turn NormVector = "0; 0; 1" Angle = "22*Pi/20" />
+        <Connect Axis = "1" Layers = "0; 2" />
+    <SaveSolvedState/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

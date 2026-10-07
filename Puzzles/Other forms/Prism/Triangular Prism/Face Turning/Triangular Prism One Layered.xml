@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triangular Prism One Layered</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Face Turning\Triangular Prism One Layered</Menu>
+        <Inventor>Dario Dagné</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-01-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6335</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'EDFF11';
+        clRed    := 'C80000';
+        clGreen  := '009600';
+        clBlue   := '0000C8';
+        clWhite  := 'FFFFFF';
+
+        R := 0.7;
+        H := R * 0.4;
+
+        sAngle := Pi * 2 / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D := R / 8;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D" NormVectors = "x; y; 0" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Faces>
+                <Face Color = "clWhite " VertexIndexes = "0;1;2" />
+                <Face Color = "clYellow" VertexIndexes = "4;3;5" />
+                <Face Color = "clGreen " VertexIndexes = "0;3;4;1" />
+                <Face Color = "clBlue  " VertexIndexes = "1;4;5;2" />
+                <Face Color = "clRed   " VertexIndexes = "2;5;3;0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

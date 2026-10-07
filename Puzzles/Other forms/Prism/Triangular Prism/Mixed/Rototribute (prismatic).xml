@@ -1,0 +1,102 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rototribute (prismatic)</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Mixed\Rototribute (prismatic)</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2018-08-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4137</Link>
+    </Interface>
+
+    <Script>
+        clBlue    := '0000C8';
+        clGreen   := '009600';
+        clRed     := 'C80000';
+        clOrange  := 'FF800A';
+        clViolett := '7700CD';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        cl[0] := clViolett; // top and bottom
+        cl[1] := clGreen;
+
+        cl[2] := clRed; // sides
+        cl[3] := clYellow;
+        cl[4] := clOrange;
+
+        R := 0.5;
+        H := R * sqrt(3);
+        sAngle := Pi * 2 / 3;
+
+        bz := R * sqrt(3);
+
+        for i := 0 to 2 do begin
+            ax[i] := R * cos(sAngle * i);
+            ay[i] := R * sin(sAngle * i);
+            vx[i] := ax[i]*2;
+            vy[i] := ay[i]*2;
+        end;
+
+        D := R / 2;
+        JAngle := Arctan(1/2)*2;
+    </Script>
+
+    <Axes TurningAngles = "Pi" AvailableAngles = "-JAngle; 0; JAngle; Pi/2; Pi-JAngle; Pi; Pi+JAngle; Pi*3/2;" PlaneDistances = "D" TurnAxesWithLayer = "0">
+        <Axis NormVector = " ax[0];  ay[0];   0"/>
+        <Axis NormVector = " ax[1];  ay[1];   0"/>
+        <Axis NormVector = " ax[2];  ay[2];   0"/>
+        <Axis NormVector = "-ax[0]; -ay[0]; -bz"/>
+        <Axis NormVector = "-ax[1]; -ay[1]; -bz"/>
+        <Axis NormVector = "-ax[2]; -ay[2]; -bz"/>
+        <Axis NormVector = "-ax[0]; -ay[0];  bz"/>
+        <Axis NormVector = "-ax[1]; -ay[1];  bz"/>
+        <Axis NormVector = "-ax[2]; -ay[2];  bz"/>
+    </Axes>
+
+    <Figure>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "vx[0]; vy[0]; -H/2"/>
+                <Add Vector = "vx[1]; vy[1]; -H/2"/>
+                <Add Vector = "vx[2]; vy[2]; -H/2"/>
+                <Add Vector = "vx[0]; vy[0];  H/2"/>
+                <Add Vector = "vx[1]; vy[1];  H/2"/>
+                <Add Vector = "vx[2]; vy[2];  H/2"/>
+            </Vertices>
+            <Faces>
+                <Face Color = "cl[2]" VertexIndexes = "0;1;4;3" />
+                <Face Color = "cl[3]" VertexIndexes = "1;2;5;4" />
+                <Face Color = "cl[4]" VertexIndexes = "2;0;3;5" />
+                <Face Color = "cl[0]" VertexIndexes = "2;1;0" />
+                <Face Color = "cl[1]" VertexIndexes = "3;4;5" />
+
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "1" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+
+        <Turn  Axis = "0" Layer = "1" Angle = "Pi"/>
+        <Split Axis = "5" From  = "1"/>
+        <Split Axis = "8" From  = "1"/>
+        <Undo Repeat = "1"/>
+
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi"/>
+        <Split Axis = "3" From  = "1"/>
+        <Split Axis = "6" From  = "1"/>
+        <Undo Repeat = "1"/>
+
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi"/>
+        <Split Axis = "4" From  = "1"/>
+        <Split Axis = "7" From  = "1"/>
+        <Undo Repeat = "1"/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

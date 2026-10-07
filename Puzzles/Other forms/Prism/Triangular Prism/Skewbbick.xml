@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewbbick</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Skewbbick</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7914</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EDFF11'; // clYellow
+        Colors[1] := 'EE0000'; // clRed
+        Colors[2] := '00CC00'; // clGreen
+        Colors[3] := '0088EE'; // clBlue
+        Colors[4] := 'FFFFFF'; // clWhite
+
+        R := 0.7;
+        sAngle := Pi / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(sAngle * 2 * i);
+            y[i] := R * cos(sAngle * 2 * i);
+        end;
+
+        D := R / 2 * 0.999; // avoid turning of hanged vetices, but this born some artefacts, that eliminated later
+        H := R / sqrt(2);
+        az := H / 2;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" TurnAxesWithLayer = "0">
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle * 2" PlaneDistances = "0" TurnAxesWithLayer = "0">
+        <Axis NormVector = "x[0]; y[0]; az" />
+        <Axis NormVector = "x[1]; y[1]; az" />
+        <Axis NormVector = "x[2]; y[2]; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "0;1;2" />
+                <Face Color = "Colors[1]" VertexIndexes = "2;5;3;0" />
+                <Face Color = "Colors[2]" VertexIndexes = "0;3;4;1" />
+                <Face Color = "Colors[3]" VertexIndexes = "1;4;5;2" />
+                <Face Color = "Colors[4]" VertexIndexes = "4;3;5" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" Layer = "1" Angle = "Pi * 2/ 6" />
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "5" From = "1" />
+        <Split Axis = "6" From = "1" />
+        <Undo/>
+
+        <!-- eliminating artefacts -->
+        <HideContaining Vector = "x[0]; y[0]; 0" />
+        <Cut Axis = "1" To = "1" />
+        <HideContaining Vector = "x[1]; y[1]; 0" />
+        <Cut Axis = "2" To = "1" />
+        <HideContaining Vector = "x[2]; y[2]; 0" />
+        <Cut Axis = "3" To = "1" />
+        <ShowAll/>
+    </Figure>
+</xml>

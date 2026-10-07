@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-1 Mirror Barrel</Name>
+        <Menu>Other forms\Cylinder\Square-1 Mirror Barrel</Menu>
+        <Menu>Other forms\Square-1\Square-1 Mirror Barrel</Menu>
+        <Inventor>César Gustavo Hernández Martínez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-01-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10906</Link>
+    </Interface>
+
+    <Script>
+        Color := 'CCCCCC';
+
+        H := 0.5;
+        R := H * 1.2;
+        D := H * 0.2;
+
+        N := 60;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+
+        DWX :=-H * 0.08;
+        DWY := H * 0.04;
+        DWZ := H * 0.15;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/12" />
+
+        <Transfer Vector = " DWX; DWY; DWZ" />
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "Color" VertexIndexes = "FromTo( 0, N - 1)" />
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                <Face Color = "Color" VertexIndexes = "FromTo( 2 * N - 1, N)" />
+            </Faces>
+        </Part>
+        <Transfer Vector = "-DWX;-DWY;-DWZ" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+
+        <SaveSolvedState/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/6" />
+        <SaveSolvedState/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/6" />
+        <SaveSolvedState/>
+        <Undo Repeat = "2" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

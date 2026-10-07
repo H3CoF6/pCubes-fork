@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>CT^3 (Claus Triple Cheese Three Colour Tetra)</Name>
+        <Menu>Other forms\Tetrahedron\CT^3</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-07-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3674</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '222222';
+        Colors[1] := 'FFFFFF';
+        Colors[2] := '555555';
+
+        R := 0.7;
+        H := R * sqrt(2);
+        D := R * 0.06;
+        dH := R * 0.25;
+
+        sAngle := Pi * 2 / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi"     PlaneDistances = "0"     NormVectors = "x; y; 0" TurnAxesWithPartNo = "0" />
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" NormVectors = "0; 0; 1" TurnAxesWithPartNo = "0" />
+
+    <Figure>
+        <Macro Name = "AddTetrahedron" >
+            <Part>
+                <Vertices Vectors = " x; y; 0" />
+                <Vertices Vectors = " 0; 0; H" />
+                <Faces>
+                    <Face Color = "Colors[i]" VertexIndexes = "0;1;2" />
+                    <Face Color = "Colors[i]" VertexIndexes = "0;3;1" />
+                    <Face Color = "Colors[i]" VertexIndexes = "1;3;2" />
+                    <Face Color = "Colors[i]" VertexIndexes = "2;3;0" />
+                </Faces>
+            </Part>
+            <Script>i1 := (i + 1) mod 3; i2 := (i + 2) mod 3; </Script>
+            <Split Axis = "i1" From = "1" />
+            <Split Axis = "i2" From = "1" />
+            <RemoveContaining Vector = "x[i1]; y[i1]; 0" />
+            <RemoveContaining Vector = "x[i2]; y[i2]; 0" />
+            <HideAll/>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Transfer Vector = " 0; 0; dH" />
+        <ExecMacro MacroName = "AddTetrahedron" i = "0" Repeat = "3" />
+        <Transfer Vector = " 0; 0;-dH" />
+        <ShowAll/>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

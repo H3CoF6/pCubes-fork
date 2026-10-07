@@ -1,0 +1,119 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Face of Andromeda Dodecahedron (Sphere)</Name>
+        <Menu>Other forms\2d\Andromeda\Face of Andromeda Dodecahedron (Sphere)</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-10-28</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF6000'; // clOrange
+        Colors[ 1] := '0000EE'; // clBlue3
+        Colors[ 2] := 'FFFF00'; // clYellow
+        Colors[ 3] := '8800DD'; // clViolett
+        Colors[ 4] := 'DD0055'; // clRed2
+        Colors[ 5] := 'FF0000'; // clRed
+        Colors[ 6] := '0088FF'; // clBlue2
+        Colors[ 7] := 'FF55BB'; // clPink
+        Colors[ 8] := '00BBFF'; // clBlue1
+        Colors[ 9] := '007700'; // clGreen3
+        Colors[10] := '00FF00'; // clGreen1
+        Colors[11] := '00AA00'; // clGreen2
+
+        K := 0.7;
+
+        C0  := 0.192893711352;
+        C1  := 0.218483370127;
+        C2  := 0.374821658114;
+        C3  := 0.567715369466;
+        C4  := 0.728335176957;
+        C5  := 0.755467260516;
+        C6  := 0.824957552676;
+        C7  := 0.921228888309;
+        C8  := 0.959987701391;
+        C9  := 1.137066133860;
+        C10 := 1.167123436475;
+        C11 := 1.222371704903;
+        C12 := 1.272096282575;
+        C13 := 1.527703070858;
+        C14 := 1.646917940690;
+        C15 := 1.746186440985;
+        C16 := 1.865401310817;
+        C17 := 1.888445389283;
+        C18 := 1.977838965420;
+        C19 := 2.097053835252;
+
+        // Calcs normal to plane with 3 points
+        procedure Normal(x1, y1, z1, x2, y2, z2, x3, y3, z3, i);
+        begin
+          nx := (y1-y3) * (z2-z3) - (y2-y3) * (z1-z3);
+          ny := (z1-z3) * (x2-x3) - (z2-z3) * (x1-x3);
+          nz := (x1-x3) * (y2-y3) - (x2-x3) * (y1-y3);
+
+          // normalize vector
+          dn := sqrt(nx^2 + ny^2 + nz^2);
+          px[i] := nx / dn; py[i] := ny / dn; pz[i] := nz / dn;
+        end;
+
+        // Calc all Normals and fill array
+
+        Normal( 0,-C17, C10,  -C1,-C19,  C0,   C6,-C16,  C3,  55); // 34; 10; 44
+        Normal( 0,-C17, C10,   C6,-C16,  C3,   C4,-C12, C13,  56); // 34; 44; 72
+        Normal( 0,-C17, C10,   C4,-C12, C13,  -C2, -C9, C15,  57); // 34; 72; 50
+        Normal( 0,-C17, C10,  -C2, -C9, C15,  -C8,-C14,  C7,  58); // 34; 50; 70
+        Normal( 0,-C17, C10,  -C8,-C14,  C7,  -C1,-C19,  C0,  59); // 34; 70; 10
+
+        // All angles there: http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;p=358806
+        A1 := 1.07971961926539; // 61,8633772
+        A2 := 2 * Pi - 4 * A1 ; // 1.96430683;  // 112,546491
+        A3 := A1*2;             // 123,7267545
+        A4 := A2 + A1;          // 174,4098683
+
+        D  := K * 0.932;   // chosen to prevent overhang bandaging
+    </Script>
+
+    <Axes TurningAngles = "0; 2 *Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "D" >
+        <Axis NormVector = " px[55]; py[55]; pz[55]" />
+        <Axis NormVector = " px[56]; py[56]; pz[56]" />
+        <Axis NormVector = " px[57]; py[57]; pz[57]" />
+        <Axis NormVector = " px[58]; py[58]; pz[58]" />
+        <Axis NormVector = " px[59]; py[59]; pz[59]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Cut> <Plane NormVector = " 0; -C57;  C34" NormDistance = "K * 0.65" /> </Cut>
+
+        <Macro Name = "TurnAndSplit" >
+            <Turn Axis = "ax1" Layer = "1" Angle = "an1" />
+            <Split Axis = "ax2" From = "1"  />
+        </Macro>
+
+        <Macro Name = "Split" >
+            <ExecMacro MacroName = "TurnAndSplit" Repeat = "3" />
+            <Undo Repeat = "3" />
+            <Script>
+                ax1 := (ax1 + 1) mod 5;
+                ax2 := (ax2 + 1) mod 5;
+            </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax1 = "0" ax2 = "1" an1 = "A1" Repeat = "5" />
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "1;0;0" Angle = " 32 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

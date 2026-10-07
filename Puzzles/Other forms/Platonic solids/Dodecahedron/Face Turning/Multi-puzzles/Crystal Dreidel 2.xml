@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crystal Dreidel 2</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Multi-puzzles\Crystal Dreidel 2</Menu>
+        <Menu>Other forms\Multi-puzzles\Crystal Dreidel 2</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2019-10-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4572</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R2sin * 0.6; // may be varied 0 - 1
+        DC := R * (3 + sqrt(5)) / 6 - D * sqrt((5 - sqrt(5)) / 6);
+        DH := DC * 0.97; // Size of hole
+
+        R2 := D * R / As / RSin; // small dodecahedron
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = " Cx; Cy; Cz" />
+
+        <InvertVisibility/>
+
+        <Macro Name = "SplitC" >
+            <Split> <Plane NormDistance = "DH" NormVector = " Vx[i]; Vy[i]; Vz[i]" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitC" Repeat = "20" i = "0" />
+
+        <Macro Name = "RemoveCenters" >
+            <RemoveContaining Vector = "Cx[Id]; Cy[Id]; Cz[Id]" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" Id = "0" Repeat = "12" />
+        <ShowAll/>
+
+        <Macro Name = "SplitI" >
+            <Split> <Plane NormDistance = "DC" NormVector = " Vx[i]; Vy[i]; Vz[i]" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitI" Repeat = "20" i = "0" />
+        <RemoveGrayParts/>
+
+        <!-- small dodecahedron -->
+
+        <Script> R := R2; </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

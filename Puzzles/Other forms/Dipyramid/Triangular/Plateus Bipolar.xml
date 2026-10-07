@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Plateus Bipolar</Name>
+        <Menu>Other forms\Dipyramid\Triangular\Plateus Bipolar</Menu>
+        <Menu>Other forms\Skewb variants\Dipyramid\Plateus Bipolar</Menu>
+        <Inventor>Frederic Plateus</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2852</Link>
+    </Interface>
+
+    <Script>
+        R := 0.4;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        DCut := RSin;
+        RCut := R * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[8]; Vy[8]; Vz[8]" />
+        <Axis NormVector = "Vx[9]; Vy[9]; Vz[9]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <Split Axis = "1" From = "1" />
+        <Cut Color = "Colors[4]" > <Plane NormVector = "-cx[0];-cy[0];-cz[0]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[8]" > <Plane NormVector = "-cx[2];-cy[2];-cz[2]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[0]" > <Plane NormVector = "-cx[3];-cy[3];-cz[3]" NormDistance = "-DCut" /> </Cut>
+        <Turn NormVector = "Vx[2]; Vy[2]; Vz[2]" Angle = " Pi / 3" />
+        <Cut Color = "Colors[9] " > <Plane NormVector = "-cx[11]; -cy[11]; -cz[11]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[6] " > <Plane NormVector = "-cx[7 ]; -cy[7 ]; -cz[7 ]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[11]" > <Plane NormVector = "-cx[8 ]; -cy[8 ]; -cz[8 ]" NormDistance = "-DCut" /> </Cut>
+        <Turn NormVector = "Vx[2]; Vy[2]; Vz[2]" Angle = "-Pi / 3" />
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <!-- cut corners for better control -->
+        <Cut> <Plane NormVector = " Vx[0 ]; Vy[0 ]; Vz[0 ]" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " Vx[4 ]; Vy[4 ]; Vz[4 ]" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " Vx[6 ]; Vy[6 ]; Vz[6 ]" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " Vx[8 ]; Vy[8 ]; Vz[8 ]" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " Vx[11]; Vy[11]; Vz[11]" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " Vx[12]; Vy[12]; Vz[12]" NormDistance = "-RCut" /> </Cut>
+        <Turn NormVector = "Vx[2]; Vy[2]; Vz[2]" Angle = " Pi / 3" />
+        <Cut> <Plane NormVector = " Vx[5 ]; Vy[5 ]; Vz[5 ]" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " Vx[9 ]; Vy[9 ]; Vz[9 ]" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " Vx[10]; Vy[10]; Vz[10]" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " Vx[13]; Vy[13]; Vz[13]" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " Vx[16]; Vy[16]; Vz[16]" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " Vx[17]; Vy[17]; Vz[17]" NormDistance = "-RCut" /> </Cut>
+        <Turn NormVector = "Vx[2]; Vy[2]; Vz[2]" Angle = "-Pi / 3" />
+    </Figure>
+</xml>

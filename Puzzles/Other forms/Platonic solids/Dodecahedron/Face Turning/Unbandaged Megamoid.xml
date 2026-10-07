@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Unbandaged Megamoid</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Unbandaged Megamoid</Menu>
+        <Inventor>Nathan Wilson</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-19</Added>
+        <Link>https://www.youtube.com/watch?v=7J1DofpXLDY</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '00CC22'; // LightGreen
+        Colors[ 1] := 'FF22FF'; // clPink
+        Colors[ 2] := 'FFEE00'; // clYellow
+        Colors[ 3] := '00EE33'; // clLime
+        Colors[ 4] := '0055DD'; // clLightBlue
+        Colors[ 5] := 'FFFF88'; // clCream
+        Colors[ 6] := 'DD00DD'; // clLightViolett2
+        Colors[ 7] := 'BB00CC'; // clLightViolett1
+        Colors[ 8] := '00CCCC'; // clCyan
+        Colors[ 9] := 'FF8800'; // clOrange1
+        Colors[10] := 'FFBB00'; // clOrange2
+        Colors[11] := 'FF1100'; // clRed
+
+        Colors[12] := 'FF6600'; //
+        Colors[13] := '9900CC'; //
+        Colors[14] := '00AA00'; //
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2 * 1.06;
+
+        RC := R * 0.46;
+        Bc := D / RSin;
+        Tc := Bc * 1.08;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D; D">
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Cut Color = "Colors[ 2]" Axis = "2" To = "2" />
+        <Cut Color = "Colors[ 4]" Axis = "4" To = "2" />
+        <Cut Color = "Colors[11]" Axis = "0" From = "1" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[c]" >
+                <Base X = "Cx[i] * Bc" Y = "Cy[i] * Bc" Z = "Cz[i] * Bc" />
+                <Top  X = "Cx[i] * Tc" Y = "Cy[i] * Tc" Z = "Cz[i] * Tc" Color = "Colors[c]" />
+            </Cylinder>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = " 2" c = "13" />
+        <ExecMacro MacroName = "AddCircle" i = " 4" c = "12" />
+        <ExecMacro MacroName = "AddCircle" i = "11" c = "14" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

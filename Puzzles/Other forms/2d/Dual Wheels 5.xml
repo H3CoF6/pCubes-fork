@@ -1,0 +1,154 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dual Wheels 5</Name>
+        <Menu>Other forms\2d\Dual Wheels 5</Menu>
+        <Inventor>Joshua Riegel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-01-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12438</Link>
+    </Interface>
+
+    <Script>
+        clLime := '72AF11';
+        clTeal := '3299A7';
+
+        clWhite := 'FFFFFF';
+        clBlack  := '333333';
+
+        K := 0.6;
+
+        R1 := 0.2;
+        R2 := 0.42;
+
+        C := 5;
+        N := 40;
+        for i := 0 to N - 1 do begin
+            A := 2*Pi / N * i;
+            sa := sin(A);
+            ca := cos(A);
+            x1[i] := R1 * ca;
+            y1[i] := R1 * sa;
+            x2[i] := R2 * ca;
+            y2[i] := R2 * sa;
+        end;
+
+        D2 := K * 0.71029864124335; <!-- C20 -->
+        D1 := (D2 + y2[2]) / sqrt(2);
+
+        H := D2 + y2[2] + y1[6];
+        m := (y1[2] - y2[2]) / (H - D2);
+
+        D3 := (sqrt(2) * D1 + y2[2] - m * D2) / (1 - m);
+
+        D4 := D1 - K * 0.2;
+        D5 := D2 - K * 0.2;
+
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = " 0; Pi" PlaneDistances = "D1" NormVectors = " 1;-1; 0" />
+
+    <Axes TurningAngles = "2*Pi/C" PlaneDistances = " D2; D3" FixedLayers = "0" >
+        <Axis NormVector = " 0;-1; 0" />
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <!-- Spheres -->
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clWhite" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "2" To   = "1" />
+
+        <Macro Name = "AddBlackSphere" >
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+            <Cut Axis = "0" To = "1" />
+            <Cut Axis = "1" To = "1" />
+            <Cut Axis = "2" To = "1" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddBlackSphere" />
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 1;-1; 0" NormDistance = " D4" /> </Cut>
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 0;-1; 0" NormDistance = " D5" /> </Cut>
+                
+        <ExecMacro MacroName = "AddBlackSphere" />
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 1;-1; 0" NormDistance = " D4" /> </Cut>
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 1; 0; 0" NormDistance = " D5" /> </Cut>
+                
+        <ExecMacro MacroName = "AddBlackSphere" />
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 0; 1; 0" NormDistance = "-D5" /> </Cut>
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = "-1; 0; 0" NormDistance = "-D5" /> </Cut>
+        <Cut Color = "clBlack"  >                 <Plane NormVector = " 1;-1; 0" NormDistance = " D4" /> </Cut>
+                
+        <ExecMacro MacroName = "AddBlackSphere" />
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = "-1; 1; 0" NormDistance = "-D4" /> </Cut>
+        <Cut Color = "clBlack"  >                 <Plane NormVector = " 0;-1; 0" NormDistance = " D5" /> </Cut>
+                
+        <ExecMacro MacroName = "AddBlackSphere" />
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = "-1; 1; 0" NormDistance = "-D4" /> </Cut>
+        <Cut Color = "clBlack"  >                 <Plane NormVector = " 1; 0; 0" NormDistance = " D5" /> </Cut>
+
+        <ShowAll/>
+
+        <!-- Cones -->
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "cl" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "TruncatedCone" >
+            <Part>
+                <Vertices Vectors = " H; x1; y1" />
+                <Vertices Vectors = "D2; x2; y2" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                    <Face              VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+            <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        </Macro>
+
+        <ExecMacro MacroName = "TruncatedCone" cl = "clTeal" />
+        <ExecMacro MacroName = "TruncatedCone" cl = "clLime" />
+        <SplitByAxes/>
+
+        <!-- Unbandage -->
+
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "1" Layers = "1;2" Angle = " 2*Pi / C" />
+            <Turn Axis = "2" Layers = "1;2" Angle = " 2*Pi / C" />
+            <Split Axis = "0" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" Repeat = "C" />
+        <Undo Repeat = "2*C" />
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi / 4" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

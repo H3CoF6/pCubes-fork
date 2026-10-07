@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pocket Jewel</Name>
+        <Menu>Other forms\2x2x2 variants\Pocket Jewel</Menu>
+        <Menu>Other forms\Trapezohedron\Vertex Turning\Pocket Jewel</Menu>
+        <Inventor>Justin Eplett</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2018-10-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6965</Link>
+    </Interface>
+
+    <Script>
+        clYellow    := 'FFFF00';
+        clBlue      := '0000A0';
+        clOrange    := 'FF6000';
+        clRed       := 'FF0000';
+        clGreen     := '008000';
+        clWhite     := 'FFFFFF';
+        clViolett   := '800080';
+        clLightBlue := '2868FF';
+
+        R := 0.75;
+        H := R;
+        z := R / 3;
+
+        for i := 0 to 3 do begin
+            x[2*i] := R * cos(Pi / 4 * (2*i));
+            y[2*i] := R * sin(Pi / 4 * (2*i));
+            x[(2*i)+1] := R * cos(Pi / 4 * ((2*i)+1)) * sqrt(8/9);
+            y[(2*i)+1] := R * sin(Pi / 4 * ((2*i)+1)) * sqrt(8/9);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;    0;  H" />
+
+                <Add Vector = "x[0]; y[0];  0" />
+                <Add Vector = "x[1]; y[1];  z" />
+                <Add Vector = "x[2]; y[2];  0" />
+                <Add Vector = "x[3]; y[3];  z" />
+                <Add Vector = "x[4]; y[4];  0" />
+                <Add Vector = "x[5]; y[5];  z" />
+                <Add Vector = "x[6]; y[6];  0" />
+                <Add Vector = "x[7]; y[7];  z" />
+
+                <Add Vector = "   0;    0; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue     " VertexIndexes = "0;6;7;8" />
+                <Face Color = "clGreen    " VertexIndexes = "0;4;5;6" />
+                <Face Color = "clRed      " VertexIndexes = "0;2;3;4" />
+                <Face Color = "clOrange   " VertexIndexes = "0;8;1;2" />
+
+                <Face Color = "clYellow   " VertexIndexes = "9;1;8;7" />
+                <Face Color = "clWhite    " VertexIndexes = "9;7;6;5" />
+                <Face Color = "clViolett  " VertexIndexes = "9;5;4;3" />
+                <Face Color = "clLightBlue" VertexIndexes = "9;3;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

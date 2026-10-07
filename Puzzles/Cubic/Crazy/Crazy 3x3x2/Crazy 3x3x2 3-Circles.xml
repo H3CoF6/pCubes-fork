@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 3x3x2 3-Circles</Name>
+        <Menu>Cubic\Crazy\Crazy 3x3x2\Crazy 3x3x2 3-Circles</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-02-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2708</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W * 2 / 3;
+        D := W / 3;
+
+        R1 := W * 0.75;
+        R2 := W * 0.5;
+
+        Delta := 0.002;
+        WC := W + Delta;
+        ZC := WZ + Delta;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-W; -D; D; W" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-WZ; 0; WZ" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Circle Radius = "R2" Color = "clRed   " Center = "-WC; 0; 0" />
+        <Circle Radius = "R2" Color = "clOrange" Center = " WC; 0; 0" />
+        <Circle Radius = "R2" Color = "clGreen " Center = " 0; WC; 0" />
+        <Circle Radius = "R2" Color = "clBlue  " Center = " 0;-WC; 0" />
+
+        <Circle Radius = "R1" Color = "clWhite " Center = "0; 0; ZC" />
+        <Circle Radius = "R1" Color = "clYellow" Center = "0; 0;-ZC" />
+
+        <Connect Axis = "0" Layers  = "0;2;4" />
+        <Connect Axis = "1" Layers  = "0;2;4" />
+
+        <SplitByAxes/>
+
+        <Connect Axis = "2" Layers = "0;1;3" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Unlock" File = "Puzzles\Cubic\Unclassified\Textures\Dot.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Unlock = 55,0,0
+    </SetTextures>
+</xml>

@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexaprism mirror</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Hexaprism mirror</Menu>
+        <Menu>Other forms\3x3x3 variants\Prism\Hexaprism mirror</Menu>
+        <Inventor>Haavizhag Havok Flores</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6391</Link>
+    </Interface>
+
+     <Script>
+        BumpColor := 'FF0000'; // Red
+
+        R := 0.6;
+        H := R * 1.0;
+
+        D := R * 0.3;
+
+        DX := -0.03;
+        DY := -0.06;
+        DZ :=  0.20;
+
+        N := 6;
+        A := 2*Pi / N;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(A * i);
+            y[i] := R * sin(A * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi/4" />
+        <Turn NormVector = " 0; 1; 0" Angle = "-Arctan(1/sqrt(2))" />
+
+        <Transfer Vector = " DX; DY; DZ" />
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "BumpColor" VertexIndexes = "i1 + N; i2 + N; i2; i1" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " x; y; H" />
+            <Vertices Vectors = " x; y;-H" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                <Face Color = "BumpColor" VertexIndexes = "FromTo(0, N - 1)" />
+                <Face Color = "BumpColor" VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Transfer Vector = "-DX;-DY;-DZ" />
+
+    </Figure>
+</xml>

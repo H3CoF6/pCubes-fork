@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bauhinia (Ball)</Name>
+        <Menu>Other forms\Sphere\Bauhinia (Ball)</Menu>
+        <Inventor>Mr. Fok</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3423</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+
+        K := 0.6;
+
+        C21 := K * 0.3569761362781;
+        C63 := K * 0.9345756579487;
+
+        D := (C21 + C63) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " cs; 2 * cs + ss; 0" />
+        <Axis NormVector = "-cs; 2 * cs + ss; 0" />
+
+        <Axis NormVector = "2 * cs + ss; 0;-cs" />
+        <Axis NormVector = "2 * cs + ss; 0; cs" />
+
+        <Axis NormVector = "0; cs; 2 * cs + ss" />
+        <Axis NormVector = "0;-cs; 2 * cs + ss" />
+
+        <Axis NormVector = "1; 1; 1" />
+        <Axis NormVector = "1; 1;-1" />
+        <Axis NormVector = "1;-1; 1" />
+        <Axis NormVector = "1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <!--<LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />-->
+        <LoadFrom File = "_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

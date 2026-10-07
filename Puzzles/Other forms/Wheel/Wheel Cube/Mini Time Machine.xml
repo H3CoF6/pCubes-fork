@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mini Time Machine</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Mini Time Machine</Menu>
+        <Inventor>Gabriel Durand</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5500</Link>
+    </Interface>
+
+    <Script>
+        W := 0.425;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        CylinderWidth := W / 3;
+        D := W / 2;
+        D1 := D + CylinderWidth;
+
+        R := W * 0.87;
+
+        C := 0.001;
+        DC := (-R * C + D1) / sqrt(C^2 + 1) * 0.99;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/4; Pi/2; Pi/4" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" Wz = "D" />
+
+        <Cylinder Radius = "R" Color = "clYellow" Base = " 0; 0;-D" Top = " 0; 0;-D1" TopColor = "clYellow" />
+        <Cylinder Radius = "R" Color = "clWhite " Base = " 0; 0; D" Top = " 0; 0; D1" TopColor = "clWhite " />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "2" Layer = "0" Angle = "Pi/4" />
+        <Turn Axis = "2" Layer = "2" Angle = "Pi/4" />
+        <SplitByAxes/>
+
+        <Cut Color = "FFFF01" > <Plane NormVector = "-C; 0; 1" NormDistance = "-DC" /> </Cut>
+        <Cut Color = "FFFFFE" > <Plane NormVector = " C; 0;-1" NormDistance = "-DC" /> </Cut>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_06.vec" />
+        <Texture Name = "tm_07" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_07.vec" />
+        <Texture Name = "tm_08" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_08.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 = 18,11,9,  5,11,9
+        tm_02 = 19,11,9,  8,11,9
+        tm_03 = 17,11,9,  9,11,9
+        tm_04 = 16,11,9, 11,11,9
+        tm_05 = 13,11,9, 10,11,9
+        tm_06 = 12,11,9,  7,11,9
+        tm_07 = 14,11,9,  6,11,9
+        tm_08 = 15,11,9,  4,11,9
+    </SetTextures>
+</xml>

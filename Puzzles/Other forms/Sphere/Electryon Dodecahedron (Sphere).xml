@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Electryon Dodecahedron (Sphere)</Name>
+        <Menu>Other forms\Sphere\Electryon Dodecahedron (Sphere)</Menu>
+        <Inventor>RaphPuzzles</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-22</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=4&amp;t=36026</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0000CC'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := '800080'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        // code from Pentagonal Icositetrahedron
+        K := 0.6;
+
+        K0  := 0.5; // result is independent from K
+        K1 := (6 * (9 + sqrt(33)))^(1/3);
+        K2 := (6 * (9 - sqrt(33)))^(1/3);
+        K3 := (2 * (1777 + 33*sqrt(33)))^(1/3);
+        K4 := (2 * (1777 - 33*sqrt(33)))^(1/3);
+
+        C0 := K0 * sqrt(6 * (-6 + K1 + K2)) / 12;
+        C1 := K0 * sqrt(6 * ( 6 + K1 + K2)) / 12;
+        C2 := K0 * sqrt(6 * (18 + K1 + K2)) / 12;
+        C3 := K0 * sqrt(6 * (14 + K3 + K4)) / 12;
+
+        n1 := (c1 - c0)^2;
+        n2 := (c1 - c2)^2;
+        n3 := (c1 - c2) * (c0 - c1);
+
+        bgx := -n2*n3 + n1^2;
+        bgy :=  n1*n2 - n3^2;
+        bgz := -n1*n3 + n2^2;
+
+        byx := -n2^2 + n1*n3;
+        byy :=  n1^2 - n2*n3;
+        byz := -n3^2 + n1*n2;
+
+        A1 := ArcCos((bgx*byx + bgy*byy + bgz*byz) / (bgx^2 + bgy^2 + bgz^2));
+        A2 := 2 * A1;
+        A3 := 3 * A1;
+        A4 := 4 * A1;
+
+        D := K * 0.858;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi; 0" AvailableAngles = "-A4; -A3; -A2; -A1; 0; A1; A2; A3; A4" PlaneDistances = "-D" FixedLayers = "1" >
+        <Axis NormVector = " n2; n3; n1" />
+        <Axis NormVector = " n3;-n2; n1" />
+        <Axis NormVector = "-n2;-n3; n1" />
+        <Axis NormVector = "-n3; n2; n1" />
+
+        <Axis NormVector = "-n2; n3;-n1" />
+        <Axis NormVector = "-n3;-n2;-n1" />
+        <Axis NormVector = " n2;-n3;-n1" />
+        <Axis NormVector = " n3; n2;-n1" />
+
+        <Axis NormVector = "-n2; n1; n3" />
+        <Axis NormVector = " n2; n1;-n3" />
+        <Axis NormVector = "-n3; n1;-n2" />
+        <Axis NormVector = " n3; n1; n2" />
+
+        <Axis NormVector = "-n3;-n1; n2" />
+        <Axis NormVector = " n3;-n1;-n2" />
+        <Axis NormVector = "-n2;-n1;-n3" />
+        <Axis NormVector = " n2;-n1; n3" />
+
+        <Axis NormVector = "-n1; n3; n2" />
+        <Axis NormVector = "-n1;-n3;-n2" />
+        <Axis NormVector = "-n1;-n2; n3" />
+        <Axis NormVector = "-n1; n2;-n3" />
+
+        <Axis NormVector = " n1;-n3; n2" />
+        <Axis NormVector = " n1; n3;-n2" />
+        <Axis NormVector = " n1;-n2;-n3" />
+        <Axis NormVector = " n1; n2; n3" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := '-1';
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

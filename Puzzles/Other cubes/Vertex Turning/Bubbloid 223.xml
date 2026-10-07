@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bubbloid 223</Name>
+        <Menu>Other cubes\Vertex Turning\Bubbloid 223</Menu>
+        <Inventor>Carl Hoff</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2018-11-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4924</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        WX := W;
+        WY := W;
+        WZ := W * 5 / 6;
+
+        D := W * 5 * sqrt(3) / 9;
+        Ax := WZ - W;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1; 1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = "-1; 1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = " 1;-1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = "-1;-1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = " 1; 1;-1" BaseVector = "0; 0;-Ax" />
+        <Axis NormVector = "-1; 1;-1" BaseVector = "0; 0;-Ax" />
+        <Axis NormVector = " 1;-1;-1" BaseVector = "0; 0;-Ax" />
+        <Axis NormVector = "-1;-1;-1" BaseVector = "0; 0;-Ax" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Cut">
+            <SplitByAxes/>
+            <Turn Axis = "a" Angle = " s * Pi / 3" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "b" Angle = "-s * Pi / 3" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "c" Angle = "-s * Pi / 3" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "d" Angle = " s * Pi / 3" Layer = "1" />
+            <SplitByAxes/>
+            <Undo Repeat = "4" />
+
+            <Turn Axis = "d" Angle = "-s * Pi / 3" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "c" Angle = " s * Pi / 3" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "b" Angle = " s * Pi / 3" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "a" Angle = "-s * Pi / 3" Layer = "1" />
+            <SplitByAxes/>
+            <Undo Repeat = "4" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cut" a = "0" b = "4" c = "5" d = "1" s = "2"/>
+        <ExecMacro MacroName = "Cut" a = "1" b = "5" c = "7" d = "3" s = "2"/>
+        <ExecMacro MacroName = "Cut" a = "3" b = "7" c = "6" d = "2" s = "2"/>
+        <ExecMacro MacroName = "Cut" a = "2" b = "6" c = "4" d = "0" s = "2"/>
+
+        <ExecMacro MacroName = "Cut" a = "4" b = "0" c = "1" d = "5" s = "-2"/>
+        <ExecMacro MacroName = "Cut" a = "5" b = "1" c = "3" d = "7" s = "-2"/>
+        <ExecMacro MacroName = "Cut" a = "7" b = "3" c = "2" d = "6" s = "-2"/>
+        <ExecMacro MacroName = "Cut" a = "6" b = "2" c = "0" d = "4" s = "-2"/>
+
+        <Turn Axis = "0" Angle = "2 * Pi / 3" Layer = "1" />
+        <Turn Axis = "1" Angle = "2 * Pi / 3" Layer = "1" />
+        <Turn Axis = "2" Angle = "2 * Pi / 3" Layer = "1" />
+        <Turn Axis = "3" Angle = "2 * Pi / 3" Layer = "1" />
+
+        <ExecMacro MacroName = "Cut" a = "0" b = "4" c = "5" d = "1" s = "2"/>
+        <ExecMacro MacroName = "Cut" a = "1" b = "5" c = "7" d = "3" s = "2"/>
+        <ExecMacro MacroName = "Cut" a = "3" b = "7" c = "6" d = "2" s = "2"/>
+        <ExecMacro MacroName = "Cut" a = "2" b = "6" c = "4" d = "0" s = "2"/>
+
+        <Undo Repeat = "4"/>
+    </Figure>
+</xml>

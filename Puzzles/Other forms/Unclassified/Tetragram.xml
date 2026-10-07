@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tetragram</Name>
+        <Menu>Other forms\Unclassified\Tetragram</Menu>
+        <Inventor>Joseph Wong</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2019-02-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7272</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=34263</Link>
+    </Interface>
+
+    <Script>
+        clWhite   := 'F0F0F0';     
+        clBlue    := '0000FF';     
+        clRed     := 'FF0000';     
+        clYellow  := 'FFFF00';     
+        clOrange  := 'FF6000';     
+        clGreen   := '008000';     
+        clCyan    := '00FFFF';
+        clLime    := '00FF00';
+        clKhaki   := 'F0E68C';
+        clOrange2 := 'FF6001';     
+        clCyan2   := '00FFFE';
+        clLime2   := '00FF01';
+        clKhaki2  := 'F0E68D';
+
+        K := 0.3;
+        
+        s5 := sqrt(5);
+        pX0:= K * sqrt(2);
+        pZ0:= K * sqrt(1 + s5);
+        pX1:= K * sqrt(3 + s5);
+        pZ2:= K * sqrt(s5 - 1);
+        D  := K * sqrt((s5 - 1) / 2);
+
+        nX := sqrt(2 + s5);
+        nZ := 1;
+
+        A1 := Arccos((3 + 2 * s5) / 11);
+        A2 := Pi - A1;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1;0;pi;A1;A2" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " nX;  0; nZ" />
+        <Axis NormVector = "  0; nX; nZ" />
+        <Axis NormVector = "-nX;  0; nZ" />
+        <Axis NormVector = "  0;-nX; nZ" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " pX0;   0; pZ0" />
+                <Add Vector = "   0; pX0; pZ0" />
+                <Add Vector = "-pX0;   0; pZ0" />
+                <Add Vector = "   0;-pX0; pZ0" />
+                <Add Vector = " pX1;   0;   0" />
+                <Add Vector = "   0; pX1;   0" />
+                <Add Vector = "-pX1;   0;   0" />
+                <Add Vector = "   0;-pX1;   0" />
+                <Add Vector = " pX0; pX0;-pZ2" />
+                <Add Vector = "-pX0; pX0;-pZ2" />
+                <Add Vector = "-pX0;-pX0;-pZ2" />
+                <Add Vector = " pX0;-pX0;-pZ2" />
+                <Add Vector = "   0;   0;-pZ2" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite " VertexIndexes = " 0; 1; 2; 3" />
+
+                <Face Color = "clBlue  " VertexIndexes = " 1; 0; 4; 8; 5" />
+                <Face Color = "clYellow" VertexIndexes = " 2; 1; 5; 9; 6" />
+                <Face Color = "clGreen " VertexIndexes = " 3; 2; 6;10; 7" />
+                <Face Color = "clRed   " VertexIndexes = " 0; 3; 7;11; 4" />
+
+                <Face Color = "clLime  " VertexIndexes = " 4;11; 8" />
+                <Face Color = "clOrange" VertexIndexes = " 5; 8; 9" />
+                <Face Color = "clCyan  " VertexIndexes = " 6; 9;10" />
+                <Face Color = "clKhaki " VertexIndexes = " 7;10;11" />
+
+                <Face Color = "clLime  " VertexIndexes = "12; 8;11" />
+                <Face Color = "clOrange" VertexIndexes = "12; 9; 8" />
+                <Face Color = "clCyan  " VertexIndexes = "12;10; 9" />
+                <Face Color = "clKhaki " VertexIndexes = "12;11;10" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split">
+            <Turn Axis = "0" Angle = " Pi" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Angle = " Pi" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "2" Angle = " Pi" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "3" Angle = " Pi" Layer = "1" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "3"/>
+        <Undo Repeat="12"/>
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

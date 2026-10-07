@@ -1,0 +1,88 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Diametric Hexahedron Pocket</Name>
+        <Menu>Other forms\Dipyramid\Triangular\Diametric Hexahedron Pocket</Menu>
+        <Inventor>Spencer Brodhead</Inventor>
+        <Added>2022-02-15</Added>
+        <Programmer>Boris</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9075</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := '40A040'; // Green
+        Colors[2] := 'FFFFFF'; // White
+        Colors[3] := 'FF6000'; // Orange
+
+        R := 0.7;
+        H := R / sqrt(2);
+        D := H * 0.2;
+
+        for i := 0 to 2 do begin
+            x[i] := R * sin(2 * Pi / 3 * i);
+            y[i] := R * cos(2 * Pi / 3 * i);
+        end;
+
+        hz := D * sqrt(3) - H / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D"  >
+        <Axis NormVector = "x[0]; y[0];-H" BaseVector = " 0; 0; hz" />
+        <Axis NormVector = "x[1]; y[1];-H" BaseVector = " 0; 0; hz" />
+        <Axis NormVector = "x[2]; y[2];-H" BaseVector = " 0; 0; hz" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; 0" />
+            <Vertices Vectors = "0; 0; H" />
+            <Vertices Vectors = "0; 0;-H" />
+
+            <Faces>
+                <Face Color = "Colors[3]" VertexIndexes = "0;3;1" />
+                <Face Color = "Colors[3]" VertexIndexes = "1;3;2" />
+                <Face Color = "Colors[3]" VertexIndexes = "2;3;0" />
+                <Face Color = "Colors[1]" VertexIndexes = "0;1;4" />
+                <Face Color = "Colors[2]" VertexIndexes = "1;2;4" />
+                <Face Color = "Colors[0]" VertexIndexes = "2;0;4" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "2" From = "1" />
+        <HideAll/>
+
+        <Part>
+            <Vertices Vectors = "x; y; 0" />
+            <Vertices Vectors = "0; 0; H" />
+            <Vertices Vectors = "0; 0;-H" />
+
+            <Faces>
+                <Face Color = "Colors[3]" VertexIndexes = "0;3;1" />
+                <Face Color = "Colors[3]" VertexIndexes = "1;3;2" />
+                <Face Color = "Colors[3]" VertexIndexes = "2;3;0" />
+                <Face Color = "Colors[3]" VertexIndexes = "0;1;4" />
+                <Face Color = "Colors[3]" VertexIndexes = "1;2;4" />
+                <Face Color = "Colors[3]" VertexIndexes = "2;0;4" />
+            </Faces>
+        </Part>
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Hide Axis = "0" Layer = "0" />
+        <Hide Axis = "1" Layer = "0" />
+        <Cut Axis = "2" To = "1" />
+        <ShowAll/>
+
+        <HideContaining Vector = "0; 0; H" />
+        <Split Axis = "2" From = "2" />
+        <InvertVisibility/>
+        <Split Axis = "2" From = "1" />
+        <ShowAll/>
+
+    </Figure>
+</xml>

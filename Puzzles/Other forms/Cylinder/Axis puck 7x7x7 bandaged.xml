@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Axis puck 7x7x7 bandaged</Name>
+        <Menu>Other forms\Cylinder\Axis puck 7x7x7 bandaged</Menu>
+        <Inventor>Zigor Martinez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9200</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        R := 0.6;
+        H := R * 0.9;
+
+        N := 7;
+        W := R * 0.78;
+        WD := 2 * W / N;
+        D[0] := -W + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+
+        N := 40;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+
+        RCut := R * 0.6;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;1;0" Angle = "-Pi/4" />
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "Colors[5]" VertexIndexes = "FromTo(0, N - 1)" />
+                <ExecMacro MacroName = "AddFace" i = "0" c = "3" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"         c = "0" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"         c = "2" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"         c = "1" Repeat = "N/4" />
+                <Face Color = "Colors[4]" VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "2" From = "4" />
+        <HideContaining Vector = "0;0;0" />
+
+        <SplitByAxes/>
+        <ShowAll/>
+        <Cut Color = "Colors[4]"><Plane NormVector = "0;0;1" NormDistance = "-RCut" /></Cut>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

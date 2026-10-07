@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Beach Ball</Name>
+        <Menu>Other forms\Sphere\Beach Ball</Menu>
+        <Inventor>Zoltán Pataki, Géza Csomós and Pal Boda</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-03-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=875</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; //Red
+        Colors[1] := 'FF800A'; //Orange
+        Colors[2] := '0000C8'; //Blue
+        Colors[3] := '009600'; //Green
+        Colors[4] := 'FFFF00'; //Yellow
+        Colors[5] := 'FFFFFF'; //White
+
+        K := 0.6;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[0]" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "3" From = "1" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[1]" />
+        <Cut Axis = "3" To   = "1" />
+        <Cut InvisibleEdges = "-1" Color = "-2" ><Plane NormVector = " 1; 0; 0"/></Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[2]" />
+        <Cut Axis = "0" From = "1" />
+        <Cut InvisibleEdges = "-1" Color = "-2" ><Plane NormVector = "-1; 0; 0"/></Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[3]" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "3" To   = "1" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[4]" />
+        <Cut Axis = "3" From = "1" />
+        <Cut InvisibleEdges = "-1" Color = "-2" ><Plane NormVector = "-1; 0; 0"/></Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[5]" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut InvisibleEdges = "-1" Color = "-2" ><Plane NormVector = " 1; 0; 0"/></Cut>
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

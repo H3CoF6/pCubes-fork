@@ -1,0 +1,166 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Vulcano Master</Name>
+        <Menu>Other forms\Cross\Vulcano Master</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-12-24</Added>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clGreen  := '009600';
+        clBlue   := '0000C8';
+        clYellow := 'EDFF11';
+
+        W := 0.75;
+
+        D0 := -sqrt(3) / 3 * W;
+        D := D0 * 2 / 3;
+
+        D2 := -D * sqrt(3) / 8;
+        D3 := W - d2 * 2;
+        D4 := W - d2 * 4;
+        D5 := (D0 * sqrt(3) + D4) / 2;
+        D5 := -D0 / sqrt(3);
+
+        DV := -(D0 - D / 2) * sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 - D / 2; D0 - D; D0 - 2*D; D0 - 3*D" >
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " W;-W; W" />
+                <Add Vector = "-W; W; W" />
+                <Add Vector = " W; W;-W" />
+                <Add Vector = "-W;-W;-W" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "0;1;3" />
+                <Face Color = "clBlue  " VertexIndexes = "1;2;3" />
+                <Face Color = "clGreen " VertexIndexes = "0;3;2" />
+                <Face Color = "clYellow" VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <Split Color1 = "clRed   " > <Plane NormVector = " 1; 1;-1" NormDistance = "D0 - 0.5 * D" /> </Split>
+        <Split Color1 = "clRed   " > <Plane NormVector = " 1; 1;-1" NormDistance = "D0 - 1 * D" /> </Split>
+
+        <Split Color1 = "clYellow" > <Plane NormVector = "-1;-1;-1" NormDistance = "D0 - 0.5 * D" /> </Split>
+        <Split Color1 = "clYellow" > <Plane NormVector = "-1;-1;-1" NormDistance = "D0 - 1 * D" /> </Split>
+
+        <Split Color1 = "clGreen " > <Plane NormVector = "-1; 1; 1" NormDistance = "D0 - 0.5 * D" /> </Split>
+        <Split Color1 = "clGreen " > <Plane NormVector = "-1; 1; 1" NormDistance = "D0 - 1 * D" /> </Split>
+
+        <Split Color1 = "clBlue  " > <Plane NormVector = " 1;-1; 1" NormDistance = "D0 - 0.5 * D" /> </Split>
+        <Split Color1 = "clBlue  " > <Plane NormVector = " 1;-1; 1" NormDistance = "D0 - 1 * D" /> </Split>
+
+        <RemoveContaining Vector = " D2; -D3; -D2" />
+        <RemoveContaining Vector = "-D2; -D3;  D2" />
+        <RemoveContaining Vector = "-D2;  D3; -D2" />
+        <RemoveContaining Vector = " D2;  D3;  D2" />
+
+        <RemoveContaining Vector = "-D2;  D2; -D3" />
+        <RemoveContaining Vector = " D2; -D2; -D3" />
+        <RemoveContaining Vector = "-D2; -D2;  D3" />
+        <RemoveContaining Vector = " D2;  D2;  D3" />
+
+        <RemoveContaining Vector = "-D3; -D2;  D2" />
+        <RemoveContaining Vector = "-D3;  D2; -D2" />
+        <RemoveContaining Vector = " D3; -D2; -D2" />
+        <RemoveContaining Vector = " D3;  D2;  D2" />
+
+        <RemoveContaining Vector = "-DV;  DV;  DV" />
+        <RemoveContaining Vector = " DV; -DV;  DV" />
+        <RemoveContaining Vector = " DV;  DV; -DV" />
+        <RemoveContaining Vector = "-DV; -DV; -DV" />
+
+        <HideContaining Vector = "  0; -D4;   0" />
+        <HideContaining Vector = "  0;  D4;   0" />
+        <HideContaining Vector = "  0;   0; -D4" />
+        <HideContaining Vector = "  0;   0;  D4" />
+        <HideContaining Vector = "-D4;   0;   0" />
+        <HideContaining Vector = " D4;   0;   0" />
+
+        <HideContaining Vector = " D5; -D5; -D5" />
+        <HideContaining Vector = "-D5;  D5; -D5" />
+        <HideContaining Vector = "-D5; -D5;  D5" />
+        <HideContaining Vector = " D5;  D5;  D5" />
+
+        <RemoveAllVisible/>
+
+
+        <Part>
+            <Vertices>
+                <Add Vector = " W;-W; W" />
+                <Add Vector = "-W; W; W" />
+                <Add Vector = " W; W;-W" />
+                <Add Vector = "-W;-W;-W" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "0;1;3" />
+                <Face Color = "clBlue  " VertexIndexes = "1;2;3" />
+                <Face Color = "clGreen " VertexIndexes = "0;3;2" />
+                <Face Color = "clYellow" VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <Split> <Plane NormVector = " 1; 1;-1" NormDistance = "D0 - 0.5 * D" /> </Split>
+        <Split> <Plane NormVector = " 1; 1;-1" NormDistance = "D0 - 1 * D" /> </Split>
+
+        <Split> <Plane NormVector = "-1;-1;-1" NormDistance = "D0 - 0.5 * D" /> </Split>
+        <Split> <Plane NormVector = "-1;-1;-1" NormDistance = "D0 - 1 * D" /> </Split>
+
+        <Split> <Plane NormVector = "-1; 1; 1" NormDistance = "D0 - 0.5 * D" /> </Split>
+        <Split> <Plane NormVector = "-1; 1; 1" NormDistance = "D0 - 1 * D" /> </Split>
+
+        <Split> <Plane NormVector = " 1;-1; 1" NormDistance = "D0 - 0.5 * D" /> </Split>
+        <Split> <Plane NormVector = " 1;-1; 1" NormDistance = "D0 - 1 * D" /> </Split>
+
+        <RemoveContaining Vector = " D2; -D3; -D2" />
+        <RemoveContaining Vector = "-D2; -D3;  D2" />
+        <RemoveContaining Vector = "-D2;  D3; -D2" />
+        <RemoveContaining Vector = " D2;  D3;  D2" />
+
+        <RemoveContaining Vector = "-D2;  D2; -D3" />
+        <RemoveContaining Vector = " D2; -D2; -D3" />
+        <RemoveContaining Vector = "-D2; -D2;  D3" />
+        <RemoveContaining Vector = " D2;  D2;  D3" />
+
+        <RemoveContaining Vector = "-D3; -D2;  D2" />
+        <RemoveContaining Vector = "-D3;  D2; -D2" />
+        <RemoveContaining Vector = " D3; -D2; -D2" />
+        <RemoveContaining Vector = " D3;  D2;  D2" />
+
+        <RemoveContaining Vector = "-DV;  DV;  DV" />
+        <RemoveContaining Vector = " DV; -DV;  DV" />
+        <RemoveContaining Vector = " DV;  DV; -DV" />
+        <RemoveContaining Vector = "-DV; -DV; -DV" />
+
+        <RemoveContaining Vector = "  0; -D4;   0" />
+        <RemoveContaining Vector = "  0;  D4;   0" />
+        <RemoveContaining Vector = "  0;   0; -D4" />
+        <RemoveContaining Vector = "  0;   0;  D4" />
+        <RemoveContaining Vector = "-D4;   0;   0" />
+        <RemoveContaining Vector = " D4;   0;   0" />
+
+        <RemoveContaining Vector = " D5; -D5; -D5" />
+        <RemoveContaining Vector = "-D5;  D5; -D5" />
+        <RemoveContaining Vector = "-D5; -D5;  D5" />
+        <RemoveContaining Vector = " D5;  D5;  D5" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+                       
+    </Figure>
+</xml>

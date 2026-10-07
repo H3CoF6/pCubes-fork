@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cubic 3x3x6 II Alternate Coloring</Name>
+        <Menu>Cubic\3x3xN Cube\Cubic 3x3x6 II AC</Menu>
+        <Inventor>Adam G. Cowan</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4336</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        Color[0] := 'DC0000'; // clRed
+        Color[1] := 'FF9600'; // clOrange
+        Color[2] := 'E6C800'; // clYellow
+        Color[3] := '009600'; // clGreen
+        Color[4] := '0000C8'; // clBlue
+        Color[5] := 'B40078'; // clViolett
+
+        D := W / 3;
+
+        WX := W;
+        WY := W;
+        WZ := D / 2;
+        DWZ := D * 2.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-2*D; -D; 0; D; 2*D" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddLayer">
+            <ShowAll/>
+            <InvertVisibility/>
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := C;
+            </Script>
+
+            <LoadFrom File = "Figures\Cuboid.xml" />
+
+            <Split Color1 = "C" Color2 = "C" Axis = "0" From = "2" />
+            <Split Color1 = "C" Color2 = "C" Axis = "0" From = "4" />
+            <Split Color1 = "C" Color2 = "C" Axis = "1" From = "2" />
+            <Split Color1 = "C" Color2 = "C" Axis = "1" From = "4" />
+        </Macro>
+
+        <Macro Name = "CutLayer">
+            <HideContaining Vector = " W; W; DWZ" />
+            <HideContaining Vector = " W;-W; DWZ" />
+            <HideContaining Vector = "-W;-W; DWZ" />
+            <HideContaining Vector = "-W; W; DWZ" />
+            <Split Color1 = "C" Color2 = "C" Axis = "0" From = "1" />
+            <Split Color1 = "C" Color2 = "C" Axis = "0" From = "5" />
+            <Split Color1 = "C" Color2 = "C" Axis = "1" From = "1" />
+            <Split Color1 = "C" Color2 = "C" Axis = "1" From = "5" />
+            <Hide Axis = "0" Layer = "0" />
+            <Hide Axis = "0" Layer = "5" />
+            <Hide Axis = "1" Layer = "0" />
+            <Hide Axis = "1" Layer = "5" />
+            <RemoveAllVisible/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddLayer" C = "Color[0]" DWZ = " D * 2.5" />
+        <ExecMacro MacroName = "AddLayer" C = "Color[1]" DWZ = " D * 1.5" />
+        <ExecMacro MacroName = "CutLayer" />
+        <ExecMacro MacroName = "AddLayer" C = "Color[2]" DWZ = " D * 0.5" />
+        <ExecMacro MacroName = "CutLayer" />
+
+        <Script>
+            WX := WX + 0.001; // for solving - to keep colors order
+            WY := WX;
+        </Script>
+
+        <ExecMacro MacroName = "AddLayer" C = "Color[3]" DWZ = "-D * 0.5" />
+        <ExecMacro MacroName = "CutLayer" />
+        <ExecMacro MacroName = "AddLayer" C = "Color[4]" DWZ = "-D * 1.5" />
+        <ExecMacro MacroName = "CutLayer" />
+        <ExecMacro MacroName = "AddLayer" C = "Color[5]" DWZ = "-D * 2.5" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(2)" Layer = "Random(6)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(6)" Angle = "Pi/2 * Random(4)" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(6)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "20" />
+        </Macro>
+    </Macros>
+</xml>

@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Multi-Star Wheel Cube</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Multi-Star Wheel Cube</Menu>
+        <Inventor>limCube</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-07-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8146</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=401389</Link>
+    </Interface>
+
+    <Script>
+        W := 0.425;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D1 := W * 0.99;
+        D3 := W * 0.95;
+
+        RC := D1 * sqrt(3) - W;
+        Sc := 1.1;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/4" PlaneDistances = "W" NormVectors = "Cx;Cy;Cz" />
+
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "D1" NormVectors = "Vx;Vy;Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0; 0; 0" />
+
+        <HideContaining Vector = "Vx; Vy; Vz" />
+
+        <Macro Name = "CutC" >
+            <Cut Color = "Colors[i]"><Plane NormVector = "-Cx[i];-Cy[i];-Cz[i]" NormDistance = "-D3" /></Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutC" Repeat = "6" i = "0" />
+        <ShowAll/>
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" Base = "Cx[i]; Cy[i]; Cz[i]" Top = "Cx[i]*Sc; Cy[i]*Sc; Cz[i]*Sc" >
+                <Top  Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Rotate" >
+            <Turn Axis = "ax" Layer = "1" Angle = "Pi/4" />
+            <Script> Inc(ax); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Rotate"  Repeat = "6" ax = "0" />
+        <SplitByAxes/>
+        <Undo Repeat = "6" />
+
+        <Macro Name = "Remove">
+            <RemoveContaining Vector = " RC*0.99; W*Sc;  0" />
+            <Turn NormVector = "0;1;0" Angle = "Pi/4" />
+        </Macro>
+        <ExecMacro MacroName = "Remove" Repeat = "8" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Remove" Repeat = "8" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Remove" Repeat = "8" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Remove" Repeat = "8" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Remove" Repeat = "8" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Remove" Repeat = "8" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Remove" Repeat = "8" />
+   </Figure>
+</xml>

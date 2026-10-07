@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cuboid 3x3x7</Name>
+        <Menu>Cubic\Cuboids\7\3x3x7</Menu>
+        <Menu>Cubic\Cross\3x3x3\3x3x7 Cuboid</Menu>
+        <Inventor>Traiphum Prungtaengkit</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2220</Link>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+
+        D := W / 7;
+
+        WX := D * 2;
+        WY := WX;
+        WZ := WX;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D*5;-D*3;-D; D; D*3; D*5" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <!-- invisible fake parts, preventing some turns -->
+        <LoadFrom File = "Figures\Cuboid.xml" DWY ="-D * 4" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWY =" D * 4" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWZ ="-D * 4" DWY ="0" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWZ =" D * 4" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <HideAll/>
+
+        <!-- Body -->
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D * 7" WY = "D * 3" WZ = "D * 3" DWZ = "0" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

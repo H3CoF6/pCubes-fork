@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Sudoku Cube 2x2x2</Name>
+        <Menu>Cubic\Sudoku\2x2x2</Menu>
+        <Inventor>Mark Lodge</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-08-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11321</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red
+        Colors[1] := 'ECE300'; // Yellow
+        Colors[2] := '04A42A'; // Green
+        Colors[3] := '0019FF'; // Blue
+
+        W := 0.5;
+        N := 2;
+        WD := W*2 / N;
+
+        function GetColor(): integer;
+        begin
+          substr := copy(SColors[sy + y], sx + x, 1));
+          Result := StrToInt(substr);
+        end;
+
+        SColors[0] := '  20    ';
+        SColors[1] := '  31    ';
+        SColors[2] := '12032130';
+        SColors[3] := '30120321';
+        SColors[4] := '  31    ';
+        SColors[5] := '  20    ';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W*1.1" Color = "-1" />
+        <SplitByAxes/>
+
+        <Macro Name = "CutCell" >
+            <HideContaining Vector = "-W + WD/2 + x * WD; -W; W - WD/2 - y * WD" />
+            <InvertVisibility/>
+            <Cut Color = "Colors[GetColor]"><Plane NormVector = "0;1;0" NormDistance = "-W" /></Cut>
+            <ShowAll/>
+            <Script>Inc(x);</Script>
+        </Macro>
+
+        <Macro Name = "CutRow" >
+            <ExecMacro MacroName = "CutCell" x = "0" Repeat = "N" />
+            <Script>Inc(y);</Script>
+        </Macro>
+
+        <Macro Name = "CutFace" >
+            <ExecMacro MacroName = "CutRow" y = "0" Repeat = "N" /> 
+        </Macro>
+
+        <ExecMacro MacroName = "CutFace" sx = "N+1" sy = "N" /> // Face
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace"  sx = "1" sy = "N" /> // Left
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" sx = "3*N+1" sy = "N" /> // Back
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" sx = "2*N+1" sy = "N" /> // Right
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" sx = "N+1" sy = "0" /> // Up
+
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutFace" sx = "N+1" sy = "2*N" /> // Down
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+    </Figure>
+    <Procedures CheckSolved="EachFaceConsistsOfDifferentColors" />
+</xml>

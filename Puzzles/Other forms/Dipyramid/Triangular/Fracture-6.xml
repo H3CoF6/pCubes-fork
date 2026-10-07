@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fracture-6</Name>
+        <Menu>Other forms\Dipyramid\Triangular\Fracture-6</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2016-12-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2937</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '0000A0';
+        clOrange  := 'FF6000';
+        clRed     := 'FF0000';
+        clGreen   := '008000';
+        clViolett := '800080';
+
+        R := 0.9;
+        H := R / sqrt(3);
+
+        for i := 0 to 2 do begin
+            x[i] := R * sin(2 * Pi / 3 * i);
+            y[i] := R * cos(2 * Pi / 3 * i);
+        end;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" FixedLayers = "0" >
+        <Axis NormVector = "  x[0]; y[0]; 0" />
+        <Axis NormVector = "  x[1]; y[1]; 0" />
+        <Axis NormVector = "  x[2]; y[2]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0];  0" />
+                <Add Vector = "x[1]; y[1];  0" />
+                <Add Vector = "x[2]; y[2];  0" />
+
+                <Add Vector = "   0;    0;  H" />
+                <Add Vector = "   0;    0; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange " VertexIndexes = "0;3;1" />
+                <Face Color = "clYellow " VertexIndexes = "1;3;2" />
+                <Face Color = "clRed    " VertexIndexes = "2;3;0" />
+
+                <Face Color = "clViolett" VertexIndexes = "0;1;4" />
+                <Face Color = "clGreen  " VertexIndexes = "1;2;4" />
+                <Face Color = "clBlue   " VertexIndexes = "2;0;4" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Hide Axis = "0" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Angle = " Pi/2" Layer = "1" />
+        <ShowAll/>
+
+        <Hide Axis = "1" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi/2" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Angle = " Pi/2" Layer = "1" />
+        <ShowAll/>
+
+        <Hide Axis = "2" Layer = "1" />
+        <Turn Axis = "0" Angle = "-Pi/2" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = " Pi/2" Layer = "1" />
+        <ShowAll/>
+
+    </Figure>
+</xml>

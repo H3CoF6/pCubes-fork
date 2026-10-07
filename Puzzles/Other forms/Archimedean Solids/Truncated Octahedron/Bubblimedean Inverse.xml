@@ -1,0 +1,145 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bubblimedean Inverse</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Octahedron\Bubblimedean Inverse</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-09-18</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=425053</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'F0F0F0';
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clNavy   := '000080';
+        clCoral  := 'FF7F50';
+        clRed    := 'FF0000';
+        clBrown  := '800000';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clOlive  := '808000';
+        clLime   := '00FF00';
+        clGreen  := '008000';
+        clPink   := 'FF69B4';
+        clPurple := '800080';
+
+        S := 3;
+        N := 1;
+        M := 2;
+
+        A := 0.28;
+        D := A * ((S-1) * 4 / 5 + 1) * sqrt(5) / S;
+        H := A * ((2 * N * (S - 1) - M * (S - 2)) / (S * N) - 1);
+        B := A * 2;
+        C := B * 0.9 + H;
+        E := B + H;
+
+        A1 := ArcCos(-1/9);
+        A2 := ArcCos(-2/3);
+
+        procedure Add4(X,Y,Z);
+        begin
+            Vx[i] := X; Vy[i] := Y; Vz[i] := Z; Inc(i);
+            Vx[i] := Y; Vy[i] :=-X; Vz[i] := Z; Inc(i);
+            Vx[i] :=-X; Vy[i] := Y; Vz[i] := Z; Inc(i);
+            Vx[i] := Y; Vy[i] := X; Vz[i] := Z; Inc(i);
+        end;
+        i := 0;
+        Add4( A, 0, E);
+        Add4( E, 0, A);
+        Add4( A, E, 0);
+        Add4( A,-E, 0);
+        Add4( E, 0,-A);
+        Add4( A, 0,-E);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " B; A; 0" BaseVector = " H; 0; 0" />
+        <Axis NormVector = " A; B; 0" BaseVector = " 0; H; 0" />
+        <Axis NormVector = " B;-A; 0" BaseVector = " H; 0; 0" />
+        <Axis NormVector = " A;-B; 0" BaseVector = " 0;-H; 0" />
+        <Axis NormVector = "-B; A; 0" BaseVector = "-H; 0; 0" />
+        <Axis NormVector = "-A; B; 0" BaseVector = " 0; H; 0" />
+        <Axis NormVector = "-B;-A; 0" BaseVector = "-H; 0; 0" />
+        <Axis NormVector = "-A;-B; 0" BaseVector = " 0;-H; 0" />
+        <Axis NormVector = " B; 0; A" BaseVector = " H; 0; 0" />
+        <Axis NormVector = " A; 0; B" BaseVector = " 0; 0; H" />
+        <Axis NormVector = " B; 0;-A" BaseVector = " H; 0; 0" />
+        <Axis NormVector = " A; 0;-B" BaseVector = " 0; 0;-H" />
+        <Axis NormVector = "-B; 0; A" BaseVector = "-H; 0; 0" />
+        <Axis NormVector = "-A; 0; B" BaseVector = " 0; 0; H" />
+        <Axis NormVector = "-B; 0;-A" BaseVector = "-H; 0; 0" />
+        <Axis NormVector = "-A; 0;-B" BaseVector = " 0; 0;-H" />
+        <Axis NormVector = " 0; B; A" BaseVector = " 0; H; 0" />
+        <Axis NormVector = " 0; A; B" BaseVector = " 0; 0; H" />
+        <Axis NormVector = " 0; B;-A" BaseVector = " 0; H; 0" />
+        <Axis NormVector = " 0; A;-B" BaseVector = " 0; 0;-H" />
+        <Axis NormVector = " 0;-B; A" BaseVector = " 0;-H; 0" />
+        <Axis NormVector = " 0;-A; B" BaseVector = " 0; 0; H" />
+        <Axis NormVector = " 0;-B;-A" BaseVector = " 0;-H; 0" />
+        <Axis NormVector = " 0;-A;-B" BaseVector = " 0; 0;-H" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Color" VertexIndexes = "i0;i1;i2" InvisibleEdges = "6" />
+        </Macro>
+        <Macro Name = "AddSquare" >
+            <ExecMacro MacroName = "AddFace" i0 = "v1" i1 = "v2" i2 = "v0" />
+            <ExecMacro MacroName = "AddFace" i0 = "v2" i1 = "v3" i2 = "v0" />
+            <ExecMacro MacroName = "AddFace" i0 = "v3" i1 = "v4" i2 = "v0" />
+            <ExecMacro MacroName = "AddFace" i0 = "v4" i1 = "v1" i2 = "v0" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices>
+                <Add Vector = " C; 0; 0" />
+                <Add Vector = "-C; 0; 0" />
+                <Add Vector = " 0; C; 0" />
+                <Add Vector = " 0;-C; 0" />
+                <Add Vector = " 0; 0; C" />
+                <Add Vector = " 0; 0;-C" />
+            </Vertices>
+
+            <Faces>
+                <ExecMacro MacroName = "AddSquare" Color = "clYellow" v0 = "24" v1 = " 4" v2 = " 9" v3 = "16" v4 = "11" />
+                <ExecMacro MacroName = "AddSquare" Color = "clBlue  " v0 = "25" v1 = " 6" v2 = "15" v3 = "18" v4 = "13" />
+                <ExecMacro MacroName = "AddSquare" Color = "clRed   " v0 = "26" v1 = " 7" v2 = " 8" v3 = "19" v4 = "10" />
+                <ExecMacro MacroName = "AddSquare" Color = "clOrange" v0 = "27" v1 = " 5" v2 = "14" v3 = "17" v4 = "12" />
+                <ExecMacro MacroName = "AddSquare" Color = "clGreen " v0 = "28" v1 = " 3" v2 = " 2" v3 = " 1" v4 = " 0" />
+                <ExecMacro MacroName = "AddSquare" Color = "clWhite " v0 = "29" v1 = "20" v2 = "21" v3 = "22" v4 = "23" />
+
+                <Face Color = "clCyan  " VertexIndexes = " 0; 1; 5;12; 9; 4" />
+                <Face Color = "clBrown " VertexIndexes = " 1; 2; 6;13;14; 5" />
+                <Face Color = "clPurple" VertexIndexes = " 2; 3; 7;10;15; 6" />
+                <Face Color = "clCoral " VertexIndexes = " 3; 0; 4;11; 8; 7" />
+
+                <Face Color = "clNavy  " VertexIndexes = " 8;11;16;20;23;19" />
+                <Face Color = "clOlive " VertexIndexes = " 9;12;17;21;20;16" />
+                <Face Color = "clPink  " VertexIndexes = "14;13;18;22;21;17" />
+                <Face Color = "clLime  " VertexIndexes = "15;10;19;23;22;18" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "A"   > <Turn  Axis = "i  " Layer = "1" Angle = " A2" /> </Macro>
+        <Macro Name = "A'"  > <Turn  Axis = "i  " Layer = "1" Angle = "-A2" /> </Macro>
+        <Macro Name = "-A-" > <Split Axis = "i  " From  = "1"/>                </Macro>
+        <Macro Name = "B"   > <Turn  Axis = "i+1" Layer = "1" Angle = " A2" /> </Macro>
+        <Macro Name = "B'"  > <Turn  Axis = "i+1" Layer = "1" Angle = "-A2" /> </Macro>
+        <Macro Name = "-B-" > <Split Axis = "i+1" From  = "1"/>                </Macro>
+        <Macro Name = "---" > <SplitByAxes/>                                   </Macro>
+
+        <Macro Name = "Split" >
+            <ExecMacro MacroName = "A -B- B -A- A' B'  B' -A- A' -B- B A --- B A' B' A B' A B A' ---" />
+            <Undo Repeat = "16" />
+            <Script>i := i + 2;</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

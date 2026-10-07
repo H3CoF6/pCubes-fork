@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher pocket cube</Name>
+        <Menu>Other cubes\Mixed\Fisher\Fisher pocket cube</Menu>
+        <Inventor>Joachim Solborg</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-06-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8702</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := -1;
+        Colors[1] := '209920'; // Green
+        Colors[2] := 'ffff00'; // Yellow
+        Colors[3] := -1;
+        Colors[4] := -1;
+        Colors[5] := '00ccff'; // Blue
+
+        ColorBody := '800080';
+
+        W := 0.5;
+        D := W / 4;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+
+        DWX := -W * 0.23;
+        DWY := -DWX;
+        DWZ := -D;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 1;-1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SplitByAxes/>
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := ColorBody;
+        </Script>
+
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <RemoveContaining Vector = "0;0;0" />
+        <ShowAll/>
+    </Figure>
+</xml>

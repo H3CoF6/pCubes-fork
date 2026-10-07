@@ -1,0 +1,221 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+// jumble angles can't be enumerated because cetral parts are absent
+
+    <Interface>
+        <Name>Coin Transformer</Name>
+        <Menu>Other forms\Catalan solids\Rhombic Dodecahedron\Coin Transformer</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added></Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=398759</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '00CC00'; // LightGreen
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0066FF'; // LightBlue
+        Colors[ 3] := '222222'; // Black
+        Colors[ 4] := 'FF0000'; // Red
+        Colors[ 5] := 'FF55CC'; // LightViolett
+        Colors[ 6] := 'FF6600'; // Orange
+        Colors[ 7] := '8800FF'; // Violett
+        Colors[ 8] := '0011EE'; // Blue
+        Colors[ 9] := '888888'; // Gray
+        Colors[10] := '008800'; // Green
+        Colors[11] := 'FFCC00'; // Gold
+
+        R := 0.7;
+
+        include 'Figures\Scripts\Rhombic_Dodecahedron_Coordinates.inc';
+
+        D1 := R * 27/40+0.005;
+        D2 := (2 * R - D1) / sqrt(3)+0.0185;
+        D3 := R / sqrt(2);
+        RC := R * 0.37;
+        KC := 1.06;
+        A := Arccos(1/3);
+
+        DCut := R * 0.40;
+        DCut2 := R * 0.18;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3"  PlaneDistances = "-D2; 0; D2" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    // circles
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-Pi+A; -Pi+2*A; -2*A; -A; 0; A; 2*A; Pi-2*A; Pi-A; Pi" PlaneDistances = "-D3; D3" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 1;-1; 0" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 1; 0;-1" />
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 0; 1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D1" FixedLayers = "0" >
+        <Axis NormVector = " 2;-1; 2" />
+        <Axis NormVector = "-1; 2; 2" />
+        <Axis NormVector = " 2; 2;-1" />
+        <Axis NormVector = " 2; 1; 2" />
+        <Axis NormVector = " 2;-2;-1" />
+        <Axis NormVector = "-1;-2; 2" />
+        <Axis NormVector = "-2; 1; 2" />
+        <Axis NormVector = " 1;-2; 2" />
+        <Axis NormVector = "-2;-2;-1" />
+        <Axis NormVector = "-2;-1; 2" />
+        <Axis NormVector = "-2; 2;-1" />
+        <Axis NormVector = " 1; 2; 2" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3"  PlaneDistances = "D2" FixedLayers = "0" >
+        <Axis NormVector = " 5;-1;-1" />
+        <Axis NormVector = "-1; 5;-1" />
+        <Axis NormVector = "-1;-1; 5" />
+        <Axis NormVector = "-1; 1; 5" />
+        <Axis NormVector = "-1;-5;-1" />
+        <Axis NormVector = " 5; 1;-1" />
+        <Axis NormVector = "-5; 1;-1" />
+        <Axis NormVector = " 1; 1; 5" />
+        <Axis NormVector = " 1;-5;-1" />
+        <Axis NormVector = " 1; 5;-1" />
+        <Axis NormVector = "-5;-1;-1" />
+        <Axis NormVector = " 1;-1; 5" />
+    </Axes>
+
+    // circles
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-Pi+A; -A; 0; A; Pi; Pi-A; Pi+A" PlaneDistances = "D3" FixedLayers = "0" >
+        <Axis NormVector = " 4; 1; 1" />
+        <Axis NormVector = " 1; 1; 4" />
+        <Axis NormVector = " 1; 4; 1" />
+        <Axis NormVector = " 4;-1; 1" />
+        <Axis NormVector = " 1;-1; 4" />
+        <Axis NormVector = " 1;-4; 1" />
+        <Axis NormVector = "-1;-4; 1" />
+        <Axis NormVector = "-1;-1; 4" />
+        <Axis NormVector = "-4; 1; 1" />
+        <Axis NormVector = "-1; 1; 4" />
+        <Axis NormVector = "-4;-1; 1" />
+        <Axis NormVector = "-1; 4; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Body">
+            <Part>
+                <Vertices Vectors = "Vx; Vy; Vz" />
+
+                <Faces>
+                    <Face Color = "Colors[ 0]" VertexIndexes = " 0; 2; 5; 1" />
+                    <Face Color = "Colors[ 1]" VertexIndexes = " 0; 3; 6; 2" />
+                    <Face Color = "Colors[ 2]" VertexIndexes = " 0; 4; 7; 3" />
+                    <Face Color = "Colors[ 3]" VertexIndexes = " 0; 1; 8; 4" />
+
+                    <Face Color = "Colors[ 4]" VertexIndexes = " 1; 5; 9; 8" />
+                    <Face Color = "Colors[ 5]" VertexIndexes = " 2; 6;10; 5" />
+                    <Face Color = "Colors[ 6]" VertexIndexes = " 3; 7;11; 6" />
+                    <Face Color = "Colors[ 7]" VertexIndexes = " 4; 8;12; 7" />
+
+                    <Face Color = "Colors[ 8]" VertexIndexes = "13; 9; 5;10" />
+                    <Face Color = "Colors[ 9]" VertexIndexes = "13;10; 6;11" />
+                    <Face Color = "Colors[10]" VertexIndexes = "13;11; 7;12" />
+                    <Face Color = "Colors[11]" VertexIndexes = "13;12; 8; 9" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "Split">
+            <Split Axis = "0" From = "1" />
+            <Split Axis = "0" From = "2" />
+            <Split Axis = "1" From = "1" />
+            <Split Axis = "1" From = "2" />
+            <Split Axis = "2" From = "1" />
+            <Split Axis = "2" From = "2" />
+
+            <Split Axis = "3" From = "1" />
+            <Split Axis = "3" From = "2" />
+            <Split Axis = "3" From = "3" />
+            <Split Axis = "4" From = "1" />
+            <Split Axis = "4" From = "2" />
+            <Split Axis = "4" From = "3" />
+            <Split Axis = "5" From = "1" />
+            <Split Axis = "5" From = "2" />
+            <Split Axis = "5" From = "3" />
+            <Split Axis = "6" From = "1" />
+            <Split Axis = "6" From = "2" />
+            <Split Axis = "6" From = "3" />
+        </Macro>
+
+        <ExecMacro MacroName = "Body" />
+        <ExecMacro MacroName = "Split" />
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+
+        <Macro Name = "CutVertex1" >
+            <HideContaining Vector = "0; 0; R" />
+            <HideContaining Vector = "0; 0; -R" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = "-1; 1;0" NormDistance = "-DCut" /> </Cut>
+            <Cut> <Plane NormVector = " 1;-1;0" NormDistance = "-DCut" /> </Cut>
+            <Cut> <Plane NormVector = " 1; 1;0" NormDistance = "-DCut" /> </Cut>
+            <Cut> <Plane NormVector = "-1;-1;0" NormDistance = "-DCut" /> </Cut>
+            <ShowAll/>
+            <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "CutVertex1" Repeat = "3" />
+
+        <Macro Name = "CutVertex2" >
+            <HideContaining Vector = "R/2; R/2; R/2" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = "-2; 1; 1" NormDistance = "-DCut2" /> </Cut>
+            <Cut> <Plane NormVector = " 1;-2; 1" NormDistance = "-DCut2" /> </Cut>
+            <Cut> <Plane NormVector = " 1; 1;-2" NormDistance = "-DCut2" /> </Cut>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "CutVertex2" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutVertex2" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i]*KC" Y = "Cy[i]*KC" Z = "Cz[i]*KC" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = " 0" Repeat = "12" />
+
+        <ExecMacro MacroName = "Split" />
+
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := -1;
+        </Script>
+
+        <ExecMacro MacroName = "Body" />
+        <ExecMacro MacroName = "Split" />
+        <HideContaining Vector = " 0; 0; 0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

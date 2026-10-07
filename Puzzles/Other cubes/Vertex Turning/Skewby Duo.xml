@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewby Duo</Name>
+        <Menu>Other cubes\Vertex Turning\Skewby Duo</Menu>
+        <Inventor>Mark Lodge</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-11-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9005</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := 'FF8800'; // Orange
+        Colors[2] := '0088FF'; // LightBlue
+        Colors[3] := '00FF00'; // Lime
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.45;
+        A := W * 1.3;
+        B := W * 0.63;
+        D := W / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = " A; 0; 0" />
+        <HideContaining Vector = "-A; 0; 0" />
+        <HideContaining Vector = " 0; A; 0" />
+        <HideContaining Vector = " 0;-A; 0" />
+        <HideContaining Vector = " 0; 0; A" />
+        <HideContaining Vector = " 0; 0;-A" />
+
+        <HideContaining Vector = " 0;-W;-W" />
+        <HideContaining Vector = " 0;-W; W" />
+        <HideContaining Vector = " 0; W;-W" />
+        <HideContaining Vector = " 0; W; W" />
+        <HideContaining Vector = "-W; 0;-W" />
+        <HideContaining Vector = "-W; 0; W" />
+        <HideContaining Vector = " W; 0;-W" />
+        <HideContaining Vector = " W; 0; W" />
+        <HideContaining Vector = "-W;-W; 0" />
+        <HideContaining Vector = "-W; W; 0" />
+        <HideContaining Vector = " W;-W; 0" />
+        <HideContaining Vector = " W; W; 0" />
+
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " A; 0; 0" />
+        <RemoveContaining Vector = "-A; 0; 0" />
+        <RemoveContaining Vector = " 0; A; 0" />
+        <RemoveContaining Vector = " 0;-A; 0" />
+        <RemoveContaining Vector = " 0; 0; A" />
+        <RemoveContaining Vector = " 0; 0;-A" />
+
+        <RemoveContaining Vector = " 0;-W;-W" />
+        <RemoveContaining Vector = " 0;-W; W" />
+        <RemoveContaining Vector = " 0; W;-W" />
+        <RemoveContaining Vector = " 0; W; W" />
+        <RemoveContaining Vector = "-W; 0;-W" />
+        <RemoveContaining Vector = "-W; 0; W" />
+        <RemoveContaining Vector = " W; 0;-W" />
+        <RemoveContaining Vector = " W; 0; W" />
+        <RemoveContaining Vector = "-W;-W; 0" />
+        <RemoveContaining Vector = "-W; W; 0" />
+        <RemoveContaining Vector = " W;-W; 0" />
+        <RemoveContaining Vector = " W; W; 0" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+Don't turn circles while scramble
+
+    <Interface>
+        <Name>Circle Floppy</Name>
+        <Menu>Test\Circle Floppy</Menu>
+        <Menu>Cuboid\Circle Floppy</Menu>
+        <Inventor>Mark Segein</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2307</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=20621&amp;p=250399&amp;hilit=circle+floppy#p250399</Link>
+        <Added>2016-11-19</Added>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        Delta := 0.002;
+        R := 0.4;
+        D := 0.5 + Delta;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-1/6; 1/6" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-1/6; 1/6" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut Color = "clWhite" >
+            <Plane>
+                <NormVector X = "0" Y = "0" Z = "-1" />
+                <NormDistance> -1/6</NormDistance>
+            </Plane>
+        </Cut>
+        <Cut Color = "clYellow" >
+            <Plane>
+                <NormVector X = "0" Y = "0" Z = "1" />
+                <NormDistance> -1/6</NormDistance>
+            </Plane>
+        </Cut>
+
+        <Circle Radius = "R" Color = "clWhite" > <Center X =  "0" Y =  "0" Z =  "D / 3" /> </Circle>
+        <Circle Radius = "R" Color = "clYellow" > <Center X =  "0" Y =  "0" Z = "-D / 3" /> </Circle>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

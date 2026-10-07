@@ -1,0 +1,121 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3x3 Mixup Plus Barrel</Name>
+        <Menu>Other forms\Cylinder\3x3x3 Mixup Plus Barrel</Menu>
+        <Inventor>Felix Mercader</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5530</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF800A'; // Orange
+        Colors[1] := '009600'; // Green
+        Colors[2] := 'EE0000'; // Red
+        Colors[3] := '0033EE'; // Blue
+
+        Colors[4] := 'AA00AA'; // Violett
+        Colors[5] := 'FFBF05'; //
+        Colors[6] := 'AFFF00'; //
+        Colors[7] := '00FF00'; // LightGreen
+
+        clYellow := 'FFEE00';
+        clBlack  := '333333';
+
+        R := 0.5;
+        H := R;
+
+        N := 60;
+        N4 := N div 4;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2*Pi / N * i);
+            y[i] := R * sin(2*Pi / N * i);
+        end;
+
+        D := R / (1 + 2 * sqrt(2));
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+     <Axes TurningAngles = "Pi/2; Pi/4; Pi/2" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "Cylinder" >
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "clBlack" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" Color = "Color1" Repeat = "N4" i = "0" />
+                    <ExecMacro MacroName = "AddFace" Color = "Color2" Repeat = "N4" />
+                    <ExecMacro MacroName = "AddFace" Color = "Color3" Repeat = "N4" />
+                    <ExecMacro MacroName = "AddFace" Color = "Color4" Repeat = "N4" />
+                    <Face Color = "clYellow" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "Cylinder" Color1 = "Colors[0]" Color2 = "Colors[1]" Color3 = "Colors[2]" Color4 = "Colors[3]" />
+        <SplitByAxes/>
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/4" />
+        <ExecMacro MacroName = "Cylinder" Color1 = "Colors[4]" Color2 = "Colors[5]" Color3 = "Colors[6]" Color4 = "Colors[7]" />
+        <SplitByAxes/>
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi/4" />
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "Ax1" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "Ax2" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Turn Axis = "Ax3" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Undo/>
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

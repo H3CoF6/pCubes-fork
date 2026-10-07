@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Valentine's Siamese Heart 1x3x3</Name>
+        <Alias>Heart to Heart</Alias>
+        <Menu>Other forms\Unclassified\Heart\Valentine's Siamese Heart 1x3x3</Menu>
+        <Inventor>Li Chung Man</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-04-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4139</Link>
+    </Interface>
+
+    <Script>
+        Color  := 'D80040'; // Purple
+        for i := 0 to 5 do
+            Colors[i] := Color;
+        Colors[0] := -1;
+        Colors[3] := -1;
+
+        W := 0.4;
+        D := W / 3;
+        R := D * 2;
+        H := D;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" BaseVector = " R; R; 0" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = " R; R; 0" />
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-R;-R; 0" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "-R;-R; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D * 2" WY = "D * 2" WZ = "H" DWX = " D * 3" DWY = "D"      />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D * 2" WY = "D * 2" WZ = "H" DWX = "-D    " DWY = "-D * 3" />
+
+        <Script>
+            Colors[1] := -1;
+            Colors[2] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D" WZ = "H" DWX = "0" DWY = "0" />
+
+        <Macro Name = "AddCylinder" >
+            <HideAll/>
+            <Cylinder Radius = "R" Color = "Color">
+                <Base X = "X" Y = "Y" Z = "-H" Color = "Color" />
+                <Top  X = "X" Y = "Y" Z = " H" Color = "Color"/>
+            </Cylinder>
+        </Macro>
+
+        <ExecMacro MacroName = "AddCylinder" X = "W" Y = "W" />
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "W" /> </Cut>
+
+        <ExecMacro MacroName = "AddCylinder" X = "-W" Y = "-W" />
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "W" /> </Cut>
+
+        <ExecMacro MacroName = "AddCylinder" X = "D" Y = "D" />
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = " D" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-D" /> </Cut>
+
+        <ExecMacro MacroName = "AddCylinder" X = "-D" Y = "-D" />
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = " D" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-D" /> </Cut>
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

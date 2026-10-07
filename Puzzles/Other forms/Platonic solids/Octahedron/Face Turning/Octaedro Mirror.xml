@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octaedro Mirror</Name>
+        <Menu>Other forms\Octahedron\Face Turning\Octaedro Mirror</Menu>
+        <Inventor>José Ramírez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-09-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10198</Link>
+    </Interface>
+
+    <Script>
+        Color := 'AAAAAA'; // Silver
+        for i := 0 to 7 do
+            Colors[i] := Color;
+
+        W := 0.75;
+        D := W * 0.26;
+        D2 := D * 2;
+
+        DX :=-W * 0.09;
+        DY := W * 0.08;
+        DZ := -W - DX  + DY  + 3*D;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2; -D; D; D2" FixedLayers = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = "-DX;-DY;-DZ" />
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <Transfer Vector = " DX; DY; DZ" />
+        <SplitByAxes/>
+        <HideContaining Vector = "-D2;  0;  0" />
+        <HideContaining Vector = " D2;  0;  0" />
+        <HideContaining Vector = "  0;-D2;  0" />
+        <HideContaining Vector = "  0; D2;  0" />
+        <HideContaining Vector = "  0;  0;-D2" />
+        <HideContaining Vector = "  0;  0; D2" />
+        <HideContaining Vector = " -D; -D;  0" />
+        <HideContaining Vector = " -D;  D;  0" />
+        <HideContaining Vector = "  D; -D;  0" />
+        <HideContaining Vector = "  D;  D;  0" />
+        <HideContaining Vector = "  0; -D; -D" />
+        <HideContaining Vector = "  0; -D;  D" />
+        <HideContaining Vector = "  0;  D; -D" />
+        <HideContaining Vector = "  0;  D;  D" />
+        <HideContaining Vector = " -D;  0; -D" />
+        <HideContaining Vector = " -D;  0;  D" />
+        <HideContaining Vector = "  D;  0; -D" />
+        <HideContaining Vector = "  D;  0;  D" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 8" />
+</xml>

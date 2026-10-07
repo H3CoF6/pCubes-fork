@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Poison Ivy Octahedron (Sphere)</Name>
+        <Menu>Other forms\Sphere\Poison Ivy Octahedron</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6121</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0088FF'; // Blue1
+        Colors[1] := '00AA00'; // Green2
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := 'FF0000'; // Red
+        Colors[4] := 'FF6000'; // Orange
+        Colors[5] := '8800DD'; // Violett
+        Colors[6] := '00FF00'; // Green1
+        Colors[7] := '0033EE'; // Blue2
+
+        Colors[8] := '333333'; // Black
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        K := 0.6;
+
+        A1 := ArcCos(11/21);
+        A2 := ArcCos(2/7);
+        A3 := ArcCos(-2/3);
+        A4 := ArcCos(-19/21);
+
+        D := K * 0.57768415038417 * 3 / sqrt(5); // C15
+        DCut := K *0.865;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 2" />
+        <Axis NormVector = "-1; 0; 2" />
+        <Axis NormVector = " 0; 2; 1" />
+        <Axis NormVector = " 0; 2;-1" />
+        <Axis NormVector = " 2; 1; 0" />
+        <Axis NormVector = " 2;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector" >
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[c]" />
+            <Cut> <Plane NormVector = " 1; 0; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi / 2" />
+            <Script> Inc(c); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" Repeat = "4" c = "0" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSector" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ShowAll/>
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-Cx[id];-Cy[id];-Cz[id]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "6" id = "0" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[8]" />
+        <Macro Name = "Split">
+            <Split> <Plane NormVector = "-Cx[id];-Cy[id];-Cz[id]" NormDistance = "-DCut" /> </Split>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "6" id = "0" />
+        <RemoveContaining Vector = "0;0;0" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

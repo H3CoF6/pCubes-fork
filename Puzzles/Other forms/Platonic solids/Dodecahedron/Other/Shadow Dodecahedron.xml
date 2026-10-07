@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Shadow Dodecahedron</Name>
+        <Menu>Other forms\Dodecahedron\Other\Shadow Dodecahedron</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7898</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0000CC'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := 'AA00AA'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R / 0.7 * 0.45407;
+
+        k := 1.15;
+        for i := 0 to 11 do begin
+            Ckx[i] := Cx[i] * k;
+            Cky[i] := Cy[i] * k;
+            Ckz[i] := Cz[i] * k;
+        end;
+
+        for i := 0 to 4 do begin
+            ax[i] := sin(2*Pi/5 * i);
+            ay[i] := cos(2*Pi/5 * i);
+        end;
+        az := sin(Pi/5);
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vx1 := y1 * z2 - y2 * z1;
+          vy1 := z1 * x2 - z2 * x1;
+          vz1 := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vx1*wx + vy1*wy + vz1*wz) / (vx1^2 + vy1^2 + vz1^2));
+        end;
+
+        A1 := Angle(ax[0], ay[0], az, ax[2], ay[2],  az, ax[3], ay[3], az);
+        A2 := Angle(ax[0], ay[0], az, ax[0], ay[0], -az, ax[1], ay[1], az);
+        A3 := Angle(ax[0], ay[0], az, ax[1], ay[1],  az, ax[4], ay[4], az);
+    </Script>
+
+    <Axes TurningAngles = "Pi*2" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = "ax[0]; ay[0];-az" />
+        <Axis NormVector = "ax[1]; ay[1];-az" />
+        <Axis NormVector = "ax[2]; ay[2];-az" />
+        <Axis NormVector = "ax[3]; ay[3];-az" />
+        <Axis NormVector = "ax[4]; ay[4];-az" />
+        <Axis NormVector = "ax[0]; ay[0]; az" />
+        <Axis NormVector = "ax[1]; ay[1]; az" />
+        <Axis NormVector = "ax[2]; ay[2]; az" />
+        <Axis NormVector = "ax[3]; ay[3]; az" />
+        <Axis NormVector = "ax[4]; ay[4]; az" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddColor" >
+            <Face Color = "Colors[cl]" VertexIndexes = " v4; v3; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v3; v2; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v2; v1; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v1; v0; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v0; v4; c" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Ckx; Cky; Ckz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddColor" cl = " 0" c = "20" v0 = " 0" v1 = " 1" v2 = " 2" v3 = " 3" v4 = " 4" />
+                <ExecMacro MacroName = "AddColor" cl = " 1" c = "21" v0 = " 5" v1 = "10" v2 = " 6" v3 = " 1" v4 = " 0" />
+                <ExecMacro MacroName = "AddColor" cl = " 2" c = "22" v0 = " 6" v1 = "11" v2 = " 7" v3 = " 2" v4 = " 1" />
+                <ExecMacro MacroName = "AddColor" cl = " 3" c = "23" v0 = " 7" v1 = "12" v2 = " 8" v3 = " 3" v4 = " 2" />
+                <ExecMacro MacroName = "AddColor" cl = " 4" c = "24" v0 = " 8" v1 = "13" v2 = " 9" v3 = " 4" v4 = " 3" />
+                <ExecMacro MacroName = "AddColor" cl = " 5" c = "25" v0 = " 9" v1 = "14" v2 = " 5" v3 = " 0" v4 = " 4" />
+                <ExecMacro MacroName = "AddColor" cl = " 6" c = "26" v0 = "13" v1 = " 8" v2 = "12" v3 = "17" v4 = "18" />
+                <ExecMacro MacroName = "AddColor" cl = " 7" c = "27" v0 = "14" v1 = " 9" v2 = "13" v3 = "18" v4 = "19" />
+                <ExecMacro MacroName = "AddColor" cl = " 8" c = "28" v0 = "10" v1 = " 5" v2 = "14" v3 = "19" v4 = "15" />
+                <ExecMacro MacroName = "AddColor" cl = " 9" c = "29" v0 = "11" v1 = " 6" v2 = "10" v3 = "15" v4 = "16" />
+                <ExecMacro MacroName = "AddColor" cl = "10" c = "30" v0 = "12" v1 = " 7" v2 = "11" v3 = "16" v4 = "17" />
+                <ExecMacro MacroName = "AddColor" cl = "11" c = "31" v0 = "19" v1 = "18" v2 = "17" v3 = "16" v4 = "15" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Cx;Cy;Cz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

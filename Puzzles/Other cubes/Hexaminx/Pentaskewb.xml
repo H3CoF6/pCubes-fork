@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentaskewb</Name>
+        <Menu>Other Cubes\Hexaminx\Pentaskewb</Menu>
+        <Inventor>Diogo Sousa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8073</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'ED0000'; // Red
+        Colors[1] := 'FF7700'; // Orange
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := '00AA00'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+
+        sAngle := 2 * Pi / 5;
+
+        s2 := sqrt(2);
+        s5 := sqrt(5);
+        A1 := s2 / 2 - s5 * s2 / 2 + s5;
+        A2 := A1 + s5 * s2;
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = "  1; A1;  1" />
+        <Axis NormVector = "  1; -1; A2" />
+        <Axis NormVector = " A1;  1; -1" />
+        <Axis NormVector = " -1; A2; -1" />
+        <Axis NormVector = " A2; -1;  1" />
+        <Axis NormVector = "  1; -1;-A1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

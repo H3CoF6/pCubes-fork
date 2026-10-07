@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx Ball</Name>
+        <Menu>Other forms\Sphere\Megaminx axes\Megaminx Ball</Menu>
+        <Inventor>Jürgen Brandt</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-10-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1534</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+
+        K := 0.6;
+        D := K * 0.66;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5; 0; 2*Pi/5" PlaneDistances = "-D; D" >
+        <Axis NormVector = "   0; -cs;  ss" />
+        <Axis NormVector = "   0; -cs; -ss" />
+        <Axis NormVector = " -ss;   0; -cs" />
+        <Axis NormVector = "  ss;   0; -cs" />
+        <Axis NormVector = "  cs; -ss;   0" />
+        <Axis NormVector = "  cs;  ss;   0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

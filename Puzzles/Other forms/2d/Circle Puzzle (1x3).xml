@@ -1,0 +1,127 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circle Puzzle - 1x3</Name>
+        <Menu>Other forms\2d\Circle Puzzle - 1x3</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-08-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11169</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clBlue   := '0000FF';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clBlack  := '333333';
+
+        K := 0.6;
+        D := K * 0.57768415038417;
+        E := D - K * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+        <Axis NormVector = "-1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clRed" />
+        <Cut  Axis = "1" From = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0;-K; 0" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clYellow" />
+        <Cut  Axis = "1" To   = "1" />
+        <Cut  Axis = "0" From = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        <RemoveContaining Vector = " K; 0; 0" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlue" />
+        <Cut  Axis = "1" To   = "1" />
+        <Cut  Axis = "2" From = "1" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <RemoveContaining Vector = "-K; 0; 0" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clWhite" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Undo Repeat = "7" />
+        <HideContaining Vector = " K; 0; 0" />
+        <HideContaining Vector = " 0;-K; 0" />
+        <HideContaining Vector = "-K; 0; 0" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut  Axis = "0" To   = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-E" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1; 0; 0" NormDistance = " E" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut  Axis = "0" To   = "1" />
+        <Cut  Axis = "1" To   = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = " E" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1; 0; 0" NormDistance = " E" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut  Axis = "0" To   = "1" />
+        <Cut  Axis = "1" To   = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1; 0; 0" NormDistance = "-E" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0; 0" NormDistance = "-E" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;-1; 0" NormDistance = " E" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut  Axis = "1" To   = "1" />
+        <Cut  Axis = "2" To   = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = " E" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0; 0" NormDistance = " E" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut  Axis = "2" To   = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-E" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = "-1; 0; 0" NormDistance = " E" /> </Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <!-- default turn for every puzzle in pCubes -->
+        <Turn NormVector = "1;0;0" Angle = "-Pi / 180 * 20" />
+        <Turn NormVector = "0;0;1" Angle = " Pi / 180 * 30" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

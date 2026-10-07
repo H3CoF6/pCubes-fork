@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Special 2x2x3</Name>
+        <Menu>Other cubes\Unclassified\Special 2x2x3</Menu>
+        <Inventor>Aleh Hladzilin</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1903</Link>
+    </Interface>
+
+    <Script>
+        W := 1/3;
+
+        WX := W;
+        WY := W;
+        WZ := W * (1 + 1 / sqrt(3));
+
+        D := W / sqrt(3);
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(i * Pi / 3);
+            az[i] := sin(i * Pi / 3);
+            bx[i] := cos((i + 0.5) * Pi / 3);
+            bz[i] := sin((i + 0.5) * Pi / 3);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = " 0;  1;  0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = " ax[0]; 0; az[0]" />
+        <Axis NormVector = " ax[1]; 0; az[1]" />
+        <Axis NormVector = " ax[2]; 0; az[2]" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; 0; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " bx[0]; 0; bz[0]" />
+        <Axis NormVector = " bx[1]; 0; bz[1]" />
+        <Axis NormVector = " bx[2]; 0; bz[2]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "5" From = "1" />
+        <Split Axis = "5" From = "2" />
+    </Figure>
+</xml>

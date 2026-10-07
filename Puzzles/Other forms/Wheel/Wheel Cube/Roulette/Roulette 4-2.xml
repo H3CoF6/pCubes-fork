@@ -1,0 +1,156 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Roulette 4-2</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Roulette\Roulette 4-2</Menu>
+        <Inventor>Hubo5563</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2025-02-16</Added>
+        <Link>http://www.mf8-china.com/forum.php?mod=viewthread&amp;tid=118656</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.15;
+        RC := W * 0.9;
+        WC := W * 1.2;
+
+        N := 40;
+        for i := 0 to N - 1 do begin
+            x[i] := RC * cos(2 * Pi / N * i);
+            y[i] := RC * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+
+        // "3-" means turn circle on 3 * Pi/4 clockwise, split, and hide right half (if '+' than left half, ' ' - do not hide) and undo turn. '|' - Show Cylinder.
+        SSquare := '0-2-3 7 |2-4-1 5 |4-6-3 7 |6-0-1 5 ';
+        STriangle := '0-6-1 5 |2-0-3 7 |5-3-6 |5-7-4 |2-4-1 ';
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/4" PlaneDistances = "D; W" NormVectors = "Cx;Cy;Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "Cylinder">
+            <Part>
+                <Vertices Vectors = "x; y; WC" />
+                <Vertices Vectors = "x; y; W" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                    <Face Color = "-1" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddCircle" >
+            <ExecMacro MacroName = "Cylinder" Color = "Colors[c]" />
+            <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" c = "5" />
+        <ExecMacro MacroName = "AddCircle" c = "3" />
+        <ExecMacro MacroName = "AddCircle" c = "1" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCircle" c = "4" />
+        <ExecMacro MacroName = "AddCircle" c = "0" />
+        <ExecMacro MacroName = "AddCircle" c = "2" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <ShowAll/>
+
+        <Macro Name = "Split1" >
+            <Script>
+                Angle := StrToInt(copy(S, 1, 1)) * Pi/4;
+                Sign := copy(S, 2, 1);
+                ax := 100;
+                if Sign = '-' then
+                    ax := -1;
+                if Sign = '+' then
+                    ax :=  1;
+                delete( S, 1, 2);
+            </Script>
+            <Turn NormVector = " 0;-1; 0" Angle = "Angle" />
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-D" /></Split>
+            <Hide><Plane NormVector = " ax; 0; 0" NormDistance = "-ax*D" /></Hide>
+            <Turn NormVector = " 0;-1; 0" Angle = "-Angle" />
+        </Macro>
+        <Macro Name = "Split2" >
+            <ShowAll/>
+            <Hide><Plane NormVector = " 0;-1; 0" NormDistance = "W" /></Hide>
+            <Script>
+                P := Pos('|', S);
+                if P > 0 then
+                    Count := (P - 1) div 2
+                else
+                    Count := Length(S) div 2;
+            </Script>
+            <ExecMacro MacroName = "Split1" i = "0" Repeat = "Count" />
+            <ShowAll/>
+            <Script> delete( S, 1, 1); </Script>
+        </Macro>
+        <Macro Name = "Split3" >
+            <Script>
+                CStrings := 1;
+                for i := 1 to Length(S) do
+                    if copy( S, i, 1) = '|' then
+                        Inc(CStrings);
+            </Script>
+            <ExecMacro MacroName = "Split2" Repeat = "CStrings" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split3" S = "SSquare"   /> // Blue
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "Split3" S = "STriangle" /> // White
+        <Turn NormVector = " 0; 0; 1" Angle = " Pi/2" />
+        <ExecMacro MacroName = "Split3" S = "STriangle" /> // Red
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "Split3" S = "SSquare"   /> // Green
+        <Turn NormVector = " 0; 0; 1" Angle = " Pi/2" />
+        <ExecMacro MacroName = "Split3" S = "STriangle" /> // Yellow
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "Split3" S = "STriangle" /> // Orange
+        <Turn NormVector = " 0; 0; 1" Angle = " Pi/2" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(6)" Layer = "Random(3)" Angle = "2 * Pi * Random"/>
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns" Repeat = "20000" />
+        </Macro>
+    </Macros>
+</xml>

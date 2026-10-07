@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sprout Cube (Ball)</Name>
+        <Menu>Other forms\Sphere\Sprout Cube (Ball)</Menu>
+        <Inventor>Diogo Sousa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7523</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // clRed
+        Colors[1] := 'FF8800'; // clOrange
+        Colors[2] := '0066FF'; // clBlue
+        Colors[3] := '00BB00'; // clGreen
+        Colors[4] := 'FFFF00'; // clYellow
+        Colors[5] := 'FFFFFF'; // clWhite
+
+        K := 0.6;
+
+        D := K * 0.848;
+
+        Sc := 0.23157240283401062; // x^4 - 4 x^3 - 6 x^2 - 20 x + 5 = 0
+
+        A2 := ArcCos((sqrt(3) * sqrt(2 + Sc^2) + Sc^2 - 2 * Sc) / (-2 - 2 * Sc));
+        A1 := 2 * (Pi - A2);
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "D" >
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = " 1; 1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "D" >
+        <Axis NormVector = "-1;-1;-sc" />
+        <Axis NormVector = " 1;-1; sc" />
+        <Axis NormVector = " 1; 1;-sc" />
+        <Axis NormVector = "-1; 1; sc" />
+
+        <Axis NormVector = " 1;-sc; 1" />
+        <Axis NormVector = "-1;-sc;-1" />
+        <Axis NormVector = " 1; sc;-1" />
+        <Axis NormVector = "-1; sc; 1" />
+
+        <Axis NormVector = " sc;-1; 1" />
+        <Axis NormVector = "-sc;-1;-1" />
+        <Axis NormVector = " sc; 1;-1" />
+        <Axis NormVector = "-sc; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

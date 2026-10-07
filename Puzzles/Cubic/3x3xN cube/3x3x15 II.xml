@@ -1,0 +1,153 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3x15 II</Name>
+        <Menu>Cubic\3x3xN Cube\3x3x15 II</Menu>
+        <Inventor>You YuChun</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-11-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8480</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        N := 15;
+        WX := W / N * 9;
+        WY := WX;
+        WZ := W;
+
+        WD := 2 * W / N;
+        D[0] := -W + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Split Axis = "0" From = "6" />
+        <Split Axis = "0" From = "9" />
+        <Split Axis = "1" From = "6" />
+        <Split Axis = "1" From = "9" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "12" />
+        <Hide  Axis = "0" Layers = "6-8" />
+        <Hide  Axis = "1" Layers = "6-8" />
+        <InvertVisibility/>
+        <Hide  Axis = "2" Layers = "0-2" />
+        <Hide  Axis = "2" Layers = "12-14" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "0" From = "11" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "1" From = "11" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "4" />
+        <Split Axis = "2" From = "5" />
+        <Split Axis = "2" From = "6" />
+        <Split Axis = "2" From = "9" />
+        <Split Axis = "2" From = "10" />
+        <Split Axis = "2" From = "11" />
+        <Split Axis = "2" From = "13" />
+        <Split Axis = "2" From = "14" />
+        <Hide  Axis = "2" Layers = "6-8" />
+        <InvertVisibility/>
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "1" From = "10" />
+        <Split Axis = "1" From = "11" />
+        <Hide  Axis = "1" Layer = "3" />
+        <Hide  Axis = "1" Layer = "11" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "0" From = "11" />
+        <RemoveGrayParts/>
+        <HideAll/>
+
+        <!-- Invisible parts to prevent some moves -->
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <Split Axis = "0" From = "6" />
+        <Split Axis = "0" From = "9" />
+        <Split Axis = "1" From = "6" />
+        <Split Axis = "1" From = "9" />
+        <RemoveContaining Vector = "0;0;0" />
+        <Turn Axis = "0" Layers = "6-8" Angle = " Pi/2" />
+        <Split Axis = "2" From = " 4" />
+        <Split Axis = "2" From = "11" />
+        <Turn Axis = "0" Layers = "6-8" Angle = "-Pi/2" />
+        <RemoveContaining Vector = "0; WD*2;0" />
+        <RemoveContaining Vector = "0;-WD*2;0" />
+
+        <Turn Axis = "1" Layers = "6-8" Angle = " Pi/2" />
+        <Split Axis = "2" From = " 4" />
+        <Split Axis = "2" From = "11" />
+        <Turn Axis = "1" Layers = "6-8" Angle = "-Pi/2" />
+        <RemoveContaining Vector = " WD*2;0;WD*3.5" />
+        <RemoveContaining Vector = "-WD*2;0;WD*3.5" />
+        <RemoveContaining Vector = " WD*2;0;-W" />
+        <RemoveContaining Vector = "-WD*2;0;-W" />
+
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "5" />
+        <Split Axis = "2" From = "6" />
+        <Split Axis = "2" From = "9" />
+        <Split Axis = "2" From = "10" />
+        <Split Axis = "2" From = "12" />
+        <Split Axis = "2" From = "13" />
+        <Split Axis = "2" From = "14" />
+        <Turn Axis = "0" Layers = "1-5" Angle = " Pi/2" />
+        <Turn Axis = "2" Layers = "6-8" Angle = " Pi" />
+        <Turn Axis = "0" Layers = "1-5" Angle = "-Pi/2" />
+        <Turn Axis = "0" Layers = "9-14" Angle = " Pi/2" />
+        <Turn Axis = "2" Layers = "6-8" Angle = " Pi" />
+        <Turn Axis = "0" Layers = "9-14" Angle = "-Pi/2" />
+        <Split Axis = "2" From = "4" />
+        <Split Axis = "2" From = "5" />
+        <Split Axis = "2" From = "10" />
+        <Split Axis = "2" From = "11" />
+        <Undo Repeat = "6" />
+        <InvertVisibility/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(2)" Layer = "Random(2) * 12" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(15)" Angle = "2*Pi * Random" />
+            <Turn1 Axis = "2" Layer = "Random(5)+8" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Sc2" >
+            <Turn Axis = "0" Layers = "9-14" Angle = " Pi/2" />
+            <Turn Axis = "1" Layers = "6-8"  Angle = " Pi"   />
+            <Turn Axis = "2" Layers = "6-8"  Angle = " Pi"   />
+            <Turn Axis = "0" Layers = "9-14" Angle = "-Pi/2" />
+            <Turn Axis = "2" Layer  = " 4"   Angle = "2*Pi * Random" />
+            <Turn Axis = "2" Layer  = " 5"   Angle = "2*Pi * Random" />
+            <Turn Axis = "2" Layer  = " 9"   Angle = "2*Pi * Random" />
+            <Turn Axis = "2" Layer  = "10"   Angle = "2*Pi * Random" />
+            <Turn Axis = "0" Layers = "9-14" Angle = " Pi/2" />
+            <Turn Axis = "1" Layers = "6-8"  Angle = " Pi"   />
+            <Turn Axis = "2" Layers = "6-8"  Angle = " Pi"   />
+            <Turn Axis = "0" Layers = "9-14" Angle = "-Pi/2" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(15)" Angle = "2*Pi * Random" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc2" Repeat = "10" />
+            <ExecMacro MacroName = "Sc1" Repeat = "50" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "20" />
+        </Macro>
+    </Macros>
+</xml>

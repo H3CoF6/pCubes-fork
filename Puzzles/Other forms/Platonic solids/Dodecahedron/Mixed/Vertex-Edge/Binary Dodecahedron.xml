@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Binary Dodecahedron</Name>
+        <Menu>Other forms\Bi Axes\Binary Dodecahedron</Menu>
+        <Menu>Other forms\Dodecahedron\Mixed\Vertex-Edge\Binary Dodecahedron</Menu>
+        <Programmer>Skallos</Programmer>
+        <Inventor>Wong Chong Wen</Inventor>
+        <Added>2022-08-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10053</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := R * sqrt(3) / 6;
+        D2 := R * (sqrt(5) + 1) / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D1" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "Ex[1]; Ey[1]; Ez[1]" />
+    </Axes>
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D2" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "TurnAndSplit">
+            <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "Pi * 4 / 3" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "TurnAndSplit" Repeat = "9" />
+        <Undo Repeat = "18" />
+    </Figure>
+</xml>

@@ -1,0 +1,101 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>MF8 Dodecahedron Cube - Multiple Skewb</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Multi-puzzles\Multiple Skewb</Menu>
+        <Menu>Other forms\Multi-puzzles\Multiple Skewb</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-08</Added>
+        <Link>http://www.ziicube.com/mf8-Puzzle/mf8-Multiple-Skewb</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        D := R2sin * 0.6; // may be varied 0 - 1
+        DC := R * (3 + sqrt(5)) / 6 - D * sqrt((5 - sqrt(5)) / 6);
+        DH := DC * 0.95; // Size of hole
+
+        R2 := D * R / As / RSin * 0.887; // small dodecahedron
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1">
+        <Axis NormVector = " Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = " Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = " Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = " Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = " Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = " Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "0.7" Color = "-1" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = " Vx; Vy; Vz" />
+        <HideContaining Vector = " Cx; Cy; Cz" />
+
+        <InvertVisibility/>
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-RSin" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "12" id = "0" />
+
+        <ShowAll/>
+
+        <Macro Name = "CutColor2">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-RSin * 1.01" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor2" Repeat = "12" id = "0" />
+
+        <HideContaining Vector = " Cx; Cy; Cz" />
+
+        <InvertVisibility/>
+
+        <Macro Name = "SplitC" >
+            <Split> <Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "DH" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitC" Repeat = "20" i = "0" />
+
+        <RemoveContaining Vector = "Cx; Cy; Cz" />
+
+        <ShowAll/>
+
+        <Macro Name = "SplitI" >
+            <Split> <Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "DC" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitI" Repeat = "20" i = "0" />
+
+        <RemoveGrayParts/>
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-RSin" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "12" id = "0" />
+
+        <HideAll/>
+
+        <!-- small dodecahedron -->
+
+        <Script> R := R2;</Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = " Cx; Cy; Cz" />
+        <HideContaining Vector = " Vx; Vy; Vz" />
+        <HideContaining Vector = " Ex; Ey; Ez" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+    </Figure>
+</xml>

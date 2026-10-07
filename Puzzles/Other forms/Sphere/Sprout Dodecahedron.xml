@@ -1,0 +1,127 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sprout Dodecahedron (Sphere)</Name>
+        <Menu>Other forms\Sphere\Sprout Dodecahedron</Menu>
+        <Inventor>Diogo Sousa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8227</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := '0033FF'; // Blue
+        Colors[ 2] := 'EE0000'; // Red
+        Colors[ 3] := '00AA00'; // Green
+        Colors[ 4] := 'FF7700'; // Orange
+        Colors[ 5] := 'FFFF00'; // Yellow
+        Colors[ 6] := '7700EE'; // Violett
+        Colors[ 7] := 'FF0077'; // DarkPink
+        Colors[ 8] := '00FF99'; // LightGreen
+        Colors[ 9] := 'FF88CC'; // LightViolett
+        Colors[10] := 'FFFFAA'; // Cream
+        Colors[11] := 'AAAAAA'; // Gray
+
+        K := 0.6;
+        D := K * 0.9369;
+
+        phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        a := 1;
+        b := a / phi;
+        c := a * phi;
+
+        Vx[ 0] := 0; Vy[ 0] := c; Vz[ 0] := b;
+        Vx[ 1] := 0; Vy[ 1] :=-c; Vz[ 1] := b;
+        Vx[ 2] := 0; Vy[ 2] :=-c; Vz[ 2] :=-b;
+        Vx[ 3] := 0; Vy[ 3] := c; Vz[ 3] :=-b;
+        Vx[ 4] := c; Vy[ 4] := b; Vz[ 4] := 0;
+        Vx[ 5] :=-c; Vy[ 5] := b; Vz[ 5] := 0;
+        Vx[ 6] :=-c; Vy[ 6] :=-b; Vz[ 6] := 0;
+        Vx[ 7] := c; Vy[ 7] :=-b; Vz[ 7] := 0;
+        Vx[ 8] := b; Vy[ 8] := 0; Vz[ 8] := c;
+        Vx[ 9] := b; Vy[ 9] := 0; Vz[ 9] :=-c;
+        Vx[10] :=-b; Vy[10] := 0; Vz[10] :=-c;
+        Vx[11] :=-b; Vy[11] := 0; Vz[11] := c;
+
+        Wx[ 0] := a; Wy[ 0] := a; Wz[ 0] := a;
+        Wx[ 1] := a; Wy[ 1] := a; Wz[ 1] :=-a;
+        Wx[ 2] := a; Wy[ 2] :=-a; Wz[ 2] := a;
+        Wx[ 3] := a; Wy[ 3] :=-a; Wz[ 3] :=-a;
+        Wx[ 4] :=-a; Wy[ 4] := a; Wz[ 4] := a;
+        Wx[ 5] :=-a; Wy[ 5] := a; Wz[ 5] :=-a;
+        Wx[ 6] :=-a; Wy[ 6] :=-a; Wz[ 6] := a;
+        Wx[ 7] :=-a; Wy[ 7] :=-a; Wz[ 7] :=-a;
+
+        f := 0.3722978023497; //0..1
+        i := 0;
+        procedure CalcAxes(v1, v2);
+        begin
+          Ax[i] := Wx[v1] + f * (Vx[v2] - Wx[v1]);
+          Ay[i] := Wy[v1] + f * (Vy[v2] - Wy[v1]);
+          Az[i] := Wz[v1] + f * (Vz[v2] - Wz[v1]);
+          Inc(i);
+        end;
+        CalcAxes( 0, 0);
+        CalcAxes( 0, 4);
+        CalcAxes( 0, 8);
+        CalcAxes( 1, 3);
+        CalcAxes( 1, 4);
+        CalcAxes( 1, 9);
+        CalcAxes( 2, 1);
+        CalcAxes( 2, 7);
+        CalcAxes( 2, 8);
+        CalcAxes( 3, 2);
+        CalcAxes( 3, 7);
+        CalcAxes( 3, 9);
+        CalcAxes( 4, 0);
+        CalcAxes( 4, 5);
+        CalcAxes( 4,11);
+        CalcAxes( 5, 3);
+        CalcAxes( 5, 5);
+        CalcAxes( 5,10);
+        CalcAxes( 6, 1);
+        CalcAxes( 6, 6);
+        CalcAxes( 6,11);
+        CalcAxes( 7, 2);
+        CalcAxes( 7, 6);
+        CalcAxes( 7,10);
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vvx := y1 * z2 - y2 * z1;
+          vvy := z1 * x2 - z2 * x1;
+          vvz := x1 * y2 - x2 * y1;
+          wvx := y1 * z3 - y3 * z1;
+          wvy := z1 * x3 - z3 * x1;
+          wvz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vvx*wvx + vvy*wvy + vvz*wvz) / sqrt((vvx^2 + vvy^2 + vvz^2)) / sqrt((wvx^2 + wvy^2 + wvz^2)));
+        end;
+
+        AA1 := Angle(Ax[6], Ay[6], Az[6],  Vx[1], Vy[1], Vz[1],  Ax[7], Ay[7], Az[7]);
+        AA2 := 2 * AA1;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "D" NormVectors = "Vx; Vy; Vz" />
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-AA2;-AA1; 0; AA1; AA2" PlaneDistances = "D" NormVectors = " Ax; Ay; Az" />
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split">
+            <Turn Axis = "ax" Layers = "1" Angle = "2*Pi/3" />
+            <SplitByAxes/>
+            <Undo/>
+            <Script>Inc(ax); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" ax = "0" Repeat = "12" />
+
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

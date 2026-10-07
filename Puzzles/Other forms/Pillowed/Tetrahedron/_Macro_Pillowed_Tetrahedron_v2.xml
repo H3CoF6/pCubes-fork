@@ -1,0 +1,797 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Programmer>uot</Programmer>
+    <Link></Link>
+    <Added></Added>
+
+    // the shape of faces are from geodesic icosahedron with frequency 8
+
+    <Macro Name = "CalcCoordinates" >
+        <Script>
+            procedure AddVertex(x, y, z);
+            begin
+                d := sqrt(x^2+y^2+z^2);
+                c := (1 + (K * 1.73 / d)^Pillow) / 2;
+                PTX[i] := x * c;
+                PTY[i] := y * c;
+                PTZ[i] := z * c;
+                Inc(i);
+            end;
+
+            C00 := K * 0.11096353935072;
+            C01 := K * 0.12643603476419;
+            C02 := K * 0.14470731003114;
+            C03 := K * 0.15815737357933;
+            C04 := K * 0.19236169714227;
+            C05 := K * 0.19824522744379;
+            C06 := K * 0.21265469046617;
+            C07 := K * 0.39097529014845;
+            C08 := K * 0.43618505232104;
+            C09 := K * 0.44564552284921;
+            C10 := K * 0.45063240343164;
+            C11 := K * 0.49455851864986;
+            C12 := K * 0.50326323549878;
+            C13 := K * 0.54082369372826;
+            C14 := K * 0.63355226147934;
+            C15 := K * 0.67253418130447;
+            C16 := K * 0.73996106551417;
+            C17 := K * 0.76595819582026;
+            C18 := K * 0.76945241748983;
+            C19 := K * 0.83068867921588;
+            C20 := K * 0.83544018181329;
+            C21 := K * 0.85400120266450;
+            C22 := K * 0.85988265037160;
+            C23 := K * 0.97386483873327;
+            C24 := K;
+            C25 := K * 1.06342293934856;
+            C26 := K * 1.11329925160758;
+            C27 := K * 1.12652326968580;
+            C28 := K * 1.14598386388012;
+            C29 := K * 1.19715571558681;
+            C30 := K * 1.23411747367278;
+            C31 := K * 1.28338080145092;
+            C32 := K * 1.30752359584959;
+            C33 := K * 1.33372787816378;
+            C34 := K * 1.35509083771683;
+            C35 := K * 1.39456546299854;
+            C36 := K * 1.44572485671643;
+            C37 := K * 1.45607124601745;
+
+            if not VarExists('Pillow') then begin
+                Pillow := 0;
+            end;
+
+            i := 0;
+
+            AddVertex( C24,-C24, C24); // 0 // Vertices
+            AddVertex(-C24, C24, C24); // 1
+            AddVertex( C24, C24,-C24); // 2
+            AddVertex(-C24,-C24,-C24); // 3
+
+            AddVertex( C20,-C20, C28); // 4 // On edges
+            AddVertex( C18,-C18, C29); // 5
+            AddVertex( C14,-C14, C31); // 6
+            AddVertex( C11,-C11, C34); // 7
+            AddVertex( C07,-C07, C35); // 8
+            AddVertex( C04,-C04, C36); // 9
+            AddVertex( C00,-C00, C37); // 10
+            AddVertex(-C00, C00, C37); // 11
+            AddVertex(-C04, C04, C36); // 12
+            AddVertex(-C07, C07, C35); // 13
+            AddVertex(-C11, C11, C34); // 14
+            AddVertex(-C14, C14, C31); // 15
+            AddVertex(-C18, C18, C29); // 16
+            AddVertex(-C20, C20, C28); // 17
+
+            AddVertex(-C20,-C20,-C28); // 18
+            AddVertex(-C18,-C18,-C29); // 19
+            AddVertex(-C14,-C14,-C31); // 20
+            AddVertex(-C11,-C11,-C34); // 21
+            AddVertex(-C07,-C07,-C35); // 22
+            AddVertex(-C04,-C04,-C36); // 23
+            AddVertex(-C00,-C00,-C37); // 24
+            AddVertex( C00, C00,-C37); // 25
+            AddVertex( C04, C04,-C36); // 26
+            AddVertex( C07, C07,-C35); // 27
+            AddVertex( C11, C11,-C34); // 28
+            AddVertex( C14, C14,-C31); // 29
+            AddVertex( C18, C18,-C29); // 30
+            AddVertex( C20, C20,-C28); // 31
+
+            AddVertex( C20,-C28, C20); // 32
+            AddVertex( C18,-C29, C18); // 33
+            AddVertex( C14,-C31, C14); // 34
+            AddVertex( C11,-C34, C11); // 35
+            AddVertex( C07,-C35, C07); // 36
+            AddVertex( C04,-C36, C04); // 37
+            AddVertex( C00,-C37, C00); // 38
+            AddVertex(-C00,-C37,-C00); // 39
+            AddVertex(-C04,-C36,-C04); // 40
+            AddVertex(-C07,-C35,-C07); // 41
+            AddVertex(-C11,-C34,-C11); // 42
+            AddVertex(-C14,-C31,-C14); // 43
+            AddVertex(-C18,-C29,-C18); // 44
+            AddVertex(-C20,-C28,-C20); // 45
+
+            AddVertex(-C20, C28, C20); // 46
+            AddVertex(-C18, C29, C18); // 47
+            AddVertex(-C14, C31, C14); // 48
+            AddVertex(-C11, C34, C11); // 49
+            AddVertex(-C07, C35, C07); // 50
+            AddVertex(-C04, C36, C04); // 51
+            AddVertex(-C00, C37, C00); // 52
+            AddVertex( C00, C37,-C00); // 53
+            AddVertex( C04, C36,-C04); // 54
+            AddVertex( C07, C35,-C07); // 55
+            AddVertex( C11, C34,-C11); // 56
+            AddVertex( C14, C31,-C14); // 57
+            AddVertex( C18, C29,-C18); // 58
+            AddVertex( C20, C28,-C20); // 59
+
+            AddVertex( C28,-C20, C20); // 60
+            AddVertex( C29,-C18, C18); // 61
+            AddVertex( C31,-C14, C14); // 62
+            AddVertex( C34,-C11, C11); // 63
+            AddVertex( C35,-C07, C07); // 64
+            AddVertex( C36,-C04, C04); // 65
+            AddVertex( C37,-C00, C00); // 66
+            AddVertex( C37, C00,-C00); // 67
+            AddVertex( C36, C04,-C04); // 68
+            AddVertex( C35, C07,-C07); // 69
+            AddVertex( C34, C11,-C11); // 70
+            AddVertex( C31, C14,-C14); // 71
+            AddVertex( C29, C18,-C18); // 72
+            AddVertex( C28, C20,-C20); // 73
+
+            AddVertex(-C28,-C20,-C20); // 74
+            AddVertex(-C29,-C18,-C18); // 75
+            AddVertex(-C31,-C14,-C14); // 76
+            AddVertex(-C34,-C11,-C11); // 77
+            AddVertex(-C35,-C07,-C07); // 78
+            AddVertex(-C36,-C04,-C04); // 79
+            AddVertex(-C37,-C00,-C00); // 80
+            AddVertex(-C37, C00, C00); // 81
+            AddVertex(-C36, C04, C04); // 82
+            AddVertex(-C35, C07, C07); // 83
+            AddVertex(-C34, C11, C11); // 84
+            AddVertex(-C31, C14, C14); // 85
+            AddVertex(-C29, C18, C18); // 86
+            AddVertex(-C28, C20, C20); // 87
+
+            AddVertex( C22,-C16, C27); // 88 // On faces
+            AddVertex( C27,-C16, C22); // 89
+            AddVertex( C15,-C10, C30); // 90
+            AddVertex( C23,-C09, C23); // 91
+            AddVertex( C30,-C10, C15); // 92
+            AddVertex( C08,-C02, C32); // 93
+            AddVertex( C17,-C01, C25); // 94
+            AddVertex( C25,-C01, C17); // 95
+            AddVertex( C32,-C02, C08); // 96
+            AddVertex( C03, C03, C33); // 97
+            AddVertex( C12, C05, C26); // 98
+            AddVertex( C19, C06, C19); // 99
+            AddVertex( C26, C05, C12); // 100
+            AddVertex( C33, C03, C03); // 101
+            AddVertex(-C02, C08, C32); // 102
+            AddVertex( C05, C12, C26); // 103
+            AddVertex( C13, C13, C21); // 104
+            AddVertex( C21, C13, C13); // 105
+            AddVertex( C26, C12, C05); // 106
+            AddVertex( C32, C08,-C02); // 107
+            AddVertex(-C10, C15, C30); // 108
+            AddVertex(-C01, C17, C25); // 109
+            AddVertex( C06, C19, C19); // 110
+            AddVertex( C13, C21, C13); // 111
+            AddVertex( C19, C19, C06); // 112
+            AddVertex( C25, C17,-C01); // 113
+            AddVertex( C30, C15,-C10); // 114
+            AddVertex(-C16, C22, C27); // 115
+            AddVertex(-C09, C23, C23); // 116
+            AddVertex(-C01, C25, C17); // 117
+            AddVertex( C05, C26, C12); // 118
+            AddVertex( C12, C26, C05); // 119
+            AddVertex( C17, C25,-C01); // 120
+            AddVertex( C23, C23,-C09); // 121
+            AddVertex( C27, C22,-C16); // 122
+            AddVertex(-C16, C27, C22); // 123
+            AddVertex(-C10, C30, C15); // 124
+            AddVertex(-C02, C32, C08); // 125
+            AddVertex( C03, C33, C03); // 126
+            AddVertex( C08, C32,-C02); // 127
+            AddVertex( C15, C30,-C10); // 128
+            AddVertex( C22, C27,-C16); // 129
+
+            AddVertex( C16,-C22, C27); // 130
+            AddVertex( C16,-C27, C22); // 131
+            AddVertex( C10,-C15, C30); // 132
+            AddVertex( C09,-C23, C23); // 133
+            AddVertex( C10,-C30, C15); // 134
+            AddVertex( C02,-C08, C32); // 135
+            AddVertex( C01,-C17, C25); // 136
+            AddVertex( C01,-C25, C17); // 137
+            AddVertex( C02,-C32, C08); // 138
+            AddVertex(-C03,-C03, C33); // 139
+            AddVertex(-C05,-C12, C26); // 140
+            AddVertex(-C06,-C19, C19); // 141
+            AddVertex(-C05,-C26, C12); // 142
+            AddVertex(-C03,-C33, C03); // 143
+            AddVertex(-C08, C02, C32); // 144
+            AddVertex(-C12,-C05, C26); // 145
+            AddVertex(-C13,-C13, C21); // 146
+            AddVertex(-C13,-C21, C13); // 147
+            AddVertex(-C12,-C26, C05); // 148
+            AddVertex(-C08,-C32,-C02); // 149
+            AddVertex(-C15, C10, C30); // 150
+            AddVertex(-C17, C01, C25); // 151
+            AddVertex(-C19,-C06, C19); // 152
+            AddVertex(-C21,-C13, C13); // 153
+            AddVertex(-C19,-C19, C06); // 154
+            AddVertex(-C17,-C25,-C01); // 155
+            AddVertex(-C15,-C30,-C10); // 156
+            AddVertex(-C22, C16, C27); // 157
+            AddVertex(-C23, C09, C23); // 158
+            AddVertex(-C25, C01, C17); // 159
+            AddVertex(-C26,-C05, C12); // 160
+            AddVertex(-C26,-C12, C05); // 161
+            AddVertex(-C25,-C17,-C01); // 162
+            AddVertex(-C23,-C23,-C09); // 163
+            AddVertex(-C22,-C27,-C16); // 164
+            AddVertex(-C27, C16, C22); // 165
+            AddVertex(-C30, C10, C15); // 166
+            AddVertex(-C32, C02, C08); // 167
+            AddVertex(-C33,-C03, C03); // 168
+            AddVertex(-C32,-C08,-C02); // 169
+            AddVertex(-C30,-C15,-C10); // 170
+            AddVertex(-C27,-C22,-C16); // 171
+
+            AddVertex( C22,-C27, C16); // 172
+            AddVertex( C27,-C22, C16); // 173
+            AddVertex( C15,-C30, C10); // 174
+            AddVertex( C23,-C23, C09); // 175
+            AddVertex( C30,-C15, C10); // 176
+            AddVertex( C08,-C32, C02); // 177
+            AddVertex( C17,-C25, C01); // 178
+            AddVertex( C25,-C17, C01); // 179
+            AddVertex( C32,-C08, C02); // 180
+            AddVertex( C03,-C33,-C03); // 181
+            AddVertex( C12,-C26,-C05); // 182
+            AddVertex( C19,-C19,-C06); // 183
+            AddVertex( C26,-C12,-C05); // 184
+            AddVertex( C33,-C03,-C03); // 185
+            AddVertex(-C02,-C32,-C08); // 186
+            AddVertex( C05,-C26,-C12); // 187
+            AddVertex( C13,-C21,-C13); // 188
+            AddVertex( C21,-C13,-C13); // 189
+            AddVertex( C26,-C05,-C12); // 190
+            AddVertex( C32, C02,-C08); // 191
+            AddVertex(-C10,-C30,-C15); // 192
+            AddVertex(-C01,-C25,-C17); // 193
+            AddVertex( C06,-C19,-C19); // 194
+            AddVertex( C13,-C13,-C21); // 195
+            AddVertex( C19,-C06,-C19); // 196
+            AddVertex( C25, C01,-C17); // 197
+            AddVertex( C30, C10,-C15); // 198
+            AddVertex(-C16,-C27,-C22); // 199
+            AddVertex(-C09,-C23,-C23); // 200
+            AddVertex(-C01,-C17,-C25); // 201
+            AddVertex( C05,-C12,-C26); // 202
+            AddVertex( C12,-C05,-C26); // 203
+            AddVertex( C17, C01,-C25); // 204
+            AddVertex( C23, C09,-C23); // 205
+            AddVertex( C27, C16,-C22); // 206
+            AddVertex(-C16,-C22,-C27); // 207
+            AddVertex(-C10,-C15,-C30); // 208
+            AddVertex(-C02,-C08,-C32); // 209
+            AddVertex( C03,-C03,-C33); // 210
+            AddVertex( C08, C02,-C32); // 211
+            AddVertex( C15, C10,-C30); // 212
+            AddVertex( C22, C16,-C27); // 213
+
+            AddVertex(-C27,-C16,-C22); // 214
+            AddVertex(-C22,-C16,-C27); // 215
+            AddVertex(-C30,-C10,-C15); // 216
+            AddVertex(-C23,-C09,-C23); // 217
+            AddVertex(-C15,-C10,-C30); // 218
+            AddVertex(-C32,-C02,-C08); // 219
+            AddVertex(-C25,-C01,-C17); // 220
+            AddVertex(-C17,-C01,-C25); // 221
+            AddVertex(-C08,-C02,-C32); // 222
+            AddVertex(-C33, C03,-C03); // 223
+            AddVertex(-C26, C05,-C12); // 224
+            AddVertex(-C19, C06,-C19); // 225
+            AddVertex(-C12, C05,-C26); // 226
+            AddVertex(-C03, C03,-C33); // 227
+            AddVertex(-C32, C08, C02); // 228
+            AddVertex(-C26, C12,-C05); // 229
+            AddVertex(-C21, C13,-C13); // 230
+            AddVertex(-C13, C13,-C21); // 231
+            AddVertex(-C05, C12,-C26); // 232
+            AddVertex( C02, C08,-C32); // 233
+            AddVertex(-C30, C15, C10); // 234
+            AddVertex(-C25, C17, C01); // 235
+            AddVertex(-C19, C19,-C06); // 236
+            AddVertex(-C13, C21,-C13); // 237
+            AddVertex(-C06, C19,-C19); // 238
+            AddVertex( C01, C17,-C25); // 239
+            AddVertex( C10, C15,-C30); // 240
+            AddVertex(-C27, C22, C16); // 241
+            AddVertex(-C23, C23, C09); // 242
+            AddVertex(-C17, C25, C01); // 243
+            AddVertex(-C12, C26,-C05); // 244
+            AddVertex(-C05, C26,-C12); // 245
+            AddVertex( C01, C25,-C17); // 246
+            AddVertex( C09, C23,-C23); // 247
+            AddVertex( C16, C22,-C27); // 248
+            AddVertex(-C22, C27, C16); // 249
+            AddVertex(-C15, C30, C10); // 250
+            AddVertex(-C08, C32, C02); // 251
+            AddVertex(-C03, C33,-C03); // 252
+            AddVertex( C02, C32,-C08); // 253
+            AddVertex( C10, C30,-C15); // 254
+            AddVertex( C16, C27,-C22); // 255
+        </Script>
+    </Macro>
+
+    <Macro Name = "AddPillowedTetrahedron" >
+        <Part>
+            <Vertices Vectors = "PTX; PTY; PTZ" />
+
+            <Faces>
+                // Faces
+                <Face Color = "Colors[3]" VertexIndexes = " 89; 88;  0" InvisibleEdges = "7" /> x, y, z
+                <Face Color = "Colors[3]" VertexIndexes = " 91; 90; 88" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 89; 91; 88" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 92; 91; 89" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 94; 93; 90" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 91; 94; 90" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 95; 94; 91" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 92; 95; 91" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 96; 95; 92" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 93; 98; 97" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 94; 98; 93" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 99; 98; 94" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 95; 99; 94" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "100; 99; 95" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "100; 95; 96" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "101;100; 96" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 97;103;102" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 98;103; 97" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 98;104;103" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 99;104; 98" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "105;104; 99" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "105; 99;100" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "106;105;100" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "106;100;101" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "107;106;101" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "102;109;108" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "103;109;102" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "103;110;109" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "104;110;103" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "104;111;110" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "105;111;104" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "111;105;112" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "112;105;106" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "112;106;113" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "113;106;107" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "113;107;114" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "108;116;115" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "108;109;116" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "109;117;116" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "109;110;117" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "110;118;117" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "110;111;118" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "118;111;119" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "111;112;119" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "119;112;120" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "120;112;113" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "120;113;121" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "121;113;114" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "121;114;122" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "115;123;  1" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "115;116;123" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "116;124;123" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "116;117;124" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "117;125;124" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "117;118;125" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "125;118;126" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "118;119;126" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "126;119;127" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "119;120;127" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "127;120;128" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "128;120;121" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "128;121;129" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "129;121;122" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "129;122;  2" InvisibleEdges = "7" />
+
+                <Face Color = "Colors[0]" VertexIndexes = "131;  0;130" InvisibleEdges = "7" />-y,-x,z
+                <Face Color = "Colors[0]" VertexIndexes = "133;130;132" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "131;130;133" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "134;131;133" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "136;132;135" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "133;132;136" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "137;133;136" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "134;133;137" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "138;134;137" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "135;139;140" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "136;135;140" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "141;136;140" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "137;136;141" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "142;137;141" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "142;138;137" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "143;138;142" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "139;144;145" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "140;139;145" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "140;145;146" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "141;140;146" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "147;141;146" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "147;142;141" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "148;142;147" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "148;143;142" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "149;143;148" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "144;150;151" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "145;144;151" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "145;151;152" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "146;145;152" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "146;152;153" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "147;146;153" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "153;154;147" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "154;148;147" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "154;155;148" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "155;149;148" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "155;156;149" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "150;157;158" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "150;158;151" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "151;158;159" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "151;159;152" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "152;159;160" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "152;160;153" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "160;161;153" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "153;161;154" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "161;162;154" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "162;155;154" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "162;163;155" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "163;156;155" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "163;164;156" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "157;  1;165" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "157;165;158" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "158;165;166" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "158;166;159" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "159;166;167" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "159;167;160" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "167;168;160" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "160;168;161" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "168;169;161" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "161;169;162" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "169;170;162" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "170;163;162" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "170;171;163" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "171;164;163" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "171;  3;164" InvisibleEdges = "7" />
+
+                <Face Color = "Colors[2]" VertexIndexes = "173;  0;172" InvisibleEdges = "7" />x,-z,-y
+                <Face Color = "Colors[2]" VertexIndexes = "175;172;174" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "173;172;175" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "176;173;175" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "178;174;177" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "175;174;178" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "179;175;178" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "176;175;179" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "180;176;179" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "177;181;182" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "178;177;182" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "183;178;182" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "179;178;183" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "184;179;183" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "184;180;179" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "185;180;184" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "181;186;187" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "182;181;187" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "182;187;188" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "183;182;188" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "189;183;188" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "189;184;183" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "190;184;189" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "190;185;184" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "191;185;190" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "186;192;193" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "187;186;193" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "187;193;194" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "188;187;194" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "188;194;195" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "189;188;195" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "195;196;189" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "196;190;189" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "196;197;190" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "197;191;190" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "197;198;191" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "192;199;200" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "192;200;193" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "193;200;201" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "193;201;194" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "194;201;202" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "194;202;195" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "202;203;195" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "195;203;196" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "203;204;196" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "204;197;196" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "204;205;197" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "205;198;197" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "205;206;198" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "199;  3;207" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "199;207;200" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "200;207;208" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "200;208;201" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "201;208;209" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "201;209;202" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "209;210;202" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "202;210;203" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "210;211;203" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "203;211;204" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "211;212;204" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "212;205;204" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "212;213;205" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "213;206;205" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = "213;  2;206" InvisibleEdges = "7" />
+
+                <Face Color = "Colors[1]" VertexIndexes = "215;  3;214" InvisibleEdges = "7" />-z,y,-x
+                <Face Color = "Colors[1]" VertexIndexes = "217;214;216" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "215;214;217" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "218;215;217" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "220;216;219" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "217;216;220" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "221;217;220" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "218;217;221" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "222;218;221" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "219;223;224" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "220;219;224" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "225;220;224" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "221;220;225" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "226;221;225" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "226;222;221" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "227;222;226" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "223;228;229" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "224;223;229" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "224;229;230" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "225;224;230" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "231;225;230" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "231;226;225" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "232;226;231" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "232;227;226" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "233;227;232" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "228;234;235" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "229;228;235" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "229;235;236" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "230;229;236" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "230;236;237" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "231;230;237" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "237;238;231" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "238;232;231" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "238;239;232" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "239;233;232" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "239;240;233" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "234;241;242" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "234;242;235" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "235;242;243" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "235;243;236" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "236;243;244" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "236;244;237" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "244;245;237" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "237;245;238" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "245;246;238" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "246;239;238" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "246;247;239" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "247;240;239" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "247;248;240" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "241;  1;249" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "241;249;242" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "242;249;250" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "242;250;243" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "243;250;251" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "243;251;244" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "251;252;244" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "244;252;245" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "252;253;245" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "245;253;246" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "253;254;246" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "254;247;246" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "254;255;247" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "255;248;247" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = "255;  2;248" InvisibleEdges = "7" />
+
+                // Edges
+                <Face Color = "Colors[3]" VertexIndexes = "  0; 88;  4"     InvisibleEdges = "3" />x,y,z
+                <Face Color = "Colors[3]" VertexIndexes = "  4; 88;  5"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = "  5; 88; 90;  6" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "  6; 90;  7"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = "  7; 90; 93;  8" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = "  8; 93;  9"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = "  9; 93; 97; 10" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 10; 97; 11"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 11; 97;102; 12" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 12;102; 13"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 13;102;108; 14" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 14;108; 15"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 15;108;115; 16" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 16;115; 17"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 17;115;  1"     InvisibleEdges = "3" />
+
+                <Face Color = "Colors[0]" VertexIndexes = "  4;130;  0"     InvisibleEdges = "3" />-y,-x,z
+                <Face Color = "Colors[0]" VertexIndexes = "  5;130;  4"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = "  6;132;130;  5" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "  7;132;  6"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = "  8;135;132;  7" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = "  9;135;  8"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 10;139;135;  9" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 11;139; 10"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 12;144;139; 11" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 13;144; 12"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 14;150;144; 13" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 15;150; 14"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 16;157;150; 15" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 17;157; 16"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = "  1;157; 17"     InvisibleEdges = "3" />
+
+                <Face Color = "Colors[2]" VertexIndexes = " 32;172;  0"     InvisibleEdges = "3" />x,-z,-y
+                <Face Color = "Colors[2]" VertexIndexes = " 33;172; 32"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 34;174;172; 33" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 35;174; 34"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 36;177;174; 35" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 37;177; 36"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 38;181;177; 37" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 39;181; 38"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 40;186;181; 39" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 41;186; 40"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 42;192;186; 41" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 43;192; 42"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 44;199;192; 43" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 45;199; 44"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = "  3;199; 45"     InvisibleEdges = "3" />
+
+                <Face Color = "Colors[1]" VertexIndexes = " 74;214;  3"     InvisibleEdges = "3" />-z,y,-x
+                <Face Color = "Colors[1]" VertexIndexes = " 75;214; 74"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 76;216;214; 75" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 77;216; 76"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 78;219;216; 77" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 79;219; 78"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 80;223;219; 79" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 81;223; 80"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 82;228;223; 81" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 83;228; 82"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 84;234;228; 83" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 85;234; 84"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 86;241;234; 85" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 87;241; 86"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = "  1;241; 87"     InvisibleEdges = "3" />
+
+                <Face Color = "Colors[3]" VertexIndexes = " 60; 89;  0"     InvisibleEdges = "3" />x,y,z
+                <Face Color = "Colors[3]" VertexIndexes = " 61; 89; 60"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 62; 92; 89; 61" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 63; 92; 62"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 64; 96; 92; 63" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 65; 96; 64"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 66;101; 96; 65" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 67;101; 66"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 68;107;101; 67" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 69;107; 68"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 70;114;107; 69" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 71;114; 70"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 72;122;114; 71" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 73;122; 72"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = "  2;122; 73"     InvisibleEdges = "3" />
+
+                <Face Color = "Colors[0]" VertexIndexes = "  0;131; 32"     InvisibleEdges = "3" />-y,-x,z
+                <Face Color = "Colors[0]" VertexIndexes = " 32;131; 33"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 33;131;134; 34" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 34;134; 35"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 35;134;138; 36" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 36;138; 37"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 37;138;143; 38" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 38;143; 39"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 39;143;149; 40" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 40;149; 41"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 41;149;156; 42" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 42;156; 43"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 43;156;164; 44" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 44;164; 45"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 45;164;  3"     InvisibleEdges = "3" />
+
+                <Face Color = "Colors[2]" VertexIndexes = "  0;173; 60"     InvisibleEdges = "3" />x,-z,-y
+                <Face Color = "Colors[2]" VertexIndexes = " 60;173; 61"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 61;173;176; 62" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 62;176; 63"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 63;176;180; 64" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 64;180; 65"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 65;180;185; 66" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 66;185; 67"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 67;185;191; 68" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 68;191; 69"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 69;191;198; 70" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 70;198; 71"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 71;198;206; 72" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 72;206; 73"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 73;206;  2"     InvisibleEdges = "3" />
+
+                <Face Color = "Colors[1]" VertexIndexes = "  3;215; 18"     InvisibleEdges = "3" />-z,y,-x
+                <Face Color = "Colors[1]" VertexIndexes = " 18;215; 19"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 19;215;218; 20" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 20;218; 21"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 21;218;222; 22" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 22;222; 23"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 23;222;227; 24" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 24;227; 25"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 25;227;233; 26" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 26;233; 27"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 27;233;240; 28" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 28;240; 29"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 29;240;248; 30" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 30;248; 31"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 31;248;  2"     InvisibleEdges = "3" />
+
+                <Face Color = "Colors[3]" VertexIndexes = "  1;123; 46"     InvisibleEdges = "3" />x,y,z
+                <Face Color = "Colors[3]" VertexIndexes = " 46;123; 47"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 47;123;124; 48" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 48;124; 49"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 49;124;125; 50" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 50;125; 51"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 51;125;126; 52" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 52;126; 53"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 53;126;127; 54" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 54;127; 55"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 55;127;128; 56" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 56;128; 57"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 57;128;129; 58" InvisibleEdges = "7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 58;129; 59"     InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = " 59;129;  2"     InvisibleEdges = "3" />
+
+                <Face Color = "Colors[0]" VertexIndexes = " 87;165;  1"     InvisibleEdges = "3" />-y,-x,z
+                <Face Color = "Colors[0]" VertexIndexes = " 86;165; 87"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 85;166;165; 86" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 84;166; 85"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 83;167;166; 84" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 82;167; 83"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 81;168;167; 82" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 80;168; 81"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 79;169;168; 80" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 78;169; 79"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 77;170;169; 78" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 76;170; 77"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = " 75;171;170; 76" InvisibleEdges = "7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 74;171; 75"     InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = "  3;171; 74"     InvisibleEdges = "3" />
+
+                <Face Color = "Colors[2]" VertexIndexes = " 18;207;  3"     InvisibleEdges = "3" />x,-z,-y
+                <Face Color = "Colors[2]" VertexIndexes = " 19;207; 18"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 20;208;207; 19" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 21;208; 20"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 22;209;208; 21" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 23;209; 22"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 24;210;209; 23" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 25;210; 24"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 26;211;210; 25" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 27;211; 26"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 28;212;211; 27" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 29;212; 28"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 30;213;212; 29" InvisibleEdges = "7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 31;213; 30"     InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = "  2;213; 31"     InvisibleEdges = "3" />
+
+                <Face Color = "Colors[1]" VertexIndexes = " 46;249;  1"     InvisibleEdges = "3" />-z,y,-x
+                <Face Color = "Colors[1]" VertexIndexes = " 47;249; 46"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 48;250;249; 47" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 49;250; 48"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 50;251;250; 49" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 51;251; 50"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 52;252;251; 51" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 53;252; 52"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 54;253;252; 53" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 55;253; 54"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 56;254;253; 55" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 57;254; 56"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = " 58;255;254; 57" InvisibleEdges = "7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 59;255; 58"     InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = "  2;255; 59"     InvisibleEdges = "3" />
+            </Faces>
+        </Part>
+    </Macro>
+</xml>

@@ -1,0 +1,244 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup Prism</Name>
+        <Menu>Other forms\Cross\Mixup Prism</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-03-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2614</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'EDFF11';
+        clRed    := 'C80000';
+        clRed1   := 'C80001';
+        clRed2   := 'C80002';
+        clGreen  := '009600';
+        clGreen1 := '009601';
+        clGreen2 := '009602';
+        clBlue   := '0000C8';
+        clBlue1  := '0000C9';
+        clBlue2  := '0000CA';
+        clWhite  := 'FFFFFF';
+
+        sAngle := PI * 2 / 9;
+
+        H := 0.45;
+
+        D1 := H / sqrt(3) * 2 * sin(Pi/9);
+        D2 := H / sqrt(3);
+
+        nA1 := H * (cos(Pi/9) - 1 / 2);
+        nB1 := H * (cos(Pi/9) + 1 / 2);
+        nC2 := H / sqrt(3) * 2 * cos(Pi/9);
+        nB2 := H / sqrt(3) * (3 / 2 - cos(Pi/9));
+        nA2 := H / sqrt(3) * (3 / 2 + cos(Pi/9));
+        nD1 := H / sqrt(3) * 2;
+        nD2 := H / sqrt(3);
+
+        dx := H * 0.01;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3; sAngle; 2 * Pi / 3" PlaneDistances = "-D1;D1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D2" >
+        <Axis NormVector = "       0; -1; 0" />
+        <Axis NormVector = " sqrt(3);  1; 0" />
+        <Axis NormVector = "-sqrt(3);  1; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;  nD1;  H" />
+                <Add Vector = " nA1;  nA2;  H" />
+                <Add Vector = " nB1; -nB2;  H" />
+                <Add Vector = "   H; -nD2;  H" />
+                <Add Vector = "   H; -nC2;  H" />
+                <Add Vector = "  -H; -nC2;  H" />
+                <Add Vector = "  -H; -nD2;  H" />
+                <Add Vector = "-nB1; -nB2;  H" />
+                <Add Vector = "-nA1;  nA2;  H" />
+
+                <Add Vector = "   0;  nD1; -H" />
+                <Add Vector = " nA1;  nA2; -H" />
+                <Add Vector = " nB1; -nB2; -H" />
+                <Add Vector = "   H; -nD2; -H" />
+                <Add Vector = "   H; -nC2; -H" />
+                <Add Vector = "  -H; -nC2; -H" />
+                <Add Vector = "  -H; -nD2; -H" />
+                <Add Vector = "-nB1; -nB2; -H" />
+                <Add Vector = "-nA1;  nA2; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clYellow" VertexIndexes = "8;7;6;5;4;3;2;1;0" />
+                <Face Color = "clWhite " VertexIndexes = "9;10;11;12;13;14;15;16;17" />
+
+                <Face Color = "clRed   " VertexIndexes = "0;1;10; 9" />
+                <Face Color = "clBlue  " VertexIndexes = "1;2;11;10" />
+                <Face Color = "clGreen " VertexIndexes = "2;3;12;11" />
+                <Face Color = "clBlue1 " VertexIndexes = "3;4;13;12" />
+                <Face Color = "clGreen1" VertexIndexes = "4;5;14;13" />
+                <Face Color = "clRed1  " VertexIndexes = "5;6;15;14" />
+                <Face Color = "clGreen2" VertexIndexes = "6;7;16;15" />
+                <Face Color = "clRed2  " VertexIndexes = "7;8;17;16" />
+                <Face Color = "clBlue2 " VertexIndexes = "8;0; 9;17" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi/2" />
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <Turn  Axis = "3" Layer = "1" Angle = "Pi/2" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "0" From  = "2"/>
+        <Turn  Axis = "3" Layer = "1" Angle = "-Pi/2" />
+        <Turn  Axis = "2" Layer = "1" Angle = "-Pi/2" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-Pi/2" />
+
+        /////////////
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "-2*sAngle" Layer = "1" />
+
+        <Turn Axis = "1" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "3" Angle = "Pi/2" Layer = "1" />
+
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "-2*sAngle" Layer = "1" />
+
+        <Turn Axis = "3" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "1" />
+
+        ///////////////////
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <Turn Axis = "1" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "3" Angle = "Pi/2" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "3" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "1" />
+
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <Turn Axis = "1" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "3" Angle = "Pi/2" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "3" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "1" />
+
+        <Turn Axis = "0" Angle = "-2*sAngle" Layer = "1" />
+
+        ///////////////////
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <Turn Axis = "1" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "3" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "-2*sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <Turn Axis = "3" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "0" Angle = "-sAngle" Layer = "1" />
+
+        <Turn Axis = "0" Angle = "-sAngle" Layer = "1" />
+        <Turn Axis = "1" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "3" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "-2*sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <Turn Axis = "3" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+
+        ///////////////////
+        <Turn Axis = "1" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "3" Angle = "Pi/2" Layer = "1" />
+
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <Turn Axis = "1" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "3" Angle = "Pi/2" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "-2*sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <Turn Axis = "3" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "0" Angle = "-sAngle" Layer = "1" />
+
+        <Turn Axis = "0" Angle = "-sAngle" Layer = "1" />
+        <Turn Axis = "1" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "3" Angle = "Pi/2" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "-2*sAngle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+        <Turn Axis = "3" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "0" Angle = "sAngle" Layer = "1" />
+
+        <RemoveGrayParts/>
+
+        <RemoveContaining Vector = " nA1; nA2; D1-dx" />
+        <RemoveContaining Vector = " nA1; nA2;-D1+dx" />
+        <RemoveContaining Vector = "-nA1; nA2; D1-dx" />
+        <RemoveContaining Vector = "-nA1; nA2;-D1+dx" />
+        <RemoveContaining Vector = " nB1;-nB2; D1-dx" />
+        <RemoveContaining Vector = " nB1;-nB2;-D1+dx" />
+        <RemoveContaining Vector = "-nB1;-nB2; D1-dx" />
+        <RemoveContaining Vector = "-nB1;-nB2;-D1+dx" />
+        <RemoveContaining Vector = "   H;-nC2; D1-dx" />
+        <RemoveContaining Vector = "   H;-nC2;-D1+dx" />
+        <RemoveContaining Vector = "  -H;-nC2; D1-dx" />
+        <RemoveContaining Vector = "  -H;-nC2;-D1+dx" />
+
+        <Turn Axis = "3" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "1" />
+
+        <RemoveContaining Vector = " nA1; nA2; D1-dx" />
+        <RemoveContaining Vector = " nA1; nA2;-D1+dx" />
+        <RemoveContaining Vector = "-nA1; nA2; D1-dx" />
+        <RemoveContaining Vector = "-nA1; nA2;-D1+dx" />
+        <RemoveContaining Vector = " nB1;-nB2; D1-dx" />
+        <RemoveContaining Vector = " nB1;-nB2;-D1+dx" />
+        <RemoveContaining Vector = "-nB1;-nB2; D1-dx" />
+        <RemoveContaining Vector = "-nB1;-nB2;-D1+dx" />
+        <RemoveContaining Vector = "   H;-nC2; D1-dx" />
+        <RemoveContaining Vector = "   H;-nC2;-D1+dx" />
+        <RemoveContaining Vector = "  -H;-nC2; D1-dx" />
+        <RemoveContaining Vector = "  -H;-nC2;-D1+dx" />
+
+    </Figure>
+</xml>

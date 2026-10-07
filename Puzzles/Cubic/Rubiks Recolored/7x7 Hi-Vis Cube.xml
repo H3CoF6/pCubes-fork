@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>7x7 Hi-Vis Cube</Name>
+        <Menu>Cubic\Rubiks Recolored\7x7 Hi-Vis Cube</Menu>
+        <Inventor>SMB Puzzles</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8014</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=9&amp;p=399806</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := -1;
+        Colors[1] := '59D753'; // LightGreen
+        Colors[2] := 'F35458'; // LightViolett
+
+        W  := 0.5;
+        WD := 2 * W / 7;
+        D[0] := -W + WD;
+        for i := 1 to 5 do
+            D[i] := D[i-1] + WD;
+
+        SColors[0] := '1111111';
+        SColors[1] := '0000001';
+        SColors[2] := '2222201';
+        SColors[3] := '0000201';
+        SColors[4] := '2220201';
+        SColors[5] := '0020201';
+        SColors[6] := '2020201';
+
+        function GetInt(): integer;
+        begin
+          Result := StrToInt(copy(SColors[Y], X+1, 1));
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" TurnAxesWithLayer = "0" > <!-- TurnAxes - for Solving procedure -->
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "6" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "6" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "6" />
+        <RemoveContaining Vector = "0;0;0" />
+        <SplitByAxes/>
+
+        <Macro Name = "CutCubie" >
+            <HideContaining Vector = "(x - 3) * WD; -W; -(y - 3) * WD" /> // cut face surface
+            <InvertVisibility />
+            <Cut Color = "Colors[GetInt]"><Plane NormVector = "0;1;0" NormDistance = "-W" /></Cut>
+            <ShowAll/>
+            <Script>Inc(x);</Script>
+        </Macro>
+
+        <Macro Name = "CutRow" >
+            <ExecMacro MacroName = "CutCubie" x = "0" Repeat = "7" />
+            <Script>Inc(y);</Script>
+        </Macro>
+
+        <Macro Name = "CutFace" >
+            <ExecMacro MacroName = "CutRow" y = "0" Repeat = "7" />
+            <Turn NormVector = " 1; 1; 1" Angle = "2*Pi/3" />
+        </Macro>
+
+        <ExecMacro MacroName = "CutFace" Side = "0" Repeat = "3" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutFace" Side = "0" Repeat = "3" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

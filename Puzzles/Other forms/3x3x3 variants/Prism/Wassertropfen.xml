@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Wassertropfen</Name>
+        <Menu>Other forms\3x3x3 variants\Prism\Wassertropfen</Menu>
+        <Inventor>Jean-Claude Constantin</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-01-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10468</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        Colors[6] := '00DCB4'; // Cyan
+        Colors[7] := '800080'; // Violett
+        Colors[8] := 'FF0080'; // LightViolett
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W / 3;
+        DCut := (W + D) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Cut Color = "Colors[6]" ><Plane NormVector = " 1; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[7]" ><Plane NormVector = " 1;-1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[8]" ><Plane NormVector = "-1; 1; 0" NormDistance = "-DCut" /></Cut>
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

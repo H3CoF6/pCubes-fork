@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Baguaminx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Baguaminx</Menu>
+        <Inventor>Ray Bruner</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-07-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7481</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * sqrt((25 + 2 * sqrt(5)) / 75);
+        rAngle := Pi / 5;
+    </Script>
+
+    <Axes TurningAngles = " 0; rAngle" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "SplitSide" >
+            <Turn Axis = "ax" Layer = "1" Angle = "rAngle" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+            <Undo/>
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitSide" Repeat = "12" ax = "0" />
+
+        <Macro Name = "Unbandage" >
+            <Hide Axis = "a1" To = "0" />
+            <Hide Axis = "a2" From = "1" />
+            <Turn Axis = "a1" Layer = "1" Angle = "sAngle" />
+            <Hide Axis = "a2" From = "1" />
+            <Turn Axis = "a1" Layer = "1" Angle = "sAngle" />
+            <Hide Axis = "a2" From = "1" />
+            <Turn Axis = "a1" Layer = "1" Angle = "sAngle" />
+            <Hide Axis = "a2" From = "1" />
+            <Turn Axis = "a1" Layer = "1" Angle = "sAngle" />
+            <Hide Axis = "a2" From = "1" />
+            <Turn Axis = "a1" Layer = "1" Angle = "sAngle/2" />
+            <ExecMacro MacroName = "SplitSide" Repeat = "12" ax = "0" />
+            <Undo Repeat = "5" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" a1 = " 0" a2 = " 1" />
+        <ExecMacro MacroName = "Unbandage" a1 = " 1" a2 = " 0" />
+        <ExecMacro MacroName = "Unbandage" a1 = " 2" a2 = " 0" />
+        <ExecMacro MacroName = "Unbandage" a1 = " 3" a2 = " 0" />
+        <ExecMacro MacroName = "Unbandage" a1 = " 4" a2 = " 0" />
+        <ExecMacro MacroName = "Unbandage" a1 = " 5" a2 = " 0" />
+        <ExecMacro MacroName = "Unbandage" a1 = "11" a2 = " 6" />
+        <ExecMacro MacroName = "Unbandage" a1 = " 6" a2 = "11" />
+        <ExecMacro MacroName = "Unbandage" a1 = " 7" a2 = "11" />
+        <ExecMacro MacroName = "Unbandage" a1 = " 8" a2 = "11" />
+        <ExecMacro MacroName = "Unbandage" a1 = " 9" a2 = "11" />
+        <ExecMacro MacroName = "Unbandage" a1 = "10" a2 = "11" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Random5" >
+            <Turn Axis = "Random(12)" Layer = "1" Angle = "2 * Pi / 5 * Random(5)" />
+        </Macro>
+
+        <Macro Name = "RS" >
+            <Turn Axis = "3" Layer = "1" Angle = "-rAngle" />
+            <Turn Axis = "1" Layer = "1" Angle = "-rAngle" />
+            <Turn Axis = "0" Layer = "1" Angle = " rAngle * 4" />
+            <Turn Axis = "1" Layer = "1" Angle = " rAngle" />
+            <Turn Axis = "0" Layer = "1" Angle = " rAngle * 2" />
+            <Turn Axis = "3" Layer = "1" Angle = " rAngle" />
+            <ExecMacro MacroName = "Random5" Repeat = "5" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(12)" Layer = "1" Angle = "2 * Pi * Random" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <Script> rAngle := Pi / 5; </Script>
+            <ExecMacro MacroName = "RS" Repeat = "200" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+
+        <Macro Name = "ScrambleKeepForm" Public = "1" >
+            <Script> rAngle := Pi / 5; </Script>
+            <ExecMacro MacroName = "RS" Repeat = "200" />
+        </Macro>
+    </Macros>
+</xml>

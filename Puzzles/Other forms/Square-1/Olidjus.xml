@@ -1,0 +1,101 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Olidjus</Name>
+        <Menu>Other forms\Square-1\Olidjus</Menu>
+        <Inventor>Dmitriev, Jurin, Stulnikov</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-08-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2772</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '2424FF'; // Blue;
+        Colors[1] := 'FF800A'; // Orange;
+        Colors[2] := '00BE00'; // DarkGreen;
+        Colors[3] := 'FFFF00'; // Yellow;
+        Colors[4] := 'C80000'; // Red;
+        Colors[5] := '2464FF'; // LightBlue;
+
+        ColorBottom := '808080'; // Gray
+        ColorUp     := 'FFFFFF'; // White
+
+        W := 0.5;
+        R := W;
+        for i := 0 to 11 do begin
+          x[i] := R * sin(i * Pi / 6);
+          y[i] := R * cos(i * Pi / 6);
+        end;
+        H := W * 3 / 4;
+
+        sAngle := Pi / 9;
+
+        R1 := W;
+        R2 := W * 0.5;
+        RC := W * 0.3;
+        H1  := W;
+        H2  := W * 0.5;
+        HC := H1 * 1.004;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-H1; -H2; H2; H1" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddPart" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "0; 0; H1" />
+                    <Add Vector = "0; -R2;  H1" />
+                    <Add Vector = "R2 * sin(sAngle); -R2 * cos(sAngle);  H1" />
+                    <Add Vector = "0; -R1;  H2" />
+                    <Add Vector = "R1 * sin(sAngle); -R1 * cos(sAngle);  H2" />
+                    <Add Vector = "0; -R1; -H2" />
+                    <Add Vector = "R1 * sin(sAngle); -R1 * cos(sAngle); -H2" />
+                    <Add Vector = "0; -R2; -H1" />
+                    <Add Vector = "R2 * sin(sAngle); -R2 * cos(sAngle); -H1" />
+                    <Add Vector = "0; 0; -H1" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[c]" VertexIndexes = "0;2;4;6;8;9" />
+                    <Face Color = "Colors[c]" VertexIndexes = "9;7;5;3;1;0" />
+                    <Face Color = "Colors[c]" VertexIndexes = "0;1;2" />
+                    <Face Color = "Colors[c]" VertexIndexes = "1;3;4;2" />
+                    <Face Color = "Colors[c]" VertexIndexes = "3;5;6;4" />
+                    <Face Color = "Colors[c]" VertexIndexes = "5;7;8;6" />
+                    <Face Color = "Colors[c]" VertexIndexes = "9;8;7" />
+                </Faces>
+            </Part>
+            <Turn Axis = "0" From = "1" To = "3" Angle = "-sAngle" />
+        </Macro>
+        <Macro Name = "AddPart3" >
+            <ExecMacro MacroName = "AddPart" Repeat = "3" />
+            <Script>Inc(c);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddPart3" c = "0" Repeat = "6" />
+
+        <Undo Repeat = "18" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+
+        <Circle Color = "ColorUp    " Radius = "RC" Center = "0; 0;  HC" />
+        <Circle Color = "ColorBottom" Radius = "RC" Center = "0; 0; -HC" />
+
+        <Split Axis = "1" From = "1" />
+
+        <Connect Axis = "0" Layers = "0;2;4" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Shadow Hexahedron</Name>
+        <Menu>Other cubes\Unclassified\Shadow Hexahedron</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8007</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0077EE'; // Blue
+        Colors[1] := '00DD00'; // Green
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := 'FFFFFF'; // White
+        Colors[4] := 'EE0000'; // Red
+        Colors[5] := 'FF6600'; // Orange
+
+        for i := 0 to 5 do begin
+            ax[i] := cos(Pi / 3 * i);
+            ay[i] := sin(Pi / 3 * i);
+        end;
+        az := 1 / 2;
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        A := W * 1.3;
+        B := A - W;
+        D := W * 1.006978;
+
+        A1 := ArcCos(-1/4);
+        A2 := ArcCos(-7/8); // 2*(Pi-A1)
+
+        for i := 0 to 5 do begin
+           Cx[i] := Cx[i] * 1.3;
+           Cy[i] := Cy[i] * 1.3;
+           Cz[i] := Cz[i] * 1.3;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "-D; D" FixedLayers = "1" NormVectors = "ax; ay; az" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Cx;Cy;Cz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <InvertVisibility/>
+        <Cut> <Plane NormVector = "Cx[2];Cy[2];Cz[2]" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[3];Cy[3];Cz[3]" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,134 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sun and Moon Puzzler</Name>
+        <Alias>Elite-2</Alias>
+        <Menu>Other forms\2d\Sun and Moon Puzzler</Menu>
+        <Inventor>Vladimir Yaroslavkiy + Evgeniy Grigoriev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-09-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10347</Link>
+    </Interface>
+
+    <Script>
+        clBlack  := '333333';
+        clRed    := 'FF0000';
+        clOrange := 'FF9030';
+        clYellow := 'FFFF00';
+
+        W := 0.7;
+        C0 := W * (1 - sqrt(2) / 3);
+        C1 := W * (10 - sqrt(2)) / 14;
+        C2 := W;
+
+        D1 := W * 0.717;
+        D2 := C0 * sqrt(2);
+
+        DCut1 := D1 - W * 0.1;
+        DCut2 := D2 - W * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi / 4" PlaneDistances = "D1" >
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "D2" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        // definitions
+        <Macro Name = "A"   > <Turn Axis = "0" Layer  = "1"   Angle = "  -Pi / 4" /> </Macro>
+        <Macro Name = "B"   > <Turn Axis = "1" Layer  = "1"   Angle = "  -Pi / 2" /> </Macro>
+        <Macro Name = "CutA-"  > <Cut   Axis = "0" To   = "1" /> </Macro>
+        <Macro Name = "CutA+"  > <Cut   Axis = "0" From = "1" /> </Macro>
+        <Macro Name = "CutB-"  > <Cut   Axis = "1" To   = "1" /> </Macro>
+        <Macro Name = "CutB+"  > <Cut   Axis = "1" From = "1" /> </Macro>
+        <Macro Name = "SplitA" > <Split Axis = "0" From = "1" /> </Macro>
+        <Macro Name = "SplitB" > <Split Axis = "1" From = "1" /> </Macro>
+
+        <Macro Name = "CreateShape" >
+            <Macro Name = "Add8Faces" >
+                  <Face Color = "Color" VertexIndexes = "v0;v1;v2" InvisibleEdges = "7" />
+                  <Face Color = "Color" VertexIndexes = "v0;v2;v3" InvisibleEdges = "7" />
+                  <Face Color = "Color" VertexIndexes = "v0;v3;v4" InvisibleEdges = "7" />
+                  <Face Color = "Color" VertexIndexes = "v0;v4;v5" InvisibleEdges = "7" />
+                  <Face Color = "Color" VertexIndexes = "v0;v5;v6" InvisibleEdges = "7" />
+                  <Face Color = "Color" VertexIndexes = "v0;v6;v7" InvisibleEdges = "7" />
+                  <Face Color = "Color" VertexIndexes = "v0;v7;v8" InvisibleEdges = "7" />
+                  <Face Color = "Color" VertexIndexes = "v0;v8;v1" InvisibleEdges = "7" />
+            </Macro>
+
+            <HideAll/>
+            <Part>
+                <Vertices>
+                      <Add Vector = "  0;  0; C2" />
+                      <Add Vector = "  0;  0;-C2" />
+                      <Add Vector = " C2;  0;  0" />
+                      <Add Vector = "-C2;  0;  0" />
+                      <Add Vector = "  0; C2;  0" />
+                      <Add Vector = "  0;-C2;  0" />
+                      <Add Vector = " C1;  0; C1" />
+                      <Add Vector = " C1;  0;-C1" />
+                      <Add Vector = "-C1;  0; C1" />
+                      <Add Vector = "-C1;  0;-C1" />
+                      <Add Vector = " C1; C1;  0" />
+                      <Add Vector = " C1;-C1;  0" />
+                      <Add Vector = "-C1; C1;  0" />
+                      <Add Vector = "-C1;-C1;  0" />
+                      <Add Vector = "  0; C1; C1" />
+                      <Add Vector = "  0; C1;-C1" />
+                      <Add Vector = "  0;-C1; C1" />
+                      <Add Vector = "  0;-C1;-C1" />
+                      <Add Vector = " C0; C0; C0" />
+                      <Add Vector = " C0; C0;-C0" />
+                      <Add Vector = " C0;-C0; C0" />
+                      <Add Vector = " C0;-C0;-C0" />
+                      <Add Vector = "-C0; C0; C0" />
+                      <Add Vector = "-C0; C0;-C0" />
+                      <Add Vector = "-C0;-C0; C0" />
+                      <Add Vector = "-C0;-C0;-C0" />
+                </Vertices>
+
+                <Faces>
+                      <ExecMacro MacroName = "Add8Faces" v0 = " 3" v1 = "24" v2 = " 8" v3 = "22" v4 = "12" v5 = "23" v6 = " 9" v7 = "25" v8 = "13" />
+                      <ExecMacro MacroName = "Add8Faces" v0 = " 2" v1 = "18" v2 = " 6" v3 = "20" v4 = "11" v5 = "21" v6 = "07" v7 = "19" v8 = "10" />
+                      <ExecMacro MacroName = "Add8Faces" v0 = " 5" v1 = "20" v2 = "16" v3 = "24" v4 = "13" v5 = "25" v6 = "17" v7 = "21" v8 = "11" />
+                      <ExecMacro MacroName = "Add8Faces" v0 = " 4" v1 = "22" v2 = "14" v3 = "18" v4 = "10" v5 = "19" v6 = "15" v7 = "23" v8 = "12" />
+                      <ExecMacro MacroName = "Add8Faces" v0 = " 1" v1 = "21" v2 = "17" v3 = "25" v4 = " 9" v5 = "23" v6 = "15" v7 = "19" v8 = " 7" />
+                      <ExecMacro MacroName = "Add8Faces" v0 = " 0" v1 = "22" v2 = " 8" v3 = "24" v4 = "16" v5 = "20" v6 = " 6" v7 = "18" v8 = "14" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "CreateShape CutA- CutB-" Color = "clBlack" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = " DCut1" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = " DCut2" /> </Cut>
+
+        <ExecMacro MacroName = "CreateShape CutA- CutB-" Color = "clBlack" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;-1; 0" NormDistance = " DCut1" /> </Cut>
+
+        <ExecMacro MacroName = "CreateShape CutA- CutB-" Color = "clBlack" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1;-1; 0" NormDistance = " DCut2" /> </Cut>
+
+        <ExecMacro MacroName = "CreateShape CutA+ CutB+" Color = "clOrange" />
+        <ExecMacro MacroName = "CreateShape CutA- CutB+" Color = "clRed" />
+        <ExecMacro MacroName = "CreateShape CutA+ CutB-" Color = "clYellow" />
+        <ShowAll/>
+
+        <ExecMacro MacroName = "SplitA A SplitB B" Repeat = "10" />
+        <Undo Repeat = "20" />
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/8" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

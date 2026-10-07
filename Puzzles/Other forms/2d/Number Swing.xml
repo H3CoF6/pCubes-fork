@@ -1,0 +1,394 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Number Swing</Name>
+        <Menu>Other forms\2d\Number Swing</Menu>
+        <Inventor>Galen Ivanov</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-01-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5103</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000FF';
+        clOrange := 'FF6000';
+        clWhite  := 'FFFFFF';
+        clBlack  := '000000';
+
+        K  := 0.082;
+        s5 := sqrt(5);
+        C0  := K * ( 10 +              sqrt(  50 -  10 * s5)) / 10;
+        C1  := K *                     sqrt(  10 +   2 * s5)  /  2;
+        C2  := K * ( 15 -     s5 + 4 * sqrt( 125 +  10 * s5)) / 22;
+        C3  := K * (  2 +              sqrt(  10 +   2 * s5)) /  2;
+        C4  := K *                     sqrt(   5 +   2 * s5);
+        C5  := K * (  5 + 5 * s5 + 4 * sqrt(  25 +  10 * s5)) / 10;
+        C6  := K * (  5 + 7 * s5 + 2 * sqrt( 850 + 310 * s5)) / 22;
+        C7  := K * ( 10 +              sqrt( 650 + 290 * s5)) / 10;
+        C8  := K * (  1 +     s5 + 2 * sqrt(   5 +   2 * s5)) /  2;
+        C9  := K * (  5 + 5 * s5 +     sqrt( 850 + 310 * s5)) / 10;
+        C10 := K * (  2 +              sqrt(  50 +  22 * s5)) /  2;
+        C11 := K * (  5 +          4 * sqrt(  25 +  10 * s5)) /  5;
+        C12 := K * (  1 +     s5 +     sqrt(  50 +  22 * s5)) /  2;
+        C13 := K * ( 10 + 3 * s5 +     sqrt(2050 + 890 * s5)) / 11;
+        C14 := K * (  5 + 5 * s5 + 2 * sqrt( 425 + 190 * s5)) / 10;
+        C15 := K * (  1 +     s5 + 4 * sqrt(   5 +   2 * s5)) /  2;
+        C16 := K;
+
+        f := (1 + s5) / 2; // golden ratio
+
+        D1 := K * (3 + s5 + sqrt(1 + 2 / s5)); <!-- Decagonal Axes Cut -->
+        D2 := (C3 + C4 + C12) / sqrt(3); <!-- Triangular Axes Cut -->
+
+        SCut := K * (3 + s5 + sqrt((5 + s5) /  2)); <!-- Decagonal Face Height -->
+
+        DCut1 := SCut - K * 0.0050; <!-- Numeral Wedge Cut -->
+        DCut2 := D1   + K * 0.0040; <!-- Blue Side Cut -->
+        DCut3 := K * (50 + 26 * s5 + sqrt(410 + 178 * s5)) / 22; <!-- Core Cut From Below -->
+
+        d := K * 0.01;
+        R := K * 3.5;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/5"  PlaneDistances = "D1" >
+        <Axis NormVector = " 0;-f; 1" />
+        <Axis NormVector = " f;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; 2*Pi/3"  PlaneDistances = "D2" >
+        <Axis NormVector = "C6; -C6; C6" />
+        <Axis NormVector = "C2;-C13;  0" />
+    </Axes>
+
+    <Figure>
+        <!-- Monocolor Truncated Triakis Icosahedron -->
+        <Macro Name = "CreateBody" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " C16;   0; C15" />
+                    <Add Vector = " C16;   0;-C15" />
+                    <Add Vector = "-C16;   0; C15" />
+                    <Add Vector = "-C16;   0;-C15" />
+                    <Add Vector = " C15; C16;   0" />
+                    <Add Vector = " C15;-C16;   0" />
+                    <Add Vector = "-C15; C16;   0" />
+                    <Add Vector = "-C15;-C16;   0" />
+                    <Add Vector = "   0; C15; C16" />
+                    <Add Vector = "   0; C15;-C16" />
+                    <Add Vector = "   0;-C15; C16" />
+                    <Add Vector = "   0;-C15;-C16" />
+                    <Add Vector = "  C0;  C1; C14" />
+                    <Add Vector = "  C0;  C1;-C14" />
+                    <Add Vector = "  C0; -C1; C14" />
+                    <Add Vector = "  C0; -C1;-C14" />
+                    <Add Vector = " -C0;  C1; C14" />
+                    <Add Vector = " -C0;  C1;-C14" />
+                    <Add Vector = " -C0; -C1; C14" />
+                    <Add Vector = " -C0; -C1;-C14" />
+                    <Add Vector = " C14;  C0;  C1" />
+                    <Add Vector = " C14;  C0; -C1" />
+                    <Add Vector = " C14; -C0;  C1" />
+                    <Add Vector = " C14; -C0; -C1" />
+                    <Add Vector = "-C14;  C0;  C1" />
+                    <Add Vector = "-C14;  C0; -C1" />
+                    <Add Vector = "-C14; -C0;  C1" />
+                    <Add Vector = "-C14; -C0; -C1" />
+                    <Add Vector = "  C1; C14;  C0" />
+                    <Add Vector = "  C1; C14; -C0" />
+                    <Add Vector = "  C1;-C14;  C0" />
+                    <Add Vector = "  C1;-C14; -C0" />
+                    <Add Vector = " -C1; C14;  C0" />
+                    <Add Vector = " -C1; C14; -C0" />
+                    <Add Vector = " -C1;-C14;  C0" />
+                    <Add Vector = " -C1;-C14; -C0" />
+                    <Add Vector = "   0;  C2; C13" />
+                    <Add Vector = "   0;  C2;-C13" />
+                    <Add Vector = "   0; -C2; C13" />
+                    <Add Vector = "   0; -C2;-C13" />
+                    <Add Vector = " C13;   0;  C2" />
+                    <Add Vector = " C13;   0; -C2" />
+                    <Add Vector = "-C13;   0;  C2" />
+                    <Add Vector = "-C13;   0; -C2" />
+                    <Add Vector = "  C2; C13;   0" />
+                    <Add Vector = "  C2;-C13;   0" />
+                    <Add Vector = " -C2; C13;   0" />
+                    <Add Vector = " -C2;-C13;   0" />
+                    <Add Vector = "  C3;  C4; C12" />
+                    <Add Vector = "  C3;  C4;-C12" />
+                    <Add Vector = "  C3; -C4; C12" />
+                    <Add Vector = "  C3; -C4;-C12" />
+                    <Add Vector = " -C3;  C4; C12" />
+                    <Add Vector = " -C3;  C4;-C12" />
+                    <Add Vector = " -C3; -C4; C12" />
+                    <Add Vector = " -C3; -C4;-C12" />
+                    <Add Vector = " C12;  C3;  C4" />
+                    <Add Vector = " C12;  C3; -C4" />
+                    <Add Vector = " C12; -C3;  C4" />
+                    <Add Vector = " C12; -C3; -C4" />
+                    <Add Vector = "-C12;  C3;  C4" />
+                    <Add Vector = "-C12;  C3; -C4" />
+                    <Add Vector = "-C12; -C3;  C4" />
+                    <Add Vector = "-C12; -C3; -C4" />
+                    <Add Vector = "  C4; C12;  C3" />
+                    <Add Vector = "  C4; C12; -C3" />
+                    <Add Vector = "  C4;-C12;  C3" />
+                    <Add Vector = "  C4;-C12; -C3" />
+                    <Add Vector = " -C4; C12;  C3" />
+                    <Add Vector = " -C4; C12; -C3" />
+                    <Add Vector = " -C4;-C12;  C3" />
+                    <Add Vector = " -C4;-C12; -C3" />
+                    <Add Vector = "   0;  C5; C11" />
+                    <Add Vector = "   0;  C5;-C11" />
+                    <Add Vector = "   0; -C5; C11" />
+                    <Add Vector = "   0; -C5;-C11" />
+                    <Add Vector = " C11;   0;  C5" />
+                    <Add Vector = " C11;   0; -C5" />
+                    <Add Vector = "-C11;   0;  C5" />
+                    <Add Vector = "-C11;   0; -C5" />
+                    <Add Vector = "  C5; C11;   0" />
+                    <Add Vector = "  C5;-C11;   0" />
+                    <Add Vector = " -C5; C11;   0" />
+                    <Add Vector = " -C5;-C11;   0" />
+                    <Add Vector = "  C1;  C8; C10" />
+                    <Add Vector = "  C1;  C8;-C10" />
+                    <Add Vector = "  C1; -C8; C10" />
+                    <Add Vector = "  C1; -C8;-C10" />
+                    <Add Vector = " -C1;  C8; C10" />
+                    <Add Vector = " -C1;  C8;-C10" />
+                    <Add Vector = " -C1; -C8; C10" />
+                    <Add Vector = " -C1; -C8;-C10" />
+                    <Add Vector = " C10;  C1;  C8" />
+                    <Add Vector = " C10;  C1; -C8" />
+                    <Add Vector = " C10; -C1;  C8" />
+                    <Add Vector = " C10; -C1; -C8" />
+                    <Add Vector = "-C10;  C1;  C8" />
+                    <Add Vector = "-C10;  C1; -C8" />
+                    <Add Vector = "-C10; -C1;  C8" />
+                    <Add Vector = "-C10; -C1; -C8" />
+                    <Add Vector = "  C8; C10;  C1" />
+                    <Add Vector = "  C8; C10; -C1" />
+                    <Add Vector = "  C8;-C10;  C1" />
+                    <Add Vector = "  C8;-C10; -C1" />
+                    <Add Vector = " -C8; C10;  C1" />
+                    <Add Vector = " -C8; C10; -C1" />
+                    <Add Vector = " -C8;-C10;  C1" />
+                    <Add Vector = " -C8;-C10; -C1" />
+                    <Add Vector = "  C7;  C4;  C9" />
+                    <Add Vector = "  C7;  C4; -C9" />
+                    <Add Vector = "  C7; -C4;  C9" />
+                    <Add Vector = "  C7; -C4; -C9" />
+                    <Add Vector = " -C7;  C4;  C9" />
+                    <Add Vector = " -C7;  C4; -C9" />
+                    <Add Vector = " -C7; -C4;  C9" />
+                    <Add Vector = " -C7; -C4; -C9" />
+                    <Add Vector = "  C9;  C7;  C4" />
+                    <Add Vector = "  C9;  C7; -C4" />
+                    <Add Vector = "  C9; -C7;  C4" />
+                    <Add Vector = "  C9; -C7; -C4" />
+                    <Add Vector = " -C9;  C7;  C4" />
+                    <Add Vector = " -C9;  C7; -C4" />
+                    <Add Vector = " -C9; -C7;  C4" />
+                    <Add Vector = " -C9; -C7; -C4" />
+                    <Add Vector = "  C4;  C9;  C7" />
+                    <Add Vector = "  C4;  C9; -C7" />
+                    <Add Vector = "  C4; -C9;  C7" />
+                    <Add Vector = "  C4; -C9; -C7" />
+                    <Add Vector = " -C4;  C9;  C7" />
+                    <Add Vector = " -C4;  C9; -C7" />
+                    <Add Vector = " -C4; -C9;  C7" />
+                    <Add Vector = " -C4; -C9; -C7" />
+                    <Add Vector = "  C6;  C6;  C6" />
+                    <Add Vector = "  C6;  C6; -C6" />
+                    <Add Vector = "  C6; -C6;  C6" />
+                    <Add Vector = "  C6; -C6; -C6" />
+                    <Add Vector = " -C6;  C6;  C6" />
+                    <Add Vector = " -C6;  C6; -C6" />
+                    <Add Vector = " -C6; -C6;  C6" />
+                    <Add Vector = " -C6; -C6; -C6" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "  0; 14; 50;110; 94; 76; 92;108; 48; 12" />
+                    <Face Color = "Color" VertexIndexes = "  3; 19; 55;115; 99; 79; 97;113; 53; 17" />
+                    <Face Color = "Color" VertexIndexes = "  4; 21; 57;117;101; 80;100;116; 56; 20" />
+                    <Face Color = "Color" VertexIndexes = "  7; 27; 63;123;107; 83;106;122; 62; 26" />
+                    <Face Color = "Color" VertexIndexes = "  5; 22; 58;118;102; 81;103;119; 59; 23" />
+                    <Face Color = "Color" VertexIndexes = "  6; 24; 60;120;104; 82;105;121; 61; 25" />
+                    <Face Color = "Color" VertexIndexes = "  9; 29; 65;125; 85; 73; 89;129; 69; 33" />
+                    <Face Color = "Color" VertexIndexes = " 10; 30; 66;126; 86; 74; 90;130; 70; 34" />
+                    <Face Color = "Color" VertexIndexes = "  1; 13; 49;109; 93; 77; 95;111; 51; 15" />
+                    <Face Color = "Color" VertexIndexes = "  2; 16; 52;112; 96; 78; 98;114; 54; 18" />
+                    <Face Color = "Color" VertexIndexes = "  8; 32; 68;128; 88; 72; 84;124; 64; 28" />
+                    <Face Color = "Color" VertexIndexes = " 11; 35; 71;131; 91; 75; 87;127; 67; 31" />
+
+                    <Face Color = "Color" VertexIndexes = " 36; 12; 48; 84; 72" />
+                    <Face Color = "Color" VertexIndexes = " 36; 72; 88; 52; 16" />
+                    <Face Color = "Color" VertexIndexes = " 36; 16;  2;  0; 12" />
+                    <Face Color = "Color" VertexIndexes = " 39; 15; 51; 87; 75" />
+                    <Face Color = "Color" VertexIndexes = " 39; 75; 91; 55; 19" />
+                    <Face Color = "Color" VertexIndexes = " 39; 19;  3;  1; 15" />
+
+                    <Face Color = "Color" VertexIndexes = " 37; 13;  1;  3; 17" />
+                    <Face Color = "Color" VertexIndexes = " 37; 17; 53; 89; 73" />
+                    <Face Color = "Color" VertexIndexes = " 37; 73; 85; 49; 13" />
+                    <Face Color = "Color" VertexIndexes = " 38; 14;  0;  2; 18" />
+                    <Face Color = "Color" VertexIndexes = " 38; 18; 54; 90; 74" />
+                    <Face Color = "Color" VertexIndexes = " 38; 74; 86; 50; 14" />
+
+                    <Face Color = "Color" VertexIndexes = " 40; 20; 56; 92; 76" />
+                    <Face Color = "Color" VertexIndexes = " 40; 76; 94; 58; 22" />
+                    <Face Color = "Color" VertexIndexes = " 40; 22;  5;  4; 20" />
+                    <Face Color = "Color" VertexIndexes = " 43; 25; 61; 97; 79" />
+                    <Face Color = "Color" VertexIndexes = " 43; 79; 99; 63; 27" />
+                    <Face Color = "Color" VertexIndexes = " 43; 27;  7;  6; 25" />
+
+                    <Face Color = "Color" VertexIndexes = "132;108; 92; 56;116" />
+                    <Face Color = "Color" VertexIndexes = "132;116;100; 64;124" />
+                    <Face Color = "Color" VertexIndexes = "132;124; 84; 48;108" />
+                    <Face Color = "Color" VertexIndexes = "139;115; 55; 91;131" />
+                    <Face Color = "Color" VertexIndexes = "139;131; 71;107;123" />
+                    <Face Color = "Color" VertexIndexes = "139;123; 63; 99;115" />
+
+                    <Face Color = "Color" VertexIndexes = "134;110; 50; 86;126" />
+                    <Face Color = "Color" VertexIndexes = "134;126; 66;102;118" />
+                    <Face Color = "Color" VertexIndexes = "134;118; 58; 94;110" />
+                    <Face Color = "Color" VertexIndexes = "137;113; 97; 61;121" />
+                    <Face Color = "Color" VertexIndexes = "137;121;105; 69;129" />
+                    <Face Color = "Color" VertexIndexes = "137;129; 89; 53;113" />
+
+                    <Face Color = "Color" VertexIndexes = "133;109; 49; 85;125" />
+                    <Face Color = "Color" VertexIndexes = "133;125; 65;101;117" />
+                    <Face Color = "Color" VertexIndexes = "133;117; 57; 93;109" />
+                    <Face Color = "Color" VertexIndexes = "138;114; 98; 62;122" />
+                    <Face Color = "Color" VertexIndexes = "138;122;106; 70;130" />
+                    <Face Color = "Color" VertexIndexes = "138;130; 90; 54;114" />
+
+                    <Face Color = "Color" VertexIndexes = " 41; 21;  4;  5; 23" />
+                    <Face Color = "Color" VertexIndexes = " 41; 23; 59; 95; 77" />
+                    <Face Color = "Color" VertexIndexes = " 41; 77; 93; 57; 21" />
+                    <Face Color = "Color" VertexIndexes = " 42; 24;  6;  7; 26" />
+                    <Face Color = "Color" VertexIndexes = " 42; 26; 62; 98; 78" />
+                    <Face Color = "Color" VertexIndexes = " 42; 78; 96; 60; 24" />
+
+                    <Face Color = "Color" VertexIndexes = "135;111; 95; 59;119" />
+                    <Face Color = "Color" VertexIndexes = "135;119;103; 67;127" />
+                    <Face Color = "Color" VertexIndexes = "135;127; 87; 51;111" />
+                    <Face Color = "Color" VertexIndexes = "136;112; 52; 88;128" />
+                    <Face Color = "Color" VertexIndexes = "136;128; 68;104;120" />
+                    <Face Color = "Color" VertexIndexes = "136;120; 60; 96;112" />
+
+                    <Face Color = "Color" VertexIndexes = " 44; 28; 64;100; 80" />
+                    <Face Color = "Color" VertexIndexes = " 44; 80;101; 65; 29" />
+                    <Face Color = "Color" VertexIndexes = " 44; 29;  9;  8; 28" />
+                    <Face Color = "Color" VertexIndexes = " 47; 34; 70;106; 83" />
+                    <Face Color = "Color" VertexIndexes = " 47; 83;107; 71; 35" />
+                    <Face Color = "Color" VertexIndexes = " 47; 35; 11; 10; 34" />
+
+                    <Face Color = "Color" VertexIndexes = " 45; 30; 10; 11; 31" />
+                    <Face Color = "Color" VertexIndexes = " 45; 31; 67;103; 81" />
+                    <Face Color = "Color" VertexIndexes = " 45; 81;102; 66; 30" />
+                    <Face Color = "Color" VertexIndexes = " 46; 32;  8;  9; 33" />
+                    <Face Color = "Color" VertexIndexes = " 46; 33; 69;105; 82" />
+                    <Face Color = "Color" VertexIndexes = " 46; 82;104; 68; 32" />
+
+                </Faces>
+            </Part>
+        </Macro>
+
+        <!-- Rotate Decagonal Faces and Unbandage -->
+        <Macro Name = "Unbandage" >
+            <Turn  Axis = "0" Layer = "1" Angle = "Pi/5" />
+            <Turn  Axis = "1" Layer = "1" Angle = "Pi/5" />
+            <SplitByAxes/>
+        </Macro>
+
+        <!-- Hide Edge Pieces and Turn -->
+        <Macro Name = "Hide" >
+            <HideContaining Vector = " C4; -C12*0.95; C3" />
+            <HideContaining Vector = " C8; -C10*0.95; C1" />
+            <Turn  Axis = "0" Layer = "1" Angle = "Pi/5" />
+            <Turn  Axis = "1" Layer = "1" Angle = "Pi/5" />
+        </Macro>
+
+        <!-- Create Blue Body and Keep Needed Parts -->
+        <ExecMacro MacroName = "CreateBody" Color = "clBlue" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0;    0;  0" />
+        <RemoveContaining Vector = "C6; -C6 ; C6" />
+        <RemoveContaining Vector = "C8; -C10; C1" />
+        <HideAll/>
+
+        !-- Create Orange Body and Keep Needed Parts -->
+        <ExecMacro MacroName = "CreateBody" Color = "clOrange" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0;    0;  0" />
+        <RemoveContaining Vector = "C2; -C13;  0" />
+        <RemoveContaining Vector = "C4; -C12; C3" />
+        <ShowAll/>
+ 
+        <!-- Unbandage Puzzle -->
+        <ExecMacro MacroName = "Unbandage" Repeat = "7" />
+        <Undo Repeat = "14"/>
+
+        <!-- Hide Centers and Edges -->
+        <ExecMacro MacroName = "Hide" Repeat = "10" />
+        <HideContaining Vector = " 0; -f*R; R" />
+        <HideContaining Vector = " f*R; -R; 0" />
+
+        <!-- Apply Wedge Cut to Set Numeral Order -->
+        <Cut Color = "clBlue"   > <Plane NormVector = " d; f; -1" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clOrange" > <Plane NormVector = "-f; 1;  d" NormDistance = "-DCut1" /> </Cut>
+
+        <!-- Create Puzzle Frame -->
+        <HideAll/>
+        <ExecMacro MacroName = "CreateBody" Color = "clWhite" />
+        <Split> <Plane NormDistance = "DCut3" NormVector = "  0;  -f;  1" /> </Split>
+        <Split> <Plane NormDistance = "DCut3" NormVector = "  f;  -1;  0" /> </Split>
+        <Cut>   <Plane NormDistance = "-D1"   NormVector = "  0;   f; -1" /> </Cut>
+        <Cut>   <Plane NormDistance = "-D1"   NormVector = " -f;   1;  0" /> </Cut>
+        <Cut>   <Plane NormDistance = "-D2"   NormVector = "-C6;  C6;-C6" /> </Cut>
+        <Cut>   <Plane NormDistance = "-D2"   NormVector = "-C2; C13;  0" /> </Cut>
+        <RemoveContaining Vector = "0; 0; 0" />
+        <ShowAll/>
+
+        <Hide Axis = "0" Layer = "0"/>
+        <Cut Color = "clBlack"> <Plane NormVector = " 0; -f; 1" NormDistance = "DCut2" /> </Cut>
+        <ShowAll/>
+
+        <Turn NormVector = "1;0;0" Angle = " Pi / 180 * 20" />
+        <Turn NormVector = "0;0;1" Angle = "-Pi / 180 * 30" />
+        <Turn NormVector = "0;1;0" Angle = "-Pi / 180 * 21.35" />
+        <Turn NormVector = "1;0;0" Angle = "-Pi / 180 * 20" />
+        <Turn NormVector = "0;0;1" Angle = " Pi / 180 * 30" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_06.vec" />
+        <Texture Name = "tm_07" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_07.vec" />
+        <Texture Name = "tm_08" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_08.vec" />
+        <Texture Name = "tm_09" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_09.vec" />
+        <Texture Name = "tm_00" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_00.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 = 21,0,2, 40,0,0
+        tm_02 = 18,0,2, 42,0,0
+        tm_03 = 17,0,2, 43,0,0
+        tm_04 = 14,0,2, 37,0,0
+        tm_05 = 12,0,2, 34,0,0
+        tm_06 = 10,0,2, 32,0,0
+        tm_07 =  8,0,2, 30,0,0
+        tm_08 =  6,0,2, 28,0,0
+        tm_09 =  4,0,2, 26,0,0
+        tm_00 = 20,0,2, 39,0,0
+    </SetTextures>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 25" />
+</xml>

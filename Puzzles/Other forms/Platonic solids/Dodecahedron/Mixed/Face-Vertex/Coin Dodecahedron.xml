@@ -1,0 +1,106 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Coin Dodecahedron</Name>
+        <Menu>Other forms\Dodecahedron\Mixed\Face-Vertex\Coin Dodecahedron</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-06</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // clWhite
+        Colors[ 1] := 'FFFF00'; // clYellow
+        Colors[ 2] := '0000CC'; // clBlue
+        Colors[ 3] := 'FF0000'; // clRed
+        Colors[ 4] := '00AA00'; // clGreen
+        Colors[ 5] := '800080'; // clViolett
+        Colors[ 6] := 'FFFFAA'; // clCream
+        Colors[ 7] := '0066CC'; // clLightBlue
+        Colors[ 8] := 'FF6000'; // clOrange
+        Colors[ 9] := '00FF00'; // clLightGreen
+        Colors[10] := 'FF88CC'; // clLightViolett
+        Colors[11] := '666666'; // clGray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * 0.90;
+        RC := R * 0.4565;
+        Sc := 1.07;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+        <Axis NormVector = "Vx[6]; Vy[6]; Vz[6]" />
+        <Axis NormVector = "Vx[7]; Vy[7]; Vz[7]" />
+        <Axis NormVector = "Vx[8]; Vy[8]; Vz[8]" />
+        <Axis NormVector = "Vx[9]; Vy[9]; Vz[9]" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-RSin; RSin">
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Dodecahedron" >
+            <Part>
+                <Vertices Vectors = "Vx; Vy; Vz" />
+
+                <Faces>
+                    <Face Color = "Colors[ 0]" VertexIndexes = "4;3;2;1;0" />
+                    <Face Color = "Colors[ 1]" VertexIndexes = "0;1;6;10;5" />
+                    <Face Color = "Colors[ 2]" VertexIndexes = "1;2;7;11;6" />
+                    <Face Color = "Colors[ 3]" VertexIndexes = "2;3;8;12;7" />
+                    <Face Color = "Colors[ 4]" VertexIndexes = "3;4;9;13;8" />
+                    <Face Color = "Colors[ 5]" VertexIndexes = "4;0;5;14;9" />
+                    <Face Color = "Colors[ 6]" VertexIndexes = "18;17;12;8;13" />
+                    <Face Color = "Colors[ 7]" VertexIndexes = "19;18;13;9;14" />
+                    <Face Color = "Colors[ 8]" VertexIndexes = "15;19;14;5;10" />
+                    <Face Color = "Colors[ 9]" VertexIndexes = "16;15;10;6;11" />
+                    <Face Color = "Colors[10]" VertexIndexes = "17;16;11;7;12" />
+                    <Face Color = "Colors[11]" VertexIndexes = "15;16;17;18;19" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "Dodecahedron" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" >
+            <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+            <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "12" i = "0" />
+
+        <SplitByAxes/>
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := -1;
+        </Script>
+
+        <ExecMacro MacroName = "Dodecahedron" />
+        <SplitByAxes/>
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+   </Figure>
+</xml>

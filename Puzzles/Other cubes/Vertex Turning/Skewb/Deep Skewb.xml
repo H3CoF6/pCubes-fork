@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Deep Skewb</Name>
+        <Menu>Other cubes\Vertex Turning\Skewb\Deep Skewb</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-02-26</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * sqrt(3) / 6;
+
+        RCut := W * sqrt(3) - 0.04;
+        RCu2 := W * sqrt(2) - 0.01;
+
+        A := Pi * 2 / 3;
+    </Script>
+
+    <Axes TurningAngles = "A" PlaneDistances = "D" TurnAxesWithPartNo = "0">
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split><Plane NormVector = " 1;  1; -1" NormDistance = "-D" /></Split> 
+        <Split><Plane NormVector = "-1;  1; -1" NormDistance = "-D" /></Split> 
+
+        <HideContaining Vector = "0; -W; W" />
+        <Split><Plane NormVector = " 1;  1;  1" NormDistance = "D" /></Split> 
+        <Split><Plane NormVector = " 1;  1; -1" NormDistance = "D" /></Split> 
+        <Split><Plane NormVector = " 1; -1; -1" NormDistance = "D" /></Split> 
+        <Split><Plane NormVector = "-1;  1;  1" NormDistance = "D" /></Split> 
+        <Split><Plane NormVector = "-1;  1; -1" NormDistance = "D" /></Split> 
+        <Split><Plane NormVector = "-1; -1; -1" NormDistance = "D" /></Split> 
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <!-- cut edges and vertices for better control -->
+        <Cut> <Plane NormVector = " 1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1; -1" NormDistance = "-RCut" /> </Cut>
+
+        <Cut> <Plane NormVector = " 1;  1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  0;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  0; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  1;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  1; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1; -1" NormDistance = "-RCu2" /> </Cut>
+
+    </Figure>
+</xml>

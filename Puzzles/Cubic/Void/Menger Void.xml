@@ -1,0 +1,133 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Menger Void</Name>
+        <Menu>Cubic\Void\Menger Void</Menu>
+        <Inventor>Tim Fitzrandolph</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7381</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        D := W / 3;
+        dW := 2 * W / 9;
+
+        procedure CalcCubie(x1, y1, z1);
+        begin
+            xc := x1 + 3 * x;
+            yc := y1 + 3 * y;
+            zc := z1 + 3 * z;
+            xc1 := -W + dW * xc;
+            yc1 := -W + dW * yc;
+            zc1 := -W + dW * zc;
+            xc2 := xc1 + dW;
+            yc2 := yc1 + dW;
+            zc2 := zc1 + dW;
+
+            for i := 0 to 5 do begin
+                 ColorsC[i] := -1;
+                 ie[i] := 15;
+            end;
+            if xc = 0 then ColorsC[0] := Colors[0];
+            if xc = 8 then ColorsC[1] := Colors[1];
+            if yc = 0 then ColorsC[2] := Colors[2];
+            if yc = 8 then ColorsC[3] := Colors[3];
+            if zc = 0 then ColorsC[4] := Colors[4];
+            if zc = 8 then ColorsC[5] := Colors[5];
+
+            if (x1 > 0) and ((y1 = z1) or (y1 + z1 = 2)) then ColorsC[0] := -2;
+            if (2 > x1) and ((y1 = z1) or (y1 + z1 = 2)) then ColorsC[1] := -2;
+            if (y1 > 0) and ((z1 = x1) or (z1 + x1 = 2)) then ColorsC[2] := -2;
+            if (2 > y1) and ((z1 = x1) or (z1 + x1 = 2)) then ColorsC[3] := -2;
+            if (z1 > 0) and ((x1 = y1) or (x1 + y1 = 2)) then ColorsC[4] := -2;
+            if (2 > z1) and ((x1 = y1) or (x1 + y1 = 2)) then ColorsC[5] := -2;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "MicroCubie" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "xc1; yc1; zc1" />
+                    <Add Vector = "xc1; yc1; zc2" />
+                    <Add Vector = "xc1; yc2; zc1" />
+                    <Add Vector = "xc1; yc2; zc2" />
+                    <Add Vector = "xc2; yc1; zc1" />
+                    <Add Vector = "xc2; yc1; zc2" />
+                    <Add Vector = "xc2; yc2; zc1" />
+                    <Add Vector = "xc2; yc2; zc2" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "ColorsC[0]" VertexIndexes = "0;1;3;2" InvisibleEdges = "ie[0]" />
+                    <Face Color = "ColorsC[1]" VertexIndexes = "5;4;6;7" InvisibleEdges = "ie[1]" />
+                    <Face Color = "ColorsC[2]" VertexIndexes = "1;0;4;5" InvisibleEdges = "ie[2]" />
+                    <Face Color = "ColorsC[3]" VertexIndexes = "2;3;7;6" InvisibleEdges = "ie[3]" />
+                    <Face Color = "ColorsC[4]" VertexIndexes = "0;2;6;4" InvisibleEdges = "ie[4]" />
+                    <Face Color = "ColorsC[5]" VertexIndexes = "3;1;5;7" InvisibleEdges = "ie[5]" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "Cubie" >
+            <Script> CalcCubie(0,0,0); ie[0] :=  6; ie[2] := 12; ie[4] :=  6;              </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(1,0,0); ie[2] :=  5; ie[4] :=  5; ie[3] :=  0; ie[5] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(2,0,0); ie[1] := 12; ie[2] :=  9; ie[4] :=  3;              </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(0,1,0); ie[0] :=  5; ie[4] := 10; ie[1] :=  0; ie[5] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(2,1,0); ie[1] :=  5; ie[4] := 10; ie[0] :=  0; ie[5] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(0,2,0); ie[0] :=  3; ie[3] :=  6; ie[4] := 12;              </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(1,2,0); ie[3] :=  5; ie[4] :=  5; ie[2] :=  0; ie[5] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(2,2,0); ie[1] :=  9; ie[3] :=  3; ie[4] :=  9;              </Script> <ExecMacro MacroName = "MicroCubie" />
+
+            <Script> CalcCubie(0,0,1); ie[0] := 10; ie[2] := 10; ie[1] :=  0; ie[3] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(2,0,1); ie[1] := 10; ie[2] := 10; ie[0] :=  0; ie[3] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(0,2,1); ie[0] := 10; ie[3] := 10; ie[1] :=  0; ie[2] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(2,2,1); ie[1] := 10; ie[3] := 10; ie[0] :=  0; ie[2] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+
+            <Script> CalcCubie(0,0,2); ie[0] := 12; ie[2] :=  6; ie[5] := 12;              </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(1,0,2); ie[2] :=  5; ie[5] :=  5; ie[3] :=  0; ie[4] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(2,0,2); ie[1] :=  6; ie[2] :=  3; ie[5] :=  9;              </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(0,1,2); ie[0] :=  5; ie[5] := 10; ie[1] :=  0; ie[4] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(2,1,2); ie[1] :=  5; ie[5] := 10; ie[0] :=  0; ie[4] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(0,2,2); ie[0] :=  9; ie[3] := 12; ie[5] :=  6;              </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(1,2,2); ie[3] :=  5; ie[5] :=  5; ie[2] :=  0; ie[4] :=  0; </Script> <ExecMacro MacroName = "MicroCubie" />
+            <Script> CalcCubie(2,2,2); ie[1] :=  3; ie[3] :=  9; ie[5] :=  3;              </Script> <ExecMacro MacroName = "MicroCubie" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cubie" x = "0" y = "0" z = "0" />
+        <ExecMacro MacroName = "Cubie" x = "1" y = "0" z = "0" />
+        <ExecMacro MacroName = "Cubie" x = "2" y = "0" z = "0" />
+        <ExecMacro MacroName = "Cubie" x = "0" y = "1" z = "0" />
+        <ExecMacro MacroName = "Cubie" x = "2" y = "1" z = "0" />
+        <ExecMacro MacroName = "Cubie" x = "0" y = "2" z = "0" />
+        <ExecMacro MacroName = "Cubie" x = "1" y = "2" z = "0" />
+        <ExecMacro MacroName = "Cubie" x = "2" y = "2" z = "0" />
+
+        <ExecMacro MacroName = "Cubie" x = "0" y = "0" z = "1" />
+        <ExecMacro MacroName = "Cubie" x = "2" y = "0" z = "1" />
+        <ExecMacro MacroName = "Cubie" x = "0" y = "2" z = "1" />
+        <ExecMacro MacroName = "Cubie" x = "2" y = "2" z = "1" />
+
+        <ExecMacro MacroName = "Cubie" x = "0" y = "0" z = "2" />
+        <ExecMacro MacroName = "Cubie" x = "1" y = "0" z = "2" />
+        <ExecMacro MacroName = "Cubie" x = "2" y = "0" z = "2" />
+        <ExecMacro MacroName = "Cubie" x = "0" y = "1" z = "2" />
+        <ExecMacro MacroName = "Cubie" x = "2" y = "1" z = "2" />
+        <ExecMacro MacroName = "Cubie" x = "0" y = "2" z = "2" />
+        <ExecMacro MacroName = "Cubie" x = "1" y = "2" z = "2" />
+        <ExecMacro MacroName = "Cubie" x = "2" y = "2" z = "2" />
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

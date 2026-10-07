@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octaball AC</Name>
+        <Menu>Other forms\Sphere\Dino\Octaball AC</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1708</Link>
+    </Interface>
+
+    <Script>
+        Col[ 0] := '00AACC'; // Blue
+        Col[ 1] := 'FF6600'; // Orange
+        Col[ 2] := 'FFFFFF'; // White
+        Col[ 3] := '00CC00'; // LightGreen
+        Col[ 4] := 'FF22AA'; // Pink
+        Col[ 5] := '00AAFF'; // Cyan
+        Col[ 6] := '440000'; // Brown
+        Col[ 7] := '88EEFF'; // LightestBlue
+        Col[ 8] := 'FFFFBB'; // Cream
+        Col[ 9] := '008822'; // Green
+        Col[10] := '9900CC'; // Violett
+        Col[11] := 'DDDDDD'; // Silver
+        Col[12] := 'FF55CC'; // LightPink
+        Col[13] := 'EE77EE'; // LightViolett
+        Col[14] := '0077EE'; // LightBlue
+        Col[15] := 'FF1100'; // Red
+        Col[16] := '00DDAA'; // Mint
+        Col[17] := 'FFEE00'; // Yellow
+        Col[18] := 'FFAAFF'; // Rose
+        Col[19] := '995500'; // LightBrown
+        Col[20] := 'FF5500'; // DarkerOrange
+        Col[21] := '440044'; // DarkViolett
+        Col[22] := 'FFBB00'; // DarkYellow
+        Col[23] := '009966'; // DarkMint
+
+        Colors[1] := -1;
+        Colors[2] := -1;
+        Colors[4] := -1;
+
+        K := 0.6;
+        D := K * 0.333526099730881; // C15/K/sqrt(3)
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+       <Macro Name = "AddSegment" >
+            <Script>
+                Colors[0] := Col[c];
+                Colors[5] := Col[c+1];
+                Colors[3] := Col[c+2];
+                c := c + 3;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+            <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" c = "0" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSegment" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

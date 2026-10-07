@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-1 (11-layers)</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other cubes\Square-1\Square-1 (11-layers)</Menu>
+        <Inventor>Isaiah Tucker (TwistyTurtle)</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-13</Added>
+    </Interface>
+
+    <Script>
+        W := 0.44;
+        H := W;
+        D := W * 0.15;
+        N := 5;
+
+        dH := (H - D) / N;
+        for i := 1 to N do begin
+            HArray[i-1]   := -H + i * dH;
+            HArray[2*N-i] :=  H - i * dH;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "HArray"  TurnAxesWithLayer = "N" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi / 12" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "N" Angle = "-Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "N" Angle = "-Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "N" Angle = "-Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "N" Angle = " Pi * 2 / 3" />
+    </Figure>
+</xml>

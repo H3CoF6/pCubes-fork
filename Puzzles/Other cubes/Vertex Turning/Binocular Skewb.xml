@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Binocular Skewb</Name>
+        <Menu>Other cubes\Vertex Turning\Binocular Skewb</Menu>
+        <Inventor>Timur Evbatyrov</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3483</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        W := 0.5;
+        A := W * 1.35;
+        B := W * 0.5;
+
+        D1 := (2 * W - A) / sqrt(3);
+        D2 := A / sqrt(3);
+        D3 := (3 * W + (D1 * sqrt(3) + W) / (W + A - B) * (B - 3 * W + A)) / sqrt(3);
+
+        RCut := W * 0.75;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D1;D2;D3" FixedLayers = "" >
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = " 1; -1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "SplitV">
+            <HideContaining Vector = "W; W; W" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = "-1;-1; 2" NormDistance = "-RCut" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 2;-1" NormDistance = "-RCut" /> </Cut>
+            <Cut> <Plane NormVector = " 2;-1;-1" NormDistance = "-RCut" /> </Cut>
+            <ShowAll/>
+        </Macro>
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "SplitV" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "SplitV" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+        <ExecMacro MacroName = "SplitV" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "SplitV" />
+        <Turn NormVector = "0;1;1" Angle = "Pi" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

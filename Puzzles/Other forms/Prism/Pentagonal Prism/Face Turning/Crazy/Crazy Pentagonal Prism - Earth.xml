@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Crazy Pentagonal Prism - Earth</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Face Turning\Crazy\Earth</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Josh Mermelstein</Programmer>
+        <Added>2019-05-14</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '009600'; // Green
+        Colors[1] := 'FF6000'; // Orange
+        Colors[2] := '800080'; // Purple
+        Colors[3] := 'C80000'; // Red
+        Colors[4] := '0000C8'; // Blue
+        Colors[5] := 'FFFF00'; // Yellow
+        Colors[6] := 'FFFFFF'; // White
+
+        R := 0.65;
+
+        H := R * sin(Pi / 5);
+        sAngle := PI * 2 / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D1 := R * (sqrt(5) + 3) / 12;
+        D2 := H / 3;
+        D3 := R * cos(Pi / 5);
+
+        Fixed[0] := 1; // 1 - fixed, 2 - not fixed
+        Fixed[1] := 1;
+        Fixed[2] := 2;
+        Fixed[3] := 2;
+        Fixed[4] := 1;
+
+        DC := 1.001 * cos(Pi / 5);
+        RC := R * 0.43;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1; -D3 * Fixed[0]" FixedLayers = "0;2" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1; -D3 * Fixed[1]" FixedLayers = "0;2" >
+        <Axis NormVector = "x[1]; y[1]; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1; -D3 * Fixed[2]" FixedLayers = "0;2" >
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1; -D3 * Fixed[3]" FixedLayers = "0;2" >
+        <Axis NormVector = "x[3]; y[3]; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1; -D3 * Fixed[4]" FixedLayers = "0;2" >
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "-D2; D2" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; -H" />
+            <Vertices Vectors = "x; y;  H" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "7;8;3;2" />
+                <Face Color = "Colors[1]" VertexIndexes = "8;9;4;3" />
+                <Face Color = "Colors[2]" VertexIndexes = "9;5;0;4" />
+                <Face Color = "Colors[3]" VertexIndexes = "5;6;1;0" />
+                <Face Color = "Colors[4]" VertexIndexes = "6;7;2;1" />
+                <Face Color = "Colors[5]" VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "Colors[6]" VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color =  "Colors[i]" > <Center X = "-x[i] * DC" Y = "-y[i] * DC" Z = "0" /> </Circle>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "5" />
+
+        <SplitByAxes/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Cross" File = "Puzzles\Other forms\Prism\Pentagonal Prism\Face Turning\Crazy\CrossFace.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Cross = 40,0,0, 49,0,0, 76,0,0
+    </SetTextures>
+
+</xml>

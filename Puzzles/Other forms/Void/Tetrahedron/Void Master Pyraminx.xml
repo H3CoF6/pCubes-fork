@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Void Master Pyraminx</Name>
+        <Menu>Other forms\Void\Tetrahedron\Void Master Pyraminx</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-02-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6626</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 4;
+        D := W * 4 / sqrt(3) / N;
+        D0 := -W / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2*D; D0 + 3*D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " 0.1; 0.1; 0.1" />
+        <RemoveContaining Vector = "-0.1;-0.1; 0.1" />
+        <RemoveContaining Vector = "-0.1; 0.1;-0.1" />
+        <RemoveContaining Vector = " 0.1;-0.1;-0.1" />
+
+        <Macro Name = "CutEdge" >
+            <HideContaining Vector = "Ex[i];Ey[i];Ez[i]" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "Ex[i];Ey[i];Ez[i]" NormDistance = "W/2" /></Cut>
+            <ShowAll/>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutEdge" i = "0" Repeat = "6" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

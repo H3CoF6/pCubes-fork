@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese Skewb Diamond</Name>
+        <Menu>Other forms\Multi-core\Siamese Skewb Diamond</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4027</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+        D := W / 2;
+    </Script>
+ 
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "-1;-1; 1" BaseVector = "-D; 0; 0" />
+        <Axis NormVector = "-1;-1;-1" BaseVector = "-D; 0; 0" />
+        <Axis NormVector = "-1; 1; 1" BaseVector = "-D; 0; 0" />
+        <Axis NormVector = "-1; 1;-1" BaseVector = "-D; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = " 1;-1; 1" BaseVector = " D; 0; 0" />
+        <Axis NormVector = " 1;-1;-1" BaseVector = " D; 0; 0" />
+        <Axis NormVector = " 1; 1; 1" BaseVector = " D; 0; 0" />
+        <Axis NormVector = " 1; 1;-1" BaseVector = " D; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = "-D; 0; 0" />
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <Transfer Vector = " D; 0; 0" />
+        <Cut><Plane NormVector = " 1; 0; 0" /></Cut>
+        <HideAll/>
+
+        <Transfer Vector = "D; 0; 0" />
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <Transfer Vector = "-D; 0; 0" />
+        <Cut><Plane NormVector = "-1; 0; 0" /></Cut>
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

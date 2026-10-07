@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>YJ Crazy Pyraminx</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Crazy\YJ Crazy Pyraminx</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3278</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        D := W * 4 * sqrt(3) / 9;
+        D0 := -W * sqrt(3) / 3;
+
+        RC := W * 0.55;
+        Sc := 1.001;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "D0; D0 + D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <Circle Radius = "RC" Color = "Colors[0]" Center = "Cx[0] * Sc; Cy[0] * Sc; Cz[0] * Sc" />
+        <Circle Radius = "RC" Color = "Colors[1]" Center = "Cx[1] * Sc; Cy[1] * Sc; Cz[1] * Sc" />
+        <Circle Radius = "RC" Color = "Colors[2]" Center = "Cx[2] * Sc; Cy[2] * Sc; Cz[2] * Sc" />
+        <Circle Radius = "RC" Color = "Colors[3]" Center = "Cx[3] * Sc; Cy[3] * Sc; Cz[3] * Sc" />
+
+        <SplitByAxes/>
+
+        <!-- remove small artefacts -->
+
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <Hide Axis = "2" Layer = "1" />
+        <Hide Axis = "3" Layer = "1" />
+        <RemoveAllVisible/>
+
+        <!-- -->
+
+        <ShowAll/>
+
+        <Connect Layers = "0;2" />
+    </Figure>
+
+</xml>

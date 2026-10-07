@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tetrahedron Crazy Plus - Earth</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Crazy\Earth</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2015-10-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3706</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        RC := W * 0.7;
+        Delta := 1.001;
+        DC := W / 3 * Delta;
+
+        D1 := -W / sqrt(3);
+        D2 := 0;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "D1; D2" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Script> W := W * Delta; </Script>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <Cut Color = "Colors[3]" Axis = "1" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "3" From = "2" />
+        <HideAll/>
+
+        <Circle Radius = "RC" Color = "Colors[3]" Center = " DC; DC; DC" />
+        <SplitByAxes/>
+        <ShowAll/>
+
+        <Connect Axis = "0" Layers = "0;1" />
+        <Connect Axis = "1" Layers = "0;2" />
+        <Connect Axis = "2" Layers = "0;1" />
+        <Connect Axis = "3" Layers = "0;1" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Triangle" File = "Puzzles\Other forms\Platonic solids\Tetrahedron\Vertex Turning\Crazy\Triangle.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Triangle = 20,0,0
+    </SetTextures>
+
+</xml>

@@ -1,0 +1,117 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Duo Axis Cube</Name>
+        <Menu>Other cubes\Axis\Duo Axis Cube</Menu>
+        <Inventor>A J Lu</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-06-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4770</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D1 := W / 3;
+        D2 := W * 2 / 3;
+
+        a1x := -1;
+        a1y :=  2;
+        a1z :=  2;
+        a2x :=  2;
+        a2y := -1;
+        a2z :=  2;
+        a3x :=  2;
+        a3y :=  2;
+        a3z := -1;
+        ak := W * 0.4 / 3;
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.982;
+
+        procedure GetNextCubie();
+        begin
+          Nx := (a1x * ix + a2x * iy + a3x * iz) * ak;
+          Ny := (a1y * ix + a2y * iy + a3y * iz) * ak;
+          Nz := (a1z * ix + a2z * iy + a3z * iz) * ak;
+
+          Inc(ix);
+          if ix > 1 then begin
+            ix := -1;
+            inc(iy);
+          end;
+          if iy > 1 then begin
+            iy := -1;
+            inc(iz);
+          end;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2; -D1; D1; D2" >
+        <Axis NormVector = "a1x; a1y; a1z" />
+        <Axis NormVector = "a2x; a2y; a2z" />
+        <Axis NormVector = "a3x; a3y; a3z" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+
+        <Macro Name = "SplitCubie">
+            <Script>GetNextCubie;</Script>
+            <HideContaining Vector = "Nx; Ny; Nz" />
+            <InvertVisibility/>
+            <Split Axis = "ax" From = "1" />
+            <Split Axis = "ax" From = "4" />
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitCubie" ax = "2" ix = "-1" iy = "-1" iz = "-1" />
+        <ExecMacro MacroName = "SplitCubie" ax = "1" />
+        <ExecMacro MacroName = "SplitCubie" ax = "2" />
+        <ExecMacro MacroName = "SplitCubie" ax = "0" />
+        <ExecMacro MacroName = "SplitCubie" ax = "2" />
+        <ExecMacro MacroName = "SplitCubie" ax = "2" />
+        <ExecMacro MacroName = "SplitCubie" ax = "0" />
+        <ExecMacro MacroName = "SplitCubie" ax = "2" />
+        <ExecMacro MacroName = "SplitCubie" ax = "1" />
+
+        <ExecMacro MacroName = "SplitCubie" ax = "0" />
+        <ExecMacro MacroName = "SplitCubie" ax = "1" />
+        <ExecMacro MacroName = "SplitCubie" ax = "0" />
+        <ExecMacro MacroName = "SplitCubie" ax = "0" />
+        <ExecMacro MacroName = "SplitCubie" ax = "0" ix = "2" />
+        <ExecMacro MacroName = "SplitCubie" ax = "0" />
+        <ExecMacro MacroName = "SplitCubie" ax = "1" />
+        <ExecMacro MacroName = "SplitCubie" ax = "0" />
+
+        <ExecMacro MacroName = "SplitCubie" ax = "1" />
+        <ExecMacro MacroName = "SplitCubie" ax = "1" />
+        <ExecMacro MacroName = "SplitCubie" ax = "1" />
+        <ExecMacro MacroName = "SplitCubie" ax = "0" />
+        <ExecMacro MacroName = "SplitCubie" ax = "2" />
+        <ExecMacro MacroName = "SplitCubie" ax = "2" />
+        <ExecMacro MacroName = "SplitCubie" ax = "2" />
+        <ExecMacro MacroName = "SplitCubie" ax = "2" />
+        <ExecMacro MacroName = "SplitCubie" ax = "0" />
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

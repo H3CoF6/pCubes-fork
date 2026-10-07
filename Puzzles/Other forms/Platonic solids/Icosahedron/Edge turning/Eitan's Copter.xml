@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Eitan's Copter</Name>
+        <Menu>Other forms\Icosahedron\Edge turning\Eitan's Copter</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-12-18</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := R * sqrt(1 + 2 / sqrt(5)) / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" JumbleAngle = "arctan(2)" PlaneDistances = "D" NormVectors = " Ex; Ey; Ez" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+
+    <Macros>
+        <Macro Name = "RandomTurns180" >
+            <Turn Axis = "Random(30)" Layer = "1" Angle = "Pi"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(30)" Layer = "1" Angle = "Pi/6 * Random(12)"/>
+        </Macro>
+        <Macro Name = "Scramble180" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns180" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble180" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+</xml>

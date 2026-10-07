@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx in a Pyraminx Crystal</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Multi-puzzles\Megaminx in a Pyraminx Crystal</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-25</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0011EE'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := '8800BB'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := Rsin * As;
+        R2 := R * 0.625;
+
+        DV := R * 0.787;
+        DE := R * 0.81;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "SplitV">
+            <HideContaining Vector = "Vx[id]; Vy[id]; Vz[id]" />
+            <InvertVisibility/>
+            <Split> <Plane NormVector = "Vx[id]; Vy[id]; Vz[id]" NormDistance = "DV" /> </Split>
+            <ShowAll/>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitV" Repeat = "20" id = "0" />
+
+        <Macro Name = "SplitE">
+            <HideContaining Vector = "Ex[id]; Ey[id]; Ez[id]" />
+            <InvertVisibility/>
+            <Split> <Plane NormVector = "Ex[id]; Ey[id]; Ez[id]" NormDistance = "DE" /> </Split>
+            <ShowAll/>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitE" Repeat = "30" id = "0" />
+
+        <RemoveContaining Vector = "Cx; Cy; Cz" />
+
+        <!-- small dodecahedron -->
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" R = "R2" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

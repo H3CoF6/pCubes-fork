@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bermuda Star</Name>
+        <Menu>Other forms\Bermuda Cubes\Star</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-03-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2815</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        s2 := sqrt(2);
+        D := W * (s2 - 1);
+
+        N := 16;
+        x[0] := W; y[0] := W;
+        x[1] := D; y[1] := W;
+        for i := 2 to 15 do begin
+            x[i] := (x[i - 2] - y[i - 2]) / s2;
+            y[i] := (x[i - 2] + y[i - 2]) / s2;
+        end;
+        i := 0;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1 + N; i2 + N; i2; i1" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " x; y; W" />
+            <Vertices Vectors = " x; y;-W" />
+
+            <Faces>
+                <Face Color = "clGreen" VertexIndexes = " 0; 1; 2; 3; 4; 5; 6; 7; 8; 9;10;11;12;13;14;15" />
+                <Face Color = "clBlue " VertexIndexes = "31;30;29;28;27;26;25;24;23;22;21;20;19;18;17;16" />
+                <ExecMacro MacroName = "AddFace" Color = "clYellow" Repeat = "4" />
+                <ExecMacro MacroName = "AddFace" Color = "clRed"    Repeat = "4" />
+                <ExecMacro MacroName = "AddFace" Color = "clWhite"  Repeat = "4" />
+                <ExecMacro MacroName = "AddFace" Color = "clOrange" Repeat = "4" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "2" From  = "2" />
+        <Hide  Axis = "2" From  = "2" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <InvertVisibility/>
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "1" />
+        <HideContaining Vector = " 0; 0; W" />
+        <SplitByAxes/>
+        <InvertVisibility/>
+        <Turn  Axis = "2" Layer = "2" Angle = "Pi/4" />
+        <Split Axis = "0" From = "1" />
+        <Hide  Axis = "0" From = "1" />
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

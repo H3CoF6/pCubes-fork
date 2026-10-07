@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Trapezohedron</Name>
+        <Menu>Test\Trapezohedron</Menu>
+        <Inventor></Inventor>
+        <Programmer></Programmer>
+        <Added></Added>
+    </Interface>
+
+    <Script>
+        clYellow    := 'FFFF00';
+        clBlue      := '0000A0';
+        clOrange    := 'FF6000';
+        clRed       := 'FF0000';
+        clGreen     := '008000';
+        clWhite     := 'FFFFFF';
+        clViolett   := '800080';
+        clLightBlue := '2868FF';
+
+        n := 7;
+
+        R := 0.55;
+        H := 1;
+        z := H * (1 - cos(Pi / n)) / (1 + cos(Pi / n));
+
+        for i := 0 to n - 1 do begin
+            x[2 * i] := R * cos(2 * Pi / n * i);
+            y[2 * i] := R * sin(2 * Pi / n * i);
+            x[2 * i + 1] := R * cos(2 * Pi / n * (i + 0.5));
+            y[2 * i + 1] := R * sin(2 * Pi / n * (i + 0.5));
+        end;
+
+        for i := 0 to n - 1 do begin
+            ax[i] := cos(1 * i);
+            ay[i] := sin(Pi / 4 * i);
+        end;
+
+        D1 := 1;
+        D2 := 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D2; D2" FixedLayers = "1">
+        <Axis NormVector = "ax[0]; ay[0]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;    0;  H" />
+                <Add Vector = "   0;    0; -H" />
+
+                <Add Vector = "x[ 0]; y[ 0];  z" />
+                <Add Vector = "x[ 1]; y[ 1]; -z" />
+                <Add Vector = "x[ 2]; y[ 2];  z" />
+                <Add Vector = "x[ 3]; y[ 3]; -z" />
+                <Add Vector = "x[ 4]; y[ 4];  z" />
+                <Add Vector = "x[ 5]; y[ 5]; -z" />
+                <Add Vector = "x[ 6]; y[ 6];  z" />
+                <Add Vector = "x[ 7]; y[ 7]; -z" />
+                <Add Vector = "x[ 8]; y[ 8];  z" />
+                <Add Vector = "x[ 9]; y[ 9]; -z" />
+                <Add Vector = "x[10]; y[10];  z" />
+                <Add Vector = "x[11]; y[11]; -z" />
+                <Add Vector = "x[12]; y[12];  z" />
+                <Add Vector = "x[13]; y[13]; -z" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue     " VertexIndexes = "0; 2; 3 ;4" />
+                <Face Color = "clGreen    " VertexIndexes = "0; 4; 5; 6" />
+                <Face Color = "clRed      " VertexIndexes = "0; 6; 7; 8" />
+                <Face Color = "clOrange   " VertexIndexes = "0; 8; 9;10" />
+                <Face Color = "clOrange   " VertexIndexes = "0;10;11;12" />
+                <Face Color = "clOrange   " VertexIndexes = "0;12;13;14" />
+                <Face Color = "clOrange   " VertexIndexes = "0;14;15; 2" />
+
+                <Face Color = "clYellow   " VertexIndexes = "1; 5; 4; 3" />
+                <Face Color = "clWhite    " VertexIndexes = "1; 7; 6; 5" />
+                <Face Color = "clViolett  " VertexIndexes = "1; 9; 8; 7" />
+                <Face Color = "clLightBlue" VertexIndexes = "1;11;10; 9" />
+                <Face Color = "clLightBlue" VertexIndexes = "1;13;12;11" />
+                <Face Color = "clLightBlue" VertexIndexes = "1;15;14;13" />
+                <Face Color = "clLightBlue" VertexIndexes = "1; 3; 2;15" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes1/>
+    </Figure>
+</xml>

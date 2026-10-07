@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+Learn internal bandage
+
+    <Interface>
+        <Name>RotoPrism 2 Flat</Name>
+        <Menu>Grigr\RotoPrism 2 Flat</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2016-12-05</Added>
+        <Link>https://www.youtube.com/watch?v=JXjBp7o9G5o</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0'; clBlue1        := '0000A1';
+        clRed          := 'FF0000'; clRed1         := 'FF0001';
+        clGreen        := '008000'; clGreen1       := '008001';
+        clWhite        := 'FFFFFF';
+
+        p1 := 0.75; p0 := 0.5; p2 := 0.25;
+        pA:= 0.1443375673; pB:= pA * 2;
+        pC:= pA * 4;       pD:= pC + pA;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "pB" TurnAxesWithLayer = "1">
+        <Axis NormVector = "-p0; -pB; 0" />
+        <Axis NormVector = " p0; -pB; 0" />
+        <Axis NormVector = "  0;  pC; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " p1; -pA;  p0" /> 0
+                <Add Vector = "  0; -pC;  p0" /> 1
+                <Add Vector = "-p0; -pC;  p0" /> 2
+                <Add Vector = "-p0;  pB;  p0" /> 3
+                <Add Vector = "-p2;  pD;  p0" /> 4
+                <Add Vector = " p0;  pB;  p0" /> 5
+
+                <Add Vector = " p1; -pA; -p0" /> 6
+                <Add Vector = "  0; -pC; -p0" /> 7
+                <Add Vector = "-p0; -pC; -p0" /> 8
+                <Add Vector = "-p0;  pB; -p0" /> 9
+                <Add Vector = "-p2;  pD; -p0" /> 10
+                <Add Vector = " p0;  pB; -p0" /> 11
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite " VertexIndexes = "5;4;3;2;1;0" />
+                <Face Color = "clGreen " VertexIndexes = "0;1;7;6" />
+                <Face Color = "clGreen1" VertexIndexes = "1;2;8;7" />
+                <Face Color = "clRed   " VertexIndexes = "2;3;9;8" />
+                <Face Color = "clRed1  " VertexIndexes = "3;4;10;9" />
+                <Face Color = "clBlue  " VertexIndexes = "4;5;11;10" />
+                <Face Color = "clBlue1 " VertexIndexes = "5;0;6;11" />
+                <Face Color = "clYellow" VertexIndexes = "6;7;8;9;10;11" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Angle = " Pi    " Axis = "1" Layer = "1" />
+
+        <Turn Angle = " Pi / 2" Axis = "2" Layer = "0" />
+        <SplitByAxes/>
+        <Turn Angle = "-Pi / 2" Axis = "2" Layer = "0" />
+
+        <Turn Angle = " Pi    " Axis = "0" Layer = "0" />
+        <Turn Angle = " Pi / 2" Axis = "2" Layer = "0" />
+        <SplitByAxes/>
+        <Turn Angle = "-Pi / 2" Axis = "2" Layer = "0" />
+        <Turn Angle = "-Pi    " Axis = "0" Layer = "0" />
+
+        <Turn Angle = "-Pi    " Axis = "1" Layer = "1" />
+    </Figure>
+</xml>

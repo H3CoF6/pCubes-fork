@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Kite Mixup</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Vertex Turning\Skewb Kite Mixup</Menu>
+        <Inventor>LeeHQ</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-07</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+
+        D := R * 0.15; // must exceed R * sqrt(3) / 4
+        RC := D * 0.99;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; Pi/3; 2*Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "i" Angle = "Pi/3" Layer = "1" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+            <Undo/>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "4" />
+
+        <HideContaining Vector = " Vx; Vy; Vz" />
+        <HideContaining Vector = " Ex; Ey; Ez" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "Circle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = " Cx[i]; Cy[i]; Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Circle" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

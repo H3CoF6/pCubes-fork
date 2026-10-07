@@ -1,0 +1,487 @@
+<?xml version = "1.0" encoding = "UTF-8"?>                                                                                                                                   	
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Propello Dodecahedron</Name>
+        <Menu>Other forms\Propellor Solids\Propello Dodecahedron</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2019-02-16</Added>
+        <Link>http://dmccooey.com/polyhedra/PropelloDodecahedron.html</Link>
+    </Interface>
+
+    <Script>
+        clWhite         := 'F0F0F0';
+        clBlue          := '0000FF';
+        clRed           := 'FF0000';
+
+        clSilver        := 'A0A0A0';
+        clGray          := '707070';
+        clBlack         := '202020';
+
+        clPowderBlue    := 'B0E0E6';
+        clCadetBlue     := '5F9EA0';
+        clDarkTurquoise := '00CED1';
+
+        clCyan          := '00FFFF';
+        clTeal          := '008080';
+        clNavy          := '000080';
+
+        clCoral         := 'FF7F50';
+        clIndian        := 'CD5C5C';
+        clBrown         := '800000';
+
+        clGreenYellow   := 'ADFF2F';
+        clLime          := '00FF00';
+        clDarkGreen     := '006400';
+
+        clKhaki         := 'F0E68C';
+        clGolden        := 'DDBB20';
+        clOlive         := '808000';
+
+        clPink          := 'FF69B4';
+        clFuchsia       := 'FF00FF';
+        clPurple        := '800080';
+
+        clYellow        := 'FFFF00';
+        clOrange        := 'FF6000';
+        clGreen         := '008000';
+
+        clLightSteel    := 'B0C4DE';
+        clLavender      := 'E6E6FA';
+        clHoneydew      := 'F0FFF0';
+
+        clYellowGreen   := '9ACD32';
+        clOliveDrab     := '6B8E23';
+        clLimeGgreen    := '32CD32';
+
+        clDeepSky       := '00BFFF';
+        clDodgerBlue    := '1E90FF';
+        clSkyBlue       := '87CEEB';
+
+        clCrimson       := 'DC143C';
+        clPale          := 'D07090';
+        clOrchid        := 'DA70D6';
+
+        clSeaGreen      := '2E8B57';
+        clAquaMarine    := '66CDAA';
+        clDarkSeaGreen  := '8FBC8F';
+
+        clChocolate     := 'D2691E';
+        clPeru          := 'CD853F';
+        clSandyBrown    := 'F4A460';
+
+        clIndigo        := '4B0082';
+        clDarkSlate     := '483D8B';
+        clSlate         := '6A5ACD';
+
+        clMediumPurple  := '9370DB';
+        clThistle       := 'D8BFD8';
+        clPlum          := 'DDA0DD';
+
+        clAliceBlue     := 'F0F8FF';
+        clGainsboro     := 'C0C0C0';
+        ckGhostWhite    := 'F8F8FF';
+
+        clFirebrick     := 'B22222';
+        clDarkOrange    := 'FF8C00';
+        clSalmon        := 'FA8072';
+
+        clMidnightBlue  := '191970';
+        clMediumBlue    := '0000CD';
+        clRoyalBlue     := '4169E1';
+
+        clDarkRed       := '8B0000';
+        clOrangeRed     := 'FF4500';
+        clTomato        := 'FF6347';
+
+        clLightSea      := '20B2AA';
+        clSteelBlue     := '4682B4';
+        clCornFower     := '6495ED';
+
+        clGoldSun       := 'FFD700';
+        clGoldenRod     := 'DAA520';
+        clDarkKhaki     := 'BDB76B';
+
+        clMediumViolet  := 'C71585';
+        clDeepPink      := 'FF1493';
+        clHotPink       := 'FFC0CB';
+
+// Propello Dodecahedron (canonical)
+
+        K  := 0.65;
+
+        C0  := K * 0.1007009180197;
+        C1  := K * 0.1299840121949;
+        C2  := K * 0.1951284563056;
+        C3  := K * 0.2929215202492;
+        C4  := K * 0.3110194677452;
+        C5  := K * 0.3251124685006;
+        C6  := K * 0.3589611999956;
+        C7  := K * 0.3732560577798;
+        C8  := K * 0.4880499765549;
+        C9  := K * 0.5808114222354;
+        C10 := K * 0.6267439422201;
+        C11 := K * 0.6889805322547;
+        C12 := K * 0.6983685262804;
+        C13 := K * 0.7990694443002;
+        C14 := K * 0.8189645444496;
+        C15 := K * 0.9196654624694;
+        C16 := K * 0.9397726222311;
+
+        // Calcs normal to plane with 3 points. Answer - in vector nx, ny, nz
+        procedure Normal(x1, y1, z1, x2, y2, z2, x3, y3, z3, i);
+        begin
+          nx := (y1-y3) * (z2-z3) - (y2-y3) * (z1-z3);
+          ny := (z1-z3) * (x2-x3) - (z2-z3) * (x1-x3);
+          nz := (x1-x3) * (y2-y3) - (x2-x3) * (y1-y3);
+
+          // normalize vector
+          dn := sqrt(nx^2 + ny^2 + nz^2);
+          nx := nx / dn; ny := ny / dn; nz := nz / dn;
+          px[i] := nx; py[i] := ny; pz[i] := nz;
+
+          // distace to plane
+          L := x1*nx + y1*ny + z1* nz;
+        end;
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(ver1, ver2, ver3);
+        begin
+          vx := py[ver1] * pz[ver2] - py[ver2] * pz[ver1];
+          vy := pz[ver1] * px[ver2] - pz[ver2] * px[ver1];
+          vz := px[ver1] * py[ver2] - px[ver2] * py[ver1];
+          wx := py[ver1] * pz[ver3] - py[ver3] * pz[ver1];
+          wy := pz[ver1] * px[ver3] - pz[ver3] * px[ver1];
+          wz := px[ver1] * py[ver3] - px[ver3] * py[ver1];
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+        // Calcs angle from 2 to 3 while rotating over 1
+        function AngleC(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vx := y1 * z2 - y2 * z1;
+          vy := z1 * x2 - z2 * x1;
+          vz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+
+        // Calc all Normal and fill array
+        // Normal( , , , 0); // "  "
+        Normal(  C2,-C0,  K,   C8, -C7, C14,   C5,  C4, C15, 0); // "  0, 36, 24 "
+        Normal(  C2, C0, -K,   C8,  C7,-C14,   C5, -C4,-C15, 1); // "  1, 37, 25 "
+        Normal(  -K, C2, C0, -C14,  C8,  C7, -C15,  C5, -C4, 2); // "  6, 42, 31 "
+        Normal(  -K,-C2,-C0, -C14, -C8, -C7, -C15, -C5,  C4, 3); // "  7, 43, 30 "
+        Normal(  C0, -K, C2,   C7,-C14,  C8,  -C4,-C15,  C5, 4); // "  8, 44, 34 "
+        Normal( -C0,  K, C2,  -C7, C14,  C8,   C4, C15,  C5, 5); // " 10, 46, 32 "
+
+        Normal( C9,-C9,C9,  C8, -C7,C14,  C7,-C14, C8,  6); // " 74, 36, 44 "
+        Normal( C9,-C9,C9,  C7,-C14, C8,  C14,-C8, C7,  7); // " 74, 44, 40 "
+        Normal( C9,-C9,C9, C14, -C8, C7,  C8, -C7,C14,  8); // " 74, 40, 36 "
+        Normal( C6,-C16,0,  C0,   -K, C2, C4, -C15,-C5, 9); // " 21,  8, 33 "
+        Normal( C6,-C16,0,  C4, -C15,-C5, C10,-C13, C1,10); // " 21, 33, 56 "
+        Normal( C6,-C16,0, C10,-C13,C1,   C0,   -K, C2,11); // " 21, 56,  8 "
+        Normal( C16,0,C6,    K,-C2, C0,   C15, C5, C4, 12); // " 16,  4, 28 "
+        Normal( C16,0,C6,  C15, C5, C4,   C13,-C1,C10, 13); // " 16, 28, 52 "
+        Normal( C16,0,C6,  C13,-C1,C10,   K,-C2, C0,   14); // " 16, 52,  4 "
+
+        // Calc all Jumble Angle
+        A1 := Angle(7, 6, 8);
+        A2 := Angle(7, 6,11);
+        A3 := Angle(7, 8,11);
+        A4 := Angle(7,10,14);
+
+        Normal(    0,  C6, C16,   -C2,  C0,   K,   C5,  C4, C15, 15);
+        Normal(    0,  C6, C16,   C5,  C4, C15,  -C1, C10, C13 , 16);
+        Normal(    0,  C6, C16,  -C1, C10, C13,   -C2,  C0,   K, 17);
+        Normal(    0,  C6,-C16,    C2,  C0,  -K,  -C5,  C4,-C15, 18);
+        Normal(    0,  C6,-C16,  -C5,  C4,-C15,   C1, C10,-C13 , 19);
+        Normal(    0,  C6,-C16,   C1, C10,-C13,    C2,  C0,  -K, 20);
+        Normal(    0, -C6, C16,    C2, -C0,   K,  -C5, -C4, C15, 21);
+        Normal(    0, -C6, C16,  -C5, -C4, C15,   C1,-C10, C13 , 22);
+        Normal(    0, -C6, C16,   C1,-C10, C13,    C2, -C0,   K, 23);
+        Normal(    0, -C6,-C16,   -C2, -C0,  -K,   C5, -C4,-C15, 24);
+        Normal(    0, -C6,-C16,   C5, -C4,-C15,  -C1,-C10,-C13 , 25);
+        Normal(    0, -C6,-C16,  -C1,-C10,-C13,   -C2, -C0,  -K, 26);
+        Normal(  C16,   0, -C6,     K,  C2, -C0,  C15, -C5, -C4, 27);
+        Normal(  C16,   0, -C6,  C15, -C5, -C4,  C13,  C1,-C10 , 28);
+        Normal(  C16,   0, -C6,  C13,  C1,-C10,     K,  C2, -C0, 29);
+        Normal( -C16,   0,  C6,    -K,  C2,  C0, -C15, -C5,  C4, 30);
+        Normal( -C16,   0,  C6, -C15, -C5,  C4, -C13,  C1, C10 , 31);
+        Normal( -C16,   0,  C6, -C13,  C1, C10,    -K,  C2,  C0, 32);
+        Normal( -C16,   0, -C6,    -K, -C2, -C0, -C15,  C5, -C4, 33);
+        Normal( -C16,   0, -C6, -C15,  C5, -C4, -C13, -C1,-C10 , 34);
+        Normal( -C16,   0, -C6, -C13, -C1,-C10,    -K, -C2, -C0, 35);
+        Normal(   C6, C16,   0,    C0,   K, -C2,   C4, C15,  C5, 36);
+        Normal(   C6, C16,   0,   C4, C15,  C5,  C10, C13, -C1 , 37);
+        Normal(   C6, C16,   0,  C10, C13, -C1,    C0,   K, -C2, 38);
+        Normal(  -C6, C16,   0,  -C0,   K,  C2,  -C4, C15, -C5 , 39);
+        Normal(  -C6, C16,   0,  -C4, C15, -C5, -C10, C13,  C1 , 40);
+        Normal(  -C6, C16,   0, -C10, C13,  C1,  -C0,   K,  C2 , 41);
+        Normal(  -C6,-C16,   0,  -C0,  -K, -C2,  -C4,-C15,  C5 , 42);
+        Normal(  -C6,-C16,   0,  -C4,-C15,  C5, -C10,-C13, -C1 , 43);
+        Normal(  -C6,-C16,   0, -C10,-C13, -C1,  -C0,  -K, -C2 , 44);
+        Normal(   C9,  C9,  C9,   C3, C11, C12,  C12,  C3, C11 , 45);
+        Normal(   C9,  C9,  C9,  C12,  C3, C11,  C11, C12,  C3 , 46);
+        Normal(   C9,  C9,  C9,  C11, C12,  C3,   C3, C11, C12 , 47);
+        Normal(   C9,  C9, -C9,   C8,  C7,-C14,   C7, C14, -C8 , 48);
+        Normal(   C9,  C9, -C9,   C7, C14, -C8,  C14,  C8, -C7 , 49);
+        Normal(   C9,  C9, -C9,  C14,  C8, -C7,   C8,  C7,-C14 , 50);
+        Normal(   C9, -C9, -C9,   C3,-C11,-C12,  C12, -C3,-C11 , 51);
+        Normal(   C9, -C9, -C9,  C12, -C3,-C11,  C11,-C12, -C3 , 52);
+        Normal(   C9, -C9, -C9,  C11,-C12, -C3,   C3,-C11,-C12 , 53);
+        Normal(  -C9,  C9,  C9,  -C8,  C7, C14,  -C7, C14,  C8 , 54);
+        Normal(  -C9,  C9,  C9,  -C7, C14,  C8, -C14,  C8,  C7 , 55);
+        Normal(  -C9,  C9,  C9, -C14,  C8,  C7,  -C8,  C7, C14 , 56);
+        Normal(  -C9,  C9, -C9,  -C3, C11,-C12, -C12,  C3,-C11 , 57);
+        Normal(  -C9,  C9, -C9, -C12,  C3,-C11, -C11, C12, -C3 , 58);
+        Normal(  -C9,  C9, -C9, -C11, C12, -C3,  -C3, C11,-C12 , 59);
+        Normal(  -C9, -C9,  C9,  -C3,-C11, C12, -C12, -C3, C11 , 60);
+        Normal(  -C9, -C9,  C9, -C12, -C3, C11, -C11,-C12,  C3 , 61);
+        Normal(  -C9, -C9,  C9, -C11,-C12,  C3,  -C3,-C11, C12 , 62);
+        Normal(  -C9, -C9, -C9,  -C8, -C7,-C14,  -C7,-C14, -C8 , 63);
+        Normal(  -C9, -C9, -C9,  -C7,-C14, -C8, -C14, -C8, -C7 , 64);
+        Normal(  -C9, -C9, -C9, -C14, -C8, -C7,  -C8, -C7,-C14 , 65);
+
+        D1 := K * 0.897;
+        D2 := K * 0.94;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "-D1;D1" FixedLayers = "1">
+        <Axis NormVector = " px[ 0]; py[ 0]; pz[ 0]" />
+        <Axis NormVector = " px[ 1]; py[ 1]; pz[ 1]" />
+        <Axis NormVector = " px[ 2]; py[ 2]; pz[ 2]" />
+        <Axis NormVector = " px[ 3]; py[ 3]; pz[ 3]" />
+        <Axis NormVector = " px[ 4]; py[ 4]; pz[ 4]" />
+        <Axis NormVector = " px[ 5]; py[ 5]; pz[ 5]" />
+    </Axes>
+    <Axes TurningAngles = "2*Pi" AvailableAngles = " -A4;-A3;-A2;-A1; 0; A1;A2;A3;A4 " PlaneDistances = "D2"  FixedLayers = "0">
+        <Axis NormVector = " px[ 6]; py[ 6]; pz[ 6]" />
+        <Axis NormVector = " px[ 7]; py[ 7]; pz[ 7]" />
+        <Axis NormVector = " px[ 8]; py[ 8]; pz[ 8]" />
+        <Axis NormVector = " px[ 9]; py[ 9]; pz[ 9]" />
+        <Axis NormVector = " px[10]; py[10]; pz[10]" />
+        <Axis NormVector = " px[11]; py[11]; pz[11]" />
+        <Axis NormVector = " px[12]; py[12]; pz[12]" />
+        <Axis NormVector = " px[13]; py[13]; pz[13]" />
+        <Axis NormVector = " px[14]; py[14]; pz[14]" />
+        <Axis NormVector = " px[15]; py[15]; pz[15]" />
+        <Axis NormVector = " px[16]; py[16]; pz[16]" />
+        <Axis NormVector = " px[17]; py[17]; pz[17]" />
+        <Axis NormVector = " px[18]; py[18]; pz[18]" />
+        <Axis NormVector = " px[19]; py[19]; pz[19]" />
+        <Axis NormVector = " px[20]; py[20]; pz[20]" />
+        <Axis NormVector = " px[21]; py[21]; pz[21]" />
+        <Axis NormVector = " px[22]; py[22]; pz[22]" />
+        <Axis NormVector = " px[23]; py[23]; pz[23]" />
+        <Axis NormVector = " px[24]; py[24]; pz[24]" />
+        <Axis NormVector = " px[25]; py[25]; pz[25]" />
+        <Axis NormVector = " px[26]; py[26]; pz[26]" />
+        <Axis NormVector = " px[27]; py[27]; pz[27]" />
+        <Axis NormVector = " px[28]; py[28]; pz[28]" />
+        <Axis NormVector = " px[29]; py[29]; pz[29]" />
+        <Axis NormVector = " px[30]; py[30]; pz[30]" />
+        <Axis NormVector = " px[31]; py[31]; pz[31]" />
+        <Axis NormVector = " px[32]; py[32]; pz[32]" />
+        <Axis NormVector = " px[33]; py[33]; pz[33]" />
+        <Axis NormVector = " px[34]; py[34]; pz[34]" />
+        <Axis NormVector = " px[35]; py[35]; pz[35]" />
+        <Axis NormVector = " px[36]; py[36]; pz[36]" />
+        <Axis NormVector = " px[37]; py[37]; pz[37]" />
+        <Axis NormVector = " px[38]; py[38]; pz[38]" />
+        <Axis NormVector = " px[39]; py[39]; pz[39]" />
+        <Axis NormVector = " px[40]; py[40]; pz[40]" />
+        <Axis NormVector = " px[41]; py[41]; pz[41]" />
+        <Axis NormVector = " px[42]; py[42]; pz[42]" />
+        <Axis NormVector = " px[43]; py[43]; pz[43]" />
+        <Axis NormVector = " px[44]; py[44]; pz[44]" />
+        <Axis NormVector = " px[45]; py[45]; pz[45]" />
+        <Axis NormVector = " px[46]; py[46]; pz[46]" />
+        <Axis NormVector = " px[47]; py[47]; pz[47]" />
+        <Axis NormVector = " px[48]; py[48]; pz[48]" />
+        <Axis NormVector = " px[49]; py[49]; pz[49]" />
+        <Axis NormVector = " px[50]; py[50]; pz[50]" />
+        <Axis NormVector = " px[51]; py[51]; pz[51]" />
+        <Axis NormVector = " px[52]; py[52]; pz[52]" />
+        <Axis NormVector = " px[53]; py[53]; pz[53]" />
+        <Axis NormVector = " px[54]; py[54]; pz[54]" />
+        <Axis NormVector = " px[55]; py[55]; pz[55]" />
+        <Axis NormVector = " px[56]; py[56]; pz[56]" />
+        <Axis NormVector = " px[57]; py[57]; pz[57]" />
+        <Axis NormVector = " px[58]; py[58]; pz[58]" />
+        <Axis NormVector = " px[59]; py[59]; pz[59]" />
+        <Axis NormVector = " px[60]; py[60]; pz[60]" />
+        <Axis NormVector = " px[61]; py[61]; pz[61]" />
+        <Axis NormVector = " px[62]; py[62]; pz[62]" />
+        <Axis NormVector = " px[63]; py[63]; pz[63]" />
+        <Axis NormVector = " px[64]; py[64]; pz[64]" />
+        <Axis NormVector = " px[65]; py[65]; pz[65]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  C2; -C0;   K" />
+                <Add Vector = "  C2;  C0;  -K" />
+                <Add Vector = " -C2;  C0;   K" />
+                <Add Vector = " -C2; -C0;  -K" />
+                <Add Vector = "   K; -C2;  C0" />
+                <Add Vector = "   K;  C2; -C0" />
+                <Add Vector = "  -K;  C2;  C0" />
+                <Add Vector = "  -K; -C2; -C0" />
+                <Add Vector = "  C0;  -K;  C2" />
+                <Add Vector = "  C0;   K; -C2" />
+                <Add Vector = " -C0;   K;  C2" />
+                <Add Vector = " -C0;  -K; -C2" />
+                <Add Vector = "   0;  C6; C16" />
+                <Add Vector = "   0;  C6;-C16" />
+                <Add Vector = "   0; -C6; C16" />
+                <Add Vector = "   0; -C6;-C16" />
+                <Add Vector = " C16;   0;  C6" />
+                <Add Vector = " C16;   0; -C6" />
+                <Add Vector = "-C16;   0;  C6" />
+                <Add Vector = "-C16;   0; -C6" />
+                <Add Vector = "  C6; C16;   0" />
+                <Add Vector = "  C6;-C16;   0" />
+                <Add Vector = " -C6; C16;   0" />
+                <Add Vector = " -C6;-C16;   0" />
+                <Add Vector = "  C5;  C4; C15" />
+                <Add Vector = "  C5; -C4;-C15" />
+                <Add Vector = " -C5; -C4; C15" />
+                <Add Vector = " -C5;  C4;-C15" />
+                <Add Vector = " C15;  C5;  C4" />
+                <Add Vector = " C15; -C5; -C4" />
+                <Add Vector = "-C15; -C5;  C4" />
+                <Add Vector = "-C15;  C5; -C4" />
+                <Add Vector = "  C4; C15;  C5" />
+                <Add Vector = "  C4;-C15; -C5" />
+                <Add Vector = " -C4;-C15;  C5" />
+                <Add Vector = " -C4; C15; -C5" />
+                <Add Vector = "  C8; -C7; C14" />
+                <Add Vector = "  C8;  C7;-C14" />
+                <Add Vector = " -C8;  C7; C14" />
+                <Add Vector = " -C8; -C7;-C14" />
+                <Add Vector = " C14; -C8;  C7" />
+                <Add Vector = " C14;  C8; -C7" />
+                <Add Vector = "-C14;  C8;  C7" />
+                <Add Vector = "-C14; -C8; -C7" />
+                <Add Vector = "  C7;-C14;  C8" />
+                <Add Vector = "  C7; C14; -C8" />
+                <Add Vector = " -C7; C14;  C8" />
+                <Add Vector = " -C7;-C14; -C8" />
+                <Add Vector = "  C1;-C10; C13" />
+                <Add Vector = "  C1; C10;-C13" />
+                <Add Vector = " -C1; C10; C13" />
+                <Add Vector = " -C1;-C10;-C13" />
+                <Add Vector = " C13; -C1; C10" />
+                <Add Vector = " C13;  C1;-C10" />
+                <Add Vector = "-C13;  C1; C10" />
+                <Add Vector = "-C13; -C1;-C10" />
+                <Add Vector = " C10;-C13;  C1" />
+                <Add Vector = " C10; C13; -C1" />
+                <Add Vector = "-C10; C13;  C1" />
+                <Add Vector = "-C10;-C13; -C1" />
+                <Add Vector = "  C3; C11; C12" />
+                <Add Vector = "  C3;-C11;-C12" />
+                <Add Vector = " -C3;-C11; C12" />
+                <Add Vector = " -C3; C11;-C12" />
+                <Add Vector = " C12;  C3; C11" />
+                <Add Vector = " C12; -C3;-C11" />
+                <Add Vector = "-C12; -C3; C11" />
+                <Add Vector = "-C12;  C3;-C11" />
+                <Add Vector = " C11; C12;  C3" />
+                <Add Vector = " C11;-C12; -C3" />
+                <Add Vector = "-C11;-C12;  C3" />
+                <Add Vector = "-C11; C12; -C3" />
+                <Add Vector = "  C9;  C9;  C9" />
+                <Add Vector = "  C9;  C9; -C9" />
+                <Add Vector = "  C9; -C9;  C9" />
+                <Add Vector = "  C9; -C9; -C9" />
+                <Add Vector = " -C9;  C9;  C9" />
+                <Add Vector = " -C9;  C9; -C9" />
+                <Add Vector = " -C9; -C9;  C9" />
+                <Add Vector = " -C9; -C9; -C9" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite        " VertexIndexes = "  0; 36; 52; 64; 24 " />
+                <Face Color = "clBlue         " VertexIndexes = "  1; 37; 53; 65; 25 " />
+                <Face Color = "clRed          " VertexIndexes = "  2; 38; 54; 66; 26 " />
+                <Face Color = "clYellow       " VertexIndexes = "  3; 39; 55; 67; 27 " />
+                <Face Color = "clOrange       " VertexIndexes = "  4; 40; 56; 69; 29 " />
+                <Face Color = "clGreen        " VertexIndexes = "  5; 41; 57; 68; 28 " />
+                <Face Color = "clCyan         " VertexIndexes = "  6; 42; 58; 71; 31 " />
+                <Face Color = "clTeal         " VertexIndexes = "  7; 43; 59; 70; 30 " />
+                <Face Color = "clNavy         " VertexIndexes = "  8; 44; 48; 62; 34 " />
+                <Face Color = "clCoral        " VertexIndexes = "  9; 45; 49; 63; 35 " />
+                <Face Color = "clIndian       " VertexIndexes = " 10; 46; 50; 60; 32 " />
+                <Face Color = "clBrown        " VertexIndexes = " 11; 47; 51; 61; 33 " />
+                <Face Color = "clAliceBlue    " VertexIndexes = " 12;  2;  0; 24 " />
+                <Face Color = "clGainsboro    " VertexIndexes = " 12; 24; 60; 50 " />
+                <Face Color = "ckGhostWhite   " VertexIndexes = " 12; 50; 38;  2 " />
+                <Face Color = "clMediumPurple " VertexIndexes = " 13;  1;  3; 27 " />
+                <Face Color = "clThistle      " VertexIndexes = " 13; 27; 63; 49 " />
+                <Face Color = "clPlum         " VertexIndexes = " 13; 49; 37;  1 " />
+                <Face Color = "clGreenYellow  " VertexIndexes = " 14;  0;  2; 26 " />
+                <Face Color = "clLime         " VertexIndexes = " 14; 26; 62; 48 " />
+                <Face Color = "clDarkGreen    " VertexIndexes = " 14; 48; 36;  0 " />
+                <Face Color = "clKhaki        " VertexIndexes = " 15;  3;  1; 25 " />
+                <Face Color = "clGolden       " VertexIndexes = " 15; 25; 61; 51 " />
+                <Face Color = "clOlive        " VertexIndexes = " 15; 51; 39;  3 " />
+                <Face Color = "clPink         " VertexIndexes = " 16;  4;  5; 28 " />
+                <Face Color = "clFuchsia      " VertexIndexes = " 16; 28; 64; 52 " />
+                <Face Color = "clPurple       " VertexIndexes = " 16; 52; 40;  4 " />
+                <Face Color = "clDeepSky      " VertexIndexes = " 17;  5;  4; 29 " />
+                <Face Color = "clDodgerBlue   " VertexIndexes = " 17; 29; 65; 53 " />
+                <Face Color = "clSkyBlue      " VertexIndexes = " 17; 53; 41;  5 " />
+                <Face Color = "clCrimson      " VertexIndexes = " 18;  6;  7; 30 " />
+                <Face Color = "clPale         " VertexIndexes = " 18; 30; 66; 54 " />
+                <Face Color = "clOrchid       " VertexIndexes = " 18; 54; 42;  6 " />
+                <Face Color = "clSeaGreen     " VertexIndexes = " 19;  7;  6; 31 " />
+                <Face Color = "clAquaMarine   " VertexIndexes = " 19; 31; 67; 55 " />
+                <Face Color = "clDarkSeaGreen " VertexIndexes = " 19; 55; 43;  7 " />
+                <Face Color = "clChocolate    " VertexIndexes = " 20;  9; 10; 32 " />
+                <Face Color = "clPeru         " VertexIndexes = " 20; 32; 68; 57 " />
+                <Face Color = "clSandyBrown   " VertexIndexes = " 20; 57; 45;  9 " />
+                <Face Color = "clIndigo       " VertexIndexes = " 21;  8; 11; 33 " />
+                <Face Color = "clDarkSlate    " VertexIndexes = " 21; 33; 69; 56 " />
+                <Face Color = "clSlate        " VertexIndexes = " 21; 56; 44;  8 " />
+                <Face Color = "clMidnightBlue " VertexIndexes = " 22; 10;  9; 35 " />
+                <Face Color = "clMediumBlue   " VertexIndexes = " 22; 35; 71; 58 " />
+                <Face Color = "clRoyalBlue    " VertexIndexes = " 22; 58; 46; 10 " />
+                <Face Color = "clDarkRed      " VertexIndexes = " 23; 11;  8; 34 " />
+                <Face Color = "clOrangeRed    " VertexIndexes = " 23; 34; 70; 59 " />
+                <Face Color = "clTomato       " VertexIndexes = " 23; 59; 47; 11 " />
+                <Face Color = "clLightSea     " VertexIndexes = " 72; 60; 24; 64 " />
+                <Face Color = "clSteelBlue    " VertexIndexes = " 72; 64; 28; 68 " />
+                <Face Color = "clCornFower    " VertexIndexes = " 72; 68; 32; 60 " />
+                <Face Color = "clGoldSun      " VertexIndexes = " 73; 37; 49; 45 " />
+                <Face Color = "clGoldenRod    " VertexIndexes = " 73; 45; 57; 41 " />
+                <Face Color = "clDarkKhaki    " VertexIndexes = " 73; 41; 53; 37 " />
+                <Face Color = "clMediumViolet " VertexIndexes = " 74; 36; 48; 44 " />
+                <Face Color = "clDeepPink     " VertexIndexes = " 74; 44; 56; 40 " />
+                <Face Color = "clHotPink      " VertexIndexes = " 74; 40; 52; 36 " />
+                <Face Color = "clPowderBlue   " VertexIndexes = " 75; 61; 25; 65 " />
+                <Face Color = "clCadetBlue    " VertexIndexes = " 75; 65; 29; 69 " />
+                <Face Color = "clDarkTurquoise" VertexIndexes = " 75; 69; 33; 61 " />
+                <Face Color = "clYellowGreen  " VertexIndexes = " 76; 38; 50; 46 " />
+                <Face Color = "clOliveDrab    " VertexIndexes = " 76; 46; 58; 42 " />
+                <Face Color = "clLimeGgreen   " VertexIndexes = " 76; 42; 54; 38 " />
+                <Face Color = "clFirebrick    " VertexIndexes = " 77; 63; 27; 67 " />
+                <Face Color = "clDarkOrange   " VertexIndexes = " 77; 67; 31; 71 " />
+                <Face Color = "clSalmon       " VertexIndexes = " 77; 71; 35; 63 " />
+                <Face Color = "clLightSteel   " VertexIndexes = " 78; 62; 26; 66 " />
+                <Face Color = "clLavender     " VertexIndexes = " 78; 66; 30; 70 " />
+                <Face Color = "clHoneydew     " VertexIndexes = " 78; 70; 34; 62 " />
+                <Face Color = "clSilver       " VertexIndexes = " 79; 39; 51; 47 " />
+                <Face Color = "clGray         " VertexIndexes = " 79; 47; 59; 43 " />
+                <Face Color = "clBlack        " VertexIndexes = " 79; 43; 55; 39 " />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>
+

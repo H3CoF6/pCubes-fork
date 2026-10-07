@@ -1,0 +1,137 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Eight</Name>
+        <Menu>Other forms\2d\Eight</Menu>
+        <Inventor>Galen Ivanov</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-12-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6008</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00BB00';
+        Colors[1] := 'FF6000';
+        Colors[2] := '8800DD';
+        Colors[3] := '0000FF';
+        Colors[4] := 'FFFF00';
+        Colors[5] := 'FFFFFF';
+
+        K := 0.6;
+
+        D1 := K * 0.5031; // C29 / 2;
+        D2 := D1 * sqrt(2);
+                
+        DCut1 := D1 - K * 0.09;
+        DCut2 := D2 - K * 0.09;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D1" >
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D2" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        </Macro>
+
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = " Pi" />
+            <SplitByAxes/>
+        </Macro>
+
+        <Macro Name = "RemoveV" >
+            <Hide> <Plane NormVector = " 0;-1; 1" NormDistance = " D2" /> </Hide>
+            <Hide> <Plane NormVector = " 1;-1; 0" NormDistance = " D2" /> </Hide>
+            <Hide> <Plane NormVector = " 1; 0; 1" NormDistance = " D2" /> </Hide>
+            <RemoveAllVisible/>
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "CreateVariant" >
+            <ExecMacro MacroName = "AddSegment" Color = "Colors[0]" />
+            <Cut Axis = "0" From = "1" />
+            <Cut> <Plane NormVector = " 0;-1;-1*Z" NormDistance = " D2" /> </Cut>
+            <Cut> <Plane NormVector = " 1; 1; 0  " NormDistance = "-D2" /> </Cut>
+            <HideAll/>
+
+            <ExecMacro MacroName = "AddSegment" Color = "Colors[1]" />
+            <Cut Axis = "0" From = "1" />
+            <Cut Axis = "1" From = "1" />
+            <Cut> <Plane NormVector = " 0; 1; 1*Z" NormDistance = "-D2" /> </Cut>
+            <HideAll/>
+
+            <ExecMacro MacroName = "AddSegment" Color = "Colors[2]" />
+            <Cut Axis = "0" From = "1" />
+            <Cut> <Plane NormVector = " 0;-1; 1*Z" NormDistance = " D2" /> </Cut>
+            <Cut Axis = "1" To = "1" />
+            <HideAll/>
+
+            <ExecMacro MacroName = "AddSegment" Color = "Colors[3]" />
+            <Cut Axis = "0" From = "1" />
+            <Cut> <Plane NormVector = "-1;-1; 0  " NormDistance = " D2" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1;-1*Z" NormDistance = "-D2" /> </Cut>
+            <HideAll/>
+
+            <ExecMacro MacroName = "AddSegment" Color = "Colors[4]" />
+            <Cut Axis = "1" From = "1" />
+            <Cut Axis = "0"   To = "1" />
+            <Cut> <Plane NormVector = " 1; 1; 0  " NormDistance = "-D2" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1; 1*Z" NormDistance = "-D2" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1;-1*Z" NormDistance = "-D2" /> </Cut>
+            <HideAll/>
+
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[5]" />
+            <Cut Axis = "0" To = "1" />
+            <Cut Axis = "1" To = "1" />
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1;0" NormDistance = " DCut2" /> </Cut>
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1;0" NormDistance = " DCut1" /> </Cut>
+            <HideAll/>
+
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[5]" />
+            <Cut Axis = "0" To = "1" />
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1;0" NormDistance = "-DCut2" /> </Cut>
+            <Cut Color = "Colors[5]"  > <Plane NormVector = " 0;-1;0" NormDistance = " DCut1" /> </Cut>
+            <HideAll/>
+
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[5]" />
+            <Cut Axis = "1" To = "1" />
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1;0" NormDistance = "-DCut1" /> </Cut>
+            <Cut Color = "Colors[5]"  > <Plane NormVector = " 1;-1;0" NormDistance = " DCut2" /> </Cut>
+            <ShowAll/>
+
+            <SplitByAxes/>
+
+            <ExecMacro MacroName = "Unbandage" Repeat = "8" />
+            <Undo Repeat = "16" />
+
+            <ExecMacro MacroName = "RemoveV" />
+            <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+            <ExecMacro MacroName = "RemoveV" />
+            <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+            <ExecMacro MacroName = "RemoveV" />
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+            <ExecMacro MacroName = "RemoveV" />
+            <Undo Repeat = "3" />
+
+            <SaveSolvedState/>
+        </Macro>
+        <ExecMacro MacroName = "CreateVariant" Z = "-1" />
+        <RemoveAllVisible/>
+        <ExecMacro MacroName = "CreateVariant" Z = "1" />
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi / 8" />
+        <Turn NormVector = "1;0;0" Angle = "-Pi / 180 * 20" />
+        <Turn NormVector = "0;0;1" Angle = " Pi / 180 * 30" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup Morphix</Name>
+        <Menu>Other forms\Tetrahedron\Edge Turning\Mixup Morphix</Menu>
+        <Inventor>Zijian Wang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7929</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * (3 - sqrt(2)) / 7;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "Ax1" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "Ax2" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Turn Axis = "Ax3" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Undo/>
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+
+        <HideContaining Vectors = "Vx; Vy; Vz" />
+        <HideContaining Vectors = "Ex; Ey; Ez" />
+
+        <RemoveContaining Vector = " D;-W; D" />
+        <RemoveContaining Vector = "-D;-W;-D" />
+        <RemoveContaining Vector = "-D; W; D" />
+        <RemoveContaining Vector = " D; W;-D" />
+
+        <RemoveContaining Vector = " D; D;-W" />
+        <RemoveContaining Vector = "-D;-D;-W" />
+        <RemoveContaining Vector = " D;-D; W" />
+        <RemoveContaining Vector = "-D; D; W" />
+
+        <RemoveContaining Vector = "-W; D; D" />
+        <RemoveContaining Vector = "-W;-D;-D" />
+        <RemoveContaining Vector = " W; D;-D" />
+        <RemoveContaining Vector = " W;-D; D" />
+        <ShowAll/>
+    </Figure>
+</xml>

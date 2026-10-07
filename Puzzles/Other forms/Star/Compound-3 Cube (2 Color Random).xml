@@ -1,0 +1,100 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Compound-3 Cube (2 Color Random)</Name>
+        <Menu>Other forms\Star\Compound-3 Cube (2 Color Random)</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-03-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1783</Link>
+        <Link>https://youtube.com/watch?v=Ynn3A2jfPEs</Link>
+    </Interface>
+
+    <Script>
+        Colors0[0] := 'FFFFFF'; // clWhite
+        Colors1[0] := '0000A0'; // clBlue
+               
+        Colors0[1] := 'FF0000'; // clRed
+        Colors1[1] := '0000A0'; // clBlue
+               
+        Colors0[2] := 'FF6000'; // clOrange
+        Colors1[2] := '009600'; // clGreen
+               
+        Colors0[3] := 'FFFF00'; // clYellow
+        Colors1[3] := '009600'; // clGreen
+        
+        C := Random(4);
+        Color0 := Colors0[C];
+        Color1 := Colors1[C];
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        s2 := sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W; W" FixedLayers = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = "-1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-W; W" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0;  0" />
+        <Axis NormVector = " 0; 1;  0" />
+        <Axis NormVector = " 1; 1; s2" />
+        <Axis NormVector = "-1; 1; s2" />
+        <Axis NormVector = " 1;-1; s2" />
+        <Axis NormVector = "-1;-1; s2" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCube" >
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "W" />
+            <SplitByAxes/>
+            <HideContaining Vector = "Vx;Vy;Vz" />
+            <RemoveContaining Vector = " W; W; 0" />
+            <RemoveContaining Vector = "-W; W; 0" />
+            <RemoveContaining Vector = " W;-W; 0" />
+            <RemoveContaining Vector = "-W;-W; 0" />
+            <HideContaining Vector = "Ex; Ey; Ez" />
+            <RemoveAllVisible/>
+            <Turn NormVector = "s2; 0; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+
+        <Macro Name = "AddGray" >
+            <HideAll/>
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+            <SplitByAxes/>
+            <RemoveContaining Vector = "Vx;Vy;Vz" />
+            <Cut><Plane NormVector = "-1; 1; s2" NormDistance = "-W" /> </Cut>
+            <Cut><Plane NormVector = " 1;-1; s2" NormDistance = "-W" /> </Cut>
+            <Cut><Plane NormVector = "-1; 1;-s2" NormDistance = "-W" /> </Cut>
+            <Cut><Plane NormVector = " 1;-1;-s2" NormDistance = "-W" /> </Cut>
+            <Cut><Plane NormVector = "-1; 1;  0" NormDistance = "-W" /> </Cut>
+            <Cut><Plane NormVector = " 1;-1;  0" NormDistance = "-W" /> </Cut>
+            <RemoveContaining Vector = " 0; 0; KeepCenter" />
+            <Turn NormVector = "s2; 0; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+
+        <Macro Name = "AddPuzzle" >
+            <RemoveAllVisible/>
+            <ExecMacro MacroName = "AddCube" Color = "C1" />
+            <ExecMacro MacroName = "AddCube" Color = "C2" />
+            <ExecMacro MacroName = "AddCube" Color = "C3" />
+            <ExecMacro MacroName = "AddGray" KeepCenter = "0" />
+            <ExecMacro MacroName = "AddGray" KeepCenter = "0" />
+            <ExecMacro MacroName = "AddGray" KeepCenter = "1" />
+            <ShowAll/>
+            <SaveSolvedState/>
+        </Macro>
+
+        // three orientations for solving procedure
+        <ExecMacro MacroName = "AddPuzzle" C1 = "Color0" C2 = "Color0" C3 = "Color1" />
+        <ExecMacro MacroName = "AddPuzzle" C1 = "Color0" C2 = "Color1" C3 = "Color0" />
+        <ExecMacro MacroName = "AddPuzzle" C1 = "Color1" C2 = "Color0" C3 = "Color0" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

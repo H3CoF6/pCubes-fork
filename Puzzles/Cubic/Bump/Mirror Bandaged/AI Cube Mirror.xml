@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>AI Cube Mirror</Name>
+        <Menu>Cubic\Bandaged\Cube 4x4x4\AI Cube Mirror</Menu>
+        <Menu>Cubic\Bump\Bandaged\AI Cube Mirror</Menu>
+        <Inventor>Zigor Martinez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-03-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6102</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11007</Link>
+    </Interface>
+
+    <Script>
+        clBlue := '0000C8';
+        clRed  := 'C80000';
+
+        W := 0.5;
+        D := W / 2;
+
+        DX := W * 0.14;
+        DY := W * 0.1;
+        DZ :=-W * 0.04;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddColor" >
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "Color" />
+            <Split Axis = "0" From = "2" />
+            <Split Axis = "1" From = "2" />
+            <Split Axis = "2" From = "2" />
+            <HideContaining Vector = " D; D; D" />
+            <HideContaining Vector = " D;-D;-D" />
+            <HideContaining Vector = "-D; D;-D" />
+            <HideContaining Vector = "-D;-D; D" />
+        </Macro>
+
+        <Transfer Vector = " DX; DY; DZ" />
+
+        <ExecMacro MacroName = "AddColor" Color = "clBlue" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "AddColor" Color = "clRed" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Transfer Vector = "-DX;-DY;-DZ" />
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

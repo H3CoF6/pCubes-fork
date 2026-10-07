@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Morningstar Compy 2</Name>
+        <Menu>Other forms\Star\Escher's solid\Morningstar Compy 2</Menu>
+        <Inventor>Seth Holiday</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-07-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11809</Link>
+    </Interface>
+
+    <Script>
+        Color[ 0] := 'C80000'; // Red
+        Color[ 1] := '008000'; // Green
+        Color[ 2] := '00AFAF'; // Cyan
+        Color[ 3] := '800080'; // Purple
+        Color[ 4] := '0000C8'; // Blue
+        Color[ 5] := 'F0F0F0'; // White
+        Color[ 6] := 'FF800A'; // Orange
+        Color[ 7] := '00C800'; // Lime
+        Color[ 8] := '202020'; // Black
+        Color[ 9] := 'FF69B4'; // Pink
+        Color[10] := '000060'; // Navy
+        Color[11] := 'FFFF00'; // Yellow
+
+        W  := 0.5;
+        D := W / sqrt(3);
+        DCut := W / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = " 2*Pi/3; 0; Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "SplitEdges">
+            <Split Color2 = "Color[ i]"><Plane NormVector = " Ex[i]; Ey[i]; Ez[i]" NormDistance = "DCut" />  </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitEdges" i = "0" Repeat = "12" />
+
+        <Macro Name = "HideEdges">
+            <HideContaining Vector = " Ex[i] * 0.9; Ey[i] * 0.9; Ez[i] * 0.9" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideEdges" i = "0" Repeat = "12" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "2" Angle = " Pi / 3" />
+        <Turn Axis = "1" Layer = "2" Angle = " Pi / 3" />
+        <Turn Axis = "2" Layer = "2" Angle = " Pi / 3" />
+        <Turn Axis = "3" Layer = "2" Angle = " Pi / 3" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Undo Repeat = "4" />
+        <RemoveContaining Vectors = "Ex;Ey;Ez" />
+    </Figure>
+</xml>

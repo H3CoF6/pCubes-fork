@@ -1,0 +1,112 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Clover Cuboctahedron (Jumbling Only)</Name>
+        <Menu>Other forms\Sphere\Clover Cuboctahedron (Jumbling Only)</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7716</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF0000'; // Red
+        Colors[ 1] := 'FF6600'; // Orange
+        Colors[ 2] := '0066FF'; // Blue
+        Colors[ 3] := '00DD00'; // Green
+        Colors[ 4] := 'FFEE00'; // Yellow
+        Colors[ 5] := 'FFFFFF'; // White
+        Colors[ 6] := '1FAF00';
+        Colors[ 7] := '7F00FF';
+        Colors[ 8] := 'FFAF00';
+        Colors[ 9] := '0099FF';
+        Colors[10] := '00FF7F';
+        Colors[11] := 'AFFF00';
+        Colors[12] := 'FF007F';
+        Colors[13] := 'AF1F00';
+
+        K := 0.6;
+
+        W := K * 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        s2 := sqrt(2);
+        C0 := 1;
+        C1 := s2 + 1;
+        C2 := 2 * s2 + 1;
+
+        procedure AddNormal(bx, by, bz);
+        begin
+            nx[i] := bx;
+            ny[i] := by;
+            nz[i] := bz;
+            Inc(i);
+        end;
+
+        procedure AddNormals(ax, ay, az);
+        begin
+            AddNormal(-ax,-ay,-az);
+            AddNormal(-ax,-ay, az);
+            AddNormal(-ax, ay,-az);
+            AddNormal(-ax, ay, az);
+            AddNormal( ax,-ay,-az);
+            AddNormal( ax,-ay, az);
+            AddNormal( ax, ay,-az);
+            AddNormal( ax, ay, az);
+        end;
+
+        i := 0;
+        AddNormals(C0, C1, C2);
+        AddNormals(C0, C2, C1);
+        AddNormals(C1, C2, C0);
+        AddNormals(C1, C0, C2);
+        AddNormals(C2, C0, C1);
+        AddNormals(C2, C1, C0);
+
+        C20 := K * 0.71029864124335; // from _Macro_For_Cubic_Sphere
+        D := C20 * (C1 + C2) / sqrt(c0^2 + c1^2 + c2^2);
+
+        // All angles there: http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;p=358806
+        A0 := Arccos((-2 + s2)/12);     // 92.7980362
+        A1 := Arccos((-6 + s2)/ 8);     // 124.9753039
+        A2 := Arccos((-1 - 6 * s2)/12); // 142.2266599; A1 + A2 + A3 = 2 * Pi;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-A2;-A1;-A0; 0; A0; A1; A2" PlaneDistances = "D" NormVectors = "nx; ny; nz" />
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Macro Name = "SplitZero">
+            <Split><Plane NormVector = " 1; 1; 1" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = "-1;-1; 1" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = "-1; 1;-1" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 1;-1;-1" NormDistance = "0" /></Split>
+        </Macro>
+        <ExecMacro MacroName = "SplitZero" />
+
+        <Macro Name = "RemoveCorners">
+            <RemoveContaining Vector = "Vx[id]; Vy[id]; Vz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCorners" id = "0" Repeat = "8" />
+
+        <HideAll/>
+        <Macro Name = "AddSegment" >
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[c]" />
+            <ExecMacro MacroName = "SplitZero" />
+            <HideContaining Vector = "Vx[v]; Vy[v]; Vz[v]" />
+            <RemoveAllVisible/>
+            <Script>Inc(c);Inc(v)</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" c = "6" v = "0" Repeat = "8" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

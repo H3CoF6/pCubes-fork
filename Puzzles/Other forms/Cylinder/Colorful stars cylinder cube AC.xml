@@ -1,0 +1,129 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Colorful stars cylinder cube AC</Name>
+        <Menu>Other forms\Cylinder\Colorful stars cylinder cube AC</Menu>
+        <Inventor>YJ</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8051</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?t=35825</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'CC0000'; // Red
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := '0000EE'; // Blue
+        Colors[3] := 'FF800A'; // Orange
+        Colors[4] := '009900'; // Green
+        Colors[5] := 'FFFFFF'; // White
+        Colors[6] := '55CCFF'; // Cyan
+
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        R := 0.6;
+        R2 := R * 0.6;
+        H := R * 5/6;
+        H2 := H * 1.002;
+
+        sAngle := 2*Pi / 5;
+        for i := 0 to 4 do begin
+            ax[i] := R2 * cos(sAngle * i);
+            ay[i] := R2 * sin(sAngle * i);
+        end;
+
+        D := R * cos(2*Pi/5);
+
+        N := 60;
+        N5 := N div 5;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2*Pi / N * i);
+            y[i] := R * sin(2*Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D" NormVectors = " ax; ay; 0" />
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "-H/3; H/3" NormVectors = " 0; 0; 1" />
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "AddSectorTop" >
+            <Face Color = "Colors[c]" VertexIndexes = "N5 * (c + 1) mod N; N * 2; FromTo( c * N5, (c + 1) * N5 - 1)" InvisibleEdges = "3" />
+            <Script>Inc(c);</Script>
+        </Macro>
+
+        <Macro Name = "AddSectorBottom" >
+            <Face Color = "Colors[c]" VertexIndexes = "N5 * c + N; N * 2 + 1; N5 * (c + 1) mod N + N; FromTo( N5 * (c + 1) + N - 1, N5 * c + N + 1)" InvisibleEdges = "3" />
+            <Script>Inc(c);</Script>
+        </Macro>
+
+        <Turn NormVector = "0;0;1" Angle = " sAngle / 2" />
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "0; 0; H" />
+            <Vertices Vectors = "0; 0;-H" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" Color = "Colors[0]" Repeat = "N5" i = "0" />
+                <ExecMacro MacroName = "AddFace" Color = "Colors[1]" Repeat = "N5" />
+                <ExecMacro MacroName = "AddFace" Color = "Colors[2]" Repeat = "N5" />
+                <ExecMacro MacroName = "AddFace" Color = "Colors[3]" Repeat = "N5" />
+                <ExecMacro MacroName = "AddFace" Color = "Colors[4]" Repeat = "N5" />
+
+                <ExecMacro MacroName = "AddSectorTop" c = "0" Repeat = "5" />
+                <ExecMacro MacroName = "AddSectorBottom" c = "0" Repeat = "5" />
+            </Faces>
+        </Part>
+
+        <Turn NormVector = "0;0;1" Angle = " sAngle / 2" />
+
+        <SplitByAxes/>
+
+        // cut central invisible part
+        <Macro Name = "Hide" >
+            <Hide Axis = "i" From = "1" /> 
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" i = "0" Repeat = "5" />
+        <Cut><Plane NormVector = " 0; 0; 1" NormDistance = "-H * 0.999" /></Cut>
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "-H * 0.999" /></Cut>
+        <HideAll/>
+
+        <Circle Color = "Colors[6]" Radius = "R" Center = " 0; 0;-H2"/>
+        <Circle Color = "Colors[5]" Radius = "R" Center = " 0; 0; H2"/>
+        <SplitByAxes/>
+
+        <Macro Name = "RemovePiece" >
+            <RemoveContaining Vector = "-R2; 0;-H2" />
+            <RemoveContaining Vector = "-R2; 0; H2" />
+            <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-R2" /></Cut>
+            <Turn NormVector = "0;0;1" Angle = "sAngle" />
+        </Macro>
+        <ExecMacro MacroName = "RemovePiece" Repeat = "5" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

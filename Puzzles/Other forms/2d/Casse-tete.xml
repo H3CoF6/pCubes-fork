@@ -1,0 +1,179 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Casse-tête</Name>
+        <Menu>Other forms\2d\Casse-tête</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-10-02</Added>
+        <Link>https://twistypuzzles.com/forum/viewtopic.php?t=39603</Link>
+    </Interface>
+
+    <Script>
+        clGreen  := '50A020';
+        clYellow := 'FFFF00';
+        clRed    := 'FF0000';
+        clBlue   := '000096';
+        clBlack  := '333333';
+
+        K := 0.6;
+
+        ang := 2 * Pi / 7;
+        s2  := sqrt(2);
+<!--
+//        a := sin(Pi / 14) ^ 2; // axis 0 x
+//        b := cos(Pi / 14) ^ 2; // axis 0 y
+//        c := sin(Pi / 7) / s2; // axis 0 z
+//        d := cos(Pi / 7); // axis 3 y
+//        e := sin(Pi / 7); // axis 3 z
+
+//        f := 1 - s2; // face normal y
+//        g := (s2 - 1) * (1 - sin(3 * Pi / 14)) / cos(3 * Pi / 14); // face normal z   (1;f;g) is parallel to (PX,PY,PZ)
+
+//        h := D2 * sqrt(1 + f^2 + g^2); // scale factor
+
+//        s := (4 - 2 * s2) / (sin(3 * Pi / 14) + 7 - 4 * s2); // parameter
+//        t := 1 - 1 / s2 + (1 + 1 / s2) * sin(3 * Pi / 14); // inverse of parameter.  t = 2 / s - 2
+
+//        D1 := h * (1 + s * (1 / s2 - 1)); // axes cut depth
+//        D3 := h * (1 + (1 / s2 - 1) / t); // back side cut depth
+//        D4 := h * (1 + 1 / s2) - D1;      // facet cit depth
+-->
+
+        include 'Figures\Scripts\Vectors.inc';
+
+        // calc axes
+        Ax[1] := 1/s2; Ay[1] :=-1/s2; Az[1] := 0;
+        Ax[2] := 1;    Ay[2] := 0;    Az[2] := 0;
+
+        VectorRotatePoint( Ax[2], Ay[2], Az[2],  Ax[1], Ay[1], Az[1],  2*Pi * 3 / 7, True); // Axis 0
+        Ax[0] := Ans_X; Ay[0] := Ans_Y; Az[0] := Ans_Z;
+        VectorRotatePoint( Ax[1], Ay[1], Az[1],  Ax[2], Ay[2], Az[2], -2*Pi * 3 / 7, True); // Axis 3
+        Ax[3] := Ans_X; Ay[3] := Ans_Y; Az[3] := Ans_Z;
+
+        // calc axis (MX, MY, MZ) and angle of global symmetry
+        VectorNormalToPlane( Ax[0], Ay[0], Az[0], Ax[1], Ay[1], Az[1], Ax[2], Ay[2], Az[2]);
+        MX := Ans_X; MY := Ans_Y; MZ := Ans_Z;
+        GAngle := VectorRotatingAngle( MX, MY, MZ, Ax[2], Ay[2], Az[2],  Ax[1], Ay[1], Az[1])); // near but not equal 2*Pi/7
+
+        procedure CalcSymmetricVector(Angl); // find normal vector that after turning around axis 1 on Angle then around axis 2 on Angle returns back to itself
+        begin
+            VectorRotatePoint( 0, 0, 1,  1, 0, 0, -Angl / 2, False);
+            X1 := Ans_X; Y1 := Ans_Y; Z1 := Ans_Z;
+            VectorRotatePoint( 0, 0, 1,  1,-1, 0,  Angl / 2, True);
+            X2 := Ans_X; Y2 := Ans_Y; Z2 := Ans_Z;
+            VectorMultiply( X1, Y1, Z1,  X2, Y2, Z2);
+            VectorNormalize( Ans_X, Ans_Y, Ans_Z);
+        end;
+
+        // calc side's cut plane
+        CalcSymmetricVector( 2*Pi / 7);
+        PX := Ans_X; PY := Ans_Y; PZ := Ans_Z; // normalized vector where red and yellow region touch (to find point: * D2)
+
+        D1 := PX * K; // axes cut depth
+
+        D2 := K; // face cut depth
+
+        CalcSymmetricVector( 4*Pi / 7);
+        D3 := Ans_X * K / VectorScalarMultiply( PX, PY, PZ,  Ans_X, Ans_Y, Ans_Z); // back side cut depth
+
+        VectorRotatePoint( PX, PY, PZ,  1, 0, 0,  Pi / 7, False);
+        D4 := K * (PX - Ans_Y / cos(Pi / 7)) / s2; // facet cit depth
+    </Script>
+
+    <Axes TurningAngles = " 0; ang" PlaneDistances = "D1" NormVectors = "Ax;Ay;Az" />
+
+    <Figure>
+        // definitions
+        <Macro Name = "M"  > <Turn NormVector = " MX; MY; MZ" Angle = "-GAngle" /> </Macro>
+        <Macro Name = "M'" > <Turn NormVector = " MX; MY; MZ" Angle = " GAngle" /> </Macro>
+
+        <Macro Name = "CutPart">
+            <Cut Color = "Color" > <Plane NormVector = "-PX;-PY;-PZ" NormDistance = "-D2" /> </Cut>
+            <Turn NormVector = "1;0;0" Angle = "2*Pi / 7" />
+        </Macro>
+
+        // black base
+
+        <Macro Name = "BasePart">
+            <HideAll/>
+            <LoadFrom File = "Figures\Cube.xml" W = "K" />
+            <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-D1" /> </Cut>
+            <ExecMacro MacroName = "CutPart" Color = "clBlack" Repeat = "7" />
+        </Macro>
+
+        <Macro Name = "CutLeft">
+            <Cut Color = "-2" InvisibleEdges = "-1" ><Plane NormVector = "-1; 1; 0" NormDistance = "-D3"  /></Cut>
+        </Macro>
+        <Macro Name = "CutRight">
+            <Turn NormVector = "1; 0; 0" Angle = " 6*Pi/7" />
+            <Cut Color = "-2" InvisibleEdges = "-1" ><Plane NormVector = "-1; 1; 0" NormDistance = "-D3"  /></Cut  >
+            <Turn NormVector = "1; 0; 0" Angle = "-6*Pi/7" />
+        </Macro>
+        <Macro Name = "CutBack">
+            <Cut Color = "clBlack" > <Plane NormVector = " 1; 0; 0" NormDistance = " D3" /> </Cut>
+        </Macro>
+
+        <Macro Name = "StickPart">
+            <HideAll/>
+            <ExecMacro MacroName = "BasePart " />
+            <Cut                                    > <Plane NormVector = "-1; 1; 0" NormDistance = "-D1" /> </Cut>
+            <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 1;-1; 0" NormDistance = " D3" /> </Cut>
+            <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 1; 0; 0" NormDistance = " D3" /> </Cut>
+        </Macro>
+
+        <ExecMacro MacroName = "M' M' BasePart         CutRight CutBack" />
+        <ExecMacro MacroName = "M     BasePart CutLeft CutRight CutBack StickPart" />
+        <ExecMacro MacroName = "M     BasePart CutLeft CutRight CutBack StickPart" />
+        <ExecMacro MacroName = "M     BasePart CutLeft          CutBack StickPart M'" />
+
+        // color parts
+
+        <Macro Name = "Cut1">
+            <Cut> <Plane NormVector = "-1; 1; 0" NormDistance = "-D1" /> </Cut>
+            <Turn NormVector = "1;0;0" Angle = "2*Pi / 7" />
+        </Macro>
+        <Macro Name = "Split1">
+            <Split> <Plane NormVector = "-1; 1; 0" NormDistance = "-D1" /> </Split>
+            <Turn NormVector = "1;0;0" Angle = "2*Pi / 7" />
+        </Macro>
+
+        <Macro Name = "ColorPart">
+            <HideAll/>
+            <LoadFrom File = "Figures\Cube.xml" W = "K" />
+            <Cut Color = "Color" > <Plane NormVector = "-1; 0; 0" NormDistance = "-D4" /> </Cut>
+            <Cut                 > <Plane NormVector = " 1; 0; 0" NormDistance = " D1" /> </Cut>
+            <ExecMacro MacroName = "CutPart" Repeat = "7" />
+            <ExecMacro MacroName = "Cut1 Split1 Split1 Cut1 Split1 Split1 Split1"/>
+        </Macro>
+
+        <ExecMacro MacroName = "M' M' ColorPart"    Color = "clBlue"   />
+        <ExecMacro MacroName = "M     ColorPart"    Color = "clRed"    />
+        <ExecMacro MacroName = "M     ColorPart"    Color = "clYellow" />
+        <ExecMacro MacroName = "M     ColorPart M'" Color = "clGreen"  />
+
+        // black pieces
+
+        <Macro Name = "BlackPart" >
+            <HideAll/>
+            <LoadFrom File = "Figures\Cube.xml" W = "K" />
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = " D1" /> </Cut>
+            <ExecMacro  Color = "clBlack" MacroName = "CutPart" Repeat = "7" />
+            <Cut> <Plane NormVector = " 1;-1; 0" NormDistance = " D1" /> </Cut>
+        </Macro>
+
+        <ExecMacro MacroName = "M' M' BlackPart M BlackPart M BlackPart M BlackPart M BlackPart M' M'" />
+
+        <ShowAll/>
+        <SaveSolvedState/>
+
+        <Turn NormVector = " 0; 0; 1" Angle = "-3*Pi/8" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = " 1; 0; 0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = " 0; 0; 1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,78 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circus</Name>
+        <Aliases>Square-1 Mirror Ball</Aliases>
+        <Menu>Other forms\Sphere\Circus</Menu>
+        <Menu>Other forms\Square-1\Circus</Menu>
+        <Inventor>JoseRo, Zigor Martinez</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-25</Added>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'CCCCCC';
+        Colors[1] := '8800EE';
+        Colors[2] := 'AAFF33';
+
+        K := 0.6;
+
+        D := K * 0.175;
+
+        DX := 0;
+        DY := K * 0.125;
+        DZ :=-K * 0.075; 
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "D;-D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSphere">
+            <Transfer Vector = " DX; DY; DZ" />
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Transfer Vector = "-DX;-DY;-DZ" />
+        </Macro>
+
+        <Macro Name = "CutSectors">
+            <Split Color1 = "Color" Color2 = "Color"><Plane NormVector = "1;0;0" NormDistance = "0" /></Split>
+            <Split Color1 = "Color" Color2 = "Color"><Plane NormVector = "0;1;0" NormDistance = "0" /></Split>
+            <Turn NormVector = "0;0;1" Angle = " Angle" />
+            <Split Color1 = "Color" Color2 = "Color"><Plane NormVector = "1;0;0" NormDistance = "0" /></Split>
+            <Split Color1 = "Color" Color2 = "Color"><Plane NormVector = "0;1;0" NormDistance = "0" /></Split>
+            <Turn NormVector = "0;0;1" Angle = "-Angle / 2" />
+            <RemoveContaining Vector = "0; -K/5; 0" />
+            <RemoveContaining Vector = "0;  K/5; 0" />
+            <RemoveContaining Vector = "-K/5; 0; 0" />
+            <RemoveContaining Vector = " K/5; 0; 0" />
+            <Turn NormVector = "0;0;1" Angle = "-Angle / 2" />
+
+            <Split Axis = "0" From = "1" Color2 = "Color"/>
+            <Split Axis = "0" From = "2" Color1 = "Color"/>
+            <RemoveContaining Vector = "0;0;0" />
+            <HideAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSphere" Color = "Colors[1]" />
+        <ExecMacro MacroName = "CutSectors" Angle = "-Pi/6" />
+
+        <ExecMacro MacroName = "AddSphere" Color = "Colors[2]" />
+        <ExecMacro MacroName = "CutSectors" Angle = "Pi/3" />
+
+        <ExecMacro MacroName = "AddSphere" Color = "Colors[0]" />
+        <Cut Color = "Colors[0]" Axis = "0" From = "1" To = "2" />
+        <Split Axis = "1" From = "1" Color1 = "Colors[0]" Color2 = "Colors[0]" />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

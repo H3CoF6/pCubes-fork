@@ -1,0 +1,128 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 3x3x3 Half Moon 3</Name>
+        <Menu>Cubic\Crazy\Crazy 3x3x3\Half Moon\Half Moon 3</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-06-10</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        R := W * 0.8;
+        Delta := 1.001;
+        WC := W * Delta;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W;-D; D; W" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script>W := WC;</Script>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+
+        <Hide Axis = "1" From = "3" />
+        <Cut Color = "Colors[5]" Axis = "2" To = "4" />
+        <ShowAll/>
+
+        <Hide Axis = "0" To = "1" />
+        <Cut Color = "Colors[2]" Axis = "1" From = "1" />
+        <ShowAll/>
+
+        <Hide Axis = "2" To = "1" />
+        <Cut Color = "Colors[1]" Axis = "0" To = "4" />
+
+        <HideAll/>
+        <Circle Radius = "R" Color =   "clBlue" Center = "  0;-WC;  0" />
+        <Cut  Axis = "0" From = "2" />
+        <SplitByAxes/>
+
+        <HideAll/>
+        <Circle Radius = "R" Color = "clOrange" Center = " WC;  0;  0" />
+        <Cut  Axis = "2" From = "2" />
+        <SplitByAxes/>
+
+        <HideAll/>
+        <Circle Radius = "R" Color =  "clWhite" Center = "  0;  0; WC" />
+        <Cut  Axis = "1" To = "3" />
+        <SplitByAxes/>
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+
+        <Connect Axis = "0" Layers = "2;4" />
+        <Connect Axis = "1" Layers = "0;2" />
+        <Connect Axis = "2" Layers = "2;4" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Cross" File = "Puzzles\Cubic\Crazy\Crazy 3x3x3\CrossFace.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Cross = 27,0,0, 34,0,0, 41,0,0
+    </SetTextures>
+
+    <Macros>
+        <Macro Name = "L"  > <Turn Axis = "0" Layer = "1" Angle = " Pi/2" /> </Macro>
+        <Macro Name = "L2" > <Turn Axis = "0" Layer = "1" Angle = " Pi  " /> </Macro>
+        <Macro Name = "L'" > <Turn Axis = "0" Layer = "1" Angle = "-Pi/2" /> </Macro>
+        <Macro Name = "R"  > <Turn Axis = "0" Layer = "3" Angle = "-Pi/2" /> </Macro>
+        <Macro Name = "R2" > <Turn Axis = "0" Layer = "3" Angle = " Pi  " /> </Macro>
+        <Macro Name = "R'" > <Turn Axis = "0" Layer = "3" Angle = " Pi/2" /> </Macro>
+
+        <Macro Name = "F"  > <Turn Axis = "1" Layer = "1" Angle = " Pi/2" /> </Macro>
+        <Macro Name = "F2" > <Turn Axis = "1" Layer = "1" Angle = " Pi  " /> </Macro>
+        <Macro Name = "F'" > <Turn Axis = "1" Layer = "1" Angle = "-Pi/2" /> </Macro>
+        <Macro Name = "B"  > <Turn Axis = "1" Layer = "3" Angle = "-Pi/2" /> </Macro>
+        <Macro Name = "B2" > <Turn Axis = "1" Layer = "3" Angle = " Pi  " /> </Macro>
+        <Macro Name = "B'" > <Turn Axis = "1" Layer = "3" Angle = " Pi/2" /> </Macro>
+
+        <Macro Name = "D"  > <Turn Axis = "2" Layer = "1" Angle = " Pi/2" /> </Macro>
+        <Macro Name = "D2" > <Turn Axis = "2" Layer = "1" Angle = " Pi  " /> </Macro>
+        <Macro Name = "D'" > <Turn Axis = "2" Layer = "1" Angle = "-Pi/2" /> </Macro>
+        <Macro Name = "U"  > <Turn Axis = "2" Layer = "3" Angle = "-Pi/2" /> </Macro>
+        <Macro Name = "U2" > <Turn Axis = "2" Layer = "3" Angle = " Pi  " /> </Macro>
+        <Macro Name = "U'" > <Turn Axis = "2" Layer = "3" Angle = " Pi/2" /> </Macro>
+
+        <!-- Scramble macro -->
+        <Macro Name = "UU" >
+            <ExecMacro MacroName = " D B U B2 L2 B2 D' L2 B2 L2 D B2 L2 B2 U' L' D2 L B' D B D L' D' L U' L' D2 L B' D B D L' D' L B2 L2 B2 D' L2 B2 L2 D B2 L2 B2 U' B' D' " />
+        </Macro>
+        <Macro Name = "FF" >
+            <ExecMacro MacroName = " B L F L2 D2 L2 B' D2 L2 D2 B L2 D2 L2 F' D' B2 D L' B L B D' B' D F' D' B2 D L' B L B D' B' D L2 D2 L2 B' D2 L2 D2 B L2 D2 L2 F' L' B' " />
+        </Macro>
+        <Macro Name = "RR" >
+            <ExecMacro MacroName = " L D R D2 B2 D2 L' B2 D2 B2 L D2 B2 D2 R' B' L2 B D' L D L B' L' B R' B' L2 B D' L D L B' L' B D2 B2 D2 L' B2 D2 B2 L D2 B2 D2 R' D' L' " />
+        </Macro>
+
+        <Macro Name = "Sc" >
+            <ExecMacro MacroName = "UU" Repeat = "Random(3)" />
+            <ExecMacro MacroName = "FF" Repeat = "Random(3)" />
+            <ExecMacro MacroName = "RR" Repeat = "Random(3)" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(2) * 2 + 1" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc" Repeat = "40" />
+            <ExecMacro MacroName = "D B" />
+            <ExecMacro MacroName = "U" Repeat = "Random(3) + 1" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+</xml>

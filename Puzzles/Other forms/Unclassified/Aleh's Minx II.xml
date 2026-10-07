@@ -1,0 +1,133 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Aleh's Minx II</Name>
+        <Menu>Other forms\Unclassified\Aleh's Minx II</Menu>
+        <Inventor>Aleh Hladzilin</Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2018-03-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3613</Link>
+    </Interface>
+
+    <Script>
+        // Hexagons
+        Colors[ 0] := '008000'; // clGreen;
+        Colors[ 1] := '0000A0'; // clBlue;
+
+        // Regular pentagons
+        Colors[ 2] := 'FFFF00'; // clYellow;
+        Colors[ 3] := 'FF6000'; // clOrange;
+        Colors[ 4] := 'FF0000'; // clRed;
+        Colors[ 5] := 'FFFFFF'; // clWhite;
+
+        // Non turning faces
+        Colors[ 6] := '808000'; // clOlive;
+        Colors[ 7] := '00DCB4'; // clCyan;
+        Colors[ 8] := '2828FF'; // clLightBlue;
+        Colors[ 9] := 'FF0080'; // clLightViolett;
+        Colors[10] := '00FF00'; // clLightGreen;
+        Colors[11] := '800000'; // clBrown;
+        Colors[12] := '800080'; // clViolett;
+        Colors[13] := 'AAAAAA'; // clGray;
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        C00 := R * sqrt((3 -     sqrt(5)) / 30); // 0.15957568972124;
+        C01 := R * sqrt((5 - 2 * sqrt(5)) / 15); // 0.18759247408508; // -Vy[2]
+        C03 := R * sqrt((5 -     sqrt(5)) / 30); // 0.30353099910335; // -Vy[7]
+        C04 := R * sqrt((3 -     sqrt(5)) /  6); // 0.35682208977309; // -Vx[0]
+        C05 := R * sqrt((5 +     sqrt(5)) / 30); // 0.49112347318842; //  Vy[0]
+        C07 := R * sqrt((5 + 2 * sqrt(5)) / 15); // 0.79465447229177; //  Vy[5]
+        C08 := R * sqrt((5 + 2 * sqrt(5)) / 12); // 0.88845070933431;
+        C09 := R * sqrt((3 +     sqrt(5)) /  6); // 0.93417235896272; //  Vx[7]
+
+        C06 := R / sqrt(3);                      // 0.57735026918963; //  Vx[2]=-Vx[5]
+        C02 := R / 2 / sqrt(3);                  // 0.28867513459481;
+
+        D := (Rsin + R2sin) / 2 + R * 0.03;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " Cx[0]; Cy[0]; Cz[0]" />
+    </Axes>
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " Cy[2]; Cx[2]; Cz[2]" />
+        <Axis NormVector = "-Cy[2];-Cx[2]; Cz[2]" />
+        <Axis NormVector = "-Cy[5];-Cx[5];-Cz[5]" />
+        <Axis NormVector = " Cy[5]; Cx[5];-Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " C05;-C04;-C07" />
+                <Add Vector = "-C01;-C06;-C07" />
+                <Add Vector = "-C05;-C00;-C07" />
+                <Add Vector = "-C05; C04;-C07" />
+                <Add Vector = " C01; C06;-C07" />
+                <Add Vector = " C05; C00;-C07" />
+
+                <Add Vector = " C01;-C06; C07" />
+                <Add Vector = " C05;-C00; C07" />
+                <Add Vector = " C05; C04; C07" />
+                <Add Vector = "-C01; C06; C07" />
+                <Add Vector = "-C05; C00; C07" />
+                <Add Vector = "-C05;-C04; C07" />
+
+                <Add Vector = " C07;-C06;-C01" />
+                <Add Vector = " C03;-C09; C01" />
+                <Add Vector = "-C03;-C09;-C01" />
+                <Add Vector = "-C07; C06;-C01" />
+                <Add Vector = "-C03; C09; C01" />
+                <Add Vector = " C03; C09;-C01" />
+                <Add Vector = "-C07;-C06; C01" />
+                <Add Vector = " C07; C06; C01" />
+                <Add Vector = "-C08;-C02;   0" />
+                <Add Vector = "-C08; C02;   0" />
+                <Add Vector = " C08; C02;   0" />
+                <Add Vector = " C08;-C02;   0" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                <Face Color = "Colors[ 1]" VertexIndexes = " 6; 7; 8; 9;10;11" />
+
+                <Face Color = "Colors[ 2]" VertexIndexes = " 1; 0;12;13;14" />
+                <Face Color = "Colors[ 3]" VertexIndexes = " 4; 3;15;16;17" />
+                <Face Color = "Colors[ 4]" VertexIndexes = " 6;11;18;14;13" />
+                <Face Color = "Colors[ 5]" VertexIndexes = " 9; 8;19;17;16" />
+
+                <Face Color = "Colors[ 6]" VertexIndexes = " 3; 2;20;21;15" />
+                <Face Color = "Colors[ 7]" VertexIndexes = " 5; 4;17;19;22" />
+                <Face Color = "Colors[ 8]" VertexIndexes = " 2; 1;14;18;20" />
+                <Face Color = "Colors[ 9]" VertexIndexes = " 0; 5;22;23;12" />
+                <Face Color = "Colors[10]" VertexIndexes = "10; 9;16;15;21" />
+                <Face Color = "Colors[11]" VertexIndexes = " 8; 7;23;22;19" />
+                <Face Color = "Colors[12]" VertexIndexes = "11;10;21;20;18" />
+                <Face Color = "Colors[13]" VertexIndexes = " 7; 6;13;12;23" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "1" Layer = "1" Angle = "sAngle" />
+        <Turn Axis = "2" Layer = "1" Angle = "sAngle" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "sAngle" />
+        <Turn Axis = "2" Layer = "1" Angle = "sAngle" />
+        <SplitByAxes/>
+        <Undo Repeat = "4" />
+
+        <Turn Axis = "3" Layer = "1" Angle = "sAngle" />
+        <Turn Axis = "4" Layer = "1" Angle = "sAngle" />
+        <SplitByAxes/>
+        <Turn Axis = "3" Layer = "1" Angle = "sAngle" />
+        <Turn Axis = "4" Layer = "1" Angle = "sAngle" />
+        <SplitByAxes/>
+        <Undo Repeat = "4" />
+    </Figure>
+
+</xml>

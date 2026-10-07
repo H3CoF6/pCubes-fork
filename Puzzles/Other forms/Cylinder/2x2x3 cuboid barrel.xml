@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2x3 cuboid barrel</Name>
+        <Menu>Other forms\Cylinder\2x2x3 cuboid barrel</Menu>
+        <Inventor>Alberto Costa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6260</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+
+        R := 0.4;
+        H := 0.5;
+        D := H / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <Cylinder Radius = "R" Color = "Color" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Color " />
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Color" />
+            </Cylinder>
+            <Cut> <Plane NormVector = " 1; 1; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 1;-1; 0" /> </Cut>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+            <HideAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" Color = "clRed" />
+        <ExecMacro MacroName = "AddSegment" Color = "clBlue" />
+        <ExecMacro MacroName = "AddSegment" Color = "clOrange" />
+        <ExecMacro MacroName = "AddSegment" Color = "clGreen" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

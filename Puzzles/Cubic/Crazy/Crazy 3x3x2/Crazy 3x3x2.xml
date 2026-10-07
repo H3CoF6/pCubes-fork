@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 3x3x2</Name>
+        <Class>TCrazy332</Class>
+        <Menu>Cubic\Crazy\Crazy 3x3x2\Crazy 3x3x2</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2665</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W * 2 / 3;
+        D := W / 3*0.5;
+
+        R := W * 0.8;
+        WC := WZ * 1.004;
+        DCut := W * 1.5; // mark "lock" cube
+    </Script>
+
+    <!-- enabled (by Class TCrazy332), first is disabled when special turn occur via 2nd axis and vice versa -->
+    <Axes TurningAngles = "Pi;Pi/2;Pi" PlaneDistances = "-D; D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <!-- enabled (by Class TCrazy332), it's disabled when special turn occur -->
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-WZ; -D; D; WZ" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <!-- disabled (by Class TCrazy332), it's enabled when special turn occur -->
+    <Axes TurningAngles = "Pi" PlaneDistances = " D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Cut><Plane NormVector = "-1;-1; 1" NormDistance = "-DCut" /></Cut> <!-- mark "lock" cube -->
+
+        <!-- cutting to assign "0" to block cube -->
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Split>
+
+        <Circle Radius = "R" Color = "clWhite " Center =  "0; 0; WC" />
+        <Circle Radius = "R" Color = "clYellow" Center =  "0; 0;-WC" />
+
+        <SplitByAxes/>
+
+        <Hide Axis = "2" Layer = "2" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+            WZ := D;
+        </Script>
+
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <ShowAll/>
+
+        <Connect Axis = "2" Layers = "0;1;2;4" />
+    </Figure>
+</xml>

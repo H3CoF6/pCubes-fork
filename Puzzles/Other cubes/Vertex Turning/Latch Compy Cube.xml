@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Latch Compy Cube</Name>
+        <Menu>Other cubes\Vertex Turning\Latch Compy Cube</Menu>
+        <Class>TLatch</Class>
+        <Inventor>Justin Costa</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-09-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10364</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * 2 * sqrt(3) / 5;
+        DCut := (W * sqrt(3) * 4 / 3 - D) * 0.999;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "1; 1; 1" />
+        <Axis NormVector = "1; 1;-1" />
+        <Axis NormVector = "1;-1; 1" />
+        <Axis NormVector = "1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Vx;Vy;Vz" />
+
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "-DCut" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <ShowAll/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Lock CW"  />
+        <Texture Name = "Lock CCW" />
+        <Texture Name = "LockCW"   File = "Textures\Latch Compy Cube\LockCW.vec"  />
+        <Texture Name = "LockCCW"  File = "Textures\Latch Compy Cube\LockCCW.vec" />
+        <Texture Name = "Edge"     File = "Textures\Latch Compy Cube\Edge.vec"    />
+        <Texture Name = "Corner"   File = "Textures\Latch Compy Cube\Corner.vec"  />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+
+        <!-- red side -->
+        LockCW   = 0,0,0, 4,0,0
+        Edge     = 1,0,0, 7,0,0
+        Corner   = 5,0,0, 9,0,0, 8,0,0, 2,0,0
+
+        <!-- white side -->
+        LockCW   = 17,1,0, 19,1,2
+        Edge     =  4,1,0,  6,1,0
+        Corner   =  9,2,0, 18,2,0, 12,2,1, 5,2,0
+
+        <!-- blue side -->
+        LockCW   = 6,0,0, 13,1,2
+        Edge     = 0,1,0,  3,0,0
+        Corner   = 2,1,0,  5,1,0,  11,1,1,  12,1,0
+
+        <!-- orange side -->
+        LockCCW  = 16,0,2, 20,0,2
+        Edge     = 13,0,0, 19,0,0
+        Corner   = 15,0,0, 11,0,0, 12,0,0, 18,0,0
+
+        <!-- yellow side -->
+        LockCCW  =  1,1,0,  3,1,0
+        Edge     = 14,1,2, 16,1,0
+        Corner   = 15,2,0,  8,2,0, 2,2,0, 11,2,1
+
+        <!-- green side -->
+        LockCCW  =  7,1,0, 14,0,0
+        Edge     = 17,0,2, 20,1,0
+        Corner   = 15,1,1,  8,1,0, 9,1,0, 18,1,0
+
+        Lock CW  = 1,5,0, 3,4,0, 7,5,0, 14,4,0, 16,5,0, 20,5,0
+        Lock CCW = 0,4,0, 4,4,0, 6,5,0, 13,4,0, 17,5,0, 19,4,0
+    </SetTextures>
+</xml>

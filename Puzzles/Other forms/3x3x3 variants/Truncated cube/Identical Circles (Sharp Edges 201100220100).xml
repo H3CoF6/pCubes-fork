@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Identical Circles</Name>
+        <Aliases>Sharp Edges 201100220100</Aliases>
+        <Menu>Other forms\3x3x3 variants\Truncated cube\Identical Circles</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3058</Link>
+    </Interface>
+ 
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        D := W * 0.18;
+        DCut := W * 0.4;
+        ax := 1;
+        ay := 3.5;
+        az := 5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" W = "W * 1.5" />
+        <SplitByAxes/>
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Colors[i]" ><Plane NormVector = " ax; ay; az" NormDistance = "-DCut" /></Cut>
+            <Script>Inc(i);</Script>
+            <Turn NormVector = " 1; 1; 1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "3" />
+        <Turn NormVector = "-1; 1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "Cut" Repeat = "3" />
+        <Turn NormVector = "-	1; 1; 0" Angle = "Pi" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

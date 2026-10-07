@@ -1,0 +1,127 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Quasi Twist</Name>
+        <Menu>Other forms\Unclassified\Quasi Twist</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-09-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7572</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0000A0'; // Blue
+        Colors[1] := 'FF0000'; // Red
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := '008000'; // Green
+
+        R := 0.65;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R2sin;
+
+        procedure AddM2( v1, v2);
+        begin
+            Mx[i] := (Vx[v1] + Vx[v2]) / 2;
+            My[i] := (Vy[v1] + Vy[v2]) / 2;
+            Mz[i] := (Vz[v1] + Vz[v2]) / 2;
+            Inc(i);
+        end;
+
+        procedure AddM3( v1, v2, v3);
+        begin
+            Mx[i] := (Vx[v1] + Vx[v2] + Vx[v3]) / 3;
+            My[i] := (Vy[v1] + Vy[v2] + Vy[v3]) / 3;
+            Mz[i] := (Vz[v1] + Vz[v2] + Vz[v3]) / 3;
+            Inc(i);
+        end;
+
+        i := 0;
+        AddM2( 0, 3);
+        AddM2( 0, 2);
+        AddM2( 0, 6);
+        AddM2( 0,10);
+        AddM2( 0,14);
+        AddM2( 0, 9);
+        AddM3( 0, 2, 6);
+        AddM2( 2, 6);
+        AddM3( 0, 9, 3);
+        AddM2( 9, 3);
+        AddM3( 0,10,14);
+        AddM2(10,14);
+        AddM2(12,16);
+        AddM2(16,18);
+        AddM2(18,12);
+        AddM3(12,18,16);
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D" NormVectors = " Cx; Cy; Cz" TurnAxesWithPartNo = "0" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " Vx; Vy; Vz" />
+            <Vertices Vectors = " Mx; My; Mz" />
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = " 0;20;21"    />
+                <Face Color = "Colors[1]" VertexIndexes = " 3; 2;21;20" />
+                <Face Color = "Colors[1]" VertexIndexes = "12; 2; 3"    />
+                <Face Color = "Colors[0]" VertexIndexes = " 0;22;23"    />
+                <Face Color = "Colors[2]" VertexIndexes = " 6;10;23;22" />
+                <Face Color = "Colors[2]" VertexIndexes = "16;10; 6"    />
+                <Face Color = "Colors[0]" VertexIndexes = " 0;24;25"    />
+                <Face Color = "Colors[3]" VertexIndexes = "14; 9;25;24" />
+                <Face Color = "Colors[3]" VertexIndexes = "18; 9;14"    />
+                <Face Color = "Colors[0]" VertexIndexes = " 0;21;26;22" />
+                <Face Color = "Colors[1]" VertexIndexes = " 2;27;26;21" />
+                <Face Color = "Colors[2]" VertexIndexes = " 6;22;26;27" />
+                <Face Color = "Colors[0]" VertexIndexes = " 0;25;28;20" />
+                <Face Color = "Colors[3]" VertexIndexes = " 9;29;28;25" />
+                <Face Color = "Colors[1]" VertexIndexes = " 3;20;28;29" />
+                <Face Color = "Colors[0]" VertexIndexes = " 0;23;30;24" />
+                <Face Color = "Colors[2]" VertexIndexes = "10;31;30;23" />
+                <Face Color = "Colors[3]" VertexIndexes = "14;24;30;31" />
+                <Face Color = "Colors[1]" VertexIndexes = " 2;12;32;27" />
+                <Face Color = "Colors[2]" VertexIndexes = "27;32;16; 6" />
+                <Face Color = "Colors[2]" VertexIndexes = "10;16;33;31" />
+                <Face Color = "Colors[3]" VertexIndexes = "31;33;18;14" />
+                <Face Color = "Colors[3]" VertexIndexes = " 9;18;34;29" />
+                <Face Color = "Colors[1]" VertexIndexes = "29;34;12; 3" />
+                <Face Color = "Colors[2]" VertexIndexes = "16;32;35;33" />
+                <Face Color = "Colors[1]" VertexIndexes = "12;34;35;32" />
+                <Face Color = "Colors[3]" VertexIndexes = "18;33;35;34" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "Split" >
+            <Split Axis = "2" From = "1" />
+            <Split Axis = "4" From = "1" />
+            <Split Axis = "8" From = "1" />
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split" />
+
+        <HideContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+        <Cut Axis = "6" From = "1" />
+        <Cut Axis = "10" From = "1" />
+        <Cut Axis = "11" From = "1" />
+        <ShowAll/>
+
+        <Macro Name = "Unbandage" >
+            <HideContaining Vector = "Mx[7];My[7];Mz[7]" />
+            <InvertVisibility/>
+            <Split><Plane NormVector = " Cx[10]; Cy[10]; Cz[10]" NormDistance = " D" /> </Split> 
+            <Hide> <Plane NormVector = "-Cx[10];-Cy[10];-Cz[10]" NormDistance = "-D" /> </Hide> 
+            <Cut>  <Plane NormVector = " Cx[ 0]; Cy[ 0]; Cz[ 0]" NormDistance = " D" /> </Cut> 
+            <Cut>  <Plane NormVector = " Cx[ 1]; Cy[ 1]; Cz[ 1]" NormDistance = " D" /> </Cut> 
+            <ShowAll/>
+            <Turn NormVector = "Vx[0];Vy[0];Vz[0]" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" Repeat = "3" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

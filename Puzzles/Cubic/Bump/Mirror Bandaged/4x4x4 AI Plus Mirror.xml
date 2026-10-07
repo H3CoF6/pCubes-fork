@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4x4x4 AI Plus Mirror</Name>
+        <Menu>Cubic\Bump\Bandaged\4x4x4 AI Plus Mirror</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-08-11</Added>
+        <Link>http://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8925</Link>
+    </Interface>
+
+    <Script>
+        clGreen  := '5C741B';
+        clYellow := 'AFC933';
+
+        W := 0.5;
+        D := W * 0.4;
+
+        DX := 0.1 * W;
+        DY := 0.2 * W;
+        DZ := 0.3 * W;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "CreateCube">
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := MirrorColor;
+            </Script>
+            <Transfer Vector = " DX; DY; DZ" />
+            <LoadFrom File = "Figures\Cube.xml" />
+            <Transfer Vector = "-DX;-DY;-DZ" />
+            <Split Axis = "0" From = "2" />
+            <Split Axis = "1" From = "2" />
+            <Split Axis = "2" From = "1" />
+            <Split Axis = "2" From = "2" />
+            <Split Axis = "2" From = "3" />
+            <Turn Axis = "2" Layers = "0;2" Angle = "Pi/2" />
+            <Turn Axis = "1" Layers = "0;1" Angle = "Pi"   />
+        </Macro>
+
+        <ExecMacro MacroName = "CreateCube" MirrorColor = "clGreen" />
+        <Cut Axis = "0" To = "2" />
+        <Undo Repeat = "3" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreateCube" MirrorColor = "clYellow"/>
+        <Cut Axis = "0" From = "2" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+
+        <ShowAll/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

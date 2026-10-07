@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagonal Dipyramid 3x3x3 Fused</Name>
+        <Aliases>Hexagonal Bipyramid 3x3x3 Fused</Aliases>
+        <Menu>Other forms\Multi-core\Hexagonal Dipyramid 3x3x3 Fused</Menu>
+        <Menu>Other forms\Dipyramid\Hexagonal\3x3x3 Fused</Menu>
+        <Inventor>David Gugl</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7704</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'F0E68C'; // Khaki
+        Colors[ 1] := '0000A0'; // Blue
+        Colors[ 2] := '00FFFF'; // Cyan
+        Colors[ 3] := '2828FF'; // LightBlue
+        Colors[ 4] := '008000'; // Green
+        Colors[ 5] := '00FF00'; // LightGreen
+        Colors[ 6] := 'FF0080'; // LightViolett
+        Colors[ 7] := '800000'; // Brown
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := 'FFFF00'; // Yellow
+        Colors[10] := '800080'; // Violett
+        Colors[11] := 'FF0000'; // Red
+
+        R := 0.5;
+        H := R * 1.6;
+
+        for i := 0 to 5 do begin
+            x[i] := R * sin(2*Pi / 6 * i);
+            y[i] := R * cos(2*Pi / 6 * i);
+        end;
+
+        nz := R / sqrt(2);
+        az := R * 0.47;
+
+        D := az / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = " 0; Pi / 2" PlaneDistances = " D" >
+        <Axis NormVector = " y[1]; x[1];-nz" BaseVector = " 0; 0;-az" />
+        <Axis NormVector = " y[3]; x[3];-nz" BaseVector = " 0; 0;-az" />
+        <Axis NormVector = " y[5]; x[5];-nz" BaseVector = " 0; 0;-az" />
+        <Axis NormVector = " y[0]; x[0]; nz" BaseVector = " 0; 0; az" />
+        <Axis NormVector = " y[2]; x[2]; nz" BaseVector = " 0; 0; az" />
+        <Axis NormVector = " y[4]; x[4]; nz" BaseVector = " 0; 0; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " 0; 0;-H" />
+            <Vertices Vectors = " x; y; 0" />
+            <Vertices Vectors = " 0; 0; H" />
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = "0;1;2" />
+                <Face Color = "Colors[ 1]" VertexIndexes = "0;2;3" />
+                <Face Color = "Colors[ 2]" VertexIndexes = "0;3;4" />
+                <Face Color = "Colors[ 3]" VertexIndexes = "0;4;5" />
+                <Face Color = "Colors[ 4]" VertexIndexes = "0;5;6" />
+                <Face Color = "Colors[ 5]" VertexIndexes = "0;6;1" />
+                <Face Color = "Colors[ 6]" VertexIndexes = "7;1;6" />
+                <Face Color = "Colors[ 7]" VertexIndexes = "7;6;5" />
+                <Face Color = "Colors[ 8]" VertexIndexes = "7;5;4" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "7;4;3" />
+                <Face Color = "Colors[10]" VertexIndexes = "7;3;2" />
+                <Face Color = "Colors[11]" VertexIndexes = "7;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveContaining Vectors = " x; y; 0" />
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "3" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "2" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "5" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "4" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+    </Figure>
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Roux Cube</Name>
+        <Menu>Cubic\Bandaged\Cube 3x3x3\Roux Cube</Menu>
+        <Inventor>Bozhao Chen</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-08-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7743</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        D := W / 3;
+
+        A1 := 2;
+        E1 := (-W - D + D*A1) / sqrt(2 + A1^2);
+        A2 := 4;
+        E2 := (-W - D + D*A2) / sqrt(2 + A2^2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <Split Axis = "2" From = "1" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" />
+        <Split Axis = "2" From = "2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" />
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Macro Name = "Decorate" >
+            <HideContaining Vector = "W;W;W" />
+            <InvertVisibility/>
+            <Split><Plane NormVector = "-1;-1; A" NormDistance = "E" /></Split>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Decorate" A = "A1" E = "E1" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "Decorate" A = "A2" E = "E2" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <Connect Axis = "0" Layers = "0;2" />
+        <Connect Axis = "1" Layers = "0;2" />
+    </Figure>
+</xml>

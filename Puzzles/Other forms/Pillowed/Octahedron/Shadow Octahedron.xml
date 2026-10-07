@@ -1,0 +1,97 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Shadow Octahedron</Name>
+        <Menu>Other forms\Pillowed\Octahedron\Shadow Octahedron</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5992</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Octahedron_Standard_Colors.inc';
+        clYellow    := 'FFFF00';
+        clBlue      := '0000A0';
+        clOrange    := 'FF6000';
+        clRed       := 'FF0000';
+        clGreen     := '008000';
+        clWhite     := 'FFFFFF';
+        clViolett   := '800080';
+        clLightBlue := '2868FF';
+
+        K := 0.4;
+
+        D1 := K * 1.02;
+        D2 := K * 1.1;
+
+        Pillow := 1.1;
+        f1 := K * 0.1;
+
+        for i := 0 to 7 do begin
+            ax[i] := cos(Pi/4 * i);
+            ay[i] := sin(Pi/4 * i);
+        end;
+        az := 1/8^0.25;
+
+        A1 := ArcCos((sqrt(2) - 1) /2);
+        A2 := 2 * A1;
+        A3 := ArcCos(sqrt(2) - 2);
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D1" FixedLayers = "0" >
+        <Axis NormVector = " ax[0]; ay[0];-az" />
+        <Axis NormVector = " ax[1]; ay[1]; az" />
+        <Axis NormVector = " ax[2]; ay[2];-az" />
+        <Axis NormVector = " ax[3]; ay[3]; az" />
+        <Axis NormVector = " ax[4]; ay[4];-az" />
+        <Axis NormVector = " ax[5]; ay[5]; az" />
+        <Axis NormVector = " ax[6]; ay[6];-az" />
+        <Axis NormVector = " ax[7]; ay[7]; az" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn1 NormVector = "0;0;1" Angle = "Pi/8" />
+
+
+        <LoadFrom File = "Puzzles\Other forms\Pillowed\Tetrahedron\_Macro_Pillowed_Tetrahedron_v2.xml" />
+        <ExecMacro MacroName = "CalcCoordinates" />
+
+        <Macro Name = "AddHalf">
+            <ExecMacro MacroName = "AddPillowedTetrahedron" />
+
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+
+            <RemoveContaining Vector = "-f1;-f1;-f1" />
+            <RemoveContaining Vector = " f1;-f1; f1" />
+            <RemoveContaining Vector = " f1; f1;-f1" />
+            <RemoveContaining Vector = "-f1; f1; f1" />
+        </Macro>
+        <ExecMacro MacroName = "AddHalf" />
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+
+        <HideAll/>
+
+        <Script>
+            Colors[0] := Colors[4];
+            Colors[1] := Colors[5];
+            Colors[2] := Colors[6];
+            Colors[3] := Colors[7];
+        </Script>
+
+        <ExecMacro MacroName = "AddHalf" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

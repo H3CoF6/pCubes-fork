@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3x5 - III</Name>
+        <Menu>Cubic\Bandaged\Cube 5x5x5\3x3x5 - III</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2014-05-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4306</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 5;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('211=000,300,040,340,001,301,041,341,002,302,042,342,003,303,043,343,004,304,044,344');
+        ParseTxt('131=210,214, 011,411,012,412,013,413');
+        ParseTxt('231=010,310,014,314');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(3)" Layer = "Random(5)" Angle = "Pi"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(5)" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "50" />
+        </Macro>
+    </Macros>
+</xml>

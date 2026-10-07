@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Slide Rule Duel (Quadrometer 3, sphere)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Quadrometer 3 (sphere)</Menu>
+        <Menu>Other forms\Sphere\Slide Rule Duel (Quadrometer 3)</Menu>
+        <Inventor>Douglas A. Engel</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4557</Link>
+    </Interface>
+
+    <Script>
+        Color1 := '0033FF'; // Blue
+        Color2 := 'EE0000'; // Red
+        Color3 := 'FFFF00'; // Yellow
+
+        K := 0.6;
+        D := K * 0.5782;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "-Pi/2; -Pi/2" MaxAngles = "0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color1" />
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = " 0" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = " D" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color2" />
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = " 0" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-D" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = " D" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color3" />
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = " 0" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = " D" /> </Cut>
+        <ShowAll/>
+
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = " 0" /> </Split>
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = " D" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = " 0" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = " D" /> </Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = " D" /> </Split>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "-1" />
+        <Cut Axis = "1" To = "1" />
+        <Split Axis = "0" From = "1" />
+        <Hide Axis = "0" Layer = "0" />
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-D" /> </Cut>
+        <ShowAll/>
+
+        <Turn Axis = "0" Layer = "0" Angle = "Pi/2" />
+        <SaveSolvedState/>
+        <Undo/>
+
+        <Hide> <Plane NormVector = " 1; 0; 0" NormDistance = " D" /> </Hide>
+        <Hide> <Plane NormVector = " 0;-1; 0" NormDistance = " D" /> </Hide>
+        <Hide> <Plane NormVector = " 0; 0; 1" NormDistance = " 0" /> </Hide>
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color2" />
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = " 0" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = " D" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = " D" /> </Cut>
+        <ShowAll/>
+        <SaveSolvedState/>
+        
+        <Turn NormVector = "0;0;1" Angle = "-45 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

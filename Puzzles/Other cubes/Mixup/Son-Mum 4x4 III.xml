@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Son-Mum 4x4 III</Name>
+        <Menu>Other cubes\Mixup\Son-Mum 4x4 III</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Link>https://www.twistypuzzles.com/cgi-bin/puzzle.cgi?pkey=12338</Link>
+        <Link>http://bbs.mf8-china.com/forum.php?mod=viewthread&amp;tid=108427</Link>
+        <Added>2018-01-02</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        A := Pi / 12;
+        D := tan(A);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2;A;A;Pi/2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Vx; Vy; Vz" />
+        <HideContaining Vector = "Ex; Ey; Ez" />
+
+        <Macro Name = "SplitCenters" >
+            <Split> <Plane NormVector = "Cx[Id]; Cy[Id]; Cz[Id]"  NormDistance = "0.4" /> </Split>
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitCenters" Id = "0" Repeat = "6" />
+        <ShowAll/>
+
+        <Macro Name = "SplitPart">
+            <Turn  Axis = "Ax0" Layer = "1" Angle = "A" />
+            <Turn  Axis = "Ax0" Layer = "2" Angle = "A" />
+            <Split Axis = "Ax1" From  = "2" />
+            <Split Axis = "Ax2" From  = "2" />
+            <Turn  Axis = "Ax0" Layer = "1" Angle = "-2*A" />
+            <Turn  Axis = "Ax0" Layer = "2" Angle = "-2*A" />
+            <Split Axis = "Ax1" From  = "2" />
+            <Split Axis = "Ax2" From  = "2" />
+            <Turn  Axis = "Ax0" Layer = "1" Angle = "A" />
+            <Turn  Axis = "Ax0" Layer = "2" Angle = "A" />
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart" Ax0 = "0" Ax1 = "1" Ax2 = "2" />
+        <ExecMacro MacroName = "SplitPart" Ax0 = "2" Ax1 = "0" Ax2 = "1" />
+        <ExecMacro MacroName = "SplitPart" Ax0 = "1" Ax1 = "2" Ax2 = "0" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

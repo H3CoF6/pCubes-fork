@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Lorente's Sphere</Name>
+        <Menu>Other forms\Sphere\Dino\Lorente's Sphere</Menu>
+        <Inventor>Adam G. Cowan</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-12-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3930</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0080'; // pink
+        Colors[1] := 'F80000'; // red
+        Colors[2] := 'FFFFFF'; // white
+        Colors[3] := '000078'; // blue
+        Colors[4] := 'F67F05'; // orange
+        Colors[5] := '005600'; // green
+        Colors[6] := '800080'; // violett
+        Colors[7] := 'FFFF00'; // yellow
+
+        K := 0.6;
+        C29 := K * 1.00517373279507;
+        D := C29 / sqrt(3);
+        sAngle := 2*Pi / 3;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "1; 1; 1" />
+        <Axis NormVector = "1; 1;-1" />
+        <Axis NormVector = "1;-1; 1" />
+        <Axis NormVector = "1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector" >
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[i]" />
+            <Cut><Plane NormVector = " 1; 0; 0" /></Cut>
+            <Cut><Plane NormVector = " 0; 1; 0" /></Cut>
+            <Cut><Plane NormVector = " 0; 0; 1" /></Cut>
+            <Turn NormVector = " 1; 0; 0" Angle = "Pi/2" />
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "4" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSector" Repeat = "4" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ShowAll/>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

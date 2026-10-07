@@ -1,0 +1,125 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup Gem</Name>
+        <Menu>Other forms\Unclassified\Mixup Gem</Menu>
+        <Inventor>Marcell Mágori</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2026-01-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12880</Link>
+    </Interface>
+
+    <Script>
+        clPurple1 := 'A200FE';
+        clLime1   := '00FF01';
+        clOrange1 := 'FF6001';
+
+        clGray1   := '757574';
+        clRed1    := 'FF0001';
+        clNavy1   := '000081';
+
+        clPink1   := 'FF69B3';
+        clGreen1  := '008001';
+        clYellow1 := 'FFFF01';
+
+        clWhite1  := 'FFFFFE';
+        clBrown1  := '800001';
+        clCyan1   := '00FFFE';
+
+
+        clGreen2  := '008000';
+        clLime2   := '00FF00';
+        clRed2    := 'FF0000';
+
+        clOrange2 := 'FF6000';
+        clPink2   := 'FF69B4';
+        clCyan2   := '00FFFF';
+
+        clGray2   := '757575';
+        clWhite2  := 'FFFFFF';
+        clYellow2 := 'FFFF00';
+
+        clBrown2  := '800000';
+        clNavy2   := '000080';
+        clPurple2 := 'A200FF';
+
+
+        W  := 0.6;
+        C0 := W * 0.6;
+        C1 := W;
+
+        D := W * sqrt(3) / 4;
+        E := W * 3 / sqrt(11);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/3; 2*Pi/3" PlaneDistances = "0; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " C1; C1; C1" />
+                <Add Vector = " C1;-C1;-C1" />
+                <Add Vector = "-C1;-C1; C1" />
+                <Add Vector = "-C1; C1;-C1" />
+                <Add Vector = " C0;-C0; C0" />
+                <Add Vector = " C0; C0;-C0" />
+                <Add Vector = "-C0; C0; C0" />
+                <Add Vector = "-C0;-C0;-C0" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clPurple1" VertexIndexes = "4;0;2" />
+                <Face Color = "clLime1  " VertexIndexes = "4;2;1" />
+                <Face Color = "clOrange1" VertexIndexes = "4;1;0" />
+
+                <Face Color = "clGray1  " VertexIndexes = "5;0;1" />
+                <Face Color = "clRed1   " VertexIndexes = "5;1;3" />
+                <Face Color = "clNavy1  " VertexIndexes = "5;3;0" />
+
+                <Face Color = "clPink1  " VertexIndexes = "6;0;3" />
+                <Face Color = "clGreen1 " VertexIndexes = "6;3;2" />
+                <Face Color = "clYellow1" VertexIndexes = "6;2;0" />
+
+                <Face Color = "clWhite1 " VertexIndexes = "7;1;2" />
+                <Face Color = "clBrown1 " VertexIndexes = "7;2;3" />
+                <Face Color = "clCyan1  " VertexIndexes = "7;3;1" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "CurV" >
+            <Cut Color = "c1" > <Plane NormVector = "-7; 5; 5" NormDistance = "-E" /> </Cut>
+            <Cut Color = "c2" > <Plane NormVector = " 5;-7; 5" NormDistance = "-E" /> </Cut>
+            <Cut Color = "c3" > <Plane NormVector = " 5; 5;-7" NormDistance = "-E" /> </Cut>
+        </Macro>
+        <ExecMacro MacroName = "CurV" c1 = "clGreen2 " c2 = "clLime2 " c3 = "clRed2   " />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "CurV" c1 = "clOrange2" c2 = "clPink2 " c3 = "clCyan2  " />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "CurV" c1 = "clGray2  " c2 = "clWhite2" c3 = "clYellow2" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "CurV" c1 = "clBrown2 " c2 = "clNavy2 " c3 = "clPurple2" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+
+        <Macro Name = "Split" >
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/3" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "Pi/3" />
+            <SplitByAxes/>
+            <Turn Axis = "2" Layer = "1" Angle = "Pi/3" />
+            <SplitByAxes/>
+            <Turn Axis = "3" Layer = "1" Angle = "Pi/3" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Split" Repeat = "8" />
+        <Undo Repeat = "32" />
+    </Figure>
+</xml>

@@ -1,0 +1,116 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4x4x4 Mixup Plus Barrel</Name>
+        <Menu>Other forms\Cylinder\4x4x4 Mixup Plus Barrel</Menu>
+        <Inventor>Felix Mercader</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5646</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0033EE'; // Blue
+        Colors[1] := 'FF7700'; // Orange
+        Colors[2] := '0077FF'; // LightBlue
+        Colors[3] := 'FFEE00'; // Yellow
+        Colors[4] := '009900'; // Green
+        Colors[5] := 'EE0000'; // Red
+        Colors[6] := '00DD00'; // LightGreen
+        Colors[7] := 'CC00DD'; // Rose
+
+        R := 0.5;
+        H := R;
+
+        for i := 0 to 10 do begin
+            x[i] := R * cos(2 * Pi / 40 * i);
+            y[i] := R * sin(2 * Pi / 40 * i);
+        end;
+
+        D := 1 / (1 + 2 * sqrt(2));
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/4; Pi/2" PlaneDistances = "-D/2; 0; D/2" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Body" >
+            <Part>
+                <Vertices Vectors = "0; 0; H" />
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "0; 0; 0" />
+                <Vertices Vectors = "x; y; 0" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11" />
+
+                    <Face Color = "Color" VertexIndexes = "13;14; 2; 1" InvisibleEdges = " 2" />
+                    <Face Color = "Color" VertexIndexes = "14;15; 3; 2" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "15;16; 4; 3" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "16;17; 5; 4" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "17;18; 6; 5" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "18;19; 7; 6" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "19;20; 8; 7" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "20;21; 9; 8" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "21;22;10; 9" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "22;23;11;10" InvisibleEdges = " 8" />
+
+                    <Face VertexIndexes = "12;23;22;21;20;19;18;17;16;15;14;13" />
+
+                    <Face VertexIndexes = "12; 0;11;23" />
+                    <Face VertexIndexes = " 0;12;13; 1" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Body" Color = "Colors[0]" />
+        <ExecMacro MacroName = "Body" Color = "Colors[1]" />
+        <ExecMacro MacroName = "Body" Color = "Colors[2]" />
+        <ExecMacro MacroName = "Body" Color = "Colors[3]" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "Body" Color = "Colors[4]" />
+        <ExecMacro MacroName = "Body" Color = "Colors[5]" />
+        <ExecMacro MacroName = "Body" Color = "Colors[6]" />
+        <ExecMacro MacroName = "Body" Color = "Colors[7]" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split13" >
+            <Split Axis = "0" From = "1" />
+            <Split Axis = "0" From = "3" />
+            <Split Axis = "1" From = "1" />
+            <Split Axis = "1" From = "3" />
+            <Split Axis = "2" From = "1" />
+            <Split Axis = "2" From = "3" />
+        </Macro>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "Ax1" Angle = "Pi/4" Layers = "1-2" />
+            <ExecMacro MacroName = "Split13" />
+            <Turn Axis = "Ax2" Angle = "Pi/4" Layers = "1-2" />
+            <ExecMacro MacroName = "Split13" />
+            <Undo/>
+            <Turn Axis = "Ax3" Angle = "Pi/4" Layers = "1-2" />
+            <ExecMacro MacroName = "Split13" />
+            <Undo/>
+            <Undo/>
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

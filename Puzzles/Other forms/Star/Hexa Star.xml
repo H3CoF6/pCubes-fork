@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexa Star</Name>
+        <Menu>Other forms\Star\Hexa Star</Menu>
+        <Inventor>Manish Rathod</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-09-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11334</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '900090';
+        Colors[1] := '009000';
+        Colors[2] := 'FF6000';
+        Colors[3] := 'DF2FDF';
+        Colors[4] := '0000FF';
+        Colors[5] := 'CC0000';
+
+        Colors[6] := 'FFFF00';
+        Colors[7] := '333333';
+
+        R1 := 0.45;
+        H  := R1 * 0.5;
+        R2 := R1 * sqrt(3);
+
+        for i := 0 to 5 do begin
+            x1[i] := R1 * sin(Pi/3 * i + Pi / 6);
+            y1[i] := R1 * cos(Pi/3 * i + Pi / 6);
+            x2[i] := R2 * sin(Pi/3 * i);
+            y2[i] := R2 * cos(Pi/3 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = " x2[0]; y2[0]; 0" />
+        <Axis NormVector = " x2[2]; y2[2]; 0" />
+        <Axis NormVector = " x2[4]; y2[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x2; y2; 0" />
+            <Vertices Vectors = " x1; y1; H" />
+            <Vertices Vectors = " x1; y1;-H" />
+
+            <Faces>
+                <Face Color = "Colors[6]" VertexIndexes = "12;13;14;15;16;17" />
+                <Face Color = "Colors[7]" VertexIndexes = "11;10; 9; 8; 7; 6" />
+
+                <Face Color = "Colors[6]" VertexIndexes = "3; 8; 9" />
+                <Face Color = "Colors[6]" VertexIndexes = "4; 9;10" />
+                <Face Color = "Colors[6]" VertexIndexes = "5;10;11" />
+                <Face Color = "Colors[6]" VertexIndexes = "0;11; 6" />
+                <Face Color = "Colors[6]" VertexIndexes = "1; 6; 7" />
+                <Face Color = "Colors[6]" VertexIndexes = "2; 7; 8" />
+
+                <Face Color = "Colors[7]" VertexIndexes = "3;15;14" />
+                <Face Color = "Colors[7]" VertexIndexes = "4;16;15" />
+                <Face Color = "Colors[7]" VertexIndexes = "5;17;16" />
+                <Face Color = "Colors[7]" VertexIndexes = "0;12;17" />
+                <Face Color = "Colors[7]" VertexIndexes = "1;13;12" />
+                <Face Color = "Colors[7]" VertexIndexes = "2;14;13" />
+
+                <Face Color = "Colors[0]" VertexIndexes = "2; 8;14" />
+                <Face Color = "Colors[0]" VertexIndexes = "3;14; 8" />
+                <Face Color = "Colors[1]" VertexIndexes = "3; 9;15" />
+                <Face Color = "Colors[1]" VertexIndexes = "4;15; 9" />
+                <Face Color = "Colors[2]" VertexIndexes = "4;10;16" />
+                <Face Color = "Colors[2]" VertexIndexes = "5;16;10" />
+                <Face Color = "Colors[3]" VertexIndexes = "5;11;17" />
+                <Face Color = "Colors[3]" VertexIndexes = "0;17;11" />
+                <Face Color = "Colors[4]" VertexIndexes = "0; 6;12" />
+                <Face Color = "Colors[4]" VertexIndexes = "1;12; 6" />
+                <Face Color = "Colors[5]" VertexIndexes = "1; 7;13" />
+                <Face Color = "Colors[5]" VertexIndexes = "2;13; 7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

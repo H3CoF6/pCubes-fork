@@ -1,0 +1,269 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Keid 3 (AC)</Name>
+        <Menu>Other forms\2d\Keid 3 (AC)</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10995</Link>
+    </Interface>
+
+    <Script>
+        clDeepSky := '00BFFF';
+        clBlack   := '333333';
+
+        K  := 0.75;
+
+        s5 := sqrt(5);
+        C0 := K * (s5 - 1) / 4;
+        C1 := K * 3 * (9 + s5) / 76;
+        C2 := K * 3 * (7 + 5 * s5) / 76;
+        C3 := K * (1 + s5) / 4;
+        C4 := K * 1 / 2;
+
+        C5 := C0 + C4;
+        C6 := C3 + C4;
+
+        D1 := K * sqrt(3) / 38 * (8 + 3 * s5);
+        D2 := C2;
+        D3 := D1 - K * 0.045;
+        D4 := D2 - K * 0.045;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D2" FixedLayers = "0">
+        <Axis NormVector = " C4;-C5; C6" />
+        <Axis NormVector = " C6;-C4; C5" />
+        <Axis NormVector = " C5;-C6; C4" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "D1" FixedLayers = "0">
+        <Axis NormVector = " C4;-C4; C4" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Part">  <!-- Pentakis Dodecahedron -->
+            <Part>
+                <Vertices>
+                    <Add Vector = "  0; C0; C3" />
+                    <Add Vector = "  0; C0;-C3" />
+                    <Add Vector = "  0;-C0; C3" />
+                    <Add Vector = "  0;-C0;-C3" />
+                    <Add Vector = " C3;  0; C0" />
+                    <Add Vector = " C3;  0;-C0" />
+                    <Add Vector = "-C3;  0; C0" />
+                    <Add Vector = "-C3;  0;-C0" />
+                    <Add Vector = " C0; C3;  0" />
+                    <Add Vector = " C0;-C3;  0" />
+                    <Add Vector = "-C0; C3;  0" />
+                    <Add Vector = "-C0;-C3;  0" />
+                    <Add Vector = " C1;  0; C2" />
+                    <Add Vector = " C1;  0;-C2" />
+                    <Add Vector = "-C1;  0; C2" />
+                    <Add Vector = "-C1;  0;-C2" />
+                    <Add Vector = " C2; C1;  0" />
+                    <Add Vector = " C2;-C1;  0" />
+                    <Add Vector = "-C2; C1;  0" />
+                    <Add Vector = "-C2;-C1;  0" />
+                    <Add Vector = "  0; C2; C1" />
+                    <Add Vector = "  0; C2;-C1" />
+                    <Add Vector = "  0;-C2; C1" />
+                    <Add Vector = "  0;-C2;-C1" />
+                    <Add Vector = " C4; C4; C4" />
+                    <Add Vector = " C4; C4;-C4" />
+                    <Add Vector = " C4;-C4; C4" />
+                    <Add Vector = " C4;-C4;-C4" />
+                    <Add Vector = "-C4; C4; C4" />
+                    <Add Vector = "-C4; C4;-C4" />
+                    <Add Vector = "-C4;-C4; C4" />
+                    <Add Vector = "-C4;-C4;-C4" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "12;  0;  2" />
+                    <Face Color = "Color" VertexIndexes = "12;  2; 26" />
+                    <Face Color = "Color" VertexIndexes = "12; 26;  4" />
+                    <Face Color = "Color" VertexIndexes = "12;  4; 24" />
+                    <Face Color = "Color" VertexIndexes = "12; 24;  0" />
+
+                    <Face Color = "Color" VertexIndexes = "14;  2;  0" />
+                    <Face Color = "Color" VertexIndexes = "14; 30;  2" />
+
+                    <Face Color = "Color" VertexIndexes = "16;  4;  5" />
+                    <Face Color = "Color" VertexIndexes = "16; 24;  4" />
+
+                    <Face Color = "Color" VertexIndexes = "17;  5;  4" />
+                    <Face Color = "Color" VertexIndexes = "17;  4; 26" />
+                    <Face Color = "Color" VertexIndexes = "17; 26;  9" />
+                    <Face Color = "Color" VertexIndexes = "17;  9; 27" />
+                    <Face Color = "Color" VertexIndexes = "17; 27;  5" />
+
+                    <Face Color = "Color" VertexIndexes = "23;  9; 11" />
+                    <Face Color = "Color" VertexIndexes = "23; 27;  9" />
+
+                    <Face Color = "Color" VertexIndexes = "22; 11;  9" />
+                    <Face Color = "Color" VertexIndexes = "22;  9; 26" />
+                    <Face Color = "Color" VertexIndexes = "22; 26;  2" />
+                    <Face Color = "Color" VertexIndexes = "22;  2; 30" />
+                    <Face Color = "Color" VertexIndexes = "22; 30; 11" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "2" From = "1" />
+        <Cut Axis = "3" To   = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "3" To   = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "3" From = "1" />
+        <Cut Axis = "0" To   = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clDeepSky" />
+        <Cut Axis = "0" From = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-C6;  C4; -C5" NormDistance = "-D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-C5;  C6; -C4" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " C4; -C5;  C6" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-C4;  C5; -C6" NormDistance = "-D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-C5;  C6; -C4" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " C6; -C4;  C5" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-C4;  C5; -C6" NormDistance = "-D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-C6;  C4; -C5" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " C5; -C6;  C4" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " C6; -C4;  C5" NormDistance = " D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " C5; -C6;  C4" NormDistance = " D3" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = "-C4;  C5; -C6" NormDistance = "-D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " C4; -C5;  C6" NormDistance = " D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " C5; -C6;  C4" NormDistance = " D3" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = "-C6;  C4; -C5" NormDistance = "-D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " C4; -C5;  C6" NormDistance = " D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " C6; -C4;  C5" NormDistance = " D3" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = "-C5;  C6; -C4" NormDistance = "-D3" /> </Cut>
+        <ShowAll/>
+
+        <Split Axis = "3" From = "1" />
+
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" Layer = "1" Angle = " Pi" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" Layer = "1" Angle = " Pi" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "0" From = "1" />
+        <Turn  Axis = "0" Layer = "1" Angle = " Pi" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "0" From = "1" />
+        <Undo Repeat = "6" />
+
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi/3" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = " Pi" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = " Pi" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = " Pi" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "1" From = "1" />
+        <Undo Repeat = "6" />
+
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi/3" />
+        <Split Axis = "2" From = "1" />
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "2" From = "1" />
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "2" From = "1" />
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "2" From = "1" />
+        <Undo Repeat = "8" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "3" Layers = "1" Angle = "-2*Pi / 3"/>
+        <Turn Axis = "1" Layers = "1" Angle = "-Pi"/>
+        <Turn Axis = "3" Layers = "1" Angle = " 2*Pi / 3"/>
+        <Turn Axis = "0" Layers = "1" Angle = " Pi"/>
+        <Turn Axis = "3" Layers = "1" Angle = "-2*Pi / 3"/>
+        <SaveSolvedState/>
+
+        <Turn Axis = "3" Layers = "1" Angle = "-2*Pi / 3"/>
+        <Turn Axis = "2" Layers = "1" Angle = "-Pi"/>
+        <Turn Axis = "3" Layers = "1" Angle = " 2*Pi / 3"/>
+        <Turn Axis = "1" Layers = "1" Angle = "-Pi"/>
+        <Turn Axis = "3" Layers = "1" Angle = "-2*Pi / 3"/>
+        <SaveSolvedState/>
+        <Undo Repeat = "10" />
+
+
+        <Turn NormVector = "1;0;0" Angle = " Pi/4" />
+        <Turn NormVector = "0;0;1" Angle = "-arctan(1/sqrt(2))" />
+        <Turn NormVector = "0;1;0" Angle = "Arctan(sqrt(5/3))" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

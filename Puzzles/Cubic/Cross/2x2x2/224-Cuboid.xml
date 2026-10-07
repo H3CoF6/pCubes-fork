@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2x4 Cuboid (Rubik's Tower)</Name>
+        <Menu>Cubic\Cross\2x2x2\2x2x4 Cuboid (Rubik's Tower)</Menu>
+        <Inventor>Hidetoshi Takeji</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-08-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2011</Link>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+        D  := W / 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D * 2; 0; D * 2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D * 4" WY = "D * 2" WZ = "D * 2" />
+        <SplitByAxes/>
+
+        <!-- fake cubies -->
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D * 2" WY = "D * 3" WZ = "D * 3" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+
+        <InvertVisibility/>
+    </Figure>
+</xml>

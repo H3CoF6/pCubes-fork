@@ -1,0 +1,122 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-1 Super Triangle (4 layers)</Name>
+        <Menu>Other forms\Square-1\Triangle (4 layers)</Menu>
+        <Inventor>Mr. Fok</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-03-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3153</Link>
+    </Interface>
+
+    <Script>
+        clRed        := 'C80000';
+        clOrange     := 'FF800A';
+        clYellow     := 'FFFF00';
+        clGreen      := '00BE00';
+        clBlue       := '0404AF';
+
+        ColorBottom := clOrange;
+        ColorUp     := clRed;
+
+        W := 0.5;
+        R := W;
+        R1 := R * cos(Pi/12) / cos(Pi / 4);
+        RC := W / 2;
+        D := W / 2;
+        H := W;
+        Delta := 0.002;
+
+        i := 0;
+        A := 0;
+
+        Procedure AddVertex(L, Angle);
+        begin
+          A := A + Angle;
+          x[i] := L * sin(A);
+          y[i] := L * cos(A);
+          Inc(i);
+        end;
+
+        AddVertex( R, 0);
+        AddVertex(R1, Pi / 3);
+        AddVertex( R, Pi / 3);
+        AddVertex(R1, Pi / 3);
+        AddVertex( R, Pi / 3);
+        AddVertex(R1, Pi / 3);
+
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/6; Pi/6; Pi/6; Pi/6; 0" PlaneDistances = "-H; -D; 0; D; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[3]; y[3]; -H" />
+                <Add Vector = "x[4]; y[4]; -H" />
+                <Add Vector = "x[5]; y[5]; -H" />
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+                <Add Vector = "x[3]; y[3];  H" />
+                <Add Vector = "x[4]; y[4];  H" />
+                <Add Vector = "x[5]; y[5];  H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "ColorBottom" VertexIndexes = "0;1;2;3;4;5" />
+                <Face Color = "ColorUp    " VertexIndexes = "11;10;9;8;7;6" />
+                <Face Color = "clBlue     " VertexIndexes = "0;5;11;6" />
+                <Face Color = "clBlue     " VertexIndexes = "1;0;6;7" />
+                <Face Color = "clYellow   " VertexIndexes = "2;1;7;8" />
+                <Face Color = "clYellow   " VertexIndexes = "3;2;8;9" />
+                <Face Color = "clGreen    " VertexIndexes = "4;3;9;10" />
+                <Face Color = "clGreen    " VertexIndexes = "5;4;10;11" />
+            </Faces>
+        </Part>
+
+        <Split><Plane NormVector = "x[0]; y[0]; 0"/></Split>
+        <Split><Plane NormVector = "x[1]; y[1]; 0"/></Split>
+        <Split><Plane NormVector = "x[2]; y[2]; 0"/></Split>
+
+        <HideContaining Vector = "x[1]; y[1]; 0" />
+        <HideContaining Vector = "x[3]; y[3]; 0" />
+        <HideContaining Vector = "x[5]; y[5]; 0" />
+        <Split><Plane NormVector = "y[0];-x[0]; 0"/></Split>
+        <Split><Plane NormVector = "y[1];-x[1]; 0"/></Split>
+        <Split><Plane NormVector = "y[2];-x[2]; 0"/></Split>
+        <ShowAll/>
+
+        <Turn  Axis = "0" From = "1" To = "4" Angle = "Pi / 6" />
+        <Circle Color = "ColorUp    " Radius = "RC" Center = "0; 0;  H + Delta" />
+        <Circle Color = "ColorBottom" Radius = "RC" Center = "0; 0; -H - Delta" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "0" From = "1" To = "4" Angle = "-Pi / 6" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+
+        <SaveSolvedState/> <!-- 1 solved state -->
+		<Turn Axis = "0" From = "1" To = "4" Angle = "Pi/6"/>
+        <SaveSolvedState/> <!-- 2 solved state -->
+		<Turn Axis = "0" From = "1" To = "4" Angle = "Pi/6"/>
+        <SaveSolvedState/> <!-- 3 solved state -->
+		<Turn Axis = "0" From = "1" To = "4" Angle = "Pi/6"/>
+        <SaveSolvedState/> <!-- 4 solved state -->
+        <Undo/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

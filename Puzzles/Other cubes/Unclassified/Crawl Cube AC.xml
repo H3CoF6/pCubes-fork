@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crawl Cube AC</Name>
+        <Menu>Other cubes\Unclassified\Crawl Cube AC</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-09-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10160</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        clBlack := '222222';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.25;
+
+        A := W * 0.3;
+        B := W * 0.6;
+        L := W * 0.5;
+        R := W * 0.3;
+        WC := W * 1.01;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 1; 1;-1" Angle = "Pi / 4" />
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W * 1.1" Color = "-1" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = " Vx; Vy; Vz" />
+        <HideContaining Vector = "-W;-W; L" />
+        <HideContaining Vector = " W; W;-L" />
+        <HideContaining Vector = "-W; W;-L" />
+        <HideContaining Vector = " W;-W; L" />
+        <Cut Color = "clOrange" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clRed   " > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+
+        <HideContaining Vector = " Vx; Vy; Vz" />
+        <HideContaining Vector = "-L;-W; W" />
+        <HideContaining Vector = " L; W;-W" />
+        <HideContaining Vector = " L;-W;-W" />
+        <HideContaining Vector = "-L; W; W" />
+        <Cut Color = "clGreen " > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+
+        <HideContaining Vector = " Vx; Vy; Vz" />
+        <HideContaining Vector = "-W;-L; W" />
+        <HideContaining Vector = " W; L;-W" />
+        <HideContaining Vector = " W; L; W" />
+        <HideContaining Vector = "-W;-L;-W" />
+        <Cut Color = "clWhite " > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+
+        <Cut Color = "clBlack" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+
+        <Circle  Radius = "R" Base = "-W; A; B" Center = "-WC; A; B" Color = "clRed" />
+        <Circle  Radius = "R" Base = " W;-A;-B" Center = " WC;-A;-B" Color = "clOrange" />
+        <Circle  Radius = "R" Base = "-B;-W;-A" Center = "-B;-WC;-A" Color = "clBlue" />
+        <Circle  Radius = "R" Base = " B; W; A" Center = " B; WC; A" Color = "clGreen" />
+        <Circle  Radius = "R" Base = "-A; B;-W" Center = "-A; B;-WC" Color = "clYellow" />
+        <Circle  Radius = "R" Base = " A;-B; W" Center = " A;-B; WC" Color = "clWhite" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

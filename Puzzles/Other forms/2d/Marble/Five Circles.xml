@@ -1,0 +1,131 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Five Circles</Name>
+        <Menu>Other forms\2d\Marble\Five Circles</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4989</Link>
+    </Interface>
+
+    <Script>
+        clBody := 'AAAAAA'; // Gray;
+        for i := 0 to 11 do
+            Colors[i] := clBody;
+        Colors[ 0] := '0033EE'; // Blue
+        Colors[ 2] := '222222'; // Black
+        Colors[ 3] := 'FF6000'; // Orange
+        Colors[ 4] := 'DD0000'; // Red
+        Colors[ 6] := '00BB00'; // Green
+        Colors[10] := 'FFFFFF'; // White
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := R * 0.578;
+        D2 := R * 0.457;
+
+        // Puck parameters
+        R1 := R * 0.06;
+        R2 := R1 * 0.7;
+        z1 := RSin;
+        z2 := z1 * 1.05;
+        RPuck := R * 0.42;
+        Dx := RPuck * sin(Pi/5);
+        Dy := -RPuck * cos(Pi/5);
+        for i := 0 to 9 do begin
+            x1[i] := R1 * cos(2 * Pi / 10 * i) + Dx;
+            y1[i] := R1 * sin(2 * Pi / 10 * i) + Dy;
+            x2[i] := R2 * cos(2 * Pi / 10 * i) + Dx;
+            y2[i] := R2 * sin(2 * Pi / 10 * i) + Dy;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; sAngle" PlaneDistances = "D1;D2">
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+    </Axes>
+
+    <Axes TurningAngles = "0; 2 * Pi/17" PlaneDistances = "Rsin">
+        <Axis NormVector = " Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "-Cx[1];-Cy[1];-Cz[1]" />
+        <Axis NormVector = " Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = " Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "-Cx[5];-Cy[5];-Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        // Body
+
+        <Macro Name = "CutWhite">
+            <Cut Color = "clBody" > <Plane NormVector = "-cx[id];-cy[id];-cz[id]" NormDistance = "-RSin" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutWhite" Repeat = "12" id = "0" />
+
+        <Cut> <Plane NormVector = "-cx[3]; -cy[3]; -cz[3]" NormDistance = "-D1" /> </Cut>
+        <Cut> <Plane NormVector = " cx[3];  cy[3];  cz[3]" NormDistance = " D2" /> </Cut>
+
+        <InvertVisibility/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-cx[id];-cy[id];-cz[id]" NormDistance = "-RSin" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "12" id = "0" />
+
+        <Cut Color = "clBody" > <Plane NormVector = "cx[3];cy[3];cz[3]" NormDistance = "-R2Sin" /> </Cut>
+
+        <SplitByAxes/>
+        <Hide Axis = "0" Layer = "0" />
+        <Cut  Axis = "0" From  = "2" />
+
+        <ShowAll/>
+
+        // Pucks
+
+        <Macro Name = "AddPuck">
+            <Part>
+                <Vertices Vectors = "x2; y2; z2" />
+                <Vertices Vectors = "x1; y1; z1" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;2;3;4;5;6;7;8;9" />
+
+                    <Face Color = "cl" VertexIndexes = "10;11;1;0" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "11;12;2;1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "12;13;3;2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "13;14;4;3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "14;15;5;4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "15;16;6;5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "16;17;7;6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "17;18;8;7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "18;19;9;8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "19;10;0;9" InvisibleEdges = "10" />
+
+                    <Face VertexIndexes = "19;18;17;16;15;14;13;12;11;10" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0; 0; 1" Angle = "2*Pi / 17" />
+        </Macro>
+
+        <Macro Name = "AddPucks">
+            <ExecMacro MacroName = "AddPuck" Repeat = "17" />
+            <Turn NormVector = "Cx[3]; Cy[3]; Cz[3]" Angle = "sAngle" />
+        </Macro>
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 0]" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 2]" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[10]" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 6]" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[ 4]" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

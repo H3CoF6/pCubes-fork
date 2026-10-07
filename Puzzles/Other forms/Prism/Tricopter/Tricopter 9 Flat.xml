@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tricopter 9 Flat</Name>
+        <Menu>Other forms\Prism\Tricopter\Tricopter 9 Flat</Menu>
+        <Inventor>David Pitcher + Evgeniy Grigoriev</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2016-12-04</Added>
+        <Link>https://www.youtube.com/watch?v=NJSKHXYkb7Q</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5402</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clWhite        := 'FFFFFF';
+
+        R := 0.6;
+        H := R * sqrt(3) / 2;
+
+        for i := 0 to 2 do begin
+            x[i] := R * cos(2 * Pi / 3 * (i + 0.5));
+            y[i] := R * sin(2 * Pi / 3 * (i + 0.5));
+        end;
+
+        D := R / sqrt(7);
+        D1 := R / 4;
+
+        A1 := ArcCos(1 / 8);
+        A2 := ArcCos(-3 / 4);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D1" FixedLayers = "0" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi; 0" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "-D" >
+        <Axis NormVector = "x[1]; y[1];  H" />
+        <Axis NormVector = "x[2]; y[2];  H" />
+        <Axis NormVector = "x[0]; y[0];  H" />
+        <Axis NormVector = "x[1]; y[1]; -H" />
+        <Axis NormVector = "x[2]; y[2]; -H" />
+        <Axis NormVector = "x[0]; y[0]; -H" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clBlue  " VertexIndexes = "3;4;1;0" />
+                <Face Color = "clRed   " VertexIndexes = "4;5;2;1" />
+                <Face Color = "clGreen " VertexIndexes = "5;3;0;2" />
+                <Face Color = "clYellow" VertexIndexes = "0;1;2" />
+                <Face Color = "clWhite " VertexIndexes = "5;4;3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

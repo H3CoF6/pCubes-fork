@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Magic Tower 8</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Tetrahedron\Magic Tower 8</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-02-10</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Tetrahedron_Coordinates.inc';
+
+        D := W * 4 * sqrt(3) / 9;
+        D0 := -W * sqrt(3) / 3;
+
+        N := 4;
+        C[0] := D0 + D/N;
+        for i := 1 to N - 1 do
+            C[i] := C[i - 1] + D/N;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "C" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <Macro Name = "AddFigure" >
+            <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+            <Split Axis = "0" From = "N" />
+            <Split Axis = "1" From = "N" />
+            <Split Axis = "2" From = "N" />
+            <Split Axis = "3" From = "N" />
+            <RemoveContaining Vectors = " 0; 0; 0" />
+        </Macro>
+        <ExecMacro MacroName = "AddFigure" />
+
+        <RemoveContaining Vectors = " Ex; Ey; Ez" />
+
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <ExecMacro MacroName = "AddFigure" />
+
+        <RemoveContaining Vectors = " Vx; Vy; Vz" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

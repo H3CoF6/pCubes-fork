@@ -1,0 +1,102 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Face of Celtic Dodecahedron (Sphere)</Name>
+        <Menu>Other forms\2d\Face of Celtic Dodecahedron (Sphere)</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-10-26</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF6000'; // clOrange
+        Colors[ 2] := 'FFFF00'; // clYellow
+        Colors[ 3] := '8800DD'; // clViolett
+        Colors[ 4] := 'DD0055'; // clRed2
+        Colors[ 6] := '0088FF'; // clBlue2
+        Colors[10] := '00FF00'; // clGreen1
+
+        Colors[ 1] := '0000EE'; // clBlue3
+        Colors[ 5] := 'FF0000'; // clRed
+        Colors[ 7] := 'FF55BB'; // clPink
+        Colors[ 8] := '00BBFF'; // clBlue1
+        Colors[ 9] := '007700'; // clGreen3
+        Colors[11] := '00AA00'; // clGreen2
+
+        K := 0.7;
+
+        s5 := sqrt(5);
+        pA1 := 3 - s5;
+        pA2 := s5 + 1;
+        pB1 := s5 - 1;
+        pB2 := 2;
+        pB3 := 2 * s5 - 2;
+        pC  := 5 - s5;
+
+        A1 := ArcCos((-5 + 2 * sqrt(5)) / 10);
+        A2 := ArcCos(( 5 - 9 * sqrt(5)) / 40);
+        A3 := ArcCos((-5 -     sqrt(5)) /  8);
+
+        D := K * 0.938; // chosen to prevent overhang bandaging
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "   0;-pB2; pC " />
+        <Axis NormVector = " pB1;-pB3; pB2" />
+        <Axis NormVector = "-pB1;-pB3; pB2" />
+        <Axis NormVector = " pA1;-pA2; pA1" />
+        <Axis NormVector = "-pA1;-pA2; pA1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "TurnAndSplit" >
+            <Turn Axis = "ax1" Layer = "2" Angle = "an1" />
+            <Split Axis = "ax2" From = "2"  />
+            <Undo/>
+        </Macro>
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = " 0" ax2 = "2" an1 = " A1" />
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = " 0" ax2 = "2" an1 = " A3" />
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = " 1" ax2 = "0" an1 = " A1" />
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = " 1" ax2 = "0" an1 = " A3" />
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = " 2" ax2 = "0" an1 = "-A1" />
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = " 2" ax2 = "0" an1 = "-A3" />
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = " 3" ax2 = "4" an1 = "-A1" />
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = " 3" ax2 = "4" an1 = "-A3" />
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = " 4" ax2 = "2" an1 = "-A1" />
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = " 4" ax2 = "2" an1 = "-A3" />
+
+        <Macro Name = "TurnAndSplit2" >
+            <Turn Axis = "ax1" Layer = "2" Angle = "an1" />
+            <Turn Axis = "ax2" Layer = "2" Angle = "an2" />
+            <Split Axis = "ax1" From = "2"  />
+            <Undo Repeat = "2" />
+        </Macro>
+        <ExecMacro MacroName = "TurnAndSplit2" ax1 = " 2" ax2 = "0" an1 = "-A3" an2 = " A1" />
+        <ExecMacro MacroName = "TurnAndSplit2" ax1 = " 2" ax2 = "4" an1 = " A3" an2 = "-A1" />
+        <ExecMacro MacroName = "TurnAndSplit2" ax1 = " 1" ax2 = "3" an1 = "-A3" an2 = " A1" />
+        <ExecMacro MacroName = "TurnAndSplit2" ax1 = " 1" ax2 = "0" an1 = " A3" an2 = "-A1" />
+        <ExecMacro MacroName = "TurnAndSplit2" ax1 = " 0" ax2 = "1" an1 = "-A3" an2 = " A1" />
+        <ExecMacro MacroName = "TurnAndSplit2" ax1 = " 0" ax2 = "2" an1 = " A3" an2 = "-A1" />
+        <ExecMacro MacroName = "TurnAndSplit2" ax1 = " 3" ax2 = "4" an1 = "-A3" an2 = " A1" />
+        <ExecMacro MacroName = "TurnAndSplit2" ax1 = " 3" ax2 = "1" an1 = " A3" an2 = "-A1" />
+        <ExecMacro MacroName = "TurnAndSplit2" ax1 = " 4" ax2 = "2" an1 = "-A3" an2 = " A1" />
+        <ExecMacro MacroName = "TurnAndSplit2" ax1 = " 4" ax2 = "3" an1 = " A3" an2 = "-A1" />
+
+        <Cut> <Plane NormVector = " 0;-C57; C34" NormDistance = "K * 0.67" /> </Cut>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "1;0;0" Angle = " 32 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb</Name>
+        <Menu>Other cubes\Vertex Turning\Skewb\Skewb</Menu>
+        <Inventor>Tony Durham</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-03-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=621</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        RCut := W * sqrt(3) * 0.96;
+        RCu2 := W * sqrt(2) * 0.985;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <!-- cut edges and vertices for better control -->
+        <Cut> <Plane NormVector = " 1; 1; 1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 1;-1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1;-1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1; 1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1;-1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1; 1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1;-1" NormDistance = "-RCut" /> </Cut>
+
+        <Cut> <Plane NormVector = " 1; 1; 0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1; 0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1; 0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 0; 1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0;-1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 0;-1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1;-1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1;-1" NormDistance = "-RCu2" /> </Cut>
+    </Figure>
+
+	<Macros>
+		<Macro Name = "L " Public = "1" Description = "L up-face-left (UFL) clockwise L' - c/clockwise"> <Turn Axis = "2" Layer = "1" Angle = "-Pi * 2/3" /> </Macro>
+		<Macro Name = "L'" Public = "0" > <Turn Axis = "2" Layer = "1" Angle = " Pi * 2/3" /> </Macro>
+		<Macro Name = "l " Public = "1" Description = "l - DFL clockwise" > <Turn Axis = "0" Layer = "0" Angle = " Pi * 2/3" /> </Macro>
+		<Macro Name = "l'" Public = "0" > <Turn Axis = "0" Layer = "0" Angle = "-Pi * 2/3" /> </Macro>
+		<Macro Name = "R " Public = "1" Description = "R - UBR clockwise" > <Turn Axis = "0" Layer = "1" Angle = "-Pi * 2/3" /> </Macro>
+		<Macro Name = "R'" Public = "0" > <Turn Axis = "0" Layer = "1" Angle = " Pi * 2/3" /> </Macro>
+		<Macro Name = "r " Public = "1" Description = "r - DBR clockwise" > <Turn Axis = "2" Layer = "0" Angle = " Pi * 2/3" /> </Macro>
+		<Macro Name = "r'" Public = "0" > <Turn Axis = "2" Layer = "0" Angle = "-Pi * 2/3" /> </Macro>
+		<Macro Name = "F " Public = "1" Description = "F - UFR clockwise" > <Turn Axis = "3" Layer = "1" Angle = "-Pi * 2/3" /> </Macro>
+		<Macro Name = "F'" Public = "0" > <Turn Axis = "3" Layer = "1" Angle = " Pi * 2/3" /> </Macro>
+		<Macro Name = "f " Public = "1" Description = "f - DFR clockwise" > <Turn Axis = "1" Layer = "0" Angle = " Pi * 2/3" /> </Macro>
+		<Macro Name = "f'" Public = "0" > <Turn Axis = "1" Layer = "0" Angle = "-Pi * 2/3" /> </Macro>
+		<Macro Name = "B " Public = "1" Description = "B - UBL clockwise" > <Turn Axis = "1" Layer = "1" Angle = "-Pi * 2/3" /> </Macro>
+		<Macro Name = "B'" Public = "0" > <Turn Axis = "1" Layer = "1" Angle = " Pi * 2/3" /> </Macro>
+		<Macro Name = "b " Public = "1" Description = "b - DBL clockwise" > <Turn Axis = "3" Layer = "0" Angle = " Pi * 2/3" /> </Macro>
+		<Macro Name = "b'" Public = "0" > <Turn Axis = "3" Layer = "0" Angle = "-Pi * 2/3" /> </Macro>
+	</Macros>
+</xml>

@@ -1,0 +1,100 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Traheptrix</Name>
+        <Menu>Other forms\Bi Axes\Traheptrix</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-01-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4642</Link>
+    </Interface>
+
+    <Script>
+        clWhite   := 'F0F0F0';
+        clBlue    := '0000FF';
+        clRed1    := 'FF0001';
+        clRed2    := 'FF0002';
+        clRed3    := 'FF0003';
+        clYellow  := 'FFFF00';
+        clOrange1 := 'FF6001';
+        clOrange2 := 'FF6002';
+        clOrange3 := 'FF6003';
+        clGreen   := '008000';
+
+        pA3 := 0.5974076229;
+        pB1 := 0.4112805295;
+        pB2 := 0.0938720970;
+        pB3 := 0.4230038101;
+        pC1 := 0.5128584316;
+        pC2 := 0.3048007843;
+        pC3 := 0.0311220001;
+        pD1 := 0.2282434744;
+        pD2 := 0.4739524582;
+        pD3 := 0.2831428114;
+        pE2 := 0.5260475418;
+        pF2 := 0.3279852776;
+        pG2 := 0.1170565903;
+        pH1 := 0.5943175845;
+        pH2 := 0.0520950836;
+        pH3 := 0.0311220001; // pC3
+        pI2 := 0.1356491104;
+        pI3 := 0.0810378126;
+
+        D := -0.0787242446;
+        A := 2*Pi/3;
+
+//AngleAxes := ArcCos((4 * cos(Pi /7) - 1) / 3) / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; A" PlaneDistances = "D" >
+        <Axis NormVector = " pH1;-pI2;-pI3" />
+        <Axis NormVector = "-pH1;-pI2;-pI3" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;    0;  pA3" />
+                <Add Vector = " pB1; -pB2;  pB3" />
+                <Add Vector = " pC1; -pC2;  pC3" />
+                <Add Vector = " pD1; -pD2; -pD3" />
+                <Add Vector = "-pD1; -pD2; -pD3" />
+                <Add Vector = "-pC1; -pC2;  pC3" />
+                <Add Vector = "-pB1; -pB2;  pB3" />
+                <Add Vector = "   0;  pE2; -pD3" />
+                <Add Vector = "-pB1;  pF2; -pD3" />
+                <Add Vector = "-pC1; -pG2; -pD3" />
+                <Add Vector = " pC1; -pG2; -pD3" />
+                <Add Vector = " pB1;  pF2; -pD3" />
+                <Add Vector = "-pH1;  pH2;  pH3" />
+                <Add Vector = " pH1;  pH2;  pH3" />
+                <Add Vector = " pH1; -pI2; -pI3" />
+                <Add Vector = "-pH1; -pI2; -pI3" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clGreen  " VertexIndexes = " 0; 6; 5; 4; 3; 2; 1" />
+                <Face Color = "clYellow " VertexIndexes = " 7;11;10; 3; 4; 9; 8" />
+                <Face Color = "clWhite  " VertexIndexes = " 0; 7; 8;12; 6" />
+                <Face Color = "clBlue   " VertexIndexes = " 0; 1;13;11; 7" />
+                <Face Color = "clRed1   " VertexIndexes = " 1; 2;14;13" />
+                <Face Color = "clRed2   " VertexIndexes = " 2; 3;10;14" />
+                <Face Color = "clRed3   " VertexIndexes = "13;14;10;11" />
+                <Face Color = "clOrange1" VertexIndexes = " 6;12;15; 5" />
+                <Face Color = "clOrange2" VertexIndexes = "12; 8; 9;15" />
+                <Face Color = "clOrange3" VertexIndexes = " 5;15; 9; 4" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "R" > <Turn Axis = "0" Angle = "-A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+        <Macro Name = "R'"> <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+        <Macro Name = "L" > <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+        <Macro Name = "L'"> <Turn Axis = "1" Angle = " A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+
+        <ExecMacro MacroName = "R' L" Repeat = "13" />
+        <Undo Repeat = "1800" />
+    </Figure>
+</xml>

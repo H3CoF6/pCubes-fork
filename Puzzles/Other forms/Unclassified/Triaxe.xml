@@ -1,0 +1,142 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triaxe</Name>
+        <Menu>Other forms\Unclassified\Triaxe</Menu>
+        <Inventor>Ben Streeter</Inventor>
+        <Programmer>skallos</Programmer>
+        <Added>2016-07-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4922</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'EDFF11';
+        clBlue         := '0000C8';
+        clOrange       := 'FF800A';
+        clLightViolett := 'FF00B0';
+        clRed          := 'C80000';
+        clGreen        := '009600';
+        clViolett      := '7700CD';
+        clGray         := '45575E';
+        clWhite        := 'FFFFFF';
+
+        mAngle := ArcTan(0.5);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+        sAngle := PI * 2 / 5;
+        for i := 1 to 5 do begin
+            ax[i] := sin(sAngle * (i - 1)) * Ac;
+            ay[i] := cos(sAngle * (i - 1)) * Ac;
+        end;
+
+        R := 0.9;
+        Rsin := R * sin(mAngle);
+        Rcos := R * cos(mAngle);
+
+        X[3] := Rcos * sin(sAngle * 2);
+        Y[3] := Rcos * cos(sAngle * 2);
+        Z[3] := Rsin;
+
+        X[6] := Rcos * sin(sAngle * 5.5);
+        Y[6] := Rcos * cos(sAngle * 5.5);
+        Z[6] := -Rsin;
+
+        X[9] := Rcos * sin(sAngle * 8.5);
+        Y[9] := Rcos * cos(sAngle * 8.5);
+        Z[9] := -Rsin;
+
+        dAngle := (Arctan(2) + Arcsin(2/3)) / 2;
+        dAngle2 := (Arctan(2) - Arcsin(2/3)) / 2;
+        K := RSin / sin(dAngle);
+        Rsin := K * sin(dAngle);
+        Rcos := K * cos(dAngle);
+        R2sin := K * sin(dAngle2);
+        R2cos := K * cos(dAngle2);
+
+        for i := 0 to 4 do begin
+            x1[i] := Rcos * sin(sAngle * (i - 0.5));
+            y1[i] := Rcos * cos(sAngle * (i - 0.5));
+            z1[i] := Rsin;
+        end;
+
+        for i := 5 to 9 do begin
+            x1[i] := R2cos * sin(sAngle * (i - 0.5));
+            y1[i] := R2cos * cos(sAngle * (i - 0.5));
+            z1[i] := R2sin;
+        end;
+
+        x1[17] := Rcos * sin(sAngle * 17);
+        y1[17] := Rcos * cos(sAngle * 17);
+        z1[17] := -Rsin;
+
+        D2 := R2sin;
+
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D2" FixedLayers = "0" >
+        <Axis NormVector = "-ax[2]; -ay[2]; -As" />
+        <Axis NormVector = " ax[3];  ay[3];  As" />
+        <Axis NormVector = "-ax[4]; -ay[4]; -As" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " X[ 3];  Y[ 3];  Z[ 3]" />
+                <Add Vector = " X[ 9];  Y[ 9];  Z[ 9]" />
+                <Add Vector = " X[ 6];  Y[ 6];  Z[ 6]" />
+                <Add Vector = "x1[ 0]; y1[ 0]; z1[ 0]" />
+                <Add Vector = "x1[ 1]; y1[ 1]; z1[ 1]" />
+                <Add Vector = "x1[ 4]; y1[ 4]; z1[ 4]" />
+                <Add Vector = "x1[ 5]; y1[ 5]; z1[ 5]" />
+                <Add Vector = "x1[17]; y1[17]; z1[17]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange"       VertexIndexes = "1;0;5" />
+                <Face Color = "clYellow"       VertexIndexes = "0;2;4" />
+                <Face Color = "clGreen"        VertexIndexes = "2;1;6" />
+                <Face Color = "clViolett"      VertexIndexes = "0;4;3;5" />
+                <Face Color = "clLightViolett" VertexIndexes = "2;6;3;4" />
+                <Face Color = "clGray"         VertexIndexes = "1;5;3;6" />
+                <Face Color = "clRed"          VertexIndexes = "0;1;7" />
+                <Face Color = "clWhite"        VertexIndexes = "2;0;7" />
+                <Face Color = "clBlue"         VertexIndexes = "1;2;7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Angle =    "sAngle" Axis = "0" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Angle =    "sAngle" Axis = "0" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Angle = "-2*sAngle" Axis = "0" Layer = "1" />
+
+        <Turn Angle =    "sAngle" Axis = "1" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Angle =    "sAngle" Axis = "1" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Angle = "-2*sAngle" Axis = "1" Layer = "1" />
+
+        <Turn Angle =    "sAngle" Axis = "2" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Angle =    "sAngle" Axis = "2" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Angle = "-2*sAngle" Axis = "2" Layer = "1" />
+
+        <HideContaining Vector = "X[3]; Y[3]; Z[3]" />
+        <HideContaining Vector = "X[6]; Y[6]; Z[6]" />
+        <HideContaining Vector = "X[9]; Y[9]; Z[9]" />
+        <HideContaining Vector = "   0;    0;    0" />
+
+        <Split> <Plane NormDistance = "-D2" NormVector = "      0;      0;   1" /> </Split>
+        <Split> <Plane NormDistance = "-D2" NormVector = "  ax[1];  ay[1];  As" /> </Split>
+        <Split> <Plane NormDistance = "-D2" NormVector = " -ax[2]; -ay[2]; -As" /> </Split>
+        <Split> <Plane NormDistance = "-D2" NormVector = "  ax[3];  ay[3];  As" /> </Split>
+        <Split> <Plane NormDistance = "-D2" NormVector = " -ax[4]; -ay[4]; -As" /> </Split>
+        <Split> <Plane NormDistance = "-D2" NormVector = "  ax[5];  ay[5];  As" /> </Split>
+        <ShowAll/>
+    </Figure>
+</xml>

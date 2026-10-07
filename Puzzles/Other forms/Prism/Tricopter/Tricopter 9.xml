@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+    <Interface>
+        <Name>Tricopter 9</Name>
+        <Menu>Other forms\Prism\Tricopter\Tricopter 9</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Boris, Evgeniy Grigoriev</Programmer>
+        <Added>2016-12-04</Added>
+        <Link>http://twistypuzzles.com/museum/museum_showitem.php?pkey=5402</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=31059</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '008000'; // Green
+        Colors[1] := 'C80000'; // Red
+        Colors[2] := '0000A0'; // Blue
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        R  := 0.6;
+        PH := 0.55; // horizontal pillow
+        PV := 1.0; // vertical pillow
+        H := R * (1 + PH * PV) / sqrt(3);
+
+        S := 3; // S segments
+        // every side divided into MxN faces
+        N := 1; 
+        M := 6; // must be even
+        MS := M * S; // FacesPerRow
+
+        A := 2 * Pi / S;
+        sa := sin(A/2);
+        ca := cos(A/2);
+
+        function QInterpolate(xi, x1, y1, x2, y2, x3, y3);
+        begin
+            Result :=
+                y1 * (xi - x2) * (xi - x3) / (x1 - x2) / (x1 - x3) +
+                y2 * (xi - x3) * (xi - x1) / (x2 - x3) / (x2 - x1) +
+                y3 * (xi - x1) * (xi - x2) / (x3 - x1) / (x3 - x2);
+        end;
+
+        for i := 0 to N do begin // vertical curve
+            HZ[i] := H * (-1 + 2 / N * i);
+            RZ[i] := R * QInterpolate(HZ[i], -H,PV, 0,1, H,PV)
+        end;
+
+        for i := 0 to M do begin // horizontal curve
+            SX[i] := sa * (-1 + 2 / M * i);
+            SY[i] := QInterpolate(SX[i], -sa,ca, 0,PH, sa,ca);
+        end;
+
+
+        id := 0;
+        for k := 0 to N do begin
+            for j := 0 to S - 1 do begin
+                A1 := Pi/2 + A * j;
+                cA1 := cos(A1);
+                sA1 := sin(A1);
+                for i := 0 to M - 1 do begin
+                    x[Id] := (SX[i] * cA1 + SY[i] * sA1) * RZ[k];
+                    y[Id] := (SY[i] * cA1 - SX[i] * sA1) * RZ[k];
+                    z[Id] := HZ[k];
+                    Inc(Id);
+                end;
+            end;
+        end;
+
+        for i := 0 to S do begin
+            ax[i] := cos(A * i);
+            ay[i] := sin(A * i);
+        end;
+        az := sqrt(3)/2;
+
+        D := (-PH * PV * R / 2 + H * sqrt(3)/2) / sqrt(7) * 2;
+        D2 := (H * sqrt(3) - D *  sqrt(7)) / 2;
+        A1 := ArcCos(1 / 8);
+        A2 := ArcCos(-3 / 4);
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "D" >
+        <Axis NormVector = "ax[0]; ay[0]; az" />
+        <Axis NormVector = "ax[1]; ay[1]; az" />
+        <Axis NormVector = "ax[2]; ay[2]; az" />
+        <Axis NormVector = "ax[0]; ay[0];-az" />
+        <Axis NormVector = "ax[1]; ay[1];-az" />
+        <Axis NormVector = "ax[2]; ay[2];-az" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2; 0" PlaneDistances = "-D2" NormVectors = "ax; ay; 0" />
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                is := i + Seg * M;
+                ir := Row * MS;
+                i1 := is + ir;
+                i2 := (is + 1) mod MS + ir;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[Seg]" VertexIndexes = "i2; i1; i1 + MS; i2 + MS" InvisibleEdges = "ie" />
+        </Macro>
+
+        <Macro Name = "AddRow" >
+            <ExecMacro MacroName = "AddFace" i = "0"     ie = "13 and ia" />
+            <ExecMacro MacroName = "AddFace" i = "1"     ie = "15 and ia" Repeat = "M - 2" />
+            <ExecMacro MacroName = "AddFace" i = "M - 1" ie = " 7 and ia" />
+            <Script> Row := Row + 1; </Script>
+        </Macro>
+
+        <Macro Name = "AddSegment" >
+            <ExecMacro MacroName = "AddRow" Row = "0"     ia = "10" /> bottom
+<!--            <ExecMacro MacroName = "AddRow" Row = "1"     ia = "15" Repeat = "N - 2" /> center
+            <ExecMacro MacroName = "AddRow" Row = "N - 1" ia = "11" /> top-->
+            <Script> Inc(Seg); </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x;y;z" />
+
+            <Faces>
+                <Face Color = "clWhite"  VertexIndexes = "FromTo(0, MS - 1)" />
+                <ExecMacro MacroName = "AddSegment" Seg = "0" Repeat = "3" />
+                <Face Color = "clYellow" VertexIndexes = "FromTo((N + 1) * MS - 1, N * MS)" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "CutCenter" >
+            <Turn Axis = "Ax1" Layer = "1" Angle = "A1" />
+            <Cut Axis = "Ax2" To = "1" />
+            <Turn Axis = "Ax1" Layer = "1" Angle = "-2*A1" />
+            <Cut Axis = "Ax3" To = "1" />
+            <Undo Repeat = "2" />
+        </Macro>
+
+        <Hide><Plane NormVector = "0;0;1" NormDistance = "0.1" /></Hide>
+        <ExecMacro MacroName = "CutCenter" Ax1 = "0" Ax2 = "5" Ax3 = "4" />
+        <ExecMacro MacroName = "CutCenter" Ax1 = "1" Ax2 = "3" Ax3 = "5" />
+        <ExecMacro MacroName = "CutCenter" Ax1 = "2" Ax2 = "4" Ax3 = "3" />
+        <ShowAll/>
+
+        <Hide><Plane NormVector = "0;0;-1" NormDistance = "0.1" /></Hide>
+            <Turn1 Axis = "3" Layer = "1" Angle = "A1" />
+            <Cut1 Axis = "1" To = "1" />
+        <ExecMacro MacroName = "CutCenter" Ax1 = "3" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "CutCenter" Ax1 = "4" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "CutCenter" Ax1 = "5" Ax2 = "0" Ax3 = "1" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

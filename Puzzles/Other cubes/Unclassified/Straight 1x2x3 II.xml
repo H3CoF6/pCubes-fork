@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Straight 1x2x3 II</Name>
+        <Menu>Other cubes\Unclassified\Straight 1x2x3 II</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-25</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        D := 0.185;
+        W := 0.5;
+        R := 0.15;
+        sAngle := 10 * Pi / 9;
+        x := R * cos(sAngle);
+        y := R * sin(sAngle);
+
+        D1 := -2*D-R;
+
+        Wx := W;
+        Wy := W / 3;
+        Wz := W / 3 * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0" PlaneDistances = "-R" >
+        <Axis NormVector = " x; y; 0" />
+        <Axis NormVector = "-x; y; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 9" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "2" From = "1" />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "0" Angle = "Pi" />
+    </Figure>
+</xml>

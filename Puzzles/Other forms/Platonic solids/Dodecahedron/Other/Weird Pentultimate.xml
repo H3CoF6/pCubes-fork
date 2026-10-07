@@ -1,0 +1,164 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Weird Pentultimate</Name>
+        <Menu>Other forms\Dodecahedron\Other\Weird Pentultimate</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-10</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // clWhite
+        Colors[ 1] := 'FFFF00'; // clYellow
+        Colors[ 2] := '0000CC'; // clBlue
+        Colors[ 3] := 'FF0000'; // clRed
+        Colors[ 4] := '00AA00'; // clGreen
+        Colors[ 5] := '800080'; // clViolett
+        Colors[ 6] := 'FFFFAA'; // clCream
+        Colors[ 7] := '0066CC'; // clLightBlue
+        Colors[ 8] := 'FF6000'; // clOrange
+        Colors[ 9] := '00FF00'; // clLightGreen
+        Colors[10] := 'FF88CC'; // clLightViolett
+        Colors[11] := '666666'; // clGray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * sqrt((85 + 38 * sqrt(5)) / 240);
+        DCut := R * sqrt((47 + 21 * sqrt(5))/120);
+
+         // Rotate p around normalized v
+        procedure RotatePoint(Angle);
+        begin
+            Xp := Ex[e];
+            Yp := Ey[e];
+            Zp := Ez[e];
+            Xv := Cx[c] / RSin; // normalize v
+            Yv := Cy[c] / RSin;
+            Zv := Cz[c] / RSin;
+
+            ca := Cos(Angle);
+            sa := Sin(Angle);
+            c2 := 1 - ca;
+
+            px[ind] := Xp * (Xv * c2 * Xv + ca) +
+                       Yp * (Yv * c2 * Xv - sa * Zv) +
+                       Zp * (Zv * c2 * Xv + sa * Yv);
+
+            py[ind] := Xp * (Xv * c2 * Yv + sa * Zv) +
+                       Yp * (Yv * c2 * Yv + ca) +
+                       Zp * (Zv * c2 * Yv - sa * Xv);
+
+            pz[ind] := Xp * (Xv * c2 * Zv - sa * Yv) +
+                       Yp * (Yv * c2 * Zv + sa * Xv) +
+                       Zp * (Zv * c2 * Zv + ca);
+            Inc(ind);
+        end;
+
+        procedure CalcPlaneAxes(e, c, A);
+        begin
+            for i := 0 to 4 do
+                RotatePoint((i * 2 + 1) * A);
+        end;
+
+        ind := 0;
+        CalcPlaneAxes(10, 0, Pi/10);
+        CalcPlaneAxes( 9, 1, Pi/10);
+        CalcPlaneAxes( 8, 2,-Pi/10);
+        CalcPlaneAxes( 6, 3, Pi/10);
+        CalcPlaneAxes( 7, 4, Pi/10);
+        CalcPlaneAxes( 2, 5,-Pi/10);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/10" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-D; D" NormVectors = " px; py; pz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "Split1" >
+            <Split Axis = "ax" From = "1" />
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split1" ax = "0" Repeat = "6" />
+
+        <Macro Name = "Split2" >
+            <Turn Axis = "ax0" Layer = "0" Angle = "2*pi/10" />
+            <Split Axis = "ax  " From = "2" />
+            <Split Axis = "ax+1" From = "1" />
+            <Split Axis = "ax+2" From = "2" />
+            <Split Axis = "ax+3" From = "1" />
+            <Split Axis = "ax+4" From = "2" />
+            <Undo/>
+        </Macro>
+        <ExecMacro MacroName = "Split2" ax0 = "0" ax = " 6" />
+        <ExecMacro MacroName = "Split2" ax0 = "1" ax = "11" />
+        <ExecMacro MacroName = "Split2" ax0 = "2" ax = "16" />
+        <ExecMacro MacroName = "Split2" ax0 = "3" ax = "21" />
+        <ExecMacro MacroName = "Split2" ax0 = "4" ax = "26" />
+        <ExecMacro MacroName = "Split2" ax0 = "5" ax = "31" />
+
+        <HideContaining Vectors = "Cx; Cy; Cz" />
+
+        <Macro Name = "Hide2">
+            <HideContaining Vector = "f*Vx[id]; f*Vy[id]; f*Vz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide2" Repeat = "20" id = "0" f = "D/R * sqrt(6 * (5 - sqrt(5))) / 4" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <RemoveContaining Vector = "Ex; Ey; Ez" />
+
+        <Macro Name = "CutCenter">
+            <HideContaining Vector = "Cx[0]; Cy[0]; Cz[0]" />
+            <InvertVisibility/>
+            <Cut Color = "Colors[c1]" > <Plane NormVector = "-Ex[0];-Ey[0];-Ez[0]" NormDistance = "-DCut" /> </Cut>
+            <Cut Color = "Colors[c2]" > <Plane NormVector = "-Ex[1];-Ey[1];-Ez[1]" NormDistance = "-DCut" /> </Cut>
+            <Cut Color = "Colors[c3]" > <Plane NormVector = "-Ex[2];-Ey[2];-Ez[2]" NormDistance = "-DCut" /> </Cut>
+            <Cut Color = "Colors[c4]" > <Plane NormVector = "-Ex[3];-Ey[3];-Ez[3]" NormDistance = "-DCut" /> </Cut>
+            <Cut Color = "Colors[c5]" > <Plane NormVector = "-Ex[4];-Ey[4];-Ez[4]" NormDistance = "-DCut" /> </Cut>
+
+            <ShowAll/>
+            <Turn NormVector = "Ex[0]; Ey[0]; Ez[0]" Angle = "Pi" />
+        </Macro>
+
+        <ExecMacro MacroName = "CutCenter" c1 = " 1" c2 = " 2" c3 = " 3" c4 = " 4" c5 = " 5" />
+        <ExecMacro MacroName = "CutCenter" c1 = " 0" c2 = " 5" c3 = " 8" c4 = " 9" c5 = " 2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutCenter" c1 = " 6" c2 = "10" c3 = " 9" c4 = " 8" c5 = " 7" />
+        <ExecMacro MacroName = "CutCenter" c2 = " 7" c3 = " 4" c4 = " 3" c5 = "10" c1 = "11" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <Turn NormVector = "Vx[2];Vy[2];Vz[2]" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "CutCenter" c1 = "10" c2 = " 3" c3 = " 0" c4 = " 1" c5 = " 9" />
+        <ExecMacro MacroName = "CutCenter" c1 = " 2" c2 = " 9" c3 = "11" c4 = " 6" c5 = " 3" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutCenter" c1 = " 5" c2 = " 4" c3 = " 6" c4 = "11" c5 = " 8" />
+        <ExecMacro MacroName = "CutCenter" c1 = " 7" c2 = " 8" c3 = " 1" c4 = " 0" c5 = " 4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <Turn NormVector = "Vx[2];Vy[2];Vz[2]" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "CutCenter" c1 = " 4" c2 = " 0" c3 = " 2" c4 = "10" c5 = " 6" />
+        <ExecMacro MacroName = "CutCenter" c1 = " 3" c2 = " 6" c3 = " 7" c4 = " 5" c5 = " 0" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutCenter" c1 = " 9" c2 = " 1" c3 = " 5" c4 = " 7" c5 = "11" />
+        <ExecMacro MacroName = "CutCenter" c1 = " 8" c2 = "11" c3 = "10" c4 = " 2" c5 = " 1" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <Turn NormVector = "Vx[2];Vy[2];Vz[2]" Angle = "2*Pi/3" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

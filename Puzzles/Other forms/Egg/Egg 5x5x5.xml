@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Egg 5x5x5</Name>
+        <Menu>Other forms\Egg\Egg 5x5x5</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-03-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5294</Link>
+    </Interface>
+
+    <Script>
+        clGold   := 'EFCC71';
+        clSilver := 'BFBFBA';
+
+        K := 0.7;
+        D1 := K * 0.122;
+        D2 := D1 * 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D1; D1; D2" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Egg\_Macro_For_Egg.xml" Color = "clGold" />
+
+        <Cut Axis = "2" From = "1" />
+        <Split Axis = "2" From = "4" />
+        <Hide Axis = "2" From = "4" />
+        <SplitByAxes/>
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = "0;0;-1" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Egg\_Macro_For_Egg.xml" Color = "clSilver"/>
+        <Cut Axis = "2" To = "4" />
+        <Split Axis = "2" From = "1" />
+        <Hide Axis = "2" To = "1" />
+        <SplitByAxes/>
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = "0;0;1" /> </Cut>
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

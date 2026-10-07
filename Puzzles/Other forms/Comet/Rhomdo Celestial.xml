@@ -1,0 +1,465 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhomdo Celestial</Name>
+        <Menu>Other forms\Comet\Rhomdo Celestial</Menu>
+        <Inventor>Oskar van Deventer + Bo Hu</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-07-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4705</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clOrange       := 'FF6000';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clWhite        := 'FFFFFF';
+        clLightViolett := 'FF0080';
+        clLightBlue    := '2828FF';
+        clViolett      := '800080';
+        clBrown        := '800000';
+        clLightGreen   := '00FF00';
+        clCyan         := '00DCB4';
+
+        K   := 1 / 50;
+        pAx := K * 20;
+        pBx := K * 10;
+        pCx := K * 21;
+        pDx := K *  6;
+        pEx := K * 15;
+        pFx := K * 25;
+        pGx := K *  5;
+        pHx := K * 20;
+        pIx := K * 27;
+        pJx := K *  9;
+        pKx := K * 18;
+        pLx := K * 30;
+        pMx := K * 15;
+        nAx := K * 22;
+        nBx := K * 11;
+        nCx := K * 23;
+        nDx := K * 10;
+        nEx := K * 13;
+        nFx := K * 24;
+        nGx := K * 12;
+
+        K3  := K  * sqrt(3);
+        pBy := K3 * 10;
+        pCy := K3 *  3;
+        pDy := K3 * 12;
+        pEy := K3 *  9;
+        pFy := K3 *  5;
+        pGy := K3 * 15;
+        pHy := K3 * 10;
+        pIy := K3 *  3;
+        pJy := K3 * 15;
+        pKy := K3 * 12;
+        pMy := K3 * 15;
+        nBy := K3 * 11;
+        nCy := K3;
+        nDy := K3 * 12;
+        nEy := K3 * 11;
+        nGy := K3 * 12;
+
+        K2  := K  * sqrt(2) / 2;
+        pAz := K2 * 35;
+        pCz := K2 * 30;
+        pFz := K2 * 25;
+        pIz := K2 * 18;
+        pLz := K2 * 15;
+        nAz := K2 * 25;
+        nCz := K2 * 23;
+        nFz := K2 * 21;
+
+        H   := K2 * 45;
+
+        D   := K3 * 12;
+
+        nA  := sqrt(3) / 2;
+        nB  := 1 / 2;
+        nz  := sqrt(2);
+
+        A1  := Arccos(1 / 3);
+        A2  := 2 * A1;
+        A3  := Pi - A1;
+    </Script>
+
+    <Axes TurningAngles = "Pi" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3; Pi" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "  0;  1; 0" />
+        <Axis NormVector = "-nA;-nB; 0" />
+        <Axis NormVector = " nA;-nB; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "A1" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "  1;  0; nz" />
+        <Axis NormVector = "-nB;-nA; nz" />
+        <Axis NormVector = "-nB; nA; nz" />
+        <Axis NormVector = "  1;  0;-nz" />
+        <Axis NormVector = "-nB;-nA;-nz" />
+        <Axis NormVector = "-nB; nA;-nz" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;   0;   H" />
+
+                <Add Vector = "-pAx;   0; pAz" />
+                <Add Vector = " pBx;-pBy; pAz" />
+                <Add Vector = " pBx; pBy; pAz" />
+
+                <Add Vector = "-pCx; pCy; pCz" />
+                <Add Vector = "-pCx;-pCy; pCz" />
+                <Add Vector = " pDx;-pDy; pCz" />
+                <Add Vector = " pEx;-pEy; pCz" />
+                <Add Vector = " pEx; pEy; pCz" />
+                <Add Vector = " pDx; pDy; pCz" />
+
+                <Add Vector = "-pFx; pFy; pFz" />
+                <Add Vector = "-pFx;-pFy; pFz" />
+                <Add Vector = " pGx;-pGy; pFz" />
+                <Add Vector = " pHx;-pHy; pFz" />
+                <Add Vector = " pHx; pHy; pFz" />
+                <Add Vector = " pGx; pGy; pFz" />
+
+                <Add Vector = "-pIx; pIy; pIz" />
+                <Add Vector = "-pIx;-pIy; pIz" />
+                <Add Vector = " pJx;-pJy; pIz" />
+                <Add Vector = " pKx;-pKy; pIz" />
+                <Add Vector = " pKx; pKy; pIz" />
+                <Add Vector = " pJx; pJy; pIz" />
+
+                <Add Vector = "-pLx;   0; pLz" />
+                <Add Vector = " pMx;-pMy; pLz" />
+                <Add Vector = " pMx; pMy; pLz" />
+
+                <Add Vector = "-pMx;-pMy; pLz" />
+                <Add Vector = " pLx;   0; pLz" />
+                <Add Vector = "-pMx; pMy; pLz" />
+
+                <Add Vector = "-pMx;-pMy;-pLz" />
+                <Add Vector = " pLx;   0;-pLz" />
+                <Add Vector = "-pMx; pMy;-pLz" />
+
+                <Add Vector = "-pLx;   0;-pLz" />
+                <Add Vector = " pMx;-pMy;-pLz" />
+                <Add Vector = " pMx; pMy;-pLz" />
+
+                <Add Vector = "-pIx; pIy;-pIz" />
+                <Add Vector = "-pIx;-pIy;-pIz" />
+                <Add Vector = " pJx;-pJy;-pIz" />
+                <Add Vector = " pKx;-pKy;-pIz" />
+                <Add Vector = " pKx; pKy;-pIz" />
+                <Add Vector = " pJx; pJy;-pIz" />
+
+                <Add Vector = "-pFx; pFy;-pFz" />
+                <Add Vector = "-pFx;-pFy;-pFz" />
+                <Add Vector = " pGx;-pGy;-pFz" />
+                <Add Vector = " pHx;-pHy;-pFz" />
+                <Add Vector = " pHx; pHy;-pFz" />
+                <Add Vector = " pGx; pGy;-pFz" />
+
+                <Add Vector = "-pCx; pCy;-pCz" />
+                <Add Vector = "-pCx;-pCy;-pCz" />
+                <Add Vector = " pDx;-pDy;-pCz" />
+                <Add Vector = " pEx;-pEy;-pCz" />
+                <Add Vector = " pEx; pEy;-pCz" />
+                <Add Vector = " pDx; pDy;-pCz" />
+
+                <Add Vector = "-pAx;   0;-pAz" />
+                <Add Vector = " pBx;-pBy;-pAz" />
+                <Add Vector = " pBx; pBy;-pAz" />
+
+                <Add Vector = "   0;   0;-  H" />
+
+                <Add Vector = "-nAx;   0; nAz" />
+                <Add Vector = " nBx;-nBy; nAz" />
+                <Add Vector = " nBx; nBy; nAz" />
+
+                <Add Vector = "-nCx; nCy; nCz" />
+                <Add Vector = "-nCx;-nCy; nCz" />
+                <Add Vector = " nDx;-nDy; nCz" />
+                <Add Vector = " nEx;-nEy; nCz" />
+                <Add Vector = " nEx; nEy; nCz" />
+                <Add Vector = " nDx; nDy; nCz" />
+
+                <Add Vector = "-nFx;   0; nFz" />
+                <Add Vector = " nGx;-nGy; nFz" />
+                <Add Vector = " nGx; nGy; nFz" />
+
+                <Add Vector = "-nFx;   0;-nFz" />
+                <Add Vector = " nGx;-nGy;-nFz" />
+                <Add Vector = " nGx; nGy;-nFz" />
+
+                <Add Vector = "-nCx; nCy;-nCz" />
+                <Add Vector = "-nCx;-nCy;-nCz" />
+                <Add Vector = " nDx;-nDy;-nCz" />
+                <Add Vector = " nEx;-nEy;-nCz" />
+                <Add Vector = " nEx; nEy;-nCz" />
+                <Add Vector = " nDx; nDy;-nCz" />
+
+                <Add Vector = "-nAx;   0;-nAz" />
+                <Add Vector = " nBx;-nBy;-nAz" />
+                <Add Vector = " nBx; nBy;-nAz" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue        " VertexIndexes = "0;1;5;11;25;12;6;2" />
+                <Face Color = "clGreen       " VertexIndexes = "0;2;7;13;26;14;8;3" />
+                <Face Color = "clViolett     " VertexIndexes = "0;3;9;15;27;10;4;1" />
+
+                <Face Color = "clOrange      " VertexIndexes = "22;31;35;41;28;25;11;17" />
+                <Face Color = "clWhite       " VertexIndexes = "23;32;37;43;29;26;13;19" />
+                <Face Color = "clCyan        " VertexIndexes = "24;33;39;45;30;27;15;21" />
+
+                <Face Color = "clRed         " VertexIndexes = "25;28;42;36;32;23;18;12" />
+                <Face Color = "clYellow      " VertexIndexes = "26;29;44;38;33;24;20;14" />
+                <Face Color = "clBrown       " VertexIndexes = "27;30;40;34;31;22;16;10" />
+
+                <Face Color = "clLightBlue   " VertexIndexes = "28;41;47;52;55;53;48;42" />
+                <Face Color = "clLightGreen  " VertexIndexes = "29;43;49;53;55;54;50;44" />
+                <Face Color = "clLightViolett" VertexIndexes = "30;45;51;54;55;52;46;40" />
+
+                <Face VertexIndexes = "1;4;56;5" />
+                <Face VertexIndexes = "2;6;57;7" />
+                <Face VertexIndexes = "3;8;58;9" />
+
+                <Face VertexIndexes = "10;16;59;4" />
+                <Face VertexIndexes = "11;5;60;17" />
+                <Face VertexIndexes = "12;18;61;6" />
+                <Face VertexIndexes = "13;7;62;19" />
+                <Face VertexIndexes = "14;20;63;8" />
+                <Face VertexIndexes = "15;9;64;21" />
+
+                <Face VertexIndexes = "17;65;16;22" />
+                <Face VertexIndexes = "19;66;18;23" />
+                <Face VertexIndexes = "21;67;20;24" />
+
+                <Face VertexIndexes = "56;59;65;60" />
+                <Face VertexIndexes = "57;61;66;62" />
+                <Face VertexIndexes = "58;63;67;64" />
+
+                <Face VertexIndexes = "4;59;56" />
+                <Face VertexIndexes = "5;56;60" />
+                <Face VertexIndexes = "6;61;57" />
+                <Face VertexIndexes = "7;57;62" />
+                <Face VertexIndexes = "8;63;58" />
+                <Face VertexIndexes = "9;58;64" />
+
+                <Face VertexIndexes = "16;65;59" />
+                <Face VertexIndexes = "17;60;65" />
+                <Face VertexIndexes = "18;66;61" />
+                <Face VertexIndexes = "19;62;66" />
+                <Face VertexIndexes = "20;67;63" />
+                <Face VertexIndexes = "21;64;67" />
+
+                <Face VertexIndexes = "68;35;31;34" />
+                <Face VertexIndexes = "69;37;32;36" />
+                <Face VertexIndexes = "70;39;33;38" />
+
+                <Face VertexIndexes = "71;34;40;46" />
+                <Face VertexIndexes = "72;47;41;35" />
+                <Face VertexIndexes = "73;36;42;48" />
+                <Face VertexIndexes = "74;49;43;37" />
+                <Face VertexIndexes = "75;38;44;50" />
+                <Face VertexIndexes = "76;51;45;39" />
+
+                <Face VertexIndexes = "77;46;52;47" />
+                <Face VertexIndexes = "78;48;53;49" />
+                <Face VertexIndexes = "79;50;54;51" />
+
+                <Face VertexIndexes = "68;71;77;72" />
+                <Face VertexIndexes = "69;73;78;74" />
+                <Face VertexIndexes = "70;75;79;76" />
+
+                <Face VertexIndexes = "34;71;68" />
+                <Face VertexIndexes = "35;68;72" />
+                <Face VertexIndexes = "36;73;69" />
+                <Face VertexIndexes = "37;69;74" />
+                <Face VertexIndexes = "38;75;70" />
+                <Face VertexIndexes = "39;70;76" />
+
+                <Face VertexIndexes = "46;77;71" />
+                <Face VertexIndexes = "47;72;77" />
+                <Face VertexIndexes = "48;78;73" />
+                <Face VertexIndexes = "49;74;78" />
+                <Face VertexIndexes = "50;79;75" />
+                <Face VertexIndexes = "51;76;79" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn  Axis = "3" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+        <Split Axis = "3" From  = "1" />
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " A1" />
+        <Split Axis = "4" From  = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "5" Layer = "1" Angle = "-A1" />
+        <Split Axis = "4" From  = "1" />
+        <Turn  Axis = "5" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "5" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+
+        <Turn  Axis = "3" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+        <Split Axis = "3" From  = "1" />
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " A1" />
+        <Split Axis = "4" From  = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "5" Layer = "1" Angle = "-A1" />
+        <Split Axis = "4" From  = "1" />
+        <Turn  Axis = "5" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "4" Layer = "1" Angle = " Pi" />
+
+        <Turn  Axis = "3" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+        <Split Axis = "3" From  = "1" />
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " A1" />
+        <Split Axis = "4" From  = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "5" Layer = "1" Angle = "-A1" />
+        <Split Axis = "4" From  = "1" />
+        <Turn  Axis = "5" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "5" Layer = "1" Angle = " Pi" />
+
+
+        <Turn  Axis = "6" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "8" Layer = "1" Angle = "-A1" />
+        <Split Axis = "6" From  = "1" />
+        <Turn  Axis = "8" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "6" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "8" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "6" Layer = "1" Angle = " A1" />
+        <Split Axis = "8" From  = "1" />
+        <Turn  Axis = "6" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "8" Layer = "1" Angle = " A1" />
+
+        <Turn  Axis = "8" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "7" Layer = "1" Angle = "-A1" />
+        <Split Axis = "8" From  = "1" />
+        <Turn  Axis = "7" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "8" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "7" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "8" Layer = "1" Angle = " Pi" />
+
+        <Turn  Axis = "6" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "8" Layer = "1" Angle = "-A1" />
+        <Split Axis = "6" From  = "1" />
+        <Turn  Axis = "8" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "6" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "8" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "6" Layer = "1" Angle = " A1" />
+        <Split Axis = "8" From  = "1" />
+        <Turn  Axis = "6" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "8" Layer = "1" Angle = " A1" />
+
+        <Turn  Axis = "8" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "7" Layer = "1" Angle = "-A1" />
+        <Split Axis = "8" From  = "1" />
+        <Turn  Axis = "7" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "8" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "8" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "6" Layer = "1" Angle = " Pi" />
+
+        <Turn  Axis = "6" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "8" Layer = "1" Angle = "-A1" />
+        <Split Axis = "6" From  = "1" />
+        <Turn  Axis = "8" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "6" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "8" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "6" Layer = "1" Angle = " A1" />
+        <Split Axis = "8" From  = "1" />
+        <Turn  Axis = "6" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "8" Layer = "1" Angle = " A1" />
+
+        <Turn  Axis = "8" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "7" Layer = "1" Angle = "-A1" />
+        <Split Axis = "8" From  = "1" />
+        <Turn  Axis = "7" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "8" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "6" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "7" Layer = "1" Angle = " Pi" />
+
+
+        <Turn  Axis = "0" Layer = "0" Angle = "-A3" />
+        <Turn  Axis = "1" Layer = "0" Angle = "-A3" />
+        <Turn  Axis = "2" Layer = "0" Angle = "-A3" />
+
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "5" From  = "1" />
+        <Turn  Axis = "5" Layer = "1" Angle = " Pi" />
+        <Split Axis = "4" From  = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "4" Layer = "1" Angle = " Pi" />
+        <Split Axis = "3" From  = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+
+        <Turn  Axis = "3" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+        <Split Axis = "3" From  = "1" />
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " A1" />
+        <Split Axis = "4" From  = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "5" Layer = "1" Angle = "-A1" />
+        <Split Axis = "4" From  = "1" />
+        <Turn  Axis = "5" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "4" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "5" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+
+        <Turn  Axis = "0" Layer = "0" Angle = " A3" />
+        <Turn  Axis = "1" Layer = "0" Angle = " A3" />
+        <Turn  Axis = "2" Layer = "0" Angle = " A3" />
+    </Figure>
+</xml>

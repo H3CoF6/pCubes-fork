@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3 Corners Slim Cube (5 colors)</Name>
+        <Menu>Cubic\Multi-core\3x3 Corners Slim Cube (5 colors)</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-05</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colr[0] := 'FFFFFF'; // White
+        Colr[1] := 'EE0000'; // Red
+        Colr[2] := '00CC00'; // Green
+        Colr[3] := 'FFEE00'; // Yellow
+        Colr[4] := '0077EE'; // Blue
+
+        for i := 0 to 5 do
+            Colors[i] := Colr[0];
+
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W / 3;
+        D := W / 3;
+        D1 := D * 5 / 3;
+        D2 := D * 7 / 3;
+        DC := D * 2; //(D1+D2)/2;
+        D3 := W / 9;
+
+        dAngle := 0.001;
+        t := Tan(dAngle);
+    </Script>
+
+    <Axes TurningAngles = "0;Pi" AvailableAngles = "0; Pi/2 + dAngle; Pi; -Pi/2 + dAngle; Pi" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = "-1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; Pi/2; 0; Pi/2; Pi/2" PlaneDistances = "-D2;-D1; D1; D2" >
+        <Axis NormVector = " 0;-t; 1" BaseVector = " DC;  0; 0" />
+        <Axis NormVector = " 0; t; 1" BaseVector = "-DC;  0; 0"/>
+        <Axis NormVector = "-t; 0; 1" BaseVector = "  0;-DC; 0" />
+        <Axis NormVector = " t; 0; 1" BaseVector = "  0; DC; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D3; D3" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Split Color1 = "Colr[0]" Color2 = "Colr[0]" Axis = "0" From = "1" />
+        <Split Color1 = "Colr[0]" Color2 = "Colr[0]" Axis = "1" From = "1" />
+        <Split Color1 = "Colr[0]" Color2 = "Colr[0]" Axis = "2" From = "1" />
+        <Split Color1 = "Colr[0]" Color2 = "Colr[0]" Axis = "3" From = "1" />
+
+        <RemoveContaining Vector = " W; W; 0" />
+        <RemoveContaining Vector = " W;-W; 0" />
+        <RemoveContaining Vector = "-W;-W; 0" />
+        <RemoveContaining Vector = "-W; W; 0" />
+
+        <Split Color1 = "Colr[0]" Color2 = "Colr[0]" Axis = "8" From = "1" />
+        <Split Color1 = "Colr[0]" Color2 = "Colr[0]" Axis = "8" From = "2" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Turn NormVector = "0;0;1" BaseVector = "D;D;0" Angle = "Pi" /> // move scene
+
+        <Macro Name = "SplitCorner" >
+            <HideAll/>
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "D" Color = "Colr[c]; Inc(c);" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "8" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "8" From = "2" />
+            <Split Color1 = "Color" Color2 = "Color"><Plane NormVector = "1;0;0" NormDistance = " D3" /></Split>
+            <Split Color1 = "Color" Color2 = "Color"><Plane NormVector = "1;0;0" NormDistance = "-D3" /></Split>
+            <Split Color1 = "Color" Color2 = "Color"><Plane NormVector = "0;1;0" NormDistance = " D3" /></Split>
+            <Split Color1 = "Color" Color2 = "Color"><Plane NormVector = "0;1;0" NormDistance = "-D3" /></Split>
+            <Turn NormVector = "0;0;1" BaseVector = "DC;DC;0" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "SplitCorner" Repeat = "4" c = "1" />
+
+        <Turn NormVector = "0;0;1" BaseVector = "D;D;0" Angle = "Pi" /> // restore scene
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

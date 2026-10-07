@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Alaina's Cube</Name>
+        <Menu>Other cubes\Unclassified\Alaina's Cube</Menu>
+        <Inventor>Eric Vergo</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2017-05-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2002</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        s2  := sqrt(2);
+        ss2 := sqrt(sqrt(2));
+        az  := ss2 / 2;
+
+        for i := 0 to 3 do begin
+          ax[i] := sin(Pi / 2 * i + Pi / 8);
+          ay[i] := cos(Pi / 2 * i + Pi / 8);
+
+          ax[i + 4] := sin(Pi / 2 * i + 3 * Pi / 8);
+          ay[i + 4] := cos(Pi / 2 * i + 3 * Pi / 8);
+        end;
+
+        D := -sqrt((2 * s2 - 1) / 28);
+
+        A1 := ArcCos((s2 - 1) / 2);      // 1.36
+        A2 := ArcCos(s2 - 2);            // 2.19
+        A3 := ArcCos(-(2 * s2 - 1) / 2); // 2.72
+    </Script>
+
+    <Axes TurningAngles = "2*Pi; 0" AvailableAngles = "-A3;-A2;-A1; 0; A1;A2;A3" PlaneDistances = "D" >
+        <Axis NormVector = "ax[0]; ay[0]; -az" />
+        <Axis NormVector = "ax[1]; ay[1]; -az" />
+        <Axis NormVector = "ax[2]; ay[2]; -az" />
+        <Axis NormVector = "ax[3]; ay[3]; -az" />
+        <Axis NormVector = "ax[4]; ay[4];  az" />
+        <Axis NormVector = "ax[5]; ay[5];  az" />
+        <Axis NormVector = "ax[6]; ay[6];  az" />
+        <Axis NormVector = "ax[7]; ay[7];  az" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Turn  Axis = "0" Layer = "0" Angle = "-A1" />
+        <Turn  Axis = "4" Layer = "0" Angle = "-A1" />
+        <Split Axis = "5" From =  "1" />
+        <Turn  Axis = "4" Layer = "0" Angle = " A1" />
+        <Turn  Axis = "0" Layer = "0" Angle = "-A2" />
+        <Turn  Axis = "4" Layer = "0" Angle = "-A1" />
+        <Split Axis = "0" From =  "1" />
+        <Turn  Axis = "4" Layer = "0" Angle = " A1" />
+        <Turn  Axis = "0" Layer = "0" Angle = "-A3" />
+
+        <Turn  Axis = "2" Layer = "0" Angle = "-A1" />
+        <Turn  Axis = "6" Layer = "0" Angle = "-A1" />
+        <Split Axis = "7" From =  "1" />
+        <Turn  Axis = "6" Layer = "0" Angle = " A1" />
+        <Turn  Axis = "2" Layer = "0" Angle = "-A2" />
+        <Turn  Axis = "6" Layer = "0" Angle = "-A1" />
+        <Split Axis = "2" From =  "1" />
+        <Turn  Axis = "6" Layer = "0" Angle = " A1" />
+        <Turn  Axis = "2" Layer = "0" Angle = "-A3" />
+
+        <Turn  Axis = "4" Layer = "0" Angle = "-A1" />
+        <Turn  Axis = "0" Layer = "0" Angle = "-A1" />
+        <Split Axis = "3" From =  "1" />
+        <Turn  Axis = "0" Layer = "0" Angle = " A1" />
+        <Turn  Axis = "4" Layer = "0" Angle = "-A2" />
+        <Turn  Axis = "0" Layer = "0" Angle = "-A1" />
+        <Split Axis = "4" From =  "1" />
+        <Turn  Axis = "0" Layer = "0" Angle = " A1" />
+        <Turn  Axis = "4" Layer = "0" Angle = "-A3" />
+
+        <Turn  Axis = "6" Layer = "0" Angle = "-A1" />
+        <Turn  Axis = "2" Layer = "0" Angle = "-A1" />
+        <Split Axis = "1" From =  "1" />
+        <Turn  Axis = "2" Layer = "0" Angle = " A1" />
+        <Turn  Axis = "6" Layer = "0" Angle = "-A2" />
+        <Turn  Axis = "2" Layer = "0" Angle = "-A1" />
+        <Split Axis = "6" From =  "1" />
+        <Turn  Axis = "2" Layer = "0" Angle = " A1" />
+        <Turn  Axis = "6" Layer = "0" Angle = "-A3" />
+    </Figure>
+</xml>

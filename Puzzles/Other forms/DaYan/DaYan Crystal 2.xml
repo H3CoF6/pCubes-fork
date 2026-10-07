@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>DaYan Crystal 2</Name>
+        <Menu>Other forms\DaYan\DaYan Crystal 2</Menu>
+        <Inventor></Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-03-04</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFF00';
+        Colors[ 1] := '004080';
+        Colors[ 2] := '4070FF';
+        Colors[ 3] := '00FF00';
+        Colors[ 4] := 'FFFFFF';
+        Colors[ 5] := 'FF0000';
+        Colors[ 6] := 'FF0080';
+        Colors[ 7] := '800080';
+        Colors[ 8] := 'BF8040';
+        Colors[ 9] := '309060';
+        Colors[10] := 'FACC05';
+        Colors[11] := '734082';
+        Colors[12] := 'E23465';
+        Colors[13] := '008000';
+        Colors[14] := 'C1C5C7';
+        Colors[15] := 'FF800A';
+        Colors[16] := '4D1350';
+        Colors[17] := '9F0000';
+        Colors[18] := '7F8040';
+        Colors[19] := '80BF80';
+
+        CColors[ 0] := '51C4FA';
+        CColors[ 1] := '075AFF';
+        CColors[ 2] := 'FF8009';
+        CColors[ 3] := 'FFFFFE';
+        CColors[ 4] := 'FACC06';
+        CColors[ 5] := '01FF00';
+        CColors[ 6] := 'FFFF01';
+        CColors[ 7] := '018000';
+        CColors[ 8] := '38ABEA';
+        CColors[ 9] := 'FF0001';
+        CColors[10] := 'C1C5C8';
+        CColors[11] := '009484';
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        s5 := sqrt(5);
+        D2 := R * (1 + 2 / s5) / 3;
+        D1 := R * sqrt(25 + 11 * s5) * sqrt(10) / 30;
+        DCut := R * (2 + 1 / s5) / 3.2;
+    </Script>
+
+    <Axes TurningAngles = " 0; Pi" JumbleAngle = "ArcTan(2)" PlaneDistances = "D1" NormVectors = "Ex;Ey;Ez" />
+    <Axes TurningAngles = " 0; 2*Pi/5" PlaneDistances = "D2" NormVectors = "Vx;Vy;Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" W = "R" />
+
+        <Macro Name = "CutV" >
+            <Cut Color = "CColors[i]" > <Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "12" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

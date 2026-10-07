@@ -1,0 +1,34 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>ETO+</Name>
+        <Menu>Other forms\Octahedron\Edge Turning\ETO+</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-01-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10744</Link>
+    </Interface>
+
+    <Script>
+        W := 0.75;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+
+        D := W * sqrt(2) / 4;
+        DCut := W / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "D" FixedLayers = "0" NormVectors = " Ex; Ey; Ez" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "DCut" /></Split>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "DCut" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "DCut" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "DCut" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "DCut" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "DCut" /></Split>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

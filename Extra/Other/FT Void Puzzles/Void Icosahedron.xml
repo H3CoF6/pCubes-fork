@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+    <Interface>
+        <Name>Void Icosahedron</Name>
+        <Menu>Other forms\FT Void Puzzles\Void Icosahedron</Menu>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        Rout := sqrt(3) / 4 * (1 + sqrt(5));
+        Rin := 0.5 * sqrt(2.5 + 1.1 * sqrt(5));
+        dAngle := Arcsin(Rin / Rout);
+        dAngle2 := dAngle - 2 * Arcsin(1 / 2 / Rout);
+        Rsin := R * sin(dAngle);
+        Rcos := R * cos(dAngle);
+        R2sin := R * sin(dAngle2);
+        R2cos := R * cos(dAngle2);
+        sAngle := PI * 2 / 5;
+        D1 := 1.1 * R;
+        
+        for i := 0 to 4 do begin
+            ax[i] := Rcos * sin(sAngle * (i - 0.5)) * D1;
+            ay[i] := Rcos * cos(sAngle * (i - 0.5)) * D1;
+            az[i] := Rsin * D1;
+        end;
+        for i := 5 to 9 do begin
+            ax[i] := R2cos * sin(sAngle * (i - 0.5)) * D1;
+            ay[i] := R2cos * cos(sAngle * (i - 0.5)) * D1;;
+            az[i] := R2sin * D1;
+        end;
+    </Script>
+    
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0.5" FixedLayer = "0">
+        <Axis NormVector = " ax[0]; ay[0]; az[0]"/>
+        <Axis NormVector = " ax[1]; ay[1]; az[1]"/>
+        <Axis NormVector = " ax[2]; ay[2]; az[2]"/>
+        <Axis NormVector = " ax[3]; ay[3]; az[3]"/>
+        <Axis NormVector = " ax[4]; ay[4]; az[4]"/>
+        <Axis NormVector = " ax[5]; ay[5]; az[5]"/>
+        <Axis NormVector = " ax[6]; ay[6]; az[6]"/>
+        <Axis NormVector = " ax[7]; ay[7]; az[7]"/>
+        <Axis NormVector = " ax[8]; ay[8]; az[8]"/>
+        <Axis NormVector = " ax[9]; ay[9]; az[9]"/>
+        <Axis NormVector = "-ax[0];-ay[0];-az[0]"/>
+        <Axis NormVector = "-ax[1];-ay[1];-az[1]"/>
+        <Axis NormVector = "-ax[2];-ay[2];-az[2]"/>
+        <Axis NormVector = "-ax[3];-ay[3];-az[3]"/>
+        <Axis NormVector = "-ax[4];-ay[4];-az[4]"/>
+        <Axis NormVector = "-ax[5];-ay[5];-az[5]"/>
+        <Axis NormVector = "-ax[6];-ay[6];-az[6]"/>
+        <Axis NormVector = "-ax[7];-ay[7];-az[7]"/>
+        <Axis NormVector = "-ax[8];-ay[8];-az[8]"/>
+        <Axis NormVector = "-ax[9];-ay[9];-az[9]"/>
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0"/>
+
+        <RemoveContaining Vector = " ax[0]; ay[0]; az[0]"/>
+        <RemoveContaining Vector = " ax[1]; ay[1]; az[1]"/>
+        <RemoveContaining Vector = " ax[2]; ay[2]; az[2]"/>
+        <RemoveContaining Vector = " ax[3]; ay[3]; az[3]"/>
+        <RemoveContaining Vector = " ax[4]; ay[4]; az[4]"/>
+        <RemoveContaining Vector = " ax[5]; ay[5]; az[5]"/>
+        <RemoveContaining Vector = " ax[6]; ay[6]; az[6]"/>
+        <RemoveContaining Vector = " ax[7]; ay[7]; az[7]"/>
+        <RemoveContaining Vector = " ax[8]; ay[8]; az[8]"/>
+        <RemoveContaining Vector = " ax[9]; ay[9]; az[9]"/>
+        <RemoveContaining Vector = "-ax[0];-ay[0];-az[0]"/>
+        <RemoveContaining Vector = "-ax[1];-ay[1];-az[1]"/>
+        <RemoveContaining Vector = "-ax[2];-ay[2];-az[2]"/>
+        <RemoveContaining Vector = "-ax[3];-ay[3];-az[3]"/>
+        <RemoveContaining Vector = "-ax[4];-ay[4];-az[4]"/>
+        <RemoveContaining Vector = "-ax[5];-ay[5];-az[5]"/>
+        <RemoveContaining Vector = "-ax[6];-ay[6];-az[6]"/>
+        <RemoveContaining Vector = "-ax[7];-ay[7];-az[7]"/>
+        <RemoveContaining Vector = "-ax[8];-ay[8];-az[8]"/>
+        <RemoveContaining Vector = "-ax[9];-ay[9];-az[9]"/>
+    </Figure>
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection"/>
+</xml>

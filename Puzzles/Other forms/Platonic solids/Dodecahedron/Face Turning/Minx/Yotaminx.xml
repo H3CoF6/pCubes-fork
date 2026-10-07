@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Yotaminx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Minx\Yotaminx</Menu>
+        <Inventor>Matt Bahner</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-05-12</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        N := 7;
+        for i := 0 to N - 1 do
+            D[i] := ((2 * N - i - 1) * Rsin + (i + 1) * R2sin) / 2 / N;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" FixedLayers = "0" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <!-- at first remove central part to accelerate creation -->
+        <Macro Name = "SplitF" >
+            <Split Axis = "i" From = "N" />
+            <Script>Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitF" i = "0" Repeat = "12" />
+        <RemoveGrayParts/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Decagonal Prism Tower</Name>
+        <Menu>Other forms\Prism\Decagonal Prism Tower</Menu>
+        <Inventor>David Gugl</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-12-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7761</Link>
+    </Interface>
+
+    <Script>
+        R := 0.6;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        H := R*1.2;
+        for i := 0 to 9 do begin
+            x[i] := R * cos(Pi / 5 * (i + 0.5));
+            y[i] := R * sin(Pi / 5 * (i + 0.5));
+        end;
+        D := R * 0.81;
+        DD := R * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D - DD; D + DD">
+        <Axis NormVector = "0;0;1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D">
+        <Axis BaseVector = "0; 0; DD" NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis BaseVector = "0; 0; DD" NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis BaseVector = "0; 0; DD" NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis BaseVector = "0; 0; DD" NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis BaseVector = "0; 0; DD" NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+
+        <Axis BaseVector = "0; 0;-DD" NormVector = "Cx[ 6]; Cy[ 6]; Cz[ 6]" />
+        <Axis BaseVector = "0; 0;-DD" NormVector = "Cx[ 7]; Cy[ 7]; Cz[ 7]" />
+        <Axis BaseVector = "0; 0;-DD" NormVector = "Cx[ 8]; Cy[ 8]; Cz[ 8]" />
+        <Axis BaseVector = "0; 0;-DD" NormVector = "Cx[ 9]; Cy[ 9]; Cz[ 9]" />
+        <Axis BaseVector = "0; 0;-DD" NormVector = "Cx[10]; Cy[10]; Cz[10]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;  H" />
+            <Vertices Vectors = "x; y; -H" />
+
+            <Faces>
+                <Face Color = "FFFF00" VertexIndexes = "0;1;2;3;4;5;6;7;8;9" />
+                <Face Color = "FFFFFF" VertexIndexes = "19;18;17;16;15;14;13;12;11;10" />
+
+                <Face Color = "00FF00" VertexIndexes = "1;0;10;11" />
+                <Face Color = "FF0080" VertexIndexes = "2;1;11;12" />
+                <Face Color = "0000A0" VertexIndexes = "3;2;12;13" />
+                <Face Color = "FF0000" VertexIndexes = "4;3;13;14" />
+                <Face Color = "800000" VertexIndexes = "5;4;14;15" />
+                <Face Color = "008000" VertexIndexes = "6;5;15;16" />
+                <Face Color = "800080" VertexIndexes = "7;6;16;17" />
+                <Face Color = "3868BF" VertexIndexes = "8;7;17;18" />
+                <Face Color = "FF6000" VertexIndexes = "9;8;18;19" />
+                <Face Color = "00DCB4" VertexIndexes = "0;9;19;10" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <Macro Name = "Split">
+            <Turn  Axis = "1" Layer = "1" Angle = "2 * sAngle"/>
+            <Turn  Axis = "6" Layer = "1" Angle = "2 * sAngle"/>
+            <Split Axis = "0" From  = "1" />
+            <Split Axis = "0" From  = "2" />
+            <Turn  Axis = "1" Layer = "1" Angle = "sAngle"/>
+            <Turn  Axis = "6" Layer = "1" Angle = "sAngle"/>
+            <Split Axis = "0" From  = "1" />
+            <Split Axis = "0" From  = "2" />
+            <Undo Repeat = "4" />
+        </Macro>
+        <ExecMacro MacroName = "Split" />
+   </Figure>
+</xml>

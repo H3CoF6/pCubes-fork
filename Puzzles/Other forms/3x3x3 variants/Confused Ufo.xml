@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Confused Ufo</Name>
+        <Menu>Other forms\3x3x3 variants\Confused Ufo</Menu>
+        <Inventor>Jürgen Brandt</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-10-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2706</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF0000'; // red
+        Colors[ 1] := 'FF5C00'; // orange
+        Colors[ 2] := '0000FF'; // Blue
+        Colors[ 3] := '1D9F00'; // green
+        Colors[ 4] := 'FFFF00'; // Yellow
+        Colors[ 5] := 'FFFFFF'; // white
+        Colors[ 6] := '800080'; // purple
+        Colors[ 7] := 'FFA500'; // bright orange
+        Colors[ 8] := '00FFFF'; // aqua
+        Colors[ 9] := '708090'; // light gray
+        Colors[10] := 'A020F0'; // light purple
+        Colors[11] := '87FF4A'; // bright green
+        Colors[12] := 'D2B48C'; // tan
+        Colors[13] := '4169E1'; // light blue
+
+        W := 0.55;
+        s2 := sqrt(2);
+        D := W / 3;
+        WX := D * s2 * 2;
+        WY := W;
+        WZ := WX;
+        DC2 := D * 5 / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "-1; 0;-1" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = "-1; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Cut Color = "Colors[ 6]" ><Plane NormVector = "-1; 0; 1" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[ 7]" ><Plane NormVector = "-1; 0;-1" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[ 8]" ><Plane NormVector = " 1; 0;-1" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[ 9]" ><Plane NormVector = " 1; 0; 1" NormDistance = "-W" /></Cut>
+
+        <Cut Color = "Colors[10]" ><Plane NormVector = " 0; 1;-s2" NormDistance = "-DC2" /></Cut>
+        <Cut Color = "Colors[11]" ><Plane NormVector = " 0;-1;-s2" NormDistance = "-DC2" /></Cut>
+        <Cut Color = "Colors[12]" ><Plane NormVector = " 0;-1; s2" NormDistance = "-DC2" /></Cut>
+        <Cut Color = "Colors[13]" ><Plane NormVector = " 0; 1; s2" NormDistance = "-DC2" /></Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

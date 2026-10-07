@@ -1,0 +1,141 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Column Megaminx (5 colors)</Name>
+        <Menu>Other forms\Cylinder\Column\Column Megaminx (5 colors)</Menu>
+        <Inventor>A J Lu</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2166</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0099FF'; // LightBlue;
+        Colors[1] := 'FF7700'; // Orange;
+        Colors[2] := '00BB00'; // Green;
+        Colors[3] := '222222'; // Black;
+        Colors[4] := 'FF0000'; // Red;
+        Colors[5] := 'FFFFFF'; // White;
+
+        R := 0.5;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        H := R * 0.915;
+
+        D := R * sqrt((5 + 2 * sqrt(5)) / 20);
+
+        N := 40;
+        NAngle := 2 * Pi / N;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(NAngle * i);
+            y[i] := R * sin(NAngle * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+
+        f := 1;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "Cylinder" >
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "clT" VertexIndexes = "FromTo( 0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" i = "0" Color = "cl" Repeat = "N" />
+                    <Face Color = "clB" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "HideCenters" >
+            <HideContaining Vector = "f*cx[id]; f*cy[id]; f*cz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+
+        <Macro Name = "HideEdges" >
+            <HideContaining Vector = "f*ex[id]; f*ey[id]; f*ez[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+
+        <Macro Name = "HideCorners" >
+            <HideContaining Vector = "f*vx[id]; f*vy[id]; f*vz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "Cylinder" cl = "Colors[1]" clT = "Colors[1]" clB = "Colors[1]" />
+        <Cut Axis = " 0" To = "1" />
+        <Cut Axis = "11" To = "1" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideCenters" id = " 1" Repeat = "5" />
+        <ExecMacro MacroName = "HideEdges"   id = " 5" Repeat = "5" />
+        <ExecMacro MacroName = "HideCenters" id = " 6" Repeat = "5" />
+        <ExecMacro MacroName = "HideEdges"   id = "20" Repeat = "5" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Cylinder" cl = "Colors[0]" clT = "Colors[0]" clB = "Colors[0]" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideCenters" id = " 1" Repeat = "5" />
+        <ExecMacro MacroName = "HideEdges"   id = " 5" Repeat = "5" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Cylinder" cl = "Colors[2]" clT = "Colors[2]" clB = "Colors[2]" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideCenters" id = " 6" Repeat = "5" />
+        <ExecMacro MacroName = "HideEdges"   id = "20" Repeat = "5" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Cylinder" cl = "Colors[3]" clT = "Colors[3]" clB = "Colors[3]" />
+        <Cut Axis = "11" From = "1" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideCenters" id = "11" Repeat = "1" />
+        <ExecMacro MacroName = "HideEdges"   id = "25" Repeat = "5" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Cylinder" cl = "Colors[3]" clT = "Colors[3]" clB = "Colors[5]" />
+        <Cut Axis = "11" From = "1" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideCorners" id = "15" Repeat = "5" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Cylinder" cl = "Colors[4]" clT = "Colors[4]" clB = "Colors[4]" />
+        <Cut Axis = "0" From = "1" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideCenters" id = " 0" Repeat = "1" />
+        <ExecMacro MacroName = "HideEdges"   id = " 0" Repeat = "5" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Cylinder" cl = "Colors[4]" clT = "Colors[5]" clB = "Colors[4]" />
+        <Cut Axis = "0" From = "1" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideCorners" id = " 0" Repeat = "5" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

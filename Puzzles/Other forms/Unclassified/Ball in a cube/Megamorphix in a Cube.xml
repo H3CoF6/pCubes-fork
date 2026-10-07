@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megamorphix in a Cube</Name>
+        <Menu>Other forms\Unclassified\Ball in a cube\Megamorphix in a Cube</Menu>
+        <Inventor>Chester de Guzman</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8493</Link>
+    </Interface>                   
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W / 2;
+        K := 0.43;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "3" />
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <RemoveContaining Vector = " W; 0; 0" />
+        <RemoveContaining Vector = "-W; 0; 0" />
+        <RemoveContaining Vector = " 0; W; 0" />
+        <RemoveContaining Vector = " 0;-W; 0" />
+        <RemoveContaining Vector = " 0; 0; W" />
+        <RemoveContaining Vector = " 0; 0;-W" />
+        <HideAll/>
+
+        <Script>
+            Colors[0] := 'FF0080'; // LightViolett
+            Colors[1] := 'BF8040'; // Brown
+            Colors[2] := '408000'; // Olive
+            Colors[3] := '000078'; // DarkBlue
+        </Script>
+
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "3" />
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <HideContaining Vector = " W; 0; 0" />
+        <HideContaining Vector = "-W; 0; 0" />
+        <HideContaining Vector = " 0; W; 0" />
+        <HideContaining Vector = " 0;-W; 0" />
+        <HideContaining Vector = " 0; 0; W" />
+        <HideContaining Vector = " 0; 0;-W" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "0" Layers = "0-3" Angle = "Pi/2" />
+        <SaveSolvedState/>
+        <Undo/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,115 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sadalmelik</Name>
+        <Menu>Other forms\2d\Looper\Sadalmelik</Menu>
+        <Menu>Other forms\Prism\Nonagonal Prism\Sadalmelik</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7622</Link>
+    </Interface>
+
+    <Script>
+        clWhite   := 'FFFFFF';
+        clRed     := 'FF0000';
+        clLime    := '00FF00';
+        clYellow  := 'FFFF00';
+        clDeepSky := '00BFFF';
+        clOrange  := 'FF6000';
+        clBlack   := '333333';
+
+        R := 0.65;
+        H := 2 * R * sin(Pi / 18);
+        A := 2 * Pi / 9;
+
+        for i := 0 to 8 do begin
+            x[i] := R * cos(A * (i+0.5));
+            y[i] := R * sin(A * (i+0.5));
+        end;
+        for i := 0 to 5 do begin
+            ax[i] :=-cos(A * i);
+            ay[i] :=-sin(A * i);
+        end;
+
+        D := R * cos(2 * A);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D" NormVectors = " ax; ay; 0" />
+
+    <Figure>
+        <Macro Name = "CreatePrism" >
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2;3;4;5;6;7;8" />
+                    <Face Color = "Color" VertexIndexes = "9;10;1;0" />
+                    <Face Color = "Color" VertexIndexes = "10;11;2;1" />
+                    <Face Color = "Color" VertexIndexes = "11;12;3;2" />
+                    <Face Color = "Color" VertexIndexes = "12;13;4;3" />
+                    <Face Color = "Color" VertexIndexes = "13;14;5;4" />
+                    <Face Color = "Color" VertexIndexes = "14;15;6;5" />
+                    <Face Color = "Color" VertexIndexes = "15;16;7;6" />
+                    <Face Color = "Color" VertexIndexes = "16;17;8;7" />
+                    <Face Color = "Color" VertexIndexes = "17; 9;0;8" />
+                    <Face Color = "Color" VertexIndexes = "17;16;15;14;13;12;11;10;9" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "CreateSector" >
+            <ExecMacro MacroName = "CreatePrism" />
+            <Cut Axis = "af" From = "1" />
+            <Cut Axis = "at" To   = "1" />
+            <HideAll/>
+        </Macro>
+
+        <Macro Name = "Unbandage" >
+            <Split> <Plane NormVector = " x[i]; y[i]; 0" NormDistance = "D" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <!-- central part -->
+        <ExecMacro MacroName = "CreatePrism" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut Axis = "4" To = "1" />
+        <Cut Axis = "5" To = "1" />
+        <HideAll/>
+
+        <!-- 1st variant -->
+        <ExecMacro MacroName = "CreateSector" Color = "clWhite"   af = "5" at = "1" />
+        <ExecMacro MacroName = "CreateSector" Color = "clRed"     af = "4" at = "5" />
+        <ExecMacro MacroName = "CreateSector" Color = "clLime"    af = "3" at = "4" />
+        <ExecMacro MacroName = "CreateSector" Color = "clYellow"  af = "2" at = "3" />
+        <ExecMacro MacroName = "CreateSector" Color = "clDeepSky" af = "1" at = "2" />
+        <ExecMacro MacroName = "CreateSector" Color = "clOrange"  af = "0" at = "1" />
+        <ShowAll/>
+        <HideContaining Vector = "0;0;0" />
+        <ExecMacro MacroName = "Unbandage" i = "0" Repeat = "9" />
+        <ShowAll/>
+        <SaveSolvedState/>
+
+        <!-- 2nd variant (mirror reflection) -->
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ExecMacro MacroName = "CreateSector" Color = "clWhite"   af = "0" at = "4" />
+        <ExecMacro MacroName = "CreateSector" Color = "clRed"     af = "1" at = "0" />
+        <ExecMacro MacroName = "CreateSector" Color = "clLime"    af = "2" at = "1" />
+        <ExecMacro MacroName = "CreateSector" Color = "clYellow"  af = "3" at = "2" />
+        <ExecMacro MacroName = "CreateSector" Color = "clDeepSky" af = "4" at = "3" />
+        <ExecMacro MacroName = "CreateSector" Color = "clOrange"  af = "5" at = "4" />
+        <ShowAll/>
+        <HideContaining Vector = "0;0;0" />
+        <ExecMacro MacroName = "Unbandage" i = "0" Repeat = "9" />
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

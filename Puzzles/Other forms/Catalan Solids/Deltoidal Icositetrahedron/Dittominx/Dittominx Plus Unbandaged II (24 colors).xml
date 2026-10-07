@@ -1,0 +1,140 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dittominx Plus Unbandaged II (24 colors)</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Dittominx\Dittominx Plus Unbandaged II (24 colors)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-15</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '0099FF'; // LightBlue
+        Colors[ 1] := '008800'; // Green
+        Colors[ 2] := 'FFFFFF'; // White
+        Colors[ 3] := 'FF6600'; // Orange
+        Colors[ 4] := 'BB00BB'; // Purple
+        Colors[ 5] := '0011FF'; // Blue
+        Colors[ 6] := 'BB0022'; // Brown
+        Colors[ 7] := 'BBBBBB'; // Silver
+        Colors[ 8] := 'FF2299'; // Pink
+        Colors[ 9] := 'DDBB20'; // Golden
+        Colors[10] := 'FF0000'; // Red
+        Colors[11] := 'FFFF00'; // Yellow
+
+        Colors[20] := '0077DD'; // LightBlue2
+        Colors[21] := '006600'; // Green2
+        Colors[22] := 'DDDDDD'; // White2
+        Colors[23] := 'FF4400'; // Orange2
+        Colors[24] := '990099'; // Purple2
+        Colors[25] := '0000DD'; // Blue2
+        Colors[26] := 'AA0011'; // Brown2
+        Colors[27] := '909090'; // Silver2
+        Colors[28] := 'DD0077'; // Pink2
+        Colors[29] := 'BB9900'; // Golden2
+        Colors[30] := 'DD0000'; // Red2
+        Colors[31] := 'DDDD00'; // Yellow2
+
+        W  := 0.45;
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_Coordinates.inc';
+
+        pillow := sqrt(2) - 1/3;
+        for i := 0 to 23 do begin
+            Cx[i] := Cx[i] * pillow;
+            Cy[i] := Cy[i] * pillow;
+            Cz[i] := Cz[i] * pillow;
+        end;
+
+        D1 := (Cx[0] + Cy[0] + Cz[0]) / sqrt(3);
+        D2 := Cz[0];
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/4; 0; Pi/4" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = " 0; 0; 1" />
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; 0; Pi/2" PlaneDistances = "-D2; D2" >
+       <Axis NormVector = " 1; 0; 1" />
+       <Axis NormVector = " 1; 0;-1" />
+       <Axis NormVector = " 1; 1; 0" />
+       <Axis NormVector = " 1;-1; 0" />
+       <Axis NormVector = " 0; 1; 1" />
+       <Axis NormVector = " 0; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Side" >
+            <Face Color = "Colors[c   ]" VertexIndexes = "i1;i2;i0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c+20]" VertexIndexes = "i2;i3;i0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c   ]" VertexIndexes = "i3;i4;i0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c+20]" VertexIndexes = "i4;i1;i0" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx;Vy;Vz" />
+            <Vertices Vectors = "Cx;Cy;Cz" />
+
+            <Faces>
+                <ExecMacro MacroName = "Side" i0 = "26" i1 = " 0" i2 = " 6" i3 = "18" i4 = "14" c = " 0" />
+                <ExecMacro MacroName = "Side" i0 = "27" i1 = " 0" i2 = "14" i3 = "22" i4 = " 8" c = " 1" />
+                <ExecMacro MacroName = "Side" i0 = "28" i1 = " 0" i2 = " 8" i3 = "24" i4 = "16" c = " 3" />
+                <ExecMacro MacroName = "Side" i0 = "29" i1 = " 0" i2 = "16" i3 = "20" i4 = " 6" c = " 2" />
+                <ExecMacro MacroName = "Side" i0 = "30" i1 = " 1" i2 = " 9" i3 = "23" i4 = "15" c = " 2" />
+                <ExecMacro MacroName = "Side" i0 = "31" i1 = " 1" i2 = "15" i3 = "19" i4 = " 7" c = " 3" />
+                <ExecMacro MacroName = "Side" i0 = "32" i1 = " 1" i2 = " 7" i3 = "21" i4 = "17" c = " 1" />
+                <ExecMacro MacroName = "Side" i0 = "33" i1 = " 1" i2 = "17" i3 = "25" i4 = " 9" c = " 0" />
+                <ExecMacro MacroName = "Side" i0 = "34" i1 = " 2" i2 = " 7" i3 = "19" i4 = "10" c = "10" />
+                <ExecMacro MacroName = "Side" i0 = "35" i1 = " 2" i2 = "10" i3 = "18" i4 = " 6" c = " 8" />
+                <ExecMacro MacroName = "Side" i0 = "36" i1 = " 2" i2 = " 6" i3 = "20" i4 = "11" c = " 9" />
+                <ExecMacro MacroName = "Side" i0 = "37" i1 = " 2" i2 = "11" i3 = "21" i4 = " 7" c = "11" />
+                <ExecMacro MacroName = "Side" i0 = "38" i1 = " 3" i2 = " 8" i3 = "22" i4 = "12" c = "11" />
+                <ExecMacro MacroName = "Side" i0 = "39" i1 = " 3" i2 = "12" i3 = "23" i4 = " 9" c = " 9" />
+                <ExecMacro MacroName = "Side" i0 = "40" i1 = " 3" i2 = " 9" i3 = "25" i4 = "13" c = " 8" />
+                <ExecMacro MacroName = "Side" i0 = "41" i1 = " 3" i2 = "13" i3 = "24" i4 = " 8" c = "10" />
+                <ExecMacro MacroName = "Side" i0 = "42" i1 = " 4" i2 = "10" i3 = "19" i4 = "15" c = " 6" />
+                <ExecMacro MacroName = "Side" i0 = "43" i1 = " 4" i2 = "15" i3 = "23" i4 = "12" c = " 7" />
+                <ExecMacro MacroName = "Side" i0 = "44" i1 = " 4" i2 = "12" i3 = "22" i4 = "14" c = " 5" />
+                <ExecMacro MacroName = "Side" i0 = "45" i1 = " 4" i2 = "14" i3 = "18" i4 = "10" c = " 4" />
+                <ExecMacro MacroName = "Side" i0 = "46" i1 = " 5" i2 = "11" i3 = "20" i4 = "16" c = " 7" />
+                <ExecMacro MacroName = "Side" i0 = "47" i1 = " 5" i2 = "16" i3 = "24" i4 = "13" c = " 6" />
+                <ExecMacro MacroName = "Side" i0 = "48" i1 = " 5" i2 = "13" i3 = "25" i4 = "17" c = " 4" />
+                <ExecMacro MacroName = "Side" i0 = "49" i1 = " 5" i2 = "17" i3 = "21" i4 = "11" c = " 5" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "TurnVertices" >
+            <Turn Axis = "i" Layers = "0;2" Angle = "Angle" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <SplitByAxes/>
+        <ExecMacro MacroName = "TurnVertices" Angle = "Pi/2" i = "7" Repeat = "6" />
+        <SplitByAxes/>
+        <Undo Repeat = "6" />
+
+        // unbandage 8-sided vertices
+        <ExecMacro MacroName = "TurnVertices" Angle = "Pi/4" i = "4" Repeat = "3" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+
+        // unbandage 3-sided vertices
+        <ExecMacro MacroName = "TurnVertices" Angle = "Pi/2" i = "7" Repeat = "6" />
+        <ExecMacro MacroName = "TurnVertices" Angle = "Pi/4" i = "4" Repeat = "3" />
+        <SplitByAxes/>
+        <Undo Repeat = "9" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

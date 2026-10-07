@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexoid</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Face Turning\Hexoid</Menu>
+        <Inventor>Luke Benjii</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2015-04-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3178</Link>
+    </Interface>
+
+    <Script>
+        D := 0.6;
+        H := D;
+        for i := 0 to 5 do begin
+            x[i] := D * cos(Pi / 3 * (i + 0.5));
+            y[i] := D * sin(Pi / 3 * (i + 0.5));
+        end;
+        Da := D * sqrt(3) / 6;
+        for i := 0 to 2 do begin
+            ax[i] := D * cos(Pi / 3 * i);
+            ay[i] := D * sin(Pi / 3 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-Da; Da" >
+        <Axis NormVector = "Ax[0]; Ay[0]; 0" />
+        <Axis NormVector = "Ax[1]; Ay[1]; 0" />
+        <Axis NormVector = "Ax[2]; Ay[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "-H/6; H/6" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+              <Vertices>
+                  <Add Vector = "x[0]; y[0]; H / 2" />
+                  <Add Vector = "x[1]; y[1]; H / 2" />
+                  <Add Vector = "x[2]; y[2]; H / 2" />
+                  <Add Vector = "x[3]; y[3]; H / 2" />
+                  <Add Vector = "x[4]; y[4]; H / 2" />
+                  <Add Vector = "x[5]; y[5]; H / 2" />
+                  <Add Vector = "x[0]; y[0]; -H / 2" />
+                  <Add Vector = "x[1]; y[1]; -H / 2" />
+                  <Add Vector = "x[2]; y[2]; -H / 2" />
+                  <Add Vector = "x[3]; y[3]; -H / 2" />
+                  <Add Vector = "x[4]; y[4]; -H / 2" />
+                  <Add Vector = "x[5]; y[5]; -H / 2" />
+            </Vertices>
+            <Faces>
+                <Face Color = "FFFF00" VertexIndexes = "1;0;6;7" />
+                <Face Color = "FF64FF" VertexIndexes = "2;1;7;8" />
+                <Face Color = "FF6000" VertexIndexes = "3;2;8;9" />
+                <Face Color = "00FF00" VertexIndexes = "4;3;9;10" />
+                <Face Color = "0064FF" VertexIndexes = "5;4;10;11" />
+                <Face Color = "FF0000" VertexIndexes = "0;5;11;6" />
+                <Face Color = "646464" VertexIndexes = "11;10;9;8;7;6" />
+                <Face Color = "C8C8C8" VertexIndexes = "0;1;2;3;4;5" />
+            </Faces>
+        </Part>
+        
+        <SplitByAxes/>
+    </Figure>
+</xml>

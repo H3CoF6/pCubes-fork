@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>The Webb (w/o jumbling)</Name>
+        <Menu>Other forms\Icosahedron\Mixed\The Webb (w/o jumbling)</Menu>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9627</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := R * sqrt((1 + 1 / sqrt(5)) / 6);
+    </Script>
+<!--
+jumAngle := Arcsin(1/4) + Pi/6;
+JumbleAngle = "jumAngle" 
+jumbling requires moving axes
+ -->
+    <Axes TurningAngles = "0; 2*Pi / 3" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "0" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+
+    <!-- Scrambling macro -->
+    <Macros>
+        <Macro Name = "RandomTurns120" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "2*Pi/3"/>
+        </Macro>
+        <Macro Name = "RandomTurns0" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "2 * Pi * Random"/>
+        </Macro>
+        <Macro Name = "RandomTurns1" >
+            <Turn Axis = "Random(12) + 20" Layer = "1" Angle = "2 * Pi * Random"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <ExecMacro MacroName = "RandomTurns0" />
+            <ExecMacro MacroName = "RandomTurns1" />
+        </Macro>
+        <Macro Name = "Scramble120" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns120" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble120" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+</xml>

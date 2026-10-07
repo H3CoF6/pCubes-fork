@@ -1,0 +1,211 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+Visualization-engine must be updated
+width of layes can'be adjusted so parts must be curved
+
+    <Interface>
+        <Name>Fat Pentum</Name>
+        <Menu>Grigr\Fat Pentum</Menu>
+        <Inventor>Ryan Binter</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-01-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3499</Link>
+    </Interface>
+
+    <Script>
+        clWhite        := 'F0F0F0';    clYellow       := 'FFFF00';
+        clGainsboro    := 'C0C0C0';    clOrange       := 'FF6000';
+        clSilver       := 'A0A0A0';    clKhaki        := 'F0E68C';
+        clGray         := '707070';    clGolden       := 'DDBB20';
+        clBlack        := '202020';    clOlive        := '808000';
+
+        clCyan         := '00FFFF';    clGreenYellow  := 'ADFF2F';
+        clDeepSky      := '00BFFF';    clLime         := '00FF00';
+        clTeal         := '008080';    clTeal         := '008080';
+        clBlue         := '0000FF';    clGreen        := '008000';
+        clNavy         := '000080';    clDarkGreen    := '006400';
+
+        clCoral        := 'FF7F50';    clPink         := 'FF69B4';
+        clRed          := 'FF0000';    clFuchsia      := 'FF00FF';
+        clCrimson      := 'DC143C';    clPale         := 'D07090';
+        clIndian       := 'CD5C5C';    clOrchid       := 'DA70D6';
+        clBrown        := '800000';    clPurple       := '800080';
+
+        K  := 1.0;
+        C0 := K* 0.18580570704; // (13 + sqrt(5)) / 82
+        C1 := K* 0.35342345689; // sqrt(125 + 38 * sqrt(5)) / 41
+        C2 := K* 0.38196601125; // (3 - sqrt(5)) / 2
+        C3 := K* 0.48644565634; // (11 + 4 * sqrt(5)) / 41
+        C4 := K* 0.57185116567; // sqrt(2 * (565 + 239 * sqrt(5))) / 82
+        C5 := K* 0.60127989859; // (9 + 7 * sqrt(5)) / 41
+        C6 := K* 0.72654252800; // sqrt(5 - 2 * sqrt(5))
+        C7 := K* 0.87371083513; // 2 * sqrt(2 * (185 - 11 * sqrt(5))) / 41
+        C8 := K* 1.17557050458; //= sqrt(2 * (5 - sqrt(5))) / 2
+        C9 := K* 1.23606797749; //= sqrt(5) - 1
+
+        D0 := K* 0.60807822;    D1 := K* 0.6;
+        dCut:=K* 0.86669994;    delta:= K* 0.01;
+
+        pA2:= 0.74322283;       pA3:= 0.43685542;
+        pB1:= 0.70684691;       pB2:= 0.22966848;
+                                pC2:= 0.60127990;
+
+        A0 := 2*Pi/5;
+        A1 := 1.21803384;       A2 := 2*pi - A1;
+        A3 := 2*A1;             A4 := 2*pi - A3;
+        A5 := Pi-A1;            A6 := 2*pi - A5;
+    </Script>
+
+    <Axes TurningAngles = "A0" PlaneDistances = "-D0;D0" FixedLayers = "1">
+        <Axis NormVector = "   0;   0;   1" /> 0
+    </Axes>
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "0; pi; A1;A2; A3;A4; A5;A6" PlaneDistances = "D1" FixedLayers = "0">
+        <Axis NormVector = "   0; pA2; pA3" /> 1
+        <Axis NormVector = " pB1; pB2; pA3" /> 2
+        <Axis NormVector = " pA3;-pC2; pA3" /> 3
+        <Axis NormVector = "-pA3;-pC2; pA3" /> 4
+        <Axis NormVector = "-pB1; pB2; pA3" /> 5
+
+        <Axis NormVector = "   0; pA2;-pA3" /> 6
+        <Axis NormVector = " pB1; pB2;-pA3" /> 7
+        <Axis NormVector = " pA3;-pC2;-pA3" /> 8
+        <Axis NormVector = "-pA3;-pC2;-pA3" /> 9
+        <Axis NormVector = "-pB1; pB2;-pA3" /> 10
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " C4; -C0;  C7" />  0 * +
+                <Add Vector = " C4; -C0; -C7" />  1
+                <Add Vector = "-C4; -C0;  C7" />  2 *
+                <Add Vector = "-C4; -C0; -C7" />  3
+                <Add Vector = " C1;  C3;  C7" />  4 *
+                <Add Vector = " C1;  C3; -C7" />  5
+                <Add Vector = "-C1;  C3;  C7" />  6 *
+                <Add Vector = "-C1;  C3; -C7" />  7
+                <Add Vector = "0.0; -C5;  C7" />  8 * +
+                <Add Vector = "0.0; -C5; -C7" />  9
+                <Add Vector = " C8; -C2; 0.0" /> 10   +
+                <Add Vector = "-C8; -C2; 0.0" /> 11
+                <Add Vector = " C6;   K; 0.0" /> 12
+                <Add Vector = "-C6;   K; 0.0" /> 13
+                <Add Vector = "0.0; -C9; 0.0" /> 14   +
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite" VertexIndexes = "  0;  4;  6;  2;  8" /> *
+                <Face Color = "clBlack" VertexIndexes = "  1;  9;  3;  7;  5" />
+
+                <Face Color = "clGreen " VertexIndexes = " 10;  0;  8; 14" /> +
+                <Face Color = "clRed   " VertexIndexes = " 10; 12;  4;  0" />
+                <Face Color = "clKhaki " VertexIndexes = " 11;  2;  6; 13" />
+                <Face Color = "clPurple" VertexIndexes = " 11; 14;  8;  2" />
+                <Face Color = "clBlue  " VertexIndexes = " 12; 13;  6;  4" />
+
+                <Face Color = "clCyan  " VertexIndexes = " 10; 14;  9;  1" />
+                <Face Color = "clYellow" VertexIndexes = " 10;  1;  5; 12" />
+                <Face Color = "clLime  " VertexIndexes = " 11; 13;  7;  3" />
+                <Face Color = "clOrange" VertexIndexes = " 11;  3;  9; 14" />
+                <Face Color = "clPink  " VertexIndexes = " 12;  5;  7; 13" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Cut Color="clWhite" > <Plane>
+            <NormVector X = " 0" Y = " 0" Z = " -1" />
+            <NormDistance> -dCut </NormDistance>
+        </Plane> </Cut>
+        <Cut Color="clBlack" > <Plane>
+            <NormVector X = " 0" Y = " 0" Z = " 1" />
+            <NormDistance> -dCut </NormDistance>
+        </Plane> </Cut>
+
+        <Hide Axis = "0" Layer = "2" />
+        <Cut> <Plane NormVector = "    0;    0; -D0" NormDistance = "-D0+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "0" Layer = "0" />        <Hide Axis = "0" Layer = "1" />
+        <Cut> <Plane NormVector = "    0;    0;  D0" NormDistance = " D0+delta" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "0" Layer = "0" />
+        <Cut> <Plane NormVector = "    0;    0;  D0" NormDistance = "-D0+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "0" Layer = "1" /> <Hide Axis = "0" Layer = "2" />
+        <Cut> <Plane NormVector = "    0;    0; -D0" NormDistance = " D0+delta" /> </Cut>
+        <ShowAll/>
+
+
+        <Hide Axis = "1" Layer = "1" />
+        <Cut> <Plane NormVector = "    0; -pA2; -pA3" NormDistance = "-D1+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "1" Layer = "0" />
+        <Cut> <Plane NormVector = "    0;  pA2;  pA3" NormDistance = " D1+delta" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "2" Layer = "1" />
+        <Cut> <Plane NormVector = " -pB1; -pB2; -pA3" NormDistance = "-D1+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "2" Layer = "0" />
+        <Cut> <Plane NormVector = "  pB1;  pB2;  pA3" NormDistance = " D1+delta" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "3" Layer = "1" />
+        <Cut> <Plane NormVector = " -pA3;  pC2; -pA3" NormDistance = "-D1+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "3" Layer = "0" />
+        <Cut> <Plane NormVector = "  pA3; -pC2;  pA3" NormDistance = " D1+delta" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "4" Layer = "1" />
+        <Cut> <Plane NormVector = "  pA3;  pC2; -pA3" NormDistance = "-D1+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "4" Layer = "0" />
+        <Cut> <Plane NormVector = " -pA3; -pC2;  pA3" NormDistance = " D1+delta" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "5" Layer = "1" />
+        <Cut> <Plane NormVector = "  pB1; -pB2; -pA3" NormDistance = "-D1+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "5" Layer = "0" />
+        <Cut> <Plane NormVector = " -pB1;  pB2;  pA3" NormDistance = " D1+delta" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "6" Layer = "1" />
+        <Cut> <Plane NormVector = "    0; -pA2;  pA3" NormDistance = "-D1+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "6" Layer = "0" />
+        <Cut> <Plane NormVector = "    0;  pA2; -pA3" NormDistance = " D1+delta" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "7" Layer = "1" />
+        <Cut> <Plane NormVector = " -pB1; -pB2;  pA3" NormDistance = "-D1+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "7" Layer = "0" />
+        <Cut> <Plane NormVector = "  pB1;  pB2; -pA3" NormDistance = " D1+delta" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "8" Layer = "1" />
+        <Cut> <Plane NormVector = " -pA3;  pC2;  pA3" NormDistance = "-D1+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "8" Layer = "0" />
+        <Cut> <Plane NormVector = "  pA3; -pC2; -pA3" NormDistance = " D1+delta" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "9" Layer = "1" />
+        <Cut> <Plane NormVector = "  pA3;  pC2;  pA3" NormDistance = "-D1+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "9" Layer = "0" />
+        <Cut> <Plane NormVector = " -pA3; -pC2; -pA3" NormDistance = " D1+delta" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "10" Layer = "1" />
+        <Cut> <Plane NormVector = "  pB1; -pB2;  pA3" NormDistance = "-D1+delta" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "10" Layer = "0" />
+        <Cut> <Plane NormVector = " -pB1;  pB2; -pA3" NormDistance = " D1+delta" /> </Cut>
+        <ShowAll/>
+    </Figure>
+</xml>

@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rounded Tetraminx</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Rounded Tetraminx</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-12-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4019</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clBlack  := '222222';
+
+        W := 0.5;
+
+        R := W * 0.81;
+
+        M := W / 3 * 1.01;
+        D := M / sqrt(3);
+        Rcut := 2 * W / sqrt(3) - D;
+
+        x := (W - D * sqrt(3)) / 2;
+        Rcut2 := W * 0.995;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " W;-W; W" />
+                <Add Vector = "-W; W; W" />
+                <Add Vector = " W; W;-W" />
+                <Add Vector = "-W;-W;-W" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlack" VertexIndexes = "0;1;3" />
+                <Face Color = "clBlack" VertexIndexes = "1;2;3" />
+                <Face Color = "clBlack" VertexIndexes = "0;3;2" />
+                <Face Color = "clBlack" VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <Circle Radius = "R" Color = "clYellow" Center = " M; M; M" />
+        <Circle Radius = "R" Color = "clBlue  " Center = "-M;-M; M" />
+        <Circle Radius = "R" Color = "clRed   " Center = " M;-M;-M" />
+        <Circle Radius = "R" Color = "clGreen " Center = "-M; M;-M" />
+        <SplitByAxes/>
+
+        <Cut Color = "clWhite" ><Plane NormVector = " 1; 1; 1" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "clWhite" ><Plane NormVector = "-1;-1; 1" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "clWhite" ><Plane NormVector = " 1;-1;-1" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "clWhite" ><Plane NormVector = "-1; 1;-1" NormDistance = "-RCut" /></Cut>
+
+        <Macro Name = "Cut" >
+            <Cut Color = "clBlack" ><Plane NormVector = "-x; x;-W" NormDistance = "-RCut2" /></Cut>
+            <Cut Color = "clBlack" ><Plane NormVector = " x;-x;-W" NormDistance = "-RCut2" /></Cut>
+            <Cut Color = "clBlack" ><Plane NormVector = " x; x; W" NormDistance = "-RCut2" /></Cut>
+            <Cut Color = "clBlack" ><Plane NormVector = "-x;-x; W" NormDistance = "-RCut2" /></Cut>
+            <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "3" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,78 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Stellated Pyraminx II</Name>
+        <Menu>Other forms\Star\Stellated Pyraminx II</Menu>
+        <Inventor>Uwe Mèffert</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=545</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        N := 3;
+        D := W * 4 / sqrt(3) / N;
+        D0 :=-W / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2*D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveAllVisible/>
+        <HideAll/>	
+
+        <Script>
+            For i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Vx;Vy;Vz" />
+        <RemoveContaining Vector = "Ex;Ey;Ez" />
+        <ShowAll/>
+
+        <Script>
+            W := W / 3;
+        </Script>
+        <Macro Name = "AddStar" >
+            <Transfer Vector = "-W * DX;-W * DY;-W * DZ" />
+            <Script>
+                Colors[0] := c0;
+                Colors[1] := c1;
+                Colors[2] := c2;
+            </Script>
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi / 2" />
+            <LoadFrom File = "Figures\Tetrahedron.xml" />
+            <Turn NormVector = " 0; 1; 0" Angle = "-Pi / 2" />
+            <Transfer Vector = " W * DX; W * DY; W * DZ" />
+        </Macro>
+        <Macro Name = "StarSide" >
+            <ExecMacro MacroName = "AddStar" DX = " 2" DY = "-2" DZ = " 0" />
+            <ExecMacro MacroName = "AddStar" DX = " 2" DY = " 0" DZ = "-2" />
+            <ExecMacro MacroName = "AddStar" DX = " 0" DY = "-2" DZ = "-2" />
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+        </Macro>
+        <ExecMacro MacroName = "StarSide" c0 = "clRed   " c1 = "clBlue  " c2 = "clYellow" />
+        <ExecMacro MacroName = "StarSide" c0 = "clGreen " c1 = "clYellow" c2 = "clBlue  " />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "StarSide" c0 = "clYellow" c1 = "clGreen " c2 = "clRed   " />
+        <ExecMacro MacroName = "StarSide" c0 = "clBlue  " c1 = "clRed   " c2 = "clGreen " />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

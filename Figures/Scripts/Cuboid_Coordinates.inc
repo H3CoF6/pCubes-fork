@@ -27,25 +27,25 @@
 
 
         // Centers
-        Cx[0] :=-WX; Cy[0] :=  0; Cz[0] :=  0;
-        Cx[1] := WX; Cy[1] :=  0; Cz[1] :=  0;
-        Cx[2] :=  0; Cy[2] :=-WY; Cz[2] :=  0;
-        Cx[3] :=  0; Cy[3] := WY; Cz[3] :=  0;
-        Cx[4] :=  0; Cy[4] :=  0; Cz[4] :=-WZ;
-        Cx[5] :=  0; Cy[5] :=  0; Cz[5] := WZ;
+        Cx[0] :=-WX + DWX; Cy[0] :=      DWY; Cz[0] :=      DWZ;
+        Cx[1] := WX + DWX; Cy[1] :=      DWY; Cz[1] :=      DWZ;
+        Cx[2] :=      DWX; Cy[2] :=-WY + DWY; Cz[2] :=      DWZ;
+        Cx[3] :=      DWX; Cy[3] := WY + DWY; Cz[3] :=      DWZ;
+        Cx[4] :=      DWX; Cy[4] :=      DWY; Cz[4] :=-WZ + DWZ;
+        Cx[5] :=      DWX; Cy[5] :=      DWY; Cz[5] := WZ + DWZ;
 
 
         // Edges
 
-        Ex[ 0] :=  0; Ey[ 0] :=-WY; Ez[ 0] := WZ;
-        Ex[ 1] :=  0; Ey[ 1] := WY; Ez[ 1] := WZ;
-        Ex[ 2] :=-WX; Ey[ 2] :=  0; Ez[ 2] := WZ;
-        Ex[ 3] := WX; Ey[ 3] :=  0; Ez[ 3] := WZ;
-        Ex[ 4] := WX; Ey[ 4] :=-WY; Ez[ 4] :=  0;
-        Ex[ 5] := WX; Ey[ 5] := WY; Ez[ 5] :=  0;
-        Ex[ 6] :=  0; Ey[ 6] := WY; Ez[ 6] :=-WZ;
-        Ex[ 7] :=  0; Ey[ 7] :=-WY; Ez[ 7] :=-WZ;
-        Ex[ 8] := WX; Ey[ 8] :=  0; Ez[ 8] :=-WZ;
-        Ex[ 9] :=-WX; Ey[ 9] :=  0; Ez[ 9] :=-WZ;
-        Ex[10] :=-WX; Ey[10] := WY; Ez[10] :=  0;
-        Ex[11] :=-WX; Ey[11] :=-WY; Ez[11] :=  0;
+        Ex[ 0] :=      DWX; Ey[ 0] :=-WY + DWY; Ez[ 0] := WZ + DWZ;
+        Ex[ 1] :=      DWX; Ey[ 1] := WY + DWY; Ez[ 1] := WZ + DWZ;
+        Ex[ 2] :=-WX + DWX; Ey[ 2] :=      DWY; Ez[ 2] := WZ + DWZ;
+        Ex[ 3] := WX + DWX; Ey[ 3] :=      DWY; Ez[ 3] := WZ + DWZ;
+        Ex[ 4] := WX + DWX; Ey[ 4] :=-WY + DWY; Ez[ 4] :=      DWZ;
+        Ex[ 5] := WX + DWX; Ey[ 5] := WY + DWY; Ez[ 5] :=      DWZ;
+        Ex[ 6] :=      DWX; Ey[ 6] := WY + DWY; Ez[ 6] :=-WZ + DWZ;
+        Ex[ 7] :=      DWX; Ey[ 7] :=-WY + DWY; Ez[ 7] :=-WZ + DWZ;
+        Ex[ 8] := WX + DWX; Ey[ 8] :=      DWY; Ez[ 8] :=-WZ + DWZ;
+        Ex[ 9] :=-WX + DWX; Ey[ 9] :=      DWY; Ez[ 9] :=-WZ + DWZ;
+        Ex[10] :=-WX + DWX; Ey[10] := WY + DWY; Ez[10] :=      DWZ;
+        Ex[11] :=-WX + DWX; Ey[11] :=-WY + DWY; Ez[11] :=      DWZ;

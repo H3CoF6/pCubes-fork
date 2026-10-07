@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 4x4x4 2</Name>
+        <Menu>Cubic\Crazy\Crazy 4x4x4\Crazy 4x4x4 2</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Andrea</Programmer>
+        <Added>2014-03-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1693</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 2;
+        R := D * sqrt(2);
+        DC := 1.002;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W;-D; 0; D; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+        <RemoveContaining Vector = "0;0;0" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Cx;Cy;Cz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "R" Color = "Colors[i]" Center = "Cx[i] * DC; Cy[i] * DC; Cz[i] * DC" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+
+        <SplitByAxes/>
+
+        <Connect Layers = "0;2" />
+        <Connect Layers = "3;5" />
+    </Figure>
+</xml>

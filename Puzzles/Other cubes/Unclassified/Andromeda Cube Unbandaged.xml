@@ -1,0 +1,129 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Andromeda Cube Unbandaged</Name>
+        <Menu>Other cubes\Unclassified\Andromeda Cube Unbandaged</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7048</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF8800'; // Orange
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := '00DD00'; // Green
+        Colors[3] := '0066FF'; // Blue
+        Colors[4] := 'FF0000'; // Red
+        Colors[5] := 'AA00AA'; // Violett
+
+        W := 0.5;
+        A := W * 1.4;
+        B := W * 0.3;
+
+        // code from Pentagonal Icositetrahedron
+        K  := 0.5; // result is independent from K
+        K1 := (6 * (9 + sqrt(33)))^(1/3);
+        K2 := (6 * (9 - sqrt(33)))^(1/3);
+        K3 := (2 * (1777 + 33*sqrt(33)))^(1/3);
+        K4 := (2 * (1777 - 33*sqrt(33)))^(1/3);
+
+        C0 := K * sqrt(6 * (-6 + K1 + K2)) / 12;
+        C1 := K * sqrt(6 * ( 6 + K1 + K2)) / 12;
+        C2 := K * sqrt(6 * (18 + K1 + K2)) / 12;
+        C3 := K * sqrt(6 * (14 + K3 + K4)) / 12;
+
+        n1 := (c1 - c0)^2;
+        n2 := (c1 - c2)^2;
+        n3 := (c1 - c2) * (c0 - c1);
+
+        bgx := -n2*n3 + n1^2;
+        bgy :=  n1*n2 - n3^2;
+        bgz := -n1*n3 + n2^2;
+
+        byx := -n2^2 + n1*n3;
+        byy :=  n1^2 - n2*n3;
+        byz := -n3^2 + n1*n2;
+
+        A1 := ArcCos((bgx*byx + bgy*byy + bgz*byz) / (bgx^2 + bgy^2 + bgz^2));
+        A2 := 2 * Pi - 4 * A1;
+        A3 := 2 * A1;
+        A4 := 3 * A1;
+
+        D := A * n1 / sqrt(n1^2 + n2^2 + n3^2);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi; 0" AvailableAngles = "-A4; -A3; -A2; -A1; 0; A1; A2; A3; A4" PlaneDistances = "-D" FixedLayers = "1" >
+        <Axis NormVector = " n2; n3; n1" />
+        <Axis NormVector = " n3;-n2; n1" />
+        <Axis NormVector = "-n2;-n3; n1" />
+        <Axis NormVector = "-n3; n2; n1" />
+
+        <Axis NormVector = "-n2; n3;-n1" />
+        <Axis NormVector = "-n3;-n2;-n1" />
+        <Axis NormVector = " n2;-n3;-n1" />
+        <Axis NormVector = " n3; n2;-n1" />
+
+        <Axis NormVector = "-n2; n1; n3" />
+        <Axis NormVector = " n2; n1;-n3" />
+        <Axis NormVector = "-n3; n1;-n2" />
+        <Axis NormVector = " n3; n1; n2" />
+
+        <Axis NormVector = "-n3;-n1; n2" />
+        <Axis NormVector = " n3;-n1;-n2" />
+        <Axis NormVector = "-n2;-n1;-n3" />
+        <Axis NormVector = " n2;-n1; n3" />
+
+        <Axis NormVector = "-n1; n3; n2" />
+        <Axis NormVector = "-n1;-n3;-n2" />
+        <Axis NormVector = "-n1;-n2; n3" />
+        <Axis NormVector = "-n1; n2;-n3" />
+
+        <Axis NormVector = " n1;-n3; n2" />
+        <Axis NormVector = " n1; n3;-n2" />
+        <Axis NormVector = " n1;-n2;-n3" />
+        <Axis NormVector = " n1; n2; n3" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Unbandage">
+            <Turn Axis = "ax1" Layer = "0" Angle = "-A1" />
+            <Turn Axis = "ax2" Layer = "0" Angle = "A1" />
+            <Split Axis = "ax1" From = "1" />
+            <Undo Repeat = "2" />
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" ax1 = "13" ax2 = "20" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "14" ax2 = " 6" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "12" ax2 = "17" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "15" ax2 = " 2" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "21" ax2 = "11" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "22" ax2 = " 7" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "20" ax2 = "13" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "23" ax2 = " 1" />
+        <ExecMacro MacroName = "Unbandage" ax1 = " 0" ax2 = " 8" />
+        <ExecMacro MacroName = "Unbandage" ax1 = " 1" ax2 = "23" />
+        <ExecMacro MacroName = "Unbandage" ax1 = " 2" ax2 = "15" />
+        <ExecMacro MacroName = "Unbandage" ax1 = " 3" ax2 = "18" />
+        <ExecMacro MacroName = "Unbandage" ax1 = " 4" ax2 = " 9" />
+        <ExecMacro MacroName = "Unbandage" ax1 = " 5" ax2 = "19" />
+        <ExecMacro MacroName = "Unbandage" ax1 = " 6" ax2 = "14" />
+        <ExecMacro MacroName = "Unbandage" ax1 = " 7" ax2 = "22" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "11" ax2 = "21" />
+        <ExecMacro MacroName = "Unbandage" ax1 = " 8" ax2 = " 0" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "10" ax2 = "16" />
+        <ExecMacro MacroName = "Unbandage" ax1 = " 9" ax2 = " 4" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "17" ax2 = "12" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "19" ax2 = " 5" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "16" ax2 = "10" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "18" ax2 = " 3" />
+
+        <SaveSolvedState/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

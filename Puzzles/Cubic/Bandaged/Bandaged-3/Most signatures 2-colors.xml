@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Most signatures 2-colors</Name>
+        <Menu>Cubic\Bandaged\Cube 3x3x3\Most signatures 2-colors</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2019-11-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2682</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        clGreen  := '179365';
+        clOrange := 'FE8009';
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "Vx[0]; Vy[0]; Vz[0]" />
+                <Add Vector = "Vx[1]; Vy[1]; Vz[1]" />
+                <Add Vector = "Vx[2]; Vy[2]; Vz[2]" />
+                <Add Vector = "Vx[3]; Vy[3]; Vz[3]" />
+                <Add Vector = "Vx[4]; Vy[4]; Vz[4]" />
+                <Add Vector = "Vx[5]; Vy[5]; Vz[5]" />
+                <Add Vector = "Vx[6]; Vy[6]; Vz[6]" />
+                <Add Vector = "Vx[7]; Vy[7]; Vz[7]" />
+                <Add Vector = "Ex[2]; Ey[2]; Ez[2]" />
+                <Add Vector = "   -D;    -D;     W" />
+                <Add Vector = "Ex[0]; Ey[0]; Ez[0]" />
+                <Add Vector = "    D;    -W;    -D" />
+                <Add Vector = "    W;    -W;    -D" />
+                <Add Vector = "    W;     W;    -D" />
+                <Add Vector = "   -W;     W;    -D" />
+                <Add Vector = "   -W;     D;    -D" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange" VertexIndexes = " 0; 1; 8;15;14; 2" />
+                <Face Color = "clGreen " VertexIndexes = " 3;14;15; 8" />
+                <Face Color = "clGreen " VertexIndexes = " 5;12;13; 7" />
+                <Face Color = "clOrange" VertexIndexes = " 4; 6;13;12" />
+                <Face Color = "clOrange" VertexIndexes = " 1; 0; 4;12;11;10" />
+                <Face Color = "clGreen " VertexIndexes = " 5;10;11;12" />
+                <Face Color = "clGreen " VertexIndexes = " 3; 7;13;14" />
+                <Face Color = "clOrange" VertexIndexes = " 2;14;13; 6" />
+                <Face Color = "clOrange" VertexIndexes = " 0; 2; 6; 4" />
+                <Face Color = "clGreen " VertexIndexes = " 3; 8; 9;10; 5; 7" />
+                <Face Color = "clOrange" VertexIndexes = "10; 9; 8; 1" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <HideContaining Vector = "-W;-W; 0" />
+        <Split Axis = "2" From = "1" />
+        <ShowAll/>
+        <HideContaining Vector = " 0; 0; 0" />
+        <InvertVisibility/>
+        <Split Axis = "2" From = "2" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

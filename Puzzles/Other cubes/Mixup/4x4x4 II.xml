@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup 4x4x4 II</Name>
+        <Menu>Other cubes\Mixup\4x4x4 II</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Link></Link>
+        <Added>2018-01-02</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * tan(Pi / 6);
+//        D := W * sin(Pi / 6);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/6; Pi/6; Pi/2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn  Axis = "Ax0" Layer = "1" Angle = "Pi/6" />
+            <Turn  Axis = "Ax0" Layer = "2" Angle = "Pi/6" />
+            <Split Axis = "Ax1" From  = "2" />
+            <Split Axis = "Ax2" From  = "2" />
+            <Turn  Axis = "Ax0" Layer = "1" Angle = "-Pi/3" />
+            <Turn  Axis = "Ax0" Layer = "2" Angle = "-Pi/3" />
+            <Split Axis = "Ax1" From  = "2" />
+            <Split Axis = "Ax2" From  = "2" />
+            <Turn  Axis = "Ax0" Layer = "1" Angle = "Pi/6" />
+            <Turn  Axis = "Ax0" Layer = "2" Angle = "Pi/6" />
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart" Ax0 = "0" Ax1 = "1" Ax2 = "2" />
+        <ExecMacro MacroName = "SplitPart" Ax0 = "1" Ax1 = "0" Ax2 = "2" />
+        <ExecMacro MacroName = "SplitPart" Ax0 = "2" Ax1 = "1" Ax2 = "0" />
+
+        <HideContaining Vector = "-W; 0; 0" />
+        <HideContaining Vector = " W; 0; 0" />
+        <InvertVisibility />
+
+        <Macro Name = "Split2">
+            <Turn  Axis = "Ax1" From = "1" To = "2" Angle = "Pi/6" />
+            <Split Axis = "Ax0" From  = "3" />
+            <Split Axis = "Ax0" From  = "1" />
+            <Turn  Axis = "Ax1" From = "1" To = "2" Angle = "-Pi/3" />
+            <Split Axis = "Ax0" From  = "3" />
+            <Split Axis = "Ax0" From  = "1" />
+            <Turn  Axis = "Ax1" From = "1" To = "2" Angle = "Pi/6" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split2" Ax0 = "0" Ax1 = "1" />
+        <ExecMacro MacroName = "Split2" Ax0 = "0" Ax1 = "2" />
+        <ShowAll/>
+
+        <HideContaining Vector = "0; -W; 0" />
+        <HideContaining Vector = "0;  W; 0" />
+        <InvertVisibility />
+        <ExecMacro MacroName = "Split2" Ax0 = "1" Ax1 = "2" />
+        <ExecMacro MacroName = "Split2" Ax0 = "1" Ax1 = "0" />
+        <ShowAll/>
+
+        <HideContaining Vector = "0; 0; -W" />
+        <HideContaining Vector = "0; 0;  W" />
+        <InvertVisibility />
+        <ExecMacro MacroName = "Split2" Ax0 = "2" Ax1 = "0" />
+        <ExecMacro MacroName = "Split2" Ax0 = "2" Ax1 = "1" />
+        <ShowAll/>
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

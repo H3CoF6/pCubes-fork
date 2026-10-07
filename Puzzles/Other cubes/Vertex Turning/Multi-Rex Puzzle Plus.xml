@@ -1,0 +1,102 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Multi-Rex Puzzle Plus</Name>
+        <Menu>Other cubes\Vertex Turning\Multi-Rex Puzzle Plus</Menu>
+        <Menu>Other forms\Multi-puzzles\Multi-Rex Puzzle Plus</Menu>
+        <Inventor>Ruben Dario Velez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9227</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000DD';
+        clGreen  := '00AA00';
+        clRed    := 'EE0000';
+        clOrange := 'FF6600';
+        clYellow := 'FFEE00';
+        clWhite  := 'FFFFFF';
+
+        W := 0.5;
+        Width1 := W;
+        Width2 := W * 0.35;
+
+        D := W * 0.3;
+        D2 := W * 2 / sqrt(3) - D;
+
+        // central
+        DX := W * 0.12;
+        BO := Width1 - D * sqrt(3);
+        BI := BO - DX;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3; 0; Pi * 2 / 3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" W = "Width1" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " W; 0; 0" />
+        <RemoveContaining Vector = "-W; 0; 0" />
+        <RemoveContaining Vector = " 0; W; 0" />
+        <RemoveContaining Vector = " 0;-W; 0" />
+        <RemoveContaining Vector = " 0; 0; W" />
+        <RemoveContaining Vector = " 0; 0;-W" />
+
+        <Split> <Plane NormDistance = "D2" NormVector = " 1; 1; 1" /> </Split>
+        <Split> <Plane NormDistance = "D2" NormVector = " 1; 1;-1" /> </Split>
+        <Split> <Plane NormDistance = "D2" NormVector = " 1;-1; 1" /> </Split>
+        <Split> <Plane NormDistance = "D2" NormVector = " 1;-1;-1" /> </Split>
+        <Split> <Plane NormDistance = "D2" NormVector = "-1; 1; 1" /> </Split>
+        <Split> <Plane NormDistance = "D2" NormVector = "-1; 1;-1" /> </Split>
+        <Split> <Plane NormDistance = "D2" NormVector = "-1;-1; 1" /> </Split>
+        <Split> <Plane NormDistance = "D2" NormVector = "-1;-1;-1" /> </Split>
+        <RemoveGrayParts/>
+
+        // Centers
+
+        <Macro Name = "CenterSq" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "-BO;  0; Width1" />
+                    <Add Vector = "  0;-BO; Width1" />
+                    <Add Vector = " BO;  0; Width1" />
+                    <Add Vector = "  0; BO; Width1" />
+                    <Add Vector = "-BI;  0; Width1" />
+                    <Add Vector = "  0;-BI; Width1" />
+                    <Add Vector = " BI;  0; Width1" />
+                    <Add Vector = "  0; BI; Width1" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "3;0;4;7" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "0;1;5;4" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "1;2;6;5" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "2;3;7;6" InvisibleEdges = "10" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "1;0;0" Angle = "Pi" />
+        </Macro>
+        <ExecMacro MacroName = "CenterSq" Color = "clWhite " />
+        <ExecMacro MacroName = "CenterSq" Color = "clYellow" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "CenterSq" Color = "clGreen " />
+        <ExecMacro MacroName = "CenterSq" Color = "clBlue  " />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "CenterSq" Color = "clOrange" />
+        <ExecMacro MacroName = "CenterSq" Color = "clRed   " />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+
+        // internal cube
+
+        <LoadFrom File = "Figures\Cube.xml" W = "Width2" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

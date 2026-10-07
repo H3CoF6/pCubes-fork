@@ -1,0 +1,149 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rocket Twist</Name>
+        <Menu>Other forms\Unclassified\Rocket Twist</Menu>
+        <Inventor>Oskar Van Deventer</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-08-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7576</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := -R * sqrt((85 - 38 * sqrt(5)) / 15);
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D" NormVectors = " Cx; Cy; Cz" TurnAxesWithPartNo = "0" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Color" > <Plane NormVector = "-Cx[ax];-Cy[ax];-Cz[ax]" NormDistance = "-R2Sin" /> </Cut>
+        </Macro>
+        <Macro Name = "Split" >
+            <Split> <Plane NormVector = " Cx[ax]; Cy[ax]; Cz[ax]" NormDistance = "D" /> </Split>
+        </Macro>
+
+        <ExecMacro MacroName = "Cut" Ax = " 1" Color = "clRed   " />
+        <ExecMacro MacroName = "Cut" Ax = " 4" Color = "clGreen " />
+        <ExecMacro MacroName = "Cut" Ax = "10" Color = "clYellow" />
+
+        <ExecMacro MacroName = "Split" Ax = " 1" />
+        <ExecMacro MacroName = "Split" Ax = " 4" />
+        <ExecMacro MacroName = "Split" Ax = "10" />
+
+        <Macro Name = "Vertex" >
+            <HideContaining Vector = " Vx[v]; Vy[v]; Vz[v]" />
+            <InvertVisibility/>
+            <ExecMacro MacroName = "Split" />
+            <ExecMacro MacroName = "Cut" Color = "clBlue" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Vertex" v = "14" ax = "11" />
+        <ExecMacro MacroName = "Vertex" v = "15" ax = " 7" />
+        <ExecMacro MacroName = "Vertex" v = "18" ax = " 8" />
+
+        <Macro Name = "CutVertex" >
+            <HideContaining Vector = " Vx[v]; Vy[v]; Vz[v]" />
+            <InvertVisibility/>
+            <ExecMacro MacroName = "Split" ax = "c1" />
+            <ExecMacro MacroName = "Split" ax = "c2" />
+            <ExecMacro MacroName = "Split" ax = "c3" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "CutVertex" v = " 2" c1 = " 7" c2 = " 8" c3 = "11" />
+        <ExecMacro MacroName = "CutVertex" v = "14" c1 = " 2" c2 = " 3" c3 = "10" />
+        <ExecMacro MacroName = "CutVertex" v = "15" c1 = " 0" c2 = " 3" c3 = " 4" />
+        <ExecMacro MacroName = "CutVertex" v = "18" c1 = " 0" c2 = " 1" c3 = " 2" />
+
+        <Macro Name = "CutBottom" >
+            <Hide Axis = "c1" Layer = "1" />
+            <Hide Axis = "c2" Layer = "1" />
+            <ExecMacro MacroName = "Cut" ax = "c3" Color = "clBlue" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "CutBottom" c1 = " 1" c2 = " 4" c3 = "11" />
+        <ExecMacro MacroName = "CutBottom" c1 = " 4" c2 = "10" c3 = " 8" />
+        <ExecMacro MacroName = "CutBottom" c1 = "10" c2 = " 1" c3 = " 7" />
+
+        <RemoveGrayParts/>
+
+        <Turn NormVector = "0;0;1" Angle = "-sAngle" />
+        <Turn NormVector = "1;0;0" Angle = "Arctan(-RCos/RSin)" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>
+
+<!--
+        <Macro Name = "Cut" > <Cut Color = "Color" > <Plane NormVector = "-Cx[Ax];-Cy[Ax];-Cz[Ax]" NormDistance = "-R2Sin" /> </Cut> </Macro>
+
+        <Macro Name = "Split"   > <Split> <Plane NormVector = "-Cx[ax];-Cy[ax];-Cz[ax]" NormDistance = "-D" /> </Split> </Macro>
+        <Macro Name = "SplitR"  > <ExecMacro MacroName = "Split" ax = " 1" /> </Macro>
+        <Macro Name = "SplitG"  > <ExecMacro MacroName = "Split" ax = " 4" /> </Macro>
+        <Macro Name = "SplitY"  > <ExecMacro MacroName = "Split" ax = "10" /> </Macro>
+
+        <Macro Name = "R"  > <Turn Axis = " 1" Layer = "1" Angle = "-2*sAngle" /> </Macro>
+        <Macro Name = "R'" > <Turn Axis = " 1" Layer = "1" Angle = " 2*sAngle" /> </Macro>
+        <Macro Name = "G"  > <Turn Axis = " 4" Layer = "1" Angle = "-2*sAngle" /> </Macro>
+        <Macro Name = "G'" > <Turn Axis = " 4" Layer = "1" Angle = " 2*sAngle" /> </Macro>
+        <Macro Name = "Y"  > <Turn Axis = "10" Layer = "1" Angle = "-2*sAngle" /> </Macro>
+        <Macro Name = "Y'" > <Turn Axis = "10" Layer = "1" Angle = " 2*sAngle" /> </Macro>
+
+        // create shape
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <ExecMacro MacroName = "Cut" ax = " 1" Color = "clRed   " />
+        <ExecMacro MacroName = "Cut" ax = " 4" Color = "clGreen " />
+        <ExecMacro MacroName = "Cut" ax = "10" Color = "clYellow" />
+
+        <ExecMacro MacroName = "SplitR SplitG SplitY" />
+
+        // cut bottom edges
+
+        <ExecMacro MacroName = "R G'" />
+        <ExecMacro MacroName = "Cut" ax = " 1" Color = "clBlue " />
+        <Undo Repeat = "2" />
+
+        <ExecMacro MacroName = "G Y'" />
+        <ExecMacro MacroName = "Cut" ax = " 4" Color = "clBlue " />
+        <Undo Repeat = "2" />
+
+        <ExecMacro MacroName = "Y R'" />
+        <ExecMacro MacroName = "Cut" ax = "10" Color = "clBlue " />
+        <Undo Repeat = "2" />
+
+        // split legs
+        <ExecMacro MacroName = "R G' SplitR G R'" />
+        <ExecMacro MacroName = "G Y' SplitG Y G'" />
+        <ExecMacro MacroName = "Y R' SplitY R Y'" />
+
+        // cut sharps
+        <ExecMacro MacroName = "Y' G Y G'  SplitY  R G' SplitR G R'  Y R' SplitY R Y'  G Y' G' Y" />
+        <ExecMacro MacroName = "R' Y R Y'  SplitR  G Y' SplitG Y G'  R G' SplitR G R'  Y R' Y' R" />
+        <ExecMacro MacroName = "G' R G R'  SplitG  Y R' SplitY R Y'  G Y' SplitG Y G'  R G' R' G" />
+
+        // cut legs
+
+        <ExecMacro MacroName = "Y R' " />
+        <ExecMacro MacroName = "Cut" ax = " 7" Color = "clBlue " />
+        <Undo Repeat = "2" />
+
+        <ExecMacro MacroName = "R G' " />
+        <ExecMacro MacroName = "Cut" ax = "11" Color = "clBlue " />
+        <Undo Repeat = "2" />
+
+        <ExecMacro MacroName = "G Y' " />
+        <ExecMacro MacroName = "Cut" ax = " 8" Color = "clBlue " />
+        <Undo Repeat = "2" />
+
+        <RemoveGrayParts/>
+-->

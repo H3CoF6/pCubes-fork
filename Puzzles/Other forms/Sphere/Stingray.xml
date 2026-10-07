@@ -1,0 +1,96 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Stingray</Name>
+        <Menu>Other forms\Sphere\Stingray</Menu>
+        <Inventor>Leslie Le</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-07-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8126</Link>
+    </Interface>
+
+    <Script>
+        Col[ 0] := '00AACC'; // clBlue
+        Col[ 1] := 'FF6600'; // clOrange
+        Col[ 2] := 'FFFFFF'; // clWhite
+        Col[ 3] := '00CC00'; // clLightGreen
+        Col[ 4] := 'FF22AA'; // clPink
+        Col[ 5] := '00AAFF'; // clCyan
+        Col[ 6] := '440000'; // clBrown
+        Col[ 7] := '88EEFF'; // clLightestBlue
+        Col[ 8] := 'FFFFBB'; // clCream
+        Col[ 9] := '008822'; // clGreen
+        Col[10] := '9900CC'; // clViolett
+        Col[11] := 'DDDDDD'; // clSilver
+        Col[12] := 'FF55CC'; // clLightPink
+        Col[13] := 'EE77EE'; // clLightViolett
+        Col[14] := '0077EE'; // clLightBlue
+        Col[15] := 'FF1100'; // clRed
+        Col[16] := '00DDAA'; // clMint
+        Col[17] := 'FFEE00'; // clYellow
+        Col[18] := 'FFAAFF'; // clRose
+        Col[19] := '995500'; // clLightBrown
+        Col[20] := 'FF5500'; // clDarkerOrange
+        Col[21] := '440044'; // clDarkViolett
+        Col[22] := 'FFBB00'; // clDarkYellow
+        Col[23] := '009966'; // clDarkMint
+
+        Colors[1] := -1;
+        Colors[2] := -1;
+        Colors[4] := -1;
+
+        K := 0.6;
+        D1 := K * 0.89;
+        D2 := K * 0.91;
+
+        fE := K / sqrt(2);
+        fV := K /  sqrt(3);
+        DCutE := K * 0.65;
+        DCutV := K * 0.54;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = "-1; 0;-1" />
+        <Axis NormVector = " 0;-1;-1" />
+        <Axis NormVector = " 1; 0;-1" />
+        <Axis NormVector = " 0; 1;-1" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <Script>
+                Colors[0] := Col[c];
+                Colors[5] := Col[c+1];
+                Colors[3] := Col[c+2];
+                c := c + 3;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+            <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" c = "0" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSegment" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

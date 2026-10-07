@@ -1,0 +1,97 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Master Gem 4 Rhombic Triacontahedron</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Triacontahedron\Face Turning\Master Gem 4 Rhombic Triacontahedron</Menu>
+        <Inventor>Ilya Toporgilka</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9594</Link>
+    </Interface>
+
+    <Script>
+        Colors[12] := '5D8AA8';
+        Colors[13] := 'F0F8FF';
+        Colors[14] := 'E32636';
+        Colors[15] := 'EFDECD';
+        Colors[16] := 'E52B50';
+        Colors[17] := 'FFBF00';
+        Colors[18] := 'FF033E';
+        Colors[19] := '9966CC';
+        Colors[20] := 'A4C639';
+        Colors[21] := 'F2F3F4';
+        Colors[22] := 'CD9575';
+        Colors[23] := '915C83';
+        Colors[24] := 'FAEBD7';
+        Colors[25] := '88D8C0';
+        Colors[26] := '8DB600';
+        Colors[27] := 'FBCEB1';
+        Colors[28] := '00FFFF';
+        Colors[29] := '7FFFD4';
+        Colors[30] := '4B5320';
+        Colors[31] := 'E9D66B';
+        Colors[32] := 'B2BEB5';
+        Colors[33] := '87A96B';
+        Colors[34] := 'FF9966';
+        Colors[35] := 'A52A2A';
+        Colors[36] := 'FDEE00';
+        Colors[37] := '6E7F80';
+        Colors[38] := 'FF2052';
+        Colors[39] := '007FFF';
+        Colors[40] := 'F0FFFF';
+        Colors[41] := '89CFF0';
+        Colors[42] := 'A1CAF1';
+        Colors[43] := 'F4C2C2';
+        Colors[44] := '21ABCD';
+        Colors[45] := 'FAE7B5';
+        Colors[46] := 'FFE135';
+        Colors[47] := '848482';
+        Colors[48] := '98777B';
+        Colors[49] := 'BCD4E6';
+        Colors[50] := '9F8170';
+        Colors[51] := 'F5F5DC';
+        Colors[52] := 'FFE4C4';
+        Colors[53] := '3D2B1F';
+        Colors[54] := 'FE6F5E';
+        Colors[55] := '000000';
+        Colors[56] := 'FFEBCD';
+        Colors[57] := '318CE7';
+        Colors[58] := 'ACE5EE';
+        Colors[59] := 'FAF0BE';
+        Colors[60] := '0000FF';
+        Colors[61] := 'A2A2D0';
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := (5 * Rsin + 1 * R2sin) / 6-0.01;
+        D2 := (4 * Rsin + 2 * R2sin) / 6;
+        D3 := (3 * Rsin + 3 * R2sin) / 6;
+
+        DCutV := R * 0.867;
+        DCutE := R * 0.875;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; sAngle; sAngle" NormVectors = " Cx; Cy; Cz" PlaneDistances = " D3; D2; D1" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "CutV" >
+            <Cut Color = "Colors[c]" ><Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "-DCutV" /></Cut>
+            <Script>Inc(i);Inc(c);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" c = "12" Repeat = "20" />
+
+        <Macro Name = "CutE" >
+            <Cut Color = "Colors[c]" ><Plane NormVector = "Ex[i];Ey[i];Ez[i]" NormDistance = "-DCutE" /></Cut>
+            <Script>Inc(i);Inc(c);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "30" />
+
+        <SplitByAxes/>
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

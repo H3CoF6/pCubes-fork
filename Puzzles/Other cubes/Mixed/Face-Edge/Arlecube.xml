@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Arlecube</Name>
+        <Menu>Other cubes\Mixed\Face-Edge\Arlecube</Menu>
+        <Inventor>Félix Nadin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-12-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7121</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        Delta := 1.004;
+        R := W * 0.28;
+        WC := W * Delta;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+ 
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W;-D; D; W" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "0;0;1" />
+    </Axes>
+ 
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1;1;0" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "HideCenters" >
+            <HideContaining Vector = "Cx[Id]; Cy[Id]; Cz[Id]" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenters" Id = "0" Repeat = "6" />
+
+        <Split> <Plane NormVector = "-1;1;0" /> </Split>
+
+        <Macro Name = "HideCorners" >
+            <HideContaining Vector = "Vx[Id]; Vy[Id]; Vz[Id]" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCorners" Id = "0" Repeat = "8" />
+
+        <RemoveGrayParts/>
+
+        <Split> <Plane NormVector = " 0; 1; 1" /> </Split>
+        <Split> <Plane NormVector = " 0; 1;-1" /> </Split>
+        <Split> <Plane NormVector = " 1; 0; 1" /> </Split>
+        <Split> <Plane NormVector = " 1; 0;-1" /> </Split>
+        <ShowAll/>
+
+        <Circle Radius = "R" Color =  "clWhite" > <Center X = "0" Y = "0" Z = " WC" /> </Circle>
+        <Circle Radius = "R" Color = "clYellow" > <Center X = "0" Y = "0" Z = "-WC" /> </Circle>
+
+        <SplitByAxes/>
+        <Connect Axis = "2" Layers = "0;2;4" />
+    </Figure>
+</xml>

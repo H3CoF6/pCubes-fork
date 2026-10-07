@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rompentrix, The Vertical Smile</Name>
+        <Menu>Other forms\Dodecahedron\Starminx\Rompentrix, The Vertical Smile</Menu>
+        <Menu>Other forms\Dodecahedron\Face Turning\Rompentrix, The Vertical Smile</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-06-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10043</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R2sin;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = " Cx[4]; Cy[4]; Cz[4]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " Ex[2]; Ey[2]; Ez[2]" />
+
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = " Cx[i]; Cy[i]; Cz[i]" NormDistance = " D" /></Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "12" />
+
+        <Macro Name = "Hide" >
+            <HideContaining Vector = "Vx[i]; Vy[i]; Vz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" i = "0" Repeat = "20" />
+
+        <RemoveGrayParts/>
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <Split InvisibleEdges1 = "5" InvisibleEdges2 = "3" Color1 = "-2" Color2 = "-2" ><Plane NormVector = " Ex[11]; Ey[11]; Ez[11]" /></Split>
+        <HideContaining Vector = " Ex[2]; Ey[2]; Ez[2]" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <ExecMacro MacroName = "Hide" i = "2" />
+        <InvertVisibility/>
+        <Cut><Plane NormVector = "-Cx[4];-Cy[4];-Cz[4]" NormDistance = "-R * 0.23" /></Cut>
+        <ShowAll/>
+
+        <ExecMacro MacroName = "Hide" i = "3" />
+        <InvertVisibility/>
+        <Cut><Plane NormVector = "-Cx[2];-Cy[2];-Cz[2]" NormDistance = "-R * 0.23" /></Cut>
+        <ShowAll/>
+    </Figure>
+</xml>

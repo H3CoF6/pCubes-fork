@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4 Cuts Tower</Name>
+        <Menu>Other forms\Unclassified\4 Cuts Tower</Menu>
+        <Inventor>Taras Bereznyak</Inventor>
+        <Programmer>Boris, Taras Bereznyak</Programmer>
+        <Added>2025-11-12</Added>
+        <Link>https://twistypuzzles.com/forum/viewtopic.php?t=40596</Link>
+    </Interface>
+
+    <Script>
+        Color := 'CCAA88';
+
+        W := 0.5;
+        D := W * 0.16;
+
+        N := 80;
+        A := 2*Pi / N;
+
+        for i := 0 to N - 1 do begin
+            Vx[i] := W * cos(A * i);
+            Vy[i] := W * sin(A * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "CylinderSide" >
+            <Face Color = "Color" VertexIndexes = " i; (i + 1) mod N; (i + 1) mod N + N; i + N" InvisibleEdges = "10" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "ConeSide" >
+            <Face Color = "Color" VertexIndexes = " i + N; (i + 1) mod N + N; 2*N" InvisibleEdges = "6" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Transfer Vector = "-D;-D; 0" />
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy;-W" />
+            <Vertices Vectors = "Vx; Vy; D" />
+            <Vertices Vectors = " 0;  0; W" />
+
+            <Faces>
+                // bottom side
+                <Face Color = "Color" VertexIndexes = "FromTo(N - 1, 0)" />
+
+                <ExecMacro MacroName = "CylinderSide" i = "0" Repeat = "N" />
+
+                <ExecMacro MacroName = "ConeSide" i = "0" Repeat = "N" />
+            </Faces>
+        </Part>
+        <Transfer Vector = " D; D; 0" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

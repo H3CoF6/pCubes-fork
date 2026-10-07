@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bump 27</Name>
+        <Menu>Cubic\Bump\2x2x2 Bump 27</Menu>
+        <Inventor>Adam Zamora</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2018-10-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2803</Link>
+    </Interface>
+
+    <Script>
+        Color := 'E0C07D';
+
+        W1 := 1/3;
+        W2 := 2/3;
+
+        D := W1 / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W2" Color = "Color" />
+
+        <Cut Color = "Color" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W1 " /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W1 " /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W1 " /> </Cut>
+        <SplitByAxes/>
+        <Split><Plane NormDistance = "-W1" NormVector = "1; 0; 0" /></Split>
+        <Split><Plane NormDistance = " W1" NormVector = "0; 1; 0" /></Split>
+        <Split><Plane NormDistance = "-W1" NormVector = "0; 0; 1" /></Split>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

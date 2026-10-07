@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Double Crazy Cube Trio</Name>
+        <Menu>Cubic\Crazy\Crazy 3x3x3\Double Crazy Cube Trio</Menu>
+        <Inventor>Zijian Wang, Evgeniy Grigoriev</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-07-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7924</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=397392</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // clRed
+        Colors[1] := 'FF7700'; // clOrange
+        Colors[2] := '0044FF'; // clLightBlue
+        Colors[3] := '00BB00'; // clGreen
+        Colors[4] := 'FFFF00'; // clYellow
+        Colors[5] := 'FFFFFF'; // clWhite
+
+        W := 0.5;
+        D := W * 0.21;
+        R1 := W * 0.8;
+        R2 := W * 0.54;
+        W1 := W * 1.004;
+        W2 := W1 * W1 / W;
+        D1 := (W1 + W2) / 2;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D1;-W;-D; D; W; D1" TurnAxesWithLayer = "3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Circle Radius = "R1" Color = "Colors[0]" Center = "-W1;  0;  0" />
+        <Circle Radius = "R1" Color = "Colors[1]" Center = " W1;  0;  0" />
+        <Circle Radius = "R1" Color = "Colors[2]" Center = "  0;-W1;  0" />
+        <Circle Radius = "R1" Color = "Colors[3]" Center = "  0; W1;  0" />
+        <Circle Radius = "R1" Color = "Colors[4]" Center = "  0;  0;-W1" />
+        <Circle Radius = "R1" Color = "Colors[5]" Center = "  0;  0; W1" />
+
+        <Circle Radius = "R2" Color = "Colors[0]" Center = "-W2;  0;  0" />
+        <Circle Radius = "R2" Color = "Colors[1]" Center = " W2;  0;  0" />
+        <Circle Radius = "R2" Color = "Colors[2]" Center = "  0;-W2;  0" />
+        <Circle Radius = "R2" Color = "Colors[3]" Center = "  0; W2;  0" />
+        <Circle Radius = "R2" Color = "Colors[4]" Center = "  0;  0;-W2" />
+        <Circle Radius = "R2" Color = "Colors[5]" Center = "  0;  0; W2" />
+
+        <SplitByAxes/>
+
+        <RemoveGrayParts/>
+
+         <Connect Axis = "0" Layers = "1;2" />
+         <Connect Axis = "0" Layers = "6;5;3;0" />
+         <Connect Axis = "1" Layers = "1;2" />
+         <Connect Axis = "1" Layers = "6;5;3;0" />
+         <Connect Axis = "2" Layers = "1;2" />
+         <Connect Axis = "2" Layers = "6;5;3;0" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "CrazyMark1" File = "Puzzles\Cubic\Crazy\Crazy 3x3x3\CrazyMark1.vec" />
+        <Texture Name = "CrazyMark2" File = "Puzzles\Cubic\Crazy\Crazy 3x3x3\CrazyMark2.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        CrazyMark1 =  84,0,0, 102,0,0, 120,0,0
+        CrazyMark2 = 93,0,0, 111,0,0, 129,0,0
+    </SetTextures>
+</xml>

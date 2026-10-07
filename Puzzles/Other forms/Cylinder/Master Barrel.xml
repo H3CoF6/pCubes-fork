@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Master Barrel</Name>
+        <Menu>Other forms\Cylinder\Master Barrel</Menu>
+        <Inventor>Mark Segedin</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2382</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clGreen  := '008000';
+        clBlue   := '0000FF';
+        clWhite  := 'FFFFFF';
+        clYellow := 'FFFF00';
+
+        sAngle := PI * 2 / 3;
+        for i := 0 to 2 do begin
+            x[i] := sin(sAngle * i);
+            y[i] := cos(sAngle * i);
+        end;
+
+        R := 0.55;
+        H := R * 0.8;
+        H2 := H + 0.002;
+        D1 := R * 0.6;
+        D2 := R * 0.8;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-3*H/5; -H/5; H/5; 3*H/5" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi; Pi" PlaneDistances = "D1; D2" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+
+    <Figure>
+        <Script> Color := clRed; i := 0; </Script>
+        <Cylinder Radius = "R" Color = "Color" >
+            <Base X = "0" Y = "0" Z = "-H" Color = "clWhite " />
+            <Top  X = "0" Y = "0" Z = " H" Color = "clYellow" />
+        </Cylinder>
+        <Cut Color = "Color" ><Plane NormVector = "x[i]; y[i]; 0" NormDistance = "R / 2" /></Cut>
+        <Hide Axis = "0" From = "0" To = "4" />
+
+        <Script> Color := clGreen; i := 1; </Script>
+        <Cylinder Radius = "R" Color = "Color" >
+            <Base X = "0" Y = "0" Z = "-H" Color = "clWhite " />
+            <Top  X = "0" Y = "0" Z = " H" Color = "clYellow" />
+        </Cylinder>
+        <Cut Color = "Color" ><Plane NormVector = "x[i]; y[i]; 0" NormDistance = "R / 2" /></Cut>
+        <Hide Axis = "0" From = "0" To = "4" />
+
+        <Script> Color := clBlue; i := 2; </Script>
+        <Cylinder Radius = "R" Color = "Color" >
+            <Base X = "0" Y = "0" Z = "-H" Color = "clWhite " />
+            <Top  X = "0" Y = "0" Z = " H" Color = "clYellow" />
+        </Cylinder>
+        <Cut Color = "Color" ><Plane NormVector = "x[i]; y[i]; 0" NormDistance = "R / 2" /></Cut>
+        <ShowAll/>
+
+        <Circle Radius = "R" Color = "clYellow" > <Center X =  "0" Y =  "0" Z = " H2" /> </Circle>
+        <Circle Radius = "R" Color = "clWhite " > <Center X =  "0" Y =  "0" Z = "-H2" /> </Circle>
+        <Split Color1 = "clRed" Axis = "1" From = "1" />
+        <Split Color1 = "clRed" Axis = "1" From = "2" />
+        <Split Color1 = "clGreen" Axis = "2" From = "1" />
+        <Split Color1 = "clGreen" Axis = "2" From = "2" />
+        <Split Color1 = "clBlue" Axis = "3" From = "1" />
+        <Split Color1 = "clBlue" Axis = "3" From = "2" />
+
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

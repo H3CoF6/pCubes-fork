@@ -1,0 +1,139 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexapie (AC)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Hexapie (AC)</Menu>
+        <Inventor>Karolis Kairys</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11101</Link>
+    </Interface>
+
+    <Script>
+        Color1 := 'EE0000'; // Red
+        Color2 := 'FFFFFF'; // White
+        Color3 := '0000FF'; // Blue
+        Color4 := '00BFFF'; // DeepSky
+        Color5 := 'FFFF00'; // Black
+        Color6 := '007700'; // Green
+
+        K := 0.6;
+        D := K * 0.75;
+        RC := K / 1.5;
+        DC := D * 1.2;
+
+        N := 60;
+        for i := 0 to N - 1 do begin
+            x[i] := RC * cos(2 * Pi / N * i);
+            y[i] := RC * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2; 0" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "0;0" MaxAngles = "Pi/2; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 6" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCylinderFace" >
+            <Script>
+                i1 := i;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+        <Macro Name = "AddCylinder" >
+            <Part>
+                <Vertices Vectors = " x; y; DC" />
+                <Vertices Vectors = " x; y; D" />
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddCylinderFace" i = "0" Repeat = "N" />
+                    <Face Color = "-1" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddQuarter" >
+            <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+            <ExecMacro MacroName = "AddCylinder" />
+            <Turn NormVector = "1;0;0" Angle = " Pi/2" />
+            <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 0; 0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0;1;0" Angle = "-Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "AddQuarter" Color = "Color1" />
+        <ExecMacro MacroName = "AddQuarter" Color = "Color2" />
+        <ExecMacro MacroName = "AddQuarter" Color = "Color4" />
+        <ExecMacro MacroName = "AddQuarter" Color = "Color3" />
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "AddQuarter" Color = "Color5" />
+        <ExecMacro MacroName = "AddQuarter" Color = "Color6" />
+        <Turn NormVector = "0;1;0" Angle = " Pi" />
+        <Turn NormVector = "0;0;1" Angle = " Pi/2" />
+
+        <ShowAll/>
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi/6" />
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi/6" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi/6" />
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi/6" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi/3" />
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi/3" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi/6" />
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi/6" />
+        <Split Axis = "0" From  = "1" />
+        <Undo Repeat = "8" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "-1" />
+        <Split Axis = "0" From = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Hide Axis = "0" Layer = "0" />
+        <Cut Axis = "1" To = "1" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/6" />
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/6" />
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layer = "1" Angle = "-Pi/3" />
+
+        <Turn Axis = "0" Layer = "0" Angle = " Pi/2" />
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/6" />
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/6" />
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layer = "1" Angle = "-Pi/3" />
+        <Undo/>
+
+
+        <Turn NormVector = "0;0;1" Angle = "-45 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

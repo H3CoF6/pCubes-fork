@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Maple Leaves Skewb Plus (Sphere)</Name>
+        <Menu>Other forms\Sphere\Maple Leaves Skewb Plus (Sphere)</Menu>
+        <Inventor>Martin Guadalupe Bueno Alcantar</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-14</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36366</Link>
+    </Interface>
+
+    <Script>
+        K := 0.6;
+
+        C20 := K * 0.71029864124335; // from _Macro_For_Cubic_Sphere
+        D := C20 * sqrt(3 / 2);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = " Pi/2; 0; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 2; 1" />
+        <Axis NormVector = " 1;-1;-2" />
+        <Axis NormVector = "-2;-1; 1" />
+        <Axis NormVector = " 1; 1; 2" />
+        <Axis NormVector = "-2; 1;-1" />
+        <Axis NormVector = " 1;-2;-1" />
+        <Axis NormVector = "-1;-2; 1" />
+        <Axis NormVector = "-1; 1;-2" />
+        <Axis NormVector = " 2; 1; 1" />
+        <Axis NormVector = "-1;-1; 2" />
+        <Axis NormVector = " 2;-1;-1" />
+        <Axis NormVector = "-1; 2;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Macro Name = "Turn">
+            <Turn Axis = "id" Layer = "2" Angle = "Pi/2" />
+            <Script>Inc(id);</Script>
+        </Macro>
+
+        <Macro Name = "Split">
+            <Split Axis = "a1" From = "1" />
+            <Turn Axis = "a1" Layer = "0" Angle = "Pi/3" />
+
+            <Split Axis = "a2    " From = "2" />
+            <Split Axis = "a2 + 1" From = "2" />
+            <Split Axis = "a2 + 2" From = "2" />
+
+            <ExecMacro MacroName = "Turn" id = "a2" Repeat = "3" />
+            <Split Axis = "a1" From = "1" />
+            <ExecMacro MacroName = "Turn" id = "a2" Repeat = "3" />
+            <Split Axis = "a1" From = "1 "/>
+            <ExecMacro MacroName = "Turn" id = "a2" Repeat = "3" />
+            <Split Axis = "a1" From = "1" />
+            <Undo Repeat = "10" />
+        </Macro>
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = " 4" />
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = " 7" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "10" />
+        <ExecMacro MacroName = "Split" a1 = "0" a2 = "13" />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

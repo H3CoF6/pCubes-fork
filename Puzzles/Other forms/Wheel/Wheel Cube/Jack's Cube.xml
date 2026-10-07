@@ -1,0 +1,137 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jack's Cube</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Jack's Cube</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-09-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2836</Link>
+    </Interface>
+
+    <Script>
+        W := 0.41;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        RC := W;
+        Sc := (1 + sqrt(3)) / 2;
+
+        D1 := W * (Sqrt(3) - 1) / 2;
+        D2 := W;
+
+        k := 0.6;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/2; Pi/6; Pi/2; Pi/2" PlaneDistances = "-D2; -D1; D1; D2" >
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+
+        <Cut><Plane NormVector = "1;0;0" NormDistance = "1"/></Cut>
+        <ShowAll/>
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color1 = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax" Layer = "2" Angle = " Pi/6" />
+            <SplitByAxes/>
+            <Turn  Axis = "Ax" Layer = "2" Angle = " -Pi/3" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax = "0" />
+        <ExecMacro MacroName = "Split" Ax = "1" />
+        <ExecMacro MacroName = "Split" Ax = "2" />
+        <RemoveGrayParts/>
+
+        <Macro Name = "HideCenter" >
+            <HideContaining Vector = "Cx[i]*Sc;Cy[i]*Sc;Cz[i]*Sc" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <HideContaining Vector = "Ex;Ey;Ez" />
+
+        <Macro Name = "HideExtra" >
+            <HideContaining Vector = "Cx[i1] + k * Cx[i2]; Cy[i1] + k * Cy[i2]; Cz[i1] + k * Cz[i2]" />
+        </Macro>
+        <Macro Name = "HideExtra1" >
+            <ExecMacro MacroName = "HideExtra" i1 = "j" i2 = "0" />
+            <ExecMacro MacroName = "HideExtra" i1 = "j" i2 = "1" />
+            <ExecMacro MacroName = "HideExtra" i1 = "j" i2 = "2" />
+            <ExecMacro MacroName = "HideExtra" i1 = "j" i2 = "3" />
+            <ExecMacro MacroName = "HideExtra" i1 = "j" i2 = "4" />
+            <ExecMacro MacroName = "HideExtra" i1 = "j" i2 = "5" />
+            <Script> Inc(j); </Script>
+        </Macro>
+
+        <Macro Name = "HideExtra2" >
+            <ExecMacro MacroName = "HideCenter" Repeat = "6" i = "0" />
+            <ExecMacro MacroName = "HideExtra1" Repeat = "6" j = "0" />
+            <Hide Axis = "Axis" From = "3" To = "4" />
+            <Hide Axis = "Axis" From = "0" To = "1" />
+            <Cut><Plane NormVector = "1;0;0" NormDistance = "1"/></Cut>
+            <ShowAll/>
+            <Script> Inc(Axis); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideExtra2" Repeat = "3" Axis = "0" />
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax2" Layer = "2" Angle = " Pi/6" />
+            <SplitByAxes/>
+            <Turn  Axis = "Ax2" Layer = "2" Angle = "-Pi/3" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+            <RemoveGrayParts/>
+
+            <Turn  Axis = "Ax3" Layer = "2" Angle = " Pi/6" />
+            <SplitByAxes/>
+            <Turn  Axis = "Ax3" Layer = "2" Angle = "-Pi/3" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+            <RemoveGrayParts/>
+
+            <Turn  Axis = "Ax1" Layer = "2" Angle = " Pi/6" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Repeat = "3" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <Undo Repeat = "3" />
+
+        <ExecMacro MacroName = "Split" Repeat = "3" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <Undo Repeat = "3" />
+
+        <ExecMacro MacroName = "Split" Repeat = "3" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+        <Undo Repeat = "3" />
+
+        <Macro Name = "HideExtra3" >
+            <ExecMacro MacroName = "HideCenter" Repeat = "6" i = "0" />
+            <HideContaining Vector = "Ex;Ey;Ez" />
+            <Hide Axis = "Axis" From = "3" To = "4" />
+            <Hide Axis = "Axis" From = "0" To = "1" />
+            <Cut><Plane NormVector = "1;0;0" NormDistance = "1"/></Cut>
+            <ShowAll/>
+            <Script> Inc(Axis); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideExtra3" Repeat = "3" Axis = "0" />
+    </Figure>
+</xml>
+ 

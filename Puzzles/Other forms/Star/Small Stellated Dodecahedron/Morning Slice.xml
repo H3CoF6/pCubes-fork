@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Morning Slice</Name>
+        <Menu>Other forms\Star\Small Stellated Dodecahedron\Morning Slice</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2020-01-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7734</Link>
+    </Interface>
+
+    <Script>
+        R := 0.4;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        // vertex indexes around centers (e.g. there are vertexes # 0 4 3 2 1 around center # 0)
+        vi[ 0, 0] :=  0; vi[ 0, 1] :=  4; vi[ 0, 2] :=  3; vi[ 0, 3] :=  2; vi[ 0, 4] :=  1;
+        vi[ 1, 0] :=  1; vi[ 1, 1] :=  6; vi[ 1, 2] := 10; vi[ 1, 3] :=  5; vi[ 1, 4] :=  0;
+        vi[ 2, 0] :=  2; vi[ 2, 1] :=  7; vi[ 2, 2] := 11; vi[ 2, 3] :=  6; vi[ 2, 4] :=  1;
+        vi[ 3, 0] :=  3; vi[ 3, 1] :=  8; vi[ 3, 2] := 12; vi[ 3, 3] :=  7; vi[ 3, 4] :=  2;
+        vi[ 4, 0] :=  4; vi[ 4, 1] :=  9; vi[ 4, 2] := 13; vi[ 4, 3] :=  8; vi[ 4, 4] :=  3;
+        vi[ 5, 0] :=  0; vi[ 5, 1] :=  5; vi[ 5, 2] := 14; vi[ 5, 3] :=  9; vi[ 5, 4] :=  4;
+        vi[ 6, 0] := 17; vi[ 6, 1] := 12; vi[ 6, 2] :=  8; vi[ 6, 3] := 13; vi[ 6, 4] := 18;
+        vi[ 7, 0] := 18; vi[ 7, 1] := 13; vi[ 7, 2] :=  9; vi[ 7, 3] := 14; vi[ 7, 4] := 19;
+        vi[ 8, 0] := 19; vi[ 8, 1] := 14; vi[ 8, 2] :=  5; vi[ 8, 3] := 10; vi[ 8, 4] := 15;
+        vi[ 9, 0] := 15; vi[ 9, 1] := 10; vi[ 9, 2] :=  6; vi[ 9, 3] := 11; vi[ 9, 4] := 16;
+        vi[10, 0] := 16; vi[10, 1] := 11; vi[10, 2] :=  7; vi[10, 3] := 12; vi[10, 4] := 17;
+        vi[11, 0] := 15; vi[11, 1] := 16; vi[11, 2] := 17; vi[11, 3] := 18; vi[11, 4] := 19;
+
+        // centers indexes around centers
+        ci[ 0, 0] :=  5; ci[ 0, 1] :=  4; ci[ 0, 2] :=  3; ci[ 0, 3] :=  2; ci[ 0, 4] :=  1;
+        ci[ 1, 0] :=  2; ci[ 1, 1] :=  9; ci[ 1, 2] :=  8; ci[ 1, 3] :=  5; ci[ 1, 4] :=  0;
+        ci[ 2, 0] :=  3; ci[ 2, 1] := 10; ci[ 2, 2] :=  9; ci[ 2, 3] :=  1; ci[ 2, 4] :=  0;
+        ci[ 3, 0] :=  4; ci[ 3, 1] :=  6; ci[ 3, 2] := 10; ci[ 3, 3] :=  2; ci[ 3, 4] :=  0;
+        ci[ 4, 0] :=  5; ci[ 4, 1] :=  7; ci[ 4, 2] :=  6; ci[ 4, 3] :=  3; ci[ 4, 4] :=  0;
+        ci[ 5, 0] :=  1; ci[ 5, 1] :=  8; ci[ 5, 2] :=  7; ci[ 5, 3] :=  4; ci[ 5, 4] :=  0;
+        ci[ 6, 0] := 10; ci[ 6, 1] :=  3; ci[ 6, 2] :=  4; ci[ 6, 3] :=  7; ci[ 6, 4] := 11;
+        ci[ 7, 0] :=  6; ci[ 7, 1] :=  4; ci[ 7, 2] :=  5; ci[ 7, 3] :=  8; ci[ 7, 4] := 11;
+        ci[ 8, 0] :=  7; ci[ 8, 1] :=  5; ci[ 8, 2] :=  1; ci[ 8, 3] :=  9; ci[ 8, 4] := 11;
+        ci[ 9, 0] :=  8; ci[ 9, 1] :=  1; ci[ 9, 2] :=  2; ci[ 9, 3] := 10; ci[ 9, 4] := 11;
+        ci[10, 0] :=  9; ci[10, 1] :=  2; ci[10, 2] :=  3; ci[10, 3] :=  6; ci[10, 4] := 11;
+        ci[11, 0] :=  9; ci[11, 1] := 10; ci[11, 2] :=  6; ci[11, 3] :=  7; ci[11, 4] :=  8;
+
+        s5 := sqrt(5);
+        jumAngle := ArcCos((3 * s5 - 1) / 8);
+        D := R * s5 / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" JumbleAngle = "jumAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+        <Axis NormVector = "Vx[6]; Vy[6]; Vz[6]" />
+        <Axis NormVector = "Vx[7]; Vy[7]; Vz[7]" />
+        <Axis NormVector = "Vx[8]; Vy[8]; Vz[8]" />
+        <Axis NormVector = "Vx[9]; Vy[9]; Vz[9]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddPyramide" >
+            <Script>
+                for i := 0 to 4 do begin
+                    Vii := Vi[C,i];
+                    XP[i] := Vx[Vii];
+                    YP[i] := Vy[Vii];
+                    ZP[i] := Vz[Vii];
+                end;
+                XP[5] := Cx[C] * s5;
+                YP[5] := Cy[C] * s5;
+                ZP[5] := Cz[C] * s5;
+            </Script>
+
+            <Part>
+                <Vertices Vectors = "XP; YP; ZP" />
+                <Faces>
+                    <Face VertexIndexes = "4;3;2;1;0" />
+
+                    <Face Color = "Colors[ci[c, 0]]" VertexIndexes = "0;1;5" />
+                    <Face Color = "Colors[ci[c, 1]]" VertexIndexes = "1;2;5" />
+                    <Face Color = "Colors[ci[c, 2]]" VertexIndexes = "2;3;5" />
+                    <Face Color = "Colors[ci[c, 3]]" VertexIndexes = "3;4;5" />
+                    <Face Color = "Colors[ci[c, 4]]" VertexIndexes = "4;0;5" />
+                </Faces>
+            </Part>
+            <Script>Inc(c);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddPyramide" C = "0" Repeat = "12" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

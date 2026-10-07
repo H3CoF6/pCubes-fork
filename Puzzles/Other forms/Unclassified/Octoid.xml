@@ -1,0 +1,96 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octoid</Name>
+        <Menu>Other forms\Unclassified\Octoid</Menu>
+        <Inventor>Wong Chong Wen</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9138</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?t=37156</Link>
+    </Interface>
+
+    <Script>
+        clWhite    := 'FFFFFF';
+        clCyan     := '00FFFF';
+        clBlue     := '0000FF';
+        clGray     := '707070';
+
+        K := 0.7;
+        s2 := sqrt(2);
+
+        // coordinates and axes taken from http://twistypuzzles.com/forum/viewtopic.php?t=37156
+        a := K * sqrt((-4 + 4 * s2) / 3);
+        b := K * sqrt(( 2 +     s2) / 6);
+        c := K * sqrt((-1 +     s2) / 3);
+        d := K * sqrt((-1 +     s2)    );
+        e := K * sqrt((-8 + 8 * s2) / 3);
+        f := K * sqrt((10 - 7 * s2) / 6);
+        g := K * sqrt((-2 + 2 * s2) / 3);
+        h := K * sqrt((-2 + 2 * s2)    );
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+        az := (s2 - 1) * sqrt(s2);
+
+        jAngle := ArcCos((1 - 2 * s2) / 7);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "jAngle" PlaneDistances = "0" NormVectors = "ax; ay; az" TurnAxesWithLayer = "0" />
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " a; 0; b" />
+                <Add Vector = "-c;-d; b" />
+                <Add Vector = "-c; d; b" />
+                <Add Vector = " e; 0; f" />
+                <Add Vector = "-g;-h; f" />
+                <Add Vector = "-g; h; f" />
+                <Add Vector = " c;-d;-b" />
+                <Add Vector = " c; d;-b" />
+                <Add Vector = "-a; 0;-b" />
+
+                <Add Vector = " 0; 0; b" />
+                <Add Vector = "(c-g-a)/3;-(h+d)/3; (f-b-b)/3" />
+                <Add Vector = "(e+c+c)/3;       0; (f-b-b)/3" />
+                <Add Vector = "(c-g-a)/3; (h+d)/3; (f-b-b)/3" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clCyan " VertexIndexes = "0;2;9" InvisibleEdges = "6" />
+                <Face Color = "clBlue " VertexIndexes = "2;1;9" InvisibleEdges = "6" />
+                <Face Color = "clWhite" VertexIndexes = "1;0;9" InvisibleEdges = "6" />
+
+                <Face Color = "clGray " VertexIndexes = "8;6;10" InvisibleEdges = "6" />
+                <Face Color = "clWhite" VertexIndexes = "6;4;10" InvisibleEdges = "6" />
+                <Face Color = "clBlue " VertexIndexes = "4;8;10" InvisibleEdges = "6" />
+
+                <Face Color = "clGray " VertexIndexes = "6;7;11" InvisibleEdges = "6" />
+                <Face Color = "clCyan " VertexIndexes = "7;3;11" InvisibleEdges = "6" />
+                <Face Color = "clWhite" VertexIndexes = "3;6;11" InvisibleEdges = "6" />
+
+                <Face Color = "clGray " VertexIndexes = "7;8;12" InvisibleEdges = "6" />
+                <Face Color = "clBlue " VertexIndexes = "8;5;12" InvisibleEdges = "6" />
+                <Face Color = "clCyan " VertexIndexes = "5;7;12" InvisibleEdges = "6" />
+
+                <Face Color = "clGray " VertexIndexes = "6;8;7" />
+                <Face Color = "clWhite" VertexIndexes = "4;6;3;0;1" />
+                <Face Color = "clCyan " VertexIndexes = "3;7;5;2;0" />
+                <Face Color = "clBlue " VertexIndexes = "5;8;4;1;2" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "R" > <Turn Axis = "0" Layer = "1" Angle = "Pi" /> <SplitByAxes/> </Macro>
+        <Macro Name = "L" > <Turn Axis = "2" Layer = "1" Angle = "Pi" /> <SplitByAxes/> </Macro>
+        <Macro Name = "B" > <Turn Axis = "1" Layer = "1" Angle = "Pi" /> <SplitByAxes/> </Macro>
+
+        <ExecMacro MacroName = "R L B" Repeat = "4" />
+        <Undo Repeat = "12" />
+    </Figure>
+</xml>

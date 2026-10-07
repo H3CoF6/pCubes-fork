@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Beta Blocker</Name>
+        <Menu>Other forms\3x3x3 variants\Beta Blocker</Menu>
+        <Menu>Other forms\Star\Beta Blocker</Menu>
+        <Inventor>Joachim Solborg</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7482</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 6] := '8F5000'; // Orange
+        Colors[ 7] := 'FF3030'; // Red
+        Colors[ 8] := 'DFDF30'; // Yellow
+        Colors[ 9] := 'CCCCFF'; // White
+        Colors[10] := '3030B0'; // Blue
+        Colors[11] := '30A030'; // Green
+
+        W := 0.5;
+        D := W * (sqrt(2) - 1);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCube" >
+            <Turn NormVector = " 0; 1; 0" Angle = "-Pi/4" />
+            <LoadFrom File = "Figures\Cube.xml" />
+            <Turn NormVector = " 0; 1; 0" Angle = " Pi/4" />
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-W" /></Split>
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = " W" /></Split>
+            <Split><Plane NormVector = " 0; 1; 1" NormDistance = "-W" /></Split>
+            <Split><Plane NormVector = " 0; 1; 1" NormDistance = " W" /></Split>
+            <Split><Plane NormVector = " 0; 1;-1" NormDistance = "-W" /></Split>
+            <Split><Plane NormVector = " 0; 1;-1" NormDistance = " W" /></Split>
+        </Macro>
+        <ExecMacro MacroName = "AddCube" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := Colors[i + 6];
+        </Script>
+
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCube" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+
+        <ExecMacro MacroName = "AddCube" Color = "-1" />
+        <HideContaining Vector = " 0; 0; 0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi / 4" />
+        <SplitByAxes/>
+        <Undo/>
+        <SaveSolvedState/>
+        <Turn NormVector = " 0; 1; 0" Angle = "-Pi/4" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

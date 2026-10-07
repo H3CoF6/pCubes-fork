@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rex Cube Master</Name>
+        <Menu>Other cubes\Vertex Turning\Rex Cube Master</Menu>
+        <Inventor>Ben Streeter</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-05-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4497</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D1 := 0.15;
+        RCut := 1 / sqrt(3) + D1;
+        D2 := RCut / 3;
+        RC := RCut / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi*2/3" PlaneDistances = "-D2; -D1; D1; D2" FixedLayer = "2" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <!-- cut vertices -->
+        <Cut> <Plane NormVector = " 1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1; -1" NormDistance = "-RCut" /> </Cut>
+
+        <HideContaining Vector = " RC; RC; RC" />
+        <HideContaining Vector = " RC; RC;-RC" />
+        <HideContaining Vector = " RC;-RC; RC" />
+        <HideContaining Vector = " RC;-RC;-RC" />
+        <HideContaining Vector = "-RC; RC; RC" />
+        <HideContaining Vector = "-RC; RC;-RC" />
+        <HideContaining Vector = "-RC;-RC; RC" />
+        <HideContaining Vector = "-RC;-RC;-RC" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+    </Figure>
+</xml>

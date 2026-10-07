@@ -1,0 +1,170 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Maple Leaves Skewb Extreme (Ball)</Name>
+        <Menu>Other forms\Sphere\Maple Leaves Skewb Extreme</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7773</Link>
+    </Interface>
+
+    <Script>
+        K := 0.6;
+
+        D := K * 0.8705;
+        D2 := D/2;
+
+        f := 1/sqrt(3);
+        Color := '-1';
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        // Rotate p around normalized v
+        procedure RotatePoint(Xp, Yp, Zp, Xv, Yv, Zv, Angle);
+        begin
+            ca := Cos(Angle);
+            sa := Sin(Angle);
+            c2 := 1 - ca;
+
+            px[i] := Xp * (Xv * c2 * Xv + ca) +
+                     Yp * (Yv * c2 * Xv - sa * Zv) +
+                     Zp * (Zv * c2 * Xv + sa * Yv);
+
+            py[i] := Xp * (Xv * c2 * Yv + sa * Zv) +
+                     Yp * (Yv * c2 * Yv + ca) +
+                     Zp * (Zv * c2 * Yv - sa * Xv);
+
+            pz[i] := Xp * (Xv * c2 * Zv - sa * Yv) +
+                     Yp * (Yv * c2 * Zv + sa * Xv) +
+                     Zp * (Zv * c2 * Zv + ca);
+            Inc(i);
+        end;
+
+        i := 0;
+        RotatePoint( 1, 1, 0, -f, f,-f, -1*pi/6);
+        RotatePoint(-1,-1, 0, -f, f,-f, -3*pi/6);
+        RotatePoint( 1, 1, 0, -f, f,-f, -5*pi/6);
+        RotatePoint( 0, 1, 1, -f,-f, f, -1*pi/6);
+        RotatePoint( 0,-1,-1, -f,-f, f, -3*pi/6);
+        RotatePoint( 0, 1, 1, -f,-f, f, -5*pi/6);
+        RotatePoint(-1,-1, 0,  f,-f,-f, -1*pi/6);
+        RotatePoint( 1, 1, 0,  f,-f,-f, -3*pi/6);
+        RotatePoint(-1,-1, 0,  f,-f,-f, -5*pi/6);
+        RotatePoint( 0,-1, 1,  f, f, f, -1*pi/6);
+        RotatePoint( 0, 1,-1,  f, f, f, -3*pi/6);
+        RotatePoint( 0,-1, 1,  f, f, f, -5*pi/6);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/4;0;Pi/4" PlaneDistances = "-D;D" NormVectors = " px; py; pz" />
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Macro Name = "Turn">
+            <Turn Axis = "id" Layer = "2" Angle = "Pi/4" />
+            <Script>Inc(id);</Script>
+        </Macro>
+
+        <Macro Name = "Split">
+            <Split Axis = "a1" From = "1" />
+            <Turn Axis = "a1" Layer = "0" Angle = "2*Pi/6" />
+
+            <Split Axis = "a2    " From = "2" />
+            <Split Axis = "a2 + 1" From = "2" />
+            <Split Axis = "a2 + 2" From = "2" />
+
+            <ExecMacro MacroName = "Turn" id = "a2" Repeat = "3" />
+            <Split Axis = "a1" From = "1" />
+            <ExecMacro MacroName = "Turn" id = "a2" Repeat = "3" />
+            <Split Axis = "a1" From = "1 "/>
+            <ExecMacro MacroName = "Turn" id = "a2" Repeat = "3" />
+            <Split Axis = "a1" From = "1" />
+            <Undo Repeat = "10" />
+        </Macro>
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = " 4" />
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = " 7" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "10" />
+        <ExecMacro MacroName = "Split" a1 = "0" a2 = "13" />
+
+        <HideContaining Vector = " -C4;    0; -C28" />
+        <HideContaining Vector = " -C4;    0;  C28" />
+        <HideContaining Vector = "  C4;    0;  C28" />
+        <HideContaining Vector = "  C4;    0; -C28" />
+        <HideContaining Vector = " C28;   C4;    0" />
+        <HideContaining Vector = " C28;  -C4;    0" />
+        <HideContaining Vector = "-C28;   C4;    0" />
+        <HideContaining Vector = "-C28;  -C4;    0" />
+        <HideContaining Vector = "   0;  C28;   C4" />
+        <HideContaining Vector = "   0; -C28;   C4" />
+        <HideContaining Vector = "   0;  C28;  -C4" />
+        <HideContaining Vector = "   0; -C28;  -C4" />
+        <HideContaining Vector = "   0;   C4;  C28" />
+        <HideContaining Vector = "   0;  -C4;  C28" />
+        <HideContaining Vector = "   0;   C4; -C28" />
+        <HideContaining Vector = "   0;  -C4; -C28" />
+        <HideContaining Vector = " C28;    0;   C4" />
+        <HideContaining Vector = "-C28;    0;   C4" />
+        <HideContaining Vector = " C28;    0;  -C4" />
+        <HideContaining Vector = "-C28;    0;  -C4" />
+        <HideContaining Vector = "  C4;  C28;    0" />
+        <HideContaining Vector = " -C4;  C28;    0" />
+        <HideContaining Vector = "  C4; -C28;    0" />
+        <HideContaining Vector = " -C4; -C28;    0" />
+
+        <HideContaining Vector = " C23;  C14;    0" />
+        <HideContaining Vector = "-C23;  C14;    0" />
+        <HideContaining Vector = " C23; -C14;    0" />
+        <HideContaining Vector = "-C23; -C14;    0" />
+        <HideContaining Vector = " C23;    0;  C14" />
+        <HideContaining Vector = "-C23;    0;  C14" />
+        <HideContaining Vector = " C23;    0; -C14" />
+        <HideContaining Vector = "-C23;    0; -C14" />
+        <HideContaining Vector = " C14;  C23;    0" />
+        <HideContaining Vector = "-C14;  C23;    0" />
+        <HideContaining Vector = " C14; -C23;    0" />
+        <HideContaining Vector = "-C14; -C23;    0" />
+        <HideContaining Vector = " C14;    0;  C23" />
+        <HideContaining Vector = "-C14;    0;  C23" />
+        <HideContaining Vector = " C14;    0; -C23" />
+        <HideContaining Vector = "-C14;    0; -C23" />
+        <HideContaining Vector = "   0;  C23;  C14" />
+        <HideContaining Vector = "   0;  C23; -C14" />
+        <HideContaining Vector = "   0; -C23;  C14" />
+        <HideContaining Vector = "   0; -C23; -C14" />
+        <HideContaining Vector = "   0;  C14;  C23" />
+        <HideContaining Vector = "   0; -C14;  C23" />
+        <HideContaining Vector = "   0;  C14; -C23" />
+        <HideContaining Vector = "   0; -C14; -C23" />
+
+        <Macro Name = "Hide">
+            <HideContaining Vector=" 0.4*px[id];  0.4*py[id];  0.4*pz[id]"/>
+            <HideContaining Vector="-0.4*px[id]; -0.4*py[id]; -0.4*pz[id]"/>
+            <Script> Inc(id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" id = "0" Repeat = "12" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = " K; 0; 0" />
+        <HideContaining Vector = "-K; 0; 0" />
+        <HideContaining Vector = " 0; K; 0" />
+        <HideContaining Vector = " 0;-K; 0" />
+        <HideContaining Vector = " 0; 0; K" />
+        <HideContaining Vector = " 0; 0;-K" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,102 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Cuboid custom size</Name>
+        <Class>TCrazy</Class>
+        <Menu>Cubic\Crazy\Cuboid\Any size</Menu>
+        <Inventor>different</Inventor>
+        <Programmer>Skallos</Programmer>
+    </Interface>
+
+    <Script>
+        A := 2;
+        B := 2;
+        C := 2;
+
+        if not RequestNumbers('Input cuboid orders', 'Width:', 'Depth:', 'Height:', A, B, C) then
+          ShowMessage('Cancelled');
+
+
+        if A &gt; 6 then
+          ShowMessage('The width can not exceed 6!');
+
+        if B &gt; 6 then
+          ShowMessage('The depth can not exceed 6!');
+
+        if C &gt; 6 then
+          ShowMessage('The height can not exceed 6!');
+
+        A := Max(Min(A, 6), 2);
+        B := Max(Min(B, 6), 2);
+        C := Max(Min(C, 6), 2);
+
+        W := 0.5;
+
+        D0A := 2 * W / A;
+        for i := 1 to A - 1 do
+            Da[i] := -W + D0A * i;
+        for i := A to 6 do
+            Da[i] := Da[1];
+
+        D0B := 2 * W / B;
+        for i := 1 to B - 1 do
+            Db[i] := -W + D0B * i;
+        for i := B to 6 do
+            Db[i] := Db[1];
+
+        D0C := 2 * W / C;
+        for i := 1 to C - 1 do
+            Dc[i] := -W + D0C * i;
+        for i := C to 6 do
+            Dc[i] := Dc[1];
+
+        Delta := 0.002;
+        R := W * 0.98;
+        D := W + Delta;
+
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        Ang := Pi / 2;
+        amg := 2 * Pi;
+    </Script>
+
+    <Axes TurningAngles = "Amg;Ang;Ang;Ang;Ang;Ang;Ang;Amg" PlaneDistances = "-W;Da[1];Da[2];Da[3];Da[4];Da[5];Da[6];W" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Amg;Ang;Ang;Ang;Ang;Ang;Ang;Amg" PlaneDistances = "-W;Db[1];Db[2];Db[3];Db[4];Db[5];Db[6];W" >
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Amg;Ang;Ang;Ang;Ang;Ang;Ang;Amg" PlaneDistances = "-W;Dc[1];Dc[2];Dc[3];Dc[4];Dc[5];Dc[6];W" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Circle Radius = "R" Color = "clOrange" > <Center X =  "D" Y =  "0" Z =  "0" /> </Circle>
+        <Circle Radius = "R" Color =    "clRed" > <Center X = "-D" Y =  "0" Z =  "0" /> </Circle>
+        <Circle Radius = "R" Color =  "clGreen" > <Center X =  "0" Y =  "D" Z =  "0" /> </Circle>
+        <Circle Radius = "R" Color =   "clBlue" > <Center X =  "0" Y = "-D" Z =  "0" /> </Circle>
+        <Circle Radius = "R" Color =  "clWhite" > <Center X =  "0" Y =  "0" Z =  "D" /> </Circle>
+        <Circle Radius = "R" Color = "clYellow" > <Center X =  "0" Y =  "0" Z = "-D" /> </Circle>
+
+        <Split Axis = "0" From = "1"/>
+        <Split Axis = "1" From = "1"/>
+        <Split Axis = "2" From = "1"/>
+        <Split Axis = "0" From = "A-1"/>
+        <Split Axis = "1" From = "B-1"/>
+        <Split Axis = "2" From = "C-1"/>
+
+        <RemoveGrayParts/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Elite Super Skewb 3x3</Name>
+        <Menu>Other forms\Archimedean Solids\Cuboctahedron\Elite Super Skewb 3x3</Menu>
+        <Inventor>Bogdan</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-07</Added>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        Colors[ 6] := '006622';
+        Colors[ 7] := '999999';
+        Colors[ 8] := '8800FF';
+        Colors[ 9] := 'FFBB00';
+        Colors[10] := 'AA4400';
+        Colors[11] := 'EE00EE';
+        Colors[12] := 'FF88FF';
+        Colors[13] := '00CCCC';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        W2 := W * 1.06;
+        D := W * 2 * sqrt(3)/9;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "CutV" >
+            <Cut Color = "Colors[v + 6]"> <Plane NormVector = "-Vx[v];-Vy[v];-Vz[v]" NormDistance = "-DCut" /></Cut>
+            <Script>Inc(v);</Script>
+        </Macro>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <ExecMacro MacroName = "CutV" v = "0" DCut = "D * 3" Repeat = "8" />
+        <SplitByAxes/>
+
+        <HideAll/>
+
+        <Script>W1 := W;</Script>
+        <LoadFrom File = "Figures\Cube.xml" W = "W2" />
+        <ExecMacro MacroName = "CutV" v = "0" DCut = "2*D" Repeat = "8" />
+
+        <Macro Name = "SplitC" >
+            <Split><Plane  NormVector = " Cx[c]; Cy[c]; Cz[c]" NormDistance = "W1" /></Split>
+            <Script>Inc(c);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitC" c = "0" Repeat = "6" />
+
+        <RemoveContaining Vector = "0;0;0" />
+        <ShowAll/>
+    </Figure>
+</xml>

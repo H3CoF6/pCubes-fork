@@ -1,0 +1,209 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Multi Rex Rhombic Dodecahedron</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Vertex Turning\Multi Rex Rhombic Dodecahedron</Menu>
+        <Menu>Other forms\Multi-puzzles\Multi Rex Rhombic Dodecahedron</Menu>
+        <Inventor>Kevin Uhrik</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-31</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36305</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF';  // White
+        Colors[ 1] := 'FF0000';  // Red
+        Colors[ 2] := '00AA00';  // Green
+        Colors[ 3] := '8800BB';  // Violett
+        Colors[ 4] := 'FFFF00';  // Yellow
+        Colors[ 5] := '0033EE';  // Blue
+        Colors[ 6] := 'FFFFAA';  // Cream
+        Colors[ 7] := '0088EE';  // LightBlue
+        Colors[ 8] := '00FF00';  // LightGreen
+        Colors[ 9] := 'FF66CC';  // LightViolett
+        Colors[10] := '666666';  // Gray
+        Colors[11] := 'FF6000';  // Orange
+
+        R := 0.7;
+        include 'Figures\Scripts\Rhombic_Dodecahedron_Coordinates.inc';
+
+        R0 := R;
+        R1 := R0 * 0.8;
+
+        DAX := R / 2 * 0.85;
+        SAX := R / sqrt(3) * 0.85;
+
+        DAC := DAX * 1.05;
+        SAC := SAX * 1.05;
+
+        DCut := R0 / 2 * 1.25 * 0.8;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-DAX; DAX" FixedLayers = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-SAX; SAX" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Add4Face" >
+            <Face Color = "Color" VertexIndexes = "i1;i2;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i2;i3;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i3;i4;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i4;i1;i5" InvisibleEdges = "6" />
+        </Macro>
+
+        <Macro Name = "Body" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " 0; 0; R" />
+                    <Add Vector = " D; D; D" />
+                    <Add Vector = " D;-D; D" />
+                    <Add Vector = "-D;-D; D" />
+                    <Add Vector = "-D; D; D" />
+                    <Add Vector = " R; 0; 0" />
+                    <Add Vector = " 0;-R; 0" />
+                    <Add Vector = "-R; 0; 0" />
+                    <Add Vector = " 0; R; 0" />
+                    <Add Vector = " D; D;-D" />
+                    <Add Vector = " D;-D;-D" />
+                    <Add Vector = "-D;-D;-D" />
+                    <Add Vector = "-D; D;-D" />
+                    <Add Vector = " 0; 0;-R" />
+
+                    <Add Vector = " W; 0; W" />
+                    <Add Vector = " 0;-W; W" />
+                    <Add Vector = "-W; 0; W" />
+                    <Add Vector = " 0; W; W" />
+
+                    <Add Vector = " W; W; 0" />
+                    <Add Vector = " W;-W; 0" />
+                    <Add Vector = "-W;-W; 0" />
+                    <Add Vector = "-W; W; 0" />
+
+                    <Add Vector = " W; 0;-W" />
+                    <Add Vector = " 0;-W;-W" />
+                    <Add Vector = "-W; 0;-W" />
+                    <Add Vector = " 0; W;-W" />
+                </Vertices>
+
+                <Faces>
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[ 0]" i1 = " 0" i2 = " 2" i3 = " 5" i4 = " 1" i5 = "14" />
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[ 1]" i1 = " 0" i2 = " 3" i3 = " 6" i4 = " 2" i5 = "15" />
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[ 2]" i1 = " 0" i2 = " 4" i3 = " 7" i4 = " 3" i5 = "16" />
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[ 3]" i1 = " 0" i2 = " 1" i3 = " 8" i4 = " 4" i5 = "17" />
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[ 4]" i1 = " 1" i2 = " 5" i3 = " 9" i4 = " 8" i5 = "18" />
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[ 5]" i1 = " 2" i2 = " 6" i3 = "10" i4 = " 5" i5 = "19" />
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[ 6]" i1 = " 3" i2 = " 7" i3 = "11" i4 = " 6" i5 = "20" />
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[ 7]" i1 = " 4" i2 = " 8" i3 = "12" i4 = " 7" i5 = "21" />
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[ 8]" i1 = "13" i2 = " 9" i3 = " 5" i4 = "10" i5 = "22" />
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[ 9]" i1 = "13" i2 = "10" i3 = " 6" i4 = "11" i5 = "23" />
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[10]" i1 = "13" i2 = "11" i3 = " 7" i4 = "12" i5 = "24" />
+                    <ExecMacro MacroName = "Add4Face" Color = "Colors[11]" i1 = "13" i2 = "12" i3 = " 8" i4 = " 9" i5 = "25" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        // outer part
+        <Script>
+            R := R0;
+            D := R / 2;
+            W := R / 2 * 1.25;
+        </Script>
+
+        <ExecMacro MacroName = "Body" R = "R0" />
+
+        <SplitByAxes/>
+
+        // Remove some vertices
+        <RemoveContaining Vectors = "Vx; Vy; Vz" />
+        <Hide><Plane NormVector = " 1; 0; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = " 0;-1; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = " 0; 0; 1" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = " 0; 0;-1" NormDistance = "-DCut" /></Hide>
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <HideContaining Vectors = " Cx; Cy; Cz" />
+
+        <InvertVisibility/>
+
+        <Macro Name = "SplitC" >
+            <Split> <Plane NormDistance = "ND" NormVector = " Vx[i]; Vy[i]; Vz[i]" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitC" Repeat = "1" i = "0" ND = "DAC"/>
+        <ExecMacro MacroName = "SplitC" Repeat = "4" i = "5" />
+        <ExecMacro MacroName = "SplitC" Repeat = "1" i = "13" />
+        <ExecMacro MacroName = "SplitC" Repeat = "4" i = "1" ND = "SAC"/>
+        <ExecMacro MacroName = "SplitC" Repeat = "4" i = "9" />
+        <RemoveContaining Vectors = " Cx; Cy; Cz" />
+
+        <ShowAll/>
+
+
+        <Macro Name = "SplitC" >
+            <Split> <Plane NormDistance = "-R / 2 * sqrt(2)" NormVector = " Cx[i]; Cy[i]; Cz[i]" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitC" Repeat = "12" i = "0" />
+
+        <RemoveGrayParts/>
+
+        <HideAll/>
+
+
+        // inner part
+        <Script>
+            R := R1;
+            D := R / 2;
+            W := D;
+        </Script>
+
+        <ExecMacro MacroName = "Body" />
+
+        <SplitByAxes/>
+
+        <HideAll/>
+
+
+        // gray vertices for outer part
+        <Script>
+            R := R0;
+            D := R / 2;
+            W := D * 1.25;
+            for i := 0 to 11 do
+                Colors[i] := '-1';
+        </Script>
+
+        <ExecMacro MacroName = "Body" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Vx; Vy; Vz" />
+        <Hide><Plane NormVector = " 1; 0; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = " 0;-1; 0" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = " 0; 0; 1" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = " 0; 0;-1" NormDistance = "-DCut" /></Hide>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

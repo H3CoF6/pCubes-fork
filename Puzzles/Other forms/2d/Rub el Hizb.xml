@@ -1,0 +1,217 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rub el Hizb</Name>
+        <Menu>Other forms\2d\Rub el Hizb</Menu>
+        <Inventor>Karolis Kairysv</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-12-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10686</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=420492</Link>
+    </Interface>
+
+    <Script>
+        Color1 := 'FFFFFF';
+        Color2 := '00BFFF';
+        Color3 := '00FF00';
+        Color4 := 'FF0000';
+        Color5 := '000077';
+        Color6 := '007700';
+        Color7 := 'FF6000';
+        Color8 := 'FFFF00';
+        Color9 := 'FF0060';
+
+        K := 0.6;
+        R := 0.4;
+
+        s2 := sqrt(2);
+        D1 := R / s2;
+        D2 := K * 0.75;
+        D3 := D1 * (s2 - 1);
+        D4 := D3 * s2;
+
+        H := D2 * 1.2;
+        N := 40;
+        for i := 0 to N - 1 do begin
+            A := 2 * Pi / N * i;
+            x[i] := R * cos(A);
+            y[i] := R * sin(A);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" AvailableAngles = "-Pi/2; 0" PlaneDistances = "D1" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "0; 0" MaxAngles = "Pi/2; Pi/2" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/4" PlaneDistances = "D2">
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "cl" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "Cylinder" >
+            <Turn NormVector = " 1;-1; 1" Angle = " 2*Pi/3" />
+
+            <Part>
+                <Vertices Vectors = "x; y;  H" />
+                <Vertices Vectors = "x; y; D2" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" c = "0" i = "0" Repeat = "N" />
+                    <Face Color = "cl" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+
+            <Turn NormVector = " 1;-1; 1" Angle = "-2*Pi/3" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cylinder" cl = "Color2" />
+        <Cut  Axis = "0" From  = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cylinder" cl = "Color4" />
+        <Cut  Axis = "0" From  = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cylinder" cl = "Color6" />
+        <Cut  Axis = "0" From  = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cylinder" cl = "Color8" />
+        <Cut  Axis = "0" From  = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <HideAll/>
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <ExecMacro MacroName = "Cylinder" cl = "Color1" />
+        <Cut  Axis = "0" From  = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "-Pi/2" />
+
+        <ShowAll/>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "D2; D1; D1" />
+                <Add Vector = "D2; D1;-D1" />
+                <Add Vector = "D2;-D1; D1" />
+                <Add Vector = "D2;-D1;-D1" />
+                <Add Vector = " H; D1; D1" />
+                <Add Vector = " H; D1;-D1" />
+                <Add Vector = " H;-D1; D1" />
+                <Add Vector = " H;-D1;-D1" />
+
+                <Add Vector = " H; D3; D1" />
+                <Add Vector = " H; D3;-D1" />
+                <Add Vector = " H;-D3; D1" />
+                <Add Vector = " H;-D3;-D1" />
+                <Add Vector = " H; D1; D3" />
+                <Add Vector = " H; D1;-D3" />
+                <Add Vector = " H;-D1; D3" />
+                <Add Vector = " H;-D1;-D3" />
+
+                <Add Vector = " H; D3; D3" />
+                <Add Vector = " H; D3;-D3" />
+                <Add Vector = " H;-D3; D3" />
+                <Add Vector = " H;-D3;-D3" />
+
+                <Add Vector = " H; 0 ; D4" />
+                <Add Vector = " H; D4; 0 " />
+                <Add Vector = " H; 0 ;-D4" />
+                <Add Vector = " H;-D4; 0 " />
+
+                <Add Vector = " H;  0; 0 " />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = "3;2;0;1"/>
+                <Face VertexIndexes = "2;3;7;6"/>
+                <Face VertexIndexes = "0;2;6;4"/>
+                <Face VertexIndexes = "1;0;4;5"/>
+                <Face VertexIndexes = "3;1;5;7"/>
+
+                <Face Color = "Color3" VertexIndexes = "4; 8;16;12"/>
+                <Face Color = "Color5" VertexIndexes = "5;13;17; 9"/>
+                <Face Color = "Color9" VertexIndexes = "6;14;18;10"/>
+                <Face Color = "Color7" VertexIndexes = "7;11;19;15"/>
+
+                <Face Color = "Color2" VertexIndexes = " 8;10;20"/>
+                <Face Color = "Color4" VertexIndexes = "13;12;21"/>
+                <Face Color = "Color6" VertexIndexes = "11; 9;22"/>
+                <Face Color = "Color8" VertexIndexes = "14;15;23"/>
+
+                <Face Color = "Color1" VertexIndexes = "24;16; 8;20" InvisibleEdges = " 9" />
+                <Face Color = "Color1" VertexIndexes = "20;10;18;24" InvisibleEdges = "12" />
+                <Face Color = "Color1" VertexIndexes = "24;17;13;21" InvisibleEdges = " 9" />
+                <Face Color = "Color1" VertexIndexes = "21;12;16;24" InvisibleEdges = "12" />
+                <Face Color = "Color1" VertexIndexes = "24;19;11;22" InvisibleEdges = " 9" />
+                <Face Color = "Color1" VertexIndexes = "22; 9;17;24" InvisibleEdges = "12" />
+                <Face Color = "Color1" VertexIndexes = "24;18;14;23" InvisibleEdges = " 9" />
+                <Face Color = "Color1" VertexIndexes = "23;15;19;24" InvisibleEdges = "12" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "Split8" >
+            <Turn Axis = "1" Layer = "1" Angle = "Pi/4" />
+            <Split Axis = "0" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split8" Repeat = "8" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <ExecMacro MacroName = "Split8" Repeat = "8" />
+        <Turn Axis = "0" Layer = "1" Angle = "-Pi/2" />
+
+        <HideAll/>
+ 
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "-1" />
+        <Split Axis = "0" From = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Hide Axis = "0" Layer = "0" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <Cut Axis = "1" To = "1" />
+        <Undo/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-45 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Macros>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/2" />
+            <Turn Axis = "1" Layer = "1" Angle = "2*Pi*Random"/>
+            <Turn Axis = "0" Layer = "0" Angle = "Pi/2" />
+            <Turn Axis = "1" Layer = "1" Angle = "2*Pi*Random"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

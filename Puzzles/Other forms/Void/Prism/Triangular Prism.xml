@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Void Triangular Prism</Name>
+        <Menu>Other forms\Void\Prism\Triangular Prism</Menu>
+        <Programmer>Knightcrawler</Programmer>
+        <Added>2016-10-24</Added>
+    </Interface>
+
+    <Script>
+        clYellow  := 'EDFF11';
+        clBlue    := '5050FF';
+        clOrange  := 'FF5C00';
+        clViolett := '7700CD';
+        clWhite   := 'FFFFFF';
+
+        Scale := 1.2;
+        Y := sqrt(3) / 4;
+        K := 2 / sqrt(3) * Scale;
+        L := sqrt(3) / 2;
+        S := 0.2 * Scale;
+        H := 0.8 * Scale;
+
+        D1 := 1/4 * Scale;
+        D2 := 0.15 * Scale;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D2" FixedLayers = "0" >
+        <Axis NormVector = "  -1;  0; 0" />
+        <Axis NormVector = " 0.5;  L; 0" />
+        <Axis NormVector = " 0.5; -L; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-0.25 * K; Y * K; H/2" />
+                <Add Vector = "-0.25 * K; -Y * K; H/2" />
+                <Add Vector = "0.5 * K; 0; H/2" />
+                <Add Vector = "-0.25 * K; Y * K; -H/2" />
+                <Add Vector = "-0.25 * K; -Y * K; -H/2" />
+                <Add Vector = "0.5 * K; 0; -H/2" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clViolett" VertexIndexes = "0;1;2" />
+                <Face Color = "clYellow"  VertexIndexes = "4;3;5" />
+                <Face Color = "clOrange"  VertexIndexes = "0;3;4;1" />
+                <Face Color = "clWhite"   VertexIndexes = "1;4;5;2" />
+                <Face Color = "clBlue"    VertexIndexes = "2;5;3;0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " 0; 0;    0" />
+        <RemoveContaining Vector = " 0; 0;  H/2" />
+        <RemoveContaining Vector = " 0; 0; -H/2" />
+
+        <RemoveContaining Vector = " 0.5*S;   L*S; 0" />
+        <RemoveContaining Vector = " 0.5*S;  -L*S; 0" />
+        <RemoveContaining Vector = "-0.2*Scale; 0; 0" />
+    </Figure>
+</xml>

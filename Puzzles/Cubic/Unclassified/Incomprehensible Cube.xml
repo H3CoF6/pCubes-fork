@@ -1,0 +1,78 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Incomprehensible Cube</Name>
+        <Menu>Cubic\Unclassified\Incomprehensible Cube</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-06-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4417</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        D := W / 3;
+        D2 := D * 2;
+        DE := D * 3 / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Connect Axis = "1" Layers = "0;2" />
+        <Connect Axis = "0" Layers = "0;2" />
+
+        <!-- mark (cut) special cubies -->
+
+        <HideContaining Vector = " 0;-W;-W" />
+        <InvertVisibility/>
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "D*2" /></Cut>
+        <Cut><Plane NormVector = " 0;-1; 0" NormDistance = "D*2" /></Cut>
+        <ShowAll/>
+
+        <HideContaining Vector = " 0; W;-W" />
+        <InvertVisibility/>
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "D*2" /></Cut>
+        <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "D*2" /></Cut>
+        <ShowAll/>
+
+        <!-- inner cut of centers -->
+
+        <HideContaining Vectors = " Cx; Cy; Cz" />
+        <InvertVisibility/>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "D2" /></Split>
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <!-- inner cut of edges -->
+
+        <Macro Name = "CutEdge">
+            <HideContaining Vector = " Ex[i]; Ey[i]; Ez[i]" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = " Ex[i]; Ey[i]; Ez[i]" NormDistance = "DE" /></Cut>
+            <ShowAll/>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutEdge" i = "0" Repeat = "12" />
+
+    </Figure>
+</xml>

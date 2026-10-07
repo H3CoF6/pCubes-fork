@@ -1,0 +1,142 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx Ball 3 Colors (Random Color)</Name>
+        <Menu>Other forms\Sphere\Megaminx axes\Megaminx Ball 3 Colors (Random Color)</Menu>
+        <Inventor>Traipum Prungtaengkit</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-03-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6592</Link>
+        <Link>https://www.hknowstore.com/locale/en-US/categoryofcorp.aspx?corpname=nowstore&amp;search=Traiphum+megaminx+ball+3-color</Link>
+    </Interface>
+
+    <Script>
+        // Megaminx Ball 3-Color I Black Body
+        Colors0[0] := '7AEDFF'; // SkyBlue
+        Colors1[0] := 'FF9EFF'; // Pink
+        Colors2[0] := 'FFFFFF'; // White
+
+        // Megaminx Ball 3-Color I White Body
+        Colors0[1] := '7AEDFF'; // SkyBlue
+        Colors1[1] := 'FF9EFF'; // Pink
+        Colors2[1] := 'AAAAAA'; // Gray
+
+        // Megaminx Ball 3-Color II Black Body
+        Colors0[2] := '642BC6'; // Purple
+        Colors1[2] := '00FF00'; // LightGreen
+        Colors2[2] := 'FFFFFF'; // White
+
+        // Megaminx Ball 3-Color II White Body
+        Colors0[3] := '642BC6'; // Purple
+        Colors1[3] := '00FF00'; // LightGreen
+        Colors2[3] := 'AAAAAA'; // Gray
+
+        C := Random(4);
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+        as := (ss + cs) / 2;
+
+        K := 0.6;
+        D := K * 0.6;
+        L := K * 1.5;
+        M := K * 0.0471787375934;
+
+        e1 := L*ss;
+        e2 := K*as;
+        e3 := K*ss/2;
+        e4 := K*cs/2;
+
+        v1 := K * (0*ss + 1*cs) / 3;
+        v2 := K * (1*ss + 2*cs) / 3;
+        v3 := K * (1*ss + 1*cs) / 3;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5; 0; 2*Pi/5" PlaneDistances = "-D; D" >
+        <Axis NormVector = "  0;-cs; ss" />
+        <Axis NormVector = "  0;-cs;-ss" />
+        <Axis NormVector = "-ss;  0;-cs" />
+        <Axis NormVector = " ss;  0;-cs" />
+        <Axis NormVector = " cs;-ss;  0" />
+        <Axis NormVector = " cs; ss;  0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSphere" >
+            <Script>
+                for i := 0 to 11 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSphere" Color = "Colors0[C]" />
+        <Split Axis = "2" From = "1" />
+        <RemoveContaining Vector = "0;0;0" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "Colors1[C]" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "Colors2[C]" />
+        <Split Axis = "2" From = "2" />
+        <RemoveContaining Vector = "0;0;0" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <HideContaining Vector = "  0; e1;  0" />
+        <HideContaining Vector = "  0;-e1;  0" />
+        <HideContaining Vector = " e4;-e2;-e3" />
+        <HideContaining Vector = "-e4; e2; e3" />
+        <HideContaining Vector = " e2;-e3;-e4" />
+        <HideContaining Vector = "-e2; e3; e4" />
+        <HideContaining Vector = " e2; e3;-e4" />
+        <HideContaining Vector = "-e2;-e3; e4" />
+        <HideContaining Vector = " e4; e2;-e3" />
+        <HideContaining Vector = "-e4;-e2; e3" />
+
+        <InvertVisibility/>
+
+        <Split> <Plane NormDistance = "0" NormVector = " 0;  0; e1" /> </Split>
+        <Split> <Plane NormDistance = "0" NormVector = "e3;-e4; e2" /> </Split>
+        <Split> <Plane NormDistance = "0" NormVector = "e3; e4; e2" /> </Split>
+        <Split> <Plane NormDistance = "0" NormVector = "e2; e3; e4" /> </Split>
+        <Split> <Plane NormDistance = "0" NormVector = "e2;-e3; e4" /> </Split>
+
+        <ShowAll/>
+
+        <HideContaining Vector = " v2;  0;-v1" />
+        <HideContaining Vector = " v1; v2;  0" />
+        <HideContaining Vector = " v1;-v2;  0" />
+        <HideContaining Vector = "-v3; v3; v3" />
+        <HideContaining Vector = "-v3;-v3; v3" />
+
+        <InvertVisibility/>
+
+        <Split> <Plane NormDistance = "-M" NormVector = "-ss; 0; -cs" /> </Split>
+
+        <ShowAll/>
+
+        <HideContaining Vector = "-v2;  0; v1" />
+        <HideContaining Vector = "-v1;-v2;  0" />
+        <HideContaining Vector = "-v1; v2;  0" />
+        <HideContaining Vector = " v3;-v3;-v3" />
+        <HideContaining Vector = " v3; v3;-v3" />
+
+        <InvertVisibility/>
+
+        <Split> <Plane NormDistance = " M" NormVector = "-ss; 0; -cs" /> </Split>
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

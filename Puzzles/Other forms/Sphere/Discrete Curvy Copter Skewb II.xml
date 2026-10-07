@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Discrete Curvy Copter Skewb II</Name>
+        <Menu>Other forms\Sphere\Discrete Curvy Copter Skewb II</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-23</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0055EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'CCCCCC'; // LightGray
+
+        K := 0.6;
+
+        // Rotate p around normalized v
+        procedure RotatePoint(Xp, Yp, Zp, Xv, Yv, Zv, Angle);
+        begin
+            ca := Cos(Angle);
+            sa := Sin(Angle);
+            c2 := 1 - ca;
+
+            px[i] := Xp * (Xv * c2 * Xv + ca) +
+                     Yp * (Yv * c2 * Xv - sa * Zv) +
+                     Zp * (Zv * c2 * Xv + sa * Yv);
+
+            py[i] := Xp * (Xv * c2 * Yv + sa * Zv) +
+                     Yp * (Yv * c2 * Yv + ca) +
+                     Zp * (Zv * c2 * Yv - sa * Xv);
+
+            pz[i] := Xp * (Xv * c2 * Zv - sa * Yv) +
+                     Yp * (Yv * c2 * Zv + sa * Xv) +
+                     Zp * (Zv * c2 * Zv + ca);
+            Inc(i);
+        end;
+
+        i := 0;
+        f := 1/sqrt(3);
+        RotatePoint ( 1, 1, 0, -f, f,-f, -1*pi/6);
+        RotatePoint ( 1, 1, 0, -f, f,-f, -3*pi/6);
+        RotatePoint ( 1, 1, 0, -f, f,-f, -5*pi/6);
+        RotatePoint ( 0, 1, 1, -f,-f, f, -1*pi/6);
+        RotatePoint ( 0, 1, 1, -f,-f, f, -3*pi/6);
+        RotatePoint ( 0, 1, 1, -f,-f, f, -5*pi/6);
+        RotatePoint (-1,-1, 0,  f,-f,-f, -1*pi/6);
+        RotatePoint (-1,-1, 0,  f,-f,-f, -3*pi/6);
+        RotatePoint (-1,-1, 0,  f,-f,-f, -5*pi/6);
+        RotatePoint ( 0,-1, 1,  f, f, f, -1*pi/6);
+        RotatePoint ( 0,-1, 1,  f, f, f, -3*pi/6);
+        RotatePoint ( 0,-1, 1,  f, f, f, -5*pi/6);
+
+        D := K * 0.55;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi;0;Pi" PlaneDistances = "-D;D" NormVectors = " px; py; pz" />
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Macro Name = "Split" >
+            <Split Axis = "a1" From = "1" />
+            <Turn Axis = "a1" Layer = "0" Angle = "2*Pi/6" />
+            <Split Axis = "a2    " From = "2" />
+            <Split Axis = "a2 + 1" From = "1" />
+            <Split Axis = "a2 + 2" From = "2" />
+            <Undo/>
+        </Macro>
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = " 4" />
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = " 7" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "10" />
+        <ExecMacro MacroName = "Split" a1 = "0" a2 = "13" />
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

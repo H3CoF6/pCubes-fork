@@ -1,0 +1,156 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Maple Leaves Skewb Extreme</Name>
+        <Menu>Other cubes\Unclassified\Maple Leaves Skewb Extreme</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7773</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0077EE'; // Blue
+        Colors[3] := '00CC00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        K := 0.6;
+        W := K * 0.1;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        W := K * 0.817;
+
+        D := K * 0.869934618019207; // C20*(px[8]+py[8])/sqrt(2)
+
+        Color := -1;
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/4; 0; Pi/4" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 2; 1" />
+        <Axis NormVector = " 1;-1;-2" />
+        <Axis NormVector = "-2;-1; 1" />
+        <Axis NormVector = " 1; 1; 2" />
+        <Axis NormVector = "-2; 1;-1" />
+        <Axis NormVector = " 1;-2;-1" />
+        <Axis NormVector = "-1;-2; 1" />
+        <Axis NormVector = "-1; 1;-2" />
+        <Axis NormVector = " 2; 1; 1" />
+        <Axis NormVector = "-1;-1; 2" />
+        <Axis NormVector = " 2;-1;-1" />
+        <Axis NormVector = "-1; 2;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Macro Name = "Turn">
+            <Turn Axis = "id" Layer = "2" Angle = "Pi/4" />
+            <Script>Inc(id);</Script>
+        </Macro>
+
+        <Macro Name = "Split">
+            <Split Axis = "a1" From = "1" />
+            <Turn Axis = "a1" Layer = "0" Angle = "2*Pi/6" />
+
+            <Split Axis = "a2    " From = "2" />
+            <Split Axis = "a2 + 1" From = "2" />
+            <Split Axis = "a2 + 2" From = "2" />
+
+            <ExecMacro MacroName = "Turn" id = "a2" Repeat = "3" />
+            <Split Axis = "a1" From = "1" />
+            <ExecMacro MacroName = "Turn" id = "a2" Repeat = "3" />
+            <Split Axis = "a1" From = "1 "/>
+            <ExecMacro MacroName = "Turn" id = "a2" Repeat = "3" />
+            <Split Axis = "a1" From = "1" />
+            <Undo Repeat = "10" />
+        </Macro>
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = " 4" />
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = " 7" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "10" />
+        <ExecMacro MacroName = "Split" a1 = "0" a2 = "13" />
+
+        <Macro Name = "Hide1">
+            <HideContaining Vector = " C14;   0; C23" />
+            <HideContaining Vector = "  C4;   0; C28" />
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <Macro Name = "Hide2">
+            <ExecMacro MacroName = "Hide1" Repeat = "4" />
+            <Turn NormVector = "1;0;0" Angle = "Pi" />
+            <ExecMacro MacroName = "Hide1" Repeat = "4" />
+            <Turn NormVector = "1;0;0" Angle = "Pi" />
+            <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Hide2" Repeat = "3" />
+
+        <Macro Name = "Hide3">
+            <HideContaining Vector=" K*0.38; K*0.38; K*0.38*2"/>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <Macro Name = "Hide4">
+            <ExecMacro MacroName = "Hide3" Repeat = "4" />
+            <Turn NormVector = "1;0;0" Angle = "Pi" />
+            <ExecMacro MacroName = "Hide3" Repeat = "4" />
+            <Turn NormVector = "1;0;0" Angle = "Pi" />
+            <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Hide4" Repeat = "3" />
+
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = " K; 0; 0" />
+        <HideContaining Vector = "-K; 0; 0" />
+        <HideContaining Vector = " 0; K; 0" />
+        <HideContaining Vector = " 0;-K; 0" />
+        <HideContaining Vector = " 0; 0; K" />
+        <HideContaining Vector = " 0; 0;-K" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <RemoveContaining Vector = "Vx;Vy;Vz" />
+
+        <HideAll/>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = " 4" />
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = " 7" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "10" />
+        <ExecMacro MacroName = "Split" a1 = "0" a2 = "13" />
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

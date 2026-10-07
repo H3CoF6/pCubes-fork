@@ -1,0 +1,183 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentaloco 3x3x3</Name>
+        <Menu>Cubic\Rubiks Recolored\Pentaloco 3x3x3</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-07-30</Added>
+        <Link>http://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9286</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0080'; <!-- pink   -->
+        Colors[1] := 'F80000'; <!-- red    -->
+        Colors[2] := 'F67F05'; <!-- orange -->
+        Colors[3] := 'FFFF00'; <!-- yellow -->
+        Colors[4] := '005600'; <!-- green  -->
+        Colors[5] := '000078'; <!-- blue   -->
+
+        sColors[ 0] := '         1 3 1                 ';
+        sColors[ 1] := '        5-4|5-4                ';
+        sColors[ 2] := '         3 1 3                 ';
+        sColors[ 3] := '        4|5-4|5                ';
+        sColors[ 4] := '         1 3 1                 ';
+        sColors[ 5] := '        5-4|5-4                ';
+        sColors[ 6] := '         3 1 3                 ';
+        sColors[ 7] := ' 5 4 5   3 1 3   4 5 4   1 3 1 ';
+        sColors[ 8] := '2-0|2-0 0|2-0|2 2-0|2-0 0|2-0|2';
+        sColors[ 9] := ' 4 5 4   1 3 1   5 4 5   3 1 3 ';
+        sColors[10] := '0|2-0|2 2-0|2-0 0|2-0|2 2-0|2-0';
+        sColors[11] := ' 5 4 5   3 1 3   4 5 4   1 3 1 ';
+        sColors[12] := '2-0|2-0 0|2-0|2 2-0|2-0 0|2-0|2';
+        sColors[13] := ' 4 5 4   1 3 1   5 4 5   3 1 3 ';
+        sColors[14] := '         1 3 1                 ';
+        sColors[15] := '        4-5|4-5                ';
+        sColors[16] := '         3 1 3                 ';
+        sColors[17] := '        5|4-5|4                ';
+        sColors[18] := '         1 3 1                 ';
+        sColors[19] := '        4-5|4-5                ';
+        sColors[20] := '         3 1 3                 ';
+
+        W := 0.5;
+        D := W / 3;
+        D2 := D * 2;
+
+        // tile form
+        k1 := 0.3;
+
+        N := 3;
+        c := 0;
+        for i := 0 to N do
+            for j := 0 to N do
+                for k := 0 to N do
+                    if (i = 0) or (j = 0) or (k = 0) or (i = N) or (j = N) or (k = N) then begin
+                        Vx[c] := D2 * i - W;
+                        Vy[c] := D2 * j - W;
+                        Vz[c] := D2 * k - W;
+                        Idx[i,j,k] := c;
+                        inc(c);
+                    end;
+
+        function GetIdx(x2, y2);
+        begin
+            Result := Idx[x + dx1 * x2 + dx2 * y2, y + dy1 * x2 + dy2 * y2, z + dz1 * x2 + dz2 * y2]);
+        end;
+
+        function GetColorChar(x3, y3);
+        begin
+            Result := copy(sColors[sy + 2 * j + 1 + y3], sx + 2 * i + 1 + x3, 1);
+        end;
+
+        function GetColor(x3, y3);
+        begin
+            Result := Colors[StrToInt(GetColorChar(x3, y3))];
+        end;
+
+        function AddVertex(x4, y4);
+        begin
+            Result := c;
+            Vx[c] := Vx[Idx0] + dx1 * D2 * x4 + dx2 * D2 * y4;
+            Vy[c] := Vy[Idx0] + dy1 * D2 * x4 + dy2 * D2 * y4;
+            Vz[c] := Vz[Idx0] + dz1 * D2 * x4 + dz2 * D2 * y4;
+            Inc(c);
+        end;
+
+        procedure MakeFace3(Id1, Id2, Id3, color);
+        begin
+	        S[cf] := IntToStr(Id1) + ';' + IntToStr(Id2) + ';' + IntToStr(Id3);
+            Cl[cf] := color;
+            IE[cf] := 3;
+            Inc(cf);
+        end;
+
+        procedure MakeFace4(Id1, Id2, Id3, Id4, color);
+        begin
+	        S[cf] := IntToStr(Id1) + ';' + IntToStr(Id2) + ';' + IntToStr(Id3) + ';' + IntToStr(Id4);
+            Cl[cf] := color;
+            IE[cf] := 7;
+            Inc(cf);
+        end;
+
+        procedure MakeFaces1();
+        begin
+            Idx4 := AddVertex(k1, 0.5);
+            Idx5 := AddVertex(1-k1, 0.5);
+
+            MakeFace4(Idx0, Idx4, Idx5, Idx3, c1);
+            MakeFace3(Idx1, Idx4, Idx0, c2);
+            MakeFace4(Idx2, Idx5, Idx4, Idx1, c3);
+            MakeFace3(Idx3, Idx5, Idx2, c4);
+        end;
+
+        procedure MakeFaces2();
+        begin
+            Idx4 := AddVertex(0.5, k1);
+            Idx5 := AddVertex(0.5, 1-k1);
+
+            MakeFace3(Idx0, Idx4, Idx3, c1);
+            MakeFace4(Idx1, Idx5, Idx4, Idx0, c2);
+            MakeFace3(Idx2, Idx5, Idx1, c3);
+            MakeFace4(Idx3, Idx4, Idx5, Idx2, c4);
+        end;
+
+        procedure MakeSide(x, y, z, dx1, dy1, dz1, dx2, dy2, dz2, sx, sy);
+        // x, y, z - left-top point of side
+        // dx1, dy1, dz1 - 1st counting vector
+        // dx2, dy2, dz2 - 2nd counting vector
+        // sx, sy - left-top letter in sColors
+        begin
+            for i := 0 to N - 1 do
+                for j := 0 to N - 1 do begin
+                    Idx0 := GetIdx(i    , j    );
+                    Idx1 := GetIdx(i    , j + 1);
+                    Idx2 := GetIdx(i + 1, j + 1);
+                    Idx3 := GetIdx(i + 1, j    );
+                    c1 := GetColor( 0,-1);
+                    c2 := GetColor(-1, 0);
+                    c3 := GetColor( 0, 1);
+                    c4 := GetColor( 1, 0);
+
+                    case GetColorChar(0, 0) of
+                      '-': MakeFaces1;
+                      '|': MakeFaces2;
+                    end;
+                end;
+        end;
+
+        cf := 0;
+        MakeSide( 0, N, N,  1, 0, 0,  0,-1, 0,   9, 0); // up
+        MakeSide( 0, 0, N,  1, 0, 0,  0, 0,-1,   9, 7); // face
+        MakeSide( 0, N, N,  0,-1, 0,  0, 0,-1,   1, 7); // left
+        MakeSide( N, 0, N,  0, 1, 0,  0, 0,-1,  17, 7); // right
+        MakeSide( N, N, N, -1, 0, 0,  0, 0,-1,  25, 7); // back
+        MakeSide( 0, 0, 0,  1, 0, 0,  0, 1, 0,   9,14); // bottom
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Cl[i]" VertexIndexes = "S[i]" InvisibleEdges = "IE[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "cf" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "AdjoiningFacesHaveSameColors" />
+</xml>

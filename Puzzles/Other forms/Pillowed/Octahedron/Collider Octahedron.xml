@@ -1,0 +1,157 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Collider Octahedron</Name>
+        <Menu>Other forms\Pillowed\Octahedron\Collider Octahedron</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7445</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00FF00'; // clGreen1
+        Colors[1] := '0088FF'; // clBlue2
+        Colors[2] := '0000EE'; // clBlue3
+        Colors[3] := '8800DD'; // clViolett
+        Colors[4] := '007700'; // clGreen3
+        Colors[5] := 'FF0000'; // clRed
+        Colors[6] := 'FF6000'; // clOrange
+        Colors[7] := 'FFFF00'; // clYellow
+
+        K := 0.5;
+
+        D :=  K * 1.035;
+
+        C0 := 1 + sqrt(2);
+        C1 := 1;
+
+        f1 := K * 0.35;
+
+        A1 := ArcCos((-1 + 2 * sqrt(2)) / 4);
+        A2 := ArcCos((-2 -     sqrt(2)) / 4);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1;-A2; 0; A2; A1" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " C0; C1; C0" />
+        <Axis NormVector = " C0; C1;-C0" />
+        <Axis NormVector = " C0;-C1; C0" />
+        <Axis NormVector = " C0;-C1;-C0" />
+        <Axis NormVector = " C0; C0; C1" />
+        <Axis NormVector = " C0; C0;-C1" />
+        <Axis NormVector = " C0;-C0; C1" />
+        <Axis NormVector = " C0;-C0;-C1" />
+        <Axis NormVector = " C1; C0; C0" />
+        <Axis NormVector = " C1; C0;-C0" />
+        <Axis NormVector = " C1;-C0; C0" />
+        <Axis NormVector = " C1;-C0;-C0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+
+        <RemoveContaining Vector = "-f1;-f1;-f1" />
+        <RemoveContaining Vector = " f1;-f1; f1" />
+        <RemoveContaining Vector = " f1; f1;-f1" />
+        <RemoveContaining Vector = "-f1; f1; f1" />
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+
+        <HideAll/>
+
+        <Script>
+            Colors[0] := Colors[4];
+            Colors[1] := Colors[5];
+            Colors[2] := Colors[6];
+            Colors[3] := Colors[7];
+        </Script>
+
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+
+        <RemoveContaining Vector = "-f1;-f1;-f1" />
+        <RemoveContaining Vector = " f1;-f1; f1" />
+        <RemoveContaining Vector = " f1; f1;-f1" />
+        <RemoveContaining Vector = "-f1; f1; f1" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Macro Name = "Hide" >
+            <HideContaining Vector = " f*C0; f*C1; f*C0" />
+            <HideContaining Vector = " f*C0; f*C1;-f*C0" />
+            <HideContaining Vector = " f*C0;-f*C1; f*C0" />
+            <HideContaining Vector = " f*C0;-f*C1;-f*C0" />
+            <HideContaining Vector = " f*C0; f*C0; f*C1" />
+            <HideContaining Vector = " f*C0; f*C0;-f*C1" />
+            <HideContaining Vector = " f*C0;-f*C0; f*C1" />
+            <HideContaining Vector = " f*C0;-f*C0;-f*C1" />
+            <HideContaining Vector = " f*C1; f*C0; f*C0" />
+            <HideContaining Vector = " f*C1; f*C0;-f*C0" />
+            <HideContaining Vector = " f*C1;-f*C0; f*C0" />
+            <HideContaining Vector = " f*C1;-f*C0;-f*C0" />
+        </Macro>
+
+        <HideContaining Vector = " 0; 0; 0" />
+        <ExecMacro MacroName = "Hide" f = "-0.15"/>
+        <ExecMacro MacroName = "Hide" f = " 0.15"/>
+
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := '-1';
+        </Script>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+        <RemoveContaining Vector = "-f1;-f1;-f1" />
+        <RemoveContaining Vector = " f1; f1;-f1" />
+        <RemoveContaining Vector = " f1;-f1; f1" />
+        <RemoveContaining Vector = "-f1; f1; f1" />
+
+        <SplitByAxes/>
+        <HideContaining Vector = " 0; 0; 0" />
+        <ExecMacro MacroName = "Hide" f = "-0.15"/>
+        <ExecMacro MacroName = "Hide" f = " 0.15"/>
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+        <RemoveContaining Vector = "-f1;-f1;-f1" />
+        <RemoveContaining Vector = " f1;-f1; f1" />
+        <RemoveContaining Vector = " f1; f1;-f1" />
+        <RemoveContaining Vector = "-f1; f1; f1" />
+        <SplitByAxes/>
+        <HideContaining Vector = " 0; 0; 0" />
+        <ExecMacro MacroName = "Hide" f = "-0.15"/>
+        <ExecMacro MacroName = "Hide" f = " 0.15"/>
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

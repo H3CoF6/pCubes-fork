@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Triangular Prism Mirror</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Triangular Prism Mirror</Menu>
+        <Menu>Other forms\2x2x2 variants\Triangular Prism Mirror</Menu>
+        <Inventor>Roberto Cazares</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9238</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clViolett := '7700CD';
+
+        R := 0.7;
+        H := R * 0.5;
+        dH := R * 0.05;
+
+        sAngle := 2 * Pi / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * cos(sAngle * i);
+            y[i] := R * sin(sAngle * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 1; 0" />
+        <Axis NormVector = "1;-1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x; y;-H + dH" />
+            <Vertices Vectors = " x; y; H + dH" />
+            <Faces>
+                <Face Color = "clYellow" VertexIndexes = "0;1;4;3" />
+                <Face Color = "clYellow" VertexIndexes = "1;2;5;4" />
+                <Face Color = "clYellow" VertexIndexes = "2;0;3;5" />
+                <Face Color = "clYellow" VertexIndexes = "2;1;0" />
+                <Face Color = "clYellow" VertexIndexes = "3;4;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "x[0]; y[0]; H" />
+        <HideAll/>
+
+        <Part>
+            <Vertices Vectors = " x; y;-H + dH" />
+            <Vertices Vectors = " x; y; H + dH" />
+            <Faces>
+                <Face Color = "clViolett" VertexIndexes = "0;1;4;3" />
+                <Face Color = "clViolett" VertexIndexes = "1;2;5;4" />
+                <Face Color = "clViolett" VertexIndexes = "2;0;3;5" />
+                <Face Color = "clViolett" VertexIndexes = "2;1;0" />
+                <Face Color = "clViolett" VertexIndexes = "3;4;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <HideContaining Vector = "x[0]; y[0]; H" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

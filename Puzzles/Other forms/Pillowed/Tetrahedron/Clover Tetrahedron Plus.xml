@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+<Interface>
+        <Name>Clover Tetrahedron Plus</Name>
+        <Menu>Other forms\Pillowed\Tetrahedron\Clover Tetrahedron Plus</Menu>
+        <Inventor>Seth Holiday</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7363</Link>
+    </Interface>
+
+    <Script>
+        K := 0.5;
+
+        Angle1 := arccos(7/18);
+        Angle2 := arccos(-5/6);
+
+        D := K * 1.05;
+    </Script>
+
+    <Axes TurningAngles = "Pi*2" AvailableAngles = "-Angle2; -Angle1; 0; Angle1; Angle2" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1;-1; 3" />
+        <Axis NormVector = " 1; 1;-3" />
+        <Axis NormVector = "-1; 1; 3" />
+        <Axis NormVector = "-1;-1;-3" />
+        <Axis NormVector = " 3;-1; 1" />
+        <Axis NormVector = " 3; 1;-1" />
+        <Axis NormVector = "-3; 1; 1" />
+        <Axis NormVector = "-3;-1;-1" />
+        <Axis NormVector = " 1;-3; 1" />
+        <Axis NormVector = " 1; 3;-1" />
+        <Axis NormVector = "-1; 3; 1" />
+        <Axis NormVector = "-1;-3;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "unbandage1">
+            <HideContaining Vector = " x; y; z" />
+            <InvertVisibility/>
+            <Turn Axis = "ax" Layer = "1" Angle = "Angle2" />
+            <SplitByAxes/>
+            <Turn Axis = "ax" Layer = "1" Angle = "Angle1" />
+            <SplitByAxes/>
+            <Undo Repeat = "2"/>
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "unbandage2">
+            <Turn Axis = "ax1" Layer = "1" Angle = "f*Angle2" />
+            <HideContaining Vector = " x; y; z " />
+            <InvertVisibility/>
+            <Turn Axis = "ax2" Layer = "1" Angle = "f*Angle1" />
+            <SplitByAxes/>
+            <Undo Repeat = "2"/>
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "unbandage1" ax = "5" x = " K * 1.2" y = "0" z = "0" />
+        <ExecMacro MacroName = "unbandage1" ax = "6" x = "-K * 1.2" y = "0" z = "0" />
+        <ExecMacro MacroName = "unbandage1" ax = "9" x = "0" y = " K * 1.2" z = "0" />
+        <ExecMacro MacroName = "unbandage1" ax = "8" x = "0" y = "-K * 1.2" z = "0" />
+        <ExecMacro MacroName = "unbandage1" ax = "0" x = "0" y = "0" z = " K * 1.2" />
+        <ExecMacro MacroName = "unbandage1" ax = "3" x = "0" y = "0" z = "-K * 1.2" />
+
+        <ExecMacro MacroName = "unbandage2" ax1 = "10" ax2 = "9"  f = " 1" x = "0" y = " K * 1.2" z = "0" />
+        <ExecMacro MacroName = "unbandage2" ax1 = "9"  ax2 = "10" f = "-1" x = "0" y = " K * 1.2" z = "0" />
+        <ExecMacro MacroName = "unbandage2" ax1 = "11" ax2 = "8"  f = " 1" x = "0" y = "-K * 1.2" z = "0" />
+        <ExecMacro MacroName = "unbandage2" ax1 = "8"  ax2 = "11" f = "-1" x = "0" y = "-K * 1.2" z = "0" />
+        <ExecMacro MacroName = "unbandage2" ax1 = "6"  ax2 = "7"  f = " 1" x = "-K * 1.2" y = "0" z = "0" />
+        <ExecMacro MacroName = "unbandage2" ax1 = "6"  ax2 = "7"  f = "-1" x = "-K * 1.2" y = "0" z = "0" />
+        <ExecMacro MacroName = "unbandage2" ax1 = "7"  ax2 = "6"  f = " 1" x = "-K * 1.2" y = "0" z = "0" />
+        <ExecMacro MacroName = "unbandage2" ax1 = "7"  ax2 = "6"  f = "-1" x = "-K * 1.2" y = "0" z = "0" />
+        <ExecMacro MacroName = "unbandage2" ax1 = "1"  ax2 = "3"  f = " 1" x = "0" y = "0" z = "-K * 1.2" />
+        <ExecMacro MacroName = "unbandage2" ax1 = "1"  ax2 = "3"  f = "-1" x = "0" y = "0" z = "-K * 1.2" />
+        <ExecMacro MacroName = "unbandage2" ax1 = "0"  ax2 = "2"  f = " 1" x = "0" y = "0" z = " K * 1.2" />
+        <ExecMacro MacroName = "unbandage2" ax1 = "0"  ax2 = "2"  f = "-1" x = "0" y = "0" z = " K * 1.2" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

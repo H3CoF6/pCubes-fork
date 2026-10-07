@@ -1,0 +1,129 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Master Quadrant Ball Plus</Name>
+        <Menu>Other forms\Sphere\Master Quadrant Ball Plus</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-09</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        Colors[0] := '0055FF'; // LightBlue
+        Colors[1] := 'FF0055'; // Rose
+        Colors[2] := 'FF5500'; // Orange
+        Colors[3] := '0000EE'; // Blue
+        Colors[4] := '00EE33'; // LightGreen
+        Colors[5] := '7700DD'; // Violett
+        Colors[6] := 'FFFF00'; // Yellow
+        Colors[7] := '444444'; // Gray
+
+        K := 0.6;
+
+        D1 := K * 0.3576;
+        D2 := K * 0.967;
+        D22 := D2 / sqrt(2);
+        Sc := 1.08;
+        RC := K * 0.27;
+        RCut := D1 * (sqrt(2) + 1);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/2; Pi/4; Pi/4; Pi/2; Pi/2" PlaneDistances = "-D2;-D1; 0; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2;0;Pi/2" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCylinder" >
+            <Cut><Plane NormVector = "-x; -y; -z" NormDistance = "-D2" /></Cut>
+            <Cylinder Radius = "RC" Color = "Color" >
+                <Base X = "x" Y = "y" Z = "z" />
+                <Top  X = "x * Sc" Y = "y * Sc" Z = "z * Sc" Color = "Color" />
+            </Cylinder>
+        </Macro>
+
+        <Macro Name = "AddSegment" >
+            <Script>Color := Colors[c];</Script>
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <ExecMacro MacroName = "AddCylinder" x = "0  " y = "D22" z = "D22" />
+            <ExecMacro MacroName = "AddCylinder" x = "D22" y = "  0" z = "D22" />
+            <ExecMacro MacroName = "AddCylinder" x = "D22" y = "D22" z = "0  " />
+            <ExecMacro MacroName = "AddCylinder" x = "D2 " y = "  0" z = "0  " />
+            <ExecMacro MacroName = "AddCylinder" x = "0  " y = " D2" z = "0  " />
+            <ExecMacro MacroName = "AddCylinder" x = "0  " y = "  0" z = "D2 " />
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" c = "1" />
+        <ExecMacro MacroName = "AddSegment" c = "5" />
+        <ExecMacro MacroName = "AddSegment" c = "4" />
+        <ExecMacro MacroName = "AddSegment" c = "0" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSegment" c = "6" />
+        <ExecMacro MacroName = "AddSegment" c = "2" />
+        <ExecMacro MacroName = "AddSegment" c = "3" />
+        <ExecMacro MacroName = "AddSegment" c = "7" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <ShowAll/>
+
+        <Macro Name = "TurnEdges" >
+            <Turn Axis = "Id" Layer = "0" Angle = "Pi / 2" />
+            <Turn Axis = "Id" Layer = "2" Angle = "Pi / 2" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "TurnEdges" Id = "3" Repeat = "6" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Undo Repeat = "12" />
+
+        <Macro Name = "InnerCutCenter" >
+            <HideContaining Vector = "Cx[Id]*K*0.9; Cy[Id]*K*0.9; Cz[Id]*K*0.9" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = "Cx[Id]; Cy[Id]; Cz[Id]" NormDistance = "RCut" /> </Cut>
+            <ShowAll/>
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "InnerCutCenter" Id = "0" Repeat = "6" />
+
+        <Macro Name = "InnerCutEdge" >
+            <HideContaining Vector = "0; -K * 0.6; K * 0.6" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = "0; 1; 1" NormDistance = "-D1" /> </Cut>
+            <Cut> <Plane NormVector = "0;-1;-1" NormDistance = "-D1" /> </Cut>
+            <Cut> <Plane NormVector = "0;-1; 1" NormDistance = "RCut" /> </Cut>
+            <ShowAll/>
+            <Turn NormVector = " 1;-1; 1" Angle = " 2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "InnerCutEdge" Repeat = "3" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "InnerCutEdge" Repeat = "3" />
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "InnerCutEdge" Repeat = "3" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "InnerCutEdge" Repeat = "3" />
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

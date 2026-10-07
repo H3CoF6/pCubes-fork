@@ -1,0 +1,117 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Follow Cube</Name>
+        <Menu>Cubic\Rubiks Recolored\Follow Cube</Menu>
+        <Inventor>Sven Krugmann</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7419</Link>
+    </Interface>
+
+    <Script>
+        Colors[1] := 'FFFFFF'; // clWhite
+        Colors[2] := 'FFFF00'; // clYellow
+        Colors[3] := 'FF800A'; // clOrange
+        Colors[4] := 'C80000'; // clRed
+        Colors[5] := '009600'; // clGreen
+        Colors[6] := '0000C8'; // clBlue
+
+        W := 0.5;
+        D := W / 3;
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', SColors);
+          if p = 0 then begin
+            substr := SColors;
+            SColors := '';
+          end else begin
+            substr := copy(SColors, 1, p-1);
+            Delete(SColors, 1, p);
+          end;
+          Result := StrToInt(Trim(substr));
+        end;
+
+        SColorsUp    := '4,5,1, 6,4,4, 1,2,5';
+        SColorsFace  := '1,3,6, 4,4,3, 1,6,1';
+        SColorsLeft  := '1,6,2, 3,2,2, 5,5,4';
+        SColorsBack  := '5,3,6, 4,2,4, 6,3,6';
+        SColorsRight := '1,2,3, 2,6,1, 1,3,5';
+        SColorsDown  := '3,4,2, 5,2,5, 5,6,3';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "BigW" />
+        <SplitByAxes/>
+
+        <Macro Name = "CutRow" >
+            <HideContaining Vector = "(x - 1) * 2 * D; (y - 1) * 2 * D; W" />
+            <InvertVisibility />
+            <Cut Color = "Colors[GetInt]"><Plane NormVector = "0;0;-1" NormDistance = "-W" /></Cut>
+            <ShowAll/>
+            <Script>Inc(x);</Script>
+        </Macro>
+
+        <Macro Name = "CutFace" >
+            <ExecMacro MacroName = "CutRow" x = "0" y = "2" Repeat = "3" />
+            <ExecMacro MacroName = "CutRow" x = "0" y = "1" Repeat = "3" />
+            <ExecMacro MacroName = "CutRow" x = "0" y = "0" Repeat = "3" />
+        </Macro>
+
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsUp" />
+
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsFace" />
+
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsLeft" />
+
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsBack" />
+
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsRight" />
+
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "CutFace" SColors = "SColorsDown" />
+
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "FC1" File = "Puzzles\Cubic\Rubiks Recolored\Vec\Follow Cube\FC1A.vec" />
+        <Texture Name = "FC2" File = "Puzzles\Cubic\Rubiks Recolored\Vec\Follow Cube\FC2A.vec" />
+        <Texture Name = "FC3" File = "Puzzles\Cubic\Rubiks Recolored\Vec\Follow Cube\FC3A.vec" />
+        <Texture Name = "FC4" File = "Puzzles\Cubic\Rubiks Recolored\Vec\Follow Cube\FC4A.vec" />
+        <Texture Name = "FC5" File = "Puzzles\Cubic\Rubiks Recolored\Vec\Follow Cube\FC5A.vec" />
+        <Texture Name = "FC6" File = "Puzzles\Cubic\Rubiks Recolored\Vec\Follow Cube\FC6A.vec" />
+        <Texture Name = "FC7" File = "Puzzles\Cubic\Rubiks Recolored\Vec\Follow Cube\FC7A.vec" />
+        <Texture Name = "FC8" File = "Puzzles\Cubic\Rubiks Recolored\Vec\Follow Cube\FC8A.vec" />
+        <Texture Name = "FC9" File = "Puzzles\Cubic\Rubiks Recolored\Vec\Follow Cube\FC9A.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        FC1 = 2 ,3,2,  18,5,3,  7 ,4,0,  25,4,0,  17,4,3,  8 ,5,2
+        FC2 = 18,3,0,  19,5,3,  26,5,1,  1 ,4,3,  21,5,3,  6 ,4,1
+        FC3 = 8 ,4,0,  2 ,5,3,  15,4,3,  23,4,0,  3 ,4,3,  5 ,4,3
+        FC4 = 18,4,1,  1 ,5,2,  11,5,3,  0 ,4,2,  26,4,1,  5 ,5,2
+        FC5 = 26,3,1,  23,5,3,  21,4,2,  14,5,0,  6 ,3,3,  15,5,1
+        FC6 = 25,5,3,  12,5,3,  0 ,5,1,  10,5,0,  20,3,0,  24,3,0
+        FC7 = 20,5,2,  16,5,2,  17,5,3,  8 ,3,0,  6 ,5,1,  9 ,4,0
+        FC8 = 2 ,4,2,  4 ,5,3,  24,5,3,  7 ,5,1,  3 ,5,1,  20,4,2
+        FC9 = 0 ,3,1,  11,4,2,  19,4,2,  9 ,5,2,  24,4,3,  22,5,0
+    </SetTextures>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

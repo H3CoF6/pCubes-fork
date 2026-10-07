@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Big Mouth 5x5x2</Name>
+        <Menu>Other cubes\Mixed\Fisher\Fisher Big Mouth 5x5x2</Menu>
+        <Inventor>lic.har</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-20</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+        Colors[6] := -1;
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 7 / 40;
+        WZ := W * 2 / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-3*D;-D; D; 3*D" >
+        <Axis NormVector = "1; 1; 0" />
+        <Axis NormVector = "1;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = " 0; 0; W" />
+        <HideContaining Vector = " 0; 0;-W" />
+
+        <Cut Color = "Colors[4]" > <Plane NormVector = " 0; 0; 1" NormDistance = "-WZ" /> </Cut>
+        <Cut Color = "Colors[5]" > <Plane NormVector = " 0; 0;-1" NormDistance = "-WZ" /> </Cut>
+
+        <ShowAll/>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-WZ" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-WZ" /> </Cut>
+    </Figure>
+</xml>

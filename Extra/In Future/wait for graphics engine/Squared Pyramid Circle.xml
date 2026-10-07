@@ -1,0 +1,121 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+Sometimes circle elements became invisible
+
+    <Interface>
+        <Name>Squared Pyramid Circle</Name>
+        <Menu>Other forms\Johnson solids\Squared Pyramid\Squared Pyramid Circle</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-06-09</Added>
+    </Interface>
+
+    <Script>
+        clYellow := 'FFFF00';
+        clGreen  := '008000';
+        clBlue   := '0000A0';
+        clRed    := 'FF0000';
+        clWhite  := 'FFFFFF';
+
+        K := 1;
+        H  := K / sqrt(2);
+        S := K / 2;
+
+        dH := -K * 0.05;
+        az := 1 / sqrt(2);
+
+        A1 := 2*pi/3;
+        D2 := K * 0.2;
+        D1 := (H + dh - sqrt(3) * d2) / 2;
+        D3 := (H + dH) / sqrt(3);
+
+        Delta := 1.004;
+        RC := K * 0.23;
+        KC := (H + dH) * sqrt(2) / 3 * Delta;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "D2; D3" FixedLayers = "0;2">
+        <Axis NormVector = " 0;  1; az" />
+        <Axis NormVector = " 0; -1; az" />
+        <Axis NormVector = " 1;  0; az" />
+        <Axis NormVector = "-1;  0; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " 0;  0; H+dH" />
+                <Add Vector = " S;  S;   dH" />
+                <Add Vector = " S; -S;   dH" />
+                <Add Vector = "-S; -S;   dH" />
+                <Add Vector = "-S;  S;   dH" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite " VertexIndexes = "1;2;3;4" />
+                <Face Color = "clRed   " VertexIndexes = "0;2;1" />
+                <Face Color = "clYellow" VertexIndexes = "0;3;2" />
+                <Face Color = "clGreen " VertexIndexes = "0;4;3" />
+                <Face Color = "clBlue  " VertexIndexes = "0;1;4" />
+            </Faces>
+        </Part>
+
+        <Circle Color = "clBlue  " Radius = "RC" Center = "  0;  KC; az * KC" />
+        <Circle Color = "clYellow" Radius = "RC" Center = "  0; -KC; az * KC" />
+        <Circle Color = "clRed   " Radius = "RC" Center = " KC;   0; az * KC" />
+        <Circle Color = "clGreen " Radius = "RC" Center = "-KC;   0; az * KC" />
+
+        <SplitByAxes/>
+
+        <Turn  Axis = "1" Layer = "1" Angle = " A1" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-A1" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = " A1" />
+
+        <Turn  Axis = "2" Layer = "1" Angle = " A1" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "2" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "2" Layer = "1" Angle = "-A1" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "2" Layer = "1" Angle = " A1" />
+
+        <Turn  Axis = "3" Layer = "1" Angle = " A1" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " A1" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+
+        // --------------------------------------
+
+        <Turn  Axis = "1" Layer = "1" Angle = " A1" />
+        <Split Axis = "4" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "2" Layer = "1" Angle = " A1" />
+        <Split Axis = "3" From  = "1" />
+        <Turn  Axis = "2" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "3" Layer = "1" Angle = " A1" />
+        <Split Axis = "1" From  = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+        <Split Axis = "2" From  = "1" />
+        <Turn  Axis = "4" Layer = "1" Angle = "-A1" />
+    </Figure>
+</xml>

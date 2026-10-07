@@ -1,0 +1,94 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>BrillMinx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bandaged\BrillMinx</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2014-06-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4722</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := Rsin * As;
+
+        procedure Prepare();
+        begin
+            Count := Length(S) div 3;
+            for i := 0 to Count - 1 do begin
+                ax[i] := StrToInt(copy(S, i * 3 + 1, 1));
+                L[i] := StrToInt(copy(S, i * 3 + 2, 1));
+                Sign := copy(S, i * 3 + 3, 1);
+                if Sign = '-' then begin
+                    FromL[i] := L[i] + 1;
+                    ToL[i] := 20;
+                end else begin
+                    FromL[i] := 0;
+                    ToL[i] := L[i];
+                end;
+            end;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "Split1" >
+            <Split Axis = "ax[i]" From = "L[i] + 1" />
+            <Hide Axis = "ax[i]" From = "FromL[i]" To = "ToL[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <Macro Name = "Split2" >
+            <Script> Prepare; </Script>
+            <ExecMacro MacroName = "Split1" i = "0" Repeat = "Count" />
+            <ShowAll/>
+        </Macro>
+
+        // "52-" means split axis = "5" From = "2+1" and hide lower or upper half depending on sign
+        // these strings split very bandaged puzzle
+        <ExecMacro MacroName = "Split2" S = "'00-10-20+50*'" />
+        <ExecMacro MacroName = "Split2" S = "'00-10+50-40*'" />
+        <ExecMacro MacroName = "Split2" S = "'00-10+50+40-30*'" />
+        <ExecMacro MacroName = "Split2" S = "'00-10+50+40+30-20*'" />
+        <ExecMacro MacroName = "Split2" S = "'00+20-30-51*'" />
+        <ExecMacro MacroName = "Split2" S = "'00+20-30+41+10+51*'" />
+        <ExecMacro MacroName = "Split2" S = "'00+20+51-11-50-21-31+10*'" />
+        <ExecMacro MacroName = "Split2" S = "'00+20+51-11-50-21+40+31*'" />
+        <ExecMacro MacroName = "Split2" S = "'00+20+51-11-50+31+21-41+10+01*'" />
+        <ExecMacro MacroName = "Split2" S = "'00+20+51-11-50+31+21+01*'" />
+        <ExecMacro MacroName = "Split2" S = "'00+20+51-11+40-30+21*'" />
+        <ExecMacro MacroName = "Split2" S = "'00+20+51-11+40+30+21+01*'" />
+        <ExecMacro MacroName = "Split2" S = "'00+20+51+41-30-11*'" />
+        <ExecMacro MacroName = "Split2" S = "'00+20+51+41-30+11+01*'" />
+        <ExecMacro MacroName = "Split2" S = "'00+20+51+41+01*'" />
+
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(6)" Layer = "Random(2) * 2" Angle = "sAngle * (Random(4) + 1)"/>
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <Script>
+                sAngle := Pi * 2 / 5;
+            </Script>
+            <ExecMacro MacroName = "RandomTurns" Repeat = "5000" />
+        </Macro>
+    </Macros>
+</xml>

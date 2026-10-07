@@ -1,0 +1,151 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4 Corners of the Dittominx Plus Unbandaged II</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Truncated\4 Corners of the Dittominx Plus Unbandaged II</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-15</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := '0099FF'; // LightBlue
+        Colors[ 2] := 'FF6600'; // Orange
+        Colors[ 3] := '008800'; // Green
+        Colors[ 4] := 'BB0022'; // Brown
+        Colors[ 5] := 'BBBBBB'; // Silver
+        Colors[ 6] := 'FFFF00'; // Yellow
+        Colors[ 7] := 'FF0000'; // Red
+        Colors[ 8] := 'FF2299'; // Pink
+        Colors[ 9] := 'DDBB20'; // Golden
+        Colors[10] := '0011FF'; // Blue
+        Colors[11] := 'BB00BB'; // Purple
+
+        Colors[20] := 'DDDDDD'; // White2
+        Colors[21] := '0077DD'; // LightBlue2
+        Colors[22] := 'FF4400'; // Orange2
+        Colors[23] := '006600'; // Green2
+        Colors[24] := 'AA0011'; // Brown2
+        Colors[25] := '909090'; // Silver2
+        Colors[26] := 'DDDD00'; // Yellow2
+        Colors[27] := 'DD0000'; // Red2
+        Colors[28] := 'DD0077'; // Pink2
+        Colors[29] := 'BB9900'; // Golden2
+        Colors[30] := '0000DD'; // Blue2
+        Colors[31] := '990099'; // Purple2
+
+        W  := 0.45;
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_Coordinates.inc';
+
+        pillow := sqrt(2) - 1/3;
+        for i := 0 to 23 do begin
+            Cx[i] := Cx[i] * pillow;
+            Cy[i] := Cy[i] * pillow;
+            Cz[i] := Cz[i] * pillow;
+        end;
+
+        D1 := (Cx[0] + Cy[0] + Cz[0]) / sqrt(3);
+        D2 := Cz[0];
+
+
+
+
+        K  := 0.45;
+
+        C0 := K * (4 + sqrt(2)) / 7;
+        C1 := K * sqrt(2);
+        A1 := K * (6 + sqrt(2)) / 17;
+        A2 := A1 * (sqrt(2) + 1);
+
+        f := sqrt(2) - 1/3;
+        W1 := A1 * f;
+        W2 := A2 * f;
+    </Script>
+
+    <Axes TurningAngles = " 0; 2*Pi/3" PlaneDistances = "D1" NormVectors = " 1; 1;-1" />
+
+    <Axes TurningAngles = "0; Pi/4" PlaneDistances = "D2" NormVectors = " 0; 0;-1" />
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D2" >
+        <Axis NormVector = " 1; 0;-1" />
+        <Axis NormVector = " 0; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Side" >
+            <Face Color = "Colors[c   ]" VertexIndexes = "i1;i2;i0" InvisibleEdges = "ie" />
+            <Face Color = "Colors[c+20]" VertexIndexes = "i2;i3;i0" InvisibleEdges = "ie" />
+            <Face Color = "Colors[c   ]" VertexIndexes = "i3;i4;i0" InvisibleEdges = "ie" />
+            <Face Color = "Colors[c+20]" VertexIndexes = "i4;i1;i0" InvisibleEdges = "ie" />
+        </Macro>
+
+        <Macro Name = "Body" >
+            <Part>
+                <Vertices Vectors = "Vx;Vy;Vz" />
+                <Vertices Vectors = "Cx;Cy;Cz" />
+
+                <Faces>
+                    <ExecMacro MacroName = "Side" i0 = "30" i1 = " 1" i2 = " 9" i3 = "23" i4 = "15" c = " 2" />
+                    <ExecMacro MacroName = "Side" i0 = "31" i1 = " 1" i2 = "15" i3 = "19" i4 = " 7" c = " 3" />
+                    <ExecMacro MacroName = "Side" i0 = "32" i1 = " 1" i2 = " 7" i3 = "21" i4 = "17" c = " 1" />
+                    <ExecMacro MacroName = "Side" i0 = "33" i1 = " 1" i2 = "17" i3 = "25" i4 = " 9" c = " 0" />
+                    <ExecMacro MacroName = "Side" i0 = "34" i1 = " 2" i2 = " 7" i3 = "19" i4 = "10" c = "10" />
+                    <ExecMacro MacroName = "Side" i0 = "35" i1 = " 2" i2 = "10" i3 = "18" i4 = " 6" c = " 8" />
+                    <ExecMacro MacroName = "Side" i0 = "37" i1 = " 2" i2 = "11" i3 = "21" i4 = " 7" c = "11" />
+                    <ExecMacro MacroName = "Side" i0 = "39" i1 = " 3" i2 = "12" i3 = "23" i4 = " 9" c = " 9" />
+                    <ExecMacro MacroName = "Side" i0 = "42" i1 = " 4" i2 = "10" i3 = "19" i4 = "15" c = " 6" />
+                    <ExecMacro MacroName = "Side" i0 = "43" i1 = " 4" i2 = "15" i3 = "23" i4 = "12" c = " 7" />
+                    <ExecMacro MacroName = "Side" i0 = "45" i1 = " 4" i2 = "14" i3 = "18" i4 = "10" c = " 4" />
+                    <ExecMacro MacroName = "Side" i0 = "49" i1 = " 5" i2 = "17" i3 = "21" i4 = "11" c = " 5" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "Body" ie = "6" />
+        <SplitByAxes/>
+
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <Hide Axis = "2" Layer = "1" />
+        <Hide Axis = "3" Layer = "1" />
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 31 do
+                Colors[i] := -1;
+        </Script>
+        <ExecMacro MacroName = "Body" ie = "-1" />
+
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut> <Plane NormVector = " Cx[5]; Cy[5]; Cz[5]" NormDistance = "W * 0.6" /> </Cut>
+        <ShowAll/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "1" Layer = "1" Angle = "Pi / 4" />
+            <Turn Axis = "2" Layer = "1" Angle = "Pi / 2" />
+            <Turn Axis = "3" Layer = "1" Angle = "Pi / 2" />
+            <Turn Axis = "0" Layer = "1" Angle = "2*Pi/3" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "20" />
+        <Undo Repeat = "80" />
+
+        <SaveSolvedState/>
+
+        // turn puzzle to user
+        <Turn NormVector = "0;0;1" Angle = " 45 * Pi/180" />
+        <Turn NormVector = "1;0;0" Angle = "-(90+30.35) * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

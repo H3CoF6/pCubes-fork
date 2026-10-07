@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Clover Cube Plus</Name>
+        <Menu>Other cubes\Unclassified\Clover Cube Plus</Menu>
+        <Inventor>VeryPuzzle</Inventor>
+        <Programmer>Skallos, xchemist</Programmer>
+        <Added>2021-04-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5982</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0066FF'; // Blue
+        Colors[3] := '00DD00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        A := W * 1.410;
+        B := W * 0.545;
+
+        C0 := sqrt(2) - 1;
+
+        D  := W * 1.33345;
+
+        A1 := ArcCos((-1 + 2 * sqrt(2)) / 4 );
+        A2 := ArcCos((-2 -     sqrt(2)) / 4 ); // A2 := Pi - A1/2;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1;-A2; 0; A2; A1" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "  1; C0;  1" />
+        <Axis NormVector = "  1; C0; -1" />
+        <Axis NormVector = "  1;-C0;  1" />
+        <Axis NormVector = "  1;-C0; -1" />
+        <Axis NormVector = "  1;  1; C0" />
+        <Axis NormVector = "  1;  1;-C0" />
+        <Axis NormVector = "  1; -1; C0" />
+        <Axis NormVector = "  1; -1;-C0" />
+        <Axis NormVector = " C0;  1;  1" />
+        <Axis NormVector = " C0;  1; -1" />
+        <Axis NormVector = " C0; -1;  1" />
+        <Axis NormVector = " C0; -1; -1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "a" Angle = " J1" Layer = "0" />
+            <Turn Axis = "a" Angle = " J1" Layer = "2" />
+            <Turn Axis = "b" Angle = " J2" Layer = "0" />
+            <Turn Axis = "b" Angle = " J2" Layer = "2" />
+            <Turn Axis = "a" Angle = "-J1" Layer = "0" />
+            <Turn Axis = "a" Angle = "-J1" Layer = "2" />
+            <Turn Axis = "b" Angle = "-J2" Layer = "0" />
+            <Turn Axis = "b" Angle = "-J2" Layer = "2" />
+            <SplitByAxes/>
+            <Undo Repeat = "8" />
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" a = "8 " b = "11" J1 = " A2" J2 = " A2" />
+        <ExecMacro MacroName = "Unbandage" a = "9 " b = "10" J1 = "-A2" J2 = "-A2" />
+        <ExecMacro MacroName = "Unbandage" a = "4 " b = "5 " J1 = "-A2" J2 = " A2" />
+        <ExecMacro MacroName = "Unbandage" a = "6 " b = "7 " J1 = " A2" J2 = "-A2" />
+        <ExecMacro MacroName = "Unbandage" a = "1 " b = "3 " J1 = " A2" J2 = "-A2" />
+        <ExecMacro MacroName = "Unbandage" a = "0 " b = "2 " J1 = "-A2" J2 = " A2" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Platypus Supreme</Name>
+        <Menu>Other forms\Unclassified\Platypus Supreme</Menu>
+        <Inventor>Yusaf Seyhan</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-10-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1603</Link>
+    </Interface>
+
+    <Script>
+        clBody := 'FFFFFF';
+
+        W := 0.8;
+        D0 := -W * sqrt(3) / 3;
+        D := -D0 * 4 / 7;
+        D1 := D0 + D / 2;
+        DCut1 := D0 + 5 * D;
+        D2 := (D + D0 + 2 * DCut1) / 3;
+        DCut2 := 3 * (D0 + D / 2) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3; 0; 2 * Pi / 3" PlaneDistances = "D1; D2" >
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <SplitByAxes/>
+        <Cut Color = "clBody" > <Plane NormDistance = "-DCut1" NormVector = " 1;  1;  1" /> </Cut>
+        <Cut Color = "clBody" > <Plane NormDistance = "-DCut1" NormVector = "-1; -1;  1" /> </Cut>
+        <Cut Color = "clBody" > <Plane NormDistance = "-DCut1" NormVector = "-1;  1; -1" /> </Cut>
+        <Cut Color = "clBody" > <Plane NormDistance = "-DCut1" NormVector = " 1; -1; -1" /> </Cut>
+
+        <Cut Color = "clBody" > <Plane NormDistance = " DCut2" NormVector = " 1;  0;  0" /> </Cut>
+        <Cut Color = "clBody" > <Plane NormDistance = " DCut2" NormVector = "-1;  0;  0" /> </Cut>
+        <Cut Color = "clBody" > <Plane NormDistance = " DCut2" NormVector = " 0;  1;  0" /> </Cut>
+        <Cut Color = "clBody" > <Plane NormDistance = " DCut2" NormVector = " 0; -1;  0" /> </Cut>
+        <Cut Color = "clBody" > <Plane NormDistance = " DCut2" NormVector = " 0;  0;  1" /> </Cut>
+        <Cut Color = "clBody" > <Plane NormDistance = " DCut2" NormVector = " 0;  0; -1" /> </Cut>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

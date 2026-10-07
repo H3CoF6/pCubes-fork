@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhombohedral 2x2x2 I</Name>
+        <Menu>Other forms\Trapezohedron\Rhombohedral 2x2x2 I</Menu>
+        <Menu>Other forms\2x2x2 variants\Rhombohedral 2x2x2 I</Menu>
+        <Inventor>Not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-04-02</Added>
+    </Interface>
+
+    <Script>
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clRed    := 'FF0000';
+        clOrange := 'FF6000';
+        clGreen  := '008000';
+        clPink   := 'FF69B4';
+
+        R  := 0.7;
+        H1 := R / sqrt(2) / 6;
+        H2 := H1 * 3;
+
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 6 * (2 * i + 1));
+            y[i] := R * sin(Pi / 6 * (2 * i + 1));
+        end;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+        az := 1 / sqrt(2);
+
+        RCut := R * 0.95;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" NormVectors = "ax; ay; az" />
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H1" />
+                <Add Vector = "x[1]; y[1];  H1" />
+                <Add Vector = "x[2]; y[2]; -H1" />
+                <Add Vector = "x[3]; y[3];  H1" />
+                <Add Vector = "x[4]; y[4]; -H1" />
+                <Add Vector = "x[5]; y[5];  H1" />
+
+                <Add Vector = "   0;    0;  H2" />
+                <Add Vector = "   0;    0; -H2" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clRed"    VertexIndexes = " 5; 6; 3; 4" />
+                <Face Color = "clBlue"   VertexIndexes = " 3; 6; 1; 2" />
+                <Face Color = "clGreen"  VertexIndexes = " 1; 6; 5; 0" />
+
+                <Face Color = "clOrange" VertexIndexes = " 0; 7; 2; 1" />
+                <Face Color = "clCyan"   VertexIndexes = " 2; 7; 4; 3" />
+                <Face Color = "clPink"   VertexIndexes = " 4; 7; 0; 5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <!-- cut corners for better control -->
+        <Cut> <Plane NormVector = "x[0]; y[0]; -H1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "x[1]; y[1];  H1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "x[2]; y[2]; -H1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "x[3]; y[3];  H1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "x[4]; y[4]; -H1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "x[5]; y[5];  H1" NormDistance = "-RCut" /> </Cut>
+    </Figure>
+</xml>

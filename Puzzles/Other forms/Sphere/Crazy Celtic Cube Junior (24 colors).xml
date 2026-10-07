@@ -1,0 +1,133 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Celtic Cube Junior (24 colors)</Name>
+        <Menu>Other forms\Sphere\Crazy Celtic Cube Junior (24 colors)</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-14</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Col[ 0] := 'FF9900'; // Orange
+        Col[11] := 'FF8800'; // Orange
+        Col[12] := 'FFBB00'; // Orange
+        Col[23] := 'FFAA00'; // Orange
+
+        Col[ 1] := '8800DD'; // Purple
+        Col[ 4] := '7700CC'; // Purple
+        Col[ 7] := 'AA00FF'; // Purple
+        Col[10] := '9900EE'; // Purple
+
+        Col[ 2] := '0055FF'; // Blue
+        Col[ 3] := '0066FF'; // Blue
+        Col[20] := '0077FF'; // Blue
+        Col[21] := '0044FF'; // Blue
+
+        Col[ 5] := 'FF0000'; // Red
+        Col[ 6] := 'CC0000'; // Red
+        Col[17] := 'DD0000'; // Red
+        Col[18] := 'EE0000'; // Red
+
+        Col[ 8] := '00EE00'; // Green
+        Col[ 9] := '00FF00'; // Green
+        Col[14] := '00CC00'; // Green
+        Col[15] := '00DD00'; // Green
+
+        Col[13] := 'EEEE00'; // Yellow
+        Col[16] := 'DDDD00'; // Yellow
+        Col[19] := 'CCCC00'; // Yellow
+        Col[22] := 'FFFF00'; // Yellow
+
+        Colors[1] := -1;
+        Colors[2] := -1;
+        Colors[4] := -1;
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        K  := 0.6;
+
+        s2 := sqrt(2);
+        C0 := K * (4 + s2) / 7;
+        C1 := K * s2;
+
+        nA := 1;
+        n0 := s2 + 1;
+
+        A1 := ArcCos( s2 / 8 + 0.25);
+        A2 := ArcCos( s2 / 4 - 0.5 );
+        A3 := ArcCos(-s2 / 2 - 0.25);
+
+        C29 := K * 1.00517373279507; // from _Macro_For_Cubic_Sphere
+        D := C29*n0/sqrt(nA^2+nA^2+n0^2);
+        D2 := K * 0.895;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " nA; nA; n0" />
+        <Axis NormVector = "-nA; nA; n0" />
+        <Axis NormVector = " nA;-nA; n0" />
+        <Axis NormVector = "-nA;-nA; n0" />
+
+        <Axis NormVector = " nA; n0; nA" />
+        <Axis NormVector = "-nA; n0; nA" />
+        <Axis NormVector = " nA; n0;-nA" />
+        <Axis NormVector = "-nA; n0;-nA" />
+
+        <Axis NormVector = " n0; nA; nA" />
+        <Axis NormVector = " n0;-nA; nA" />
+        <Axis NormVector = " n0; nA;-nA" />
+        <Axis NormVector = " n0;-nA;-nA" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2"  PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <Script>
+                Colors[0] := Col[c];
+                Colors[5] := Col[c+1];
+                Colors[3] := Col[c+2];
+                c := c + 3;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0; 0" NormDistance = "0" /> </Cut>
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" c = "0" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSegment" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ShowAll/>
+
+        <Macro Name = "Split" >
+            <Split Axis = "i" From = "1" />
+            <Split Axis = "i" From = "2" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "15" />
+
+        <RemoveContaining Vector = "0;0;0" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

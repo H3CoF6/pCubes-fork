@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tradectrix</Name>
+        <Menu>Other forms\Bi Axes\Tradectrix</Menu>
+        <Inventor>idea of Evgeniy Grigoriev (not invented)</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2021-11-10</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=412494</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=375256#p375256</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=375293#p375293</Link>
+    </Interface>
+
+    <Script>
+        clRed          := 'FF0000';
+        clYellow       := 'FFFF00';
+        clGreen        := '008000';
+        clBlue         := '0000FF';
+        clBlack        := '010101';
+
+        K := 0.5;
+        D := K * 0.224; // middle point
+
+        s5 := sqrt(5);
+        Px := K * sqrt((5 + 3 * s5) / 10);
+        Py := K * sqrt(2 + s5);
+        Pz := K * (1 + s5) / 2;
+
+        DCut := (sqrt(6 * (5 - s5)) * D + 2 * K) / 4;
+
+        A := 2 * Pi / 3;
+    </Script>
+
+    <Axes TurningAngles = "A" PlaneDistances = "-D" FixedLayers = "0" >
+        <Axis NormVector = " Px; 0; K" />
+        <Axis NormVector = "-Px; 0; K" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " Px;  0;  K" />
+                <Add Vector = "-Px;  0;  K" />
+                <Add Vector = "  0; Py;-Pz" />
+                <Add Vector = "  0;-Py;-Pz" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "0;2;1" />
+                <Face Color = "clYellow" VertexIndexes = "1;3;0" />
+                <Face Color = "clGreen " VertexIndexes = "0;3;2" />
+                <Face Color = "clBlue  " VertexIndexes = "1;2;3" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "clBlack" ><Plane NormVector = "0;0;1" NormDistance = "-DCut" /></Cut>
+
+        <SplitByAxes/>
+
+        <Macro Name = "R" > <Turn Axis = "0" Angle = "-A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+        <Macro Name = "R'"> <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+        <Macro Name = "L" > <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+        <Macro Name = "L'"> <Turn Axis = "1" Angle = " A" Layer = "1" /> <SplitByAxes/> <RemoveGrayParts/> </Macro>
+
+        <ExecMacro MacroName = "R' L" Repeat = "9" />
+        <Undo Repeat = "18" />
+
+        <ExecMacro MacroName = "R L'" Repeat = "9" />
+        <Undo Repeat = "18" />
+
+        <ExecMacro MacroName = "R' L" Repeat = "1" />
+        <ExecMacro MacroName = "R L'" Repeat = "9" />
+        <Undo Repeat = "20" />
+    </Figure>
+</xml>

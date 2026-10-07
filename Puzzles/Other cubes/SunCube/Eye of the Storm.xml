@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Eye of the Storm</Name>
+        <Menu>Other cubes\SunCube\Eye of the Storm</Menu>
+        <Inventor>Junseo Yoon</Inventor>
+        <Programmer>Junseo Yoon</Programmer>
+        <Added>2025-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12088</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        s2 := sqrt(2);
+        D := W * (-2 - s2 + sqrt(10 + 8 * s2)) / 2; // root of x^4 + 4 * x^3 -1 = 0
+        A := Arctan((1 + s2 - sqrt(2 * s2 - 1)) / 2);
+    </Script>
+
+    <Axes TurningAngles = "0;Pi/2" NormVectors = "Cx;Cy;Cz" AvailableAngles = " 0; A; Pi/2; Pi/2+A; Pi; Pi+A; Pi*3/2; Pi*3/2+A" PlaneDistances = "D" />
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" FixedLayers = "0;2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "ax" Layer = "1" Angle = " A" />
+            <SplitByAxes/>
+            <Undo/>
+            <Script> Inc(ax); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax = "0" Repeat = "6" />
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(6)" Layer = "1" Angle = "2*Pi * Random" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns" Repeat = "10000" />
+        </Macro>
+    </Macros>
+</xml>

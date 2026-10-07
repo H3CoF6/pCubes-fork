@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Ice-9</Name>
+        <Menu>Other forms\Unclassified\Ice-9</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2016-12-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1673</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clOrange       := 'FF6000';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clLightViolett := 'FF0080';
+        clLightBlue    := '2828FF';
+        clViolett      := '800080';
+        clLightGreen   := '00FF00';
+
+        R := 0.9;
+        H := R / sqrt(3);
+        H1  := R * sqrt(3) / 4;
+
+        for i := 0 to 2 do begin
+            x[i] := R * sin(2 * Pi / 3 * i);
+            y[i] := R * cos(2 * Pi / 3 * i);
+            x1[i] := -x[i] / 2;
+            y1[i] := -y[i] / 2;
+        end;
+
+        D1 := R / 4;
+        D2 := R / 8;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2; D1" FixedLayers = "1" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " x[0];  y[0];   0" />
+                <Add Vector = " x[1];  y[1];   0" />
+                <Add Vector = " x[2];  y[2];   0" />
+
+                <Add Vector = "x1[0]; y1[0];  H1" />
+                <Add Vector = "x1[1]; y1[1];  H1" />
+                <Add Vector = "x1[2]; y1[2];  H1" />
+
+                <Add Vector = "    0;     0;   H" />
+
+                <Add Vector = "x1[0]; y1[0]; -H1" />
+                <Add Vector = "x1[1]; y1[1]; -H1" />
+                <Add Vector = "x1[2]; y1[2]; -H1" />
+
+                <Add Vector = "    0;     0;  -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange      " VertexIndexes = "5;1;9;0" />
+                <Face Color = "clYellow      " VertexIndexes = "3;2;7;1" />
+                <Face Color = "clRed         " VertexIndexes = "4;0;8;2" />
+
+                <Face Color = "clViolett     " VertexIndexes = "0;4;6;5" />
+                <Face Color = "clGreen       " VertexIndexes = "1;5;6;3" />
+                <Face Color = "clBlue        " VertexIndexes = "2;3;6;4" />
+
+                <Face Color = "clLightViolett" VertexIndexes = "0;9;10;8" />
+                <Face Color = "clLightGreen  " VertexIndexes = "1;7;10;9" />
+                <Face Color = "clLightBlue   " VertexIndexes = "2;8;10;7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Angle = " Pi/2" Layer = "2" />
+        <Turn Axis = "1" Angle = " Pi/2" Layer = "2" />
+        <Turn Axis = "2" Angle = " Pi/2" Layer = "2" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Angle = "-Pi/2" Layer = "2" />
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "2" />
+        <Turn Axis = "0" Angle = "-Pi/2" Layer = "2" />
+
+    </Figure>
+</xml>

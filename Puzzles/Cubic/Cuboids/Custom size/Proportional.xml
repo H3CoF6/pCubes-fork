@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Custom Cuboid Proportional</Name>
+        <Menu>Cubic\Cuboids\Custom size\Proportional</Menu>
+        <Inventor>different</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-11-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_search.php?function=show_puzzles&amp;any_words=Cuboid</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        X := 3;
+        Y := 3;
+        Z := 3;
+        Oversize := 0;
+
+        RequestNumbers('Input cuboid orders', 'Width:', 'Depth:', 'Height:', X, Y, Z);
+
+        include 'Puzzles\Cubic\Cuboids\Cuboid Calculation.inc';
+    </Script>
+
+    <Axes>
+        <Axis NormVector = " 1; 0; 0" PlaneDistances = "DX" TurningAngles = "Ax" />
+        <Axis NormVector = " 0; 1; 0" PlaneDistances = "DY" TurningAngles = "Ay" />
+        <Axis NormVector = " 0; 0; 1" PlaneDistances = "DZ" TurningAngles = "Az" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Cx[c];Cy[c];Cz[c]" NormDistance = "WD * (-L + 2*i)" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" c = "1" L = "X" i = "1" Repeat = "X - 1" />
+        <ExecMacro MacroName = "Split" c = "3" L = "Y" i = "1" Repeat = "Y - 1" />
+        <ExecMacro MacroName = "Split" c = "5" L = "Z" i = "1" Repeat = "Z - 1" />
+
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W" />
+        <ExecMacro MacroName = "Split" c = "1" L = "X" i = "1" Repeat = "X - 1" />
+        <ExecMacro MacroName = "Split" c = "3" L = "Y" i = "1" Repeat = "Y - 1" />
+        <ExecMacro MacroName = "Split" c = "5" L = "Z" i = "1" Repeat = "Z - 1" />
+
+        <InvertVisibility/>
+    </Figure>
+</xml>

@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Triangular Prism Professor</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Face Turning\Triangular Prism Professor</Menu>
+        <Inventor>Ryan Binter</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3374</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7981</Link>
+    </Interface>
+
+    <Script>
+        clBlue    := '0000C8';
+        clGreen   := '009600';
+        clRed     := 'C80000';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        R := 0.7;
+
+        H := R * sin(Pi / 3) * 5 / 7;
+        sAngle := PI * 2 / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D1 := -(2 * y[0] + 5 * y[1]) / 7;
+        D2 := -(1 * y[0] + 6 * y[1]) / 7;
+
+        D3 := H / 5;
+        D4 := H * 3 / 5;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1; -D2" FixedLayers = "2" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "-D3; -D4; D4; D3" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[0]; y[0]; H" />
+                <Add Vector = "x[1]; y[1]; H" />
+                <Add Vector = "x[2]; y[2]; H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "3;4;1;0" />
+                <Face Color = "clBlue  " VertexIndexes = "4;5;2;1" />
+                <Face Color = "clGreen " VertexIndexes = "5;3;0;2" />
+                <Face Color = "clYellow" VertexIndexes = "0;1;2" />
+                <Face Color = "clWhite " VertexIndexes = "5;4;3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

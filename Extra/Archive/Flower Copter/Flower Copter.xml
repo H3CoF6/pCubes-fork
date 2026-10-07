@@ -1,0 +1,168 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Flower Copter</Name>
+        <Menu>Other cubes\Mixed\Edge-Vertex\Flower Copter</Menu>
+        <Inventor>Minh Sanghsu</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-11-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2763</Link>
+    </Interface>
+
+    <Script>
+        clGreen  := '009600';
+        clYellow := 'FFFF00';
+        clBlue   := '0000C8';
+        clRed    := 'FF0000';
+        clOrange := 'FF800A';
+        clWhite  := 'FFFFFF';
+
+        clUp    := clWhite;
+        clDown  := clYellow;
+        clLeft  := clRed;
+        clRight := clOrange;
+        clFront := clBlue;
+        clBack  := clGreen;
+
+        W := 0.5;
+        A := W * 1.2;
+
+        D1 := sqrt(2) / 2 * A;
+        D2 := sqrt(3) / 3 * A;
+        A1 := W - D1 * sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " 0;  1; 1" />
+        <Axis NormVector = " 1;  0; 1" />
+        <Axis NormVector = " 0; -1; 1" />
+        <Axis NormVector = "-1;  0; 1" />
+        <Axis NormVector = "-1;  1; 0" />
+        <Axis NormVector = " 1;  1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = "1;  1;  1" />
+        <Axis NormVector = "1;  1; -1" />
+        <Axis NormVector = "1; -1;  1" />
+        <Axis NormVector = "1; -1; -1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+
+                // cube
+                <Add Vector = "-W; -W; -W" />
+                <Add Vector = "-W;  W; -W" />
+                <Add Vector = " W;  W; -W" />
+                <Add Vector = " W; -W; -W" />
+                <Add Vector = "-W; -W;  W" />
+                <Add Vector = "-W;  W;  W" />
+                <Add Vector = " W;  W;  W" />
+                <Add Vector = " W; -W;  W" />
+
+                <Add Vector = " 0;  0;  A" /> // white
+                <Add Vector = " 0; -A;  0" /> // blue
+                <Add Vector = " A;  0;  0" /> // orange
+                <Add Vector = "-A;  0;  0" /> // red
+                <Add Vector = " 0;  A;  0" /> // green
+                <Add Vector = " 0;  0; -A" /> // yellow
+            </Vertices>
+
+            <Faces>
+
+                // white
+                <Face Color = "clUp   " VertexIndexes = "5;4; 8" InvisibleEdges = "6" />
+                <Face Color = "clUp   " VertexIndexes = "6;5; 8" InvisibleEdges = "6" />
+                <Face Color = "clUp   " VertexIndexes = "7;6; 8" InvisibleEdges = "6" />
+                <Face Color = "clUp   " VertexIndexes = "4;7; 8" InvisibleEdges = "6" />
+
+                // blue
+                <Face Color = "clFront" VertexIndexes = "4;0; 9" InvisibleEdges = "6" />
+                <Face Color = "clFront" VertexIndexes = "7;4; 9" InvisibleEdges = "6" />
+                <Face Color = "clFront" VertexIndexes = "3;7; 9" InvisibleEdges = "6" />
+                <Face Color = "clFront" VertexIndexes = "0;3; 9" InvisibleEdges = "6" />
+
+                // orange
+                <Face Color = "clRight" VertexIndexes = "7;3;10" InvisibleEdges = "6" />
+                <Face Color = "clRight" VertexIndexes = "6;7;10" InvisibleEdges = "6" />
+                <Face Color = "clRight" VertexIndexes = "2;6;10" InvisibleEdges = "6" />
+                <Face Color = "clRight" VertexIndexes = "3;2;10" InvisibleEdges = "6" />
+
+                // red
+                <Face Color = "clLeft " VertexIndexes = "5;1;11" InvisibleEdges = "6" />
+                <Face Color = "clLeft " VertexIndexes = "4;5;11" InvisibleEdges = "6" />
+                <Face Color = "clLeft " VertexIndexes = "0;4;11" InvisibleEdges = "6" />
+                <Face Color = "clLeft " VertexIndexes = "1;0;11" InvisibleEdges = "6" />
+
+                // blue
+                <Face Color = "clBack " VertexIndexes = "6;2;12" InvisibleEdges = "6" />
+                <Face Color = "clBack " VertexIndexes = "5;6;12" InvisibleEdges = "6" />
+                <Face Color = "clBack " VertexIndexes = "1;5;12" InvisibleEdges = "6" />
+                <Face Color = "clBack " VertexIndexes = "2;1;12" InvisibleEdges = "6" />
+
+                // yellow
+                <Face Color = "clDown " VertexIndexes = "0;1;13" InvisibleEdges = "6" />
+                <Face Color = "clDown " VertexIndexes = "3;0;13" InvisibleEdges = "6" />
+                <Face Color = "clDown " VertexIndexes = "2;3;13" InvisibleEdges = "6" />
+                <Face Color = "clDown " VertexIndexes = "1;2;13" InvisibleEdges = "6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " A1; W; W" />
+        <RemoveContaining Vector = "-A1; W; W" />
+        <RemoveContaining Vector = " A1; W;-W" />
+        <RemoveContaining Vector = "-A1; W;-W" />
+        <RemoveContaining Vector = " A1;-W; W" />
+        <RemoveContaining Vector = "-A1;-W; W" />
+        <RemoveContaining Vector = " A1;-W;-W" />
+        <RemoveContaining Vector = "-A1;-W;-W" />
+
+        <RemoveContaining Vector = " W; A1; W" />
+        <RemoveContaining Vector = " W;-A1; W" />
+        <RemoveContaining Vector = " W; A1;-W" />
+        <RemoveContaining Vector = " W;-A1;-W" />
+        <RemoveContaining Vector = "-W; A1; W" />
+        <RemoveContaining Vector = "-W;-A1; W" />
+        <RemoveContaining Vector = "-W; A1;-W" />
+        <RemoveContaining Vector = "-W;-A1;-W" />
+
+        <RemoveContaining Vector = " W; W; A1" />
+        <RemoveContaining Vector = " W; W;-A1" />
+        <RemoveContaining Vector = " W;-W; A1" />
+        <RemoveContaining Vector = " W;-W;-A1" />
+        <RemoveContaining Vector = "-W; W; A1" />
+        <RemoveContaining Vector = "-W; W;-A1" />
+        <RemoveContaining Vector = "-W;-W; A1" />
+        <RemoveContaining Vector = "-W;-W;-A1" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Textures>
+        <Texture Name = "Flower Copter1" File = "Puzzles\Other cubes\Mixed\Edge-Vertex\Flower Copter1a.vec" />
+        <Texture Name = "Flower Copter2" File = "Puzzles\Other cubes\Mixed\Edge-Vertex\Flower Copter2a.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Flower Copter1 =  16,0,0,  26,0,0,  40,0,0,  62,0,0
+        Flower Copter1 =  14,0,0,   6,0,0,  49,0,0,  72,0,0
+        Flower Copter1 = 107,0,0,  86,0,0,   5,0,0,  21,0,0
+        Flower Copter1 =  58,0,0,  44,0,0,  82,0,0, 102,0,0
+        Flower Copter1 =  30,0,0,  65,0,0, 109,0,0,  19,0,0
+        Flower Copter1 =   8,0,0,  83,0,0,  42,0,0,   2,0,0
+        Flower Copter2 =  13,0,0,  25,0,0,  43,0,0,  60,0,0
+        Flower Copter2 =  70,0,0,   9,0,0,  15,0,0,  51,0,0
+        Flower Copter2 =  10,0,0, 106,0,0,  87,0,0,  23,0,0
+        Flower Copter2 = 103,0,0,  63,0,0,  38,0,0,  80,0,0
+        Flower Copter2 =   1,0,0,   4,0,0,  66,0,0, 110,0,0
+        Flower Copter2 =  32,0,0,  20,0,0,  79,0,0,  39,0,0
+    </SetTextures>
+</xml>

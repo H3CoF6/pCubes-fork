@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bump and Grind 2x2x2 (2 colors)</Name>
+        <Menu>Other cubes\2x2x2 variants\Bump and Grind 2x2x2 (2 colors)</Menu>
+        <Inventor>Aleksandr Ermolenko</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3941</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor1 := 'E0C07D';
+        MirrorColor2 := '222222';
+
+        WX := 0.5;
+        WY := WX;
+        WZ := WX / 2;
+
+        sa := sin(Pi/8);
+        ca := cos(Pi/8);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "0" TurnAxesWithLayer = "0">
+        <Axis NormVector = "sa; ca; 0" />
+        <Axis NormVector = "ca;-sa; 0" />
+        <Axis NormVector = " 0;  0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Cuboid" >
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := cl;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cuboid" cl = "MirrorColor1" DWZ = " WZ" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/4"/>
+        <Split Color1 = "MirrorColor1" Color2 = "MirrorColor1" Axis = "0" From = "1" />
+        <Split Color1 = "MirrorColor1" Color2 = "MirrorColor1" Axis = "1" From = "1" />
+
+        <ExecMacro MacroName = "Cuboid" cl = "MirrorColor2" DWZ = "-WZ" />
+        <Split Color1 = "MirrorColor2" Color2 = "MirrorColor2" Axis = "0" From = "1" />
+        <Split Color1 = "MirrorColor2" Color2 = "MirrorColor2" Axis = "1" From = "1" />
+        <Turn Axis = "2" Layer = "1" Angle = "-Pi/4"/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

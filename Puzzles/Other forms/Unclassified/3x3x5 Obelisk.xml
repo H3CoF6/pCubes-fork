@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3x5 Obelisk</Name>
+        <Menu>Other forms\Unclassified\3x3x5 Obelisk</Menu>
+        <Inventor>Nathan Sachleben</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-08-21</Added>
+        <Link>http://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11956</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'FFFF00';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clCoral  := 'FF7F50';
+        clGray   := '808080';
+        clPink   := 'FF69B4';
+        clWhite  := 'FFFFFF';
+
+        H := 0.48;
+        H1 := H * 1.6;
+        W1 := H * 0.6;
+        W2 := H * 0.44;
+        D := H * 0.2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D*3;-D; D; D*3" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Split335" >
+            <Split Axis = "0" From = "2" />
+            <Split Axis = "0" From = "3" />
+            <Split Axis = "1" From = "2" />
+            <Split Axis = "1" From = "3" />
+            <Split Axis = "2" From = "1" />
+            <Split Axis = "2" From = "2" />
+            <Split Axis = "2" From = "3" />
+            <Split Axis = "2" From = "4" />
+        </Macro>
+
+        <!-- invisible cube needs to avoid some turns -->
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "H" Color = "-1" />
+        <ExecMacro MacroName = "Split335" />
+        <HideAll/>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "-W1;-W1;-H" />
+                <Add Vector = "-W1; W1;-H" />
+                <Add Vector = " W1; W1;-H" />
+                <Add Vector = " W1;-W1;-H" />
+                <Add Vector = "-W2;-W2; H" />
+                <Add Vector = "-W2; W2; H" />
+                <Add Vector = " W2; W2; H" />
+                <Add Vector = " W2;-W2; H" />
+                <Add Vector = "  0;  0; H1" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3" />
+                <Face Color = "clRed   " VertexIndexes = "0;4;5;1" />
+                <Face Color = "clOrange" VertexIndexes = "7;3;2;6" />
+                <Face Color = "clBlue  " VertexIndexes = "4;0;3;7" />
+                <Face Color = "clGreen " VertexIndexes = "1;5;6;2" />
+                <Face Color = "clCoral " VertexIndexes = "4;7;8" />
+                <Face Color = "clGray  " VertexIndexes = "5;4;8" />
+                <Face Color = "clPink  " VertexIndexes = "6;5;8" />
+                <Face Color = "clWhite " VertexIndexes = "7;6;8" />
+            </Faces>
+        </Part>
+
+        <ExecMacro MacroName = "Split335" />
+    </Figure>
+</xml>

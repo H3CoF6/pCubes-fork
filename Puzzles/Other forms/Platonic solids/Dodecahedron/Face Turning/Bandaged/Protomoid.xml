@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Protomoid</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bandaged\Protomoid</Menu>
+        <Inventor>Daniel Waxtonz</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=650</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2 + R * 0.05;
+
+        RCut := R * 0.62;
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi/5" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Cx[i]; Cy[i]; Cz[i]" NormDistance = "D" /></Split>
+            <Script> Inc(i);  </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "1" Repeat = "10" />
+
+        <HideContaining Vector = "Vx; Vy; Vz" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <ShowAll/>
+        <Cut Color = "Colors[ 0]" ><Plane NormVector = " 0; 0;-1" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[11]" ><Plane NormVector = " 0; 0; 1" NormDistance = "-RCut" /></Cut>
+    </Figure>
+</xml>

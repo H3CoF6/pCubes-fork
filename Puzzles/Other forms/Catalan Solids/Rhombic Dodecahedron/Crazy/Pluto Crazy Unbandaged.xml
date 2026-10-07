@@ -1,0 +1,143 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pluto Crazy Unbandaged</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Crazy\Pluto Crazy Unbandaged</Menu>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-12-18</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=32646</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Rhombic_Dodecahedron_Coordinates.inc';
+
+        D1 := R * sqrt(2) / 2;
+        D2 := R * sqrt(2) / 3.3;
+
+        RC := R * 0.315;
+        A := Arccos(1/3);
+
+        Delta := 1.001;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi;Pi" JumbleAngle = "A" PlaneDistances = "D1; D2" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[ax]" Center = "Cx[ax] * Delta; Cy[ax] * Delta; Cz[ax] * Delta" />
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" ax = " 0" Repeat = "12" />
+
+        <Connect Axis = " 0" Layers = "0;2" />
+        <Connect Axis = " 1" Layers = "0;2" />
+        <Connect Axis = " 2" Layers = "0;2" />
+        <Connect Axis = " 3" Layers = "1;2" />
+        <Connect Axis = " 4" Layers = "0;2" />
+        <Connect Axis = " 5" Layers = "0;2" />
+        <Connect Axis = " 6" Layers = "0;2" />
+        <Connect Axis = " 7" Layers = "0;2" />
+        <Connect Axis = " 8" Layers = "0;2" />
+        <Connect Axis = " 9" Layers = "1;2" />
+        <Connect Axis = "10" Layers = "0;2" />
+        <Connect Axis = "11" Layers = "0;2" />
+
+        <SplitByAxes/>
+
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split2" >
+            <HideContaining Vector = " R/2*Delta;-R/2*Delta; RC" />
+            <HideContaining Vector = "-R/2*Delta; R/2*Delta;-RC" />
+            <InvertVisibility/>
+            <Turn NormVector = " 0;-1; 1" Angle = " A" />
+            <Split><Plane NormVector = "0; 1; 1" NormDistance = "D2" /> </Split>
+            <Split><Plane NormVector = "0;-1;-1" NormDistance = "D2" /> </Split>
+            <Turn NormVector = " 0;-1; 1" Angle = "-A" />
+
+            <Turn NormVector = " 1; 0; 1" Angle = "-A" />
+            <Split><Plane NormVector = "-1; 0; 1" NormDistance = "D2" /> </Split>
+            <Split><Plane NormVector = " 1; 0;-1" NormDistance = "D2" /> </Split>
+            <Turn NormVector = " 1; 0; 1" Angle = " A" />
+            <ShowAll/>
+            <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        </Macro>
+
+        <Macro Name = "SplitCircle" >
+            <ExecMacro MacroName = "Split2" Repeat = "2" />
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+
+        <Macro Name = "SplitBelt" >
+            <ExecMacro MacroName = "SplitCircle" Repeat = "2" />
+            <Turn NormVector = " 1; 1; 1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "SplitBelt" Repeat = "3" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Circle" File = "Textures\Circle.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Circle = 74,0,0, 87,0,1, 100,0,1, 126,0,1, 139,0,1, 152,0,0, 165,0,0, 178,0,0, 204,0,1, 217,0,0
+
+    </SetTextures>
+
+    <Macros>
+        <Macro Name = "ExchangeCenter1" >
+            <Turn Axis = "5" Layer = "1" Angle = " A1"/>
+            <Turn Axis = "0" Layer = "1" Angle = " Pi"/>
+            <Turn Axis = "5" Layer = "1" Angle = " Pi"/>
+            <Turn Axis = "9" Layer = "1" Angle = "-A1"/>
+
+            <Turn Axis = "5" Layer = "1" Angle = " Pi"/>
+
+            <Turn Axis = "9" Layer = "1" Angle = " A1"/>
+            <Turn Axis = "5" Layer = "1" Angle = " Pi"/>
+            <Turn Axis = "0" Layer = "1" Angle = " Pi"/>
+            <Turn Axis = "5" Layer = "1" Angle = "-A1"/>
+        </Macro>
+        <Macro Name = "ExchangeCenter2" >
+            <Turn Axis = "6" Layer = "1" Angle = "-A1"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi"/>
+            <Turn Axis = "6" Layer = "1" Angle = " Pi"/>
+            <Turn Axis = "9" Layer = "1" Angle = " A1"/>
+
+            <Turn Axis = "6" Layer = "1" Angle = " Pi"/>
+
+            <Turn Axis = "9" Layer = "1" Angle = "-A1"/>
+            <Turn Axis = "6" Layer = "1" Angle = " Pi"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi"/>
+            <Turn Axis = "6" Layer = "1" Angle = " A1"/>
+        </Macro>
+        <Macro Name = "RandomTurns180" >
+            <Turn Axis = "Random(12)" Layer = "1" Angle = "Pi"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(12)" Layer = "1" Angle = "2*Pi * Random"/>
+        </Macro>
+        <Macro Name = "CentersR" >
+            <ExecMacro MacroName = "ExchangeCenter1" />
+            <ExecMacro MacroName = "RandomTurns180" Repeat = "5" />
+            <ExecMacro MacroName = "ExchangeCenter2" />
+            <ExecMacro MacroName = "RandomTurns180" Repeat = "5" />
+        </Macro>
+        <Macro Name = "Scramble180" Public = "1" Description = "Scramble with non-jumble resulting form" >
+            <Script> A1 := Pi - Arccos(1/3); </Script>
+            <ExecMacro MacroName = "CentersR" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns180" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script> A1 := Pi - Arccos(1/3); </Script>
+            <ExecMacro MacroName = "CentersR" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

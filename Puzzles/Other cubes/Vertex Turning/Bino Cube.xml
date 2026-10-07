@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bino Cube</Name>
+        <Menu>Other cubes\Vertex Turning\Bino Cube</Menu>
+        <Inventor>Justin Eplett</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2018-11-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3902</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.31;
+        D := W / sqrt(3);
+        Ax := W;
+        A := 2 * Pi / 3;
+
+        WX := W;
+        WY := W;
+        WZ := 2 * W;
+    </Script>
+
+    <Axes TurningAngles = "A" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1; 1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = " 1;-1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = "-1;-1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = "-1; 1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = " 1; 1;-1" BaseVector = "0; 0;-Ax" />
+        <Axis NormVector = " 1;-1;-1" BaseVector = "0; 0;-Ax" />
+        <Axis NormVector = "-1;-1;-1" BaseVector = "0; 0;-Ax" />
+        <Axis NormVector = "-1; 1;-1" BaseVector = "0; 0;-Ax" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Angle = "A" Layer = "1" />
+        <Turn Axis = "2" Angle = "A" Layer = "1" />
+        <Turn Axis = "4" Angle = "A" Layer = "1" />
+        <Turn Axis = "6" Angle = "A" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Angle = "A" Layer = "1" />
+        <Turn Axis = "3" Angle = "A" Layer = "1" />
+        <Turn Axis = "5" Angle = "A" Layer = "1" />
+        <Turn Axis = "7" Angle = "A" Layer = "1" />
+        <SplitByAxes/>
+
+        <Undo Repeat = "8" />
+    </Figure>
+</xml>

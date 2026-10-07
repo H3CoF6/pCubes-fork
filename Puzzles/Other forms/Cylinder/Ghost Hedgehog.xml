@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Ghost Hedgehog</Name>
+        <Aliases>Ghost Barrel II</Aliases>
+        <Menu>Other forms\Cylinder\Ghost Hedgehog</Menu>
+        <Menu>Other forms\3x3x3 variants\Cylinder\Ghost Hedgehog</Menu>
+        <Inventor>Benjy Oliver</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5086</Link>
+    </Interface>
+
+    <Script>
+        Color := 'FFEE00'; // Yellow
+
+        R := 0.5;
+        H := R;
+        D := R/3;
+
+        for i := 0 to 39 do begin
+            x[i] := R * cos(2 * Pi / 40 * (i));
+            y[i] := R * sin(2 * Pi / 40 * (i));
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+
+        A1 := 60 * Pi / 180;
+        A2 := 35 * Pi / 180;
+
+        RAxesX :=  35 * Pi / 180;
+        RAxesY :=  59 * Pi / 180;
+        RAxesZ := 0 * Pi / 180;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi" AvailableAngles = "-Pi/2; 0; Pi/2; Pi; -Pi/2 + A1; A1; Pi/2 + A1; Pi + A1; -Pi/2 + A2; A2; Pi/2 + A2; Pi + A2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 1; 0" Angle = "RAxesY" />
+        <Turn NormVector = " 1; 0; 0" Angle = "RAxesX" />
+        <Turn NormVector = " 0; 0; 1" Angle = "RAxesZ" />
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i;
+                i2 := (i + 1) mod 40;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + 40; i2 + 40; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "Color" VertexIndexes = "FromTo(0, 39)" />
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "40" />
+                <Face Color = "Color" VertexIndexes = "FromTo(79, 40)" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "1" From = "1" To = "1" />
+        <Split Axis = "1" From = "2" To = "2" />
+        <Turn Axis = "1" Layer = "1" Angle = "A1" />
+        <Turn Axis = "1" Layer = "2" Angle = "A2" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

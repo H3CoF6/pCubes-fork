@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rob's Icosahedron</Name>
+        <Menu>Other forms\Icosahedron\Vertex turning\Rob's Icosahedron</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4809</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFF66'; // clYellow
+        Colors[ 1] := 'FFFFFF'; // clWhite
+        Colors[ 2] :='00DDDDD'; // clLightCyan
+        Colors[ 3] := '00FFAA'; // clSGreen
+        Colors[ 4] := '00FF55'; // clLighterGreen
+        Colors[ 5] := 'FFCC00'; // clLightOrange
+        Colors[ 6] := 'FFBBDD'; // clSLViolett
+        Colors[ 7] := '00AAFF'; // clAqua
+        Colors[ 8] := '00AAAA'; // clCyan
+        Colors[ 9] := '008000'; // clGreen
+        Colors[10] := '0000CC'; // clDarkBlue
+        Colors[11] := 'AAAAAA'; // clGray
+        Colors[12] := 'FF0000'; // clRed
+        Colors[13] := 'AA0022'; // clDarkRed
+        Colors[14] := 'AA00CC'; // clDarkViolett
+        Colors[15] := '0044DD'; // clBlue
+        Colors[16] := '007744'; // clDarkGreen
+        Colors[17] := 'FF8800'; // clOrange
+        Colors[18] := 'FF0088'; // clLightViolett
+        Colors[19] := 'BB88DD'; // clViolett
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := 0.41;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Ex; Ey; Ez" />
+        <RemoveGrayParts/>
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 19 do
+                Colors[ i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Ex; Ey; Ez" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+    </Figure>
+</xml>

@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Razer Cube (4-colors)</Name>
+        <Menu>Cubic\Camouflage\Razer Cube (4-colors)</Menu>
+        <Inventor>Daniel Waxtonz</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9349</Link>
+    </Interface>
+
+    <Script>
+        clViolett := '800080';
+        clBlue    := '0000C8';
+        clYellow  := 'FFFF00';
+        clGreen   := '009600';
+
+        W := 0.5;
+        D := W * 2 / 5;
+        W1 := D * 2;
+        W2 := D * 3;
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" NormVector = "1; 0; 0" TurnAxesWithPartNo = "3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0;-1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W2" Color = "clViolett" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+
+        <HideContaining Vector = " 0; 0; 0" />
+
+        <Cut Color = "clViolett" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W1" /> </Cut>
+        <Cut Color = "clViolett" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W1" /> </Cut>
+        <Cut Color = "clViolett" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W1" /> </Cut>
+
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "3" />
+
+        <InvertVisibility/>
+        <Cut Color = "clBlue  " > <Plane NormVector = "-1; 0; 0" NormDistance = "-W1" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = " 0; 1; 0" NormDistance = "-W1" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W1" /> </Cut>
+        <SplitByAxes />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

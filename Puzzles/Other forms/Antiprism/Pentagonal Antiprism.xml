@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentagonal Antiprism</Name>
+        <Menu>Other forms\Antiprism\Pentagonal Antiprism</Menu>
+        <Inventor>Jiroscop</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3298</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'F0F0F0';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clCyan   := '00FFFF';
+        clLime   := '00FF00';
+        clBlue   := '0000FF';
+        clGreen  := '008000';
+        clPink   := 'FF69B4';
+        clRed    := 'FF0000';
+        clPurple := '800080';
+        clOlive  := '808000';
+        clNavy   := '000080';
+
+        R := 0.7;
+
+        C0 := R * sqrt(10 * (5 - sqrt(5))) / 20;
+        C1 := R * sqrt(5 * (5 + 2 * sqrt(5))) / 10;
+        C2 := R * (1 + sqrt(5)) / 4;
+        C3 := R * sqrt(10 * (5 + sqrt(5))) / 10;
+        C4 := R * 0.5;
+
+        for i := 0 to 4 do begin
+            ax[i] := sin(Pi / 10 * (2*i+1));
+            ay[i] := cos(Pi / 10 * (2*i+1));
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "ax[0]; ay[0]; 0" />
+        <Axis NormVector = "ax[1]; ay[1]; 0" />
+        <Axis NormVector = "ax[2]; ay[2]; 0" />
+        <Axis NormVector = "ax[3]; ay[3]; 0" />
+        <Axis NormVector = "ax[4]; ay[4]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " C2;  C0;  C4" />
+                <Add Vector = "  0;  C3;  C4" />
+                <Add Vector = "-C2;  C0;  C4" />
+                <Add Vector = "-C4; -C1;  C4" />
+                <Add Vector = " C4; -C1;  C4" />
+                <Add Vector = " C2; -C0; -C4" />
+                <Add Vector = " C4;  C1; -C4" />
+                <Add Vector = "-C4;  C1; -C4" />
+                <Add Vector = "-C2; -C0; -C4" />
+                <Add Vector = "  0; -C3; -C4" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clWhite " VertexIndexes = "9;8;7;6;5" />
+                <Face Color = "clCyan  " VertexIndexes = "1;0;6" />
+                <Face Color = "clLime  " VertexIndexes = "2;1;7" />
+                <Face Color = "clGreen " VertexIndexes = "3;2;8" />
+                <Face Color = "clOrange" VertexIndexes = "4;3;9" />
+                <Face Color = "clRed   " VertexIndexes = "0;4;5" />
+                <Face Color = "clPurple" VertexIndexes = "0;5;6" />
+                <Face Color = "clPink  " VertexIndexes = "1;6;7" />
+                <Face Color = "clBlue  " VertexIndexes = "2;7;8" />
+                <Face Color = "clOlive " VertexIndexes = "3;8;9" />
+                <Face Color = "clNavy  " VertexIndexes = "4;9;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

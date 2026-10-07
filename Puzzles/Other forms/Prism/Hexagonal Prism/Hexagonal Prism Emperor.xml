@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagonal Prism Emperor</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Hexagonal Prism Emperor</Menu>
+        <Inventor>Minh Thang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9338</Link>
+    </Interface>
+
+    <Script>
+        R := 0.65;
+        D := R / sqrt(6) / 4 * 0.95;
+        H := -D * 3 * sqrt(3) + R * sqrt(2);
+
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 3 * i);
+            y[i] := R * sin(Pi / 3 * i);
+        end;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+
+        az := 1 / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-5*D;-3*D;-D; D; 3*D; 5*D" NormVectors = "ax; ay; az" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+            <Faces>
+                <Face Color = "FFFF00" VertexIndexes = " 1; 0; 6; 7" />
+                <Face Color = "FF64FF" VertexIndexes = " 2; 1; 7; 8" />
+                <Face Color = "FF6000" VertexIndexes = " 3; 2; 8; 9" />
+                <Face Color = "00FF00" VertexIndexes = " 4; 3; 9;10" />
+                <Face Color = "0064FF" VertexIndexes = " 5; 4;10;11" />
+                <Face Color = "FF0000" VertexIndexes = " 0; 5;11; 6" />
+
+                <Face Color = "646464" VertexIndexes = "11;10; 9; 8; 7; 6" />
+                <Face Color = "C8C8C8" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

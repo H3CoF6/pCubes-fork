@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>DiPie</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\DiPie</Menu>
+        <Inventor>Karolis Kairys</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11096</Link>
+    </Interface>
+
+    <Script>
+        Color1 := 'FFFFFF'; // Green
+        Color2 := 'FFFF00'; // Red
+        Color3 := '00BFFF'; // Yellow
+
+        K := 0.6;
+        D := K * 0.75;
+        RC := K / 1.5;
+        DC := D * 1.2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2; 0" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "0; 0" MaxAngles = "Pi/2; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 4" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Radius = "RC" Color = "Color1" Base = "0;-D; 0" Top = "0;-DC; 0" TopColor = "Color1" />
+        <Cut Axis = "0" To = "1" />
+        <HideAll/>
+
+        <Cylinder Radius = "RC" Color = "Color2" Base = "0;-D; 0" Top = "  0;-DC; 0" TopColor = "Color2" />
+        <Cylinder Radius = "RC" Color = "Color3" Base = "D; 0; 0" Top = " DC;  0; 0" TopColor = "Color3" />
+        <Cut Axis = "0" From = "1" />
+        <ShowAll/>
+
+        <Turn  Axis = "1" Layer = "1" Angle = " Pi/4" />
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi/4" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-Pi/2" />
+        <Turn  Axis = "2" Layer = "1" Angle = "-Pi/2" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = " Pi/4" />
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi/4" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "-1" />
+        <Split Axis = "0" From  = "1" />
+        <Cut   Axis = "2" To    = "1" />
+        <Hide  Axis = "0" Layer = "0" />
+        <Cut   Axis = "1" To    = "1" />
+        <ShowAll/>
+        <SaveSolvedState/>
+        <Turn Axis = "0" Layer = "0" Angle = " Pi/2" />
+        <SaveSolvedState/>
+        <Undo/>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

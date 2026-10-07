@@ -1,0 +1,117 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Roto 36</Name>
+        <Menu>Other forms\Catalan Truncated Solids\6-Truncated Triakis Tetrahedron\Roto 36</Menu>
+        <Menu>Other forms\2d\Roto 36</Menu>
+        <Inventor>Galen Ivanov</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-12-21</Added>
+        <Link>http://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5124</Link>
+    </Interface>
+
+    <Script>
+        clGreen := '008000';
+        clBlue  := '0000FF';
+        clRed   := '800000';
+        clWhite := 'CCCCCC';
+        clBlack := '222222';
+
+        C0   := 0.43;
+        C1   := C0 * 5 / 3;
+        s3 := sqrt(3);
+        DCut := C0 * (4 + 3 * s3) * 5 / 33;
+        D1   := C0 * (8 - 5 * s3) * 5 / 99;
+        D2   := C0 * s3 * 5 / 9;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi / 3" PlaneDistances = "D1" >
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 3" PlaneDistances = "D2" >
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = " 1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "CreateShape" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " C1; C1; C1" />
+                    <Add Vector = " C1;-C1;-C1" />
+                    <Add Vector = "-C1;-C1; C1" />
+                    <Add Vector = "-C1; C1;-C1" />
+                    <Add Vector = " C0;-C0; C0" />
+                    <Add Vector = " C0; C0;-C0" />
+                    <Add Vector = "-C0; C0; C0" />
+                    <Add Vector = "-C0;-C0;-C0" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "4;0;2" />
+                    <Face Color = "Color" VertexIndexes = "4;2;1" />
+                    <Face Color = "Color" VertexIndexes = "4;1;0" />
+                    <Face Color = "Color" VertexIndexes = "5;0;1" />
+                    <Face Color = "Color" VertexIndexes = "5;1;3" />
+                    <Face Color = "Color" VertexIndexes = "5;3;0" />
+                    <Face Color = "Color" VertexIndexes = "6;0;3" />
+                    <Face Color = "Color" VertexIndexes = "6;3;2" />
+                    <Face Color = "Color" VertexIndexes = "6;2;0" />
+                    <Face Color = "Color" VertexIndexes = "7;1;2" />
+                    <Face Color = "Color" VertexIndexes = "7;2;3" />
+                    <Face Color = "Color" VertexIndexes = "7;3;1" />
+                </Faces>
+            </Part>
+            <Cut Color = "Color" > <Plane NormVector = "-1;-1;-1" NormDistance = "-DCut" /> </Cut>
+            <Cut Color = "Color" > <Plane NormVector = "-1; 1; 1" NormDistance = "-DCut" /> </Cut>
+            <Cut Color = "Color" > <Plane NormVector = " 1;-1; 1" NormDistance = "-DCut" /> </Cut>
+            <Cut Color = "Color" > <Plane NormVector = " 1; 1;-1" NormDistance = "-DCut" /> </Cut>
+        </Macro>
+
+        <ExecMacro MacroName = "CreateShape" Color = "clRed" />
+        <Cut Axis = "1" From  = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreateShape" Color = "clBlue" />
+        <Cut Axis = "2" From  = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreateShape" Color = "clGreen" />
+        <Cut Axis = "3" From  = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreateShape" Color = "clWhite" />
+        <SplitByAxes/>
+        <HideContaining Vector = " C0;-C0; C0" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "CreateShape" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <ShowAll/>
+
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "1" Layer = "1" Angle = " Pi/3" />
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/3" />
+            <Turn Axis = "3" Layer = "1" Angle = " Pi/3" />
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "Unbandage" Repeat = "6" />
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = "1;0;0" Angle = "arctan(1/sqrt(2))" />
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

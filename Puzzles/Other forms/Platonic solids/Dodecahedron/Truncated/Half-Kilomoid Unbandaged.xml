@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Half-Kilomoid Unbandaged</Name>
+        <Menu>Other forms\Dodecahedron\Truncated\Half-Kilomoid Unbandaged</Menu>
+        <Inventor>not invented</Inventor>
+        <Added>2017-09-09</Added>
+        <Programmer>Ginanjar Syahfia + Skallos</Programmer>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        D := (Rsin + R2sin) / 2;
+        DCut := RSin;
+        DCut2 := D + 0.002;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0" PlaneDistances = "-D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Script> R := R + 0.1; </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "HideCorner">
+            <HideContaining Vector = "vx[id]; vy[id]; vz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCorner" Repeat = "15" id = "5" />
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "12" id = "0" />
+
+        <ShowAll/>
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "12" id = "0" />
+
+        <Cut Color = "clYellow"> <Plane NormVector = " 0; 0;-1" NormDistance = "-DCut2" /> </Cut>
+    </Figure>
+
+</xml>

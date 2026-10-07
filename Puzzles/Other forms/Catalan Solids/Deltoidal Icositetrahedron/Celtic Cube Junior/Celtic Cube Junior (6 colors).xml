@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Celtic Cube Junior (flat, 6 colors)</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Celtic Cube Junior\Celtic Cube Junior (6 colors)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-15</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Col[0] := '9900EE'; // Purple
+        Col[1] := 'FFFF00'; // Yellow
+        Col[2] := 'FF8800'; // Orange
+        Col[3] := 'FF0000'; // Red
+        Col[4] := '00DD00'; // Green
+        Col[5] := '0055FF'; // Blue
+
+        for i := 0 to 23 do
+            Colors[ i] := Col[i div 4];
+
+        W  := 0.45;
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_Coordinates.inc'; // for axes
+
+        A1 := ArcCos( s2 / 8 + 0.25);
+        A2 := ArcCos( s2 / 4 - 0.5 );
+        A3 := ArcCos(-s2 / 2 - 0.25); // = A1 + A2
+
+        D := W * 1.12;
+        DCut := W * 1.01;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Cx;Cy;Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "HideV" >
+            <Hide><Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "-DCut" /></Hide>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideV" i = "0" Repeat = "18" />
+
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

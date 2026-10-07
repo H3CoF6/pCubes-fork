@@ -1,0 +1,130 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Trapentrix Master</Name>
+        <Menu>Other forms\Bi Axes\Trapentrix Master</Menu>
+        <Programmer>knightcrawler</Programmer>
+        <Added>2016-09-18</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        mAngle := ArcTan(0.5);
+        dAngle2 := (Arctan(2) - Arcsin(2/3)) / 2;
+        Rsin := R * sin(mAngle);
+        Rcos := R * cos(mAngle);
+        R2sin := R * sin(dAngle2);
+        R2cos := R * cos(dAngle2);
+        sAngle := PI * 2 / 5;
+
+        for i := 1 to 5 do begin
+            X[i] := Rcos * sin(sAngle * (i - 1));
+            Y[i] := Rcos * cos(sAngle * (i - 1));
+            Z[i] := Rsin;
+        end;
+        for i := 6 to 10 do begin
+            X[i] := Rcos * sin(sAngle * (i - 0.5));
+            Y[i] := Rcos * cos(sAngle * (i - 0.5));
+            Z[i] := -Rsin;
+        end;
+
+        for i := 0 to 4 do begin
+            x2[i] := Rcos * sin(sAngle * (i - 0.5));
+            y2[i] := Rcos * cos(sAngle * (i - 0.5));
+            z2[i] := Rsin;
+        end;
+
+        for i := 5 to 9 do begin
+            x2[i] := R2cos * sin(sAngle * (i - 0.5));
+            y2[i] := R2cos * cos(sAngle * (i - 0.5));
+            z2[i] := R2sin;
+        end;
+
+        for i := 10 to 14 do begin
+            x2[i] := R2cos * sin(sAngle * i);
+            y2[i] := R2cos * cos(sAngle * i);
+            z2[i] := -R2sin;
+        end;
+
+        for i := 15 to 19 do begin
+            x2[i] := Rcos * sin(sAngle * i);
+            y2[i] := Rcos * cos(sAngle * i);
+            z2[i] := -Rsin;
+        end;
+
+        Cut := R * sqrt((5 - 2 * sqrt(5)) / 15);
+
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-Cut;Cut" FixedLayers = "0" >
+        <Axis NormVector = "x2[11]; y2[11]; z2[11]" />
+        <Axis NormVector = "x2[13]; y2[13]; z2[13]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "0; 0; R" />
+                <Add Vector = "X[2]; Y[2]; Z[2]" />
+                <Add Vector = "X[4]; Y[4]; Z[4]" />
+                <Add Vector = "X[6]; Y[6]; Z[6]" />
+                <Add Vector = "X[7]; Y[7]; Z[7]" />
+                <Add Vector = "X[8]; Y[8]; Z[8]" />
+                <Add Vector = "X[9]; Y[9]; Z[9]" />
+                <Add Vector = "X[10]; Y[10]; Z[10]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "FFFFF1" VertexIndexes = "3;1;4" />
+                <Face Color = "FFFFF0" VertexIndexes = "5;2;6" />
+                <Face Color = "C80000" VertexIndexes = "0;2;5;4;1" />
+                <Face Color = "0000C8" VertexIndexes = "3;4;5;6;7" />
+                <Face Color = "009600" VertexIndexes = "7;0;1;3" />
+                <Face Color = "FF800A" VertexIndexes = "0;7;6;2" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi * 2 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi * 4 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi * 2 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi * 4 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi * 2 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi * 4 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi * 2 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi * 4 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi * 2 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi * 4 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi * 2 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi * 4 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi * 2 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi * 4 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi * 2 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi * 4 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi * 2 / 3" From = "1" To = "2" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi * 4 / 3" From = "1" To = "2" /> <SplitByAxes/>
+
+        // Undo
+        <Turn Axis = "1" Angle = "Pi * 2 / 3" From = "1" To = "2" />
+        <Turn Axis = "0" Angle = "Pi * 4 / 3" From = "1" To = "2" />
+        <Turn Axis = "1" Angle = "Pi * 2 / 3" From = "1" To = "2" />
+        <Turn Axis = "0" Angle = "Pi * 4 / 3" From = "1" To = "2" />
+        <Turn Axis = "1" Angle = "Pi * 2 / 3" From = "1" To = "2" />
+        <Turn Axis = "0" Angle = "Pi * 4 / 3" From = "1" To = "2" />
+        <Turn Axis = "1" Angle = "Pi * 2 / 3" From = "1" To = "2" />
+        <Turn Axis = "0" Angle = "Pi * 4 / 3" From = "1" To = "2" />
+        <Turn Axis = "1" Angle = "Pi * 2 / 3" From = "1" To = "2" />
+        <Turn Axis = "0" Angle = "Pi * 4 / 3" From = "1" To = "2" />
+        <Turn Axis = "1" Angle = "Pi * 2 / 3" From = "1" To = "2" />
+        <Turn Axis = "0" Angle = "Pi * 4 / 3" From = "1" To = "2" />
+        <Turn Axis = "1" Angle = "Pi * 2 / 3" From = "1" To = "2" />
+        <Turn Axis = "0" Angle = "Pi * 4 / 3" From = "1" To = "2" />
+        <Turn Axis = "1" Angle = "Pi * 2 / 3" From = "1" To = "2" />
+        <Turn Axis = "0" Angle = "Pi * 4 / 3" From = "1" To = "2" />
+        <Turn Axis = "1" Angle = "Pi * 2 / 3" From = "1" To = "2" />
+        <Turn Axis = "0" Angle = "Pi * 4 / 3" From = "1" To = "2" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sq-5 Mirror</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other cubes\Square-1\Sq-5 Mirror</Menu>
+        <Inventor>Ge Sheng Yang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12356</Link>
+        <Added>2025-02-17</Added>
+    </Interface>
+
+    <Script>
+        Color := 'AAAAAA'; // Silver
+
+        W := 0.5;
+        D := W / 3;
+        sAngle := 9*Pi / 180; // 9 degrees
+
+        DWX := W * 0.1;
+        DWY := W * 0.1;
+        DWZ :=-W * 0.1;
+
+        DCut := W * 0.2;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" NormVectors = "0; 0; 1" />
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" NormVectors = " 1; 0; 0" />
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "sAngle*1.5 + Pi/2" />
+
+        <Transfer Vector = " DWX; DWY; DWZ" />
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" />
+        <Transfer Vector = "-DWX;-DWY;-DWZ" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Hide Axis = "0" Layers = "0;2" />
+        <SplitByAxes/>
+        <ShowAll/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "0" Layers = "0;2" Angle = "sAngle * i" />
+            <Split Axis = "1" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" />
+        <ExecMacro MacroName = "Split" i = "1" />
+        <ExecMacro MacroName = "Split" i = "1" />
+        <ExecMacro MacroName = "Split" i = "1" />
+        <ExecMacro MacroName = "Split" i = "2" />
+        <ExecMacro MacroName = "Split" i = "3" />
+        <ExecMacro MacroName = "Split" i = "2" />
+        <ExecMacro MacroName = "Split" i = "1" />
+        <ExecMacro MacroName = "Split" i = "1" />
+        <ExecMacro MacroName = "Split" i = "1" />
+        <ExecMacro MacroName = "Split" i = "2" />
+        <ExecMacro MacroName = "Split" i = "3" />
+        <Undo Repeat = "11" />
+
+        <Macro Name = "Cut" >
+            <Turn NormVector = "0;0;1" Angle = "sAngle / 2" />
+            <HideContaining Vector = " 0; DCut*2; W" />
+            <HideContaining Vector = " 0; DCut*2;-W" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "0;1;0" NormDistance = "DCut" /></Cut>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "sAngle / 2" />
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "Round(2*Pi / sAngle)" />
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

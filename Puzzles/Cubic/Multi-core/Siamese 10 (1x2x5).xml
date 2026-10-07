@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese 10 (1x2x5)</Name>
+        <Menu>Cubic\Multi-core\Siamese 10 (1x2x5)</Menu>
+        <Inventor>Fabio Bini Graciose</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8190</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 9;
+        D2 := D * 2;
+        D3 := D * 3;
+        D4 := D * 4;
+        D5 := D * 5;
+        A := Pi / 2;
+    </Script>
+
+    <Axes>
+        <Axis TurningAngles = " 0; A; A; A; A" NormVector = " 1; 0; 0" BaseVector = " D4; D3; 0" PlaneDistances = "-D3;-D; D; D3" />
+        <Axis TurningAngles = " 0; A; A; A   " NormVector = " 0; 1; 0" BaseVector = " D4; D3; 0" PlaneDistances = "    -D; D; D3" />
+
+        <Axis TurningAngles = " A; A; A; A; 0" NormVector = " 1; 0; 0" BaseVector = "-D4;-D3; 0" PlaneDistances = "-D3;-D; D; D3" />
+        <Axis TurningAngles = " A; A; A; 0   " NormVector = " 0; 1; 0" BaseVector = "-D4;-D3; 0" PlaneDistances = "-D3;-D; D    " />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D5" WY = "WX" WZ = "WX" DWX = " D4" DWY = " D3" DWZ = "0" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D5" WY = "WX" WZ = "WX" DWX = "-D4" DWY = "-D3" DWZ = "0" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D3" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D " /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D " /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D3" /></Split>
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D2" WZ = "D5" DWX = "0" DWY = "0" DWZ = "0" />
+        <Split><Plane NormVector = " 0; 1; 0" /></Split>
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

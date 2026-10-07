@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Axis 3x3x9</Name>
+        <Menu>Other cubes\Axis\Axis 3x3x9</Menu>
+        <Inventor>David Gugl</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2020-09-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1521</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 9;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-3*D; 3*D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "-1; 2; 2" />
+        <Axis NormVector = " 2;-1; 2" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-7*D; -5*D; -3*D; -D; D; 3*D; 5*D; 7*D" >
+        <Axis NormVector = " 2; 2;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Pi" >
+            <Turn Axis = "2" Layer = "Random(9)" Angle = "Pi/2 * (Random(3) + 1)" />
+            <Turn Axis = "Random(2)" Layer = "Random(2) * 2" Angle = "Pi" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "2" Layer = "Random(9)" Angle = "Pi/2 * (Random(3) + 1)" />
+            <Turn Axis = "Random(2)" Layer = "Random(2) * 2" Angle = "Pi / 2" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Pi" Repeat = "200" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

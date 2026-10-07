@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sphere XYZ (no twist)</Name>
+        <Menu>Other forms\Sphere\Slide\Sphere XYZ (no twist)</Menu>
+        <Inventor>Lori Powers and Adam Giermek</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1494</Link>
+    </Interface>
+
+    <Script>
+        Colour[0] := '222222'; // Black
+        Colour[1] := '0077EE'; // Blue
+        Colour[2] := 'FFFFFF'; // White
+        Colour[3] := '00DD00'; // Green
+        Colour[4] := 'EE0077'; // Rose
+
+        K := 0.6;
+
+        DWZ := K;
+        WZ := K * 0.043;
+        WX := (DWZ - WZ) * sin(Pi / 18);
+        WY := WX;
+
+        D := WX;
+
+        sAngle := 2 * Pi / 18;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; 0" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-2*K" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script>Color := Colour[0];</Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+        <HideAll/>
+        <Script>Color := Colour[1];</Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut> <Plane NormVector = " 0; 0; -1" /> </Cut>
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <Hide Axis = "1" From = "1" To = "1" />
+        <Hide Axis = "0" From = "1" To = "1" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "AddPiece" >
+            <HideAll/>
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := Colour[c];
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Turn Axis = "ax" Layer = "1" Angle = "sAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddPiece" ax = "0" c = "2" />
+        <ExecMacro MacroName = "AddPiece" ax = "0" c = "3" Repeat = "4" />
+        <ExecMacro MacroName = "AddPiece" ax = "0" c = "4" Repeat = "4" />
+        <ExecMacro MacroName = "AddPiece" ax = "0" c = "2" />
+        <ExecMacro MacroName = "AddPiece" ax = "0" c = "4" Repeat = "4" />
+        <ExecMacro MacroName = "AddPiece" ax = "0" c = "3" Repeat = "4" />
+        <Turn Axis = "1" Layer = "1" Angle = "sAngle" />
+        <ExecMacro MacroName = "AddPiece" ax = "1" c = "3" Repeat = "4" />
+        <ExecMacro MacroName = "AddPiece" ax = "1" c = "4" Repeat = "4 "/>
+        <Turn Axis = "1" Layer = "1" Angle = "sAngle" />
+        <ExecMacro MacroName = "AddPiece" ax = "1" c = "4" Repeat = "4 "/>
+        <ExecMacro MacroName = "AddPiece" ax = "1" c = "3" Repeat = "4 "/>
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,39 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Raptor Cube Master</Name>
+        <Menu>Other cubes\Vertex Turning\Raptor Cube Master</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7776</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        A := W * 1.35;
+        B := W * 0.5;
+        D1 := W * 0.68;
+        D2 := W * 2 / sqrt(3);
+        D3 := (3 * W + (D1 * sqrt(3) - W) * (B - 3*W + A) / (A - W) ) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D3;-D2;-D1; D1; D2; D3" FixedLayers = "3" >
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = " 1; -1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

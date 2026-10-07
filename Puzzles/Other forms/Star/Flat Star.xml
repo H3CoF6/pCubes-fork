@@ -1,0 +1,97 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Flat Star</Name>
+        <Menu>Other forms\Star\Flat Star</Menu>
+        <Menu>Other forms\2x2x2 variants\Flat Star</Menu>
+        <Inventor>Milan Vodicka</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-08-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1641</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red         
+        Colors[1] := 'FF800A'; // Orange      
+
+        Colors[2] := 'FFFF00'; // Yellow      
+        Colors[3] := '009600'; // Green       
+        Colors[4] := '0000C8'; // Blue        
+
+        W := 0.75;
+
+        for i := 0 to 5 do begin
+            x[i] := W * sin(2 * Pi / 6 * i);
+            y[i] := W * cos(2 * Pi / 6 * i);
+            x2[i] := -x[i]/2;
+            y2[i] := -y[i]/2;
+        end;
+
+        H := W * sqrt(2) / 4;
+        RCut := W * 0.58;
+        RCut2 := W * 0.95;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " x2[1]; y2[1]; H" />
+        <Axis NormVector = " x2[3]; y2[3]; H" />
+        <Axis NormVector = " x2[5]; y2[5]; H" />
+    </Axes>
+
+    <Figure>
+
+        <Part>
+            <Vertices>
+                 <Add Vector = "  x[0];  y[0];-H" />
+                 <Add Vector = "  x[2];  y[2];-H" />
+                 <Add Vector = "  x[4];  y[4];-H" />
+                 <Add Vector = "  x[1];  y[1]; H" />
+                 <Add Vector = "  x[3];  y[3]; H" />
+                 <Add Vector = "  x[5];  y[5]; H" />
+                 <Add Vector = " x2[0]; y2[0];-H" />
+                 <Add Vector = " x2[2]; y2[2];-H" />
+                 <Add Vector = " x2[4]; y2[4];-H" />
+                 <Add Vector = " x2[1]; y2[1]; H" />
+                 <Add Vector = " x2[3]; y2[3]; H" />
+                 <Add Vector = " x2[5]; y2[5]; H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = " 0; 1; 2" />
+                <Face Color = "Colors[1]" VertexIndexes = " 3; 5; 4" />
+                <Face Color = "Colors[2]" VertexIndexes = " 4; 9; 6" />
+                <Face Color = "Colors[2]" VertexIndexes = " 9; 2; 6" />
+                <Face Color = "Colors[2]" VertexIndexes = " 2; 9; 7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 5; 7; 9" />
+                <Face Color = "Colors[3]" VertexIndexes = " 7; 5;10" />
+                <Face Color = "Colors[3]" VertexIndexes = "10; 0; 7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 0;10; 8" />
+                <Face Color = "Colors[3]" VertexIndexes = " 3; 8;10" />
+                <Face Color = "Colors[4]" VertexIndexes = " 8; 3;11" />
+                <Face Color = "Colors[4]" VertexIndexes = "11; 1; 8" />
+                <Face Color = "Colors[4]" VertexIndexes = " 1;11; 6" />
+                <Face Color = "Colors[4]" VertexIndexes = " 4; 6;11" />
+            </Faces>
+        </Part>
+
+        <!-- cut edges and vertices for better control -->
+        <Cut><Plane NormVector = " x2[1]; y2[1]; H" NormDistance = "-RCut " /></Cut>
+        <Cut><Plane NormVector = " x2[3]; y2[3]; H" NormDistance = "-RCut " /></Cut>
+        <Cut><Plane NormVector = " x2[5]; y2[5]; H" NormDistance = "-RCut " /></Cut>
+        <Cut><Plane NormVector = "-x2[1];-y2[1];-H" NormDistance = "-RCut " /></Cut>
+        <Cut><Plane NormVector = "-x2[3];-y2[3];-H" NormDistance = "-RCut " /></Cut>
+        <Cut><Plane NormVector = "-x2[5];-y2[5];-H" NormDistance = "-RCut " /></Cut>
+        <Cut><Plane NormVector = "  x[0];  y[0];-H" NormDistance = "-RCut2" /></Cut>
+        <Cut><Plane NormVector = "  x[2];  y[2];-H" NormDistance = "-RCut2" /></Cut>
+        <Cut><Plane NormVector = "  x[4];  y[4];-H" NormDistance = "-RCut2" /></Cut>
+        <Cut><Plane NormVector = "  x[1];  y[1]; H" NormDistance = "-RCut2" /></Cut>
+        <Cut><Plane NormVector = "  x[3];  y[3]; H" NormDistance = "-RCut2" /></Cut>
+        <Cut><Plane NormVector = "  x[5];  y[5]; H" NormDistance = "-RCut2" /></Cut>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

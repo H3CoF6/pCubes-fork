@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Doppelkeil</Name>
+        <Menu>Other forms\3x3x3 variants\Doppelkeil</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-01-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3283</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '008000'; //clGreen
+        Colors[1] := 'FFFF00'; //clYellow
+        Colors[2] := '0000A0'; //clBlue
+        Colors[3] := '3848FF'; //clLightBlue
+        Colors[4] := 'A80000'; //clRed
+        Colors[5] := 'FFFFFF'; //clWhite
+        Colors[6] := '800080'; //clViolett
+        Colors[7] := 'FF6000'; //clOrange
+
+        R := 0.5;
+
+        phi := (sqrt(5) - 1) / 2; // The golden ratio
+        a := R / sqrt(3);
+        b := a / phi;
+        c := a * phi;
+        d := b / phi;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-c; c" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " 0; c; b" />
+                <Add Vector = " 0;-c; b" />
+                <Add Vector = " 0;-c;-b" />
+                <Add Vector = " 0; c;-b" />
+
+                <Add Vector = " d; b; 0" />
+                <Add Vector = "-d; b; 0" />
+                <Add Vector = "-d;-b; 0" />
+                <Add Vector = " d;-b; 0" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "1;6;7" />
+                <Face Color = "Colors[1]" VertexIndexes = "0;4;5" />
+                <Face Color = "Colors[2]" VertexIndexes = "2;7;6" />
+                <Face Color = "Colors[3]" VertexIndexes = "3;5;4" />
+                <Face Color = "Colors[4]" VertexIndexes = "0;1;7;4" />
+                <Face Color = "Colors[5]" VertexIndexes = "1;0;5;6" />
+                <Face Color = "Colors[6]" VertexIndexes = "2;3;4;7" />
+                <Face Color = "Colors[7]" VertexIndexes = "3;2;6;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

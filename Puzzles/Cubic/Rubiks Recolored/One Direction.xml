@@ -1,0 +1,125 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>One Direction</Name>
+        <Menu>Cubic\Rubiks Recolored\One Direction</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-08-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8946</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'C80000'; // Red
+        Colors[ 1] := '0066CC'; // Blue
+        Colors[ 2] := 'FFFF00'; // Yellow
+        Colors[ 3] := '22BB22'; // LightGreen
+        Colors[ 4] := 'FF3399'; // Pink
+        Colors[ 5] := '884499'; // Violett
+        Colors[ 6] := 'FF800A'; // Orange
+        Colors[ 7] := '33DDFF'; // Cyan
+        Colors[ 8] := 'FFAE00'; // YellowOrange
+        Colors[ 9] := '007700'; // Green
+        Colors[10] := 'FF3200'; // RedOrange
+        Colors[11] := '9F6FFF'; // Lavendar
+        Colors[12] := 'FFFFFF'; // White
+
+        W := 0.5;
+        D := W / 3;
+        S := D * 2;
+
+        function GetV(n);
+        begin
+            Result := copy(SFace, n * 3 + 1, 3);
+        end;
+
+        function GetS(S);
+        begin
+            Result := '';
+            for i := 1 to Length(S) div 3 do
+                Result := Result + GetV(StrToInt(copy(S, i * 3 - 2, 2)));
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Add8V">
+            <Add Vector = "-WX;-WY;-WZ" />
+            <Add Vector = "-WX;-WY; WZ" />
+            <Add Vector = "-WX; WY;-WZ" />
+            <Add Vector = "-WX; WY; WZ" />
+            <Add Vector = " WX;-WY;-WZ" />
+            <Add Vector = " WX;-WY; WZ" />
+            <Add Vector = " WX; WY;-WZ" />
+            <Add Vector = " WX; WY; WZ" />
+        </Macro>
+
+        <Macro Name = "AddFace">
+            <Face Color = "Colors[12]" VertexIndexes = "GetS(' 0, 5, 1,')"    InvisibleEdges = " 3" />
+            <Face Color = "Colors[12]" VertexIndexes = "GetS(' 1, 6, 2,')"    InvisibleEdges = " 3" />
+            <Face Color = "Colors[12]" VertexIndexes = "GetS(' 2, 7, 3,')"    InvisibleEdges = " 1" />
+            <Face Color = "Colors[12]" VertexIndexes = "GetS('16,12,15,')"    InvisibleEdges = " 3" />
+            <Face Color = "Colors[12]" VertexIndexes = "GetS('17,13,16,')"    InvisibleEdges = " 3" />
+            <Face Color = "Colors[12]" VertexIndexes = "GetS('18,14,17,')"    InvisibleEdges = " 2" />
+            <Face Color = "Colors[c1]" VertexIndexes = "GetS('11, 8, 4,')"    InvisibleEdges = " 3" />
+            <Face Color = "Colors[c2]" VertexIndexes = "GetS(' 0, 4, 8, 9,')" InvisibleEdges = "14" />
+            <Face Color = "Colors[c2]" VertexIndexes = "GetS('15, 9, 8,11,')" InvisibleEdges = " 7" />
+            <Face Color = "Colors[c3]" VertexIndexes = "GetS(' 1, 5, 9,10,')" InvisibleEdges = "15" />
+            <Face Color = "Colors[c3]" VertexIndexes = "GetS('16,10, 9,12,')" InvisibleEdges = "15" />
+            <Face Color = "Colors[c4]" VertexIndexes = "GetS(' 2, 6,14, 7,')" InvisibleEdges = "11" />
+            <Face Color = "Colors[c4]" VertexIndexes = "GetS('17,14,10,13,')" InvisibleEdges = "15" />
+        </Macro>
+
+        <Part>
+            <Vertices>
+                <ExecMacro MacroName = "Add8V" WX = "W" WY = "W" WZ = "W" />
+                <ExecMacro MacroName = "Add8V" WX = "W" WY = "W" WZ = "D" />
+                <ExecMacro MacroName = "Add8V" WX = "W" WY = "D" WZ = "W" />
+                <ExecMacro MacroName = "Add8V" WX = "D" WY = "W" WZ = "W" />
+                <ExecMacro MacroName = "Add8V" WX = "W" WY = "D" WZ = "D" />
+                <ExecMacro MacroName = "Add8V" WX = "D" WY = "W" WZ = "D" />
+                <ExecMacro MacroName = "Add8V" WX = "D" WY = "D" WZ = "W" />
+
+                <Add Vector = "-W;-S; 0" />
+                <Add Vector = "-W; 0; 0" />
+                <Add Vector = "-W; S; 0" />
+                <Add Vector = "-S; W; 0" />
+                <Add Vector = " 0; W; 0" />
+                <Add Vector = " S; W; 0" />
+
+                <Add Vector = " W;-S; 0" />
+                <Add Vector = " W; 0; 0" />
+                <Add Vector = " W; S; 0" />
+                <Add Vector = "-S;-W; 0" />
+                <Add Vector = " 0;-W; 0" />
+                <Add Vector = " S;-W; 0" />
+
+                <Add Vector = "-W;-W; 0" />
+                <Add Vector = "-W; W; 0" />
+                <Add Vector = " W;-W; 0" />
+                <Add Vector = " W; W; 0" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[12]" VertexIndexes = "0;2;6;4" />
+                <Face Color = "Colors[12]" VertexIndexes = "3;1;5;7" />
+                <ExecMacro MacroName = "AddFace" SFace = "' 1;25;29; 5; 9;41;45;13;65;66;67; 8;40;44;12; 0;24;28; 4;'" c1 = "11" c2 = " 0" c3 = " 1" c4 = " 2" />
+                <ExecMacro MacroName = "AddFace" SFace = "' 5;21;23; 7;13;37;39;15;62;63;64;12;36;38;14; 4;20;22; 6;'" c1 = " 2" c2 = " 3" c3 = " 4" c4 = " 5" />
+                <ExecMacro MacroName = "AddFace" SFace = "' 7;31;27; 3;15;47;43;11;61;60;59;14;46;42;10; 6;30;26; 2;'" c1 = " 5" c2 = " 6" c3 = " 7" c4 = " 8" />
+                <ExecMacro MacroName = "AddFace" SFace = "' 3;19;17; 1;11;35;33; 9;58;57;56;10;34;32; 8; 2;18;16; 0;'" c1 = " 8" c2 = " 9" c3 = "10" c4 = "11" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

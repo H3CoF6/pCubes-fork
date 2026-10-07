@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Void 5x5x5</Name>
+        <Menu>Cubic\Void\5x5x5 Void</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-04-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2621</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-3*D;-D; D; 3*D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "RemoveCenters" >
+            <Hide Axis = "ax1" Layer = "0" />
+            <Hide Axis = "ax1" Layer = "2" />
+            <Hide Axis = "ax1" Layer = "4" />
+            <Hide Axis = "ax2" Layer = "0" />
+            <Hide Axis = "ax2" Layer = "2" />
+            <Hide Axis = "ax2" Layer = "4" />
+            <RemoveAllVisible/>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" ax1 = "0" ax2 = "1" />
+        <ExecMacro MacroName = "RemoveCenters" ax1 = "1" ax2 = "2" />
+        <ExecMacro MacroName = "RemoveCenters" ax1 = "2" ax2 = "0" />
+    </Figure>
+</xml>

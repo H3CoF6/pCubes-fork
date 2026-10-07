@@ -1,0 +1,117 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triangle 0-1-2</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Triangle 0-1-2</Menu>
+        <Inventor>Miler</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2026-01-11</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clBlue1  := '0000C8';
+        clBlue2  := '0000C9';
+        clBlue3  := '0000CA';
+        clGreen1 := '009600';
+        clGreen2 := '009601';
+        clGreen3 := '009602';
+        clRed1   := 'C80000';
+        clRed2   := 'C80001';
+        clRed3   := 'C80002';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        Colors[3] := -1;
+        Colors[4] := clYellow;
+        Colors[5] := clWhite;
+
+        R := 0.5;
+        H := R * 0.6;
+
+        sAngle := 2*Pi / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D := R / 2;
+
+        WX := H;
+        WY := R * 0.2;
+        WZ := WX;
+        DWY := -D - WY;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 12; 0" PlaneDistances = "-D" NormVectors = "x; y; 0" />
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Faces>
+                <Face                    VertexIndexes = " 3; 4; 1; 0" />
+                <Face                    VertexIndexes = " 4; 5; 2; 1" />
+                <Face                    VertexIndexes = " 5; 3; 0; 2" />
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 2" />
+                <Face Color = "clWhite " VertexIndexes = " 5; 4; 3" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "AddCross" >
+            <Script>
+                Colors[0] := c1;
+                Colors[1] := c2;
+                Colors[2] := c3;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Turn NormVector = "0;0;1" Angle = "sAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCross" c1 = "clGreen1" c2 = "clRed2  " c3 = "clBlue3 " />
+        <ExecMacro MacroName = "AddCross" c1 = "clRed1  " c2 = "clBlue2 " c3 = "clGreen3" />
+        <ExecMacro MacroName = "AddCross" c1 = "clBlue1 " c2 = "clGreen2" c3 = "clRed3  " />
+
+        <Macro Name = "Turn" >
+            <Turn Axis = "0" Layer = "0" Angle = "Pi/12 * A" />
+            <Turn Axis = "1" Layer = "0" Angle = "Pi/12 * B" />
+            <Turn Axis = "2" Layer = "0" Angle = "Pi/12 * C" />
+            <Split Axis = "3" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Turn" A = "1" B = "5" C = "1" />
+        <ExecMacro MacroName = "Turn" A = "2" B = "6" C = "4" />
+        <ExecMacro MacroName = "Turn" A = "2" B = "0" C = "2" />
+        <ExecMacro MacroName = "Turn" A = "2" B = "0" C = "4" />
+        <ExecMacro MacroName = "Turn" A = "2" B = "0" C = "0" />
+        <ExecMacro MacroName = "Turn" A = "2" B = "0" C = "0" />
+        <Undo Repeat = "12" />
+    </Figure>
+
+    <Macros>
+        <Macro Name = "Setup" >
+            <Turn Axis = "0" Layer = "0" Angle = "Pi/12" />
+            <Turn Axis = "1" Layer = "0" Angle = "Pi/12" />
+            <Turn Axis = "2" Layer = "0" Angle = "Pi/12" />
+        </Macro>
+
+        <Macro Name = "RandomTurnsPartial" >
+            <Turn Axis = "Random(3)" Layer = "0" Angle = "Pi / 6 * Random(12)" />
+            <Turn Axis = "3" Layer = "0" Angle = "2 * Pi / 3 * (Random(2) * 2 - 1)" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(4)" Layer = "0" Angle = "2 * Pi * Random" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Setup" />
+            <ExecMacro MacroName = "RandomTurnsPartial" Repeat = "500" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "500" />
+        </Macro>
+    </Macros>
+</xml>

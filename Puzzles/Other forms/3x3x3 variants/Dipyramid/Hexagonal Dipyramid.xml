@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagonal Dipyramid 3x3x3</Name>
+        <Menu>Other forms\3x3x3 variants\Dipyramid\Hexagonal Dipyramid</Menu>
+        <Menu>Other forms\Dipyramid\Hexagonal\3x3x3</Menu>
+        <Inventor>Adam Zamora</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-11-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1774</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        Colors[1] := clRed;
+        Colors[3] := clBlue;
+        Colors[4] := clWhite;
+
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <Cut Color = "clOrange" > <Plane NormVector = " 2; 2;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clOrange" > <Plane NormVector = "-2;-2; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clGreen"  > <Plane NormVector = " 2;-1; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clGreen"  > <Plane NormVector = "-2; 1;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = "-1; 2; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 1;-2;-2" NormDistance = "-W" />  </Cut>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = "0;1;0" Angle = "-ArcTan(sqrt(2))" />
+    </Figure>
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super 2x2x2 bandaged</Name>
+        <Menu>Cubic\Bandaged\Cube 2x2x2\Super 2x2x2 bandaged</Menu>
+        <Inventor>Liapis Nikolaos</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2019-11-01</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=27179</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        D := W * 0.3;
+        CH := W * 0.97;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = "1;0;0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = "0;1;0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = "0;0;1" NormDistance = " D" /></Split>
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = "1;0;0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = "0;1;0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = "0;0;1" NormDistance = " D" /></Split>
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveAllVisible/>
+
+        <!-- bandage of two parts -->
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D" WZ = "D" DWX = "D" DWY = "-D*2" DWZ = "-D*2" />
+        <InvertVisibility/>
+
+        <Macro Name = "AddCenter">
+            <Part>
+                <Vertices>
+                    <Add Vector = "-D; -D;  D" />
+                    <Add Vector = " D; -D;  D" />
+                    <Add Vector = " D; -D; CH" />
+                    <Add Vector = "-D; -D; CH" />
+                    <Add Vector = "-D;  D;  D" />
+                    <Add Vector = " D;  D;  D" />
+                    <Add Vector = " D;  D; CH" />
+                    <Add Vector = "-D;  D; CH" />
+                    <Add Vector = " 0;  0; CH" />
+                </Vertices>
+
+                <Faces>
+                    <Face VertexIndexes = "0;1;2;3" />
+                    <Face VertexIndexes = "7;6;5;4" />
+                    <Face VertexIndexes = "0;4;5;1" />
+                    <Face VertexIndexes = "1;5;6;2" />
+                    <Face VertexIndexes = "3;7;4;0" />
+                    <Face VertexIndexes = "2;6;8" Color = "Colors[c1]" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "6;7;8" Color = "Colors[c2]" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "7;3;8" Color = "Colors[c3]" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "3;2;8" Color = "Colors[c4]" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/2"/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddCenter" Repeat = "1" c1 = "1" c2 = "3" c3 = "0" c4 = "2" />
+        <ExecMacro MacroName = "AddCenter" Repeat = "1" c1 = "1" c2 = "4" c3 = "0" c4 = "5" />
+        <ExecMacro MacroName = "AddCenter" Repeat = "1" c1 = "1" c2 = "2" c3 = "0" c4 = "3" />
+        <ExecMacro MacroName = "AddCenter" Repeat = "1" c1 = "1" c2 = "5" c3 = "0" c4 = "4" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/2"/>
+        <ExecMacro MacroName = "AddCenter" Repeat = "1" c1 = "5" c2 = "3" c3 = "4" c4 = "2" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi"/>
+        <ExecMacro MacroName = "AddCenter" Repeat = "1" c1 = "2" c2 = "4" c3 = "3" c4 = "5" />
+        <Undo Repeat = "8" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

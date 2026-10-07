@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx Rubí</Name>
+        <Menu>Other forms\Unclassified\Megaminx Rubí</Menu>
+        <Inventor>José Ramírez</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-06-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10034</Link>
+    </Interface>
+
+    <Script>
+        clRed := 'FF0000';
+
+        R := 0.6;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        DCut := RSin;
+        D := R * 0.55;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 5; 0; Pi / 5" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "0" Angle = " Pi / 5" />
+        <Turn Axis = "0" Layer = "2" Angle = " Pi / 5" />
+
+        <Macro Name = "Cut" >
+            <Cut Color = "clRed" ><Plane NormVector = "-Cx[i];-Cy[i];-Cz[i]" NormDistance = "-DCut" /></Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "11" />
+
+        <Hide><Plane NormVector = " 0; 0; 1" NormDistance = "-R * 0.8" /></Hide>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 11" />
+</xml>

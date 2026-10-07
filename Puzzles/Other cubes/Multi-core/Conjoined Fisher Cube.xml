@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Conjoined Fisher Cube</Name>
+        <Menu>Other cubes\Multi-core\Conjoined Fisher Cube</Menu>
+        <Inventor>Michael Womack</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5628</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+        s2 := sqrt(2);
+
+        W2 := W / 2;
+        DY := W2;
+        D := W2 * s2 / 4;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D" >
+        <Axis NormVector = "-1;-1; 0" BaseVector = " 0;-DY; D" />
+        <Axis NormVector = " 1;-1; 0" BaseVector = " 0;-DY; D" />
+        <Axis NormVector = "-1; 1; 0" BaseVector = " 0; DY;-D" />
+        <Axis NormVector = " 1; 1; 0" BaseVector = " 0; DY;-D" />
+    </Axes>
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = " D" >
+        <Axis NormVector = " 0; 0; 1" BaseVector = " 0;-DY; D" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = " 0; DY;-D" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W2" WY = "W2" WZ = "W2" DWX = "0" DWY = "-DY" DWZ = " D" />
+        <Split><Plane NormVector = "-1;-1; 0" BaseVector = " 0;-DY; D" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "-1;-1; 0" BaseVector = " 0;-DY; D" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 1;-1; 0" BaseVector = " 0;-DY; D" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 1;-1; 0" BaseVector = " 0;-DY; D" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" BaseVector = " 0;-DY; D" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" BaseVector = " 0;-DY; D" NormDistance = " D" /></Split>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W2" WY = "W2" WZ = "W2" DWX = "0" DWY = " DY" DWZ = "-D" />
+        <Split><Plane NormVector = "-1; 1; 0" BaseVector = " 0; DY;-D" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "-1; 1; 0" BaseVector = " 0; DY;-D" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 1; 1; 0" BaseVector = " 0; DY;-D" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 1; 1; 0" BaseVector = " 0; DY;-D" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" BaseVector = " 0; DY;-D" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" BaseVector = " 0; DY;-D" NormDistance = " D" /></Split>
+        <ShowAll/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

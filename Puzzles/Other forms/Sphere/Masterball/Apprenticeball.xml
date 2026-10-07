@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Apprenticeball</Name>
+        <Menu>Other forms\Sphere\Masterball\Apprenticeball</Menu>
+        <Inventor>Sam Jiang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6317</Link>
+    </Interface>
+
+    <Script>
+        clRed     := 'FF0000';
+        clOrange  := 'FF6000';
+        clYellow  := 'FFFF00';
+        clGreen   := '008000';
+        clBlue    := '0000A0';
+        clViolett := '800080';
+        Colors[0] := clRed;
+        Colors[1] := clOrange;
+        Colors[2] := clYellow;
+        Colors[3] := clGreen;
+        Colors[4] := clBlue;
+        Colors[5] := clViolett;
+
+        K := 0.6;
+        D := K * 0.55;
+    </Script>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " cos(Pi/3); sin(Pi/3); 0" />
+        <Axis NormVector = " cos(Pi/3);-sin(Pi/3); 0" />
+    </Axes>
+
+    <Figure>
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/6" />
+        <Macro Name = "AddSector" >
+            <Script>Color := Colors[i];</Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = "-cos(Pi/6); -sin(Pi/6); 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " cos(Pi/6); -sin(Pi/6); 0" NormDistance = "0" /> </Cut>
+            <Turn Axis = "0" Angle = "Pi/3" From = "0" To = "3" />
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "6" />
+        <Turn NormVector = "0;0;1" Angle = "-Pi/6" />
+
+        <ShowAll/>
+        <Undo Repeat = "7" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

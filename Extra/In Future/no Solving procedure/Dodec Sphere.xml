@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dodec Sphere</Name>
+        <Menu>Other forms\Sphere\Dodec Sphere</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2018-09-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4987</Link>
+    </Interface>
+
+    <Script>
+        Col[0] := '0000C8';
+        Col[1] := 'FFFF00';
+        Col[2] := '009600';
+        Col[3] := 'FFFFFF';
+        Col[4] := 'C80000';
+        Col[5] := 'FF800A';
+
+        K := 0.6;
+        D := K * 0.796;
+        phi := (Sqrt(5) - 1) / 2; // The golden ratio
+
+        procedure SetColor(Color);
+        begin
+            for i := 0 to 11 do
+                Colors[i] := Color;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5; 0; 2*Pi/5" PlaneDistances = "-D; D" >
+        <Axis NormVector = "   0;  -1; Phi" />
+        <Axis NormVector = "   0;  -1;-Phi" />
+        <Axis NormVector = "-Phi;   0;  -1" />
+        <Axis NormVector = " Phi;   0;  -1" />
+        <Axis NormVector = "   1;-Phi;   0" />
+        <Axis NormVector = "   1; Phi;   0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Segment">
+            <HideAll/>
+            <Script> SetColor(Color); </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+            <Cut><Plane NormVector = "1; 1; 0" NormDistance = "0"/></Cut>
+            <Cut><Plane NormVector = "1;-1; 0" NormDistance = "0"/></Cut>
+            <Cut><Plane NormVector = "1; 0; 1" NormDistance = "0"/></Cut>
+            <Cut><Plane NormVector = "1; 0;-1" NormDistance = "0"/></Cut>
+        </Macro>
+
+        <ExecMacro MacroName = "Segment" Color = "Col[0]" />
+        <Turn NormVector = "0; 0; 1" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Segment" Color = "Col[1]" />
+        <Turn NormVector = "0; 0; 1" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Segment" Color = "Col[2]" />
+        <Turn NormVector = "0; 0; 1" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Segment" Color = "Col[3]" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Segment" Color = "Col[4]" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi    " />
+        <ExecMacro MacroName = "Segment" Color = "Col[5]" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0; 0; 0" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

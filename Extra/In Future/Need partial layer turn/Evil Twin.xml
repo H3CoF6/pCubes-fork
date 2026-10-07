@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+
+<!-- need partial move of layer -->
+
+    <Interface>
+        <Name>Evil Twin</Name>
+        <Menu>Cubic\Multi-core\Evil Twin</Menu>
+        <Inventor>Mike Grimsley</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2820</Link>
+    </Interface>
+
+    <Script>
+        W := 0.4;
+        D := W / 3;
+        D2 := D * 2;
+        A := Pi / 2;
+
+        WX := D2;
+        WY := D2;
+        WZ := D2;
+    </Script>
+ 
+    <Axes TurningAngles = "0; A" PlaneDistances = "0" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-D; D; D" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = "-D; D; D" />
+        <Axis NormVector = " 0; 0; 1" BaseVector = "-D; D; D" />
+
+        <Axis NormVector = " 1; 0; 0" BaseVector = " D;-D;-D" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = " D;-D;-D" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = " D;-D;-D" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "5" From = "1" />
+
+        <Turn Axis = "2" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "5" Layer = "1" Angle = "Pi" />
+
+        <Split Axis = "4" From = "1" />
+        <Turn Axis = "4" Layer = "1" Angle = "Pi/2" />
+
+        <Split Axis = "5" From = "1" />
+        <Turn Axis = "5" Layer = "1" Angle = "Pi/2" />
+
+        <Split Axis = "1" From = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/2" />
+
+        <Split Axis = "2" From = "1" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" /> <!-- this move is wrong: https://www.youtube.com/watch?v=W10LlpkabKo -->
+
+    </Figure>
+</xml>

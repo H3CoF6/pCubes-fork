@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Enclosed Cube 5x5x5</Name>
+        <Menu>Other forms\Unclassified\Truncated cube\Enclosed Cube 5x5x5</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-03-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9693</Link>
+    </Interface>
+ 
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        Colors[ 6] := '808000'; // clOlive;
+        Colors[ 7] := '2828FF'; // clLightBlue;
+        Colors[ 8] := '800080'; // clViolett;
+        Colors[ 9] := '00FF00'; // clLightGreen;
+        Colors[10] := 'FF0080'; // clLightViolett;
+        Colors[11] := '00DCB4'; // clCyan;
+
+        W := 0.5;
+        D := W * 0.18;
+        DCut := (W + D) / sqrt(2);
+        clCut := '555500';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-3*D;-D; D; 3*D" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Cut Color = "Colors[ 6]" ><Plane NormVector = " 1;-1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[ 7]" ><Plane NormVector = "-1; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[ 8]" ><Plane NormVector = " 0; 1;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[ 9]" ><Plane NormVector = " 0;-1; 1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[10]" ><Plane NormVector = " 1; 0;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[11]" ><Plane NormVector = "-1; 0; 1" NormDistance = "-DCut" /></Cut>
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

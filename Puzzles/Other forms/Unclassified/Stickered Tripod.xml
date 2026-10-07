@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Stickered Tripod</Name>
+        <Menu>Other forms\Unclassified\Stickered Tripod</Menu>
+        <Inventor>Juan Antonio Munoz Frias</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-10-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2875</Link>
+    </Interface>
+
+    <Script>
+        clWhite   := 'F0F0F0';
+        clCyan    := '00FFFF';
+        clTeal    := '008080';
+        clBrown   := '800000';
+        clOrange  := 'FF6000';
+        clGolden  := 'DDBB20';
+        clForrest := '004400';
+        clLime    := '00FF00';
+        clPink    := 'FF69B4';
+        clFuchsia := 'FF00FF';
+
+        W := 0.8;
+        D0 := -W * sqrt(3) / 3;
+        D := -D0 * 4 / 7;
+        D1 := D0 + D / 2;
+        DCut1 := D0 + 5 * D;
+        D2 := (D + D0 + 2 * DCut1) / 3;
+        DCut2 := 3 * (D0 + D / 2) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3; 0; 2 * Pi / 3" PlaneDistances = "D1; D2" >
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <SplitByAxes/>
+        <Cut Color = "clWhite  " > <Plane NormDistance = "-DCut1" NormVector = " 1;  1;  1" /> </Cut>
+        <Cut Color = "clOrange " > <Plane NormDistance = "-DCut1" NormVector = "-1; -1;  1" /> </Cut>
+        <Cut Color = "clCyan   " > <Plane NormDistance = "-DCut1" NormVector = "-1;  1; -1" /> </Cut>
+        <Cut Color = "clLime   " > <Plane NormDistance = "-DCut1" NormVector = " 1; -1; -1" /> </Cut>
+
+        <Cut Color = "clBrown  " > <Plane NormDistance = " DCut2" NormVector = " 1;  0;  0" /> </Cut>
+        <Cut Color = "clForrest" > <Plane NormDistance = " DCut2" NormVector = "-1;  0;  0" /> </Cut>
+        <Cut Color = "clPink   " > <Plane NormDistance = " DCut2" NormVector = " 0;  1;  0" /> </Cut>
+        <Cut Color = "clFuchsia" > <Plane NormDistance = " DCut2" NormVector = " 0; -1;  0" /> </Cut>
+        <Cut Color = "clTeal   " > <Plane NormDistance = " DCut2" NormVector = " 0;  0;  1" /> </Cut>
+        <Cut Color = "clGolden " > <Plane NormDistance = " DCut2" NormVector = " 0;  0; -1" /> </Cut>
+    </Figure>
+</xml>

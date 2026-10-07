@@ -1,0 +1,140 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dynamixup</Name>
+        <Menu>Other cubes\Mixup\Dynamixup</Menu>
+        <Inventor>madartilect</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-10-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8360</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'AA00CC'; // Violett
+        Colors[1] := 'FFEE00'; // Yellow
+        Colors[2] := '00BB55'; // Green
+        Colors[3] := 'FF77EE'; // Rose
+        Colors[4] := 'FF6600'; // Orange
+        Colors[5] := '0055EE'; // Blue
+
+        W := 0.5;
+        R := W * 0.75;
+        WC := W * 1.004;
+        W1 := W;
+
+        D := W * 0.2;
+        D1 := W * 1.4;
+    </Script>
+
+    <Axes TurningAngles = "Pi/4; Pi/2; Pi/2; Pi/4; Pi/2; Pi/2; Pi/4" PlaneDistances = "-D1; -W; -D; D; W; D1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "SplitAx" >
+            <Split><Plane NormVector = "Cx[i]; Cy[i]; Cz[i]" NormDistance = " D" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "WC" />
+        <ExecMacro MacroName = "SplitAx" i = "0" Repeat = "6" />
+
+        <Macro Name = "HideCenter" >
+            <HideContaining Vector = "Cx[i]; Cy[i]; Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenter" i = "0" Repeat = "6" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "W1" />
+        <ExecMacro MacroName = "SplitAx" i = "0" Repeat = "6" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "R" Color = "Colors[i]" Base = "Cx[i]; Cy[i]; Cz[i]" Top = "Cx[i]*WC/W; Cy[i]*WC/W; Cz[i]*WC/W" > <Top Color = "Colors[i]" /> </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+        <ExecMacro MacroName = "SplitAx" i = "0" Repeat = "6" />
+
+        <Macro Name = "RemoveCenter" >
+            <RemoveContaining Vector = "Cx[i]; Cy[i]; Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenter" i = "0" Repeat = "6" />
+
+        <RemoveGrayParts/>
+
+        <ShowAll/>
+
+        <Macro Name = "CutCenter" >
+            <HideContaining Vector = "0; 0; W/2" />
+            <InvertVisibility/>
+            <Turn NormVector = " 0; 1; 0" Angle = "-Pi/4" />
+            <Cut><Plane NormVector = " 0; 0; 1" NormDistance = " D" /></Cut>
+            <Cut><Plane NormVector = "-1; 0; 0" NormDistance = " D" /></Cut>
+            <Turn NormVector = " 0; 1; 0" Angle = " Pi/4" />
+            <ShowAll/>
+            <Turn NormVector = " 1; 0; 0" Angle = " Pi/4" />
+        </Macro>
+
+        <Macro Name = "Remove" >
+            <RemoveContaining Vector = "0;-W;-D*1.01" />
+            <RemoveContaining Vector = "0;-W; D*1.01" />
+            <RemoveContaining Vector = "0;-WC;-R" />
+            <RemoveContaining Vector = "0;-WC; R" />
+            <RemoveContaining Vector = "0;-(W+D)/sqrt(2)*1.01;-(W-D)/sqrt(2)" />
+            <RemoveContaining Vector = "0;-(W+D)/sqrt(2)*1.01; (W-D)/sqrt(2)" />
+            <Turn NormVector = " 1; 0; 0" Angle = " Pi/2" />
+        </Macro>
+
+        <Macro Name = "SplitLayer" >
+            <Hide><Plane NormVector = " 1; 0; 0" NormDistance = "-D" /></Hide>
+            <Hide><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Hide>
+            <Turn NormVector = " 1; 0; 0" Angle = "Pi/4" />
+            <Split><Plane NormVector = "0; 1; 0" NormDistance = " D" /></Split>
+            <Split><Plane NormVector = "0; 1; 0" NormDistance = "-D" /></Split>
+            <Split><Plane NormVector = "0; 0; 1" NormDistance = " D" /></Split>
+            <Split><Plane NormVector = "0; 0; 1" NormDistance = "-D" /></Split>
+            <RemoveGrayParts/>
+            <Split><Plane NormVector = "0; 1; 0" NormDistance = " W" /></Split>
+            <Split><Plane NormVector = "0; 1; 0" NormDistance = "-W" /></Split>
+            <Split><Plane NormVector = "0; 0; 1" NormDistance = " W" /></Split>
+            <Split><Plane NormVector = "0; 0; 1" NormDistance = "-W" /></Split>
+            <Turn NormVector = " 1; 0; 0" Angle = "-Pi/4" />
+
+            <ExecMacro MacroName = "Remove" Repeat = "4" />
+            <ShowAll/>
+
+            <ExecMacro MacroName = "CutCenter" Repeat = "8" />
+
+            <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "SplitLayer" Repeat = "3" />
+
+        <Macro Name = "SplitEdge" >
+            <HideContaining Vector = "W;0;W" />
+            <InvertVisibility/>
+            <Turn NormVector = "0; 1; 0" Angle = "-Pi/4" />
+            <Turn NormVector = "1; 0; 0" Angle = "-Pi/4" />
+            <Cut><Plane NormVector = "0; 0;-1" NormDistance = "-W" /></Cut>
+            <Cut><Plane NormVector = "0;-1; 0" NormDistance = "-W" /></Cut>
+            <Turn NormVector = "1; 0; 0" Angle = " Pi/4" />
+            <Turn NormVector = "0; 1; 0" Angle = " Pi/4" />
+            <ShowAll/>
+            <Turn NormVector = "0; 1; 0" Angle = " Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "SplitEdge" Repeat = "4" />
+        <Turn NormVector = "1; 1; 1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "SplitEdge" Repeat = "4" />
+        <Turn NormVector = "1; 1; 1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "SplitEdge" Repeat = "4" />
+        <Turn NormVector = "1; 1; 1" Angle = "2*Pi/3" />
+
+        <Connect Axis = "0" Layers = "0;3;6" />
+        <Connect Axis = "1" Layers = "0;3;6" />
+        <Connect Axis = "2" Layers = "0;3;6" />
+    </Figure>
+</xml>

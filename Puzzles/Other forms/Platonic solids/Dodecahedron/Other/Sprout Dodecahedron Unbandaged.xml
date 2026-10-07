@@ -1,0 +1,217 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sprout Dodecahedron Unbandaged</Name>
+        <Menu>Other forms\Dodecahedron\Other\Sprout Dodecahedron Unbandaged</Menu>
+        <Inventor>Diogo Sousa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8227</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := '0033FF'; // Blue
+        Colors[ 2] := 'EE0000'; // Red
+        Colors[ 3] := '00AA00'; // Green
+        Colors[ 4] := 'FF7700'; // Orange
+        Colors[ 5] := 'FFFF00'; // Yellow
+        Colors[ 6] := '7700EE'; // Violett
+        Colors[ 7] := 'FF0077'; // DarkPink
+        Colors[ 8] := '00FF99'; // LightGreen
+        Colors[ 9] := 'FF88CC'; // LightViolett
+        Colors[10] := 'FFFFAA'; // Cream
+        Colors[11] := 'AAAAAA'; // Gray
+
+        R := 0.6;
+
+        D := R * 0.8938;
+        DCut := D * 1.05;
+
+        phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        a := R / sqrt(3);
+        b := a / phi;
+        c := a * phi;
+        C2 := (2*a + b) / 5;
+        C4 := (a + 3*b) / 5;
+
+        Vx[ 0] := 0; Vy[ 0] := c; Vz[ 0] := b;
+        Vx[ 1] := 0; Vy[ 1] :=-c; Vz[ 1] := b;
+        Vx[ 2] := 0; Vy[ 2] :=-c; Vz[ 2] :=-b;
+        Vx[ 3] := 0; Vy[ 3] := c; Vz[ 3] :=-b;
+        Vx[ 4] := c; Vy[ 4] := b; Vz[ 4] := 0;
+        Vx[ 5] :=-c; Vy[ 5] := b; Vz[ 5] := 0;
+        Vx[ 6] :=-c; Vy[ 6] :=-b; Vz[ 6] := 0;
+        Vx[ 7] := c; Vy[ 7] :=-b; Vz[ 7] := 0;
+        Vx[ 8] := b; Vy[ 8] := 0; Vz[ 8] := c;
+        Vx[ 9] := b; Vy[ 9] := 0; Vz[ 9] :=-c;
+        Vx[10] :=-b; Vy[10] := 0; Vz[10] :=-c;
+        Vx[11] :=-b; Vy[11] := 0; Vz[11] := c;
+
+        Wx[ 0] := a; Wy[ 0] := a; Wz[ 0] := a;
+        Wx[ 1] := a; Wy[ 1] := a; Wz[ 1] :=-a;
+        Wx[ 2] := a; Wy[ 2] :=-a; Wz[ 2] := a;
+        Wx[ 3] := a; Wy[ 3] :=-a; Wz[ 3] :=-a;
+        Wx[ 4] :=-a; Wy[ 4] := a; Wz[ 4] := a;
+        Wx[ 5] :=-a; Wy[ 5] := a; Wz[ 5] :=-a;
+        Wx[ 6] :=-a; Wy[ 6] :=-a; Wz[ 6] := a;
+        Wx[ 7] :=-a; Wy[ 7] :=-a; Wz[ 7] :=-a;
+
+        Cx[ 0] := C2; Cy[ 0] :=  0; Cz[ 0] := C4;
+        Cx[ 1] := C2; Cy[ 1] :=  0; Cz[ 1] :=-C4;
+        Cx[ 2] :=-C2; Cy[ 2] :=  0; Cz[ 2] := C4;
+        Cx[ 3] :=-C2; Cy[ 3] :=  0; Cz[ 3] :=-C4;
+        Cx[ 4] := C4; Cy[ 4] := C2; Cz[ 4] :=  0;
+        Cx[ 5] := C4; Cy[ 5] :=-C2; Cz[ 5] :=  0;
+        Cx[ 6] :=-C4; Cy[ 6] := C2; Cz[ 6] :=  0;
+        Cx[ 7] :=-C4; Cy[ 7] :=-C2; Cz[ 7] :=  0;
+        Cx[ 8] :=  0; Cy[ 8] := C4; Cz[ 8] := C2;
+        Cx[ 9] :=  0; Cy[ 9] := C4; Cz[ 9] :=-C2;
+        Cx[10] :=  0; Cy[10] :=-C4; Cz[10] := C2;
+        Cx[11] :=  0; Cy[11] :=-C4; Cz[11] :=-C2;
+
+        pillow := 1.27; // 1 - flat dodecaherdon. sqrt(5) - Alexandr's star. sqrt(15 - 6 * sqrt(5)) - spherical
+
+        for i := 0 to 11 do begin
+            CCx[i] := Cx[i] * pillow;
+            CCy[i] := Cy[i] * pillow;
+            CCz[i] := Cz[i] * pillow;
+        end;
+
+        f := 0.3722978023497; //0..1
+        i := 0;
+        procedure CalcAxes(v1, v2);
+        begin
+          Ax[i] := Wx[v1] + f * (Vx[v2] - Wx[v1]);
+          Ay[i] := Wy[v1] + f * (Vy[v2] - Wy[v1]);
+          Az[i] := Wz[v1] + f * (Vz[v2] - Wz[v1]);
+          Inc(i);
+        end;
+        CalcAxes( 0, 0);
+        CalcAxes( 0, 4);
+        CalcAxes( 0, 8);
+        CalcAxes( 1, 3);
+        CalcAxes( 1, 4);
+        CalcAxes( 1, 9);
+        CalcAxes( 2, 1);
+        CalcAxes( 2, 7);
+        CalcAxes( 2, 8);
+        CalcAxes( 3, 2);
+        CalcAxes( 3, 7);
+        CalcAxes( 3, 9);
+        CalcAxes( 4, 0);
+        CalcAxes( 4, 5);
+        CalcAxes( 4,11);
+        CalcAxes( 5, 3);
+        CalcAxes( 5, 5);
+        CalcAxes( 5,10);
+        CalcAxes( 6, 1);
+        CalcAxes( 6, 6);
+        CalcAxes( 6,11);
+        CalcAxes( 7, 2);
+        CalcAxes( 7, 6);
+        CalcAxes( 7,10);
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vvx := y1 * z2 - y2 * z1;
+          vvy := z1 * x2 - z2 * x1;
+          vvz := x1 * y2 - x2 * y1;
+          wvx := y1 * z3 - y3 * z1;
+          wvy := z1 * x3 - z3 * x1;
+          wvz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vvx*wvx + vvy*wvy + vvz*wvz) / sqrt(vvx^2 + vvy^2 + vvz^2) / sqrt(wvx^2 + wvy^2 + wvz^2));
+        end;
+
+        AA1 := Angle(Ax[6], Ay[6], Az[6],  Vx[1], Vy[1], Vz[1],  Ax[7], Ay[7], Az[7]);
+        AA2 := 2 * AA1;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "D" NormVectors = "Vx; Vy; Vz" />
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-AA2;-AA1; 0; AA1; AA2" PlaneDistances = "D" NormVectors = " Ax; Ay; Az" />
+
+    <Figure>
+        <Macro Name = "AddColor" >
+            <Face Color = "Colors[cl]" VertexIndexes = " v4; v3; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v3; v2; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v2; v1; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v1; v0; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v0; v4; c" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " Vx; Vy; Vz" />
+            <Vertices Vectors = " Wx; Wy; Wz" />
+            <Vertices Vectors = "CCx;CCy;CCz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddColor" cl = " 0" c = "20" v0 = "12" v1 = " 8" v2 = "14" v3 = " 1" v4 = " 0" />
+                <ExecMacro MacroName = "AddColor" cl = " 1" c = "24" v0 = "13" v1 = " 9" v2 = " 8" v3 = "12" v4 = " 4" />
+                <ExecMacro MacroName = "AddColor" cl = " 2" c = "25" v0 = "14" v1 = " 8" v2 = " 9" v3 = "15" v4 = " 7" />
+                <ExecMacro MacroName = "AddColor" cl = " 3" c = "30" v0 = "14" v1 = " 7" v2 = " 6" v3 = "18" v4 = " 1" />
+                <ExecMacro MacroName = "AddColor" cl = " 4" c = "22" v0 = "18" v1 = "11" v2 = "16" v3 = " 0" v4 = " 1" />
+                <ExecMacro MacroName = "AddColor" cl = " 5" c = "28" v0 = "16" v1 = " 5" v2 = " 4" v3 = "12" v4 = " 0" />
+                <ExecMacro MacroName = "AddColor" cl = " 6" c = "27" v0 = "19" v1 = "10" v2 = "11" v3 = "18" v4 = " 6" />
+                <ExecMacro MacroName = "AddColor" cl = " 7" c = "26" v0 = "16" v1 = "11" v2 = "10" v3 = "17" v4 = " 5" />
+                <ExecMacro MacroName = "AddColor" cl = " 8" c = "29" v0 = "13" v1 = " 4" v2 = " 5" v3 = "17" v4 = " 3" />
+                <ExecMacro MacroName = "AddColor" cl = " 9" c = "21" v0 = "15" v1 = " 9" v2 = "13" v3 = " 3" v4 = " 2" />
+                <ExecMacro MacroName = "AddColor" cl = "10" c = "31" v0 = "19" v1 = " 6" v2 = " 7" v3 = "15" v4 = " 2" />
+                <ExecMacro MacroName = "AddColor" cl = "11" c = "23" v0 = "17" v1 = "10" v2 = "19" v3 = " 2" v4 = " 3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split1">
+            <Split Axis = "ax1" From = "1" />
+            <Hide Axis = "ax1" Layer = "0" />
+            <Cut><Plane NormVector = "-Vx[ax0];-Vy[ax0];-Vz[ax0]" NormDistance = "-DCut" /></Cut>
+            <Hide Axis = "ax0" Layer = "0" />
+            <Turn Axis = "ax1" Layer = "1" Angle = "AA2" />
+            <Split Axis = "ax0" From = "1" />
+            <Undo/>
+            <Turn Axis = "ax1" Layer = "1" Angle = "-AA2" />
+            <Split Axis = "ax0" From = "1" />
+            <Undo/>
+            <ShowAll/>
+            <Turn Axis = "ax0" Layer = "1" Angle = "2*Pi/3" />
+        </Macro>
+
+        <Macro Name = "Split">
+            <ExecMacro MacroName = "Split1" Repeat = "3" />
+
+            <Hide Axis = "ax1" Layer = "0" />
+            <Hide Axis = "ax2" Layer = "0" />
+            <Turn Axis = "ax1" Layer = "1" Angle = "AA2" />
+            <Split Axis = "ax2" From = "1" />
+            <Undo/>
+            <ShowAll/>
+
+            <Hide Axis = "ax3" Layer = "0" />
+            <Hide Axis = "ax4" Layer = "0" />
+            <Turn Axis = "ax3" Layer = "1" Angle = "-AA2" />
+            <Split Axis = "ax4" From = "1" />
+            <Undo/>
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax0 = " 0" ax1 = "12" ax2 = "13" ax3 = "24" ax4 = "25" />
+        <ExecMacro MacroName = "Split" ax0 = " 1" ax1 = "30" ax2 = "31" ax3 = "18" ax4 = "19" />
+        <ExecMacro MacroName = "Split" ax0 = " 2" ax1 = "21" ax2 = "22" ax3 = "33" ax4 = "34" />
+        <ExecMacro MacroName = "Split" ax0 = " 3" ax1 = "27" ax2 = "28" ax3 = "15" ax4 = "16" />
+        <ExecMacro MacroName = "Split" ax0 = " 4" ax1 = "13" ax2 = "14" ax3 = "16" ax4 = "17" />
+        <ExecMacro MacroName = "Split" ax0 = " 5" ax1 = "28" ax2 = "29" ax3 = "25" ax4 = "26" />
+        <ExecMacro MacroName = "Split" ax0 = " 6" ax1 = "31" ax2 = "32" ax3 = "34" ax4 = "35" />
+        <ExecMacro MacroName = "Split" ax0 = " 7" ax1 = "22" ax2 = "23" ax3 = "19" ax4 = "20" />
+        <ExecMacro MacroName = "Split" ax0 = " 8" ax1 = "14" ax2 = "12" ax3 = "20" ax4 = "18" />
+        <ExecMacro MacroName = "Split" ax0 = " 9" ax1 = "23" ax2 = "21" ax3 = "17" ax4 = "15" />
+        <ExecMacro MacroName = "Split" ax0 = "10" ax1 = "29" ax2 = "27" ax3 = "35" ax4 = "33" />
+        <ExecMacro MacroName = "Split" ax0 = "11" ax1 = "32" ax2 = "30" ax3 = "26" ax4 = "24" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

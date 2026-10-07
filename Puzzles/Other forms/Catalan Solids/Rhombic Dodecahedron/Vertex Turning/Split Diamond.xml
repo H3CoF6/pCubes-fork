@@ -1,0 +1,90 @@
+﻿<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Split Diamond</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Vertex Turning\Split Diamond</Menu>
+        <Inventor>Olivér Nagy</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2017-07-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3642</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        D := R * 0.5;
+        DCut := R * 0.64;
+        DCut2 := (DCut * sqrt(2) + R / 2) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Turn  Axis = "0" Layer = "0" Angle = "-Pi / 4" />
+        <Turn  Axis = "0" Layer = "3" Angle = "-Pi / 4" />
+        <Split Axis = "1" From  = "2" />
+        <Split Axis = "2" From  = "2" />
+        <Turn  Axis = "0" Layer = "0" Angle = " Pi / 4" />
+        <Turn  Axis = "0" Layer = "3" Angle = " Pi / 4" />
+
+        <Turn  Axis = "1" Layer = "0" Angle = "-Pi / 4" />
+        <Turn  Axis = "1" Layer = "3" Angle = "-Pi / 4" />
+        <Split Axis = "2" From  = "2" />
+        <Split Axis = "0" From  = "2" />
+        <Turn  Axis = "1" Layer = "0" Angle = " Pi / 4" />
+        <Turn  Axis = "1" Layer = "3" Angle = " Pi / 4" />
+
+        <Turn  Axis = "2" Layer = "0" Angle = "-Pi / 4" />
+        <Turn  Axis = "2" Layer = "3" Angle = "-Pi / 4" />
+        <Split Axis = "0" From  = "2" />
+        <Split Axis = "1" From  = "2" />
+        <Turn  Axis = "2" Layer = "0" Angle = " Pi / 4" />
+        <Turn  Axis = "2" Layer = "3" Angle = " Pi / 4" />
+
+        <!-- cut for better control -->
+
+        <HideContaining Vector = " R; 0; 0" />
+        <HideContaining Vector = " 0; R; 0" />
+        <HideContaining Vector = " 0; 0; R" />
+        <HideContaining Vector = "-R; 0; 0" />
+        <HideContaining Vector = " 0;-R; 0" />
+        <HideContaining Vector = " 0; 0;-R" />
+        <Cut> <Plane NormVector = "-1;-1;-1" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1; 1" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1;-1" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1; 1" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1;-1" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 1" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 1;-1" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 1; 1" NormDistance = "-DCut2" /> </Cut>
+        <ShowAll/>
+
+        <Hide  Axis = "0" From = "1" To = "2" />
+        <Cut> <Plane NormVector = "0;-1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "0; 1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "0; 1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "0;-1;-1" NormDistance = "-DCut" /> </Cut>
+        <ShowAll/>
+
+        <Hide  Axis = "1" From = "1" To = "2" />
+        <Cut> <Plane NormVector = "-1;0; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;0;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;0; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;0;-1" NormDistance = "-DCut" /> </Cut>
+        <ShowAll/>
+
+        <Hide  Axis = "2" From = "1" To = "2" />
+        <Cut> <Plane NormVector = "-1; 1;0" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1;0" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 1;0" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1;0" NormDistance = "-DCut" /> </Cut>
+        <ShowAll/>
+    </Figure>
+</xml>

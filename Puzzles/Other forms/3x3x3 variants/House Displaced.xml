@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>House Displaced</Name>
+        <Menu>Other forms\3x3x3 variants\House Displaced</Menu>
+        <Inventor>Daniel Martin Ramos Aguila</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-10-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7684</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        Colors[2] := clWhite;
+        Colors[3] := clYellow;
+        Colors[4] := clGreen;
+
+        W := 0.5;
+        D := W * (sqrt(2) - 1);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 1; 0;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W * 1.5" DWZ = "W * 0.5"  />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/4" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Undo/>
+
+        <HideContaining Vector = "-W; 0; W" />
+        <Cut Color = "clBlue" ><Plane NormVector = "-1; 0;-1" NormDistance = "-W" /></Cut>
+        <Cut Color = "clBlue" ><Plane NormVector = " 1; 0;-1" NormDistance = "-W" /></Cut>
+        <InvertVisibility/>
+        <Cut Color = "clBlue" ><Plane NormVector = " 0; 0;-1" NormDistance = "-W" /></Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

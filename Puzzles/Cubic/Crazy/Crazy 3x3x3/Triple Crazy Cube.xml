@@ -1,0 +1,139 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Triple Crazy Cube</Name>
+        <Menu>Cubic\Crazy\Crazy 3x3x3\Triple Crazy Cube</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-05-13</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?t=412605</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // clRed
+        Colors[1] := 'FF7700'; // clOrange
+        Colors[2] := '0044FF'; // clLightBlue
+        Colors[3] := '00BB00'; // clGreen
+        Colors[4] := 'FFFF00'; // clYellow
+        Colors[5] := 'FFFFFF'; // clWhite
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        Delta := 1.001;
+        D := W * 0.21;
+
+        R1 := W * 0.8;
+        R2 := W * 0.6;
+        R3 := W * 0.4;
+        WC1 := W * Delta;
+        WC2 := W * (Delta * 2 - 1);
+        WC3 := W * (Delta * 3 - 2);
+        D1 := (WC1 + WC2) / 2;
+        D2 := (WC2 + WC3) / 2;
+    </Script>
+
+    // this is version with free core. For version with fixed core uncomment this line and comment next
+<!--    <Axes TurningAngles = "Pi/2" FixedLayers = "2" >-->
+    <Axes TurningAngles = "Pi/2" TurnAxesWithLayer = "4" PlaneDistances = "-D2;-D1;-W;-D; D; W; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "R" Color = "Colors[ax]" Center = " Cx[ax]; Cy[ax]; Cz[ax]" />
+            <SplitByAxes/>
+            <Script>Inc(ax);</Script>
+        </Macro>
+
+        // make center parts ordered from 0 to 6 corresponding to face number (for SetTextures)
+        <Script>W0 := W; W := WC3; R := R3; include 'Figures\Scripts\Cube_Coordinates.inc';</Script> // save W
+        <ExecMacro MacroName = "AddCircle" ax = " 0" Repeat = "6" />
+        <HideContaining Vector = " Cx; Cy; Cz" />
+        <RemoveAllVisible/>
+        <ExecMacro MacroName = "AddCircle" ax = " 0" Repeat = "6" />
+        <RemoveContaining Vector = " Cx; Cy; Cz" />
+        <ShowAll/>
+
+        <Script>W := WC2; R := R2; include 'Figures\Scripts\Cube_Coordinates.inc';</Script>
+        <ExecMacro MacroName = "AddCircle" ax = " 0" Repeat = "6" />
+
+        <Script>W := WC1; R := R1; include 'Figures\Scripts\Cube_Coordinates.inc';</Script>
+        <ExecMacro MacroName = "AddCircle" ax = " 0" Repeat = "6" />
+
+        <LoadFrom File = "Figures\Cube.xml" W = "W0" />
+        <SplitByAxes/>
+
+<!--
+        // face 0
+        <Connect Axis = "0" Layers = "0;1;2;4" /> 000
+        <Connect Axis = "0" Layers = "0;1;4"   /> 001 two inner circles fixed with center, third - turns with layer
+        <Connect Axis = "0" Layers = "2;3"     /> 001
+        <Connect Axis = "0" Layers = "0;4"     /> 011
+        <Connect Axis = "0" Layers = "1;2;3"   /> 011
+        <Connect Axis = "0" Layers = "0;1;2;3" /> 111
+
+        // face 1
+        <Connect Axis = "0" Layers = "4;6;7;8" /> 000
+        <Connect Axis = "0" Layers = "4;7;8"   /> 001
+        <Connect Axis = "0" Layers = "6;5"     /> 001
+        <Connect Axis = "0" Layers = "4;8"     /> 011
+        <Connect Axis = "0" Layers = "5;6;7"   /> 011
+        <Connect Axis = "0" Layers = "5;6;7;8" /> 111
+
+        // face 2
+        <Connect Axis = "1" Layers = "0;1;2;4" /> 000
+        <Connect Axis = "1" Layers = "0;1;4"   /> 001
+        <Connect Axis = "1" Layers = "2;3"     /> 001
+        <Connect Axis = "1" Layers = "0;4"     /> 011
+        <Connect Axis = "1" Layers = "1;2;3"   /> 011
+        <Connect Axis = "1" Layers = "0;1;2;3" /> 111
+
+        // face 3
+        <Connect Axis = "1" Layers = "4;6;7;8" /> 000
+        <Connect Axis = "1" Layers = "4;7;8"   /> 001
+        <Connect Axis = "1" Layers = "6;5"     /> 001
+        <Connect Axis = "1" Layers = "4;8"     /> 011
+        <Connect Axis = "1" Layers = "5;6;7"   /> 011
+        <Connect Axis = "1" Layers = "5;6;7;8" /> 111
+
+        // face 4
+        <Connect Axis = "2" Layers = "0;1;2;4" /> 000
+        <Connect Axis = "2" Layers = "0;1;4"   /> 001
+        <Connect Axis = "2" Layers = "2;3"     /> 001
+        <Connect Axis = "2" Layers = "0;4"     /> 011
+        <Connect Axis = "2" Layers = "1;2;3"   /> 011
+        <Connect Axis = "2" Layers = "0;1;2;3" /> 111
+
+        // face 5
+        <Connect Axis = "2" Layers = "4;6;7;8" /> 000
+        <Connect Axis = "2" Layers = "4;7;8"   /> 001
+        <Connect Axis = "2" Layers = "6;5"     /> 001
+        <Connect Axis = "2" Layers = "4;8"     /> 011
+        <Connect Axis = "2" Layers = "5;6;7"   /> 011
+        <Connect Axis = "2" Layers = "5;6;7;8" /> 111
+-->
+
+        <Connect Axis = "0" Layers = "0;1;2;3" /> // face 0, type 111
+        <Connect Axis = "0" Layers = "4;7;8"   /> // face 1, type 001
+        <Connect Axis = "0" Layers = "6;5"     /> // face 1, type 001
+        <Connect Axis = "1" Layers = "0;1;2;3" /> // face 2, type 111
+        <Connect Axis = "1" Layers = "4;6;7;8" /> // face 3, type 000
+        <Connect Axis = "2" Layers = "0;4"     /> // face 4, type 011
+        <Connect Axis = "2" Layers = "1;2;3"   /> // face 4, type 011
+        <Connect Axis = "2" Layers = "5;6;7;8" /> // face 5, type 111
+    </Figure>
+
+    <Textures>
+        <Texture Name = "CrazyMark1" File = "CrazyMark1.vec" />
+        <Texture Name = "CrazyMark2" File = "CrazyMark2.vec" />
+        <Texture Name = "CrazyMark3" File = "CrazyMark3.vec" />
+    </Textures>
+    <SetTextures>
+        CrazyMark1 = 4,0,0
+        CrazyMark2 = 1,0,0
+        CrazyMark3 = 3,0,0
+    </SetTextures>
+</xml>

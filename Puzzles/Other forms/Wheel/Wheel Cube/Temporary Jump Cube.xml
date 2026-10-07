@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Temporary Jump Cube</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Temporary Jump Cube</Menu>
+        <Inventor>Daniel Bandala Diaz</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-10-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7463</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.425;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        CylinderWidth := W / 3;
+        D := W / 2;
+        D1 := D + CylinderWidth;
+        D2 := D1 * 1.001;
+
+        R := W * 0.87;
+        R1 := W * 0.45;
+
+        C := 0.001;
+        DC := (-R * C + D1) / sqrt(C^2 + 1) * 0.99;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; Pi/6; Pi/2; Pi/6; Pi/2" PlaneDistances = "-D1;-D; D; D1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" Wz = "D" />
+
+        <Cylinder Radius = "R" Color = "clYellow" Base = " 0; 0;-D" Top = " 0; 0;-D1" TopColor = "clYellow" />
+        <Cylinder Radius = "R" Color = "clWhite " Base = " 0; 0; D" Top = " 0; 0; D1" TopColor = "clWhite " />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/6" />
+        <Turn Axis = "2" Layer = "3" Angle = "Pi/6" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/6" />
+        <Turn Axis = "2" Layer = "3" Angle = "Pi/6" />
+        <SplitByAxes/>
+
+        <Cut Color = "FFFF01" > <Plane NormVector = "-C; 0; 1" NormDistance = "-DC" /> </Cut>
+        <Cut Color = "FFFFFE" > <Plane NormVector = " C; 0;-1" NormDistance = "-DC" /> </Cut>
+
+        <Circle Radius = "R1" Center = "0;0;-D2" Color = "clYellow" />
+        <Circle Radius = "R1" Center = "0;0; D2" Color = "clWhite " />
+        <SplitByAxes/>
+
+        <Connect Axis = "2" Layers = "0;2;4" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_06.vec" />
+        <Texture Name = "tm_07" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_07.vec" />
+        <Texture Name = "tm_08" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_08.vec" />
+        <Texture Name = "tm_09" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_09.vec" />
+        <Texture Name = "tm_10" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_10.vec" />
+        <Texture Name = "tm_11" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_11.vec" />
+        <Texture Name = "tm_12" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_12.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 = 21,9,7, 11,9,7
+        tm_02 = 25,9,7, 12,9,7
+        tm_03 = 26,9,7, 15,9,7
+        tm_04 = 27,9,7, 14,9,7
+        tm_05 = 24,9,7, 13,9,7
+        tm_06 = 23,9,7,  9,9,7
+        tm_07 = 22,9,7,  8,9,7
+        tm_08 = 18,9,7,  7,9,7
+        tm_09 = 17,9,7,  4,9,7
+        tm_10 = 16,9,7,  5,9,7
+        tm_11 = 19,9,7,  6,9,7
+        tm_12 = 20,9,7, 10,9,7
+    </SetTextures>
+</xml>

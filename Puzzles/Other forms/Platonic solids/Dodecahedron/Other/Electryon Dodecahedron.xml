@@ -1,0 +1,234 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Electryon Dodecahedron</Name>
+        <Menu>Other forms\Dodecahedron\Other\Electryon Dodecahedron</Menu>
+        <Inventor>RaphPuzzles</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-22</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=4&amp;t=36026</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0000CC'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := '800080'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        // code from Pentagonal Icositetrahedron
+        K  := 0.7; // result is independent from K
+        K1 := (6 * (9 + sqrt(33)))^(1/3);
+        K2 := (6 * (9 - sqrt(33)))^(1/3);
+        K3 := (2 * (1777 + 33*sqrt(33)))^(1/3);
+        K4 := (2 * (1777 - 33*sqrt(33)))^(1/3);
+
+        Cp0 := K * sqrt(6 * (-6 + K1 + K2)) / 12;
+        Cp1 := K * sqrt(6 * ( 6 + K1 + K2)) / 12;
+        Cp2 := K * sqrt(6 * (18 + K1 + K2)) / 12;
+        Cp3 := K * sqrt(6 * (14 + K3 + K4)) / 12;
+
+        C0 := K * 0.0761776313733;
+        C1 := K * 0.3569761362781;
+        C2 := K * 0.5307631976640 * 0.93;
+        C3 := K * 0.5775995216706;
+        C4 := K * 0.8587928937980 * 0.93;
+        C5 := K * 0.9345756579487;
+
+        n1 := (cp1 - cp0)^2;
+        n2 := (cp1 - cp2)^2;
+        n3 := (cp1 - cp2) * (cp0 - cp1);
+
+        bgx := -n2*n3 + n1^2;
+        bgy :=  n1*n2 - n3^2;
+        bgz := -n1*n3 + n2^2;
+
+        byx := -n2^2 + n1*n3;
+        byy :=  n1^2 - n2*n3;
+        byz := -n3^2 + n1*n2;
+
+        A1 := ArcCos((bgx*byx + bgy*byy + bgz*byz) / (bgx^2 + bgy^2 + bgz^2));
+        A2 := 2 * A1;
+        A3 := 3 * A1;
+        A4 := 4 * A1;
+
+        D := K * 0.7955;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi; 0" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "-D" FixedLayers = "1" >
+        <Axis NormVector = " n2; n3; n1" />
+        <Axis NormVector = " n3;-n2; n1" />
+        <Axis NormVector = "-n2;-n3; n1" />
+        <Axis NormVector = "-n3; n2; n1" />
+
+        <Axis NormVector = "-n2; n3;-n1" />
+        <Axis NormVector = "-n3;-n2;-n1" />
+        <Axis NormVector = " n2;-n3;-n1" />
+        <Axis NormVector = " n3; n2;-n1" />
+
+        <Axis NormVector = "-n2; n1; n3" />
+        <Axis NormVector = " n2; n1;-n3" />
+        <Axis NormVector = "-n3; n1;-n2" />
+        <Axis NormVector = " n3; n1; n2" />
+
+        <Axis NormVector = "-n3;-n1; n2" />
+        <Axis NormVector = " n3;-n1;-n2" />
+        <Axis NormVector = "-n2;-n1;-n3" />
+        <Axis NormVector = " n2;-n1; n3" />
+
+        <Axis NormVector = "-n1; n3; n2" />
+        <Axis NormVector = "-n1;-n3;-n2" />
+        <Axis NormVector = "-n1;-n2; n3" />
+        <Axis NormVector = "-n1; n2;-n3" />
+
+        <Axis NormVector = " n1;-n3; n2" />
+        <Axis NormVector = " n1; n3;-n2" />
+        <Axis NormVector = " n1;-n2;-n3" />
+        <Axis NormVector = " n1; n2; n3" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Body" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "  0; C1; C5" />
+                    <Add Vector = "  0; C1;-C5" />
+                    <Add Vector = "  0;-C1; C5" />
+                    <Add Vector = "  0;-C1;-C5" />
+                    <Add Vector = " C5;  0; C1" />
+                    <Add Vector = " C5;  0;-C1" />
+                    <Add Vector = "-C5;  0; C1" />
+                    <Add Vector = "-C5;  0;-C1" />
+                    <Add Vector = " C1; C5;  0" />
+                    <Add Vector = " C1;-C5;  0" />
+                    <Add Vector = "-C1; C5;  0" />
+                    <Add Vector = "-C1;-C5;  0" />
+
+                    <Add Vector = " C2;  0; C4" />
+                    <Add Vector = " C2;  0;-C4" />
+                    <Add Vector = "-C2;  0; C4" />
+                    <Add Vector = "-C2;  0;-C4" />
+                    <Add Vector = " C4; C2;  0" />
+                    <Add Vector = " C4;-C2;  0" />
+                    <Add Vector = "-C4; C2;  0" />
+                    <Add Vector = "-C4;-C2;  0" />
+                    <Add Vector = "  0; C4; C2" />
+                    <Add Vector = "  0; C4;-C2" />
+                    <Add Vector = "  0;-C4; C2" />
+                    <Add Vector = "  0;-C4;-C2" />
+
+                    <Add Vector = " C3; C3; C3" />
+                    <Add Vector = " C3; C3;-C3" />
+                    <Add Vector = " C3;-C3; C3" />
+                    <Add Vector = " C3;-C3;-C3" />
+                    <Add Vector = "-C3; C3; C3" />
+                    <Add Vector = "-C3; C3;-C3" />
+                    <Add Vector = "-C3;-C3; C3" />
+                    <Add Vector = "-C3;-C3;-C3" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[ 0]" VertexIndexes = "26; 4;12" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 0]" VertexIndexes = " 2;26;12" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 0]" VertexIndexes = " 0; 2;12" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 0]" VertexIndexes = "24; 0;12" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 0]" VertexIndexes = " 4;24;12" InvisibleEdges = "6" />
+
+                    <Face Color = "Colors[ 1]" VertexIndexes = "24; 4;16" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 1]" VertexIndexes = " 8;24;16" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 1]" VertexIndexes = "25; 8;16" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 1]" VertexIndexes = " 5;25;16" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 1]" VertexIndexes = " 4; 5;16" InvisibleEdges = "6" />
+
+                    <Face Color = "Colors[ 2]" VertexIndexes = " 4;26;17" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 2]" VertexIndexes = "26; 9;17" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 2]" VertexIndexes = " 9;27;17" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 2]" VertexIndexes = "27; 5;17" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 2]" VertexIndexes = " 5; 4;17" InvisibleEdges = "6" />
+
+                    <Face Color = "Colors[ 3]" VertexIndexes = " 2;30;22" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 3]" VertexIndexes = "30;11;22" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 3]" VertexIndexes = "11; 9;22" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 3]" VertexIndexes = " 9;26;22" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 3]" VertexIndexes = "26; 2;22" InvisibleEdges = "6" />
+
+                    <Face Color = "Colors[ 4]" VertexIndexes = " 2; 0;14" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 4]" VertexIndexes = "30; 2;14" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 4]" VertexIndexes = " 6;30;14" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 4]" VertexIndexes = "28; 6;14" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 4]" VertexIndexes = " 0;28;14" InvisibleEdges = "6" />
+
+                    <Face Color = "Colors[ 5]" VertexIndexes = "10;28;20" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 5]" VertexIndexes = "28; 0;20" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 5]" VertexIndexes = " 0;24;20" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 5]" VertexIndexes = "24; 8;20" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 5]" VertexIndexes = " 8;10;20" InvisibleEdges = "6" />
+
+                    <Face Color = "Colors[ 6]" VertexIndexes = "30; 6;19" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 6]" VertexIndexes = " 6; 7;19" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 6]" VertexIndexes = " 7;31;19" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 6]" VertexIndexes = "31;11;19" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 6]" VertexIndexes = "11;30;19" InvisibleEdges = "6" />
+
+                    <Face Color = "Colors[ 7]" VertexIndexes = " 7; 6;18" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 7]" VertexIndexes = " 6;28;18" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 7]" VertexIndexes = "28;10;18" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 7]" VertexIndexes = "10;29;18" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 7]" VertexIndexes = "29; 7;18" InvisibleEdges = "6" />
+
+                    <Face Color = "Colors[ 8]" VertexIndexes = " 1;29;21" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 8]" VertexIndexes = "29;10;21" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 8]" VertexIndexes = "10; 8;21" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 8]" VertexIndexes = " 8;25;21" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 8]" VertexIndexes = "25; 1;21" InvisibleEdges = "6" />
+
+                    <Face Color = "Colors[ 9]" VertexIndexes = " 5;27;13" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 9]" VertexIndexes = "25; 5;13" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 9]" VertexIndexes = " 1;25;13" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 9]" VertexIndexes = " 3; 1;13" InvisibleEdges = "6" />
+                    <Face Color = "Colors[ 9]" VertexIndexes = "27; 3;13" InvisibleEdges = "6" />
+
+                    <Face Color = "Colors[10]" VertexIndexes = " 9;11;23" InvisibleEdges = "6" />
+                    <Face Color = "Colors[10]" VertexIndexes = "27; 9;23" InvisibleEdges = "6" />
+                    <Face Color = "Colors[10]" VertexIndexes = " 3;27;23" InvisibleEdges = "6" />
+                    <Face Color = "Colors[10]" VertexIndexes = "31; 3;23" InvisibleEdges = "6" />
+                    <Face Color = "Colors[10]" VertexIndexes = "11;31;23" InvisibleEdges = "6" />
+
+                    <Face Color = "Colors[11]" VertexIndexes = " 1; 3;15" InvisibleEdges = "6" />
+                    <Face Color = "Colors[11]" VertexIndexes = " 3;31;15" InvisibleEdges = "6" />
+                    <Face Color = "Colors[11]" VertexIndexes = "31; 7;15" InvisibleEdges = "6" />
+                    <Face Color = "Colors[11]" VertexIndexes = " 7;29;15" InvisibleEdges = "6" />
+                    <Face Color = "Colors[11]" VertexIndexes = "29; 1;15" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "Body" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := '-1';
+        </Script>
+        <ExecMacro MacroName = "Body" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

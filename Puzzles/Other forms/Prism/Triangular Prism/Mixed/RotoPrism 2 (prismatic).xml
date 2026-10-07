@@ -1,0 +1,97 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>RotoPrism 2 (prismatic)</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Mixed\RotoPrism 2 (prismatic)</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2018-08-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2981</Link>
+    </Interface>
+
+    <Script>
+        clBlue    := '0000C8';
+        clGreen   := '009600';
+        clRed     := 'C80000';
+        clOrange  := 'FF800A';
+        clViolett := '7700CD';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        cl[0] := clBlue; // top and bottom
+        cl[1] := clGreen;
+
+        cl[2] := clYellow; // sides
+        cl[3] := clOrange;
+        cl[4] := clRed;
+
+        R := 0.7;
+        H := R * sqrt(3);
+        sAngle := Pi * 2 / 3;
+
+        for i := 0 to 2 do begin
+            x[i] := -R * cos(sAngle * i);
+            y[i] := -R * sin(sAngle * i);
+        end;
+
+        D := - R / 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D" TurnAxesWithLayer = "0">
+        <Axis NormVector = "x[0]; y[0]; 0"/>
+        <Axis NormVector = "x[1]; y[1]; 0"/>
+        <Axis NormVector = "x[2]; y[2]; 0"/>
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-x[0]; -y[0]; -H/2"/>
+                <Add Vector = "-x[1]; -y[1]; -H/2"/>
+                <Add Vector = "-x[2]; -y[2]; -H/2"/>
+                <Add Vector = "-x[0]; -y[0];  H/2"/>
+                <Add Vector = "-x[1]; -y[1];  H/2"/>
+                <Add Vector = "-x[2]; -y[2];  H/2"/>
+            </Vertices>
+            <Faces>
+                <Face Color = "cl[2]" VertexIndexes = "0;1;4;3" />
+                <Face Color = "cl[3]" VertexIndexes = "1;2;5;4" />
+                <Face Color = "cl[4]" VertexIndexes = "2;0;3;5" />
+                <Face Color = "cl[0]" VertexIndexes = "2;1;0" />
+                <Face Color = "cl[1]" VertexIndexes = "3;4;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Angle="Pi" Axis="0" Layer="1"/>
+        <Turn Angle="Pi/2" Axis="2" Layer="1"/>
+        <SplitByAxes/>
+        <Turn Angle="Pi" Axis="1" Layer="1"/>
+        <Turn Angle="Pi/2" Axis="2" Layer="1"/>
+        <SplitByAxes/>
+        <Undo Repeat ="4"/>
+
+        <Turn Angle="Pi" Axis="1" Layer="1"/>
+        <Turn Angle="Pi/2" Axis="0" Layer="1"/>
+        <SplitByAxes/>
+        <Turn Angle="Pi" Axis="2" Layer="1"/>
+        <Turn Angle="Pi/2" Axis="0" Layer="1"/>
+        <SplitByAxes/>
+        <Undo Repeat ="4"/>
+
+        <Turn Angle="Pi" Axis="2" Layer="1"/>
+        <Turn Angle="Pi/2" Axis="1" Layer="1"/>
+        <SplitByAxes/>
+        <Turn Angle="Pi" Axis="0" Layer="1"/>
+        <Turn Angle="Pi/2" Axis="1" Layer="1"/>
+        <SplitByAxes/>
+        <Undo Repeat ="4"/>
+
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

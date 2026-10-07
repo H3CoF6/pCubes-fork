@@ -1,0 +1,198 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Planetarium</Name>
+        <Menu>Other forms\Unclassified\Planetarium</Menu>
+        <Inventor>Wong Chong Wen</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-01-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9492</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=414107</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '00FFFF'; // Cyan
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := 'FF0000'; // Red
+        Colors[ 3] := '006400'; // DarkGreen
+        Colors[ 4] := 'C0C0C0'; // Silver
+        Colors[ 5] := '008000'; // Green
+        Colors[ 6] := 'FF6000'; // Orange
+        Colors[ 7] := '000080'; // Navy
+        Colors[ 8] := 'F0F0F0'; // White
+        Colors[ 9] := '800000'; // Brown
+        Colors[10] := '008080'; // Teal
+        Colors[11] := 'CD5C5C'; // Indian
+        Colors[12] := '202020'; // Black
+        Colors[13] := '808000'; // Olive
+        Colors[14] := '00FF00'; // Lime
+        Colors[15] := 'DDBB20'; // Golden
+        Colors[16] := 'FF00FF'; // Fuchsia
+        Colors[17] := '0000FF'; // Blue
+        Colors[18] := 'FF7F50'; // Coral
+        Colors[19] := 'ADFF2F'; // GreenYellow
+        Colors[20] := '808080'; // Gray
+
+        include 'Figures\Scripts\Vectors.inc';
+
+        K := 0.42;
+        RC := K * 0.17; // circles' radius
+
+        sAngle := 2*Pi / 7;
+        c7 := cos(Pi / 7);
+
+        // axes z-coordinate
+        az := sqrt((1 / c7 - 1) / 2);
+
+        // find (Rx; 0; Rz) - top vertex of right heptagon
+        Rx := K;
+        D_L := (c7 + 1) / (c7 - 1 + 2 / sin(3 * Pi/14));  // D / L, where D is axes' distance, L is distance from zero to heptagon's center
+        R_L := ((D_L - 1) * (c7 + 1) / 2 + 1) / sqrt(c7); // R / L, where R is radius of circumscribed circle of heptagon
+        Rz := Rx * (R_L + az) / (1 - R_L * az);
+
+        procedure Add1( X1, Y1, Z1);
+        begin
+            Vx[idx] := X1;
+            Vy[idx] := Y1;
+            Vz[idx] := Z1;
+            Inc(idx);
+        end;
+
+        procedure Add4( X, Y, Z);
+        begin
+            Add1( X, Y, Z);
+            Add1(-X,-Y, Z);
+            Add1( Y, X,-Z);
+            Add1(-Y,-X,-Z);
+        end;
+
+        idx := 0;
+
+        // heptagons
+        for i := 0 to 6 do begin
+            VectorRotatePoint( Rx, 0, Rz,  1, 0, az, sAngle * i, True);
+            Add4( Ans_X, Ans_Y, Ans_Z); // 0..27
+        end;
+
+        // other vertices
+        VectorRotatePoint( Vx[ 8], Vy[ 8], Vz[ 8],  0,-1,-az, sAngle * 1, True);
+        Add4( Ans_X, Ans_Y, Ans_Z); // 28..31
+        Add4( Ans_X,-Ans_Y, Ans_Z); // 32..35
+
+        VectorRotatePoint( Vx[11], Vy[11], Vz[11],  1, 0, az,-sAngle * 2, True);
+        Add4( Ans_X, 0, Ans_Z); // 36..39
+
+        // heptagon's centers
+        LP := VectorDistanceToPlane(Vx[0], Vy[0], Vz[0],  1, 0, az, 0) / VectorLength(1, 0, az);
+        Add4( LP, 0, az * LP); // 40..43
+
+        // Tetragon's centers
+        k := 0.55;
+        Add4( (Vx[28] + Vx[33]) / 2 * k + (Vx[36] + Vx[37]) / 2 * (1 - k),
+              (Vy[28] + Vy[33]) / 2 * k + (Vy[36] + Vy[37]) / 2 * (1 - k),
+              (Vz[28] + Vz[33]) / 2 * k + (Vz[36] + Vz[37]) / 2 * (1 - k) ); // 44..47
+
+        D := VectorDistanceToPlane( Vx[11], Vy[11], Vz[11],  1, 0, az, 0);
+
+        // One circle's center
+        VectorNormalToPlane( Vx[4], Vy[4], Vz[4],  Vx[0], Vy[0], Vz[0],  Vx[28], Vy[28], Vz[28]);
+        LC := VectorDistanceToPlane( Vx[0], Vy[0], Vz[0],  Ans_X, Ans_Y, Ans_Z, 0);
+        CCx := Ans_X * LC;
+        CCy := Ans_Y * LC;
+        CCz := Ans_Z * LC;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "-1; 0; az" />
+        <Axis NormVector = " 1; 0; az" />
+        <Axis NormVector = " 0;-1;-az" />
+        <Axis NormVector = " 0; 1;-az" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddColor1" >
+            <Face Color = "Colors[c]" VertexIndexes = "v1;v2;v3" InvisibleEdges = "3" />
+            <Face Color = "Colors[c]" VertexIndexes = "v1;v3;v4;v6"                   />
+            <Face Color = "Colors[c]" VertexIndexes = "v4;v5;v6" InvisibleEdges = "3" />
+        </Macro>
+
+        <Macro Name = "AddColor2" >
+            <Face Color = "Colors[c]" VertexIndexes = "v1;v2;v3" InvisibleEdges = "3" />
+            <Face Color = "Colors[c]" VertexIndexes = "v1;v3;v4;v6;v7"                />
+            <Face Color = "Colors[c]" VertexIndexes = "v4;v5;v6" InvisibleEdges = "3" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx;Vy;Vz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddColor1" c = " 0" v1 = " 4" v2 = "40" v3 = " 0" v4 = "36" v5 = "44" v6 = "28" />
+                <ExecMacro MacroName = "AddColor1" c = " 1" v1 = " 0" v2 = "40" v3 = "24" v4 = "32" v5 = "45" v6 = "36" />
+                <ExecMacro MacroName = "AddColor2" c = " 2" v1 = "24" v2 = "40" v3 = "20" v4 = "22" v5 = "42" v6 = "18" v7 = "32" />
+                <ExecMacro MacroName = "AddColor2" c = " 3" v1 = "26" v2 = "42" v3 = "22" v4 = "20" v5 = "40" v6 = "16" v7 = "34" />
+                <ExecMacro MacroName = "AddColor1" c = " 4" v1 = "16" v2 = "40" v3 = "12" v4 = "31" v5 = "47" v6 = "34" />
+                <ExecMacro MacroName = "AddColor2" c = " 5" v1 = "12" v2 = "40" v3 = " 8" v4 = "11" v5 = "43" v6 = " 7" v7 = "31" />
+                <ExecMacro MacroName = "AddColor2" c = " 6" v1 = "15" v2 = "43" v3 = "11" v4 = " 8" v5 = "40" v6 = " 4" v7 = "28" />
+                <ExecMacro MacroName = "AddColor1" c = " 7" v1 = " 5" v2 = "41" v3 = " 1" v4 = "37" v5 = "45" v6 = "29" />
+                <ExecMacro MacroName = "AddColor1" c = " 8" v1 = " 1" v2 = "41" v3 = "25" v4 = "33" v5 = "44" v6 = "37" />
+                <ExecMacro MacroName = "AddColor2" c = " 9" v1 = "25" v2 = "41" v3 = "21" v4 = "23" v5 = "43" v6 = "19" v7 = "33" />
+                <ExecMacro MacroName = "AddColor2" c = "10" v1 = "27" v2 = "43" v3 = "23" v4 = "21" v5 = "41" v6 = "17" v7 = "35" />
+                <ExecMacro MacroName = "AddColor1" c = "11" v1 = "17" v2 = "41" v3 = "13" v4 = "30" v5 = "46" v6 = "35" />
+                <ExecMacro MacroName = "AddColor2" c = "12" v1 = "13" v2 = "41" v3 = " 9" v4 = "10" v5 = "42" v6 = " 6" v7 = "30" />
+                <ExecMacro MacroName = "AddColor2" c = "13" v1 = "14" v2 = "42" v3 = "10" v4 = " 9" v5 = "41" v6 = " 5" v7 = "29" />
+                <ExecMacro MacroName = "AddColor1" c = "14" v1 = " 6" v2 = "42" v3 = " 2" v4 = "38" v5 = "46" v6 = "30" />
+                <ExecMacro MacroName = "AddColor1" c = "15" v1 = " 2" v2 = "42" v3 = "26" v4 = "34" v5 = "47" v6 = "38" />
+                <ExecMacro MacroName = "AddColor1" c = "16" v1 = "18" v2 = "42" v3 = "14" v4 = "29" v5 = "45" v6 = "32" />
+                <ExecMacro MacroName = "AddColor1" c = "17" v1 = " 7" v2 = "43" v3 = " 3" v4 = "39" v5 = "47" v6 = "31" />
+                <ExecMacro MacroName = "AddColor1" c = "18" v1 = " 3" v2 = "43" v3 = "27" v4 = "35" v5 = "46" v6 = "39" />
+                <ExecMacro MacroName = "AddColor1" c = "19" v1 = "19" v2 = "43" v3 = "15" v4 = "28" v5 = "44" v6 = "33" />
+
+                <Face Color = "Colors[20]" VertexIndexes = "36;45;37" InvisibleEdges = "3" />
+                <Face Color = "Colors[20]" VertexIndexes = "37;44;36" InvisibleEdges = "3" />
+                <Face Color = "Colors[20]" VertexIndexes = "38;47;39" InvisibleEdges = "3" />
+                <Face Color = "Colors[20]" VertexIndexes = "39;46;38" InvisibleEdges = "3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "0" Layer = "1" Angle = "sAngle" />
+            <Turn Axis = "1" Layer = "1" Angle = "sAngle" />
+            <SplitByAxes/>
+            <Turn Axis = "2" Layer = "1" Angle = "sAngle" />
+            <Turn Axis = "3" Layer = "1" Angle = "sAngle" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "10" />
+        <Undo Repeat = "40" />
+
+        <HideContaining Vector = " Vx; Vy; Vz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "AddCircle" >
+            <Circle Color = "Colors[c]" Radius = "RC" Center = " CCx; CCy; CCz" />
+            <Turn NormVector = "1;0;az" Angle = "sAngle" />
+            <Script>Inc(c);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" c = "0" Repeat = "7" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCircle" Repeat = "7" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+        <Turn NormVector = "1;1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCircle" Repeat = "2" />
+        <Turn NormVector = "1;0;az" Angle = "2*sAngle" />
+        <ExecMacro MacroName = "AddCircle" />
+        <Turn NormVector = "1;0;az" Angle = "2*sAngle" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCircle" Repeat = "2" />
+        <Turn NormVector = "1;0;az" Angle = "2*sAngle" />
+        <ExecMacro MacroName = "AddCircle" />
+        <Turn NormVector = "1;0;az" Angle = "2*sAngle" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+        <Turn NormVector = "1;1;0" Angle = "Pi" />
+    </Figure>
+</xml>

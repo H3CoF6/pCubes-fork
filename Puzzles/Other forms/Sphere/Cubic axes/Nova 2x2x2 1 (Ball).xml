@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Nova 2x2x2 1 (Sphere)</Name>
+        <Menu>Other forms\Sphere\Cubic axes\Nova 2x2x2 1</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-05</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // clRed
+        Colors[1] := 'FF8800'; // clOrange
+        Colors[2] := '0066FF'; // clBlue
+        Colors[3] := '00DD00'; // clGreen
+        Colors[4] := 'FFFF00'; // clYellow
+        Colors[5] := 'FFFFFF'; // clWhite
+
+        K := 0.6;
+        D := K * 0.95;
+
+        T := sqrt(2) - 1; // Tan(Pi / 8)
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = " 0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 0; 1;-T" />
+        <Axis NormVector = " 0; T; 1" />
+        <Axis NormVector = "-T; 0; 1" />
+        <Axis NormVector = " 1; 0; T" />
+        <Axis NormVector = " 1;-T; 0" />
+        <Axis NormVector = " T; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+
+        <Macro Name = "Split" >
+            <Turn Axis = "axt" Layer = "1" Angle = "Pi/4" />
+            <Hide Axis = "axt" Layer = "2" />
+            <Split Axis = "axs" From = "1" To = "1" />
+            <Split Axis = "axs" From = "2" To = "2" />
+            <Split Axis = "axs+1" From = "1" To = "1" />
+            <Split Axis = "axs+1" From = "2" To = "2" />
+            <Undo/>
+        </Macro>
+
+        <ExecMacro MacroName= "Split" axt = "0" axs = "3" />
+        <ExecMacro MacroName= "Split" axt = "1" axs = "5" />
+        <ExecMacro MacroName= "Split" axt = "2" axs = "7" />
+
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

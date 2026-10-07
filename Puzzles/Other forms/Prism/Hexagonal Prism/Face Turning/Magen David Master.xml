@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Magen David Master</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Face Turning\Magen David Master</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-03-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9653</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red   
+        Colors[1] := '0055FF'; // LBlue 
+        Colors[2] := '009600'; // Green 
+        Colors[3] := 'FF7700'; // Orange
+        Colors[4] := '0000C8'; // Blue  
+        Colors[5] := '00FF33'; // LGreen
+        Colors[6] := 'EEFF00'; // Yellow
+        Colors[7] := 'FFFFFF'; // White 
+
+        R := 0.6;
+
+        H := R * 2 / 4;
+        sAngle := Pi * 2 / 6;
+        for i := 0 to 5 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D1 := R * sqrt(3) / 4;
+        D2 := R * sqrt(3) / 4*3/2;
+        DH := H / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" NormVectors = "y; x; 0" PlaneDistances = " D1; D2" />
+
+    <Axes TurningAngles = "2*Pi / 6" PlaneDistances = "-DH; 0; DH" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "Colors[1]" VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "Colors[2]" VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "Colors[3]" VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "Colors[4]" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "Colors[5]" VertexIndexes = "11; 6; 0; 5" />
+                <Face Color = "Colors[6]" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                <Face Color = "Colors[7]" VertexIndexes = "11;10; 9; 8; 7; 6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

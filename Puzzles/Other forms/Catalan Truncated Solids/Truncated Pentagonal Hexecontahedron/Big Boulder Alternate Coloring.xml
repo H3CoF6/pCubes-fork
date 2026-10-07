@@ -1,0 +1,374 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Big Boulder Alternate Coloring</Name>
+        <Menu>Other forms\Catalan Truncated Solids\Truncated Pentagonal Hexecontahedron\Big Boulder AC</Menu>
+        <Inventor>Oskar Van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2530</Link>
+        <Link>http://dmccooey.com/polyhedra/LpentagonalHexecontahedron.html</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red
+        Colors[1] := 'FF800A'; // Orange
+        Colors[2] := '0000C8'; // Blue
+        Colors[3] := '009600'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+        Colors[6] := '333333'; // Black
+
+        K := 0.3;
+
+        phi := (1 + sqrt(5)) / 2;
+        xx := ((phi + sqrt(phi-5/27))/2)^(1/3) + ((phi - sqrt(phi-5/27))/2)^(1/3);
+        C0  := K * phi * sqrt(3 - (xx^2)) / 2;                                               //0.192893711352;
+        C1  := K * phi * sqrt((xx - 1 - (1/xx)) * phi) / (2 * xx);                           //0.218483370127;
+        C2  := K * phi * sqrt((xx - 1 - (1/xx)) * phi) / 2;                                  //0.374821658114;
+        C3  := K * (xx^2) * phi * sqrt(3 - (xx^2)) / 2;                                      //0.567715369466;
+        C4  := K * phi * sqrt(1 - xx + (phi + 1) / xx) / 2;                                  //0.728335176957;
+        C5  := K * sqrt(xx * (xx + phi) + 1) / (2 * xx);                                     //0.755467260516;
+        C6  := K * sqrt((xx + 2) * phi + 2) / (2 * xx);                                      //0.824957552676;
+        C7  := K * sqrt(-(xx^2) * (phi + 2) + xx * (3 * phi + 1) + 4) / 2;                   //0.921228888309;
+        C8  := K * (phi + 1) * sqrt(1 + (1/xx)) / (2 * xx);                                  //0.959987701391;
+        C9  := K * sqrt(3 * phi + 2 - 2 * xx + (3/xx)) / 2;                                  //1.137066133860;
+        C10 := K * sqrt((xx^2)*(225*phi + 392) + xx*(670*phi + 249) + (157*phi + 470))/62;   //1.167123436475;
+        C11 := K * phi * sqrt(xx * (xx + phi) + 1) / (2 * xx);                               //1.222371704903;
+        C12 := K * phi * sqrt((xx^2) + xx + phi + 1) / (2 * xx);                             //1.272096282575;
+        C13 := K * phi * sqrt((xx^2) + 2 * xx * phi + 2) / (2 * xx);                         //1.527703070858;
+        C14 := K * sqrt((xx^2) * (2 * phi + 1) - phi) / 2;                                   //1.646917940690;
+        C15 := K * phi * sqrt((xx^2) + xx) / 2;                                              //1.746186440985;
+        C16 := K * (phi^3) * sqrt(xx * (xx + phi) + 1) / (2 * (xx^2));                       //1.865401310817;
+        C17 := K * sqrt((xx^2)*(842*phi + 617) + xx*(1589*phi + 919) + (784*phi + 627))/62;  //1.888445389283;
+        C18 := K * (phi^2) * sqrt(xx * (xx + phi) + 1) / (2 * xx);                           //1.977838965420;
+        C19 := K * phi * sqrt(xx * (xx + phi) + 1) / 2;                                      //2.097053835252;
+
+        X[ 0] :=   C0; Y[ 0] :=   C1; Z[ 0] :=  C19;
+        X[ 1] :=   C0; Y[ 1] :=  -C1; Z[ 1] := -C19;
+        X[ 2] :=  -C0; Y[ 2] :=  -C1; Z[ 2] :=  C19;
+        X[ 3] :=  -C0; Y[ 3] :=   C1; Z[ 3] := -C19;
+        X[ 4] :=  C19; Y[ 4] :=   C0; Z[ 4] :=   C1;
+        X[ 5] :=  C19; Y[ 5] :=  -C0; Z[ 5] :=  -C1;
+        X[ 6] := -C19; Y[ 6] :=  -C0; Z[ 6] :=   C1;
+        X[ 7] := -C19; Y[ 7] :=   C0; Z[ 7] :=  -C1;
+        X[ 8] :=   C1; Y[ 8] :=  C19; Z[ 8] :=   C0;
+        X[ 9] :=   C1; Y[ 9] := -C19; Z[ 9] :=  -C0;
+        X[10] :=  -C1; Y[10] := -C19; Z[10] :=   C0;
+        X[11] :=  -C1; Y[11] :=  C19; Z[11] :=  -C0;
+        X[12] :=    0; Y[12] :=   C5; Z[12] :=  C18;
+        X[13] :=    0; Y[13] :=   C5; Z[13] := -C18;
+        X[14] :=    0; Y[14] :=  -C5; Z[14] :=  C18;
+        X[15] :=    0; Y[15] :=  -C5; Z[15] := -C18;
+        X[16] :=  C18; Y[16] :=    0; Z[16] :=   C5;
+        X[17] :=  C18; Y[17] :=    0; Z[17] :=  -C5;
+        X[18] := -C18; Y[18] :=    0; Z[18] :=   C5;
+        X[19] := -C18; Y[19] :=    0; Z[19] :=  -C5;
+        X[20] :=   C5; Y[20] :=  C18; Z[20] :=    0;
+        X[21] :=   C5; Y[21] := -C18; Z[21] :=    0;
+        X[22] :=  -C5; Y[22] :=  C18; Z[22] :=    0;
+        X[23] :=  -C5; Y[23] := -C18; Z[23] :=    0;
+        X[24] :=  C10; Y[24] :=    0; Z[24] :=  C17;
+        X[25] :=  C10; Y[25] :=    0; Z[25] := -C17;
+        X[26] := -C10; Y[26] :=    0; Z[26] :=  C17;
+        X[27] := -C10; Y[27] :=    0; Z[27] := -C17;
+        X[28] :=  C17; Y[28] :=  C10; Z[28] :=    0;
+        X[29] :=  C17; Y[29] := -C10; Z[29] :=    0;
+        X[30] := -C17; Y[30] :=  C10; Z[30] :=    0;
+        X[31] := -C17; Y[31] := -C10; Z[31] :=    0;
+        X[32] :=    0; Y[32] :=  C17; Z[32] :=  C10;
+        X[33] :=    0; Y[33] :=  C17; Z[33] := -C10;
+        X[34] :=    0; Y[34] := -C17; Z[34] :=  C10;
+        X[35] :=    0; Y[35] := -C17; Z[35] := -C10;
+        X[36] :=   C3; Y[36] :=  -C6; Z[36] :=  C16;
+        X[37] :=   C3; Y[37] :=   C6; Z[37] := -C16;
+        X[38] :=  -C3; Y[38] :=   C6; Z[38] :=  C16;
+        X[39] :=  -C3; Y[39] :=  -C6; Z[39] := -C16;
+        X[40] :=  C16; Y[40] :=  -C3; Z[40] :=   C6;
+        X[41] :=  C16; Y[41] :=   C3; Z[41] :=  -C6;
+        X[42] := -C16; Y[42] :=   C3; Z[42] :=   C6;
+        X[43] := -C16; Y[43] :=  -C3; Z[43] :=  -C6;
+        X[44] :=   C6; Y[44] := -C16; Z[44] :=   C3;
+        X[45] :=   C6; Y[45] :=  C16; Z[45] :=  -C3;
+        X[46] :=  -C6; Y[46] :=  C16; Z[46] :=   C3;
+        X[47] :=  -C6; Y[47] := -C16; Z[47] :=  -C3;
+        X[48] :=   C2; Y[48] :=   C9; Z[48] :=  C15;
+        X[49] :=   C2; Y[49] :=  -C9; Z[49] := -C15;
+        X[50] :=  -C2; Y[50] :=  -C9; Z[50] :=  C15;
+        X[51] :=  -C2; Y[51] :=   C9; Z[51] := -C15;
+        X[52] :=  C15; Y[52] :=   C2; Z[52] :=   C9;
+        X[53] :=  C15; Y[53] :=  -C2; Z[53] :=  -C9;
+        X[54] := -C15; Y[54] :=  -C2; Z[54] :=   C9;
+        X[55] := -C15; Y[55] :=   C2; Z[55] :=  -C9;
+        X[56] :=   C9; Y[56] :=  C15; Z[56] :=   C2;
+        X[57] :=   C9; Y[57] := -C15; Z[57] :=  -C2;
+        X[58] :=  -C9; Y[58] := -C15; Z[58] :=   C2;
+        X[59] :=  -C9; Y[59] :=  C15; Z[59] :=  -C2;
+        X[60] :=   C7; Y[60] :=   C8; Z[60] :=  C14;
+        X[61] :=   C7; Y[61] :=  -C8; Z[61] := -C14;
+        X[62] :=  -C7; Y[62] :=  -C8; Z[62] :=  C14;
+        X[63] :=  -C7; Y[63] :=   C8; Z[63] := -C14;
+        X[64] :=  C14; Y[64] :=   C7; Z[64] :=   C8;
+        X[65] :=  C14; Y[65] :=  -C7; Z[65] :=  -C8;
+        X[66] := -C14; Y[66] :=  -C7; Z[66] :=   C8;
+        X[67] := -C14; Y[67] :=   C7; Z[67] :=  -C8;
+        X[68] :=   C8; Y[68] :=  C14; Z[68] :=   C7;
+        X[69] :=   C8; Y[69] := -C14; Z[69] :=  -C7;
+        X[70] :=  -C8; Y[70] := -C14; Z[70] :=   C7;
+        X[71] :=  -C8; Y[71] :=  C14; Z[71] :=  -C7;
+        X[72] :=   C4; Y[72] := -C12; Z[72] :=  C13;
+        X[73] :=   C4; Y[73] :=  C12; Z[73] := -C13;
+        X[74] :=  -C4; Y[74] :=  C12; Z[74] :=  C13;
+        X[75] :=  -C4; Y[75] := -C12; Z[75] := -C13;
+        X[76] :=  C13; Y[76] :=  -C4; Z[76] :=  C12;
+        X[77] :=  C13; Y[77] :=   C4; Z[77] := -C12;
+        X[78] := -C13; Y[78] :=   C4; Z[78] :=  C12;
+        X[79] := -C13; Y[79] :=  -C4; Z[79] := -C12;
+        X[80] :=  C12; Y[80] := -C13; Z[80] :=   C4;
+        X[81] :=  C12; Y[81] :=  C13; Z[81] :=  -C4;
+        X[82] := -C12; Y[82] :=  C13; Z[82] :=   C4;
+        X[83] := -C12; Y[83] := -C13; Z[83] :=  -C4;
+        X[84] :=  C11; Y[84] :=  C11; Z[84] :=  C11;
+        X[85] :=  C11; Y[85] :=  C11; Z[85] := -C11;
+        X[86] :=  C11; Y[86] := -C11; Z[86] :=  C11;
+        X[87] :=  C11; Y[87] := -C11; Z[87] := -C11;
+        X[88] := -C11; Y[88] :=  C11; Z[88] :=  C11;
+        X[89] := -C11; Y[89] :=  C11; Z[89] := -C11;
+        X[90] := -C11; Y[90] := -C11; Z[90] :=  C11;
+        X[91] := -C11; Y[91] := -C11; Z[91] := -C11;
+
+        // Calcs normal to plane with 3 points
+        // Calcs edge midpoints
+        procedure NormalI(i1, i2, i3);
+        begin
+          px[nindex] := (y[i1]-y[i3]) * (z[i2]-z[i3]) - (y[i2]-y[i3]) * (z[i1]-z[i3]);
+          py[nindex] := (z[i1]-z[i3]) * (x[i2]-x[i3]) - (z[i2]-z[i3]) * (x[i1]-x[i3]);
+          pz[nindex] := (x[i1]-x[i3]) * (y[i2]-y[i3]) - (x[i2]-x[i3]) * (y[i1]-y[i3]);
+          ex[nindex] := (x[i1] + 2 * x[i2]) / 3;
+          ey[nindex] := (y[i1] + 2 * y[i2]) / 3;
+          ez[nindex] := (z[i1] + 2 * z[i2]) / 3;
+          nindex := nindex + 1;
+        end;
+
+        nindex := 0;
+
+        // Calc all normals
+        NormalI( 24,  0, 36);
+        NormalI( 24, 36, 76);
+        NormalI( 24, 76, 52);
+        NormalI( 24, 52, 60);
+        NormalI( 24, 60,  0);
+        NormalI( 27,  3, 39);
+        NormalI( 27, 39, 79);
+        NormalI( 27, 79, 55);
+        NormalI( 27, 55, 63);
+        NormalI( 27, 63,  3);
+        NormalI( 25,  1, 37);
+        NormalI( 25, 37, 77);
+        NormalI( 25, 77, 53);
+        NormalI( 25, 53, 61);
+        NormalI( 25, 61,  1);
+        NormalI( 26,  2, 38);
+        NormalI( 26, 38, 78);
+        NormalI( 26, 78, 54);
+        NormalI( 26, 54, 62);
+        NormalI( 26, 62,  2);
+        NormalI( 28,  4, 41);
+        NormalI( 28, 41, 81);
+        NormalI( 28, 81, 56);
+        NormalI( 28, 56, 64);
+        NormalI( 28, 64,  4);
+        NormalI( 31,  6, 43);
+        NormalI( 31, 43, 83);
+        NormalI( 31, 83, 58);
+        NormalI( 31, 58, 66);
+        NormalI( 31, 66,  6);
+        NormalI( 29,  5, 40);
+        NormalI( 29, 40, 80);
+        NormalI( 29, 80, 57);
+        NormalI( 29, 57, 65);
+        NormalI( 29, 65,  5);
+        NormalI( 30,  7, 42);
+        NormalI( 30, 42, 82);
+        NormalI( 30, 82, 59);
+        NormalI( 30, 59, 67);
+        NormalI( 30, 67,  7);
+        NormalI( 32,  8, 46);
+        NormalI( 32, 46, 74);
+        NormalI( 32, 74, 48);
+        NormalI( 32, 48, 68);
+        NormalI( 32, 68,  8);
+        NormalI( 35,  9, 47);
+        NormalI( 35, 47, 75);
+        NormalI( 35, 75, 49);
+        NormalI( 35, 49, 69);
+        NormalI( 35, 69,  9);
+        NormalI( 33, 11, 45);
+        NormalI( 33, 45, 73);
+        NormalI( 33, 73, 51);
+        NormalI( 33, 51, 71);
+        NormalI( 33, 71, 11);
+        NormalI( 34, 10, 44);
+        NormalI( 34, 44, 72);
+        NormalI( 34, 72, 50);
+        NormalI( 34, 50, 70);
+        NormalI( 34, 70, 10);
+
+        function AngleI(i1, i2, i3);
+        begin
+          vx := py[i1] * pz[i2] - py[i2] * pz[i1];
+          vy := pz[i1] * px[i2] - pz[i2] * px[i1];
+          vz := px[i1] * py[i2] - px[i2] * py[i1];
+          wx := py[i1] * pz[i3] - py[i3] * pz[i1];
+          wy := pz[i1] * px[i3] - pz[i3] * px[i1];
+          wz := px[i1] * py[i3] - px[i3] * py[i1];
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+
+// <!-- All angles there: http://twistypuzzles.com/forum/viewtopic.php?f=1&p=358806  -->
+        A1 := AngleI(0, 19, 15);
+        A2 := 2*Pi - 4 * A1;
+        A3 := A1 * 2;
+        A4 := A1 + A2;
+        A5 := A1 + A3;
+
+        D  := K * 1.95;
+        DCut1 := K * 2.039039;
+        DCut2 := D * 1.06;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A5;-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4; A5" PlaneDistances = "D" FixedLayers = "0" NormVectors = " px; py; pz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Macro Name = "CutVertex" >
+            <Cut Color = "Colors[cl]"> <Plane NormVector = "X[v]; Y[v]; Z[v]" NormDistance = "-DCut2" /> </Cut>
+        </Macro>
+        <ExecMacro MacroName = "CutVertex" v = "24" cl = "4" />
+        <ExecMacro MacroName = "CutVertex" v = "25" cl = "0" />
+        <ExecMacro MacroName = "CutVertex" v = "26" cl = "1" />
+        <ExecMacro MacroName = "CutVertex" v = "27" cl = "5" />
+        <ExecMacro MacroName = "CutVertex" v = "32" cl = "1" />
+        <ExecMacro MacroName = "CutVertex" v = "33" cl = "2" />
+        <ExecMacro MacroName = "CutVertex" v = "34" cl = "3" />
+        <ExecMacro MacroName = "CutVertex" v = "35" cl = "0" />
+        <ExecMacro MacroName = "CutVertex" v = "28" cl = "2" />
+        <ExecMacro MacroName = "CutVertex" v = "29" cl = "4" />
+        <ExecMacro MacroName = "CutVertex" v = "30" cl = "5" />
+        <ExecMacro MacroName = "CutVertex" v = "31" cl = "3" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "HideCenter" >
+            <HideContaining Vector = "px[id]*pk; py[id]*pk; pz[id]*pk" />
+            <HideContaining Vector = "ex[id]   ; ey[id]   ; ez[id]   " />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenter" Repeat = "60" id = "0" pk = "2.1/K" />
+
+        <HideContaining Vector = "X[76]; Y[76]; Z[76]" />
+        <HideContaining Vector = "X[40]; Y[40]; Z[40]" />
+        <HideContaining Vector = "X[55]; Y[55]; Z[55]" />
+        <HideContaining Vector = "X[67]; Y[67]; Z[67]" />
+        <HideContaining Vector = "X[45]; Y[45]; Z[45]" />
+        <HideContaining Vector = "X[81]; Y[81]; Z[81]" />
+        <HideContaining Vector = "X[58]; Y[58]; Z[58]" />
+        <HideContaining Vector = "X[70]; Y[70]; Z[70]" />
+        <HideContaining Vector = "X[61]; Y[61]; Z[61]" />
+        <HideContaining Vector = "X[49]; Y[49]; Z[49]" />
+        <HideContaining Vector = "X[38]; Y[38]; Z[38]" />
+        <HideContaining Vector = "X[74]; Y[74]; Z[74]" />
+
+        <Macro Name = "HideEdge" >
+            <HideContaining Vector = "(X[v1] + X[v2]) / 2; (Y[v1] + Y[v2]) / 2; (Z[v1] + Z[v2]) / 2" />
+        </Macro>
+        <ExecMacro MacroName = "HideEdge" v1 = "76" v2 = "40" />
+        <ExecMacro MacroName = "HideEdge" v1 = "76" v2 = "86" />
+        <ExecMacro MacroName = "HideEdge" v1 = "16" v2 = "40" />
+        <ExecMacro MacroName = "HideEdge" v1 = "67" v2 = "55" />
+        <ExecMacro MacroName = "HideEdge" v1 = "67" v2 = "89" />
+        <ExecMacro MacroName = "HideEdge" v1 = "19" v2 = "55" />
+        <ExecMacro MacroName = "HideEdge" v1 = "81" v2 = "45" />
+        <ExecMacro MacroName = "HideEdge" v1 = "81" v2 = "85" />
+        <ExecMacro MacroName = "HideEdge" v1 = "20" v2 = "45" />
+        <ExecMacro MacroName = "HideEdge" v1 = "70" v2 = "58" />
+        <ExecMacro MacroName = "HideEdge" v1 = "70" v2 = "90" />
+        <ExecMacro MacroName = "HideEdge" v1 = "23" v2 = "58" />
+        <ExecMacro MacroName = "HideEdge" v1 = "61" v2 = "49" />
+        <ExecMacro MacroName = "HideEdge" v1 = "61" v2 = "87" />
+        <ExecMacro MacroName = "HideEdge" v1 = "15" v2 = "49" />
+        <ExecMacro MacroName = "HideEdge" v1 = "74" v2 = "38" />
+        <ExecMacro MacroName = "HideEdge" v1 = "74" v2 = "88" />
+        <ExecMacro MacroName = "HideEdge" v1 = "12" v2 = "38" />
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Colors[cl]"> <Plane NormVector = "-px[id]; -py[id]; -pz[id]" NormDistance = "-DCut1" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "60" id = "0" cl = "6" />
+
+        <ShowAll/>
+
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = " 0" cl = "5" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = " 5" cl = "4" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = "10" cl = "1" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = "15" cl = "0" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = "20" cl = "3" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = "25" cl = "2" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = "30" cl = "5" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = "35" cl = "4" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = "40" cl = "0" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = "45" cl = "1" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = "50" cl = "3" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" id = "55" cl = "2" />
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax1" Layer = "1" Angle = " A1" />
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "-A1" />
+            <Split Axis = "Ax1" From  = "1" />
+            <Undo Repeat = "2" />
+
+            <Turn  Axis = "Ax2" Layer = "1" Angle = " A1" />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "-A1" />
+            <Split Axis = "Ax2" From  = "1" />
+            <Undo Repeat = "2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Ax1 = " 0" Ax2 = "15" />
+        <ExecMacro MacroName = "Split" Ax1 = " 1" Ax2 = "57" />
+        <ExecMacro MacroName = "Split" Ax1 = " 2" Ax2 = "31" />
+        <ExecMacro MacroName = "Split" Ax1 = " 3" Ax2 = "24" />
+        <ExecMacro MacroName = "Split" Ax1 = " 4" Ax2 = "43" />
+        <ExecMacro MacroName = "Split" Ax1 = " 5" Ax2 = "10" />
+        <ExecMacro MacroName = "Split" Ax1 = " 6" Ax2 = "47" />
+        <ExecMacro MacroName = "Split" Ax1 = " 7" Ax2 = "26" />
+        <ExecMacro MacroName = "Split" Ax1 = " 8" Ax2 = "39" />
+        <ExecMacro MacroName = "Split" Ax1 = " 9" Ax2 = "53" />
+        <ExecMacro MacroName = "Split" Ax1 = "11" Ax2 = "52" />
+        <ExecMacro MacroName = "Split" Ax1 = "12" Ax2 = "21" />
+        <ExecMacro MacroName = "Split" Ax1 = "13" Ax2 = "34" />
+        <ExecMacro MacroName = "Split" Ax1 = "14" Ax2 = "48" />
+        <ExecMacro MacroName = "Split" Ax1 = "16" Ax2 = "42" />
+        <ExecMacro MacroName = "Split" Ax1 = "17" Ax2 = "36" />
+        <ExecMacro MacroName = "Split" Ax1 = "18" Ax2 = "29" />
+        <ExecMacro MacroName = "Split" Ax1 = "19" Ax2 = "58" />
+        <ExecMacro MacroName = "Split" Ax1 = "20" Ax2 = "30" />
+        <ExecMacro MacroName = "Split" Ax1 = "22" Ax2 = "51" />
+        <ExecMacro MacroName = "Split" Ax1 = "23" Ax2 = "44" />
+        <ExecMacro MacroName = "Split" Ax1 = "25" Ax2 = "35" />
+        <ExecMacro MacroName = "Split" Ax1 = "27" Ax2 = "46" />
+        <ExecMacro MacroName = "Split" Ax1 = "28" Ax2 = "59" />
+        <ExecMacro MacroName = "Split" Ax1 = "32" Ax2 = "56" />
+        <ExecMacro MacroName = "Split" Ax1 = "33" Ax2 = "49" />
+        <ExecMacro MacroName = "Split" Ax1 = "37" Ax2 = "41" />
+        <ExecMacro MacroName = "Split" Ax1 = "38" Ax2 = "54" />
+        <ExecMacro MacroName = "Split" Ax1 = "40" Ax2 = "50" />
+        <ExecMacro MacroName = "Split" Ax1 = "45" Ax2 = "55" />
+        <SaveSolvedState/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

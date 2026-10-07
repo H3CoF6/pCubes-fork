@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyraminx Bump</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Pyraminx\Pyraminx Bump</Menu>
+        <Inventor>Zigor Martinez</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-18</Added>
+        <Link>https://www.instagram.com/p/CH5DB72JGZR/</Link>
+    </Interface>
+
+    <Script>
+        Color := 'DD2A00';
+
+        W1 := 0.5;
+        D := W1 * 4 * sqrt(3) / 9;
+        D0 := -W1 * sqrt(3) / 3;
+        Delta := W1 / 15;
+        DCut := W1 * 0.28;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2*D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" W = "W1 * 1.5" />
+        <Cut Color = "Color" > <Plane NormVector = "-cx[0];-cy[0];-cz[0]" NormDistance = "D0 -     Delta" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = "-cx[2];-cy[2];-cz[2]" NormDistance = "D0            " /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = "-cx[3];-cy[3];-cz[3]" NormDistance = "D0 - 2 * Delta" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = "-cx[1];-cy[1];-cz[1]" NormDistance = "D0 - 3 * Delta" /> </Cut>
+
+        <Macro Name = "Split" >
+            <Split Color1 = "Color" Color2 = "Color" Axis = "ax" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "ax" From = "2" />
+            <Script> Inc(ax); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" ax = "0" Repeat = "4" />
+
+        <Hide><Plane NormVector = "-cx[0]; -cy[0]; -cz[0]" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "-cx[1]; -cy[1]; -cz[1]" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "-cx[2]; -cy[2]; -cz[2]" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = "-cx[3]; -cy[3]; -cz[3]" NormDistance = "-DCut" /></Hide>
+
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>
+

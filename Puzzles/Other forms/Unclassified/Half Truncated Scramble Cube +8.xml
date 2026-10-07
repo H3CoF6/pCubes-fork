@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Half Truncated Scramble Cube +8</Name>
+        <Menu>Other forms\Unclassified\Half Truncated Scramble Cube +8</Menu>
+        <Inventor>Rex Rossano Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5265</Link>
+    </Interface>
+ 
+    <Script>
+        Colors[6] := '000070';
+        Colors[7] := '8888BB';
+        Colors[8] := '8800FF';
+        Colors[9] := '00CCCC';
+
+        W := 0.5;
+        N := 3;
+        D := W / N;
+        DCut := W * 5 / 3 / sqrt(3);
+
+        WX := D;
+        WY := D;
+        WZ := D;
+
+        S[0] := ' 1 |1 1| 1 ';
+        S[1] := '1 1| 1 |1 1';
+        S[2] := ' 1 |1 1| 1 ';
+
+        function GetType(x1, y1, z1);
+        begin
+            Result := copy(S[N-1-z1], (N + 1) * y1 + x1 + 1, 1);
+        end;
+
+        procedure CalcCubie(No);
+        begin
+            x := No mod N;
+            y := No div N mod N;
+            z := No div N div N;
+            CType := GetType(x,y,z);
+            if CType &lt;&gt; ' ' then begin 
+                DWX := D * (2 * x - N + 1);
+                DWY := D * (2 * y - N + 1);
+                DWZ := D * (2 * z - N + 1);
+                CCount := 1;
+            end else
+                CCount := 0;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCubie">
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <Macro Name = "AddCubies">
+            <Script> CalcCubie(No); Inc(No); </Script>
+            <ExecMacro MacroName = "AddCubie" Repeat = "CCount" /> // if CCount = 1 then draw cubie
+        </Macro>
+
+        <ExecMacro MacroName = "AddCubies" No = "0" Repeat = "N*N*N" />
+
+        <HideAll/>
+
+        <Script>
+            Colors[4] := -1;
+            Colors[5] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D*3" WY = "D*3" DWX = "0" DWY = "0" DWZ = "0" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "-W; W; 0" />
+        <RemoveContaining Vector = "-W;-W; 0" />
+        <RemoveContaining Vector = " W;-W; 0" />
+        <RemoveContaining Vector = " W; W; 0" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <ShowAll/>
+
+        <Cut Color = "Colors[6]"><Plane NormVector = "-1;-1;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[7]"><Plane NormVector = " 1; 1;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[8]"><Plane NormVector = " 1;-1; 1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[9]"><Plane NormVector = "-1; 1; 1" NormDistance = "-DCut" /></Cut>
+    </Figure>
+</xml>

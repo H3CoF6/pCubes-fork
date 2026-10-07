@@ -1,0 +1,176 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Spin - 5 (26 colors) new</Name>
+        <Menu>Other forms\2d\Spin - 5 (26 colors) new</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added></Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1458</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 1] := 'F0F0F0'; //clWhite
+        Colors[ 2] := 'CCCCCC'; //clGray
+        Colors[ 3] := 'A0A0A0'; //clSilver
+        Colors[ 4] := '202020'; //clBlack
+        Colors[ 5] := '00FFFF'; //clCyan
+        Colors[ 6] := '00BFFF'; //clDeepSky
+        Colors[ 7] := '008080'; //clTeal
+        Colors[ 8] := '0000FF'; //clBlue
+        Colors[ 9] := '000080'; //clNavy
+        Colors[10] := 'FF7F50'; //clCoral
+        Colors[11] := 'FF0000'; //clRed
+        Colors[12] := 'DC143C'; //clCrimson
+        Colors[13] := 'CD5C5C'; //clIndian
+        Colors[14] := '800000'; //clBrown
+        Colors[15] := 'FFFF00'; //clYellow
+        Colors[16] := 'FF6000'; //clOrange
+        Colors[17] := 'F0E68C'; //clKhaki
+        Colors[18] := 'DDBB20'; //clGolden
+        Colors[19] := '808000'; //clOlive
+        Colors[20] := 'ADFF2F'; //clGreenYellow
+        Colors[21] := '00FF00'; //clLime
+        Colors[22] := '3cb371'; //clSeaGreen
+        Colors[23] := '008000'; //clGreen
+        Colors[24] := '006400'; //clDarkGreen
+        Colors[29] := 'FF69B4'; //clPink
+        Colors[25] := 'FF00FF'; //clFuchsia
+        Colors[28] := 'D07090'; //clPale
+        Colors[26] := 'DA70D6'; //clOrchid
+        Colors[31] := '800080'; //clPurple
+        Colors[0] := '8a2be2'; //clBlueViolet
+        Colors[31] := '6495ed'; //clCornflowerBlue
+        Colors[32] := '7fffd4'; //clAquamarine
+        clBlue   := '0099EE';
+        R := 0.4;
+        H := 0.03;
+
+        W := 0.5;
+        R1 := W * 0.0585;
+        R2 := R1 * 0.001;
+        R3 := W * 0.5;
+        R4 := R3;
+
+        delta := W * 0.8575;
+        delta2 := 0;
+        for i := 0 to 9 do begin
+            x1[i] := R1 * cos(2 * Pi / 10 * i);
+            y1[i] := R1 * sin(2 * Pi / 10 * i) - delta;
+            x2[i] := R2 * cos(2 * Pi / 10 * i);
+            y2[i] := R2 * sin(2 * Pi / 10 * i) - delta;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0" PlaneDistances = "-0.3495" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/13; 0" PlaneDistances = "-H+0.001; H-0.001" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "R*0.55" Color = "Colors[i]" >
+                <Base X = "0" Y = "0" Z = " H+0.001" Color = "Colors[i]" />
+                <Top  X = "0" Y = "0" Z = "-H-0.001" Color = "Colors[i]" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "-cos(Pi/26); -sin(Pi/26); 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " cos(Pi/26); -sin(Pi/26); 0" NormDistance = "0" /> </Cut>
+
+            <Turn NormVector = "0; 0; 1" Angle = "Pi/13" />
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "26" />
+
+        <ShowAll/>
+        <Split><Plane NormVector = "0; 0; 1" NormDistance = "-H" /></Split>
+        <Split><Plane NormVector = "0; 0;-1" NormDistance = "-H" /></Split>
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <Cylinder Radius = "R" >
+            <Base X = "0" Y = "0" Z = " H" Color = "Colors[1]" />
+            <Top  X = "0" Y = "0" Z = "-H" Color = "Colors[1]" />
+        </Cylinder>
+
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-H+0.001" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "-H+0.001" /></Split>
+        <Cut><Plane NormVector = "0; 1;0" NormDistance = "-0.3495" /></Cut>
+        <RemoveContaining Vector = "0;0;0" />
+
+        <InvertVisibility/>
+        <Cylinder Radius = "R" Color = "" >
+            <Base X = "0" Y = "0" Z = " H" Color = "clBlue"/>
+            <Top  X = "0" Y = "0" Z = "-H" Color = "clBlue" />
+        </Cylinder>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-H+0.001" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "-H+0.001" /></Split>
+        <RemoveContaining Vector = "0; 0; 0" />
+        <Cut><Plane NormVector = " 0;-1; 0" NormDistance = "0.3495" /></Cut>
+
+        <Cylinder Radius = "R*1" >
+            <Base X = "0" Y = "0" Z = " H-0.002" />
+            <Top  X = "0" Y = "0" Z = "-H+0.002" />
+        </Cylinder>
+
+        <Macro Name = "Split">
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/13" />
+        <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "26" />
+
+        <Turn NormVector = "0; 0; 1" Angle = "-0*Pi/52" /> <!-- удалить? -->
+
+        <Macro Name = "AddPuck">
+            <Part>
+                <Vertices Vectors = "x2; y2; H-0.002" />
+                <Vertices Vectors = "x1; y1; 0" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;2;3;4;5;6;7;8;9" />
+
+                    <Face Color = "cl" VertexIndexes = "10;11;1;0" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "11;12;2;1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "12;13;3;2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "13;14;4;3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "14;15;5;4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "15;16;6;5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "16;17;7;6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "17;18;8;7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "18;19;9;8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "19;10;0;9" InvisibleEdges = "10" />
+
+                    <Face VertexIndexes = "19;18;17;16;15;14;13;12;11;10" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddPucks">
+            <Script> cl := colors[id] </Script>
+            <ExecMacro MacroName = "AddPuck" />
+            <Script> Inc(id)</Script>
+            <Turn NormVector = "0; 0; 1" Angle = "f * Pi/13" />
+        </Macro>
+        <ExecMacro MacroName = "AddPucks" id = "0" f = "1" Repeat = "26" />
+
+        <Turn NormVector = "0; 1; 0" Angle = " Pi" />
+        <ExecMacro MacroName = "AddPucks" id = "0" f = "-1" Repeat = "26" />
+        <Turn NormVector = "0; 1; 0" Angle = " Pi" />
+
+        <Turn NormVector = "1; 0; 0" Angle = "-Pi/2" />
+        <Turn NormVector = "0; 0; 1" Angle = " Pi" />
+        <Turn NormVector = "0; 0; 1" Angle = " 4.5*Pi/26" />
+        <Turn NormVector = "1; 1; 1" Angle = "-Pi/13" />
+        <Turn NormVector = "0; 0; 1" Angle = " 1*Pi/26" />
+        <Turn NormVector = "1; 0; 0" Angle = "-Pi/26" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

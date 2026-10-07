@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>5x5x5 Tilt Mirror</Name>
+        <Menu>Other cubes\Unclassified\5x5x5 Tilt Mirror</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-07-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8410</Link>
+    </Interface>
+
+    <Script>
+        clSilver := 'C0C0C0';
+
+        W := 0.5;
+
+        D := W * 0.15;
+        D1 := D * 1;
+        D2 := D * 3;
+
+        for i := 0 to 5 do
+            Colors[i] := clSilver;
+
+        AX :=-0.15;
+        AY :=-0.05;
+        AZ :=-0.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D1; D1; D2" TurnAxesWithLayer = "3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "1;0;0" Angle = "AX" />
+        <Turn NormVector = "0;1;0" Angle = "AY" />
+        <Turn NormVector = "0;0;1" Angle = "AZ" />
+
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

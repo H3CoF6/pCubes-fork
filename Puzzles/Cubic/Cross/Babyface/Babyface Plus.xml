@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Babyface Plus</Name>
+        <Menu>Cubic\Cross\Babyface\Babyface Plus</Menu>
+        <Inventor>Valentin Grohar</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-08-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4693</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        W1 := W * 0.9;
+        D := W1 / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-W1;-D; D; W1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split> <Plane NormDistance = "W1" NormVector = " 0; 0; 1" /> </Split>
+        <Split> <Plane NormDistance = "W1" NormVector = " 0; 0;-1" /> </Split>
+        <Split> <Plane NormDistance = "W1" NormVector = " 1; 0; 0" /> </Split>
+        <Split> <Plane NormDistance = "W1" NormVector = "-1; 0; 0" /> </Split>
+        <Split> <Plane NormDistance = "W1" NormVector = " 0; 1; 0" /> </Split>
+        <Split> <Plane NormDistance = "W1" NormVector = " 0;-1; 0" /> </Split>
+
+        <HideContaining Vector = " Cx; Cy; Cz" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "W1" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " Cx; Cy; Cz" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

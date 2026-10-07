@@ -1,0 +1,157 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fracture-10 Unbandaged</Name>
+        <Menu>Other forms\Dipyramid\Pentagonal\Fracture-10 Unbandaged</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-06-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5390</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clViolett      := '800080';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clOrange       := 'FF6000';
+        clLightBlue    := '2828FF';
+        clLightViolett := 'FF0080';
+        clBrown        := '800000';
+        clLightGreen   := '00FF00';
+
+        R  := 0.5;
+        C0 := R * sqrt(5 * (5 - 2 * sqrt(5))) / 5;
+        C1 := R * (sqrt(5) - 1) / 2;
+        C2 := R * sqrt(10 * (5 + sqrt(5))) / 10;
+        C3 := R * sqrt(10 * (5 - sqrt(5))) / 5;
+        C4 := R * (5 + sqrt(5)) / 5;
+
+        D := R * sqrt((-2 * sqrt(5) + 5) / 5);
+
+        Rad := R * 0.26;
+
+        x[0] :=   R;
+        y[0] := -C0;
+        x[1] :=  -R;
+        y[1] := -C0;
+        x[2] :=  C1;
+        y[2] :=  C2;
+        x[3] := -C1;
+        y[3] :=  C2;
+        x[4] :=   0;
+        y[4] := -C3;
+
+        dn := sqrt((-sqrt(5) + 13) / 40);
+        D1 := C4 * sqrt((-2 * sqrt(5) + 15) / 41));
+
+        procedure Normal1(i1, i2, i);
+        begin
+          px[i] := (y[i2] - y[i1]) * C4 * D1 / dn;
+          py[i] := (x[i1] - x[i2]) * C4 * D1 / dn;
+          pz[i] := (x[i1] * y[i2] - x[i2] * y[i1]) * D1 / dn;
+        end;
+
+        Normal1(0, 2, 0);
+        Normal1(2, 3, 1);
+        Normal1(3, 1, 2);
+        Normal1(1, 4, 3);
+        Normal1(4, 0, 4);
+
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = " x[0]; y[0]; 0" />
+        <Axis NormVector = " x[1]; y[1]; 0" />
+        <Axis NormVector = " x[2]; y[2]; 0" />
+        <Axis NormVector = " x[3]; y[3]; 0" />
+        <Axis NormVector = " x[4]; y[4]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "    0;    0;  C4" />
+                <Add Vector = "    0;    0; -C4" />
+                <Add Vector = " x[0]; y[0];   0" />
+                <Add Vector = " x[1]; y[1];   0" />
+                <Add Vector = " x[2]; y[2];   0" />
+                <Add Vector = " x[3]; y[3];   0" />
+                <Add Vector = " x[4]; y[4];   0" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed         " VertexIndexes = " 0; 2; 4" />
+                <Face Color = "clLightViolett" VertexIndexes = " 0; 4; 5" />
+                <Face Color = "clBrown       " VertexIndexes = " 0; 5; 3" />
+                <Face Color = "clOrange      " VertexIndexes = " 0; 3; 6" />
+                <Face Color = "clYellow      " VertexIndexes = " 0; 6; 2" />
+                <Face Color = "clBlue        " VertexIndexes = " 1; 2; 6" />
+                <Face Color = "clViolett     " VertexIndexes = " 1; 6; 3" />
+                <Face Color = "clLightBlue   " VertexIndexes = " 1; 3; 5" />
+                <Face Color = "clGreen       " VertexIndexes = " 1; 5; 4" />
+                <Face Color = "clLightGreen  " VertexIndexes = " 1; 4; 2" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "UnAxis" >
+            <Turn Axis = "Ax" Layer = "1" Angle = "-Pi/2" />
+            <SplitByAxes/>
+        </Macro>
+        <Macro Name = "Unbandage" >
+            <ExecMacro MacroName = "UnAxis" Ax = "0"/>
+            <ExecMacro MacroName = "UnAxis" Ax = "2"/>
+            <ExecMacro MacroName = "UnAxis" Ax = "3"/>
+            <ExecMacro MacroName = "UnAxis" Ax = "1"/>
+            <ExecMacro MacroName = "UnAxis" Ax = "4"/>
+        </Macro>
+        <Macro Name = "UndoTurns" >
+            <Turn Axis = "4" Layer = "1" Angle = " Pi/2" />
+            <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+            <Turn Axis = "3" Layer = "1" Angle = " Pi/2" />
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/2" />
+            <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Unbandage" Repeat = "3"/>
+        <ExecMacro MacroName = "UndoTurns" Repeat = "3"/>
+
+        <HideContaining Vector = "  R / 2; -C0 / 2; C4 / 2" />
+        <HideContaining Vector = " -R / 2; -C0 / 2; C4 / 2" />
+        <HideContaining Vector = " C1 / 2;  C2 / 2; C4 / 2" />
+        <HideContaining Vector = "-C1 / 2;  C2 / 2; C4 / 2" />
+        <HideContaining Vector = "      0; -C3 / 2; C4 / 2" />
+
+        <HideContaining Vector = "  R / 2; -C0 / 2; -C4 / 2" />
+        <HideContaining Vector = " -R / 2; -C0 / 2; -C4 / 2" />
+        <HideContaining Vector = " C1 / 2;  C2 / 2; -C4 / 2" />
+        <HideContaining Vector = "-C1 / 2;  C2 / 2; -C4 / 2" />
+        <HideContaining Vector = "      0; -C3 / 2; -C4 / 2" />
+
+        <HideContaining Vector = "( R +  0) / 2; (-C0 - C3) / 2; 0" />
+        <HideContaining Vector = "(-R +  0) / 2; (-C0 - C3) / 2; 0" />
+        <HideContaining Vector = "( R + C1) / 2; (-C0 + C2) / 2; 0" />
+        <HideContaining Vector = "(-R - C1) / 2; (-C0 + C2) / 2; 0" />
+
+        <HideContaining Vector = "0; C2; 0" />
+        <HideContaining Vector = "0;  0; 0" />
+
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <Circle Radius = "Rad" Color = "clRed         " Center = "px[0]; py[0]; pz[0]" />
+        <Circle Radius = "Rad" Color = "clLightViolett" Center = "px[1]; py[1]; pz[1]" />
+        <Circle Radius = "Rad" Color = "clBrown       " Center = "px[2]; py[2]; pz[2]" />
+        <Circle Radius = "Rad" Color = "clOrange      " Center = "px[3]; py[3]; pz[3]" />
+        <Circle Radius = "Rad" Color = "clYellow      " Center = "px[4]; py[4]; pz[4]" />
+        <Circle Radius = "Rad" Color = "clLightGreen  " Center = "px[0]; py[0];-pz[0]" />
+        <Circle Radius = "Rad" Color = "clGreen       " Center = "px[1]; py[1];-pz[1]" />
+        <Circle Radius = "Rad" Color = "clLightBlue   " Center = "px[2]; py[2];-pz[2]" />
+        <Circle Radius = "Rad" Color = "clViolett     " Center = "px[3]; py[3];-pz[3]" />
+        <Circle Radius = "Rad" Color = "clBlue        " Center = "px[4]; py[4];-pz[4]" />
+    </Figure>
+</xml>

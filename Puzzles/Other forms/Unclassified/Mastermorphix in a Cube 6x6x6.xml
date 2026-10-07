@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mastermorphix in a Cube 6x6x6</Name>
+        <Menu>Other forms\Unclassified\Mastermorphix in a Cube 6x6x6</Menu>
+        <Inventor>Chester de Guzman</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-01-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10640</Link>
+    </Interface>
+
+    <Script>
+        Colors[2] := '0000E8'; // Blue
+        Colors[3] := '00B600'; // Green
+        Colors[0] := 'E80000'; // Red
+        Colors[1] := 'FFEF00'; // Yellow
+
+        W := 0.5;
+        K := W * 1.11;
+        D := W / 3;
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D*2;-D; 0; D; D*2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "5" />
+
+        <Hide Axis = "0" Layers = "1-4" />
+        <Hide Axis = "1" Layers = "1-4" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Hide Axis = "1" Layers = "1-4" />
+        <Hide Axis = "2" Layers = "1-4" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Hide Axis = "2" Layers = "1-4" />
+        <Hide Axis = "0" Layers = "1-4" />
+        <RemoveAllVisible/>
+
+        <Script>
+            include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        </Script>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "5" />
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "0" Layers = "0-5" Angle = "Pi/2" />
+        <SaveSolvedState/>
+        <Undo/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

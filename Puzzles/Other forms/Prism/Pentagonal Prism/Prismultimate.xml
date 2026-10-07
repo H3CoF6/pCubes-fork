@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Prismultimate</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Prismultimate</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8401</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36261</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0044EE';
+        clGreen  := '00BB00';
+        clRed    := 'DD0000';
+        clPurple := '8800AA';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF7700';
+
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        H := 0.59;
+        R := h * 0.95;
+
+        dAngle := Pi / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * sin(dAngle * (2 * i + 1));
+            y[i] := R * cos(dAngle * (2 * i + 1));
+        end;
+    </Script>
+
+    <Axes TurningAngles = "dAngle" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "cx[0]; cy[0]; cz[0]" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * dAngle" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "cx[1]; cy[1]; cz[1]" />
+        <Axis NormVector = "cx[2]; cy[2]; cz[2]" />
+        <Axis NormVector = "cx[3]; cy[3]; cz[3]" />
+        <Axis NormVector = "cx[4]; cy[4]; cz[4]" />
+        <Axis NormVector = "cx[5]; cy[5]; cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; -H" />
+            <Vertices Vectors = "x; y;  H" />
+            <Faces>
+                <Face Color = "clBlue  " VertexIndexes = "5;6;1;0" />
+                <Face Color = "clRed   " VertexIndexes = "6;7;2;1" />
+                <Face Color = "clGreen " VertexIndexes = "7;8;3;2" />
+                <Face Color = "clOrange" VertexIndexes = "8;9;4;3" />
+                <Face Color = "clPurple" VertexIndexes = "9;5;0;4" />
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clWhite " VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "dAngle"/>
+
+        <SplitByAxes/>
+        <Undo/>
+    </Figure>
+</xml>

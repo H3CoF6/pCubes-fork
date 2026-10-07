@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>BinSpiral</Name>
+        <Menu>Cubic\Bandaged\Cube 5x5x5\BinSpiral</Menu>
+        <Inventor></Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2014-06-16</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 5;
+        W_D := W / N;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('121=032, 220, 224, 204, 124, 324, 104, 310, 130, 330, 023, 304');
+        ParseTxt('211=020, 102, 302, 110, 101, 301, 103, 043, 303');
+        ParseTxt('112=021, 421, 242, 240, 040, 423, 411, 431, 030, 433, 141, 341, 010, 012, 413');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+
+        // split and glue paradox element
+        <HideContaining Vector = " W/2;-W; W" />
+        <InvertVisibility/>
+        <Split Axis = "1" From = "1" Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" />
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W_D" WY = "W_D*2" WZ = "W_D" DWX = " W_D * 2" DWY = "-W_D * 3" DWZ = " W_D * 4" />
+        <InvertVisibility/>
+    </Figure>
+</xml>

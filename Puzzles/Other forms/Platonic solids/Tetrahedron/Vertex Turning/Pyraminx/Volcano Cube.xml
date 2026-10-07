@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Volcano Cube</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Pyraminx\Volcano Cube</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-04</Added>
+        <Link>https://www.magiccubemall.com/p/2Pcs-Qiyi-Cube-Set-Vivid-Color-Little-Red-Hat-Cube-Volcano-Cube-_2830087.html</Link>
+    </Interface>
+
+    <Script>
+        C1 := '00AAFF';
+        C2 := 'FFFF00';
+        C3 := 'FF0000';
+
+        W := 0.5;
+        include 'Figures\Scripts\Tetrahedron_Coordinates.inc';
+
+        D := 2 * sqrt(3) / 9;
+        D0 := -sqrt(3) / 6;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2 * D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = "-1;  1;  1" />
+    </Axes>
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2 * D" >
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name ="Body">
+            <Part>
+                <Vertices>
+                    <Add Vector = "Vx[0]; Vy[0]; Vz[0]" />
+                    <Add Vector = "Vx[1]; Vy[1]; Vz[1]" />
+                    <Add Vector = "Vx[2]; Vy[2]; Vz[2]" />
+                    <Add Vector = "Vx[3]; Vy[3]; Vz[3]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[0]" VertexIndexes = "1;2;3" />
+                    <Face Color = "Colors[1]" VertexIndexes = "0;3;2" />
+                    <Face Color = "Colors[1]" VertexIndexes = "0;1;3" />
+                    <Face Color = "Colors[1]" VertexIndexes = "0;2;1" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Script>
+            Colors[0] := C1;
+            Colors[1] := C2;
+        </Script>
+        <ExecMacro MacroName = "Body"/>
+        <Cut> <Plane NormVector = "-1;  1; -1" NormDistance = " -D0 - D" /> </Cut>
+        <InvertVisibility/>
+
+        <Script>
+            Colors[0] := C3;
+            Colors[1] := C3;
+        </Script>
+        <ExecMacro MacroName = "Body"/>
+        <Cut> <Plane NormVector = " 1; -1;  1" NormDistance = "  D0 + D" /> </Cut>
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dharma Ring 1/2</Name>
+        <Menu>Other cubes\Multi-core\Dharma Ring 1/2</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-12</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := '00AA00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.20;
+
+        D1 := W / 2;
+        D2 := (W + D1) / sqrt(2);
+
+        DX := W * 3 / 4;
+        DY := W * 9 / 4;
+
+        Ax[0] := DY; Ay[0] := DX;
+        Ax[1] :=-DX; Ay[1] := DY;
+        Ax[2] :=-DY; Ay[2] :=-DX;
+        Ax[3] := DX; Ay[3] :=-DY;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2; 0" PlaneDistances = "-D1; 0; D1" >
+        <Axis NormVector = " 0; 1; 0" BaseVector = "Ax[0]; Ay[0]; 0" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "Ax[2]; Ay[2]; 0" />
+        <Axis NormVector = "-1; 0; 0" BaseVector = "Ax[1]; Ay[1]; 0" />
+        <Axis NormVector = " 1; 0; 0" BaseVector = "Ax[3]; Ay[3]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi"  PlaneDistances = "D2" FixedLayers = "0" >
+        <Axis NormVector = " 1; 0; 1" BaseVector = "Ax[0]; Ay[0]; 0" />
+        <Axis NormVector = " 1; 0;-1" BaseVector = "Ax[0]; Ay[0]; 0" />
+        <Axis NormVector = " 0; 1; 1" BaseVector = "Ax[1]; Ay[1]; 0" />
+        <Axis NormVector = " 0; 1;-1" BaseVector = "Ax[1]; Ay[1]; 0" />
+        <Axis NormVector = "-1; 0; 1" BaseVector = "Ax[2]; Ay[2]; 0" />
+        <Axis NormVector = "-1; 0;-1" BaseVector = "Ax[2]; Ay[2]; 0" />
+        <Axis NormVector = " 0;-1; 1" BaseVector = "Ax[3]; Ay[3]; 0" />
+        <Axis NormVector = " 0;-1;-1" BaseVector = "Ax[3]; Ay[3]; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCube">
+            <Script>
+                DWX := Ax[i];
+                DWY := Ay[i];
+                Inc(i);
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+        <ExecMacro MacroName = "AddCube" i = "0" Repeat = "4" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Turn" >
+            <Turn Axis = "Axis" Layers = "1;2" Angle = "Pi/2" />
+            <Script> Inc(Axis); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Turn" Axis = "0" Repeat = "4" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Turn" Axis = "0" Repeat = "4" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Turn" Axis = "0" Repeat = "4" />
+        <SplitByAxes/>
+        <Undo Repeat = "12" />
+    </Figure>
+</xml>

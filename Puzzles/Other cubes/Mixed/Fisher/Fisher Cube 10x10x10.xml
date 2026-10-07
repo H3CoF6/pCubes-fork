@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Cube 10x10x10</Name>
+        <Menu>Other cubes\Mixed\Fisher\Fisher cube 10x10x10</Menu>
+        <Programmer>Boris</Programmer>
+        <Inventor>Spencer Brodhead</Inventor>
+        <Added>2022-02-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7046</Link>
+    </Interface>
+
+    <Script>
+        N := 10;
+
+        W  := 0.5;
+        D0 := W * sqrt(2) / (N - 1);
+        H  := D0 * N / 2;
+
+        for i := 0 to N - 2 do
+            D[i] := -H + D0 * (i + 1);
+
+        WX := W;
+        WY := W;
+        WZ := H;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 1; 0" />
+        <Axis NormVector = "1;-1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "0" From = "1"/>
+        <Split Axis = "1" From = "1"/>
+        <Split Axis = "2" From = "1"/>
+        <Split Axis = "0" From = "N-1"/>
+        <Split Axis = "1" From = "N-1"/>
+        <Split Axis = "2" From = "N-1"/>
+
+        <RemoveGrayParts/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

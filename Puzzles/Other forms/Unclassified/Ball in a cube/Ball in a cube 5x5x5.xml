@@ -1,0 +1,118 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Ball in a cube 5x5x5</Name>
+        <Menu>Other forms\Unclassified\Ball in a cube\Ball in a cube 5x5x5</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-03-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1795</Link>
+    </Interface>                   
+
+    <Script>
+        clRed    := 'FF0000';
+        clOrange := 'FF6000';
+        clBlue   := '0000A0';
+        clGreen  := '008000';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.2;
+        K := 0.51;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-3 * D; D; 3 * D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0;-1" />
+    </Axes>
+ 
+    <Figure>
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "0;1;3;2" />
+                <Face Color = "clOrange" VertexIndexes = "5;4;6;7" />
+                <Face Color = "clBlue  " VertexIndexes = "1;0;4;5" />
+                <Face Color = "clGreen " VertexIndexes = "2;3;7;6" />
+                <Face Color = "clYellow" VertexIndexes = "0;2;6;4" />
+                <Face Color = "clWhite " VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "3" />
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <RemoveContaining Vector = " W; 0; 0" />
+        <RemoveContaining Vector = "-W; 0; 0" />
+        <RemoveContaining Vector = " 0; W; 0" />
+        <RemoveContaining Vector = " 0;-W; 0" />
+        <RemoveContaining Vector = " 0; 0; W" />
+        <RemoveContaining Vector = " 0; 0;-W" />
+
+        <SplitByAxes/>
+        <Split><Plane NormVector = "1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "0; 1; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "0; 0;-1" NormDistance = "-D" /></Split>
+
+        <RemoveContaining Vector = "Ex; Ey; Ez" />
+        <HideContaining Vector = "Vx; Vy; Vz" />
+
+        <Macro Name = "SplitEdge">
+            <Split><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "(3 * D + W) / sqrt(2)" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitEdge" i = "0" Repeat = "12" />
+
+        <RemoveGrayParts/>
+
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = "1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "0; 1; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "0; 0;-1" NormDistance = "-D" /></Split>
+
+        <HideContaining Vector = "Ex; Ey; Ez" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "CutEdge">
+            <HideContaining Vector = "Ex[i]; Ey[i]; Ez[i]" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "(3 * D + W) / sqrt(2)" /></Cut>
+            <ShowAll/>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutEdge" i = "0" Repeat = "12" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Split Color2 = "clOrange" Axis = "0" From = "1" />
+        <Split Color1 = "clRed   " Axis = "0" From = "3" />
+        <Split Color2 = "clGreen " Axis = "1" From = "1" />
+        <Split Color1 = "clBlue  " Axis = "1" From = "3" />
+        <Split Color2 = "clYellow" Axis = "2" From = "1" />
+        <Split Color1 = "clWhite " Axis = "2" From = "3" />
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <Split><Plane NormVector = "1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "0; 1; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "0; 0;-1" NormDistance = "-D" /></Split>
+    </Figure>
+</xml>

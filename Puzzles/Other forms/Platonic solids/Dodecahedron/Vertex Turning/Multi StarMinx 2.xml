@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Multi StarMinx 2</Name>
+        <Menu>Other forms\Dodecahedron\Vertex Turning\Multi StarMinx 2</Menu>
+        <Menu>Other forms\Multi-puzzles\Multi StarMinx 2</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>Evgeniy Grigoriev, xchemist</Programmer>
+        <Added>2019-11-15</Added>
+        <Link>http://bbs.mf8-china.com/forum.php?mod=viewthread&amp;tid=104056</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        R2 := R * 0.57;
+        D := R / 3;
+        jumAngle := Arcsin(1/4) + Pi/6;
+        DCut := R * sqrt(5) / 3;
+        DH := DCut * 0.97; // Size of hole
+    </Script>
+
+    <Axes TurningAngles = " 0; 2*Pi/3" JumbleAngle = "jumAngle" PlaneDistances = "D" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <SplitByAxes/>
+        <Macro Name = "HideCenter" >
+            <HideContaining Vector = " Cx[i]; Cy[i]; Cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenter" Repeat = "12" i = "0" />
+
+        <InvertVisibility/>
+
+        <Macro Name = "SplitC" >
+            <Split> <Plane NormDistance = "DH" NormVector = " Vx[i]; Vy[i]; Vz[i]" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitC" Repeat = "20" i = "0" />
+
+        <Macro Name = "RemoveCenters" >
+            <RemoveContaining Vector = "Cx[Id]; Cy[Id]; Cz[Id]" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" Id = "0" Repeat = "12" />
+        <ShowAll/>
+
+        <Macro Name = "SplitI" >
+            <Split> <Plane NormDistance = "DCut" NormVector = " Vx[i]; Vy[i]; Vz[i]" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitI" Repeat = "20" i = "0" />
+        <RemoveGrayParts/>
+
+        <!-- add small figure -->
+        <Script> R := R2; </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+      
+        <SplitByAxes/>
+      
+    </Figure>
+</xml>

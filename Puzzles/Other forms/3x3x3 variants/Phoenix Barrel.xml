@@ -1,0 +1,139 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Phoenix Barrel</Name>
+        <Menu>Other forms\3x3x3 variants\Phoenix Barrel</Menu>
+        <Inventor>Jeff Deloach</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9090</Link>
+    </Interface>
+
+    <Script>
+        Clr[7] := '0000A0'; // clBlue
+        Clr[5] := '008000'; // clGreen
+        Clr[0] := '800080'; // clViolett
+        Clr[1] := '2828FF'; // clLightBlue
+        Clr[2] := '00FF00'; // clLightGreen
+        Clr[3] := 'FF0080'; // clLightViolett
+        Clr[6] := 'FF0000'; // clRed
+        Clr[4] := 'FF6000'; // clOrange
+
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        R  := 0.6;
+        PV := 0.8; // vertical pillow
+        H := R * 0.9;
+
+        // every side divided into MxN faces
+        N := 8;
+        M := 32; // FacesPerRow
+
+        function QInterpolate(xi, x1, y1, x2, y2, x3, y3);
+        begin
+            Result :=
+                y1 * (xi - x2) * (xi - x3) / (x1 - x2) / (x1 - x3) +
+                y2 * (xi - x3) * (xi - x1) / (x2 - x3) / (x2 - x1) +
+                y3 * (xi - x1) * (xi - x2) / (x3 - x1) / (x3 - x2);
+        end;
+
+        for i := 0 to N do begin // vertical curve
+            HZ[i] := H * (-1 + 2 / N * i);
+            RZ[i] := R * QInterpolate(HZ[i], -H,PV, 0,1, H,PV)
+        end;
+
+        Id := 0;
+        sUp := '';
+        sDown := '';
+        for j := 0 to M - 1 do begin
+            A1 := 2 * Pi / M * j;
+            cA1 := cos(A1);
+            sA1 := sin(A1);
+            sDown := IntToStr(Id) + ';' + sDown;
+            for i := 0 to N do begin
+                x[Id] := RZ[i] * cA1;
+                y[Id] := RZ[i] * sA1;
+                z[Id] := HZ[i];
+                Inc(Id);
+            end;
+            sUp := sUp + IntToStr(Id - 1) + ';';
+        end;
+        D := R * PV / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1;0;0" />
+        <Axis NormVector = "0;1;0" />
+        <Axis NormVector = "0;0;1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i * (N + 1) + Row;
+                i2 := (i + 1) mod M * (N + 1) + Row;
+                c := (i + dc) * 4 div M;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "i1 + 1; i1; i2; i2 + 1" InvisibleEdges = "ie" />
+        </Macro>
+
+        <Macro Name = "AddRow" >
+            <ExecMacro MacroName = "AddFace" i = "0"  Repeat = "M" />
+            <Script> Row := Row + 1; </Script>
+        </Macro>
+
+        <Macro Name = "AddBarrel" >
+            <Part>
+                <Vertices Vectors = "x;y;z" />
+
+                <Faces>
+                    <Face Color = "clWhite"  VertexIndexes = "sUp" />
+                    <ExecMacro MacroName = "AddRow" Row = "0"     ie = "13" /> bottom
+                    <ExecMacro MacroName = "AddRow" Row = "1"     ie = "15" Repeat = "N - 2" /> center
+                    <ExecMacro MacroName = "AddRow" Row = "N - 1" ie = "7" /> top
+                    <Face Color = "clYellow" VertexIndexes = "sDown" />
+                </Faces>
+            </Part>
+            <Split Axis = "0" From = "1" />
+            <Split Axis = "0" From = "2" />
+            <Split Axis = "1" From = "1" />
+            <Split Axis = "1" From = "2" />
+        </Macro>
+
+        <Script>
+            Colors[0] := Clr[0];
+            Colors[1] := Clr[1];
+            Colors[2] := Clr[2];
+            Colors[3] := Clr[3];
+        </Script>
+
+        <ExecMacro MacroName = "AddBarrel" dc = "0" />
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <Script>
+            Colors[0] := Clr[4];
+            Colors[1] := Clr[5];
+            Colors[2] := Clr[6];
+            Colors[3] := Clr[7];
+            Colors[4] := Clr[4];
+        </Script>
+
+        <ExecMacro MacroName = "AddBarrel" dc = "4" />
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

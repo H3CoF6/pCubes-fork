@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Matryoshka Cube1</Name>
+        <Menu>Cubic\Bandaged\Matryoshka Cube1</Menu>
+        <Menu>Matr</Menu>
+        <Inventor>Sam Jiang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6956</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        D := W / 3;
+        RCut := W * 0.99;
+
+        W1 := RCut;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+
+        <Macro Name = "AddP" >
+            <HideAll/>
+            <Part>
+                <Vertices>
+                    <Add Vector = " 0; 0; W" />
+                    <Add Vector = " W;-W; W" />
+                    <Add Vector = " W; W; W" />
+                    <Add Vector = "  0;  0; W1" />
+                    <Add Vector = " W1;-W1; W1" />
+                    <Add Vector = " W1; W1; W1" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[Color]" VertexIndexes = "0;1;2" InvisibleEdges = "5" />
+                    <Face VertexIndexes = "5;4;3" InvisibleEdges = "7" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "3;4;1;0" InvisibleEdges = "15" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "4;5;2;1" InvisibleEdges = "11" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "5;3;0;2" InvisibleEdges = "15" />
+                </Faces>
+            </Part>
+            <Cu1t><Plane NormVector = "0;0;1" NormDistance = "RCut" /></Cu1t>
+            <ShowAll/>
+            
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "AddP" Color = "5" Repeat = "4" />
+!--        <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "AddP" Color = "3" Repeat = "4" />
+        <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "AddP" Color = "1" Repeat = "4" />
+        <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi / 3" />
+        <Turn NormVector = " 0;-1; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddP" Color = "2" Repeat = "4" />
+        <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "AddP" Color = "4" Repeat = "4" />
+        <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "AddP" Color = "0" Repeat = "4" />
+        <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi / 3" />
+        <Turn NormVector = " 0;-1; 1" Angle = "Pi" />
+-->
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

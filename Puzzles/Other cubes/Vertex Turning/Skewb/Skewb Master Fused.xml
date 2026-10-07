@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Master Fused</Name>
+        <Menu>Other cubes\Vertex Turning\Skewb\Skewb Master Fused</Menu>
+        <Inventor>Katsuhiko Okamoto</Inventor>
+        <Programmer>Julian Wilkinson</Programmer>
+        <Added>2020-07-05</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=35862</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / sqrt(3) / 2;
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.985;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0; 0; W" />
+
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "D" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "8" />
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

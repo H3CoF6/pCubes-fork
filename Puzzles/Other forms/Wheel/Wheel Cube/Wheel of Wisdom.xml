@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Wheel Of Wisdom</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Wheel Of Wisdom</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-04-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4666</Link>
+    </Interface>
+
+    <Script>
+        W := 0.425;
+        D1 := W / 3;
+        D2 := W;
+        RC := D1 / cos(3 * Pi / 8);
+        Sc := 1.33;
+    </Script>
+
+    <Axes TurningAngles = " Pi/4; Pi/2; Pi/2; Pi/2; Pi/4" PlaneDistances = "-D2;-D1; D1; D2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" Base = "Cx[i]; Cy[i]; Cz[i]" Top  = "Cx[i] * Sc; Cy[i] * Sc; cz[i] * Sc" TopColor = "Colors[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Angle = "Pi/4" Layer = "0" />
+        <Turn Axis = "0" Angle = "Pi/4" Layer = "4" />
+        <Turn Axis = "1" Angle = "Pi/4" Layer = "0" />
+        <Turn Axis = "1" Angle = "Pi/4" Layer = "4" />
+        <Turn Axis = "2" Angle = "Pi/4" Layer = "0" />
+        <Turn Axis = "2" Angle = "Pi/4" Layer = "4" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

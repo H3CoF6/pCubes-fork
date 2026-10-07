@@ -1,0 +1,553 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>12-Axis Puzzle Ball V4</Name>
+        <Menu>Other forms\Sphere\12-Axis Puzzle Ball\V4</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-11-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6376</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        clBlack := '202020';
+
+        procedure CalcRail(x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4);
+        begin
+          kn := 0.001;
+          kd1 := 0.81;
+          kd2 := 0.49;
+          kw1 := 0.21;
+          kw2 := 0.25;
+
+          nx := (y1-y3) * (z2-z3) - (y2-y3) * (z1-z3);
+          ny := (z1-z3) * (x2-x3) - (z2-z3) * (x1-x3);
+          nz := (x1-x3) * (y2-y3) - (x2-x3) * (y1-y3);
+
+          // normalize vector
+          dn := sqrt(nx^2 + ny^2 + nz^2);
+          nx := nx / dn*kn;
+          ny := ny / dn*kn;
+          nz := nz / dn*kn;
+
+          cx := (x2 + x1 + x3 + x4) / 4;
+          cy := (y2 + y1 + y3 + y4) / 4;
+          cz := (z2 + z1 + z3 + z4) / 4;
+
+          d1x := (x2 - x1) * kd1;
+          d1y := (y2 - y1) * kd1;
+          d1z := (z2 - z1) * kd1;
+
+          d2x := (x2 - x1) * kd2;
+          d2y := (y2 - y1) * kd2;
+          d2z := (z2 - z1) * kd2;
+
+          w1x := (x2 + x1 - x3 - x4) * kw1;
+          w1y := (y2 + y1 - y3 - y4) * kw1;
+          w1z := (z2 + z1 - z3 - z4) * kw1;
+
+          w2x := (x2 + x1 - x3 - x4) * kw2;
+          w2y := (y2 + y1 - y3 - y4) * kw2;
+          w2z := (z2 + z1 - z3 - z4) * kw2;
+
+          x1 := cx - w1x - d1x + nx; y1 := cy - w1y - d1y + ny; z1 := cz - w1z - d1z + nz;
+          x2 := cx - w1x + d1x + nx; y2 := cy - w1y + d1y + ny; z2 := cz - w1z + d1z + nz;
+          x3 := cx + w2x + d2x + nx; y3 := cy + w2y + d2y + ny; z3 := cz + w2z + d2z + nz;
+          x4 := cx + w2x - d2x + nx; y4 := cy + w2y - d2y + ny; z4 := cz + w2z - d2z + nz;
+        end;
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', indexes);
+          if p = 0 then begin
+            substr := indexes;
+            indexes := '';
+          end else begin
+            substr := copy(indexes, 1, p-1);
+            Delete(indexes, 1, p);
+          end;
+          Result := StrToInt(Trim(substr));
+        end;
+
+        procedure SetColors(Color, indexes);
+        begin
+            while Length(indexes) > 0 do begin
+                idx := GetInt;
+                Colors [idx] := Color;
+                Colors1[idx] := Color;
+                Colors2[idx] := Color;
+            end;
+        end;
+
+        for idx := 0 to 97 do begin
+            Colors [idx] := clBlack;
+            Colors1[idx] := clBlack;
+            Colors2[idx] := clBlack;
+        end;
+
+        SetColors(clYellow, '68,69,71,47,96,46,97');
+        SetColors(clGreen,  '32,11,35,33,10,90,91');
+        SetColors(clBlue,   '39,25,41,38,26,77,78');
+        SetColors(clRed,    ' 2, 3, 5,61,62,83,84');
+
+        Colors1[06] := clRed;     Colors2[06] := clGreen;
+        Colors1[13] := clGreen;   Colors2[13] := clRed;
+        Colors1[19] := clGreen;   Colors2[19] := clBlue;
+        Colors1[27] := clBlue;    Colors2[27] := clGreen;
+        Colors1[42] := clBlue;    Colors2[42] := clYellow;
+        Colors1[49] := clYellow;  Colors2[49] := clBlue;
+        Colors1[55] := clYellow;  Colors2[55] := clRed;
+        Colors1[63] := clRed;     Colors2[63] := clYellow;
+        Colors1[73] := clRed;     Colors2[73] := clBlue;
+        Colors1[79] := clBlue;    Colors2[79] := clRed;
+        Colors1[86] := clYellow;  Colors2[86] := clGreen;
+        Colors1[92] := clGreen;   Colors2[92] := clYellow;
+
+        procedure SetColors12(Color, indexes);
+        begin
+            while Length(indexes) > 0 do begin
+                idx := GetInt;
+                Colors1[idx] := Color;
+                Colors2[idx] := Color;
+            end;
+        end;
+
+        SetColors12(clRed,    ' 1, 4,16,58,60,82');
+        SetColors12(clYellow, '45,48,66,67,70,95');
+        SetColors12(clGreen,  ' 9,12,30,31,34,89');
+        SetColors12(clBlue,   '22,24,37,40,52,76');
+
+        R   := 0.6;
+        Rin := R * 0.8;
+        D   := R * 0.17;
+        D2  := D * sqrt(2);
+
+        x[0] := 0;
+        y[0] := -sqrt(R^2 - D2^2);
+        z[0] := D2;
+
+        x[1] := 0;
+        y[1] := -sqrt(Rin^2 - D2^2);
+        z[1] := D2;
+
+        z[2] := sqrt((R^2 - 4 * D^2) / 3);
+        x[2] := z[2] - D2;
+        y[2] :=-z[2] - D2;
+
+        z[3] := sqrt((Rin^2 - 4 * D^2) / 3);
+        x[3] := z[3] - D2;
+        y[3] :=-z[3] - D2;
+
+        y[4] := (-2 * D2 - sqrt(-2 * D2^2 + 3 * R^2)) / 3;
+        x[4] := -y[4] - D2;
+        z[4] := -y[4] - D2;
+
+        y[5] := (-2 * D2 - sqrt(-2 * D2^2 + 3 * Rin^2)) / 3;
+        x[5] := -y[5] - D2;
+        z[5] := -y[5] - D2;
+
+        y[6] := (-D2 - sqrt(-2 * D2^2 + 3 * R^2)) / 3;
+        x[6] := -y[6] - D2;
+        z[6] := -y[6];
+
+        y[7] := (-D2 - sqrt(-2 * D2^2 + 3 * Rin^2)) / 3;
+        x[7] := -y[7] - D2;
+        z[7] := -y[7];
+
+        x[8] :=  0;
+        y[8] := -R;
+        z[8] :=  0;
+
+        x[9] :=  R / sqrt(3);
+        y[9] := -R / sqrt(3);
+        z[9] :=  R / sqrt(3);
+
+        x[10] :=  0;
+        y[10] := -R / sqrt(2);
+        z[10] :=  R / sqrt(2);
+
+        x[11] := 0;
+        y[11] := (y[2] - y[3]) * 1.26 + y[3];
+        z[11] := (z[2] - z[3]) * 1.26 + z[3];
+
+        x[12] := (x[0] + z[2]) / 2 * 1.045;
+        y[12] := (y[0] + y[2]) / 2 * 1.045;
+        z[12] := (z[0] + x[2]) / 2 * 1.045;
+
+        x[13] := ((x[0] + x[2]) / 2 - (x[1] + x[3]) / 2) * 1.15 + (x[1] + x[3]) / 2;
+        y[13] := ((y[0] + y[2]) / 2 - (y[1] + y[3]) / 2) * 1.15 + (y[1] + y[3]) / 2;
+        z[13] := ((z[0] + z[2]) / 2 - (z[1] + z[3]) / 2) * 1.15 + (z[1] + z[3]) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0;  1;  1" />
+        <Axis NormVector = " 1;  0;  1" />
+        <Axis NormVector = " 0; -1;  1" />
+        <Axis NormVector = "-1;  0;  1" />
+        <Axis NormVector = "-1;  1;  0" />
+        <Axis NormVector = " 1;  1;  0" />
+    </Axes>
+
+    <Figure>
+
+        <Macro Name = "AddRail" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " x1; y1; z1" />
+                    <Add Vector = " x2; y2; z2" />
+                    <Add Vector = " x3; y3; z3" />
+                    <Add Vector = " x4; y4; z4" />
+                    <Add Vector = " x1-nx; y1-ny; z1-nz" />
+                    <Add Vector = " x2-nx; y2-ny; z2-nz" />
+                    <Add Vector = " x3-nx; y3-ny; z3-nz" />
+                    <Add Vector = " x4-nx; y4-ny; z4-nz" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "RailColor" VertexIndexes = "3; 2; 1; 0" />
+                    <Face VertexIndexes = "4; 5; 6; 7" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddCenter" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " x[8]; y[8]; z[8]" />
+                    <Add Vector = " x[0]; y[0]; z[0]" />
+                    <Add Vector = "-z[0]; y[0]; x[0]" />
+                    <Add Vector = "-x[0]; y[0];-z[0]" />
+                    <Add Vector = " z[0]; y[0];-x[0]" />
+                    <Add Vector = " x[1]; y[1]; z[1]" />
+                    <Add Vector = "-z[1]; y[1]; x[1]" />
+                    <Add Vector = "-x[1]; y[1];-z[1]" />
+                    <Add Vector = " z[1]; y[1];-x[1]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[Color]" VertexIndexes = " 0; 1; 2" InvisibleEdges = "5" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 0; 2; 3" InvisibleEdges = "5" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 0; 3; 4" InvisibleEdges = "5" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 0; 4; 1" InvisibleEdges = "5" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "2; 1; 5; 6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "3; 2; 6; 7" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "4; 3; 7; 8" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "1; 4; 8; 5" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "8; 7; 6; 5" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "Add5Edge" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " x[0]; y[0]; z[0]" />
+                    <Add Vector = " x[1]; y[1]; z[1]" />
+                    <Add Vector = " z[0]; y[0];-x[0]" />
+                    <Add Vector = " z[1]; y[1];-x[1]" />
+                    <Add Vector = " z[2]; y[2]; x[2]" />
+                    <Add Vector = " z[3]; y[3]; x[3]" />
+                    <Add Vector = " x[4]; y[4]; z[4]" />
+                    <Add Vector = " x[5]; y[5]; z[5]" />
+                    <Add Vector = " x[2]; y[2]; z[2]" />
+                    <Add Vector = " x[3]; y[3]; z[3]" />
+                    <Add Vector = " x[12]; y[12]; z[12]" />
+                    <Add Vector = " z[13]; y[13]; x[13]" />
+                    <Add Vector = " x[13]; y[13]; z[13]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[Color]" VertexIndexes = "0; 1; 3; 2" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "2; 3; 5; 4; 11" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "4; 5; 7; 6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "6; 7; 9; 8" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "8; 9; 1; 0; 12" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "3; 1; 9; 7; 5" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "4; 8; 10" InvisibleEdges = "7" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "8; 12; 10" InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "12; 0; 10" InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "0; 2; 10" InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "2; 11; 10" InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "11; 4; 10" InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "8; 4; 6" InvisibleEdges = "1" />
+                </Faces>
+            </Part>
+
+            <Script>CalcRail(z[1], y[1],-x[1],  z[3], y[3], x[3],  z[2], y[2], x[2],  z[0], y[0],-x[0]);</Script>
+            <ExecMacro MacroName = "AddRail" RailColor = "Colors1[Color]" />
+            <Script>CalcRail(x[3], y[3], z[3],  x[1], y[1], z[1],  x[0], y[0], z[0], x[2], y[2], z[2]);</Script>
+            <ExecMacro MacroName = "AddRail" RailColor = "Colors2[Color]" />
+        </Macro>
+
+        <Macro Name = "AddTriangle1" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " x[2]; y[2]; z[2]" />
+                    <Add Vector = " x[3]; y[3]; z[3]" />
+                    <Add Vector = " x[4]; y[4]; z[4]" />
+                    <Add Vector = " x[5]; y[5]; z[5]" />
+                    <Add Vector = " x[6]; y[6]; z[6]" />
+                    <Add Vector = " x[7]; y[7]; z[7]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[Color]" VertexIndexes = "0; 1; 3; 2" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "2; 3; 5; 4" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "4; 5; 1; 0" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "5; 3; 1" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "0; 2; 4" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddTriangle2" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " z[6]; y[6]; x[6]" />
+                    <Add Vector = " z[7]; y[7]; x[7]" />
+                    <Add Vector = " x[4]; y[4]; z[4]" />
+                    <Add Vector = " x[5]; y[5]; z[5]" />
+                    <Add Vector = " z[2]; y[2]; x[2]" />
+                    <Add Vector = " z[3]; y[3]; x[3]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[Color]" VertexIndexes = "0; 1; 3; 2" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "2; 3; 5; 4" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "4; 5; 1; 0" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "5; 3; 1" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 0; 2; 4" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "Add6Edge" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " x[2]; y[2]; z[2]" />
+                    <Add Vector = " x[3]; y[3]; z[3]" />
+                    <Add Vector = " x[6]; y[6]; z[6]" />
+                    <Add Vector = " x[7]; y[7]; z[7]" />
+                    <Add Vector = " x[2];-z[2];-y[2]" />
+                    <Add Vector = " x[3];-z[3];-y[3]" />
+                    <Add Vector = "-x[2];-z[2];-y[2]" />
+                    <Add Vector = "-x[3];-z[3];-y[3]" />
+                    <Add Vector = "-x[6]; y[6]; z[6]" />
+                    <Add Vector = "-x[7]; y[7]; z[7]" />
+                    <Add Vector = "-x[2]; y[2]; z[2]" />
+                    <Add Vector = "-x[3]; y[3]; z[3]" />
+                    <Add Vector = "x[10]; y[10]; z[10]" />
+                    <Add Vector = "x[11]; y[11]; z[11]" />
+                    <Add Vector = "x[11];-z[11];-y[11]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[Color]" VertexIndexes = " 0; 1; 3; 2" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 2; 3; 5; 4" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 4; 5; 7; 6; 14" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 6; 7; 9; 8" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 8; 9;11;10" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "10;11; 1; 0; 13" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "11; 9; 7; 5; 3; 1" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 0; 2; 4"  InvisibleEdges = "4" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 6; 8;10"  InvisibleEdges = "4" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 0; 4;12"  InvisibleEdges = "7" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 4;14;12"  InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "14; 6;12"  InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 6;10;12"  InvisibleEdges = "7" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "10;13;12"  InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "13; 0;12"  InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+
+            <Script>CalcRail( x[3],-z[3],-y[3], -x[3],-z[3],-y[3], -x[2],-z[2],-y[2],  x[2],-z[2],-y[2]);</Script>
+            <ExecMacro MacroName = "AddRail" RailColor = "Colors1[Color]" />
+            <Script>CalcRail(-x[3], y[3], z[3],  x[3], y[3], z[3],  x[2], y[2], z[2], -x[2], y[2], z[2]);</Script>
+            <ExecMacro MacroName = "AddRail" RailColor = "Colors2[Color]" />
+
+        </Macro>
+
+        <Macro Name = "AddVertex" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " x[6]; y[6]; z[6]" />
+                    <Add Vector = " x[7]; y[7]; z[7]" />
+                    <Add Vector = " x[4]; y[4]; z[4]" />
+                    <Add Vector = " x[5]; y[5]; z[5]" />
+                    <Add Vector = " z[6]; y[6]; x[6]" />
+                    <Add Vector = " z[7]; y[7]; x[7]" />
+                    <Add Vector = "-y[4];-x[4]; z[4]" />
+                    <Add Vector = "-y[5];-x[5]; z[5]" />
+                    <Add Vector = "-y[6];-x[6]; z[6]" />
+                    <Add Vector = "-y[7];-x[7]; z[7]" />
+                    <Add Vector = " x[4];-z[4];-y[4]" />
+                    <Add Vector = " x[5];-z[5];-y[5]" />
+
+                    <Add Vector = " x[9]; y[9]; z[9]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[Color]" VertexIndexes = " 0; 1; 3; 2" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 2; 3; 5; 4" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 4; 5; 7; 6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 6; 7; 9; 8" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 8; 9;11;10" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "10;11; 1; 0" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "11; 9; 7; 5; 3; 1" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 0; 2;12" InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 2; 4;12" InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 4; 6;12" InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 6; 8;12" InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = " 8;10;12" InvisibleEdges = "6" />
+                    <Face Color = "Colors[Color]" VertexIndexes = "10; 0;12" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "AddCenter   " Color = " 0" />
+        <ExecMacro MacroName = "Add5Edge    " Color = " 1" />
+        <ExecMacro MacroName = "AddTriangle1" Color = " 2" />
+        <ExecMacro MacroName = "AddTriangle2" Color = " 3" />
+        <ExecMacro MacroName = "Add6Edge    " Color = " 4" />
+        <ExecMacro MacroName = "AddVertex   " Color = " 5" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = " 6" />
+        <ExecMacro MacroName = "AddTriangle1" Color = " 7" />
+        <ExecMacro MacroName = "AddTriangle2" Color = " 8" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = " 9" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "10" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "11" />
+        <ExecMacro MacroName = "Add6Edge    " Color = "12" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "13" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "14" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "15" />
+        <ExecMacro MacroName = "Add6Edge    " Color = "16" />
+        <ExecMacro MacroName = "AddVertex   " Color = "17" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <Turn NormVector = "0; 0; 1" Angle = "Pi / 2" />
+
+        <ExecMacro MacroName = "AddCenter   " Color = "18" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "19" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "20" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "21" />
+        <ExecMacro MacroName = "Add6Edge    " Color = "22" />
+        <ExecMacro MacroName = "AddVertex   " Color = "23" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "24" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "25" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "26" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "27" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "28" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "29" />
+        <ExecMacro MacroName = "Add6Edge    " Color = "30" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "31" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "32" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "33" />
+        <ExecMacro MacroName = "Add6Edge    " Color = "34" />
+        <ExecMacro MacroName = "AddVertex   " Color = "35" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <Turn NormVector = "0; 0; 1" Angle = "Pi / 2" />
+
+        <ExecMacro MacroName = "AddCenter   " Color = "36" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "37" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "38" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "39" />
+        <ExecMacro MacroName = "Add6Edge    " Color = "40" />
+        <ExecMacro MacroName = "AddVertex   " Color = "41" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "42" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "43" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "44" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "45" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "46" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "47" />
+        <ExecMacro MacroName = "Add6Edge    " Color = "48" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "49" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "50" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "51" />
+        <ExecMacro MacroName = "Add6Edge    " Color = "52" />
+        <ExecMacro MacroName = "AddVertex   " Color = "53" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <Turn NormVector = "0; 0; 1" Angle = "Pi / 2" />
+
+        <ExecMacro MacroName = "AddCenter   " Color = "54" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "55" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "56" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "57" />
+        <ExecMacro MacroName = "Add6Edge    " Color = "58" />
+        <ExecMacro MacroName = "AddVertex   " Color = "59" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "60" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "61" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "62" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "63" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "64" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "65" />
+        <ExecMacro MacroName = "Add6Edge    " Color = "66" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "67" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "68" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "69" />
+        <ExecMacro MacroName = "Add6Edge    " Color = "70" />
+        <ExecMacro MacroName = "AddVertex   " Color = "71" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <Turn NormVector = "0; 0; 1" Angle = "Pi / 2" />
+
+        <Turn NormVector = "1; 0; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "AddCenter   " Color = "72" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "73" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "74" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "75" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "76" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "77" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "78" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "79" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "80" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "81" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "82" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "83" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "84" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+
+        <Turn NormVector = "1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCenter   " Color = "85" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "86" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "87" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "88" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "89" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "90" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "91" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "92" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "93" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "94" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "Add5Edge    " Color = "95" />
+        <ExecMacro MacroName = "AddTriangle1" Color = "96" />
+        <ExecMacro MacroName = "AddTriangle2" Color = "97" />
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+
+        <Turn NormVector = "1; 0; 0" Angle = "Pi / 2" />
+
+        <SaveSolvedState/>
+        <Turn Axis = "0" From = "0" To = "2" Angle = "Pi" />
+        <SaveSolvedState/>
+        <Undo/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

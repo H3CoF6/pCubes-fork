@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cheesetrahedron</Name>
+        <Menu>Other forms\Tetrahedron\Cheesetrahedron</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-03-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3671</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Icosahedron_20_Colors.inc';
+
+        W := 0.5;
+        for i := 0 to 2 do begin
+            ax[i] := sin(2*Pi/3 * i);
+            ay[i] := cos(2*Pi/3 * i);
+        end;
+
+        D := W * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" NormVectors = " ax[0]; ay[0]; 0" TurnAxesWithLayer = "0" />
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" NormVectors = " ax[1]; ay[1]; 0" TurnAxesWithLayer = "1" />
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" NormVectors = " ax[2]; ay[2]; 0" TurnAxesWithLayer = "1" />
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "-D; D" NormVectors = " 0; 0; 1" TurnAxesWithLayer = "1" />
+
+    <Figure>
+        <Turn NormVector = "0;1;0" Angle = "Pi/4" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <Split Axis = "0" From = "1" />
+        <Undo/>
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        <Turn NormVector = "0;1;0" Angle = "-Pi/4" />
+        <Turn NormVector = "0;0;1" Angle = " Pi/10" />
+    </Figure>
+</xml>

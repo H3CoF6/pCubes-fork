@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>SolarMinx</Name>
+        <Menu>Other forms\Dodecahedron\SolarMinx</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=356700</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        Rout := sqrt(3) / 4 * (1 + sqrt(5));
+        Rin := 0.5 * sqrt(2.5 + 1.1 * sqrt(5));
+        dAngle := Arcsin(Rin / Rout);
+        dAngle2 := dAngle - 2 * Arcsin(1 / 2 / Rout);
+        Rsin := R * sin(dAngle);
+        Rcos := R * cos(dAngle);
+        R2sin := R * sin(dAngle2);
+        R2cos := R * cos(dAngle2);
+        sAngle := PI * 2 / 5;
+
+        for i := 0 to 4 do begin
+            x[i] := Rcos * sin(sAngle * (i - 0.5));
+            y[i] := Rcos * cos(sAngle * (i - 0.5));
+            z[i] := Rsin;
+        end;
+
+        for i := 5 to 9 do begin
+            x[i] := R2cos * sin(sAngle * (i - 0.5));
+            y[i] := R2cos * cos(sAngle * (i - 0.5));
+            z[i] := R2sin;
+        end;
+
+        for i := 10 to 14 do begin
+            x[i] := R2cos * sin(sAngle * i);
+            y[i] := R2cos * cos(sAngle * i);
+            z[i] := -R2sin;
+        end;
+        <!-- D := sqrt(((x[0]+x[1]*2+x[2]*2+x[3]+x[6]+x[7])/8)^2+(((y[0]+y[1]*2+y[2]*2+y[3]+y[6]+y[7])/8))^2+(((z[0]+z[1]*2+z[2]*2+z[3]+z[6]+z[7])/8)^2)); -->
+    D:=0.4445;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "arctan(2)" PlaneDistances = "-D; D" FixedLayer = "1" >
+        <Axis NormVector = " x[0] + x[1];  y[0] + y[1];  z[0] + z[1]" />
+        <Axis NormVector = " x[1] + x[2];  y[1] + y[2];  z[1] + z[2]" />
+        <Axis NormVector = " x[2] + x[3];  y[2] + y[3];  z[2] + z[3]" />
+        <Axis NormVector = " x[3] + x[4];  y[3] + y[4];  z[3] + z[4]" />
+        <Axis NormVector = " x[4] + x[0];  y[4] + y[0];  z[4] + z[0]" />
+
+        <Axis NormVector = " x[0] + x[5];  y[0] + y[5];  z[0] + z[5]" />
+        <Axis NormVector = " x[1] + x[6];  y[1] + y[6];  z[1] + z[6]" />
+        <Axis NormVector = " x[2] + x[7];  y[2] + y[7];  z[2] + z[7]" />
+        <Axis NormVector = " x[3] + x[8];  y[3] + y[8];  z[3] + z[8]" />
+        <Axis NormVector = " x[4] + x[9];  y[4] + y[9];  z[4] + z[9]" />
+
+        <Axis NormVector = "x[10] + x[5]; y[10] + y[5]; z[10] + z[5]" />
+        <Axis NormVector = "x[11] + x[6]; y[11] + y[6]; z[11] + z[6]" />
+        <Axis NormVector = "x[12] + x[7]; y[12] + y[7]; z[12] + z[7]" />
+        <Axis NormVector = "x[13] + x[8]; y[13] + y[8]; z[13] + z[8]" />
+        <Axis NormVector = "x[14] + x[9]; y[14] + y[9]; z[14] + z[9]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

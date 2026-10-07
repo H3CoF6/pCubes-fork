@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Wheels of Courage</Name>
+        <Menu>Other forms\Wheel\Wheels of Courage</Menu>
+        <Programmer>Skallos</Programmer>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Added>2017-12-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6558</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clYellow := 'FFFF00';
+
+        D := sqrt(3) / 6;
+        E := sqrt(3) / 18;
+
+        R := 0.33;
+
+        N := 1 / 6;
+        M := N + 0.05;
+    </Script>
+
+    <Axes TurningAngles = "Pi/3; 2*Pi/3; 2*Pi/3" PlaneDistances = "-D; E" >
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "0.5; -0.5; 0.5" />
+                <Add Vector = "-0.5; 0.5; 0.5" />
+                <Add Vector = "0.5; 0.5; -0.5" />
+                <Add Vector = "-0.5; -0.5; -0.5" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue" VertexIndexes = "0;1;3" />
+                <Face Color = "clGreen" VertexIndexes = "1;2;3" />
+                <Face Color = "clRed" VertexIndexes = "0;3;2" />
+                <Face Color = "clYellow" VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Cylinder Radius = "R" Color = "clYellow" >
+            <Base X = "N" Y = "N" Z = "N" />
+            <Top  X = "M" Y = "M" Z = "M" Color = "clYellow" />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clBlue" >
+            <Base X = "-N" Y = "-N" Z = "N" />
+            <Top  X = "-M" Y = "-M" Z = "M" Color = "clBlue" />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clRed" >
+            <Base X = "N" Y = "-N" Z = "-N" />
+            <Top  X = "M" Y = "-M" Z = "-M" Color = "clRed" />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clGreen" >
+            <Base X = "-N" Y = "N" Z = "-N" />
+            <Top  X = "-M" Y = "M" Z = "-M" Color = "clGreen" />
+        </Cylinder>
+
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi/3" Layer = "0" />
+        <Turn Axis = "1" Angle = "Pi/3" Layer = "0" />
+        <Turn Axis = "2" Angle = "Pi/3" Layer = "0" />
+        <Turn Axis = "3" Angle = "Pi/3" Layer = "0" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

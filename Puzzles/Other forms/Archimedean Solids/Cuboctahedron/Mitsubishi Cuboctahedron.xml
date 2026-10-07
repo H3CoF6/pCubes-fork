@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mitsubishi Cuboctahedron</Name>
+        <Menu>Other forms\Archimedean Solids\Cuboctahedron\Mitsubishi Cuboctahedron</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11218</Link>
+    </Interface>
+
+    <Script>
+        Color1 := 'AAAAAA';
+        Color2 := 'E70053';
+
+        W := 0.5;
+        D := W * 2 / sqrt(3) / 3;
+        DCut := W * 2 / sqrt(3);
+
+        CylinderWidth := W * 0.1;
+        Sc := (W + CylinderWidth) / W;
+        RC := W * 0.6;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; 0; Pi/2" PlaneDistances = "-W; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "CutV" >
+            <Cut Color = "Color"><Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "-DCut" /></Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <HideContaining Vectors = " Ex; Ey; Ez" />
+        <ExecMacro MacroName = "CutV" Repeat = "8" i = "0" Color = "Color1" />
+        <InvertVisibility/>
+        <ExecMacro MacroName = "CutV" Repeat = "8" i = "0" Color = "Color2" />
+        <ShowAll/>
+
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" Base = "Cx[i]; Cy[i]; Cz[i]" Top = "Cx[i] * Sc; Cy[i] * Sc; Cz[i] * Sc" TopColor = "Colors[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

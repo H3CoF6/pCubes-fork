@@ -1,0 +1,128 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star Pentagram</Name>
+        <Menu>Other forms\Star\Star Pentagram</Menu>
+        <Inventor>Dario Dagné</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-12-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7133</Link>
+    </Interface>
+
+    <Script>
+        clWhite        := 'FFFFFF';
+        clYellow       := 'FFFF00';
+        clRed          := 'C80000';
+        clGreen        := '008000';
+        clBlue         := '0000FF';
+        clDeepSky      := '00BFFF';
+        clPurple       := '800080';
+
+        clFuchsia      := 'FF00FF';
+        clCyan         := '00FFFF';
+        clNavy         := '000080';
+        clCoral        := 'FF7F50';
+        clCrimson      := 'DC143C';
+        clIndian       := 'CD5C5C';
+        clOrange       := 'FF6000';
+        clKhaki        := 'F0E68C';
+        clGolden       := 'DDBB20';
+        clGreenYellow  := 'ADFF2F';
+        clLime         := '00FF00';
+        clDarkGreen    := '006400';
+        clPink         := 'FF69B4';
+        clPale         := 'D07090';
+
+        R := 0.7;
+
+        R1 := (3 - sqrt(5)) / 2 * R;
+
+        sAngle := PI * 2 / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+            xi[i] := R1 * sin(sAngle * (i + 0.5));
+            yi[i] := R1 * cos(sAngle * (i + 0.5));
+        end;
+
+        H := (xi[0]-xi[4])/2;
+        D := R1 * cos(Pi / 5);
+
+    </Script>
+
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+        <Axis NormVector = "x[3]; y[3]; 0" />
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " x[0];  y[0];  0" />
+                <Add Vector = " x[1];  y[1];  0" />
+                <Add Vector = " x[2];  y[2];  0" />
+                <Add Vector = " x[3];  y[3];  0" />
+                <Add Vector = " x[4];  y[4];  0" />
+                <Add Vector = "xi[0]; yi[0];  H" />
+                <Add Vector = "xi[1]; yi[1];  H" />
+                <Add Vector = "xi[2]; yi[2];  H" />
+                <Add Vector = "xi[3]; yi[3];  H" />
+                <Add Vector = "xi[4]; yi[4];  H" />
+                <Add Vector = "xi[0]; yi[0]; -H" />
+                <Add Vector = "xi[1]; yi[1]; -H" />
+                <Add Vector = "xi[2]; yi[2]; -H" />
+                <Add Vector = "xi[3]; yi[3]; -H" />
+                <Add Vector = "xi[4]; yi[4]; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite  "  VertexIndexes = "  9; 4; 8" />
+                <Face Color = "clWhite  "  VertexIndexes = "  5; 0; 9" />
+                <Face Color = "clWhite  "  VertexIndexes = "  6; 1; 5" />
+                <Face Color = "clWhite  "  VertexIndexes = "  7; 2; 6" />
+                <Face Color = "clWhite  "  VertexIndexes = "  8; 3; 7" />
+                <Face Color = "clWhite  "  VertexIndexes = "  9; 8; 7; 6; 5" />
+                <Face Color = "clYellow "  VertexIndexes = " 13; 4;14" />
+                <Face Color = "clYellow "  VertexIndexes = " 14; 0;10" />
+                <Face Color = "clYellow "  VertexIndexes = " 10; 1;11" />
+                <Face Color = "clYellow "  VertexIndexes = " 11; 2;12" />
+                <Face Color = "clYellow "  VertexIndexes = " 12; 3;13" />
+                <Face Color = "clYellow "  VertexIndexes = " 10;11;12;13;14" />
+
+                <Face Color = "clRed    "  VertexIndexes = " 4; 9;14" />
+                <Face Color = "clRed    "  VertexIndexes = " 0;14; 9" />
+                <Face Color = "clGreen  "  VertexIndexes = " 0; 5;10" />
+                <Face Color = "clGreen  "  VertexIndexes = " 1;10; 5" />
+                <Face Color = "clDeepSky"  VertexIndexes = " 1; 6;11" />
+                <Face Color = "clDeepSky"  VertexIndexes = " 2;11; 6" />
+                <Face Color = "clBlue   "  VertexIndexes = " 2; 7;12" />
+                <Face Color = "clBlue   "  VertexIndexes = " 3;12; 7" />
+                <Face Color = "clPurple "  VertexIndexes = " 3; 8;13" />
+                <Face Color = "clPurple "  VertexIndexes = " 4;13; 8" />
+
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "3" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "4" Layer = "1" Angle = " Pi/2" />
+        <Split Axis = "5" From = "1" />
+        <Undo Repeat = "5" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,126 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megapentix</Name>
+        <Menu>Other forms\Multi-core\Megapentix</Menu>
+        <Inventor>Sven de Bakker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-05-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2346</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := '008000'; // Green
+        Colors[ 2] := 'FFFF00'; // Yellow
+        Colors[ 3] := 'FF0080'; // LightViolett
+        Colors[ 4] := 'FF0000'; // Red
+        Colors[ 5] := '800000'; // Brown
+        Colors[ 6] := '00FF00'; // LightGreen
+        Colors[ 7] := '0000A0'; // Blue
+        Colors[ 8] := '800080'; // Violett
+        Colors[ 9] := 'FF6000'; // Orange
+        Colors[10] := '3868BF'; // LightBlue
+        Colors[11] := '00DCB4'; // Cyan
+
+        R := 0.5;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D2 := (Rsin + R2sin) / 2 * 1.035;
+
+        DD := D2;
+
+        for i := 0 to 19 do begin
+            vz1[i] := vz[i] + DD;
+            vz2[i] := vz[i] - DD;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D2">
+        <Axis NormVector = "Cx[ 0]; Cy[ 0]; Cz[ 0]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = "Cx[ 1]; Cy[ 1]; Cz[ 1]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = "Cx[ 2]; Cy[ 2]; Cz[ 2]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = "Cx[ 3]; Cy[ 3]; Cz[ 3]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = "Cx[ 4]; Cy[ 4]; Cz[ 4]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = "Cx[ 5]; Cy[ 5]; Cz[ 5]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = "Cx[ 1]; Cy[ 1]; Cz[ 6]" BaseVector = " 0; 0;-DD" />
+        <Axis NormVector = "Cx[ 2]; Cy[ 2]; Cz[ 7]" BaseVector = " 0; 0;-DD" />
+        <Axis NormVector = "Cx[ 3]; Cy[ 3]; Cz[ 8]" BaseVector = " 0; 0;-DD" />
+        <Axis NormVector = "Cx[ 4]; Cy[ 4]; Cz[ 9]" BaseVector = " 0; 0;-DD" />
+        <Axis NormVector = "Cx[ 5]; Cy[ 5]; Cz[10]" BaseVector = " 0; 0;-DD" />
+        <Axis NormVector = "Cx[11]; Cy[11]; Cz[11]" BaseVector = " 0; 0;-DD" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "vx; vy; vz1" />
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = " 4; 3; 2; 1; 0" />
+
+                <Face Color = "Colors[ 1]" VertexIndexes = " 0; 1; 6;10; 5" />
+                <Face Color = "Colors[ 2]" VertexIndexes = " 1; 2; 7;11; 6" />
+                <Face Color = "Colors[ 3]" VertexIndexes = " 2; 3; 8;12; 7" />
+                <Face Color = "Colors[ 4]" VertexIndexes = " 3; 4; 9;13; 8" />
+                <Face Color = "Colors[ 5]" VertexIndexes = " 4; 0; 5;14; 9" />
+
+                <Face Color = "Colors[ 6]" VertexIndexes = "18;17;12; 8;13" />
+                <Face Color = "Colors[ 7]" VertexIndexes = "19;18;13; 9;14" />
+                <Face Color = "Colors[ 8]" VertexIndexes = "15;19;14; 5;10" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "16;15;10; 6;11" />
+                <Face Color = "Colors[10]" VertexIndexes = "17;16;11; 7;12" />
+
+                <Face Color = "Colors[11]" VertexIndexes = "15;16;17;18;19" />
+            </Faces>
+        </Part>
+        <Cut Color = "-2" InvisibleEdges = "-1" ><Plane NormVector = " 0; 0; 1"/></Cut>
+
+        <Split><Plane NormVector = "Cx[ 1]; Cy[ 1]; Cz[ 1]" NormDistance = "-D2 + DD * As" /></Split>
+        <Split><Plane NormVector = "Cx[ 2]; Cy[ 2]; Cz[ 2]" NormDistance = "-D2 + DD * As" /></Split>
+        <Split><Plane NormVector = "Cx[ 3]; Cy[ 3]; Cz[ 3]" NormDistance = "-D2 + DD * As" /></Split>
+        <Split><Plane NormVector = "Cx[ 4]; Cy[ 4]; Cz[ 4]" NormDistance = "-D2 + DD * As" /></Split>
+        <Split><Plane NormVector = "Cx[ 5]; Cy[ 5]; Cz[ 5]" NormDistance = "-D2 + DD * As" /></Split>
+
+        <HideAll/>
+        <Turn NormVector = "0;0;1" Angle = "Pi/5" />
+
+        <Part>
+            <Vertices Vectors = "vx; vy; vz2" />
+
+            <Faces>
+                <Face Color = "Colors[11]" VertexIndexes = " 4; 3; 2; 1; 0" />
+
+                <Face Color = "Colors[ 9]" VertexIndexes = " 0; 1; 6;10; 5" />
+                <Face Color = "Colors[10]" VertexIndexes = " 1; 2; 7;11; 6" />
+                <Face Color = "Colors[ 6]" VertexIndexes = " 2; 3; 8;12; 7" />
+                <Face Color = "Colors[ 7]" VertexIndexes = " 3; 4; 9;13; 8" />
+                <Face Color = "Colors[ 8]" VertexIndexes = " 4; 0; 5;14; 9" />
+
+                <Face Color = "Colors[ 4]" VertexIndexes = "18;17;12; 8;13" />
+                <Face Color = "Colors[ 5]" VertexIndexes = "19;18;13; 9;14" />
+                <Face Color = "Colors[ 1]" VertexIndexes = "15;19;14; 5;10" />
+                <Face Color = "Colors[ 2]" VertexIndexes = "16;15;10; 6;11" />
+                <Face Color = "Colors[ 3]" VertexIndexes = "17;16;11; 7;12" />
+
+                <Face Color = "Colors[ 0]" VertexIndexes = "15;16;17;18;19" />
+            </Faces>
+        </Part>
+        <Cut Color = "-2" InvisibleEdges = "-1" ><Plane NormVector = " 0; 0;-1"/></Cut>
+        <Turn NormVector = "0;0;1" Angle = "-Pi/5" />
+
+        <Split><Plane NormVector = "Cx[ 1]; Cy[ 1]; Cz[ 6]" NormDistance = "-D2 + DD * As" /></Split>
+        <Split><Plane NormVector = "Cx[ 2]; Cy[ 2]; Cz[ 7]" NormDistance = "-D2 + DD * As" /></Split>
+        <Split><Plane NormVector = "Cx[ 3]; Cy[ 3]; Cz[ 8]" NormDistance = "-D2 + DD * As" /></Split>
+        <Split><Plane NormVector = "Cx[ 4]; Cy[ 4]; Cz[ 9]" NormDistance = "-D2 + DD * As" /></Split>
+        <Split><Plane NormVector = "Cx[ 5]; Cy[ 5]; Cz[10]" NormDistance = "-D2 + DD * As" /></Split>
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

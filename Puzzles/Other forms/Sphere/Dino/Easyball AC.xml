@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Easyball AC</Name>
+        <Aliases>Easyball AC</Aliases>
+        <Menu>Other forms\Sphere\Dino\Easyball AC</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-05</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0077EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+        Colors[6] := '333333'; // Black
+        Colors[7] := '777777'; // Gray
+        Colors[8] := 'AAAAAA'; // Silver
+        Colors[9] := 'DDDDDD'; // LightSilver
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        K := 0.6;
+        D := K * 0.333526099730881; // C15/K/sqrt(3);
+        DC1 := K * 0.942;
+        DC2 := K * 0.875;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "ColorVertex" >
+            <Split><Plane NormVector = "Vx[v];Vy[v];Vz[v]" NormDistance = "-DC1" /></Split>
+            <Hide> <Plane NormVector = "Vx[v];Vy[v];Vz[v]" NormDistance = "-DC1" /></Hide>
+            <Cut>  <Plane NormVector = "Vx[v];Vy[v];Vz[v]" NormDistance = "-DC2" /></Cut>
+
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[cl]" />
+            <Cut>  <Plane NormVector = "-Vx[v];-Vy[v];-Vz[v]" NormDistance = " DC2" /></Cut>
+            <Cut>  <Plane NormVector = " Vx[v]; Vy[v]; Vz[v]" NormDistance = "-DC1" /></Cut>
+
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "ColorVertex" v = "5" cl = "9" />
+        <ExecMacro MacroName = "ColorVertex" v = "6" cl = "7" />
+        <ExecMacro MacroName = "ColorVertex" v = "0" cl = "6" />
+        <ExecMacro MacroName = "ColorVertex" v = "3" cl = "8" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

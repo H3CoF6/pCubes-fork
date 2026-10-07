@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Collider-10</Name>
+        <Menu>Other forms\Dipyramid\Pentagonal\Collider-10</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-06-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8880</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clViolett      := '800080';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clOrange       := 'FF6000';
+        clLightBlue    := '2828FF';
+        clLightViolett := 'FF0080';
+        clBrown        := '800000';
+        clLightGreen   := '00FF00';
+
+        R := 0.5;
+        H := R * 1.0;
+
+        for i := 0 to 4 do begin
+            x[i] := R * cos(2*Pi/5*i);
+            y[i] := R * sin(2*Pi/5*i);
+
+            ax[i] :=-cos(2*Pi/5*i);
+            ay[i] :=-sin(2*Pi/5*i);
+        end;
+
+        az := sin(Pi/5);
+        D := H * az / sqrt(1 + az^2);
+
+        A1 := ArcCos((sqrt(5) - 5) / 8);
+        A2 := ArcCos(-(1 + 5 * sqrt(5)) / 16);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "D" FixedLayers = "0" NormVectors = "ax; ay; az" />
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "D" FixedLayers = "0" NormVectors = "ax; ay;-az" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " 0; 0; H" />
+            <Vertices Vectors = " 0; 0;-H" />
+            <Vertices Vectors = " x; y; 0" />
+            <Faces>
+                <Face Color = "clRed         " VertexIndexes = "0;2;3" />
+                <Face Color = "clLightViolett" VertexIndexes = "0;3;4" />
+                <Face Color = "clBrown       " VertexIndexes = "0;4;5" />
+                <Face Color = "clOrange      " VertexIndexes = "0;5;6" />
+                <Face Color = "clYellow      " VertexIndexes = "0;6;2" />
+
+                <Face Color = "clBlue        " VertexIndexes = "1;2;6" />
+                <Face Color = "clViolett     " VertexIndexes = "1;6;5" />
+                <Face Color = "clLightBlue   " VertexIndexes = "1;5;4" />
+                <Face Color = "clGreen       " VertexIndexes = "1;4;3" />
+                <Face Color = "clLightGreen  " VertexIndexes = "1;3;2" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

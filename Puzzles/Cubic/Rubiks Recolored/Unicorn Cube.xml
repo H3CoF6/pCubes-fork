@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Unicorn Cube</Name>
+        <Menu>Cubic\Rubiks Recolored\Unicorn Cube</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-04</Added>
+        <Link>https://www.magiccubemall.com/p/3Pcs-Qiyi-3x3x3-Cube-Set-Sandwich-Cube-Bumpy-Cube-Unicorn-Cube_2830075.html</Link>
+    </Interface>
+
+    <Script>
+        C1 := 'FF0000';
+        C2 := 'FFFF00';
+        C3 := '00AAFF';
+
+        W := 0.5;
+        D := W / 3;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "MonoCube" >
+            <ShowAll/>
+            <InvertVisibility/>
+            <Script>
+                for i := 0 to 5 do
+                  Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "MonoCube" Color = "C1" />
+        <Cut Axis = "0" From = "2" />
+        <Cut Axis = "1" From = "2" />
+        <Cut Axis = "2" To = "1" />
+
+        <ExecMacro MacroName = "MonoCube" Color = "C2" />
+        <RemoveContaining Vector = " W;-W; W" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "2" To = "2" />
+
+        <ExecMacro MacroName = "MonoCube" Color = "C3" />
+        <RemoveContaining Vector = " D;-D; D" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

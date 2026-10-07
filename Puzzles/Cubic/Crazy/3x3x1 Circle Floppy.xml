@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3x1 Circle Floppy</Name>
+        <Menu>Cubic\Crazy\3x3x1 Circle Floppy</Menu>
+        <Inventor>Mark Segedin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-06-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2307</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W / 3;
+        D := W / 3;
+
+        R := W * 0.8;
+        Delta := 0.002;
+        WC := WZ + Delta;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 2; 0" PlaneDistances = "-WZ; WZ" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Circle Radius = "R" Color = "clWhite " Center =  "0; 0;  WC" />
+        <Circle Radius = "R" Color = "clYellow" Center =  "0; 0; -WC" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

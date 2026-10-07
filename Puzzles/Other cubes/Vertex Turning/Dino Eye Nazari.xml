@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Eye Nazari</Name>
+        <Menu>Other cubes\Vertex Turning\Dino Eye Nazari</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Skallos, Boris</Programmer>
+        <Added>2022-12-02</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=420429</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        R := W * 0.1;
+        A := Pi * 2 / 3;
+        s2 := sqrt(2);
+        s3 := sqrt(3);
+        D1 := (W - R * s2) / s3;
+        D2 := (W + R * s2) / s3;
+        DCut := W * s3 - R * s2 / s3;
+    </Script>
+
+    <Axes TurningAngles = "A;0;A" PlaneDistances = "-D1; D2">
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Macro Name = "Cut" >
+            <Split> <Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "D1" /> </Split>
+            <Hide>  <Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "D1" /> </Hide>
+            <Cut>   <Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "D2" /> </Cut>
+            <ShowAll/>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "8" />
+        <RemoveGrayParts/>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "W" />
+        <Macro Name = "Split" >
+            <Split> <Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "D1" /> </Split>
+            <Split> <Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "D2" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "8" />
+        <RemoveContaining Vector = "Ex;Ey;Ez" />
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+        <ShowAll/>
+
+        <Macro Name = "CutV" >
+            <Cut Color = "Color" > <Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "-DCut" /> </Cut>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Color = "'010000'" />
+        <ExecMacro MacroName = "CutV" i = "3" Color = "'000100'" />
+        <ExecMacro MacroName = "CutV" i = "5" Color = "'000001'" />
+        <ExecMacro MacroName = "CutV" i = "6" Color = "'010101'" />
+        <ExecMacro MacroName = "CutV" i = "1" Color = "-1" />
+        <ExecMacro MacroName = "CutV" i = "2" Color = "-1" />
+        <ExecMacro MacroName = "CutV" i = "4" Color = "-1" />
+        <ExecMacro MacroName = "CutV" i = "7" Color = "-1" />
+
+        <Circle Radius = "R" Color = "clRed   " Center =  "-W; 0; 0" />
+        <Circle Radius = "R" Color = "clOrange" Center =  " W; 0; 0" />
+        <Circle Radius = "R" Color = "clBlue  " Center =  " 0;-W; 0" />
+        <Circle Radius = "R" Color = "clGreen " Center =  " 0; W; 0" />
+        <Circle Radius = "R" Color = "clYellow" Center =  " 0; 0;-W" />
+        <Circle Radius = "R" Color = "clWhite " Center =  " 0; 0; W" />
+    </Figure>
+</xml>

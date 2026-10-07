@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bauhinia Plus (Ball)</Name>
+        <Menu>Other forms\Sphere\Bauhinia Plus (Ball)</Menu>
+        <Inventor></Inventor>
+        <Programmer>Skallos + xchemist</Programmer>
+        <Added>2020-08-03</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0000CC'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := 'AA00AA'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+
+        K := 0.6;
+
+        C21 := K * 0.3569761362781;
+        C63 := K * 0.9345756579487;
+
+        D1 := (C21 + C63) / sqrt(3);
+        D2 := K * 0.92;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = " cs; 2 * cs + ss; 0" />
+        <Axis NormVector = "-cs; 2 * cs + ss; 0" />
+
+        <Axis NormVector = "2 * cs + ss; 0;-cs" />
+        <Axis NormVector = "2 * cs + ss; 0; cs" />
+
+        <Axis NormVector = "0; cs; 2 * cs + ss" />
+        <Axis NormVector = "0;-cs; 2 * cs + ss" />
+
+        <Axis NormVector = "1; 1; 1" />
+        <Axis NormVector = "1; 1;-1" />
+        <Axis NormVector = "1;-1; 1" />
+        <Axis NormVector = "1;-1;-1" />
+    </Axes>
+    <Axes TurningAngles = "2*Pi/5; 0; 2*Pi/5" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "  0;-cs; ss" />
+        <Axis NormVector = "  0;-cs;-ss" />
+        <Axis NormVector = "-ss;  0;-cs" />
+        <Axis NormVector = " ss;  0;-cs" />
+        <Axis NormVector = " cs;-ss;  0" />
+        <Axis NormVector = " cs; ss;  0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

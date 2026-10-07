@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding = "UTF-8" ?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Fisher Mirror Cube</Name>
+        <Menu>Other cubes\Mixed\Fisher\Fisher Mirror Cube</Menu>
+        <Inventor>Moyu</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-07-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6739</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'E0C07D';
+
+        W := 0.5;
+        D := W / 3;
+
+        DX := 0;
+        DY := 0;
+        DZ :=-W * 0.2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi / 4" />
+
+        <Transfer Vector = "-DX;-DY;-DZ" />
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "MirrorColor" />
+        <Transfer Vector = " DX; DY; DZ" />
+
+        <SplitByAxes/>
+
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

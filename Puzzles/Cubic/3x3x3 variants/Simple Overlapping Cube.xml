@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Simple Overlapping Cube</Name>
+        <Menu>Cubic\3x3x3 variants\Simple Overlapping Cube</Menu>
+        <Inventor>David Calvo</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1728</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        dz := 0.97;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        D := W * 0.3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Ex; Ey; Ez" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Vx; Vy; Vz" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "W * dz" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Cx; Cy; Cz" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>
+

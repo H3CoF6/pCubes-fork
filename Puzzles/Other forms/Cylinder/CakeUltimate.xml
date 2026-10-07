@@ -1,0 +1,109 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>CakeUltimate</Name>
+        <Menu>Other forms\Cylinder\CakeUltimate</Menu>
+        <Inventor>limCube</Inventor>
+        <Programmer>Skallos, Boris</Programmer>
+        <Added>2022-01-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9577</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0000C8'; // Blue
+        Colors[1] := '800080'; // Purple
+        Colors[2] := 'FF6000'; // Orange
+        Colors[3] := '009600'; // Green
+        Colors[4] := 'C80000'; // Red
+        Colors[5] := 'FFFF00'; // Yellow
+        Colors[6] := 'FFFFFF'; // White
+
+        R := 0.6;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        H := R * (sqrt(5) - 1) / 2;
+        N := 60; // sides of cylinder
+        NC := 5; // colors
+        N2 := N div NC;
+
+        H2 := H * 1.1;
+        H3 := H * 1.2;
+
+        M := 6; // incline, even
+        for i := 0 to N - 1 do begin
+            x[i] := R * sin(2 * Pi / N * i);
+            y[i] :=-R * cos(2 * Pi / N * i);
+
+            j := (i + N2 div 2) mod N2 - N2 div 2;
+            if j > M div 2 then
+                zi[i] := H2
+            else if j &lt; -M div 2 then
+                zi[i] :=-H2
+            else
+                zi[i] := H * sin(2*Pi / N * j) / sin(2*Pi / N * M/2);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "-Pi/10" />
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := (i + N) mod N;
+                i2 := (i + 1 + N) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color1" VertexIndexes = "i1; i2; i2 + N; i1 + N" InvisibleEdges = "ie" />
+            <Face Color = "Color2" VertexIndexes = "i2 + 2 * N; i1 + 2 * N; i1 + N; i2 + N" InvisibleEdges = "ie" />
+        </Macro>
+
+        <Macro Name = "AddSegment" >
+            <ExecMacro MacroName = "AddFace" Repeat = "N2 - 1" ie = "10" />
+            <ExecMacro MacroName = "AddFace" Color2 = "Color1" ie = "14" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y;-H3" />
+            <Vertices Vectors = "x; y; zi" />
+            <Vertices Vectors = "x; y; H3" />
+
+            <Faces>
+                <Face VertexIndexes = "FromTo(N - 1, 0)" />
+
+                <ExecMacro MacroName = "AddSegment" Color1 = "Colors[0]" Color2 = "Colors[4]" i = "-N2 div 2" />
+                <ExecMacro MacroName = "AddSegment" Color1 = "Colors[1]" Color2 = "Colors[0]" />
+                <ExecMacro MacroName = "AddSegment" Color1 = "Colors[2]" Color2 = "Colors[1]" />
+                <ExecMacro MacroName = "AddSegment" Color1 = "Colors[3]" Color2 = "Colors[2]" />
+                <ExecMacro MacroName = "AddSegment" Color1 = "Colors[4]" Color2 = "Colors[3]" />
+
+                <Face VertexIndexes = "FromTo(2 * N, 3 * N - 1)" />
+            </Faces>
+        </Part>
+        <Cut Color = "Colors[5]"> <Plane NormVector = " 0; 0; 1" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[6]"> <Plane NormVector = " 0; 0;-1" NormDistance = "-H" /> </Cut>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

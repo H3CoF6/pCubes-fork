@@ -1,0 +1,136 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Matryoshka Cube I</Name>
+        <Menu>Cubic\Unclassified\Matryoshka Cube I</Menu>
+        <Inventor>Sam Jiang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6956</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0000DD';
+        Colors[1] := 'FFFFFF';
+        Colors[2] := 'FF6600';
+        Colors[3] := 'DD0000';
+        Colors[4] := '009900';
+        Colors[5] := 'FFFF00';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        W1 := W;
+        D1 := W / 5;
+        D2 := 3 * W / 5;
+        D3 := 2.25 * W / 5;
+
+        W2 := W * 0.35;
+
+        HX := W * 0.1;
+        W3 := W * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D1; D2; D3;-D3;-D2;-D1"  TurnAxesWithLayer = "5" >
+        <Axis NormVector = "-1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+        <Axis NormVector = " 0; 0;-1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Super" >
+            <HideAll/>
+            <LoadFrom File = "Figures\Cuboid.xml" WX = "DCut2" WY = "WE" WZ = "WE" />
+            <LoadFrom File = "Figures\Cuboid.xml" WX = "WE" WY = "DCut2" WZ = "WE" />
+            <LoadFrom File = "Figures\Cuboid.xml" WX = "WE" WY = "WE" WZ = "DCut2" />
+            <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "DCut1" /> </Split>
+            <Split> <Plane NormVector = "-1; 0; 0" NormDistance = "DCut1" /> </Split>
+            <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "DCut1" /> </Split>
+            <Split> <Plane NormVector = " 0;-1; 0" NormDistance = "DCut1" /> </Split>
+            <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "DCut1" /> </Split>
+            <Split> <Plane NormVector = " 0; 0;-1" NormDistance = "DCut1" /> </Split>
+            <RemoveContaining Vector = " 0; 0; 0" />
+        </Macro>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W * 1.1" Color = "-1" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "5" />
+
+        <Macro Name = "Hide">
+            <HideContaining Vector = "Ex[id]; Ey[id]; Ez[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" Repeat = "12" id = "0" />
+        <InvertVisibility/>
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-Cx[id]; -Cy[id]; -Cz[id]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "6" id = "0" />
+        <ShowAll/>
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-Cx[id]; -Cy[id]; -Cz[id]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "6" id = "0" />
+
+        <Macro Name = "RemoveCenters">
+            <RemoveContaining Vector = "Cx[i];Cy[i];Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" Repeat = "6" i = "0" />
+
+        <RemoveContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "W2" />
+        <ShowAll/>
+        <HideContaining Vector = "-W1;-W1;-W1" />
+
+        <SplitByAxes/>
+
+        <ShowAll/>
+
+        <Hide Axis = "0" From = "0" To = "0" />
+        <Hide Axis = "0" From = "6" To = "6" />
+        <Hide Axis = "1" From = "0" To = "0" />
+        <Hide Axis = "1" From = "6" To = "6" />
+        <Hide Axis = "2" From = "0" To = "0" />
+        <Hide Axis = "2" From = "6" To = "6" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <ExecMacro MacroName = "Super" WE = "D2" DCut1 = "W1" DCut2 = "W1 + HX" />
+
+        <SplitByAxes/>
+
+        // Hide all corners
+        <Macro Name = "CutGray" >
+            <HideContaining Vector = " D2; D2; W1+HX" />
+            <HideContaining Vector = " D2; D2;-W1-HX" />
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "CutGray" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "CutGray" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Super" WE = "W3" DCut1 = "W2" DCut2 = "W2 + HX" />
+        <ShowAll/>
+
+        <Connect Layers = "0;2;3" />
+        <Connect Layers = "1;4;5" />
+    </Figure>
+</xml>

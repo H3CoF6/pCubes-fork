@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cake Master</Name>
+        <Menu>Other forms\Unclassified\Cake Master</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-07-01</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clYellow := 'FFFF00';
+        clGreen1 := '009600';
+        clGreen2 := '009601';
+        clBlue1  := '0000FE';
+        clBlue2  := '0000FF';
+
+        R1 := 0.5;
+        R4 := 0.3;
+        R2 := (2 * R1 + R4) / 3;
+        R3 := (R1 + 2 * R4) / 3;
+
+        H := 3/8;
+        D := H / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Radius = "R1" Color = "clBlue1" >
+               <Base X = "0" Y = "0" Z = "-H" Color = "clBlue1" />
+               <Top  X = "0" Y = "0" Z = "-D" Color = "clBlue2" />
+        </Cylinder>
+        <Cylinder Radius = "R2" Color = "clGreen1" >
+               <Base X = "0" Y = "0" Z = "-D" Color = "clGreen1" />
+               <Top  X = "0" Y = "0" Z = " 0" Color = "clGreen2" />
+        </Cylinder>
+        <Cylinder Radius = "R3" Color = "clYellow" >
+               <Base X = "0" Y = "0" Z = " 0" Color = "clYellow" />
+               <Top  X = "0" Y = "0" Z = " D" Color = "clYellow" />
+        </Cylinder>
+        <Cylinder Radius = "R4" Color = "clRed" >
+               <Base X = "0" Y = "0" Z = " D" Color = "clRed" />
+               <Top  X = "0" Y = "0" Z = " H" Color = "clRed" />
+        </Cylinder>
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

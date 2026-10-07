@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Diamond Cube (Random Color)</Name>
+        <Menu>Other forms\3x3x3 variants\Diamond Cube (Random Color)</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-06-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6783</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'A3E9FF'; // LightBlue
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := 'FF0000'; // Red
+        Colors[3] := '80287E'; // Purple
+        Color := Colors[Random(4)];
+
+        R  := 0.55;     // Cone radius
+        H  := R * 1.09; // Cone Height
+        K  := R * 0.4;  // Top Cut Depth
+        D  := R * 0.22; // 3x3 Cut Depth
+        TZ := R * 0.22; // Vertical Offset
+
+        N := 60; // Quality of cones
+
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        sAngle := 2 * Pi / 3;
+        da := sAngle / 4;
+        for i := 0 to 2 do begin
+            ax[i] := sin(sAngle * i + da);
+            ay[i] := cos(sAngle * i + da);
+        end;
+        az := sqrt(2) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "ax[0]; ay[0]; az" />
+        <Axis NormVector = "ax[1]; ay[1]; az" />
+        <Axis NormVector = "ax[2]; ay[2]; az" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace1" >
+            <Face Color = "Color" VertexIndexes = "0; i + 2; (i + 1) mod N + 2" InvisibleEdges = "5" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "AddFace2" >
+            <Face Color = "Color" VertexIndexes = "1; (i + 1) mod N + 2; i + 2" InvisibleEdges = "5" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Transfer Vector = " 0; 0;-TZ" />
+
+        <Part>
+            <Vertices Vectors = "0; 0; H" />
+            <Vertices Vectors = "0; 0;-H" />
+            <Vertices Vectors = "x; y; 0" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace1" i = "0" Repeat = "N" />
+                <ExecMacro MacroName = "AddFace2" i = "0" Repeat = "N" />
+            </Faces>
+        </Part>
+        <Cut Color = "Color" > <Plane NormDistance = "-K" NormVector = "0; 0;-1" /> </Cut>
+
+        <Transfer Vector = " 0; 0; TZ" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mirror 2-Layer Super Square-1</Name>
+        <Menu>Other cubes\Square-1\Mirror 2-Layer Super Square-1</Menu>
+        <Inventor>Xu Hai Kun</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-08-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10192</Link>
+    </Interface>
+
+    <Script>
+        Color := 'AAAAAA'; // Silver
+        for i := 0 to 5 do
+            Colors[i] := Color;
+
+        W := 0.5;
+        H := W / 2;
+        RC := W / 2;
+        Delta := 0.002;
+
+        DX :=-W * 0.2;
+        DY := W * 0.1;
+        DZ := W * 0;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/6; Pi/6; 0" PlaneDistances = "-H - DZ; 0; H - DZ" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi/12" />
+        <Transfer Vector = " DX; DY; DZ" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "H" />
+        <Transfer Vector = "-DX;-DY;-DZ" />
+
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "0" From = "1" To = "2" Angle = "Pi / 3" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "0" From = "1" To = "2" Angle = "Pi / 6" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "0" From = "1" To = "2" Angle = "Pi / 3" />
+        <Split Axis = "1" From = "1" />
+        <Undo Repeat = "3" />
+
+        <Circle Color = "Color" Radius = "RC" Center = "0; 0;  H + Delta - DZ" />
+        <Circle Color = "Color" Radius = "RC" Center = "0; 0; -H - Delta - DZ" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "0" From = "2" />
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 8" />
+</xml>

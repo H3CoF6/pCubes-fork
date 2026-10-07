@@ -1,0 +1,128 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Barrel Master</Name>
+        <Menu>Other forms\Cylinder\Skewb Barrel Master</Menu>
+        <Inventor>Traiphum Prungtaengkit</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3124</Link>
+    </Interface>
+
+    <Script>
+        Colors[3]   := '0099EE';
+        Colors[1]   := '00AA00';
+        Colors[0]   := 'DD0000';
+        Colors[2]   := '8800EE';
+        clYellow := 'FFEE00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.53;
+        H := R * 0.95;
+
+        s2 := sqrt(2);
+        D := H * sqrt(3) / 6;
+        N := 64;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        W := R * 0.57;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" TurnAxesWithPartNo = "1" >
+        <Axis NormVector = " s2;  0; 1" />
+        <Axis NormVector = "  0; s2; 1" />
+        <Axis NormVector = "-s2;  0; 1" />
+        <Axis NormVector = "  0;-s2; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "Cylinder">
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "clWhite" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" Repeat = "N" />
+                    <Face Color = "clYellow" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "Cylinder" Color = "Colors[0]" />
+        <SplitByAxes/>
+        <Cut Axis = "1" From = "1" />
+        <Hide Axis = "2" Layer = "0" />
+        <HideContaining Vector = "Vx[5];Vy[5];Vz[5]" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Cylinder" Color = "Colors[1]" />
+        <SplitByAxes/>
+        <Cut Axis = "0" From = "1" />
+        <Hide Axis = "1" Layer = "0" />
+        <HideContaining Vector = "Vx[1];Vy[1];Vz[1]" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Cylinder" Color = "Colors[2]" />
+        <SplitByAxes/>
+        <Cut Axis = "3" From = "1" />
+        <Hide Axis = "0" Layer = "0" />
+        <HideContaining Vector = "Vx[3];Vy[3];Vz[3]" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Cylinder" Color = "Colors[3]" />
+        <SplitByAxes/>
+        <Cut Axis = "2" From = "1" />
+        <Hide Axis = "3" Layer = "0" />
+        <HideContaining Vector = "Vx[7];Vy[7];Vz[7]" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+        <Macro Name = "RemoveEdges" >
+            <RemoveContaining Vector = "Ex[i];Ey[i];Ez[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveEdges" i = "6" Repeat = "4" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cylinder" Color = "-1" />
+        <SplitByAxes/>
+        <Macro Name = "HideEdges" >
+            <HideContaining Vector = "Ex[i];Ey[i];Ez[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideEdges" i = "0" Repeat = "4" />
+        <ExecMacro MacroName = "HideEdges" i = "6" Repeat = "4" />
+        <HideContaining Vector = "Cx[4];Cy[4];Cz[4]" />
+        <HideContaining Vector = "Cx[5];Cy[5];Cz[5]" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

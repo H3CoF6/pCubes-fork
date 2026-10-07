@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cuboid 11x13x15</Name>
+        <Menu>Cubic\Cuboids\15\11x13x15</Menu>
+        <Inventor>Thorn Taepaisitphongse</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-11-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12116</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        X := 15;
+        Y := 13;
+        Z := 11;
+
+        include 'Puzzles\Cubic\Cuboids\Cuboid Calculation.inc';
+    </Script>
+
+    <Axes>
+        <Axis TurningAngles = "Ax" NormVector = " 1; 0; 0" PlaneDistances = "DX" />
+        <Axis TurningAngles = "Ay" NormVector = " 0; 1; 0" PlaneDistances = "DY" />
+        <Axis TurningAngles = "Az" NormVector = " 0; 0; 1" PlaneDistances = "DZ" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Puzzles\Cubic\Cuboids\Cuboid Splitted.xml" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script>N := 15;</Script>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

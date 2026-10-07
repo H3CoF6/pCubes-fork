@@ -1,0 +1,115 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese Cuboctahedrons</Name>
+        <Menu>Other forms\Multi-core\Siamese Cuboctahedrons</Menu>
+        <Inventor>Benjy Oliver</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-10-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3396</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '800080'; // Purple
+        Colors[ 1] := 'CD5C5C'; // Indian
+        Colors[ 2] := '0000FF'; // Blue
+        Colors[ 3] := '202020'; // Black
+        Colors[ 4] := '00FFFF'; // Cyan
+        Colors[ 5] := 'FF7F50'; // Coral
+        Colors[ 6] := '808000'; // Olive
+        Colors[ 7] := 'FF0000'; // Red
+        Colors[ 8] := '000080'; // Navy
+        Colors[ 9] := 'FFFF00'; // Yellow
+        Colors[10] := 'FF69B4'; // Pink
+        Colors[11] := '008080'; // Teal
+        Colors[12] := '800000'; // Brown
+        Colors[13] := 'C0C0C0'; // Silver
+        Colors[14] := 'FF6000'; // Orange
+        Colors[15] := 'DDBB20'; // Golden
+
+        W := 0.33;
+        D := W / 3;
+        D1 := D * sqrt(2);
+        D2 := D1 * 2;
+        D3 := D1 * 3;
+        D5 := D1 * 5;
+
+        DC1 := D * 6 / sqrt(3);
+        DC2 := D * 10 / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi / 2; Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "-1; 0;-1" BaseVector = "-D2; 0; 0" />
+        <Axis NormVector = "-1; 0; 1" BaseVector = "-D2; 0; 0" />
+        <Axis NormVector = " 1; 0; 1" BaseVector = " D2; 0; 0" />
+        <Axis NormVector = " 1; 0;-1" BaseVector = " D2; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-D2;-W; D3" />
+                <Add Vector = " D2;-W; D3" />
+                <Add Vector = "-D2; W; D3" />
+                <Add Vector = " D2; W; D3" />
+                <Add Vector = "  0;-W; D1" />
+                <Add Vector = "  0; W; D1" />
+                <Add Vector = "-D5;-W;  0" />
+                <Add Vector = " D5;-W;  0" />
+                <Add Vector = "-D5; W;  0" />
+                <Add Vector = " D5; W;  0" />
+                <Add Vector = "  0;-W;-D1" />
+                <Add Vector = "  0; W;-D1" />
+                <Add Vector = "-D2;-W;-D3" />
+                <Add Vector = " D2;-W;-D3" />
+                <Add Vector = "-D2; W;-D3" />
+                <Add Vector = " D2; W;-D3" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = " 0; 6;12;10;13; 7; 1; 4" />
+                <Face Color = "Colors[1]" VertexIndexes = " 2; 5; 3; 9;15;11;14; 8" />
+                <Face Color = "Colors[2]" VertexIndexes = " 0; 4; 5; 2" />
+                <Face Color = "Colors[2]" VertexIndexes = " 1; 3; 5; 4" />
+                <Face Color = "Colors[3]" VertexIndexes = " 1; 7; 9; 3" />
+                <Face Color = "Colors[4]" VertexIndexes = " 7;13;15; 9" />
+                <Face Color = "Colors[5]" VertexIndexes = "10;11;15;13" />
+                <Face Color = "Colors[5]" VertexIndexes = "10;12;14;11" />
+                <Face Color = "Colors[6]" VertexIndexes = " 6; 8;14;12" />
+                <Face Color = "Colors[7]" VertexIndexes = " 0; 2; 8; 6" />
+            </Faces>
+        </Part>
+
+        <Turn NormVector = " 0; 1; 0" Angle = "-Pi/4" />
+        <Cut Color = "Colors[ 8]" ><Plane NormVector = "-1;-1; 1" NormDistance = "-DC1" /></Cut>
+        <Cut Color = "Colors[ 9]" ><Plane NormVector = "-1; 1; 1" NormDistance = "-DC1" /></Cut>
+        <Cut Color = "Colors[10]" ><Plane NormVector = " 1; 1;-1" NormDistance = "-DC1" /></Cut>
+        <Cut Color = "Colors[11]" ><Plane NormVector = " 1;-1;-1" NormDistance = "-DC1" /></Cut>
+        <Cut Color = "Colors[12]" ><Plane NormVector = " 1;-1; 1" NormDistance = "-DC2" /></Cut>
+        <Cut Color = "Colors[13]" ><Plane NormVector = " 1; 1; 1" NormDistance = "-DC2" /></Cut>
+        <Cut Color = "Colors[14]" ><Plane NormVector = "-1; 1;-1" NormDistance = "-DC2" /></Cut>
+        <Cut Color = "Colors[15]" ><Plane NormVector = "-1;-1;-1" NormDistance = "-DC2" /></Cut>
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi/4" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "1" Layers = "1;2" Angle = " Pi/2" />
+        <Turn Axis = "2" Layers = "1;2" Angle = "-Pi/2" />
+        <SplitByAxes/>
+        <Undo/>
+        <Undo/>
+
+        <Turn Axis = "0" Layers = "1;2" Angle = " Pi/2" />
+        <Turn Axis = "3" Layers = "1;2" Angle = "-Pi/2" />
+        <SplitByAxes/>
+        <Undo/>
+        <Undo/>
+
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

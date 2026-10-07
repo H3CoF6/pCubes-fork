@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Two Faces</Name>
+        <Menu>Other forms\3x3x3 variants\Fisher Two Faces</Menu>
+        <Inventor>Carlos Ramírez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9452</Link>
+    </Interface>
+
+    <Script>
+        Color0 := 'FF800A'; // Orange
+        Color1 := '009600'; // Green
+        Color2 := 'FFFF00'; // Yellow
+        Color3 := 'FFFFFF'; // White
+
+        W := 0.5;
+        D := W / 3;
+
+        Colors[0] :=-1;
+        Colors[2] :=-1;
+        Colors[3] :=-1;
+        Colors[5] :=-1;
+        WX := W;
+        WY := D;
+        WZ := W;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;1;0" Angle = "Pi/4" />
+
+        <Macro Name = "AddHalf" >
+            <Cylinder Radius = "W" Color = "c1" Base = " 0; D;-W" BaseColor = "c2" Top = "0;D;W" TopColor = "c2" />
+            <Cut> <Plane NormVector = "0; 1; 0" NormDistance = "D" /> </Cut>
+            <Cut InvisibleEdges = "-1" Color = "-2" > <Plane NormVector = " 0; 0;-1" /> </Cut>
+            <Cut InvisibleEdges = "-1" Color = "-2" > <Plane NormVector = " 1; 0; 0" /> </Cut>
+            <HideAll/>
+
+            <Cylinder Radius = "W" Color = "c1" Base = " 0; D;-W" BaseColor = "c3" Top = "0;D;W" TopColor = "c3" />
+            <Cut> <Plane NormVector = "0; 1; 0" NormDistance = "D" /> </Cut>
+            <Cut InvisibleEdges = "-1" Color = "-2" > <Plane NormVector = " 0; 0;-1" /> </Cut>
+            <Cut InvisibleEdges = "-1" Color = "-2" > <Plane NormVector = "-1; 0; 0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0;1;0" Angle = "Pi" />
+        </Macro>
+        <ExecMacro MacroName = "AddHalf" c1 = "Color0" c2 = "Color1" c3 = "Color2" />
+        <ExecMacro MacroName = "AddHalf" c1 = "Color3" c2 = "Color2" c3 = "Color1" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddHalf" c1 = "Color2" c2 = "Color3" c3 = "Color0" />
+        <ExecMacro MacroName = "AddHalf" c1 = "Color1" c2 = "Color0" c3 = "Color3" />
+        <Turn NormVector = "0;1;0" Angle = "-Pi/2" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+
+        <Macro Name = "AddQuarter" >
+            <Script> Colors[1] := c1; Colors[4] := c2; </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Cut InvisibleEdges = "-1" Color = "-2" > <Plane NormVector = " 0; 0;-1" /> </Cut>
+            <Cut InvisibleEdges = "-1" Color = "-2" > <Plane NormVector = " 1; 0; 0" /> </Cut>
+            <Turn NormVector = "0;1;0" Angle = "-Pi/2" />
+            <HideAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddQuarter" c1 = "Color0" c2 = "Color1" />
+        <ExecMacro MacroName = "AddQuarter" c1 = "Color2" c2 = "Color0" />
+        <ExecMacro MacroName = "AddQuarter" c1 = "Color3" c2 = "Color2" />
+        <ExecMacro MacroName = "AddQuarter" c1 = "Color1" c2 = "Color3" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

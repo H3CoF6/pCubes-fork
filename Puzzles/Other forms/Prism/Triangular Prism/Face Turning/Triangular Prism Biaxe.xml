@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triangular Prism Biaxe</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Face Turning\Triangular Prism Biaxe</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11470</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'EDFF11';
+        clRed    := 'C80000';
+        clGreen  := '009600';
+        clBlue   := '0000C8';
+        clWhite  := 'FFFFFF';
+
+        R := 0.7;
+        H := R * sqrt(3) / 4;
+
+        sAngle := PI * 2 / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D := R / 8;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x; y;-H" />
+            <Vertices Vectors = " x; y; H" />
+            <Faces>
+                <Face Color = "clYellow" VertexIndexes = "0;1;2" />
+                <Face Color = "clWhite " VertexIndexes = "4;3;5" />
+                <Face Color = "clBlue  " VertexIndexes = "0;3;4;1" />
+                <Face Color = "clGreen " VertexIndexes = "1;4;5;2" />
+                <Face Color = "clRed   " VertexIndexes = "2;5;3;0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <!--<HideContaining Vector = " 0; R;-H" />-->
+        <Split><Plane NormVector = "x[1]; y[1]; 0" /></Split>
+        <Split><Plane NormVector = "x[2]; y[2]; 0" /></Split>
+        <!--<ShowAll/>-->
+    </Figure>
+</xml>

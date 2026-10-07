@@ -1,0 +1,142 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Great Lotus</Name>
+        <Menu>Other forms\Archimedean Solids\Cuboctahedron\Great Lotus</Menu>
+        <Inventor>Jesse Boden</Inventor>
+        <Programmer>Skallos, ironesp</Programmer>
+        <Added>2025-01-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12442</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        Colors[ 6] := '006622';
+        Colors[ 7] := '8800FF';
+        Colors[ 8] := '999999';
+        Colors[ 9] := 'FFBB00';
+        Colors[10] := 'AA4400';
+        Colors[11] := 'FF88FF';
+        Colors[12] := 'EE00EE';
+        Colors[13] := '00CCCC';
+
+        W := 0.5;
+        A := W * 1.2;
+        D2 := W * 0.77;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/2" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddColor" >
+            <Face Color = "Colors[c]" VertexIndexes = " v1; v2; v0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = " v2; v3; v0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = " v3; v4; v0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = " v4; v1; v0" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "-W;-W; 0" />
+                <Add Vector = "-W; 0; W" />
+                <Add Vector = "-W; W; 0" />
+                <Add Vector = "-W; 0;-W" />
+                <Add Vector = " 0;-W;-W" />
+                <Add Vector = " 0;-W; W" />
+                <Add Vector = " 0; W; W" />
+                <Add Vector = " 0; W;-W" />
+                <Add Vector = " W;-W; 0" />
+                <Add Vector = " W; 0; W" />
+                <Add Vector = " W; W; 0" />
+                <Add Vector = " W; 0;-W" />
+                <Add Vector = " 0; 0; A" />
+                <Add Vector = " 0; 0;-A" />
+                <Add Vector = " A; 0; 0" />
+                <Add Vector = "-A; 0; 0" />
+                <Add Vector = " 0; A; 0" />
+                <Add Vector = " 0;-A; 0" />
+            </Vertices>
+
+            <Faces>
+                <ExecMacro MacroName = "AddColor" c = "0" v0 = "15" v1 = " 0" v2 = " 1" v3 = " 2" v4 = " 3" />
+                <ExecMacro MacroName = "AddColor" c = "1" v0 = "14" v1 = "11" v2 = "10" v3 = " 9" v4 = " 8" />
+                <ExecMacro MacroName = "AddColor" c = "2" v0 = "17" v1 = " 0" v2 = " 4" v3 = " 8" v4 = " 5" />
+                <ExecMacro MacroName = "AddColor" c = "3" v0 = "16" v1 = " 2" v2 = " 6" v3 = "10" v4 = " 7" />
+                <ExecMacro MacroName = "AddColor" c = "4" v0 = "13" v1 = " 3" v2 = " 7" v3 = "11" v4 = " 4" />
+                <ExecMacro MacroName = "AddColor" c = "5" v0 = "12" v1 = " 1" v2 = " 5" v3 = " 9" v4 = " 6" />
+
+                <Face Color = "Colors[ 6]" VertexIndexes = "0; 3; 4" />
+                <Face Color = "Colors[ 7]" VertexIndexes = "2; 7; 3" />
+                <Face Color = "Colors[ 8]" VertexIndexes = "0; 5; 1" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "1; 6; 2" />
+                <Face Color = "Colors[10]" VertexIndexes = "4;11; 8" />
+                <Face Color = "Colors[11]" VertexIndexes = "7;10;11" />
+                <Face Color = "Colors[12]" VertexIndexes = "5; 8; 9" />
+                <Face Color = "Colors[13]" VertexIndexes = "6; 9;10" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "1" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "0" Angle = "Pi/4" Layer = "1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "0" Angle = "Pi/2" Layer = "1" />
+        <Turn Axis = "2" Angle = "Pi/4" Layer = "1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+        <RemoveGrayParts/>
+
+        <Hide Axis = "0" To   = "0" />
+        <Hide Axis = "0" From = "2" />
+        <Hide Axis = "1" To   = "0" />
+        <Hide Axis = "1" From = "2" />
+        <Hide Axis = "2" To   = "0" />
+        <Hide Axis = "2" From = "2" />
+
+        <Turn Axis = "0" Angle = "Pi/4" Layer = "1" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "SplitHalf" >
+            <HideContaining Vector = "0; 0; D2*1.01" />
+            <InvertVisibility/>
+            <Split><Plane NormVector = " 0; 1; 1" NormDistance = "D2" /></Split>
+            <Turn NormVector = " 0; 1; 0" Angle = " Pi/4" />
+            <Turn NormVector = " 0; 0; 1" Angle = " Pi/4" />
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = "D2" /></Split>
+            <Turn NormVector = " 0; 0; 1" Angle = "-Pi/4" />
+            <Turn NormVector = " 1; 0; 0" Angle = "-Pi/4" />
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = " D2" /></Split>
+            <Turn NormVector = " 1; 0; 0" Angle = " Pi/4" />
+            <Turn NormVector = " 0; 1; 0" Angle = "-Pi/4" />
+            <RemoveGrayParts/>
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "Split2" >
+            <ExecMacro MacroName = "SplitHalf" Repeat = "2" />
+            <Turn NormVector = " 0; 1; 0" Angle = " Pi" />
+            <ExecMacro MacroName = "SplitHalf" Repeat = "2" />
+            <Turn NormVector = " 0; 1; 0" Angle = "-Pi" />
+            <Turn NormVector = " 1; 1; 1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Split2" Repeat = "3" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

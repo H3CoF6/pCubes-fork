@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyraminx Magic Barrel (Senior)</Name>
+        <Menu>Other forms\Cylinder\Pyraminx Magic Barrel (Senior)</Menu>
+        <Inventor>Scott Bedard</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-03-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=462</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clGreen  := '009600';
+        clBlue   := '0000C8';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        H := 0.5;
+        R := H;
+
+        D := R * 0.85;
+
+        for i := 0 to 3 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+
+        N := 60;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = " 0; Pi" PlaneDistances = " D" NormVectors = "ax; ay; 0">
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi / 3" PlaneDistances = "-H/3; H/3" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "clWhite" VertexIndexes = "FromTo(0, N - 1)" />
+                <ExecMacro MacroName = "AddFace" i = "0" Color = "clRed"   Repeat = "N/3" />
+                <ExecMacro MacroName = "AddFace"         Color = "clGreen" Repeat = "N/3" />
+                <ExecMacro MacroName = "AddFace"         Color = "clBlue"  Repeat = "N/3" />
+                <Face Color = "clYellow" VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

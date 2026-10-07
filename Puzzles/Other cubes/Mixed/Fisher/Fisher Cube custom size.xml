@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Cube custom size</Name>
+        <Menu>Other cubes\Mixed\Fisher\Fisher Any size</Menu>
+        <Programmer>Skallos</Programmer>
+        <Inventor>different</Inventor>
+        <Added>2017-08-07</Added>
+    </Interface>
+
+    <Script>
+        N := 2;
+
+        RequestNumbers('Enter cube size', 'Size:', N);
+
+        N := Max(Min(N, 100), 2);
+
+        W  := 0.5;
+        D0 := W * sqrt(2) / (N - 1);
+        H  := D0 * N / 2;
+
+        for i := 0 to N - 2 do
+            D[i] := -H + D0 * (i + 1);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 1; 0" />
+        <Axis NormVector = "1;-1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Cut Color = "clYellow" > <Plane NormDistance = "-H" NormVector = "0; 0; 1" /> </Cut>
+        <Cut Color = "clWhite " > <Plane NormDistance = "-H" NormVector = "0; 0;-1" /> </Cut>
+
+        <Split Axis = "0" From = "1"/>
+        <Split Axis = "1" From = "1"/>
+        <Split Axis = "2" From = "1"/>
+        <Split Axis = "0" From = "N-1"/>
+        <Split Axis = "1" From = "N-1"/>
+        <Split Axis = "2" From = "N-1"/>
+
+        <RemoveGrayParts/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fused 5+7</Name>
+        <Menu>Cubic\Multi-core\Fused 5+7</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2631</Link>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+        D1 := W / 10;
+        D2 := W * 0.09;
+        T := (D1 * 5 + D2 * 3) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D1; D1; D1*3" FixedLayers = "0" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-T;-T; T" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "-T;-T; T" />
+        <Axis NormVector = " 0; 0; 1" BaseVector = "-T;-T; T" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2*3;-D2; D2; D2*3; D2*5" FixedLayers = "0" >
+        <Axis NormVector = " 1; 0; 0" BaseVector = " T; T;-T" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = " T; T;-T" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = " T; T;-T" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " T; T;-T" />
+        <LoadFrom File = "Figures\Cube.xml" W = "D1 * 5" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "-D1*3" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "-D1*3" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D1*3" /></Split>
+        <HideAll/>
+        <Transfer Vector = "-T*2;-T*2; T*2" />
+
+        <LoadFrom File = "Figures\Cube.xml" W = "D2 * 7" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "-W;-W; W" />
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-D2*5" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-D2*5" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "-D2*5" /></Split>
+
+        <ShowAll/>
+        <Transfer Vector = " T; T;-T" />
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

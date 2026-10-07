@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Krystian's</Name>
+        <Menu>Other cubes\Vertex Turning\Skewb\Skewb Krystian's</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-01-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4443</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+ 
+        D := W * 0.138369893274862;
+        A := 2*pi/9;
+        DCut := W * 0.8;
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "A" PlaneDistances = "-D;D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        // split and unbandage
+        <Macro Name = "SplitI" >
+            <SplitByAxes/>
+            <Turn Axis = "i" Layer = "1" Angle = " A" />
+            <RemoveGrayParts/>
+            <Script>i := (i + 1) mod 4;</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitI" i = "0" Repeat = "20" />
+        <Undo Repeat = "20" />
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

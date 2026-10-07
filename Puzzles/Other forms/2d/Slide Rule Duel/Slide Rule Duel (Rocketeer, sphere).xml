@@ -1,0 +1,106 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Slide Rule Duel (Rocketeer, sphere)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Rocketeer (sphere)</Menu>
+        <Inventor>Douglas A. Engel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4557</Link>
+    </Interface>
+
+    <Script>
+        Colors[1] := '4444FF'; // Blue
+        Colors[2] := 'FF0000'; // Red
+        Colors[3] := '007700'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+
+        K := 0.6;
+        D1 := K * 0.14;
+        D2 := K * 0.73;
+
+        Angle := Pi * 0.56;
+    </Script>
+
+    <Axes TurningAngles = " Pi / 2" AvailableAngles = "-Pi/2; 0" PlaneDistances = "-D1" FixedLayers = "1" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "0; 0" MaxAngles = "Pi/2; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" JumbleAngle = "Angle" PlaneDistances = " D2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddColor" >
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = " D2" /> </Cut>
+            <Turn NormVector = " 0;-1; 0" Angle = " Angle" />
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D1" /></Split>
+            <Turn NormVector = " 0;-1; 0" Angle = "-2*Angle" />
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D1" /></Split>
+            <Turn NormVector = " 0;-1; 0" Angle = " Angle" />
+        </Macro>
+
+        <Macro Name = "Add2Colors" >
+            <ExecMacro MacroName = "AddColor" Color = "Color1" />
+            <RemoveContaining Vector = " 0;-K; 0"/>
+            <HideAll/>
+            <ExecMacro MacroName = "AddColor" Color = "Color2" />
+            <HideContaining Vector = " 0;-K; 0"/>
+            <RemoveAllVisible/>
+        </Macro>
+
+        <ExecMacro MacroName = "Add2Colors" Color1 = "Colors[1]" Color2 = "Colors[2]" />
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "Add2Colors" Color1 = "Colors[3]" Color2 = "Colors[4]" />
+        <Turn NormVector = " 0; 0; 1" Angle = " Pi/2" />
+        <ShowAll/>
+
+        <Hide Axis = "1" Layer = "0" />
+        <Cut Axis = "0" From = "1" />
+        <ShowAll/>
+
+        <Split Axis = "0" From  = "1" />
+        <Hide  Axis = "0" Layer = "0" />
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi" />
+        <Split Axis = "0" From  = "1" />
+        <Hide  Axis = "0" Layer = "0" />
+        <Turn  Axis = "1" Layer = "1" Angle = " Angle" />
+        <Turn  Axis = "2" Layer = "1" Angle = " Angle" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-2*Angle" />
+        <Turn  Axis = "2" Layer = "1" Angle = "-2*Angle" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = " Angle + Pi" />
+        <Turn  Axis = "2" Layer = "1" Angle = " Angle + Pi" />
+
+        <HideContaining Vector = " K; 0; 0"/>
+        <HideContaining Vector = " 0;-K; 0"/>
+        <HideContaining Vector = " K*0.9;-K*0.2; 0"/>
+        <HideContaining Vector = " K*0.9; K*0.2; 0"/>
+        <HideContaining Vector = "-K*0.2;-K*0.9; 0"/>
+        <HideContaining Vector = " K*0.2;-K*0.9; 0"/>
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "-1" />
+        <Cut Axis = "2" To = "1" />
+        <Split Axis = "0" From = "1" />
+        <Hide Axis = "0" Layer = "0" />
+        <Cut Axis = "1" To = "1" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-45 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+</xml>

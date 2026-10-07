@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dogic Carousel (10 colors)</Name>
+        <Menu>Other forms\Icosahedron\Vertex turning\Dogic Carousel (10 colors)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-09-14</Added>
+    </Interface>
+
+    <Script>
+        Color[ 0] := '00FF00'; // LightGreen
+        Color[ 1] := '2828FF'; // LightBlue
+        Color[ 2] := 'FFFF00'; // Yellow
+        Color[ 3] := '008000'; // Green
+        Color[ 4] := '800000'; // Brown
+        Color[ 5] := '800080'; // Violett
+        Color[ 6] := 'FFFFFF'; // White
+        Color[ 7] := 'FF0000'; // Red
+        Color[ 8] := '00DCB4'; // Cyan
+        Color[ 9] := 'FF0080'; // LightViolett
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D1 := Rsin;
+        D2 := (Rsin + R) / 2;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D1; D2" FixedLayers = "0" NormVectors = "Vx; Vy; Vz" TurnAxesWithPartNo = "8" />
+
+    <Figure>
+        <Macro Name = "AddPair">
+            <Face Color = "Color[c1]" VertexIndexes = " v1; v4; v3" InvisibleEdges = "2" />
+            <Face Color = "Color[c2]" VertexIndexes = " v2; v3; v4" InvisibleEdges = "2" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Ex; Ey; Ez" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddPair" c1 = " 0" c2 = " 1" v1 = " 3" v2 = " 2" v3 = " 0" v4 = "18" />
+                <ExecMacro MacroName = "AddPair" c1 = " 1" c2 = " 2" v1 = " 2" v2 = " 1" v3 = " 0" v4 = "17" />
+                <ExecMacro MacroName = "AddPair" c1 = " 2" c2 = " 3" v1 = " 1" v2 = " 5" v3 = " 0" v4 = "21" />
+                <ExecMacro MacroName = "AddPair" c1 = " 3" c2 = " 4" v1 = " 5" v2 = " 4" v3 = " 0" v4 = "20" />
+                <ExecMacro MacroName = "AddPair" c1 = " 4" c2 = " 0" v1 = " 4" v2 = " 3" v3 = " 0" v4 = "19" />
+                <ExecMacro MacroName = "AddPair" c1 = " 6" c2 = " 5" v1 = " 1" v2 = " 5" v3 = "21" v4 = "10" />
+                <ExecMacro MacroName = "AddPair" c1 = " 8" c2 = " 7" v1 = " 2" v2 = " 1" v3 = "17" v4 = " 6" />
+                <ExecMacro MacroName = "AddPair" c1 = " 5" c2 = " 9" v1 = " 3" v2 = " 2" v3 = "18" v4 = " 7" />
+                <ExecMacro MacroName = "AddPair" c1 = " 7" c2 = " 6" v1 = " 4" v2 = " 3" v3 = "19" v4 = " 8" />
+                <ExecMacro MacroName = "AddPair" c1 = " 9" c2 = " 8" v1 = " 5" v2 = " 4" v3 = "20" v4 = " 9" />
+                <ExecMacro MacroName = "AddPair" c1 = " 3" c2 = " 2" v1 = " 7" v2 = " 8" v3 = "11" v4 = "33" />
+                <ExecMacro MacroName = "AddPair" c1 = " 2" c2 = " 1" v1 = " 8" v2 = " 9" v3 = "11" v4 = "34" />
+                <ExecMacro MacroName = "AddPair" c1 = " 1" c2 = " 0" v1 = " 9" v2 = "10" v3 = "11" v4 = "35" />
+                <ExecMacro MacroName = "AddPair" c1 = " 0" c2 = " 4" v1 = "10" v2 = " 6" v3 = "11" v4 = "36" />
+                <ExecMacro MacroName = "AddPair" c1 = " 4" c2 = " 3" v1 = " 6" v2 = " 7" v3 = "11" v4 = "32" />
+
+                <ExecMacro MacroName = "AddPair" c1 = " 5" c2 = " 6" v1 = " 7" v2 = " 8" v3 = "33" v4 = " 3" />
+                <ExecMacro MacroName = "AddPair" c1 = " 7" c2 = " 8" v1 = " 8" v2 = " 9" v3 = "34" v4 = " 4" />
+                <ExecMacro MacroName = "AddPair" c1 = " 9" c2 = " 5" v1 = " 9" v2 = "10" v3 = "35" v4 = " 5" />
+                <ExecMacro MacroName = "AddPair" c1 = " 6" c2 = " 7" v1 = "10" v2 = " 6" v3 = "36" v4 = " 1" />
+                <ExecMacro MacroName = "AddPair" c1 = " 8" c2 = " 9" v1 = " 6" v2 = " 7" v3 = "32" v4 = " 2" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

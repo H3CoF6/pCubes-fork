@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tangram Minx unbandaged</Name>
+        <Menu>Other forms\Dodecahedron\Mixed\Face-Edge\Tangram Minx unbandaged</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-10-21</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := R2Sin;
+        D2 := Vx[2];
+
+        ja := arctan(2);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 10" PlaneDistances = "-D1;D1" FixedLayers = "1" >
+        <Axis NormVector = "  0;  0;  1" />
+    </Axes>
+    <Axes TurningAngles = "Pi" AvailableAngles = "0; ja; Pi; Pi+ja" PlaneDistances = "-D2;D2" FixedLayers = "1" >
+        <Axis NormVector = "cos(0*Pi/5); sin(0*Pi/5); 0" />
+        <Axis NormVector = "cos(2*Pi/5); sin(2*Pi/5); 0" />
+        <Axis NormVector = "cos(4*Pi/5); sin(4*Pi/5); 0" />
+        <Axis NormVector = "cos(6*Pi/5); sin(6*Pi/5); 0" />
+        <Axis NormVector = "cos(8*Pi/5); sin(8*Pi/5); 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn  Axis = "Ax" Layer = "0" Angle = "ja" />
+            <Turn  Axis = "Ax" Layer = "2" Angle = "ja" />
+            <Split Axis = "0" From = "1"/>
+            <Split Axis = "0" From = "2"/>
+            <Undo Repeat = "2" />
+        </Macro>
+        <ExecMacro MacroName = "SplitPart" Ax = "1" />
+        <ExecMacro MacroName = "SplitPart" Ax = "2" />
+        <ExecMacro MacroName = "SplitPart" Ax = "3" />
+        <ExecMacro MacroName = "SplitPart" Ax = "4" />
+        <ExecMacro MacroName = "SplitPart" Ax = "5" />
+    </Figure>
+</xml>

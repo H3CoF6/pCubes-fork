@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fractured Prism Master Plus</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Face Turning\Fractured Prism Master Plus</Menu>
+        <Inventor>Xing_Xu</Inventor>
+        <Programmer>Misdrop</Programmer>
+        <Added>2025-03-06</Added>
+        <Link>https://twistypuzzles.com/forum/viewtopic.php?t=39832</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '0000A0';
+        clOrange  := 'FF6000';
+        clRed     := 'FF0000';
+        clGreen   := '008000';
+        clWhite   := 'FFFFFF';
+        clViolett := '800080';
+
+        H := 0.4;
+        R := H * 1.7;
+
+        for i := 0 to 4 do begin
+            x[i] := R * cos(2 * Pi / 5 * i);
+            y[i] := R * sin(2 * Pi / 5 * i);
+        end;
+
+        D  := x[1] + (4/7) * (x[2]-x[1]);
+        D2 := x[1] + (5/7) * (x[2]-x[1]);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2"  PlaneDistances = "D2; D" FixedLayers = "2" NormVectors = " x; y; 0" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "clYellow " VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clGreen  " VertexIndexes = "5;6;1;0" />
+                <Face Color = "clViolett" VertexIndexes = "6;7;2;1" />
+                <Face Color = "clOrange " VertexIndexes = "7;8;3;2" />
+                <Face Color = "clBlue   " VertexIndexes = "8;9;4;3" />
+                <Face Color = "clRed    " VertexIndexes = "9;5;0;4" />
+                <Face Color = "clWhite  " VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "ax" Angle = "Pi" Layers = "0;1" />
+            <Turn Axis = "(ax + 1) mod 5" Angle = " Pi/2" Layers = "0;1" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+            <Turn Axis = "ax" Angle = "Pi" Layer = "0" />
+            <Turn Axis = "(ax + 1) mod 5" Angle = " Pi/2" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "(ax + 5) mod 5" Angle = " Pi" Layer = "1" />
+            <Turn Axis = "(ax + 4) mod 5" Angle = " Pi" Layer = "1" />
+            <Turn Axis = "(ax + 3) mod 5" Angle = " Pi" Layer = "1" />
+            <Turn Axis = "(ax + 2) mod 5" Angle = " Pi" Layer = "1" />
+            <Turn Axis = "(ax + 3) mod 5" Angle = " Pi" Layer = "1" />
+            <Turn Axis = "(ax + 4) mod 5" Angle = " Pi" Layer = "1" />
+            <Turn Axis = "(ax + 5) mod 5" Angle = " Pi" Layer = "1" />
+            <Turn Axis = "(ax + 1) mod 5" Angle = "-Pi/2" Layer = "1" />
+            <SplitByAxes/>
+
+            <Undo Repeat = "10" />
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" ax = "0" Repeat = "5" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x3x3 Split Mirror Cube</Name>
+        <Menu>Cubic\Bandaged\Cuboids\2x3x3 Split Mirror Cube</Menu>
+        <Inventor>Xu Hai Kun</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-11-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8858</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'AAAAAA'; // Silver
+        for i := 0 to 5 do
+            Colors[i] := MirrorColor;
+
+        W := 0.5;
+        D := W / 3;
+
+        DWX :=-W * 0.08;
+        DWY := W * 0.04;
+        DWZ :=-W * 0.13;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W / 3 * 2" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "2" />
+        <HideContaining Vector = " 0; 0; 0" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <InvertVisibility/>
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "3" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

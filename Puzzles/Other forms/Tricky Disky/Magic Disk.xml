@@ -1,0 +1,105 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Magic Disk</Name>
+        <Menu>Other forms\Tricky Disky\Magic Disk</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2842</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'DD0000'; // clRed
+        Colors[1] := 'FF8800'; // clOrange
+        Colors[2] := 'FFFF00'; // clYellow
+        Colors[3] := '00BB00'; // clGreen
+        Colors[4] := '0022EE'; // clBlue
+        Colors[5] := 'AA00AA'; // clViolett
+        clBody    := 'CCCCCC';
+
+        R := 0.4;
+
+        R1 := R * 1.2;
+        R2 := R * 1.5;
+        R3 := R * 1.6;
+        R4 := R * 1.9;
+        R5 := R * 2.0;
+
+        c6 := cos(Pi/6);
+        s6 := sin(Pi/6);
+
+        H   := R * 0.32;
+        RC  := R * 0.09;
+        RC1 := RC * 1.5;
+        RC2 := RC * 3;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(Pi / 3 * i);
+            ay[i] := sin(Pi / 3 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi;0;Pi;0;Pi;0;Pi;0" PlaneDistances = "-R4;-R3;-R2;-R1; R1; R2; R3; R4" >
+        <Axis NormVector = "ax[0]; ay[0]; 0" />
+        <Axis NormVector = "ax[1]; ay[1]; 0" />
+        <Axis NormVector = "ax[2]; ay[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" >
+         <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0; 0; 1" Angle = "Pi/6" />
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "R" Color = "Colors[i]" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Colors[i]"/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Colors[i]" />
+            </Cylinder>
+
+            <Cut> <Plane NormVector = "-c6;-s6; 0" /> </Cut>
+            <Cut> <Plane NormVector = " c6;-s6; 0" /> </Cut>
+
+            <Cylinder Radius = "RC1" Color = "clBody" >
+                <Base X = "0" Y = "-R" Z = "0" Color = "clBody" />
+                <Top  X = "0" Y = "-R1" Z = "0" />
+            </Cylinder>
+
+            <Cylinder Radius = "RC2" Color = "Colors[i]" >
+                <Base X = "0" Y = "-R1" Z = "0" Color = "Colors[i]" />
+                <Top  X = "0" Y = "-R2" Z = "0" Color = "Colors[i]" />
+            </Cylinder>
+
+            <Cylinder Radius = "RC1" Color = "clBody" >
+                <Base X = "0" Y = "-R2" Z = "0" />
+                <Top  X = "0" Y = "-R3" Z = "0" />
+            </Cylinder>
+
+            <Cylinder Radius = "RC2" Color = "Colors[i]" >
+                <Base X = "0" Y = "-R3" Z = "0" Color = "Colors[i]" />
+                <Top  X = "0" Y = "-R4" Z = "0" Color = "Colors[i]" />
+            </Cylinder>
+
+            <Cylinder Radius = "RC1" Color = "clBody" >
+                <Base X = "0" Y = "-R4" Z = "0" />
+                <Top  X = "0" Y = "-R5" Z = "0" Color = "clBody" />
+            </Cylinder>
+
+            <Turn NormVector = "0; 0; 1" Angle = "Pi/3" />
+            <HideAll/>
+
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "6" />
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi/6" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

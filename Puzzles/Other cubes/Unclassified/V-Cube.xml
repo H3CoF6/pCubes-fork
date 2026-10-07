@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>V-Cube</Name>
+        <Menu>Other cubes\Unclassified\V-Cube</Menu>
+        <Inventor>Vadim Grishin</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2017-04-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2078</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        <!-- Rotate -->
+        AngleX := 45 * Pi / 180;
+
+        procedure Rotate(i);
+        begin
+            temp := y[i] * cos(AngleX) - z[i] * sin(AngleX);
+            z[i] := y[i] * sin(AngleX) + z[i] * cos(AngleX);
+            y[i] := temp;
+
+//            temp := z[i] * cos(AngleY) - x[i] * sin(AngleY);
+//            x[i] := z[i] * sin(AngleY) + x[i] * cos(AngleY);
+//            z[i] := temp;
+
+//            temp := x[i] * cos(AngleZ) - y[i] * sin(AngleZ);
+//            y[i] := x[i] * sin(AngleZ) + y[i] * cos(AngleZ);
+//            x[i] := temp;
+        end;
+
+        // initial axes
+        for i := 0 to 2 do begin
+            x[i] := cos(Pi/3 * i + Pi/2);
+            y[i] := sin(Pi/3 * i + Pi/2);
+            z[i] := 0;
+        end;
+
+        for i := 0 to 2 do
+            Rotate(i);
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "x[0]; y[0]; z[0]" />
+        <Axis NormVector = "x[1]; y[1]; z[1]" />
+        <Axis NormVector = "x[2]; y[2]; z[2]" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" >
+        <Axis NormVector = "0; 1; -1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

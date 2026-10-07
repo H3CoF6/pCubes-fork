@@ -1,0 +1,35 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Windmill Rhombic Dodecahedron</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Windmill</Menu>
+        <Menu>Other forms\3x3x3 variants\Catalan\Windmill Rhombic Dodecahedron</Menu>
+        <Inventor>Bozhao Chen</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-05-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7465</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Rhombic Dodecahedron_6_Colors.inc';
+
+        R := 0.7;
+        D := R * ((1 - 1/(sqrt(2) - 1)^(1/3) + (sqrt(2) - 1)^(1/3)) / 2); // R * 0.201964181008339; // root of 4 * x^3 - 6 * x^2 + 6 * x - 1 = 0
+        A := (2 * D + R) / (3 * R - 2 * D); // 0.540789530410369
+    </Script>
+
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; A; 0" />
+        <Axis NormVector = "-A; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+        <SplitByAxes/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

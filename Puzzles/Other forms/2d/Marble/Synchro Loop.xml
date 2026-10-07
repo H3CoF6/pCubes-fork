@@ -1,0 +1,116 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+   <Interface>
+        <Name>Synchro Loop</Name>
+        <Menu>Other forms\2d\Marble\Synchro Loop</Menu>
+        <Inventor>Tim Fitzrandolph</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7308</Link>
+    </Interface>
+
+     <Script>
+        clViolet := 'B00040';
+        clOrange := 'FF6600';
+        clBlue   := '0099EE';
+        clYellow := 'FFFF00';
+        clGray   := '555555';
+
+        W := 0.5;
+        B := W * 0.06;
+        R1 := W * 0.0528;
+
+        delta := W * 0.925;
+        for i := 0 to 10 do begin
+            x[i] := R1 * cos(2*Pi / 11 * i);
+            y[i] := R1 * sin(2*Pi / 11 * i) - delta;
+            z[i] := B * 1.004 + R1 * (sin(2*Pi / 11 * i) + 1) / 15;
+        end;
+
+        D := delta * (cos(1 * 2*Pi / 22) + cos(2 * 2*Pi / 22)) / 2;
+
+        Wx := W;
+        Wy := B;
+        Wz := W;
+    </Script>
+
+    <Axes TurningAngles = "Pi/11; 0; Pi/11" PlaneDistances = "-B; B" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi;0;Pi" PlaneDistances = "D;-D" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Cuboid">
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cuboid" Color = "clOrange" />
+        <Cut> <Plane NormVector = "0;0;1" NormDistance = "D" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cuboid" Color = "clYellow" />
+        <Cut> <Plane NormVector = "0;0;-1" NormDistance = "D" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cuboid" Color = "clGray" />
+        <Cut> <Plane NormVector = "0;0;1" NormDistance = "-D" /> </Cut>
+        <Cut> <Plane NormVector = "0;0;-1" NormDistance = "-D" /> </Cut>
+        <ShowAll/>
+
+        <Macro Name = "AddPuck">
+            <Part>
+                <Vertices Vectors = "x; y; z" />
+                <Vertices Vectors = " 0; -delta; B" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10" />
+
+                    <Face VertexIndexes = "1;0;11" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddPucks">
+            <ExecMacro MacroName = "AddPuck" />
+            <Turn NormVector = "0; 0; 1" Angle = " Pi/11" />
+        </Macro>
+
+        <Turn NormVector = "1; 0; 0" Angle = " Pi/2" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clOrange" Repeat = "2" />
+        <ExecMacro MacroName = "AddPucks" cl = "clViolet" Repeat = "8" />
+        <ExecMacro MacroName = "AddPucks" cl = "clYellow" Repeat = "3" />
+        <ExecMacro MacroName = "AddPucks" cl = "clBLue  " Repeat = "8" />
+        <ExecMacro MacroName = "AddPucks" cl = "clOrange" Repeat = "1" />
+
+        <Turn NormVector = "0; 1; 0" Angle = " Pi" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clOrange" Repeat = "2" />
+        <ExecMacro MacroName = "AddPucks" cl = "clBlue  " Repeat = "8" />
+        <ExecMacro MacroName = "AddPucks" cl = "clYellow" Repeat = "3" />
+        <ExecMacro MacroName = "AddPucks" cl = "clViolet" Repeat = "8" />
+        <ExecMacro MacroName = "AddPucks" cl = "clOrange" Repeat = "1" />
+
+        <Turn NormVector = "0; 1; 0" Angle = "-Pi" />
+        <Turn NormVector = "1; 0; 0" Angle = "-Pi/2" />
+
+        <Connect Axis = "0" Layers = "0;2" />
+        <Connect Axis = "1" Layers = "0;2" />
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+</xml>

@@ -1,0 +1,207 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Minus</Name>
+        <Menu>Other forms\Unclassified\Dino Minus</Menu>
+        <Inventor>Krystian Wilisowski</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-06-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11654</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=426930</Link>
+        <Link>http://youtube.com/watch?v=Doc_MOUY8ks</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00FFFF';
+        Colors[1] := '0080C0';
+        Colors[2] := 'FF8000';
+        Colors[3] := 'FF80C0';
+        Colors[4] := 'FFFF00';
+        Colors[5] := '800080';
+
+        include 'Figures\Scripts\Vectors.inc';
+
+        H := 0.7;
+
+        D := H * 0.425;
+
+        procedure RotateVector(VectorX, VectorY, VectorZ, iSource, iTarget, Angle);
+        begin
+            VectorRotatePoint(Ax[iSource], Ay[iSource], Az[iSource],  VectorX, VectorY, VectorZ,  Angle, True); // rotate axis A[iSource] over Vector
+            Ax[iTarget] := Ans_X; Ay[iTarget] := Ans_Y; Az[iTarget] := Ans_Z;
+        end;
+
+        Ang := arcsin(sqrt((4 + 2^(1/3)) / 6)); // solved via angle between 0 and 1 axis equals angle between 4 and 5 axis.
+        Ax[0] := 0; Ay[0] := 0; Az[0] := 1;
+
+        RotateVector( 1, 0, 0,  0, 1, -Ang);
+        RotateVector( 1, 0, 0,  1, 4, -Ang);
+
+        RotateVector( 0, 0, 1,  1, 2, -2*Pi/3);
+        RotateVector( 0, 0, 1,  1, 3,  2*Pi/3);
+        RotateVector( 0, 0, 1,  4, 5, -2*Pi/3);
+        RotateVector( 0, 0, 1,  4, 6,  2*Pi/3);
+
+        // jumble angles
+        A1 := VectorRotatingAngle( Ax[4], Ay[4], Az[4],  Ax[5], Ay[5], Az[5],  Ax[6], Ay[6], Az[6]); // 1.30785588606995
+        A2 := VectorRotatingAngle( Ax[4], Ay[4], Az[4],  Ax[1], Ay[1], Az[1],  Ax[5], Ay[5], Az[5]); // 2.48766471055482; A2 := Pi - A1 / 2;
+
+        Vx[0] := 0; Vy[0] := 0; Vz[0] := H;
+        Vx[1] := 0; Vy[1] := H * sin(Ang); Vz[1] := H * cos(Ang);
+        Vx[2] := Vy[1] * sqrt(3)/2; Vy[2] := -Vy[1]/2; Vz[2] := Vz[1];
+        Vx[3] :=-Vy[1] * sqrt(3)/2; Vy[3] := -Vy[1]/2; Vz[3] := Vz[1];
+        VectorRotatePoint( Vx[0], Vy[0], Vz[0],  Ax[2], Ay[2], Az[2], 2*Pi/3, True);
+        Vx[4] := 0; Vy[4] := Vy[2] + (Ans_Y - Vy[2]) * Vx[2] / (Vx[2] - Ans_X); Vz[4] := Vz[2] + (Ans_Z - Vz[2]) * Vx[2] / (Vx[2] - Ans_X);
+        Vx[5] :=-Vy[4] * sqrt(3)/2; Vy[5] := -Vy[4]/2; Vz[5] := Vz[4];
+        Vx[6] := Vy[4] * sqrt(3)/2; Vy[6] := -Vy[4]/2; Vz[6] := Vz[4];
+        Vx[7] := 0; Vy[7] := 0; Vz[7] := Vz[1] - (Vz[5] - Vz[1]) * Vy[1] / (Vy[5] - Vy[1]);
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi / 3" PlaneDistances = "D" >
+        <Axis NormVector = " Ax[0]; Ay[0]; Az[0]" />
+    </Axes>
+    <Axes TurningAngles = "0; Pi / 3" PlaneDistances = "D" >
+        <Axis NormVector = " Ax[1]; Ay[1]; Az[1]" />
+        <Axis NormVector = " Ax[2]; Ay[2]; Az[2]" />
+        <Axis NormVector = " Ax[3]; Ay[3]; Az[3]" />
+    </Axes>
+    <Axes TurningAngles = "0; 2 * Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "D" >
+        <Axis NormVector = " Ax[4]; Ay[4]; Az[4]" />
+        <Axis NormVector = " Ax[5]; Ay[5]; Az[5]" />
+        <Axis NormVector = " Ax[6]; Ay[6]; Az[6]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " Vx; Vy; Vz" />
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "0;2;5;1" />
+                <Face Color = "Colors[1]" VertexIndexes = "3;6;7;4" />
+                <Face Color = "Colors[2]" VertexIndexes = "0;3;4;2" />
+                <Face Color = "Colors[3]" VertexIndexes = "1;5;7;6" />
+                <Face Color = "Colors[4]" VertexIndexes = "2;4;7;5" />
+                <Face Color = "Colors[5]" VertexIndexes = "0;1;6;3" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+
+        <Macro Name = "Split0" >
+            <Turn  Axis = "Ax1" Layer = "1" Angle = " Pi/3" />
+            <Split Axis = "Ax4" From  = "1"                 />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "-Pi/3" />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "-Pi/3" />
+            <Split Axis = "Ax4" From  = "1"                 />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = " Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Split0" Ax1 = "1" Ax4 = "4" />
+        <ExecMacro MacroName = "Split0" Ax1 = "2" Ax4 = "5" />
+        <ExecMacro MacroName = "Split0" Ax1 = "3" Ax4 = "6" />
+
+        <Macro Name = "Split1" >
+            <Hide> <Plane NormVector = "Ax[ax1];Ay[ax1];Az[ax1]" NormDistance = " D " /> </Hide>
+            <Hide> <Plane NormVector = "Ax[ax2];Ay[ax2];Az[ax2]" NormDistance = " D " /> </Hide>
+            <Turn         NormVector = "Ax[ax1];Ay[ax1];Az[ax1]" Angle        = " A1" />
+            <Split><Plane NormVector = "Ax[ax2];Ay[ax2];Az[ax2]" NormDistance = " D " /> </Split>
+            <Turn         NormVector = "Ax[ax1];Ay[ax1];Az[ax1]" Angle        = "-A1" />
+        </Macro>
+
+        <Macro Name = "Split2" >
+            <Hide> <Plane NormVector = "Ax[5];Ay[5];Az[5]" NormDistance = " D " /> </Hide>
+            <Hide> <Plane NormVector = "Ax[6];Ay[6];Az[6]" NormDistance = " D " /> </Hide>
+            <Turn         NormVector = "Ax[5];Ay[5];Az[5]" Angle        = " A1" />
+            <Split><Plane NormVector = "Ax[6];Ay[6];Az[6]" NormDistance = " D " /> </Split>
+            <Turn         NormVector = "Ax[5];Ay[5];Az[5]" Angle        = "-A1" />
+
+            <Turn       NormVector = " Ax[5]; Ay[5]; Az[5]" Angle        = "-A2"     />
+            <Turn       NormVector = " Ax[2]; Ay[2]; Az[2]" Angle        = "-2*Pi/3" />
+            <Cut><Plane NormVector = "-Ax[5];-Ay[5];-Az[5]" NormDistance = "-D"      /> </Cut>
+            <Turn       NormVector = " Ax[2]; Ay[2]; Az[2]" Angle        = " 2*Pi/3" />
+            <Turn       NormVector = " Ax[5]; Ay[5]; Az[5]" Angle        = " A2"     />
+
+            <Turn       NormVector = " Ax[6]; Ay[6]; Az[6]" Angle        = " A2"     />
+            <Turn       NormVector = " Ax[3]; Ay[3]; Az[3]" Angle        = " 2*Pi/3" />
+            <Cut><Plane NormVector = "-Ax[6];-Ay[6];-Az[6]" NormDistance = "-D"      /> </Cut>
+            <Turn       NormVector = " Ax[3]; Ay[3]; Az[3]" Angle        = "-2*Pi/3" />
+            <Turn       NormVector = " Ax[6]; Ay[6]; Az[6]" Angle        = "-A2"     />
+            <ShowAll/>
+
+            <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Split2" Repeat = "3" />
+
+        <Macro Name = "Split3" >
+            <Hide> <Plane NormVector = "Ax[3];Ay[3];Az[3]" NormDistance = " D   " /> </Hide>
+            <Turn         NormVector = "Ax[3];Ay[3];Az[3]" Angle        = "-Pi/3" />
+            <Hide> <Plane NormVector = "Ax[6];Ay[6];Az[6]" NormDistance = " D   " /> </Hide>
+            <Turn         NormVector = "Ax[6];Ay[6];Az[6]" Angle        = "-A2  " />
+            <Split><Plane NormVector = "Ax[4];Ay[4];Az[4]" NormDistance = " D   " /> </Split>
+            <Turn         NormVector = "Ax[6];Ay[6];Az[6]" Angle        = " A2  " />
+            <Turn         NormVector = "Ax[6];Ay[6];Az[6]" Angle        = " A2  " />
+            <Split><Plane NormVector = "Ax[5];Ay[5];Az[5]" NormDistance = " D   " /> </Split>
+            <Turn         NormVector = "Ax[6];Ay[6];Az[6]" Angle        = "-A2  " />
+            <Turn         NormVector = "Ax[3];Ay[3];Az[3]" Angle        = " Pi/3" />
+
+            <ShowAll/>
+            <Turn NormVector = "Ax[3];Ay[3];Az[3]" Angle = "2 * Pi/3" />
+        </Macro>
+        <ExecMacro MacroName  = "Split3" Repeat = "3"      />
+        <Turn      NormVector = "0;0;1"  Angle  = "2*Pi/3" />
+        <ExecMacro MacroName  = "Split3" Repeat = "3"      />
+        <Turn      NormVector = "0;0;1"  Angle  = "2*Pi/3" />
+        <ExecMacro MacroName  = "Split3" Repeat = "3"      />
+        <Turn      NormVector = "0;0;1"  Angle  = "2*Pi/3" />
+
+        <Macro Name = "Split4" >
+            <Hide Axis = "Ax1" To = "0" />
+            <Turn Axis = "Ax1" Layer = "1" Angle = "Pi/3" />
+            <Cut Axis = "Ax2" To = "1" />
+            <Cut Axis = "Ax3" To = "1" />
+            <Turn Axis = "Ax1" Layer = "1" Angle = "2*Pi/3" />
+            <Cut Axis = "Ax2" To = "1" />
+            <Cut Axis = "Ax3" To = "1" />
+            <Turn Axis = "Ax1" Layer = "1" Angle = "2*Pi/3" />
+            <Cut Axis = "Ax2" To = "1" />
+            <Cut Axis = "Ax3" To = "1" />
+            <Undo Repeat = "3" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName  = "Split4" Ax1 = "1" Ax2 = "2" Ax3 = "3" />
+        <ExecMacro MacroName  = "Split4" Ax1 = "2" Ax2 = "3" Ax3 = "1" />
+        <ExecMacro MacroName  = "Split4" Ax1 = "3" Ax2 = "1" Ax3 = "2" />
+
+        <Macro Name = "Split5" >
+            <Hide Axis = "0" To = "0" />
+            <Hide Axis = "2" To = "0" />
+            <Turn Axis = "3" Layers = "1" Angle = "-Pi/3      " />
+            <Turn Axis = "2" Layers = "1" Angle = " Pi        " />
+            <Turn Axis = "5" Layers = "1" Angle = " A2        " />
+            <Turn Axis = "6" Layers = "1" Angle = " A2        " />
+            <Turn Axis = "3" Layers = "1" Angle = " 2 * Pi / 3" />
+            <Cut  Axis = "2" To = "1" />
+            <Turn Axis = "3" Layers = "1" Angle = " 2 * Pi / 3" />
+            <Cut  Axis = "1" To = "1" />
+            <Undo Repeat = "6" />
+            <ShowAll/>
+            <Turn Axis = "0" Layers = "1" Angle = " 2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName  = "Split5" Repeat = "3" />
+        <Turn Axis = "1" Layers = "1" Angle = " 2 * Pi / 3" />
+        <Turn Axis = "2" Layers = "1" Angle = " 2 * Pi / 3" />
+        <Turn Axis = "3" Layers = "1" Angle = " 2 * Pi / 3" />
+        <ExecMacro MacroName  = "Split5" Repeat = "3" />
+        <Turn Axis = "1" Layers = "1" Angle = " 2 * Pi / 3" />
+        <Turn Axis = "2" Layers = "1" Angle = " 2 * Pi / 3" />
+        <Turn Axis = "3" Layers = "1" Angle = " 2 * Pi / 3" />
+        <ExecMacro MacroName  = "Split5" Repeat = "3" />
+        <Undo Repeat = "12" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

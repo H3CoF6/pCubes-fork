@@ -1,0 +1,256 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Keid 4 (AC)</Name>
+        <Menu>Other forms\2d\Keid 4 (AC)</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10996</Link>
+    </Interface>
+
+    <Script>
+        clRed     := 'FF0000';
+        clBlack   := '333333';
+
+        K  := 0.45;
+
+        s2 := sqrt(2);
+        C0 := K * (4 + s2) / 7;
+        C1 := K * s2;
+
+        A  := K * (1 + s2);
+
+        D1 := K * sqrt(4 - 2 * s2);
+        D2 := K;
+        D3 := C0 * sqrt(1 + 1 / s2);
+        D4 := D2 - K * 0.05;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D1" >
+        <Axis NormVector = " 0;-A; K" />
+        <Axis NormVector = " 0;-A;-K" />
+        <Axis NormVector = " K;-A; 0" />
+        <Axis NormVector = "-K;-A; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D2" >
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Part">
+            <Part>
+                <Vertices>
+                    <Add Vector = "  0;  0; C1" />
+                    <Add Vector = "  0;  0;-C1" />
+                    <Add Vector = " C1;  0;  0" />
+                    <Add Vector = "-C1;  0;  0" />
+                    <Add Vector = "  0; C1;  0" />
+                    <Add Vector = "  0;-C1;  0" />
+                    <Add Vector = "  K;  0;  K" />
+                    <Add Vector = "  K;  0; -K" />
+                    <Add Vector = " -K;  0;  K" />
+                    <Add Vector = " -K;  0; -K" />
+                    <Add Vector = "  K;  K;  0" />
+                    <Add Vector = "  K; -K;  0" />
+                    <Add Vector = " -K;  K;  0" />
+                    <Add Vector = " -K; -K;  0" />
+                    <Add Vector = "  0;  K;  K" />
+                    <Add Vector = "  0;  K; -K" />
+                    <Add Vector = "  0; -K;  K" />
+                    <Add Vector = "  0; -K; -K" />
+                    <Add Vector = " C0; C0; C0" />
+                    <Add Vector = " C0; C0;-C0" />
+                    <Add Vector = " C0;-C0; C0" />
+                    <Add Vector = " C0;-C0;-C0" />
+                    <Add Vector = "-C0; C0; C0" />
+                    <Add Vector = "-C0; C0;-C0" />
+                    <Add Vector = "-C0;-C0; C0" />
+                    <Add Vector = "-C0;-C0;-C0" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = " 0;16;20; 6" />
+                    <Face Color = "Color" VertexIndexes = " 0; 8;24;16" />
+                    <Face Color = "Color" VertexIndexes = " 2; 6;20;11" />
+                    <Face Color = "Color" VertexIndexes = " 2;11;21; 7" />
+                    <Face Color = "Color" VertexIndexes = " 1;17;25; 9" />
+                    <Face Color = "Color" VertexIndexes = " 1; 7;21;17" />
+                    <Face Color = "Color" VertexIndexes = " 5;13;25;17" />
+                    <Face Color = "Color" VertexIndexes = " 5;17;21;11" />
+                    <Face Color = "Color" VertexIndexes = " 5;16;24;13" />
+                    <Face Color = "Color" VertexIndexes = " 5;11;20;16" />
+                    <Face Color = "Color" VertexIndexes = " 3; 9;25;13" />
+                    <Face Color = "Color" VertexIndexes = " 3;13;24; 8" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "4" To   = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " K; A; 0" NormDistance = "-D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-K; A; 0" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;-A; K" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "4" To   = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " K; A; 0" NormDistance = "-D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-K; A; 0" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;-A;-K" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "2" To   = "1" />
+        <Cut Axis = "4" To   = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; A; K" NormDistance = "-D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; A;-K" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " K;-A; 0" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "3" To   = "1" />
+        <Cut Axis = "4" To   = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; A; K" NormDistance = "-D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; A;-K" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = "-K;-A; 0" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "3" To   = "1" />
+        <Cut                      > <Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-A;-K" NormDistance = " D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-K;-A; 0" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "2" To   = "1" />
+        <Cut                      > <Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-A;-K" NormDistance = " D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " K;-A; 0" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "2" To   = "1" />
+        <Cut                      > <Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-A; K" NormDistance = " D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " K;-A; 0" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "3" To   = "1" />
+        <Cut                      > <Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-A; K" NormDistance = " D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-K;-A; 0" NormDistance = " D3" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; A; K" NormDistance = "-D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; A;-K" NormDistance = "-D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " K; A; 0" NormDistance = "-D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-K; A; 0" NormDistance = "-D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;-1; 0" NormDistance = " D4" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "2" To   = "1" />
+        <Cut Axis = "3" To   = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "2" To   = "1" />
+        <Cut Axis = "3" To   = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "2" From = "1" />
+        <Cut Axis = "3" To   = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clRed" />
+        <Cut Axis = "3" From = "1" />
+        <ShowAll/>
+
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi" />
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Split Axis = "4" From = "1" />
+        <Undo Repeat = "4" />
+
+        <Turn  Axis = "4" Layer = "1" Angle = " Pi/2" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "0" Layer = "1" Angle = " Pi" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = " Pi" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "4" From = "1" />
+        <Turn  Axis = "0" Layer = "1" Angle = " Pi" />
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = " Pi" />
+        <Split Axis = "4" From = "1" />
+        <Undo Repeat = "5" />
+
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "3" Layer = "1" Angle = " Pi" />
+        <Turn  Axis = "4" Layer = "1" Angle = " Pi/2" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Undo Repeat = "3" />
+        <SaveSolvedState/>
+
+        <Macro Name = "A"  > <Turn Axis = "a0" Layers = "1" Angle = " Pi"   /> </Macro>
+        <Macro Name = "B"  > <Turn Axis = "a2" Layers = "1" Angle = " Pi"   /> </Macro>
+        <Macro Name = "C"  > <Turn Axis = "a1" Layers = "1" Angle = " Pi"   /> </Macro>
+        <Macro Name = "D"  > <Turn Axis = "a3" Layers = "1" Angle = " Pi"   /> </Macro>
+        <Macro Name = "E"  > <Turn Axis = "a4" Layers = "1" Angle = "-Pi/2" /> </Macro>
+        <Macro Name = "E'" > <Turn Axis = "a4" Layers = "1" Angle = " Pi/2" /> </Macro>
+        <Macro Name = "X"  > <ExecMacro MacroName = "E  A  E  B  E  C  E  D  E  A" /> </Macro>
+        <Macro Name = "Y"  > <ExecMacro MacroName = "E' D  E' C  E' B  E' A  E' D" /> </Macro>
+
+        <Macro Name = "TurnCW" >
+            <ExecMacro MacroName = "X Y X Y X" />
+            <SaveSolvedState/>
+        </Macro>
+
+        <ExecMacro MacroName = "TurnCW" a3 = "3" a0 = "0" a2 = "2" a1 = "1" a4 = "4" />
+        <ExecMacro MacroName = "TurnCW" a3 = "0" a0 = "2" a2 = "1" a1 = "3" a4 = "4" />
+        <ExecMacro MacroName = "TurnCW" a3 = "2" a0 = "1" a2 = "3" a1 = "0" a4 = "4" />
+        <Undo Repeat = "150" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

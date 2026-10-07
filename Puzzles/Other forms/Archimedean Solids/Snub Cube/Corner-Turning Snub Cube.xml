@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Corner-Turning Snub Cube</Name>
+        <Menu>Other forms\Archimedean Solids\Snub Cube\Corner-Turning Snub Cube</Menu>
+        <Inventor>Tanner Frisby</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-03-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5073</Link>
+    </Interface>
+
+    <Script>
+        W  := 0.55;
+        include 'Figures\Scripts\Snub_Cube_Coordinates.inc';
+        D := C2^2 / sqrt(C0^2 + C1^2 + C2^2);
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          tx := y1 * z2 - y2 * z1;
+          ty := z1 * x2 - z2 * x1;
+          tz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((tx*wx + ty*wy + tz*wz) / (tx^2 + ty^2 + tz^2));
+        end;
+
+        A1 := Angle( C2,-C0, C1,  C2, C1, C0,  C2,-C1,-C0);
+        A2 := Angle( C2,-C0, C1,  C2, C1, C0,  C1, C0, C2);
+        A3 := A2*2;
+        A4 := A2*3;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Vx;Vy;Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Snub_Cube.xml" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

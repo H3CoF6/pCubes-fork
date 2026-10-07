@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tripteon 5x5x5</Name>
+        <Menu>Other forms\Star\Tripteon 5x5x5</Menu>
+        <Inventor>Carlos Ramírez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9468</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        W := 0.5;
+        DCut := W / sqrt(3);
+        D1 := W * 0.11560311; // to avoid small artefacts
+        D2 := D1 * 3;
+    </Script>
+
+    <Axes TurningAngles = " Pi / 2" PlaneDistances = "-D2; -D1; D1; D2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = " 1; 1; 1" NormDistance = "DCut" /></Split>
+            <Split><Plane NormVector = "-1;-1; 1" NormDistance = "DCut" /></Split>
+            <Split><Plane NormVector = " 1;-1;-1" NormDistance = "DCut" /></Split>
+            <Split><Plane NormVector = "-1; 1;-1" NormDistance = "DCut" /></Split>
+            <Turn NormVector = "0; 0; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi / 4" />
+
+        <Macro Name = "AddTetrahedron" >
+            <Script>
+                for i := 0 to 3 do
+                    Colors[i] := Colors[i + Col];
+                Col := Col + 4;
+            </Script>
+            <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+            <Turn NormVector = "0; 0; 1" Angle = "2 * Pi / 3" />
+            <ExecMacro MacroName = "Split" Repeat = "2" />
+
+            <HideContaining Vectors = "Vx;Vy;Vz" />
+            <HideContaining Vectors = "Ex[0];Ey[0];Ez[0]" />
+            <HideContaining Vectors = "Ex[1];Ey[1];Ez[1]" />
+            <HideContaining Vectors = "Ex[2];Ey[2];Ez[2]" />
+            <HideContaining Vectors = "Ex[3];Ey[3];Ez[3]" />
+            <RemoveAllVisible/>
+            <Turn NormVector = "0; 0; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddTetrahedron" Col = "0" Repeat = "3" />
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

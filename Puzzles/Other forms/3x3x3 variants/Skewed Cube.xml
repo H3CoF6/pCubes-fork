@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewed Cube</Name>
+        <Alias>Sharp Edges (12000000)</Alias>
+        <Menu>Other forms\Prism\Tetragonal Prism\Skewed Cube</Menu>
+        <Menu>Other forms\3x3x3 variants\Skewed Cube</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-04-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3804</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        WX := W;
+        WY := W * 5/3;
+        WZ := W;
+        D := W / 3;
+        DCut := W * 3 / sqrt(13);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" /> 
+
+        <Cut Color = "clBlue"  > <Plane NormVector = "-2; 3; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clGreen" > <Plane NormVector = " 2;-3; 0" NormDistance = "-DCut" /> </Cut>
+
+        <Split InvisibleEdges1 = "4" InvisibleEdges2 = "4" > <Plane NormDistance = "W" NormVector = " 0;-1; 0" /> </Split>
+        <Split InvisibleEdges1 = "4" InvisibleEdges2 = "4" > <Plane NormDistance = "W" NormVector = " 0; 1; 0" /> </Split>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

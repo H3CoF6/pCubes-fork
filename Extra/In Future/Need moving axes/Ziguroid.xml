@@ -1,0 +1,123 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Ziguroid</Name>
+        <Menu>Other forms\Bifrustum\Square Bifrustum\Ziguroid</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-10-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11888</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'FFFFFF';
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clCoral  := 'FF7F50';
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clGolden := 'DDBB20';
+        clLime   := '00FF00';
+        clGreen  := '008000';
+
+        W  := 0.5;
+        W1 := W / 2;
+        s3 := sqrt(3);
+        H  := W * s3 / 2;
+        D  := H * 3 / 4;
+
+        A := ArcCos(-3/5);
+		
+		S := W * 0.85;
+		U := W * 0.80;
+		T := H * 0.15;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi" AvailableAngles = "-A; 0; A; Pi" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "  0; s3; 1" />
+        <Axis NormVector = "  0;-s3; 1" />
+        <Axis NormVector = " s3;  0; 1" />
+        <Axis NormVector = "-s3;  0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " W1; W1; H" />
+                <Add Vector = " W1;-W1; H" />
+                <Add Vector = "-W1;-W1; H" />
+                <Add Vector = "-W1; W1; H" />
+
+                <Add Vector = "  W;  W; 0" />
+                <Add Vector = "  W; -W; 0" />
+                <Add Vector = " -W; -W; 0" />
+                <Add Vector = " -W;  W; 0" />
+
+                <Add Vector = " W1; W1;-H" />
+                <Add Vector = " W1;-W1;-H" />
+                <Add Vector = "-W1;-W1;-H" />
+                <Add Vector = "-W1; W1;-H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite " VertexIndexes = " 0; 3; 2; 1" />
+
+                <Face Color = "clRed   " VertexIndexes = " 0; 1; 5; 4" />
+                <Face Color = "clGreen " VertexIndexes = " 1; 2; 6; 5" />
+                <Face Color = "clGolden" VertexIndexes = " 2; 3; 7; 6" />
+                <Face Color = "clCyan  " VertexIndexes = " 3; 0; 4; 7" />
+
+                <Face Color = "clOrange" VertexIndexes = " 4; 5; 9; 8" />
+                <Face Color = "clBlue  " VertexIndexes = " 5; 6;10; 9" />
+                <Face Color = "clCoral " VertexIndexes = " 6; 7;11;10" />
+                <Face Color = "clLime  " VertexIndexes = " 7; 4; 8;11" />
+
+                <Face Color = "clYellow" VertexIndexes = " 8; 9;10;11" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Hide><Plane NormVector = "-1; 1; 0" NormDistance = "-W" /></Hide>
+        <Hide><Plane NormVector = " 1; 1; 0" NormDistance = "-W" /></Hide>
+        <Hide><Plane NormVector = " 1;-1; 0" NormDistance = "-W" /></Hide>
+        <Hide><Plane NormVector = "-1;-1; 0" NormDistance = "-W" /></Hide>
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+		
+<!--		
+		<RemoveContaining Vector = " W; W; 0" />
+		<RemoveContaining Vector = " W;-W; 0" />
+		<RemoveContaining Vector = "-W; W; 0" />
+		<RemoveContaining Vector = "-W;-W; 0" />
+		<RemoveContaining Vector = " S; U; T" />
+		<RemoveContaining Vector = " S; U;-T" />
+		<RemoveContaining Vector = " U; S; T" />
+		<RemoveContaining Vector = " U; S;-T" />
+		<RemoveContaining Vector = " S;-U; T" />
+		<RemoveContaining Vector = " S;-U;-T" />
+		<RemoveContaining Vector = " U;-S; T" />
+		<RemoveContaining Vector = " U;-S;-T" />
+		<RemoveContaining Vector = "-S; U; T" />
+		<RemoveContaining Vector = "-S; U;-T" />
+		<RemoveContaining Vector = "-U; S; T" />
+		<RemoveContaining Vector = "-U; S;-T" />
+		<RemoveContaining Vector = "-S;-U; T" />
+		<RemoveContaining Vector = "-S;-U;-T" />
+		<RemoveContaining Vector = "-U;-S; T" />
+		<RemoveContaining Vector = "-U;-S;-T" />
+-->
+    </Figure>
+</xml>

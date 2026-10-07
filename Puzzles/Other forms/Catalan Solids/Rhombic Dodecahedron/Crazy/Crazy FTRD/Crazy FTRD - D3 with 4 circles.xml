@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy FTRD - D3 (4 circle version)</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Crazy\Crazy FTRD\D\D3 (4 circle version)</Menu>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Programmer>Julian Wilkinson</Programmer>
+        <Added>2020-07-05</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Rhombic_Dodecahedron_Coordinates.inc';
+
+        D1 := R / sqrt(2);
+        D2 := R * 0.43;
+
+        RC := R * 0.34;
+
+        Delta := 1.001;
+
+        // invisible cylinder size
+        i1 := 0.9;
+        i2 := 1.1;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi;Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "D1; D2" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+
+        <Macro Name = "SplitByAxe" >
+            <Split Axis = "i" From = "1" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "AddColoredCircle" >
+            <Circle Radius = "RC" Color = "Colors[ax]" Center = "Cx[ax] * Delta; Cy[ax] * Delta; Cz[ax] * Delta" />
+            <Connect Axis = "ax" Layers = "0;2" />
+        </Macro>
+
+        <Macro Name = "AddInvisibleCylinder" >
+            <!-- invisible gray cylinder to prevent some turns -->
+            <Cylinder Radius = "RC" Base = "Cx[ax] * i1; Cy[ax] * i1; Cz[ax] * i1" Top = "Cx[ax] * i2; Cy[ax] * i2; Cz[ax] * i2" />
+            <ExecMacro MacroName = "SplitByAxe" i = "0" Repeat = "12" />
+            <Hide><Plane NormVector = "-Cx[ax]; -Cy[ax]; -Cz[ax]" NormDistance = "-D1 * i1" /></Hide>
+
+            <Connect Axis = "ax" Layers = "1;2" />
+        </Macro>
+
+        <!-- 0=red 1=blue 2=green 3=white 4=pink 5=beige 6=purple -->
+        <!-- 7=olive 8=dark green 9=yellow 10=orange 11=dark blue -->
+        <ExecMacro MacroName = "AddInvisibleCylinder" ax = " 0" />
+        <ExecMacro MacroName = "AddColoredCircle"     ax = " 1" />
+        <ExecMacro MacroName = "AddInvisibleCylinder" ax = " 2" />
+        <ExecMacro MacroName = "AddColoredCircle"     ax = " 3" />
+        <ExecMacro MacroName = "AddInvisibleCylinder" ax = " 4" />
+        <ExecMacro MacroName = "AddInvisibleCylinder" ax = " 5" />
+        <ExecMacro MacroName = "AddInvisibleCylinder" ax = " 6" />
+        <ExecMacro MacroName = "AddInvisibleCylinder" ax = " 7" />
+        <ExecMacro MacroName = "AddInvisibleCylinder" ax = " 8" />
+        <ExecMacro MacroName = "AddColoredCircle"     ax = " 9" />
+        <ExecMacro MacroName = "AddInvisibleCylinder" ax = "10" />
+        <ExecMacro MacroName = "AddColoredCircle"     ax = "11" />
+
+        <SplitByAxes/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Circle" File = "..\Textures\Circle.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Circle = 84,0,1, 102,0,0, 156,0,1, 174,0,0, 
+    </SetTextures>
+</xml>

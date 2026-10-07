@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crystal Pentagonal 3x3x3</Name>
+        <Menu>Other forms\Dipyramid\Pentagonal\Crystal Pentagonal 3x3x3</Menu>
+        <Menu>Other forms\3x3x3 variants\Dipyramid\Crystal Pentagonal 3x3x3</Menu>
+        <Inventor>José Ramírez</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-08-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10136</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := 'FF0080'; // LightViolett
+        Colors[2] := '800000'; // Brown
+        Colors[3] := 'FF6000'; // Orange
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := '0000A0'; // Blue
+        Colors[6] := '800080'; // Violett
+        Colors[7] := '2828FF'; // LightBlue
+        Colors[8] := '008000'; // Green
+        Colors[9] := '00FF00'; // LightGreen
+
+        R := 0.7;
+        H := R * 1.0;
+
+        for i := 0 to 4 do begin
+            x[i] := R * cos(2*Pi/5*i);
+            y[i] := R * sin(2*Pi/5*i);
+        end;
+
+        D := R * cos(Pi/3) * cos(2*Pi/5);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi/6" />
+        <Part>
+            <Vertices Vectors = " 0; 0; H" />
+            <Vertices Vectors = " 0; 0;-H" />
+            <Vertices Vectors = " x; y; 0" />
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "0;2;3" />
+                <Face Color = "Colors[1]" VertexIndexes = "0;3;4" />
+                <Face Color = "Colors[2]" VertexIndexes = "0;4;5" />
+                <Face Color = "Colors[3]" VertexIndexes = "0;5;6" />
+                <Face Color = "Colors[4]" VertexIndexes = "0;6;2" />
+                <Face Color = "Colors[5]" VertexIndexes = "1;2;6" />
+                <Face Color = "Colors[6]" VertexIndexes = "1;6;5" />
+                <Face Color = "Colors[7]" VertexIndexes = "1;5;4" />
+                <Face Color = "Colors[8]" VertexIndexes = "1;4;3" />
+                <Face Color = "Colors[9]" VertexIndexes = "1;3;2" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

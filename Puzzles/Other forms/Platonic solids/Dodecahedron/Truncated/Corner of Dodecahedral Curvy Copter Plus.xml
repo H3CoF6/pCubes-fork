@@ -1,0 +1,139 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Corner of Dodecahedral Curvy Copter Plus</Name>
+        <Menu>Other forms\Dodecahedron\Truncated\Corner of Dodecahedral Curvy Copter Plus</Menu>
+        <Inventor>Justin Costa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-14</Added>
+        <Link>https://www.instagram.com/p/BqdFOjiHn8V/</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0000CC'; // Blue
+        Colors[1] := 'FF88CC'; // LightViolett
+        Colors[2] := 'FF0000'; // Red
+        Colors[3] := 'FFFFFF'; // White
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := '00FF00'; // LightGreen
+        Colors[6] := '800080'; // Violett
+        Colors[7] := 'FFFFAA'; // Cream
+        Colors[8] := '00AA00'; // Green
+        Colors[9] := '-1';     // 
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        k := 1.20;
+        for i := 0 to 11 do begin
+            CCx[i] := Cx[i] * k;
+            CCy[i] := Cy[i] * k;
+            CCz[i] := Cz[i] * k;
+        end;
+        DCut := R * 0.52;
+        Dcu2 := R * 0.51925;
+        D1 := R * 0.83;
+
+        jAngle := Arctan(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0; Pi" JumbleAngle = "jAngle" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = "Ex[ 0]; Ey[ 0]; Ez[ 0]" />
+        <Axis NormVector = "Ex[ 1]; Ey[ 1]; Ez[ 1]" />
+        <Axis NormVector = "Ex[ 2]; Ey[ 2]; Ez[ 2]" />
+        <Axis NormVector = "Ex[ 3]; Ey[ 3]; Ez[ 3]" />
+        <Axis NormVector = "Ex[ 4]; Ey[ 4]; Ez[ 4]" />
+        <Axis NormVector = "Ex[ 5]; Ey[ 5]; Ez[ 5]" />
+        <Axis NormVector = "Ex[ 6]; Ey[ 6]; Ez[ 6]" />
+        <Axis NormVector = "Ex[ 7]; Ey[ 7]; Ez[ 7]" />
+        <Axis NormVector = "Ex[ 8]; Ey[ 8]; Ez[ 8]" />
+        <Axis NormVector = "Ex[ 9]; Ey[ 9]; Ez[ 9]" />
+        <Axis NormVector = "Ex[10]; Ey[10]; Ez[10]" />
+        <Axis NormVector = "Ex[11]; Ey[11]; Ez[11]" />
+        <Axis NormVector = "Ex[12]; Ey[12]; Ez[12]" />
+        <Axis NormVector = "Ex[13]; Ey[13]; Ez[13]" />
+        <Axis NormVector = "Ex[14]; Ey[14]; Ez[14]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddColor" >
+            <Face Color = "Colors[cl]" VertexIndexes = " v4; v3; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v3; v2; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v2; v1; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v1; v0; c" InvisibleEdges = "6" />
+            <Face Color = "Colors[cl]" VertexIndexes = " v0; v4; c" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " Vx;  Vy;  Vz" />
+            <Vertices Vectors = "CCx; CCy; CCz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddColor" cl = " 0" c = "20" v0 = " 0" v1 = " 1" v2 = " 2" v3 = " 3" v4 = " 4" />
+                <ExecMacro MacroName = "AddColor" cl = " 1" c = "21" v0 = " 5" v1 = "10" v2 = " 6" v3 = " 1" v4 = " 0" />
+                <ExecMacro MacroName = "AddColor" cl = " 2" c = "22" v0 = " 6" v1 = "11" v2 = " 7" v3 = " 2" v4 = " 1" />
+                <ExecMacro MacroName = "AddColor" cl = " 3" c = "23" v0 = " 7" v1 = "12" v2 = " 8" v3 = " 3" v4 = " 2" />
+                <ExecMacro MacroName = "AddColor" cl = " 4" c = "24" v0 = " 8" v1 = "13" v2 = " 9" v3 = " 4" v4 = " 3" />
+                <ExecMacro MacroName = "AddColor" cl = " 9" c = "25" v0 = " 9" v1 = "14" v2 = " 5" v3 = " 0" v4 = " 4" />
+                <ExecMacro MacroName = "AddColor" cl = " 9" c = "26" v0 = "13" v1 = " 8" v2 = "12" v3 = "17" v4 = "18" />
+                <ExecMacro MacroName = "AddColor" cl = " 9" c = "27" v0 = "14" v1 = " 9" v2 = "13" v3 = "18" v4 = "19" />
+                <ExecMacro MacroName = "AddColor" cl = " 9" c = "28" v0 = "10" v1 = " 5" v2 = "14" v3 = "19" v4 = "15" />
+                <ExecMacro MacroName = "AddColor" cl = " 9" c = "29" v0 = "11" v1 = " 6" v2 = "10" v3 = "15" v4 = "16" />
+                <ExecMacro MacroName = "AddColor" cl = " 8" c = "30" v0 = "12" v1 = " 7" v2 = "11" v3 = "16" v4 = "17" />
+                <ExecMacro MacroName = "AddColor" cl = " 9" c = "31" v0 = "19" v1 = "18" v2 = "17" v3 = "16" v4 = "15" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "Split">
+            <Split Axis = "1" From = "2" />
+            <Split Axis = "2" From = "2" />
+            <Split Axis = "7" From = "2" />
+        </Macro>
+        <ExecMacro MacroName = "Split" />
+
+        <Turn Axis = "1" Layer = "2" Angle = "Pi" />
+        <ExecMacro MacroName = "Split" />
+        <Turn Axis = "2" Layer = "2" Angle = "Pi" />
+        <ExecMacro MacroName = "Split" />
+        <Turn Axis = "7" Layer = "2" Angle = "Pi" />
+        <ExecMacro MacroName = "Split" />
+        <Undo Repeat = "3" />
+
+        <Macro Name = "unbandage">
+            <Turn Axis = "a1" Layer = "l1" Angle = "jAngle" />
+            <Turn Axis = "a2" Layer = "l2" Angle = "Pi" />
+            <Turn Axis = "a1" Layer = "l1" Angle = "-jAngle" />
+            <ExecMacro MacroName = "Split" />
+            <Undo Repeat = "3" />
+
+            <Turn Axis = "a2" Layer = "l1" Angle = "-jAngle" />
+            <Turn Axis = "a1" Layer = "l2" Angle = "Pi" />
+            <Turn Axis = "a2" Layer = "l1" Angle = "jAngle" />
+            <ExecMacro MacroName = "Split" />
+            <Undo Repeat = "3" />
+        </Macro>
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 2" a2 = " 1" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 7" a2 = " 2" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 1" a2 = " 7" />
+
+        <Turn Axis = "7" Layer = "2" Angle = "Pi" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 1" a2 = " 7" />
+        <Undo />
+        <Turn Axis = "1" Layer = "2" Angle = "Pi" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 2" a2 = " 1" />
+        <Undo />
+        <Turn Axis = "2" Layer = "2" Angle = "Pi" />
+        <ExecMacro MacroName = "unbandage" l1 = "2" l2 = "2" a1 = " 7" a2 = " 2" />
+        <Undo />
+
+        <Cut> <Plane NormVector = " vx[2]; vy[2]; vz[2]" NormDistance = "DCut" /> </Cut>
+        <Cut Color = "Colors[5]"> <Plane NormVector = "cx[10]; cy[10]; cz[10]" NormDistance = "-Dcu2" /> </Cut>
+        <Cut Color = "Colors[7]"> <Plane NormVector = "cx[ 4]; cy[ 4]; cz[ 4]" NormDistance = "-Dcu2" /> </Cut>
+        <Cut Color = "Colors[6]"> <Plane NormVector = "cx[ 1]; cy[ 1]; cz[ 1]" NormDistance = "-Dcu2" /> </Cut>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

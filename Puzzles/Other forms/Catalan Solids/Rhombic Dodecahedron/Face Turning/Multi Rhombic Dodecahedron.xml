@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Multi Rhombic Dodecahedron</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Face Turning\Multi Rhombic Dodecahedron</Menu>
+        <Menu>Other forms\Multi-puzzles\Multi Rhombic Dodecahedron</Menu>
+        <Inventor>5284973</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-02-19</Added>
+        <Link>http://twistypuzzles.com/~sandy/forum/viewtopic.php?f=15&amp;t=34275</Link>
+        <Link>https://www.youtube.com/watch?v=6eNZPZH5LV0</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        D := R * sqrt(2) / 8;
+        DCut := R / sqrt(2) - D;
+        DC1 := R / sqrt(2) * 0.997;
+        DC2 := R * 0.21;
+        DC3 := R * 0.14;
+        R1  := R * 0.38;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "1; 1; 0" />
+        <Axis NormVector = "1;-1; 0" />
+        <Axis NormVector = "1; 0; 1" />
+        <Axis NormVector = "1; 0;-1" />
+        <Axis NormVector = "0; 1; 1" />
+        <Axis NormVector = "0; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+
+        <Macro Name = "SplitC" >
+            <Split> <Plane NormVector = "Cx[Id]; Cy[Id]; Cz[Id]" NormDistance = "DC" /> </Split>
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitC" Id = "0" Repeat = "12" DC = "DCut" />
+        <RemoveGrayParts/>
+
+        <Macro Name = "HideCenters" >
+            <HideContaining Vector = "Cx[Id]; Cy[Id]; Cz[Id]" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenters" Id = "0" Repeat = "12" />
+
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "SplitC" Id = "0" Repeat = "12" DC = "DC1" />
+        <ShowAll/>
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideCenters" Id = "0" Repeat = "12" />
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "SplitC" Id = "0" Repeat = "12" DC = "DC2" />
+        <ExecMacro MacroName = "SplitC" Id = "0" Repeat = "12" DC = "DC3" />
+
+        <Macro Name = "RemoveCenters" >
+            <RemoveContaining Vector = "Cx[Id]; Cy[Id]; Cz[Id]" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" Id = "0" Repeat = "12" />
+
+        <Script>R := R1;</Script>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+
+    </Figure>
+</xml>

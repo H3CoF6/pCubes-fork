@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cuboid 2x4x7</Name>
+        <Menu>Cubic\Cuboids\7\2x4x7</Menu>
+        <Inventor>Traiphum Prungtaengkit</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-11-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12137</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        X := 4;
+        Y := 7;
+        Z := 2;
+
+        include 'Puzzles\Cubic\Cuboids\Cuboid Calculation.inc';
+    </Script>
+
+    <Axes>
+        <Axis TurningAngles = "Ax" NormVector = " 1; 0; 0" PlaneDistances = "DX" />
+        <Axis TurningAngles = "Ay" NormVector = " 0; 1; 0" PlaneDistances = "DY" />
+        <Axis TurningAngles = "Az" NormVector = " 0; 0; 1" PlaneDistances = "DZ" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Puzzles\Cubic\Cuboids\Cuboid Splitted.xml" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "2*Pi * Random" />
+        </Macro>
+        <Macro Name = "S1cramble" Public = "1" >
+            <Script>N := 7;</Script>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hex-2</Name>
+        <Menu>Other forms\Dipyramid\Hexagonal\Hex-2</Menu>
+        <Inventor>Minh Thang Vo</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1985</Link>
+        <Added>2017-09-25</Added>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clOrange       := 'FF6000';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clWhite        := 'FFFFFF';
+        clLightViolett := 'FF0080';
+        clLightBlue    := '2828FF';
+        clViolett      := '800080';
+        clBrown        := '800000';
+        clLightGreen   := '00FF00';
+        clCyan         := '00DCB4';
+
+        S15 := sin(Pi / 12); // 15 degrees
+        C15 := cos(Pi / 12);
+
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "C15; S15; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-W;-W;-W" />
+                <Add Vector = "-W;-W; W" />
+                <Add Vector = "-W; W;-W" />
+                <Add Vector = "-W; W; W" />
+                <Add Vector = " W;-W;-W" />
+                <Add Vector = " W;-W; W" />
+                <Add Vector = " W; W;-W" />
+                <Add Vector = " W; W; W" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue     " VertexIndexes = "1;0;4;5" />
+                <Face Color = "clLightBlue" VertexIndexes = "2;3;7;6" />
+                <Face Color = "clBrown    " VertexIndexes = "0;1;3;2" />
+                <Face Color = "clRed      " VertexIndexes = "5;4;6;7" />
+                <Face Color = "clWhite    " VertexIndexes = "0;2;6;4" />
+                <Face Color = "clYellow   " VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <Cut Color = "clOrange      "> <Plane NormVector = " 2; 2;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clCyan        "> <Plane NormVector = "-2;-2; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clLightGreen  "> <Plane NormVector = " 2;-1; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clGreen       "> <Plane NormVector = "-2; 1;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clLightViolett"> <Plane NormVector = "-1; 2; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clViolett     "> <Plane NormVector = " 1;-2;-2" NormDistance = "-W" /> </Cut>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Undo Repeat = "5" />
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = "0;1;0" Angle = "-ArcTan(sqrt(2))" />
+    </Figure>
+</xml>

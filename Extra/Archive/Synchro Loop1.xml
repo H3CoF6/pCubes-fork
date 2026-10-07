@@ -1,0 +1,178 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+   <Interface>
+        <Name>Synchro Loop1</Name>
+        <Menu>Other forms\Synchro Loop1</Menu>
+        <Inventor>Tim Fitzrandolph</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7308</Link>
+    </Interface>
+
+    <Script>
+        clViolet := 'B00040';
+        clOrange := 'FF6600';
+        clBlue   := '0099EE';
+        clYellow := 'FFFF00';
+        clGray   := '555555';
+
+        R := 0.5;
+        H1 := R * 0.06;
+        H2 := H1 * 1.3;
+
+        R1 := R  * 0.06;
+        R2 := R1 * 0.7;
+
+        dy := R * 1.05;
+        for i := 0 to 15 do begin
+            x1[i] := R1 * cos(2 * Pi / 16 * (i));
+            y1[i] := R1 * sin(2 * Pi / 16 * (i)) + dy;
+            x2[i] := R2 * cos(2 * Pi / 16 * (i));
+            y2[i] := R2 * sin(2 * Pi / 16 * (i)) + dy;
+        end;
+
+        sAngle := 2*Pi / 22;
+
+        D := dy * (cos(1 * sAngle) + cos(2 * sAngle)) / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; 0" PlaneDistances = "-H1; H1" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi; 0" PlaneDistances = "D;-D" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+
+        <Macro Name = "AddBody">
+            <Cylinder Color = "cl" Radius = "R" Base = "0;  H1; 0" Top = "0;  H2; 0" >
+                <Base Color = "cl" />
+                <Top  Color = "cl" />
+            </Cylinder>
+            <Cylinder Color = "cl" Radius = "R" Base = "0; -H1; 0" Top = "0; -H2; 0" >
+                <Base Color = "cl" />
+                <Top  Color = "cl" />
+            </Cylinder>
+        </Macro>
+
+        <ExecMacro MacroName = "AddBody" cl = "clOrange" />
+        <Cut> <Plane NormVector = "0;0;1" NormDistance = "D" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddBody" cl = "clYellow" />
+        <Cut> <Plane NormVector = "0;0;-1" NormDistance = "D" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddBody" cl = "clGray" />
+        <Cut> <Plane NormVector = "0;0;1" NormDistance = "-D" /> </Cut>
+        <Cut> <Plane NormVector = "0;0;-1" NormDistance = "-D" /> </Cut>
+        <ShowAll/>
+
+        <Macro Name = "AddPuck" >
+            <Part>
+                <Vertices Vectors = "x1;  0; y1" />
+                <Vertices Vectors = "x2; H1; y2" />
+                <Vertices Vectors = "x2;-H1; y2" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "16;17; 1; 0" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "17;18; 2; 1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "18;19; 3; 2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "19;20; 4; 3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "20;21; 5; 4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "21;22; 6; 5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "22;23; 7; 6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "23;24; 8; 7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "24;25; 9; 8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "25;26;10; 9" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "26;27;11;10" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "27;28;12;11" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "28;29;13;12" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "29;30;14;13" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "30;31;15;14" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "31;16; 0;15" InvisibleEdges = "10" />
+
+                    <Face Color = "cl" VertexIndexes = "24;23;22;21;20;19;18;17;16;31;30;29;28;27;26;25" />
+
+                    <Face Color = "cl" VertexIndexes = "33;32; 0; 1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "34;33; 1; 2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "35;34; 2; 3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "36;35; 3; 4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "37;36; 4; 5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "38;37; 5; 6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "39;38; 6; 7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "40;39; 7; 8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "41;40; 8; 9" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "42;41; 9;10" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "43;42;10;11" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "44;43;11;12" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "45;44;12;13" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "46;45;13;14" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "47;46;14;15" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "32;47;15; 0" InvisibleEdges = "10" />
+
+                    <Face Color = "cl" VertexIndexes = "32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0; 1; 0" Angle = "sAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddPuck" cl = "clOrange" Repeat = "2" />
+        <ExecMacro MacroName = "AddPuck" cl = "clViolet" Repeat = "8" />
+        <ExecMacro MacroName = "AddPuck" cl = "clYellow" Repeat = "3" />
+        <ExecMacro MacroName = "AddPuck" cl = "clBlue  " Repeat = "8" />
+        <ExecMacro MacroName = "AddPuck" cl = "clOrange" Repeat = "1" />
+<!--
+        <Macro Name = "AddPuck">
+            <Part>
+                <Vertices Vectors = "x; y; z" />
+                <Vertices Vectors = " 0; -delta; B" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10" />
+
+                    <Face VertexIndexes = "1;0;11" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddPucks">
+            <ExecMacro MacroName = "AddPuck" />
+            <Turn NormVector = "0; 0; 1" Angle = " Pi/11" />
+        </Macro>
+
+        <Turn NormVector = "1; 0; 0" Angle = " Pi/2" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clOrange" Repeat = "2" />
+        <ExecMacro MacroName = "AddPucks" cl = "clViolet" Repeat = "8" />
+        <ExecMacro MacroName = "AddPucks" cl = "clYellow" Repeat = "3" />
+        <ExecMacro MacroName = "AddPucks" cl = "clBLue  " Repeat = "8" />
+        <ExecMacro MacroName = "AddPucks" cl = "clOrange" Repeat = "1" />
+
+        <Turn NormVector = "0; 1; 0" Angle = " Pi" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clOrange" Repeat = "2" />
+        <ExecMacro MacroName = "AddPucks" cl = "clBlue  " Repeat = "8" />
+        <ExecMacro MacroName = "AddPucks" cl = "clYellow" Repeat = "3" />
+        <ExecMacro MacroName = "AddPucks" cl = "clViolet" Repeat = "8" />
+        <ExecMacro MacroName = "AddPucks" cl = "clOrange" Repeat = "1" />
+
+        <Turn NormVector = "0; 1; 0" Angle = "-Pi" />
+        <Turn NormVector = "1; 0; 0" Angle = "-Pi/2" />
+
+        <Connect Axis = "0" Layers = "0;2" />
+        <Connect Axis = "1" Layers = "0;2" />
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+-->
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+</xml>

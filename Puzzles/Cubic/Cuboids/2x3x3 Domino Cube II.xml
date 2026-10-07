@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x3x3 Domino Cube II</Name>
+        <Class>TCrazy332</Class>
+        <Menu>Cubic\Cuboids\2x3x3 Domino Cube II</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6521</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W * 2 / 3;
+        D := W * 0.17;
+
+        DCut := W * 1.5; // mark "lock" cube
+    </Script>
+
+    <!-- enabled (by Class TCrazy332), first is disabled when special turn occur via 2nd axis and vice versa -->
+    <Axes TurningAngles = "Pi;Pi/2;Pi" PlaneDistances = "-D; D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <!-- enabled (by Class TCrazy332), it's disabled when special turn occur -->
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <!-- disabled (by Class TCrazy332), it's enabled when special turn occur -->
+    <Axes TurningAngles = "Pi" PlaneDistances = " D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Cut><Plane NormVector = "-1;-1; 1" NormDistance = "-DCut" /></Cut> <!-- mark "lock" cube -->
+
+        <!-- cutting to assign "0" to block cube -->
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Split>
+
+        <SplitByAxes/>
+
+        <Hide Axis = "2" Layer = "1" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+            WZ := D;
+        </Script>
+
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <ShowAll/>
+    </Figure>
+</xml>

@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Reuleaux Mastermorphix Bump</Name>
+        <Menu>Other forms\Pillowed\Tetrahedron\Reuleaux Mastermorphix Bump</Menu>
+        <Inventor>Aleh Hladzilin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-09-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2686</Link>
+    </Interface>
+
+    <Script>
+        Color := 'AAAAAA';
+        for i := 0 to 3 do
+            Colors[i] := Color;
+
+        K := 0.45;
+        D := K * 0.3;
+
+        DWX :=K * 0.4;
+        DWY := K * 0.1;
+        DWZ :=K * 0.3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " DWX; DWY; DWZ" />
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+        <Transfer Vector = "-DWX;-DWY;-DWZ" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

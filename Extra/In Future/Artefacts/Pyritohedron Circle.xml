@@ -1,0 +1,115 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+artefacts on circles
+
+    <Interface>
+        <Name>Pyritohedron Circle</Name>
+        <Menu>Other forms\Pyritohedron\Pyritohedron Circle</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-06-09</Added>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clLightBlue    := '2828FF';
+        clBlue         := '0000A0';
+        clBrown        := '800000';
+        clOrange       := 'FF6000';
+        clLightViolett := 'FF0080';
+        clRed          := 'FF0000';
+        clLightGreen   := '00FF00';
+        clGreen        := '008000';
+        clViolett      := '800080';
+        clCyan         := '00DCB4';
+        clWhite        := 'FFFFFF';
+
+        R := 0.8;
+
+        k := 0.838;
+        b := (R * k);
+        c := (R * sqrt(3 / 4 - k^2));
+        a := (R * k^2 / (2 * k - sqrt(3 / 4 - k^2)));
+
+        ss := b / sqrt(b^2 + (b - c)^2);
+        cs := (b - c) / sqrt(b^2 + (b - c)^2);
+
+        D := 0.31608426;
+        D2 := b^2 / sqrt(b^2 + (b-c)^2);
+
+        A1 := Arccos((a^2-(a-c)^2-(a-b)^2) / (a^2+(a-c)^2+(a-b)^2));
+        A2 := Arccos((a*(c-a)+(c-a)*(a-b)-a*(a-b)) / (a^2+(a-c)^2+(a-b)^2));
+        A3 := A1 + A2;
+        A4 := A2 + A1 + A2;
+
+        RC := 0.24;
+        KC := D2 / (ss^2 + cs^2) * 1.004;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi; 0; 2*Pi; 0" AvailableAngles = "-A4; -A3; -A2; -A1; 0; A1; A2; A3; A4" PlaneDistances = "-D2; -D; D; D2" >
+        <Axis NormVector = "   0;  ss;  cs" />
+        <Axis NormVector = "   0; -ss;  cs" />
+        <Axis NormVector = "  ss;  cs;   0" />
+        <Axis NormVector = " -ss;  cs;   0" />
+        <Axis NormVector = "  cs;   0;  ss" />
+        <Axis NormVector = "  cs;   0; -ss" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;  c;  b" />
+                <Add Vector = "  0; -c;  b" />
+                <Add Vector = "  0; -c; -b" />
+                <Add Vector = "  0;  c; -b" />
+                <Add Vector = "  c;  b;  0" />
+                <Add Vector = " -c;  b;  0" />
+                <Add Vector = " -c; -b;  0" />
+                <Add Vector = "  c; -b;  0" />
+                <Add Vector = "  b;  0;  c" />
+                <Add Vector = "  b;  0; -c" />
+                <Add Vector = " -b;  0; -c" />
+                <Add Vector = " -b;  0;  c" />
+                <Add Vector = "  a;  a;  a" />
+                <Add Vector = "  a;  a; -a" />
+                <Add Vector = "  a; -a;  a" />
+                <Add Vector = "  a; -a; -a" />
+                <Add Vector = " -a;  a;  a" />
+                <Add Vector = " -a;  a; -a" />
+                <Add Vector = " -a; -a;  a" />
+                <Add Vector = " -a; -a; -a" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue        " VertexIndexes = "1;18; 6; 7;14" />
+                <Face Color = "clBrown       " VertexIndexes = "0;12; 4; 5;16" />
+                <Face Color = "clCyan        " VertexIndexes = "2;15; 7; 6;19" />
+                <Face Color = "clLightBlue   " VertexIndexes = "3;17; 5; 4;13" />
+                <Face Color = "clLightViolett" VertexIndexes = "7;15; 9; 8;14" />
+                <Face Color = "clLightGreen  " VertexIndexes = "4;12; 8; 9;13" />
+                <Face Color = "clGreen       " VertexIndexes = "6;18;11;10;19" />
+                <Face Color = "clViolett     " VertexIndexes = "5;17;10;11;16" />
+                <Face Color = "clYellow      " VertexIndexes = "0; 1;14; 8;12" />
+                <Face Color = "clRed         " VertexIndexes = "1; 0;16;11;18" />
+                <Face Color = "clOrange      " VertexIndexes = "2; 3;13; 9;15" />
+                <Face Color = "clWhite       " VertexIndexes = "3; 2;19;10;17" />
+            </Faces>
+        </Part>
+
+        <Circle Color =  "clBrown       " Radius = "RC" Center = "  0*KC;  ss*KC;  cs*KC" />
+        <Circle Color =  "clBlue        " Radius = "RC" Center = "  0*KC; -ss*KC;  cs*KC" />
+        <Circle Color =  "clLightGreen  " Radius = "RC" Center = " ss*KC;  cs*KC;   0*KC" />
+        <Circle Color =  "clViolett     " Radius = "RC" Center = "-ss*KC;  cs*KC;   0*KC" />
+        <Circle Color =  "clYellow      " Radius = "RC" Center = " cs*KC;   0*KC;  ss*KC" />
+        <Circle Color =  "clOrange      " Radius = "RC" Center = " cs*KC;   0*KC; -ss*KC" />
+        <Circle Color =  "clCyan        " Radius = "RC" Center = "  0*KC; -ss*KC; -cs*KC" />
+        <Circle Color =  "clLightBlue   " Radius = "RC" Center = "  0*KC;  ss*KC; -cs*KC" />
+        <Circle Color =  "clGreen       " Radius = "RC" Center = "-ss*KC; -cs*KC;   0*KC" />
+        <Circle Color =  "clLightViolett" Radius = "RC" Center = " ss*KC; -cs*KC;   0*KC" />
+        <Circle Color =  "clWhite       " Radius = "RC" Center = "-cs*KC;   0*KC; -ss*KC" />
+        <Circle Color =  "clRed         " Radius = "RC" Center = "-cs*KC;   0*KC;  ss*KC" />
+        
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Copterminx</Name>
+        <Menu>Other forms\Dodecahedron\Mixed\Face-Edge\Copterminx</Menu>
+        <Inventor>Sharon Avidor + Matthew Ray</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1646</Link>
+        <Added>2017-08-07</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        D1 := R * sqrt(3) * (Sqrt(5) + 3) / 12 + 0.01;
+        D2 := (Rsin + R2sin) / 2;
+        S := 0.8;
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0; Pi" JumbleAngle = "arctan(2)" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = "Ex[ 0]; Ey[ 0]; Ez[ 0]" />
+        <Axis NormVector = "Ex[ 1]; Ey[ 1]; Ez[ 1]" />
+        <Axis NormVector = "Ex[ 2]; Ey[ 2]; Ez[ 2]" />
+        <Axis NormVector = "Ex[ 3]; Ey[ 3]; Ez[ 3]" />
+        <Axis NormVector = "Ex[ 4]; Ey[ 4]; Ez[ 4]" />
+        <Axis NormVector = "Ex[ 5]; Ey[ 5]; Ez[ 5]" />
+        <Axis NormVector = "Ex[ 6]; Ey[ 6]; Ez[ 6]" />
+        <Axis NormVector = "Ex[ 7]; Ey[ 7]; Ez[ 7]" />
+        <Axis NormVector = "Ex[ 8]; Ey[ 8]; Ez[ 8]" />
+        <Axis NormVector = "Ex[ 9]; Ey[ 9]; Ez[ 9]" />
+        <Axis NormVector = "Ex[10]; Ey[10]; Ez[10]" />
+        <Axis NormVector = "Ex[11]; Ey[11]; Ez[11]" />
+        <Axis NormVector = "Ex[12]; Ey[12]; Ez[12]" />
+        <Axis NormVector = "Ex[13]; Ey[13]; Ez[13]" />
+        <Axis NormVector = "Ex[14]; Ey[14]; Ez[14]" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <SplitByAxes/>
+
+        <Macro Name = "HideGray1">
+            <HideContaining Vector = " Vx[i]*S;  Vy[i]*S;  Vz[i]*S" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideGray1" i = "0" Repeat = "20" />
+
+        <Macro Name = "HideGray2">
+            <HideContaining Vector = " Ex[i]*S;  Ey[i]*S;  Ez[i]*S" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideGray2" i = "0" Repeat = "30" />
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[i]" > <Plane NormVector = "-Cx[i]; -Cy[i]; -Cz[i]" NormDistance = "-RSin" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" i = "0" Repeat = "12" />
+
+        <ShowAll/>
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "Cx[i]; Cy[i]; Cz[i]" NormDistance = "-RSin" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" i = "0" Repeat = "12" />
+
+    </Figure>
+</xml>

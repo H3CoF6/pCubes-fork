@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Orion</Name>
+        <Menu>Other forms\Dodecahedron\Mixed\Face-Vertex\Orion</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Link>https://www.youtube.com/watch?v=sc43PXe1T7w</Link>
+        <Added>2018-01-26</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R2sin;
+        D2 := R / 3;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "-Cx[1]; -Cy[1]; -Cz[1]" />
+        <Axis NormVector = " Cx[2];  Cy[2];  Cz[2]" />
+        <Axis NormVector = " Cx[5];  Cy[5];  Cz[5]" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "-D2;D2" FixedLayers = "1" >
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Turn  Axis = "0" Layer = "1" Angle = "-2*sAngle" />
+        <Turn  Axis = "1" Layer = "1" Angle = " 2*sAngle" />
+        <Turn  Axis = "0" Layer = "1" Angle = " 2*sAngle" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-2*sAngle" />
+        <SplitByAxes/>
+        <Turn  Axis = "0" Layer = "1" Angle = "-2*sAngle" />
+        <Turn  Axis = "1" Layer = "1" Angle = " 2*sAngle" />
+        <Turn  Axis = "0" Layer = "1" Angle = " 2*sAngle" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-2*sAngle" />
+        <SplitByAxes/>
+        <Undo Repeat="8"/>
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

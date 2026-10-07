@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Junior Trio Cube</Name>
+        <Menu>Cubic\Cross\2x2x2\Trio Cube</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-08-05</Added>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+        D  := W / 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D * 2; 0; D * 2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script>
+            include 'Figures\Scripts\Cube_Standard_Colors.inc';
+            Colors[1] := -1;
+            Colors[2] := -1;
+            Colors[5] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cube.xml" W = "D * 2" />
+
+        <Script>
+            include 'Figures\Scripts\Cube_Standard_Colors.inc';
+            Colors[0] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D * 2" WZ = "D * 2" DWX = " D * 3" />
+
+        <Script>
+            include 'Figures\Scripts\Cube_Standard_Colors.inc';
+            Colors[3] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D * 2" WY = "D" WZ = "D * 2" DWX = "0" DWY = "-D * 3" />
+        <SplitByAxes/>
+
+        <Script>
+            include 'Figures\Scripts\Cube_Standard_Colors.inc';
+            Colors[4] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D * 2" WY = "D * 2" WZ = "D" DWX = "0" DWY = "0" DWZ = "D * 3" />
+        <SplitByAxes/>
+
+
+        <!-- fake cubies -->
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D * 3" WY = "D * 3" WZ = "D * 3" DWX = "-D" DWY = "D" DWZ = "-D"/>
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+
+        <InvertVisibility/>
+    </Figure>
+</xml>

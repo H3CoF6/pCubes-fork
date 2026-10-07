@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup Cane Ball</Name>
+        <Menu>Other forms\Archimedean Solids\Rhombicuboctahedron\Mixup Cane Ball</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-14</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF'; // White
+        Colors[1] := 'C80000'; // Red
+        Colors[2] := '640064'; // Violett
+        Colors[3] := '5F5F5F'; // Gray
+        Colors[4] := '009600'; // Green
+        Colors[5] := '0000C8'; // Blue
+        Colors[6] := 'FFFF00'; // Yellow
+        Colors[7] := 'FF800A'; // Orange
+
+        W := 0.6;
+        D := W * (sqrt(2) - 1);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2;Pi/4;Pi/4;Pi/2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Archimedean Solids\Rhombicuboctahedron\Figures\Rhombicuboctahedron Alternate Coloring.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split">
+            <Turn Axis = "Ax1" Angle = " Pi/4" From = "1" To = "2" />
+            <SplitByAxes/>
+            <Turn Axis = "Ax2" Angle = " Pi/4" From = "1" To = "2" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+            <Undo Repeat = "2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" />
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "1" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

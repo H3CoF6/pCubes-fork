@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Quirky Gem III</Name>
+        <Menu>Other forms\Bifrustum\Square Bifrustum\Quirky Gem III</Menu>
+        <Menu>Other forms\Unclassified\Quirky Gem\Quirky Gem III</Menu>
+        <Inventor>Chandler Griscom</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-01-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5687</Link>
+    </Interface>
+
+    <Script>
+        clBlack  := '202020';
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clCoral  := 'FF7F50';
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clGolden := 'DDBB20';
+        clLime   := '00FF00';
+        clGreen  := '008000';
+
+        W  := 0.5;
+        W1 := W / 2;
+        s3 := sqrt(3);
+        H  := W * s3 / 2;
+        D  := H / 2;
+
+        A := ArcCos(-3/5);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi" AvailableAngles = "-A; 0; A; Pi" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "  0; s3; 1" />
+        <Axis NormVector = "  0;-s3; 1" />
+        <Axis NormVector = " s3;  0; 1" />
+        <Axis NormVector = "-s3;  0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " W1; W1; H" />
+                <Add Vector = " W1;-W1; H" />
+                <Add Vector = "-W1;-W1; H" />
+                <Add Vector = "-W1; W1; H" />
+
+                <Add Vector = "  W;  W; 0" />
+                <Add Vector = "  W; -W; 0" />
+                <Add Vector = " -W; -W; 0" />
+                <Add Vector = " -W;  W; 0" />
+
+                <Add Vector = " W1; W1;-H" />
+                <Add Vector = " W1;-W1;-H" />
+                <Add Vector = "-W1;-W1;-H" />
+                <Add Vector = "-W1; W1;-H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlack " VertexIndexes = " 0; 3; 2; 1" />
+
+                <Face Color = "clRed   " VertexIndexes = " 0; 1; 5; 4" />
+                <Face Color = "clGreen " VertexIndexes = " 1; 2; 6; 5" />
+                <Face Color = "clGolden" VertexIndexes = " 2; 3; 7; 6" />
+                <Face Color = "clCyan  " VertexIndexes = " 3; 0; 4; 7" />
+
+                <Face Color = "clOrange" VertexIndexes = " 4; 5; 9; 8" />
+                <Face Color = "clBlue  " VertexIndexes = " 5; 6;10; 9" />
+                <Face Color = "clCoral " VertexIndexes = " 6; 7;11;10" />
+                <Face Color = "clLime  " VertexIndexes = " 7; 4; 8;11" />
+
+                <Face Color = "clYellow" VertexIndexes = " 8; 9;10;11" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

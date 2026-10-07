@@ -1,0 +1,111 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+Duplicated script
+
+    <Interface>
+        <Name>Astroid Attack 1</Name>
+        <Menu>Other forms\Trapezohedron\Face Turning\Astroid Attack1</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-01-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1496</Link>
+    </Interface>
+
+    <Script>
+        clYellow    := 'FFFF00';
+        clBlue      := '0000A0';
+        clOrange    := 'FF6000';
+        clRed       := 'FF0000';
+        clGreen     := '008000';
+        clWhite     := 'FFFFFF';
+        clViolett   := '800080';
+        clLightBlue := '2868FF';
+        clLightGray := 'AAAAAA';
+
+        R := 0.55;
+        s2 := sqrt(2);
+        H := R * (s2 + 1) / 2 * 2^0.25;
+        z := R * (s2 - 1) / 2 * 2^0.25;
+        az := R / 8^0.25;
+
+        for i := 0 to 7 do begin
+            x[i] := R * cos(Pi / 4 * (i + 0.5));
+            y[i] := R * sin(Pi / 4 * (i + 0.5));
+        end;
+
+        A1 := ArcCos((s2 - 1) /2);
+        A2 := 2 * A1;
+        A3 := ArcCos(s2 - 2);
+
+        D := R * sqrt(224 + 91 * s2) / 42;
+        E := R * sqrt( 56 + 35 * s2) / 14;
+
+        DCut := H/2;
+    </Script>
+
+    <Axes TurningAngles = " 0; 2 * Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D" >
+        <Axis NormVector = " x[0]; y[0]; az" />
+        <Axis NormVector = " x[1]; y[1];-az" />
+        <Axis NormVector = " x[2]; y[2]; az" />
+        <Axis NormVector = " x[3]; y[3];-az" />
+        <Axis NormVector = " x[4]; y[4]; az" />
+        <Axis NormVector = " x[5]; y[5];-az" />
+        <Axis NormVector = " x[6]; y[6]; az" />
+        <Axis NormVector = " x[7]; y[7];-az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;    0; H" />
+
+                <Add Vector = "x[0]; y[0];-z" />
+                <Add Vector = "x[1]; y[1]; z" />
+                <Add Vector = "x[2]; y[2];-z" />
+                <Add Vector = "x[3]; y[3]; z" />
+                <Add Vector = "x[4]; y[4];-z" />
+                <Add Vector = "x[5]; y[5]; z" />
+                <Add Vector = "x[6]; y[6];-z" />
+                <Add Vector = "x[7]; y[7]; z" />
+
+                <Add Vector = "   0;    0;-H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue     " VertexIndexes = "0;6;7;8" />
+                <Face Color = "clGreen    " VertexIndexes = "0;4;5;6" />
+                <Face Color = "clRed      " VertexIndexes = "0;2;3;4" />
+                <Face Color = "clOrange   " VertexIndexes = "0;8;1;2" />
+
+                <Face Color = "clYellow   " VertexIndexes = "9;1;8;7" />
+                <Face Color = "clWhite    " VertexIndexes = "9;7;6;5" />
+                <Face Color = "clViolett  " VertexIndexes = "9;5;4;3" />
+                <Face Color = "clLightBlue" VertexIndexes = "9;3;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Hide><Plane NormVector = " 0; 0; 1" NormDistance = "-DCut" /></Hide>
+        <Hide><Plane NormVector = " 0; 0;-1" NormDistance = "-DCut" /></Hide>
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "CutAndSplit" >
+            <HideContaining Vector = "x[7]/2; y[7]/2;H/2" />
+            <InvertVisibility/>
+            <Turn NormVector = " x[0]; y[0];  az" Angle = " A1" />
+            <Split><Plane NormVector = "x[6]; y[6]; az" NormDistance = "D" /></Split>
+            <Cut><Plane NormVector = "-x[6];-y[6];-az" NormDistance = "-E" /></Cut>
+            <Turn NormVector = " x[0]; y[0];  az" Angle = "-A1" />
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "CutAndSplit" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutAndSplit" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+    </Figure>
+</xml>

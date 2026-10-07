@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Kantikub (Sphere)</Name>
+        <Menu>Other forms\Sphere\Kantikub (Sphere)</Menu>
+        <Inventor>Félix Nadin</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7147</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        K := 0.6;
+
+        D1 := K * 0.30;
+        D2 := K * 0.71076516273; <!-- C29 / sqrt(2) -->
+    </Script>
+
+    <Axes TurningAngles = "Pi/4" PlaneDistances = "-D1; D1" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "D2" /></Split>
+
+        <Macro Name = "HideC">
+            <HideContaining Vector = "cx[id]; cy[id]; cz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideC" Repeat = "6" id = "0" />
+
+        <Macro Name = "HideE">
+            <HideContaining Vector = "f*ex[id]; f*ey[id]; f*ez[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideE" Repeat = "12" id = "0" f = "0.8" />
+
+        <InvertVisibility/>
+        <SplitByAxes/>
+
+        <ShowAll/>
+
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

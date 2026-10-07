@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese 4 (1x1x4)</Name>
+        <Menu>Cubic\Multi-core\Siamese 4 (1x1x4)</Menu>
+        <Inventor>Marcel Gillen</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1100</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 7;
+        D2 := D * 2;
+        D3 := D * 3;
+        D4 := D * 4;
+        A := Pi / 2;
+    </Script>
+
+    <Axes TurningAngles = " 0; A; A; A" PlaneDistances = "-D2; 0; D2" >
+        <Axis NormVector = " 1; 0; 0" BaseVector = " D3; D3; 0" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = " D3; D3; 0" />
+
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-D3;-D3; 0" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "-D3;-D3; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D4" WY = "WX" WZ = "WX" DWX = " D3" DWY = " D3" DWZ = "0" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D4" WY = "WX" WZ = "WX" DWX = "-D3" DWY = "-D3" DWZ = "0" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D2" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " 0 " /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D2" /></Split>
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D" WZ = "D4" DWX = "0" DWY = "0" DWZ = "0" />
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

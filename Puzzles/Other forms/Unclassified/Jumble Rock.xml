@@ -1,0 +1,406 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jumble Rock</Name>
+        <Menu>Other forms\Unclassified\Jumble Rock</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2018-09-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4183</Link>
+    </Interface>
+
+    <Script>
+        clRed          := 'FF0000';
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clOrange       := 'FF6000';
+        clGreen        := '008000';
+        clWhite        := 'FFFFFF';
+
+        clOlive        := '808000';
+        clCyan         := '00DCB4';
+        clLightBlue    := '2828FF';
+        clLightViolett := 'FF0080';
+        clLightGreen   := '00FF00';
+        clBrown        := '800000';
+
+        clViolett      := '800080';
+        clGray         := 'AAAAAA';
+        clTeal         := '008080';
+        clCoral        := 'FF7F50';
+        clLime         := '00FF00';
+        clDarkGreen    := '006400';
+        clFuchsia      := 'FF00FF';
+        clPurple       := '800080';
+        clPink         := 'FF69B4';
+        clPale         := 'DB7093';
+
+        // Pentagons
+        cl[ 0] := clBlue;
+        cl[ 1] := clYellow;
+        cl[ 2] := clRed;
+        cl[ 3] := clWhite;
+        cl[ 4] := clOrange;
+        cl[ 5] := clGreen;
+
+        // Rhombi
+        cl[ 6] := clLightGreen;
+        cl[ 7] := clCyan;
+        cl[ 8] := clCoral;
+        cl[ 9] := clLightViolett;
+        cl[10] := clFuchsia;
+        cl[11] := clLightBlue;
+
+        // Non turning faces
+        cl[12] := clViolett;
+        cl[13] := clBrown;
+        cl[14] := clGray;
+        cl[15] := clOlive;
+        cl[16] := clTeal;
+        cl[17] := clPale;
+
+        W := 0.7;
+
+        ay0 := sqrt((3 - sqrt(3)) * 2) / 3;
+        az := sqrt(sqrt(3)*2 + 3) / 3;
+        by0 := -sqrt((3 - sqrt(3)) * 6) / 3;
+        bz := sqrt((sqrt(3)*2 - 3) / 3);
+
+        for i := 0 to 2 do begin
+            ax[i]   := ay0 * sin(Pi*2/3 * i);
+            ay[i]   := ay0 * cos(Pi*2/3 * i);
+            ax[i+3] := ay0 * cos(Pi*2/3 * i);
+            ay[i+3] := ay0 * sin(Pi*2/3 * i);
+
+            bx[i]   := by0 * sin(Pi*2/3 * i);
+            by[i]   := by0 * cos(Pi*2/3 * i);
+            bx[i+3] := by0 * cos(Pi*2/3 * i);
+            by[i+3] := by0 * sin(Pi*2/3 * i);
+        end;
+
+        z0 := W;
+        y1 := W * (-0.57039978477823479531); // (-sqrt(sqrt(3)-1)) * 2/3;    
+        z1 := W *   0.82136720504591819568;  // (sqrt(3)*2-1) / 3;           
+        x2 := W *   0.49398070393112768953;  // sqrt((sqrt(3)-1)*3) / 3;     
+        y2 := W * (-0.70276151547313798139); // (-sqrt(sqrt(3)*17-25)) / 3;  
+        z2 := W *   0.51196612828741513765;  // (5-sqrt(3)*2) / 3;           
+        x3 := W * (-0.98796140786225537905); // (-sqrt((sqrt(3)-1)*3)) * 2/3;
+        z3 := W *   0.15470053837925152902;  // (sqrt(3)*2-3) / 3;           
+        x4 := W *   0.45476241335486007883;
+        y4 := W * (-0.77068958733723318654);
+        z4 := W *   0.35318142166156464492;
+        x5 := W * (-0.90952482670972015767);
+        z5 := W *   0.31348524500510202174;
+        x6 := W * (-0.87030653613345254698);
+        y6 := W * (-0.14636465301663042653);
+        z6 := W *   0.22181085189147148603;
+        x7 := W *   0.60112706637149050537;
+        y7 := W * (-0.56246395312297008093);
+        z7 := W *   0.49778405031714534488;
+
+        vx[ 0,0] :=  0;        vy[ 0,0] :=  0;        vz[ 0] :=  z0;
+        vx[ 1,0] :=  0;        vy[ 1,0] :=  0;        vz[ 1] := -z0;
+
+        vx[ 2,0] :=  0;        vy[ 2,0] :=  y1;       vz[ 2] :=  z1;
+        vx[ 3,0] :=  y1;       vy[ 3,0] :=  0;        vz[ 3] := -z1;
+
+        vx[ 4,0] :=  x2;       vy[ 4,0] :=  y2;       vz[ 4] :=  z2;
+        vx[ 5,0] := -x2;       vy[ 5,0] :=  y2;       vz[ 5] :=  z2;
+        vx[ 6,0] :=  y2;       vy[ 6,0] :=  x2;       vz[ 6] := -z2;
+        vx[ 7,0] :=  y2;       vy[ 7,0] := -x2;       vz[ 7] := -z2;
+
+        vx[ 8,0] :=  x3;       vy[ 8,0] :=  0;        vz[ 8] :=  z3;
+        vx[ 9,0] := -x3;       vy[ 9,0] :=  0;        vz[ 9] :=  z3;
+        vx[10,0] :=  0;        vy[10,0] :=  x3;       vz[10] := -z3;
+        vx[11,0] :=  0;        vy[11,0] := -x3;       vz[11] := -z3;
+
+        vx[12,0] :=  x4;       vy[12,0] :=  y4;       vz[12] :=  z4;
+        vx[13,0] := -x4;       vy[13,0] :=  y4;       vz[13] :=  z4;
+        vx[14,0] :=  y4;       vy[14,0] :=  x4;       vz[14] := -z4;
+        vx[15,0] :=  y4;       vy[15,0] := -x4;       vz[15] := -z4;
+
+        vx[16,0] :=  x5;       vy[16,0] :=  0;        vz[16] :=  z5;
+        vx[17,0] := -x5;       vy[17,0] :=  0;        vz[17] :=  z5;
+        vx[18,0] :=  0;        vy[18,0] :=  x5;       vz[18] := -z5;
+        vx[19,0] :=  0;        vy[19,0] := -x5;       vz[19] := -z5;
+
+        vx[20,0] :=  x6;       vy[20,0] :=  y6;       vz[20] :=  z6;
+        vx[21,0] := -x6;       vy[21,0] :=  y6;       vz[21] :=  z6;
+        vx[22,0] :=  y6;       vy[22,0] :=  x6;       vz[22] := -z6;
+        vx[23,0] :=  y6;       vy[23,0] := -x6;       vz[23] := -z6;
+
+        vx[24,0] :=  x7;       vy[24,0] :=  y7;       vz[24] :=  z7;
+        vx[25,0] := -x7;       vy[25,0] :=  y7;       vz[25] :=  z7;
+        vx[26,0] :=  y7;       vy[26,0] :=  x7;       vz[26] := -z7;
+        vx[27,0] :=  y7;       vy[27,0] := -x7;       vz[27] := -z7;
+
+        vx[28,0] :=  x4+x7-x2; vy[28,0] :=  y4+y7-y2; vz[28] :=  z4+z7-z2;
+        vx[29,0] := -x4-x7+x2; vy[29,0] :=  y4+y7-y2; vz[29] :=  z4+z7-z2;
+        vx[30,0] :=  y4+y7-y2; vy[30,0] :=  x4+x7-x2; vz[30] := -z4-z7+z2;
+        vx[31,0] :=  y4+y7-y2; vy[31,0] := -x4-x7+x2; vz[31] := -z4-z7+z2;
+
+        cos1 := cos(Pi*2/3);
+        sin1 := sin(Pi*2/3);
+        cos2 := cos(Pi*4/3);
+        sin2 := sin(Pi*4/3);
+
+        for i := 0 to 31 do begin
+            vx[i,1] := vx[i,0] * cos1 - vy[i,0] * sin1;
+            vy[i,1] := vx[i,0] * sin1 + vy[i,0] * cos1;
+            vx[i,2] := vx[i,0] * cos2 - vy[i,0] * sin2;
+            vy[i,2] := vx[i,0] * sin2 + vy[i,0] * cos2;
+        end;
+
+        D := W * 0.71291867674665091885;
+        angle := arctan(sqrt(sqrt(3)*2+3)); // 1.196061894086157 = 68.529deg
+    </Script>
+
+    <Axes TurningAngles = "Pi*2" AvailableAngles = "-angle*3; -angle*2; -angle; 0; angle; angle*2; angle*3" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = "ax[0]; ay[0];  az" />
+        <Axis NormVector = "ax[1]; ay[1];  az" />
+        <Axis NormVector = "ax[2]; ay[2];  az" />
+        <Axis NormVector = "ax[3]; ay[3]; -az" />
+        <Axis NormVector = "ax[4]; ay[4]; -az" />
+        <Axis NormVector = "ax[5]; ay[5]; -az" />
+    </Axes>
+    <Axes TurningAngles = "Pi" JumbleAngle = "angle" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = "bx[0]; by[0];  bz" />
+        <Axis NormVector = "bx[1]; by[1];  bz" />
+        <Axis NormVector = "bx[2]; by[2];  bz" />
+        <Axis NormVector = "bx[3]; by[3]; -bz" />
+        <Axis NormVector = "bx[4]; by[4]; -bz" />
+        <Axis NormVector = "bx[5]; by[5]; -bz" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "vx[ 0,0]; vy[ 0,0]; vz[ 0]"/>
+                <Add Vector = "vx[ 1,0]; vy[ 1,0]; vz[ 1]"/>
+                <Add Vector = "vx[ 2,0]; vy[ 2,0]; vz[ 2]"/>
+                <Add Vector = "vx[ 2,1]; vy[ 2,1]; vz[ 2]"/>
+                <Add Vector = "vx[ 2,2]; vy[ 2,2]; vz[ 2]"/>
+                <Add Vector = "vx[ 3,0]; vy[ 3,0]; vz[ 3]"/>
+                <Add Vector = "vx[ 3,1]; vy[ 3,1]; vz[ 3]"/>
+                <Add Vector = "vx[ 3,2]; vy[ 3,2]; vz[ 3]"/>
+                <Add Vector = "vx[ 4,0]; vy[ 4,0]; vz[ 4]"/>
+                <Add Vector = "vx[ 4,1]; vy[ 4,1]; vz[ 4]"/>
+                <Add Vector = "vx[ 4,2]; vy[ 4,2]; vz[ 4]"/>
+                <Add Vector = "vx[ 5,0]; vy[ 5,0]; vz[ 5]"/>
+                <Add Vector = "vx[ 5,1]; vy[ 5,1]; vz[ 5]"/>
+                <Add Vector = "vx[ 5,2]; vy[ 5,2]; vz[ 5]"/>
+                <Add Vector = "vx[ 6,0]; vy[ 6,0]; vz[ 6]"/>
+                <Add Vector = "vx[ 6,1]; vy[ 6,1]; vz[ 6]"/>
+                <Add Vector = "vx[ 6,2]; vy[ 6,2]; vz[ 6]"/>
+                <Add Vector = "vx[ 7,0]; vy[ 7,0]; vz[ 7]"/>
+                <Add Vector = "vx[ 7,1]; vy[ 7,1]; vz[ 7]"/>
+                <Add Vector = "vx[ 7,2]; vy[ 7,2]; vz[ 7]"/>
+                <Add Vector = "vx[ 8,0]; vy[ 8,0]; vz[ 8]"/>
+                <Add Vector = "vx[ 8,1]; vy[ 8,1]; vz[ 8]"/>
+                <Add Vector = "vx[ 8,2]; vy[ 8,2]; vz[ 8]"/>
+                <Add Vector = "vx[ 9,0]; vy[ 9,0]; vz[ 9]"/>
+                <Add Vector = "vx[ 9,1]; vy[ 9,1]; vz[ 9]"/>
+                <Add Vector = "vx[ 9,2]; vy[ 9,2]; vz[ 9]"/>
+                <Add Vector = "vx[10,0]; vy[10,0]; vz[10]"/>
+                <Add Vector = "vx[10,1]; vy[10,1]; vz[10]"/>
+                <Add Vector = "vx[10,2]; vy[10,2]; vz[10]"/>
+                <Add Vector = "vx[11,0]; vy[11,0]; vz[11]"/>
+                <Add Vector = "vx[11,1]; vy[11,1]; vz[11]"/>
+                <Add Vector = "vx[11,2]; vy[11,2]; vz[11]"/>
+                <Add Vector = "vx[12,0]; vy[12,0]; vz[12]"/>
+                <Add Vector = "vx[12,1]; vy[12,1]; vz[12]"/>
+                <Add Vector = "vx[12,2]; vy[12,2]; vz[12]"/>
+                <Add Vector = "vx[13,0]; vy[13,0]; vz[13]"/>
+                <Add Vector = "vx[13,1]; vy[13,1]; vz[13]"/>
+                <Add Vector = "vx[13,2]; vy[13,2]; vz[13]"/>
+                <Add Vector = "vx[14,0]; vy[14,0]; vz[14]"/>
+                <Add Vector = "vx[14,1]; vy[14,1]; vz[14]"/>
+                <Add Vector = "vx[14,2]; vy[14,2]; vz[14]"/>
+                <Add Vector = "vx[15,0]; vy[15,0]; vz[15]"/>
+                <Add Vector = "vx[15,1]; vy[15,1]; vz[15]"/>
+                <Add Vector = "vx[15,2]; vy[15,2]; vz[15]"/>
+                <Add Vector = "vx[16,0]; vy[16,0]; vz[16]"/>
+                <Add Vector = "vx[16,1]; vy[16,1]; vz[16]"/>
+                <Add Vector = "vx[16,2]; vy[16,2]; vz[16]"/>
+                <Add Vector = "vx[17,0]; vy[17,0]; vz[17]"/>
+                <Add Vector = "vx[17,1]; vy[17,1]; vz[17]"/>
+                <Add Vector = "vx[17,2]; vy[17,2]; vz[17]"/>
+                <Add Vector = "vx[18,0]; vy[18,0]; vz[18]"/>
+                <Add Vector = "vx[18,1]; vy[18,1]; vz[18]"/>
+                <Add Vector = "vx[18,2]; vy[18,2]; vz[18]"/>
+                <Add Vector = "vx[19,0]; vy[19,0]; vz[19]"/>
+                <Add Vector = "vx[19,1]; vy[19,1]; vz[19]"/>
+                <Add Vector = "vx[19,2]; vy[19,2]; vz[19]"/>
+                <Add Vector = "vx[20,0]; vy[20,0]; vz[20]"/>
+                <Add Vector = "vx[20,1]; vy[20,1]; vz[20]"/>
+                <Add Vector = "vx[20,2]; vy[20,2]; vz[20]"/>
+                <Add Vector = "vx[21,0]; vy[21,0]; vz[21]"/>
+                <Add Vector = "vx[21,1]; vy[21,1]; vz[21]"/>
+                <Add Vector = "vx[21,2]; vy[21,2]; vz[21]"/>
+                <Add Vector = "vx[22,0]; vy[22,0]; vz[22]"/>
+                <Add Vector = "vx[22,1]; vy[22,1]; vz[22]"/>
+                <Add Vector = "vx[22,2]; vy[22,2]; vz[22]"/>
+                <Add Vector = "vx[23,0]; vy[23,0]; vz[23]"/>
+                <Add Vector = "vx[23,1]; vy[23,1]; vz[23]"/>
+                <Add Vector = "vx[23,2]; vy[23,2]; vz[23]"/>
+                <Add Vector = "vx[24,0]; vy[24,0]; vz[24]"/>
+                <Add Vector = "vx[24,1]; vy[24,1]; vz[24]"/>
+                <Add Vector = "vx[24,2]; vy[24,2]; vz[24]"/>
+                <Add Vector = "vx[25,0]; vy[25,0]; vz[25]"/>
+                <Add Vector = "vx[25,1]; vy[25,1]; vz[25]"/>
+                <Add Vector = "vx[25,2]; vy[25,2]; vz[25]"/>
+                <Add Vector = "vx[26,0]; vy[26,0]; vz[26]"/>
+                <Add Vector = "vx[26,1]; vy[26,1]; vz[26]"/>
+                <Add Vector = "vx[26,2]; vy[26,2]; vz[26]"/>
+                <Add Vector = "vx[27,0]; vy[27,0]; vz[27]"/>
+                <Add Vector = "vx[27,1]; vy[27,1]; vz[27]"/>
+                <Add Vector = "vx[27,2]; vy[27,2]; vz[27]"/>
+                <Add Vector = "vx[28,0]; vy[28,0]; vz[28]"/>
+                <Add Vector = "vx[28,1]; vy[28,1]; vz[28]"/>
+                <Add Vector = "vx[28,2]; vy[28,2]; vz[28]"/>
+                <Add Vector = "vx[29,0]; vy[29,0]; vz[29]"/>
+                <Add Vector = "vx[29,1]; vy[29,1]; vz[29]"/>
+                <Add Vector = "vx[29,2]; vy[29,2]; vz[29]"/>
+                <Add Vector = "vx[30,0]; vy[30,0]; vz[30]"/>
+                <Add Vector = "vx[30,1]; vy[30,1]; vz[30]"/>
+                <Add Vector = "vx[30,2]; vy[30,2]; vz[30]"/>
+                <Add Vector = "vx[31,0]; vy[31,0]; vz[31]"/>
+                <Add Vector = "vx[31,1]; vy[31,1]; vz[31]"/>
+                <Add Vector = "vx[31,2]; vy[31,2]; vz[31]"/>
+            </Vertices>
+
+            <Faces>
+                // non turning faces
+                <Face Color = "cl[12]" VertexIndexes = " 9;33;81;69"/>
+                <Face Color = "cl[12]" VertexIndexes = "13;73;85;37"/>
+                <Face Color = "cl[12]" VertexIndexes = "69;81;85;73"/>
+                <Face Color = "cl[12]" VertexIndexes = "33;46;58;81"/>
+                <Face Color = "cl[12]" VertexIndexes = "48;37;85;60"/>
+                <Face Color = "cl[12]" VertexIndexes = "81;58;60;85" InvisibleEdges = "2"/>
+                <Face Color = "cl[12]" VertexIndexes = "29;24;60;58;22" InvisibleEdges = "14"/>VertexIndexes = "29;24;48;60;58;46;22" InvisibleEdges = "8"
+                <Face Color = "cl[12]" VertexIndexes = "24;48;60" InvisibleEdges = "4"/>
+                <Face Color = "cl[12]" VertexIndexes = "58;46;22" InvisibleEdges = "4"/>
+
+                <Face Color = "cl[13]" VertexIndexes = " 8;32;80;68"/>
+                <Face Color = "cl[13]" VertexIndexes = "12;72;84;36"/>
+                <Face Color = "cl[13]" VertexIndexes = "68;80;84;72"/>
+                <Face Color = "cl[13]" VertexIndexes = "32;45;57;80"/>
+                <Face Color = "cl[13]" VertexIndexes = "47;36;84;59"/>
+                <Face Color = "cl[13]" VertexIndexes = "80;57;59;84" InvisibleEdges = "2"/>
+                <Face Color = "cl[13]" VertexIndexes = "31;23;59;57;21" InvisibleEdges = "14"/>VertexIndexes = "31;23;47;59;57;45;21" InvisibleEdges = "8"
+                <Face Color = "cl[13]" VertexIndexes = "23;47;59" InvisibleEdges = "4"/>
+                <Face Color = "cl[13]" VertexIndexes = "57;45;21" InvisibleEdges = "4"/>
+
+                <Face Color = "cl[14]" VertexIndexes = "10;34;82;70"/>
+                <Face Color = "cl[14]" VertexIndexes = "11;71;83;35"/>
+                <Face Color = "cl[14]" VertexIndexes = "70;82;83;71"/>
+                <Face Color = "cl[14]" VertexIndexes = "34;44;56;82"/>
+                <Face Color = "cl[14]" VertexIndexes = "49;35;83;61"/>
+                <Face Color = "cl[14]" VertexIndexes = "82;56;61;83" InvisibleEdges = "2"/>
+                <Face Color = "cl[14]" VertexIndexes = "30;25;61;56;20" InvisibleEdges = "14"/>VertexIndexes = "30;25;49;61;56;44;20" InvisibleEdges = "8"
+                <Face Color = "cl[14]" VertexIndexes = "25;49;61" InvisibleEdges = "4"/>
+                <Face Color = "cl[14]" VertexIndexes = "56;44;20" InvisibleEdges = "4"/>
+
+                <Face Color = "cl[15]" VertexIndexes = "14;38;86;74"/>
+                <Face Color = "cl[15]" VertexIndexes = "19;79;91;43"/>
+                <Face Color = "cl[15]" VertexIndexes = "74;86;91;79"/>
+                <Face Color = "cl[15]" VertexIndexes = "38;52;64;86"/>
+                <Face Color = "cl[15]" VertexIndexes = "53;43;91;65"/>
+                <Face Color = "cl[15]" VertexIndexes = "86;64;65;91" InvisibleEdges = "2"/>
+                <Face Color = "cl[15]" VertexIndexes = "24;29;65;64;28" InvisibleEdges = "14"/>VertexIndexes = "24;29;53;65;64;52;28" InvisibleEdges = "8"
+                <Face Color = "cl[15]" VertexIndexes = "29;53;65" InvisibleEdges = "4"/>
+                <Face Color = "cl[15]" VertexIndexes = "64;52;28" InvisibleEdges = "4"/>
+
+                <Face Color = "cl[16]" VertexIndexes = "16;40;88;76"/>
+                <Face Color = "cl[16]" VertexIndexes = "18;78;90;42"/>
+                <Face Color = "cl[16]" VertexIndexes = "76;88;90;78"/>
+                <Face Color = "cl[16]" VertexIndexes = "40;51;63;88"/>
+                <Face Color = "cl[16]" VertexIndexes = "55;42;90;67"/>
+                <Face Color = "cl[16]" VertexIndexes = "88;63;67;90" InvisibleEdges = "2"/>
+                <Face Color = "cl[16]" VertexIndexes = "23;31;67;63;27" InvisibleEdges = "14"/>VertexIndexes = "23;31;55;67;63;51;27" InvisibleEdges = "8"
+                <Face Color = "cl[16]" VertexIndexes = "31;55;67" InvisibleEdges = "4"/>
+                <Face Color = "cl[16]" VertexIndexes = "63;51;27" InvisibleEdges = "4"/>
+
+                <Face Color = "cl[17]" VertexIndexes = "15;39;87;75"/>
+                <Face Color = "cl[17]" VertexIndexes = "17;77;89;41"/>
+                <Face Color = "cl[17]" VertexIndexes = "75;87;89;77"/>
+                <Face Color = "cl[17]" VertexIndexes = "39;50;62;87"/>
+                <Face Color = "cl[17]" VertexIndexes = "54;41;89;66"/>
+                <Face Color = "cl[17]" VertexIndexes = "87;62;66;89" InvisibleEdges = "2"/>
+                <Face Color = "cl[17]" VertexIndexes = "25;30;66;62;26" InvisibleEdges = "14"/>VertexIndexes = "25;30;54;66;62;50;26" InvisibleEdges = "8"
+                <Face Color = "cl[17]" VertexIndexes = "30;54;66" InvisibleEdges = "4"/>
+                <Face Color = "cl[17]" VertexIndexes = "62;50;26" InvisibleEdges = "4"/>
+
+                // pentagons
+                <Face Color = "cl[ 0]" VertexIndexes = " 0; 3; 9;69;73;13; 4"/>
+                <Face Color = "cl[ 1]" VertexIndexes = " 0; 2; 8;68;72;12; 3"/>
+                <Face Color = "cl[ 2]" VertexIndexes = " 0; 4;10;70;71;11; 2"/>
+                <Face Color = "cl[ 3]" VertexIndexes = " 1; 5;14;74;79;19; 7"/>
+                <Face Color = "cl[ 4]" VertexIndexes = " 1; 7;16;76;78;18; 6"/>
+                <Face Color = "cl[ 5]" VertexIndexes = " 1; 6;15;75;77;17; 5"/>
+
+                // rhombi
+                <Face Color = "cl[ 6]" VertexIndexes = " 2;11;35;32; 8" InvisibleEdges = "4"/>VertexIndexes = " 2;11;35;49;25;26;21;45;32; 8"
+                <Face Color = "cl[ 6]" VertexIndexes = "49;25;26;21;45" InvisibleEdges = "16"/> 
+                <Face Color = "cl[ 6]" VertexIndexes = "35;49;45;32"    InvisibleEdges = "10"/> 
+
+                <Face Color = "cl[ 7]" VertexIndexes = " 4;13;37;34;10" InvisibleEdges = "4"/>VertexIndexes = " 4;13;37;48;24;28;20;44;34;10"
+                <Face Color = "cl[ 7]" VertexIndexes = "48;24;28;20;44" InvisibleEdges = "16"/>
+                <Face Color = "cl[ 7]" VertexIndexes = "37;48;44;34"    InvisibleEdges = "10"/>
+                
+                <Face Color = "cl[ 8]" VertexIndexes = " 3;12;36;33; 9" InvisibleEdges = "4"/>VertexIndexes = " 3;12;36;47;23;27;22;46;33; 9"
+                <Face Color = "cl[ 8]" VertexIndexes = "47;23;27;22;46" InvisibleEdges = "16"/>
+                <Face Color = "cl[ 8]" VertexIndexes = "36;47;46;33"    InvisibleEdges = "10"/>
+                
+                <Face Color = "cl[ 9]" VertexIndexes = " 6;18;42;39;15" InvisibleEdges = "4"/>VertexIndexes = " 6;18;42;55;31;21;26;50;39;15"
+                <Face Color = "cl[ 9]" VertexIndexes = "55;31;21;26;50" InvisibleEdges = "16"/>
+                <Face Color = "cl[ 9]" VertexIndexes = "42;55;50;39"    InvisibleEdges = "10"/>
+
+                <Face Color = "cl[10]" VertexIndexes = " 5;17;41;38;14" InvisibleEdges = "4"/>VertexIndexes = " 5;17;41;54;30;20;28;52;38;14"
+                <Face Color = "cl[10]" VertexIndexes = "54;30;20;28;52" InvisibleEdges = "16"/>
+                <Face Color = "cl[10]" VertexIndexes = "41;54;52;38"    InvisibleEdges = "10"/>
+
+                <Face Color = "cl[11]" VertexIndexes = " 7;19;43;40;16" InvisibleEdges = "4"/>VertexIndexes = " 7;19;43;53;29;22;27;51;40;16"
+                <Face Color = "cl[11]" VertexIndexes = "53;29;22;27;51" InvisibleEdges = "16"/>
+                <Face Color = "cl[11]" VertexIndexes = "43;53;51;40"    InvisibleEdges = "10"/>
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split1">
+            <Hide  Axis = "Ax2" Layer = "0" />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "angle" />
+            <Split Axis = "Ax2" From = "1"/>
+            <Undo  Repeat = "1"/>
+            <ShowAll/>
+
+            <Hide  Axis = "Ax3" Layer = "0" />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "-angle" />
+            <Split Axis = "Ax3" From = "1"/>
+            <Undo  Repeat = "1"/>
+            <ShowAll/>
+ 
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "pi" />
+            <Split Axis = "Ax2" From = "1"/>
+            <Hide  Axis = "Ax2" Layer = "0" />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "angle" />
+            <Split Axis = "Ax2" From = "1"/>
+            <Undo  Repeat = "2"/>
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split1" Ax1 = " 6" Ax2 = "1" Ax3 = "2"/>
+        <ExecMacro MacroName = "Split1" Ax1 = " 7" Ax2 = "2" Ax3 = "0"/>
+        <ExecMacro MacroName = "Split1" Ax1 = " 8" Ax2 = "0" Ax3 = "1"/>
+
+        <ExecMacro MacroName = "Split1" Ax1 = " 9" Ax2 = "4" Ax3 = "5"/>
+        <ExecMacro MacroName = "Split1" Ax1 = "10" Ax2 = "5" Ax3 = "3"/>
+        <ExecMacro MacroName = "Split1" Ax1 = "11" Ax2 = "3" Ax3 = "4"/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

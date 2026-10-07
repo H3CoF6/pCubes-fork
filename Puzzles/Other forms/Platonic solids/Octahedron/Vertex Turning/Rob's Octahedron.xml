@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rob's Octahedron</Name>
+        <Aliases>Pyraminx Diamond</Aliases>
+        <Menu>Other forms\Octahedron\Vertex Turning\Rob's Octahedron</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4802</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00CC00';
+        Colors[1] := '0000EE';
+        Colors[2] := 'EE0000';
+        Colors[3] := 'FFFF33';
+        Colors[4] := 'CC00DD';
+        Colors[5] := 'FFFFFF';
+        Colors[6] := 'FF7700';
+        Colors[7] := '0066FF';
+
+        W := 1.5 * 0.5;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-3/16; 3/16" FixedLayers = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Ex; Ey; Ez" />
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 7 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+
+        <SplitByAxes/>
+        <HideContaining Vector = "Ex; Ey; Ez" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+</xml>

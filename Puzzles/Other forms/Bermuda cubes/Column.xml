@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bermuda Column</Name>
+        <Menu>Other forms\Bermuda Cubes\Column</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-03-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2812</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        Colors[2] := clWhite;
+        Colors[3] := clYellow;
+        Colors[4] := clBlue;
+        Colors[5] := clGreen;
+
+        W := 0.5;
+        D := W * (sqrt(2) - 1);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "2" From  = "1" />
+        <Split Axis = "2" From  = "2" />
+        <Turn  Axis = "2" Layer = "0" Angle = " Pi / 4" />
+        <Hide  Axis = "2" Layer = "2" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Undo/>
+        <ShowAll/>
+
+        <Cut Color = "clOrange" ><Plane NormVector = "-1; 1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "clWhite"  ><Plane NormVector = " 1; 1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "clRed"    ><Plane NormVector = " 1;-1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "clYellow" ><Plane NormVector = "-1;-1; 0" NormDistance = "-W" /></Cut>
+
+        <Hide  Axis = "2" Layers = "0;1" />
+        <Split Axis = "0" From  = "2" />
+        <Split Axis = "1" From  = "2" />
+        <HideContaining Vector = "0;0;W"/>
+        <SplitByAxes/>
+
+        <InvertVisibility/>
+        <Hide  Axis = "2" Layers = "0;1" />
+        <Turn  Axis = "2" Layer = "2" Angle = " Pi / 4" />
+        <Split Axis = "1" From  = "1" />
+        <HideContaining Vector = "0;0;W"/>
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

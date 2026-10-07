@@ -1,0 +1,183 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Prismatic Wheel Plus</Name>
+        <Menu>Other forms\2d\Prismatic Wheel Plus</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11109</Link>
+    </Interface>
+
+    <Script>
+        Colors[1] := 'E00000';
+        Colors[2] := 'F67B00';
+        Colors[3] := 'FFFF00';
+        Colors[4] := '99FF00';
+        Colors[5] := '44C0FF';
+        Colors[6] := '0040D0';
+        Colors[7] := '8070E0';
+        Colors[8] := 'FFA0E0';
+
+        ColorCent := 'FFFFFF';
+        ColorSid1 := '666666';
+        ColorSid2 := 'AAAAAA';
+        ColorFace := '333333';
+        ColorBack := '333333';
+
+        K := 0.6;
+        R := K * 2 / 3;
+        D2 := K * 0.75;
+        D1 := (R + D2) / sqrt(3);
+        D3 := D1 - K * 0.2;
+        D4 := D2 - K * 0.2;
+        H := D2 * 1.2;
+
+        N := 40;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "D1" NormVectors = " 1;-1; 1" />
+    <Axes TurningAngles = "0; Pi/4" PlaneDistances = "D2" NormVectors = " 0;-1; 0" />
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "cl" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "Cylinder" >
+            <Turn NormVector = " 1;-1; 1" Angle = "-2*Pi/3" />
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y; D2" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                    <Face Color = "cl" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+            <Turn NormVector = " 1;-1; 1" Angle = "2*Pi/3" />
+        </Macro>
+
+        <Macro Name = "CreateFragment" >
+            <ExecMacro MacroName = "Cylinder" cl = "Colors[j]" />
+            <Cut Axis = "0" From = "1" />
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi/4" />
+            <Cut Axis = "0" To = "1" />
+            <HideAll/>
+            <Script>inc(j);</Script>
+        </Macro>
+
+        <Macro Name = "CreateFragment2" >
+            <ExecMacro MacroName = "Cylinder" cl = "Colors[j]" />
+            <Cut Axis = "0" From = "1" />
+            <Turn Axis = "1" Layer = "1" Angle = " Pi/4" />
+            <Cut Axis = "0" To = "1" />
+            <HideAll/>
+            <Script>inc(j);</Script>
+        </Macro>
+
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi/4" />
+            <SplitByAxes/>
+        </Macro>
+
+        <Macro Name = "Cut" >
+            <Cut Axis = "0" To = "1" />
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi/4" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cylinder" cl = "ColorSid1" />
+        <ExecMacro MacroName = "Unbandage" Repeat = "8" />
+        <Cut Axis = "0" From = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/3" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cylinder" cl = "ColorSid2" />
+        <ExecMacro MacroName = "Unbandage" Repeat = "8" />
+        <Cut Axis = "0" From = "1" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "ColorFace" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/3" />
+        <Cut Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/3" />
+        <Cut Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "4*Pi/3" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreateFragment2" j = "1" Repeat = "8" />
+        <ShowAll/>
+        <ExecMacro MacroName = "Unbandage" Repeat = "8" />
+        <Turn Axis = "1" Layer = "1" Angle = "-3*Pi/4" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cylinder" cl = "ColorCent" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Cut" Repeat = "8" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "ColorBack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 1" NormDistance = " D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = " D4" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "ColorBack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1;-1" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "ColorBack"  > <Plane NormVector = " 0;-1; 0" NormDistance = " D4" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "ColorBack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-D4" /> </Cut>
+        <Cut Color = "ColorBack"  > <Plane NormVector = " 1;-1; 1" NormDistance = " D3" /> </Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <HideContaining Vector = " 0;-D2; 0" />
+        <Cut Axis = "1" To = "1" />
+        <HideAll/>
+        <ExecMacro MacroName = "CreateFragment" j = "1" Repeat = "8" />
+        <ShowAll/>
+        <ExecMacro MacroName = "Unbandage" Repeat = "8" />
+        <Turn Axis = "1" Layer = "1" Angle = "5*Pi/4" />
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;1;0" Angle = "Pi/4" />
+        <Turn NormVector = "0;0;1" Angle = "-Arccos(1/sqrt(3))/2" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

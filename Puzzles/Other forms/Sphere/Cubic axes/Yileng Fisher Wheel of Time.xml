@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Yileng Fisher Wheel of Time</Name>
+        <Menu>Other forms\Sphere\Cubic axes\Yileng Fisher Wheel of Time</Menu>
+        <Inventor>Moyu</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6370</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0077EE'; // Blue
+        Colors[3] := '00DD00'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        K := 0.6;
+        W := K * 0.933;
+
+        D1 := K * 0.13;
+        D2 := K * 0.92;
+        WC := D2 * 1.1;
+        R  := K * 0.4225;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2;-D1; D1; D2" >
+        <Axis NormVector = "1; 1; 0" />
+        <Axis NormVector = "1;-1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Cut> <Plane NormVector = " 0;  0; -1" NormDistance = "-D2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  0;  1" NormDistance = "-D2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  0" NormDistance = "-D2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  0" NormDistance = "-D2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  1;  0" NormDistance = "-D2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  0" NormDistance = "-D2" /> </Cut>
+
+        <Cylinder Radius = "R" Color = "Colors[5]" >
+            <Base X = "0" Y = "0" Z = "D2" />
+            <Top  X = "0" Y = "0" Z = "WC" Color = "Colors[5]" />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "Colors[4]" >
+            <Base X = "0" Y = "0" Z = "-D2" />
+            <Top  X = "0" Y = "0" Z = "-WC" Color = "Colors[4]" />
+        </Cylinder>
+
+        <HideAll/>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split> <Plane NormVector = " 1;-1; 0" NormDistance = "-D2" /> </Split>
+        <Split> <Plane NormVector = "-1; 1; 0" NormDistance = "-D2" /> </Split>
+        <Split> <Plane NormVector = " 1; 1; 0" NormDistance = "-D2" /> </Split>
+        <Split> <Plane NormVector = "-1;-1; 0" NormDistance = "-D2" /> </Split>
+        <RemoveContaining Vector = "0;0;0" />
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-D1*3.1" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-D1*3.1" /> </Cut>
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>RotoPrism 3 Flat</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Mixed\RotoPrism 3 Flat</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-10-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2979</Link>
+    </Interface>
+
+    <Script>
+        clBlue    := '0000C8';
+        clGreen   := '009600';
+        clRed     := 'C80000';
+        clOrange  := 'FF800A';
+        clViolett := '7700CD';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        H := 0.7;
+        sAngle := PI * 2 / 3;
+
+        for i := 0 to 2 do begin
+            x[i] := H * sin(sAngle * i);
+            y[i] := H * cos(sAngle * i);
+        end;
+       
+        P := sqrt((x[0]-x[1])^2+(y[0]-y[1])^2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -P / 3" />
+                <Add Vector = "x[1]; y[1]; -P / 3" />
+                <Add Vector = "x[2]; y[2]; -P / 3" />
+                <Add Vector = "x[0]; y[0]; P / 3" />
+                <Add Vector = "x[1]; y[1]; P / 3" />
+                <Add Vector = "x[2]; y[2]; P / 3" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed"     VertexIndexes = "3;4;1;0" />
+                <Face Color = "clBlue"  VertexIndexes = "4;5;2;1" />
+                <Face Color = "clGreen"   VertexIndexes = "5;3;0;2" />
+                <Face Color = "clYellow"  VertexIndexes = "0;1;2" />
+                <Face Color = "clWhite"   VertexIndexes = "5;4;3" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <Turn Angle=" Pi    " Axis="0" Layer="0" />
+        <Turn Angle=" Pi / 2" Axis="1" Layer="0" />
+        <SplitByAxes/>
+        <Turn Angle="-Pi / 2" Axis="1" Layer="0" />
+        <Turn Angle="-Pi    " Axis="0" Layer="0" />
+        <Turn Angle=" Pi    " Axis="1" Layer="0" />
+        <Turn Angle=" Pi / 2" Axis="2" Layer="0" />
+        <SplitByAxes/>
+        <Turn Angle="-Pi / 2" Axis="2" Layer="0" />
+        <Turn Angle="-Pi    " Axis="1" Layer="0" />
+        <Turn Angle=" Pi    " Axis="2" Layer="0" />
+        <Turn Angle=" Pi / 2" Axis="0" Layer="0" />
+        <SplitByAxes/>
+        <Turn Angle="-Pi / 2" Axis="0" Layer="0" />
+        <Turn Angle="-Pi    " Axis="2" Layer="0" />
+    </Figure>
+</xml>

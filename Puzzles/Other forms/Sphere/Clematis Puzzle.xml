@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Clematis Puzzle</Name>
+        <Menu>Other forms\Sphere\Clematis Puzzle</Menu>
+        <Inventor>Grant Anderson</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-20</Added>
+        <Link>https://www.etsy.com/de/listing/839334694/clematis-puzzle</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // clRed
+        Colors[1] := 'FF6600'; // clOrange
+        Colors[2] := '0000DD'; // clBlue
+        Colors[3] := '00AA00'; // clGreen
+        Colors[4] := 'FFEE00'; // clYellow
+        Colors[5] := 'FFFFFF'; // clWhite
+
+        K := 0.6;
+        D1 := K * 0.845;
+        D2 := K * 0.895;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = "-1; 0;-1" />
+        <Axis NormVector = " 0;-1;-1" />
+        <Axis NormVector = " 1; 0;-1" />
+        <Axis NormVector = " 0; 1;-1" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Turn">
+            <Turn Axis = "ax" Layer = "0" Angle = "2*Pi/6" />
+            <Turn Axis = "ax" Layer = "2" Angle = "2*Pi/6" />
+            <Script>Inc(ax); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Turn" ax = "0" Repeat = "4" />
+
+        <SplitByAxes/>
+        <Undo Repeat = "8" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

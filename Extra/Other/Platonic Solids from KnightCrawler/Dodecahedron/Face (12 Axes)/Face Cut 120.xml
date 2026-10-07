@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Face Cut 120</Name>
+        <Menu>KnightCrawler\Dodecahedron\Face (12 Axes)\Face Cut 120</Menu>
+        <Programmer></Programmer>
+        <Added></Added>
+    </Interface>
+
+    <Script>    Degree:=120;
+        
+        mAngle := ArcTan(0.5);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+        sAngle := PI * 2 / 5;
+        for i := 1 to 5 do begin
+            x[i] := sin(sAngle * (i - 1)) * Ac;
+            y[i] := cos(sAngle * (i - 1)) * Ac;
+        end;
+
+        R := 0.7;
+        dAngle := (Arctan(2) + Arcsin(2/3)) / 2;
+        dAngle2 := (Arctan(2) - Arcsin(2/3)) / 2;
+        Rsin := R * sin(dAngle);
+        R2sin := R * sin(dAngle2);
+
+        D := (Rsin + R2sin) / 2;
+        Cut := (180-Degree)/180*sqrt(2.5 + 1.1 * sqrt(5))/4;
+    </Script>
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-Cut;Cut" >
+
+        <Axis NormVector = "   0;    0;  1" /><Axis NormVector = "x[1]; y[1]; As" /><Axis NormVector = "x[2]; y[2]; As" /><Axis NormVector = "x[3]; y[3]; As" /><Axis NormVector = "x[4]; y[4]; As" /><Axis NormVector = "x[5]; y[5]; As" />
+    </Axes>
+    <Axes>
+        <Axis NormVector = "   0;    0;  -1" /><Axis NormVector = "-x[1]; -y[1]; -As" /><Axis NormVector = "-x[2]; -y[2]; -As" /><Axis NormVector = "-x[3]; -y[3]; -As" /><Axis NormVector = "-x[4]; -y[4]; -As" /><Axis NormVector = "-x[5]; -y[5]; -As" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

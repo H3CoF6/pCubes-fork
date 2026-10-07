@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Bicone Fisher Skewb</Name>
+        <Menu>Other forms\Bicone\Bicone Fisher Skewb</Menu>
+        <Menu>Other forms\Skewb variants\Bicone\Bicone Fisher Skewb</Menu>
+        <Inventor>JoseRo</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-05</Added>
+        <Link>https://www.instagram.com/p/CJdSfw2K2L-/</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0077EE'; // Blue
+        Colors[1] := 'FFFFFF'; // White
+        Colors[2] := 'FF1100'; // Red
+        Colors[3] := 'FF5500'; // Orange
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := '00EE00'; // LightGreen
+        Colors[6] := 'DDDDDD'; // LightGray
+        Colors[7] := '00CCFF'; // LightBlue
+        Colors[8] := 'FF00FF'; // Fuchsia
+
+        H := 0.7;
+        R := H * 0.95;
+        RCut := R / 2;
+
+        for i := 0 to 59 do begin
+            x[i] := R * cos(2 * Pi / 60 * i);
+            y[i] := R * sin(2 * Pi / 60 * i);
+        end;
+
+        for i := 0 to 2 do begin
+            ax[i] := sin(2 * Pi / 3 * (i + 0.25));
+            ay[i] := cos(2 * Pi / 3 * (i + 0.25));
+        end;
+        az := -1/sqrt(8);
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "0; 0; 1" />
+        <Axis NormVector = "ax[0]; ay[0]; az" />
+        <Axis NormVector = "ax[1]; ay[1]; az" />
+        <Axis NormVector = "ax[2]; ay[2]; az" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Colors[c1]" VertexIndexes = "0; i + 1; (i + 1) mod 60 + 1" InvisibleEdges = "5" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "Cone" >
+            <Part>
+                <Vertices Vectors = "0; 0; H" />
+                <Vertices Vectors = "x; y; 0" />
+
+                <Faces>
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "60" />
+                    <Face VertexIndexes = "FromTo(60, 1)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddSegment" >
+            <Hide><Plane NormVector = "0; 0; 1" /></Hide>
+            <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-RCut" /></Cut>
+            <HideAll/>
+            <ExecMacro MacroName = "Cone" c1 = "c" c2 = "c" c3 = "c" />
+            <Cut><Plane NormVector = " 1; 0; 0" NormDistance = " RCut" /></Cut>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "2*Pi / 3" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cone" c1 = "0" c2 = "1" c3 = "2" />
+        <ExecMacro MacroName = "AddSegment" c = "6" />
+        <ExecMacro MacroName = "AddSegment" c = "7" />
+        <ExecMacro MacroName = "AddSegment" c = "8" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <ExecMacro MacroName = "Cone" c1 = "3" c2 = "4" c3 = "5" />
+        <ExecMacro MacroName = "AddSegment" c = "6" />
+        <ExecMacro MacroName = "AddSegment" c = "8" />
+        <ExecMacro MacroName = "AddSegment" c = "7" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+
+        <SplitByAxes/>
+        <Undo/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

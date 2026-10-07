@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Truncated Rhombic Dodecahedron 4x4x4</Name>
+        <Menu>Other forms\Chamfered\Truncated Rhombic Dodecahedron 4x4x4</Menu>
+        <Inventor>Runchuan Lan</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3686</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000';
+        Colors[1] := '0000D8';
+        Colors[2] := '00A600';
+        Colors[3] := 'FFFFFF';
+        Colors[4] := 'FF0080';
+        Colors[5] := 'BF8040';
+        Colors[6] := '800040';
+        Colors[7] := '808000';
+
+        R := 0.7;
+        include 'Figures\Scripts\Rhombic_Dodecahedron_Coordinates.inc';
+
+        D := R / 3;
+        DCut := (R + D) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <Face Color = "Colors[1]" VertexIndexes = " 1; 0; 5" />
+                <Face Color = "Colors[1]" VertexIndexes = " 1; 5; 8" />
+                <Face Color = "Colors[1]" VertexIndexes = " 1; 8; 0" />
+                <Face Color = "Colors[0]" VertexIndexes = " 2; 0; 6" />
+                <Face Color = "Colors[0]" VertexIndexes = " 2; 6; 5" />
+                <Face Color = "Colors[0]" VertexIndexes = " 2; 5; 0" />
+                <Face Color = "Colors[3]" VertexIndexes = " 3; 0; 7" />
+                <Face Color = "Colors[3]" VertexIndexes = " 3; 7; 6" />
+                <Face Color = "Colors[3]" VertexIndexes = " 3; 6; 0" />
+                <Face Color = "Colors[2]" VertexIndexes = " 4; 0; 8" />
+                <Face Color = "Colors[2]" VertexIndexes = " 4; 8; 7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 4; 7; 0" />
+                <Face Color = "Colors[4]" VertexIndexes = " 9; 5;13" />
+                <Face Color = "Colors[4]" VertexIndexes = " 9; 8; 5" />
+                <Face Color = "Colors[4]" VertexIndexes = " 9;13; 8" />
+                <Face Color = "Colors[5]" VertexIndexes = "10;13; 5" />
+                <Face Color = "Colors[5]" VertexIndexes = "10; 5; 6" />
+                <Face Color = "Colors[5]" VertexIndexes = "10; 6;13" />
+                <Face Color = "Colors[6]" VertexIndexes = "11;13; 6" />
+                <Face Color = "Colors[6]" VertexIndexes = "11; 6; 7" />
+                <Face Color = "Colors[6]" VertexIndexes = "11; 7;13" />
+                <Face Color = "Colors[7]" VertexIndexes = "12;13; 7" />
+                <Face Color = "Colors[7]" VertexIndexes = "12; 7; 8" />
+                <Face Color = "Colors[7]" VertexIndexes = "12; 8;13" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Colors[c]" ><Plane NormVector = "-Vx[i];-Vy[i];-Vz[i]" NormDistance = "-DCut" /></Cut>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = " 1" c = "1" />
+        <ExecMacro MacroName = "Cut" i = " 2" c = "0" />
+        <ExecMacro MacroName = "Cut" i = " 3" c = "3" />
+        <ExecMacro MacroName = "Cut" i = " 4" c = "2" />
+        <ExecMacro MacroName = "Cut" i = " 9" c = "4" />
+        <ExecMacro MacroName = "Cut" i = "10" c = "5" />
+        <ExecMacro MacroName = "Cut" i = "11" c = "6" />
+        <ExecMacro MacroName = "Cut" i = "12" c = "7" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

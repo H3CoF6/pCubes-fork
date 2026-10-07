@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Twistball (Ring Ball)</Name>
+        <Menu>Other forms\Sphere\Dino\Twistball (Ring Ball)</Menu>
+        <Inventor>Josip Matijek</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7333</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7334</Link>
+    </Interface>
+
+    <Script>
+        clBody := 'FFFFFF'; // White
+        Colors[0] := 'FFFF00'; // Yellow
+        Colors[1] := '9900CC'; // Violett
+        Colors[2] := '00BB00'; // Green
+        Colors[3] := 'FF7700'; // Orange
+        Colors[4] := '0055EE'; // Blue
+        Colors[5] := 'EE0000'; // Red
+
+        K := 0.6;
+        D := K * 0.585;
+        sAngle := 2*Pi / 3;
+
+        R1 := K * 0.817;
+        R2 := K * 0.967;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "1; 1; 1" />
+        <Axis NormVector = "1; 1;-1" />
+        <Axis NormVector = "1;-1; 1" />
+        <Axis NormVector = "1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSphere">
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        </Macro>
+
+        <Macro Name = "AddColor">
+            <Split> <Plane NormVector = "1;0;0" NormDistance = "R2" /> </Split>
+            <Split> <Plane NormVector = "1;0;0" NormDistance = "R1" /> </Split>
+            <RemoveContaining Vector = "(R1 + R2) / 2; 0; 0" />
+            <HideAll/>
+
+            <ExecMacro MacroName = "AddSphere" />
+            <Cut> <Plane NormVector = "-1;0;0" NormDistance = "-R2" /> </Cut>
+            <Cut> <Plane NormVector = " 1;0;0" NormDistance = " R1" /> </Cut>
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBody" />
+
+        <ExecMacro MacroName = "AddColor" Color = "Colors[0]" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2"/>
+        <ExecMacro MacroName = "AddColor" Color = "Colors[1]" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2"/>
+        <ExecMacro MacroName = "AddColor" Color = "Colors[2]" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2"/>
+        <ExecMacro MacroName = "AddColor" Color = "Colors[3]" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2"/>
+        <ExecMacro MacroName = "AddColor" Color = "Colors[4]" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2"/>
+        <ExecMacro MacroName = "AddColor" Color = "Colors[5]" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2"/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

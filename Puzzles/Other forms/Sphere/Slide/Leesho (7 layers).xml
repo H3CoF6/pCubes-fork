@@ -1,0 +1,135 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Leesho (7 layers)</Name>
+        <Menu>Other forms\Sphere\Slide\Leesho (7 layers)</Menu>
+        <Inventor>Gábor Csete</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7078</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0055FF'; // Blue
+        Colors[1] := 'FF7700'; // Orange
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := '009900'; // Green
+        Colors[4] := 'EE0000'; // Red
+        Colors[5] := 'AA00AA'; // clViolett
+        Colors[6] := 'DDBB20'; // clGolden
+        Colors[7] := '222222'; // clBlack
+        clBody    := 'FFFFFF'; // White
+
+        K := 0.6;
+
+        Ax := 2*Pi /  8;
+        Ay := 2*Pi / 22;
+
+        D := K * sin(Ay/2);
+        D2 := K * cos(2 * Ay);
+        D3 := K * cos(3 * Ay);
+        D4 := K * cos(4 * Ay);
+        D5 := K * cos(5 * Ay);
+        R := K * cos(Ay/2);
+
+        R1 := R * 0.95;
+        RC := D * 0.99;
+        for i := 0 to 15 do begin
+            Rx[i] := Rc * sin(i * 2 * Pi / 16);
+            Ry[i] :=-Rc * cos(i * 2 * Pi / 16);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Ay; 0" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Ax; Ax; Ax; Ax; Ax; Ax; Ax; 0" PlaneDistances = "-D5; -D4;-D3;-D2; D2; D3; D4; D5" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script> Color := clBody; </Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <SplitByAxes/>
+
+        // remove middle layers
+        <Hide Axis = "0" From = "2" />
+        <Cut  Axis = "0" To   = "1" />
+        <ShowAll/>
+        <Hide Axis = "1" From = "8" />
+        <Cut  Axis = "1" To   = "1" />
+        <HideAll/>
+
+        // make middle layer
+        <Script> Color := -1; </Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut Axis = "1" From = "1" To = "8" />
+        <Macro Name = "Cut" >
+            <Split Axis = "0" From = "2" />
+            <Hide  Axis = "0" From = "2" />
+            <Cut   Axis = "0" To   = "1" />
+            <ShowAll/>
+            <Turn Axis = "1" From = "1" To = "2" Angle = "Ax" />
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "4" />
+        <SplitByAxes/>
+
+        <Macro Name = "AddMarble" >
+            <Turn NormVector = "0;0;1" Angle = " x * Ax" />
+            <Turn NormVector = "1;0;0" Angle = " y * Ay" />
+            <Part>
+                <Vertices Vectors = "Rx; Ry; R" >
+                    <Add Vector = "0; 0; R1" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[cl]" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15" />
+                    <Face VertexIndexes = " 1; 0;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 2; 1;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 3; 2;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 4; 3;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 5; 4;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 6; 5;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 7; 6;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 8; 7;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 9; 8;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "10; 9;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "11;10;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "12;11;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "13;12;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "14;13;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "15;14;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 0;15;16" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "1;0;0" Angle = "-y * Ay" />
+            <Turn NormVector = "0;0;1" Angle = "-x * Ax" />
+        </Macro>
+
+        <Macro Name = "AddMarbleX" >
+            <ExecMacro MacroName = "AddMarble" />
+            <Script> Inc(x); </Script>
+        </Macro>
+
+        <Macro Name = "AddMarbleY" >
+            <ExecMacro MacroName = "AddMarble" />
+            <Script> Inc(y); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddMarbleY" cl = "0" x = "0" y = "-1.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarbleY" cl = "0" x = "0" y = " 9.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarbleX" cl = "1" x = "0" y = " 2.5" Repeat = "8" />
+        <ExecMacro MacroName = "AddMarbleX" cl = "2" x = "0" y = " 3.5" Repeat = "8" />
+        <ExecMacro MacroName = "AddMarbleX" cl = "3" x = "0" y = " 4.5" Repeat = "8" />
+        <ExecMacro MacroName = "AddMarbleX" cl = "4" x = "0" y = " 5.5" Repeat = "8" />
+        <ExecMacro MacroName = "AddMarbleX" cl = "5" x = "0" y = " 6.5" Repeat = "8" />
+        <ExecMacro MacroName = "AddMarbleX" cl = "6" x = "0" y = " 7.5" Repeat = "8" />
+        <ExecMacro MacroName = "AddMarbleX" cl = "7" x = "0" y = " 8.5" Repeat = "8" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

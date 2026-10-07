@@ -1,0 +1,139 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Double Circle Real 6x6x6</Name>
+        <Menu>Cubic\Crazy\Double Circle Real 6x6x6</Menu>
+        <Inventor>Carl N. Hoff</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2019-11-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8054</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        R1 := W * 2 / 3 * sqrt(2);
+        R2 := W * 0.85;
+        HS := W * 0.06; // height of extra elements
+        WS := W * 0.2; // width of extra elements
+
+        Delta := W * 0.002;
+        W1 := W + Delta;
+        W2 := W1 + Delta;
+        W3 := W2 + Delta;
+        W4 := W3 + HS;
+
+        D1 := W / 3;
+        D2 := W * 2 / 3;
+        D3 := (W1 + W2) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D3; -W; -D2; -D1; 0; D1; D2; W; D3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+
+        <!-- Make cube with gray centers -->
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "7" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "7" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "7" />
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "HideCenters">
+            <HideContaining Vector = "Cx[i];Cy[i];Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenters" Repeat = "6" i = "0" />
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[i]" > <Plane NormVector = "-Cx[i]; -Cy[i]; -Cz[i]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "6" i = "0" />
+
+        <ShowAll/>
+        <ExecMacro MacroName = "HideCenters" Repeat = "6" i = "0" />
+        <InvertVisibility/>
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-Cx[i]; -Cy[i]; -Cz[i]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "6" i = "0" />
+        <ShowAll/>
+
+        <!-- Make extra elements -->
+
+        <Script> WE := WS + D1; DCut1 := W3; DCut2 := W4 </Script>
+        <LoadFrom File = "Puzzles\Cubic\Classic Rubiks\_Macro_For_Super.xml" />
+        <Script> include 'Figures\Scripts\Cube_Coordinates.inc'; </Script>
+
+        <!-- First (big) circles -->
+
+        <Circle Radius = "R1" Color = "Colors[0]" Center = "-W1;  0;  0" />
+        <Circle Radius = "R1" Color = "Colors[1]" Center = " W1;  0;  0" />
+        <Circle Radius = "R1" Color = "Colors[2]" Center = "  0;-W1;  0" />
+        <Circle Radius = "R1" Color = "Colors[3]" Center = "  0; W1;  0" />
+        <Circle Radius = "R1" Color = "Colors[4]" Center = "  0;  0;-W1" />
+        <Circle Radius = "R1" Color = "Colors[5]" Center = "  0;  0; W1" />
+
+        <!-- Split with internal colors -->
+
+        <Split Color1 = "Colors[0]" Axis = "0" From = "6" />
+        <Split Color2 = "Colors[1]" Axis = "0" From = "4" />
+        <Split Color1 = "Colors[2]" Axis = "1" From = "6" />
+        <Split Color2 = "Colors[3]" Axis = "1" From = "4" />
+        <Split Color1 = "Colors[4]" Axis = "2" From = "6" />
+        <Split Color2 = "Colors[5]" Axis = "2" From = "4" />
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <!-- Remove centers -->
+
+        <SplitByAxes/>
+        <Macro Name = "RemoveCenters">
+            <Hide Axis = "ax1" From = "6" />
+            <Hide Axis = "ax2" From = "7" />
+            <Hide Axis = "ax2" To   = "2" />
+            <Cut  Axis = "ax1" To   = "4" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" ax1 = "0" ax2 = "1" />
+        <ExecMacro MacroName = "RemoveCenters" ax1 = "0" ax2 = "2" />
+        <ExecMacro MacroName = "RemoveCenters" ax1 = "1" ax2 = "0" />
+        <ExecMacro MacroName = "RemoveCenters" ax1 = "1" ax2 = "2" />
+        <ExecMacro MacroName = "RemoveCenters" ax1 = "2" ax2 = "0" />
+        <ExecMacro MacroName = "RemoveCenters" ax1 = "2" ax2 = "1" />
+
+        <!-- Add second (small) circles -->
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "R2" Color = "Colors[i]" >
+                <Base X = "Cx[i] * W2 / W" Y = "Cy[i] * W2 / W" Z = "Cz[i] * W2 / W" />
+                <Top  X = "Cx[i] * W3 / W" Y = "Cy[i] * W3 / W" Z = "Cz[i] * W3 / W" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+        <SplitByAxes/>
+
+        <!--  -->
+
+        <Connect Layers = "1;3" />
+        <Connect Layers = "6;8" />
+        <Connect Layers = "0;4" />
+        <Connect Layers = "5;9" />
+    </Figure>
+</xml>

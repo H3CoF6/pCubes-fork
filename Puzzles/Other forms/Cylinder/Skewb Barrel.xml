@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Barrel</Name>
+        <Menu>Other forms\Cylinder\Skewb Barrel</Menu>
+        <Menu>Other forms\Skewb variants\Barrel\Skewb Barrel</Menu>
+        <Inventor>Alberto Costa</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2018-11-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6208</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '009600'; // Green
+        Colors[1] := 'FF800A'; // Orange
+        Colors[2] := '0000C8'; // Blue
+        Colors[3] := 'C80000'; // Red
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.5;
+        H := R;
+        S2 := sqrt(2);
+
+        for i := 0 to 39 do begin
+            x[i] := R * cos(2 * Pi / 40 * i);
+            y[i] := R * sin(2 * Pi / 40 * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " S2;  0; 1" />
+        <Axis NormVector = "  0; S2; 1" />
+        <Axis NormVector = "-S2;  0; 1" />
+        <Axis NormVector = "  0;-S2; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Colors[(i+35) mod 40 div 10]" VertexIndexes = "i + 40; (i + 1) mod 40 + 40; (i + 1) mod 40; i" InvisibleEdges = "10" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "clWhite" VertexIndexes = "FromTo(0, 39)" />
+                <Face Color = "clYellow" VertexIndexes = "FromTo(79, 40)" />
+
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "40" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

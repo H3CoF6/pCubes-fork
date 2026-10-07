@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Stellated Pyraminx I</Name>
+        <Menu>Other forms\Star\Stellated Pyraminx I</Menu>
+        <Inventor>Uwe Mèffert</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=545</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        N := 3;
+        D := W * 4 / sqrt(3) / N;
+        D0 :=-W / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2*D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <RemoveContaining Vector = "Vx;Vy;Vz" />
+        <RemoveContaining Vector = "Ex;Ey;Ez" />
+        <HideAll/>	
+
+        <Script>
+            For i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Script>
+            W := W / 3;
+        </Script>
+        <Macro Name = "AddStar" >
+            <Transfer Vector = "-W/3 * DX;-W/3 * DY;-W/3 * DZ" />
+            <Script>
+                Colors[0] := c0;
+                Colors[2] := c1;
+                Colors[3] := c2;
+            </Script>
+            <Turn NormVector = " 1; 1; 0" Angle = "Pi" />
+            <Turn NormVector = " 1;-1;-1" Angle = "Pi" />
+            <LoadFrom File = "Figures\Tetrahedron.xml" />
+            <Turn NormVector = " 1;-1;-1" Angle = "Pi" />
+            <Turn NormVector = " 1; 1; 0" Angle = "-Pi" />
+            <Transfer Vector = " W/3 * DX; W/3 * DY; W/3 * DZ" />
+        </Macro>
+        <Macro Name = "StarSide" >
+            <ExecMacro MacroName = "AddStar" DX = " 8" DY = "-8" DZ = " 4" />
+            <ExecMacro MacroName = "AddStar" DX = " 2" DY = "-8" DZ = "-2" />
+            <ExecMacro MacroName = "AddStar" DX = "-4" DY = "-8" DZ = "-8" />
+            <ExecMacro MacroName = "AddStar" DX = " 8" DY = "-2" DZ = "-2" />
+            <ExecMacro MacroName = "AddStar" DX = " 2" DY = "-2" DZ = "-8" />
+            <ExecMacro MacroName = "AddStar" DX = " 8" DY = " 4" DZ = "-8" />
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+        </Macro>
+        <ExecMacro MacroName = "StarSide" c0 = "clBlue  " c1 = "clYellow" c2 = "clRed   " />
+        <ExecMacro MacroName = "StarSide" c0 = "clYellow" c1 = "clBlue  " c2 = "clGreen " />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "StarSide" c0 = "clGreen " c1 = "clRed   " c2 = "clYellow" />
+        <ExecMacro MacroName = "StarSide" c0 = "clRed   " c1 = "clGreen " c2 = "clBlue  " />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

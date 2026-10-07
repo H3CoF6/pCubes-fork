@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octa Domino (2 layers)</Name>
+        <Menu>Other forms\Prism\Octagonal Prism\Octa Domino (2 layers)</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2628</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clPink   := 'FF69B4';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+        clCyan   := '00FFFF';
+        clLime   := '00FF00';
+
+        R := 0.55;
+
+        H := R * sin(Pi / 8);
+        sAngle := PI * 2 / 8;
+        for i := 0 to 7 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+            ax[i] := sin(sAngle * i + sAngle/2);
+            ay[i] := cos(sAngle * i + sAngle/2);
+        end;
+
+        D := R * (sin(Pi / 8) + cos(Pi / 8)) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "ax[0]; ay[0]; 0" />
+        <Axis NormVector = "ax[1]; ay[1]; 0" />
+        <Axis NormVector = "ax[2]; ay[2]; 0" />
+        <Axis NormVector = "ax[3]; ay[3]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/8" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[3]; y[3]; -H" />
+                <Add Vector = "x[4]; y[4]; -H" />
+                <Add Vector = "x[5]; y[5]; -H" />
+                <Add Vector = "x[6]; y[6]; -H" />
+                <Add Vector = "x[7]; y[7]; -H" />
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+                <Add Vector = "x[3]; y[3];  H" />
+                <Add Vector = "x[4]; y[4];  H" />
+                <Add Vector = "x[5]; y[5];  H" />
+                <Add Vector = "x[6]; y[6];  H" />
+                <Add Vector = "x[7]; y[7];  H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 8; 9; 1; 0" />
+                <Face Color = "clBlue  " VertexIndexes = " 9;10; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = "10;11; 3; 2" />
+                <Face Color = "clOrange" VertexIndexes = "11;12; 4; 3" />
+                <Face Color = "clPurple" VertexIndexes = "12;13; 5; 4" />
+                <Face Color = "clCyan  " VertexIndexes = "13;14; 6; 5" />
+                <Face Color = "clPink  " VertexIndexes = "14;15; 7; 6" />
+                <Face Color = "clLime  " VertexIndexes = "15; 8; 0; 7" />
+
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4;5;6;7" />
+                <Face Color = "clWhite " VertexIndexes = "15;14;13;12;11;10;9;8" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

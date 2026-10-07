@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bent 4x4x5</Name>
+        <Menu>Other forms\Unclassified\Bent\Bent 4x4x5</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-12-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10702</Link>
+    </Interface>
+
+    <Script>
+        clRed     := 'C80000';
+        clOrange  := 'FF800A';
+        clBlue1   := '0100C8';
+        clBlue2   := '0000C8';
+        clBlue3   := '0001C8';
+        clGreen1  := '019600';
+        clGreen2  := '009600';
+        clGreen3  := '009601';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        H := 0.4;
+        D := H;
+        R0 := D * 0.65;
+        R1 := R0 + D;
+        D1 := H / 2;
+        D2 := R0;
+        D3 := R0 + D / 2;
+        sAngle := Pi * 7 / 9;
+
+        ca := cos(Pi/9);
+        sa := sin(Pi/9);
+
+        procedure AddVertex(ax, ay);
+        begin
+            x[i] := ax * ca + ay * sa;
+            y[i] :=-ax * sa + ay * ca;
+            Inc(i);
+        end;
+        i := 0;
+        AddVertex( R0,-D);
+        AddVertex( R1,-D);
+        AddVertex( R1, D);
+        AddVertex( R0, D);
+        for i := 4 to 7 do begin
+            x[i] :=-x[7 - i];
+            y[i] := y[7 - i];
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2" PlaneDistances = "D2; D3" >
+        <Axis NormVector = " ca;-sa; 0" />
+        <Axis NormVector = "-ca;-sa; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-sAngle; sAngle" PlaneDistances = "-D1; 0; D1" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x; y; H" />
+            <Vertices Vectors = " x; y;-H" />
+
+            <Faces>
+                <Face Color = "clWhite  " VertexIndexes = " 0; 1; 2; 3; 4; 5; 6; 7" />
+                <Face Color = "clYellow " VertexIndexes = "15;14;13;12;11;10; 9; 8" />
+                <Face Color = "clGreen1 " VertexIndexes = " 1; 0; 8; 9" />
+                <Face Color = "clRed    " VertexIndexes = " 2; 1; 9;10" />
+                <Face Color = "clBlue1  " VertexIndexes = " 3; 2;10;11" />
+                <Face Color = "clBlue2  " VertexIndexes = " 4; 3;11;12" />
+                <Face Color = "clBlue3  " VertexIndexes = " 5; 4;12;13" />
+                <Face Color = "clOrange " VertexIndexes = " 6; 5;13;14" />
+                <Face Color = "clGreen2 " VertexIndexes = " 7; 6;14;15" />
+                <Face Color = "clGreen3 " VertexIndexes = " 0; 7;15; 8" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <Turn Axis = "0" Layers = "1;2" Angle = " Pi/2" />
+        <Turn Axis = "1" Layers = "1;2" Angle = " Pi/2" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+    </Figure>
+</xml>

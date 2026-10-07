@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 3x3x2 True</Name>
+        <Menu>Cubic\Crazy\Crazy 3x3x2\Crazy 3x3x2 True</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-09-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6915</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W * 2 / 3;
+        D := W / 3;
+
+        R1 := W * 0.75;
+        R2 := W * 0.5;
+
+        Delta := 0.002;
+        WC := W + Delta;
+
+        ZC := WZ * 1.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-W; -D; D; W" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-WZ; 0; WZ" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <!-- cutting to assign "0" to block cube -->
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " 0" /></Split>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = " D" /></Split>
+
+        <Circle Radius = "R2" Color = "clRed   " Center = "-WC; 0; 0" />
+        <Circle Radius = "R2" Color = "clOrange" Center = " WC; 0; 0" />
+        <Circle Radius = "R2" Color = "clGreen " Center = " 0; WC; 0" />
+        <Circle Radius = "R2" Color = "clBlue  " Center = " 0;-WC; 0" />
+
+        <Circle1 Radius = "R1" Color = "clWhite " Center = "0; 0; ZC" />
+        <Circle1 Radius = "R1" Color = "clYellow" Center = "0; 0;-ZC" />
+
+        <Cylinder Radius = "R1" TopColor = "clYellow" Base = "0; 0;-WZ" Top = "0; 0;-ZC" />
+        <Cylinder Radius = "R1" TopColor = "clWhite"  Base = "0; 0; WZ" Top = "0; 0; ZC" />
+
+        <Connect Axis = "0" Layers  = "0;2;4" />
+        <Connect Axis = "1" Layers  = "0;2;4" />
+
+        <SplitByAxes/>
+
+        <Connect Axis = "2" Layers = "0;3" />
+    </Figure>
+</xml>

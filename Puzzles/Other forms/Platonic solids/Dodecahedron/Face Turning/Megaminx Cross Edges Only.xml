@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx Cross Edges Only</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Megaminx Cross Edges Only</Menu>
+        <Menu>Other forms\Cross\Megaminx Cross Edges Only</Menu>
+        <Inventor>Aleh Hladzilin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9425</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        W := RSin;
+        sAngle := 2*Pi / 5;
+        D := (Rsin + R2sin) / 2 * 1.1;
+        RC := R * 0.47;
+        Sc := 1.05;
+        DCut := W * 0.93;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; sAngle" PlaneDistances = " D; W" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <Macro Name = "Split" >
+            <Split Color2 = "Colors[i]" ><Plane NormVector = " Cx[j]; Cy[j]; Cz[j]" NormDistance = "D" /> </Split>
+            <Split Color2 = "Colors[i]" ><Plane NormVector = " Cx[j]; Cy[j]; Cz[j]" NormDistance = "DCut" /> </Split>
+            <Script>Inc(j);</Script>
+        </Macro>
+
+        <Macro Name = "AddCircle" >
+            <HideAll/>
+            <Cylinder Radius = "RC" Color = "Colors[i]" Base = " Cx[i]; Cy[i]; Cz[i]" Top = " Cx[i]*Sc; Cy[i]*Sc; Cz[i]*Sc" TopColor = "Colors[i]" />
+            <ExecMacro MacroName = "Split" j = " 0" Repeat = "12" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = " 0" Repeat = "12" />
+        <ShowAll/>
+
+        <Macro Name = "Hide" >
+            <Hide><Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "-R * 0.7" /> </Hide>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" i = " 0" Repeat = "20" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

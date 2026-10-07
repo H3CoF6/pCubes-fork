@@ -1,0 +1,101 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese 2x2x2 (elipsoid)</Name>
+        <Menu>Other forms\Multi-core\Siamese 2x2x2 (elipsoid)</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-10-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3394</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.7;
+        D := W / 2 / sqrt(2);
+
+        R := W;
+        H := W * 0.3;
+        N := 60;
+        for i := 0 to N - 1 do begin
+            A := 2 * Pi / N * i;
+            x[i] := R * sin(A);
+            y[i] :=-R / 2 * cos(A);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes>
+        <Axis TurningAngles = " 0; Pi / 2" NormVector = " 1; 0; 0" BaseVector = " D; D; 0" PlaneDistances = "0" />
+        <Axis TurningAngles = " 0; Pi / 2" NormVector = " 0; 1; 0" BaseVector = " D; D; 0" PlaneDistances = "0" />
+
+        <Axis TurningAngles = " 0; Pi / 2" NormVector = "-1; 0; 0" BaseVector = "-D;-D; 0" PlaneDistances = "0" />
+        <Axis TurningAngles = " 0; Pi / 2" NormVector = " 0;-1; 0" BaseVector = "-D;-D; 0" PlaneDistances = "0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/4" />
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "AddBody" >
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Colors[5]" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" c = "0" i = "0" Repeat = "N" />
+                    <Face Color = "Colors[4]" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "AddBody" Color = "Colors[0]" />
+        <Cut Axis = "2" From = "1" />
+        <Cut Axis = "3" From = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddBody" Color = "Colors[1]" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddBody" Color = "Colors[2]" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddBody" Color = "Colors[3]" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = " 0; 0; 0" />
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " 0" /></Split>
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

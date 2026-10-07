@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rota (4 colors)</Name>
+        <Menu>Other forms\Cylinder\Rota (4 colors)</Menu>
+        <Menu>Other forms\2x2x2 variants\Rota (4 colors)</Menu>
+        <Inventor>Eugen F. Gehrer and Manfred Vonderlinn</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=37</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFF00'; // clYellow
+        Colors[1] := '0000C8'; // clBlue
+        Colors[2] := 'FFFFFF'; // clWhite
+        Colors[3] := 'C80000'; // clRed
+
+        R := 0.5;
+        H := R;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "R" Color = "Colors[i]" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Colors[i]"/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Colors[i]" />
+            </Cylinder>
+            <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "0" /> </Cut>
+            <Turn NormVector = "0; 0; 1" Angle = "Pi/2" />
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "4" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layer = "0" Angle = "Pi" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <SaveSolvedState/>
+        <Undo Repeat = "2" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

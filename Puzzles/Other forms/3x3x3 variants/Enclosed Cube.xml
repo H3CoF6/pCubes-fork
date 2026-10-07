@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Enclosed Cube</Name>
+        <Menu>Other forms\3x3x3 variants\Enclosed Cube</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2170</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        DCut := sqrt(2) / 3;
+        clCut := '555500';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-1/6; 1/6" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Cut Color = "clCut" ><Plane NormVector = " 1;-1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clCut" ><Plane NormVector = "-1; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clCut" ><Plane NormVector = " 0; 1;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clCut" ><Plane NormVector = " 0;-1; 1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clCut" ><Plane NormVector = " 1; 0;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clCut" ><Plane NormVector = "-1; 0; 1" NormDistance = "-DCut" /></Cut>
+
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Greenhill's Dodecahedron</Name>
+        <Menu>Other forms\Dodecahedron\Other\Greenhill's Dodecahedron</Menu>
+        <Inventor>Anthony Greenhill</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=757</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi/6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "Ex[12]; Ey[12]; Ez[12]" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "Ex[23]; Ey[23]; Ez[23]" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "Ex[12]; Ey[12]; Ez[12]" Angle = "Pi/12" />
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+    </Figure>
+</xml>

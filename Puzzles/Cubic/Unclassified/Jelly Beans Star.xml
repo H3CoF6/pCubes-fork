@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jelly Beans Star</Name>
+        <Menu>Cubic\Unclassified\Jelly Beans Star</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-08-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7641</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.3;
+
+        D := W / 5;
+
+        Wx := D;
+        Wy := D;
+        Wz := D;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-3 * D; -D; D; 3 * D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "ChangeColor" >
+            <Script>
+                For i := 0 to 5 do
+                    Colors[i] := Color;
+            </Script>
+        </Macro>
+        <Macro Name = "AddCubie" >
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+        <Macro Name = "AddSide" >
+            <ExecMacro MacroName = "ChangeColor" />
+            <ExecMacro MacroName = "AddCubie" DWx = "-D * 0" DWy = "-D * 4" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = "-D * 2" DWy = "-D * 2" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = "-D * 0" DWy = "-D * 2" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = " D * 2" DWy = "-D * 2" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = "-D * 4" DWy = "-D * 0" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = "-D * 2" DWy = "-D * 0" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = " D * 0" DWy = "-D * 0" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = " D * 2" DWy = "-D * 0" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = " D * 4" DWy = "-D * 0" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = "-D * 2" DWy = " D * 2" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = "-D * 0" DWy = " D * 2" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = " D * 2" DWy = " D * 2" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = "-D * 0" DWy = " D * 4" DWz = " D * 6" />
+            <ExecMacro MacroName = "AddCubie" DWx = "-D * 0" DWy = "-D * 2" DWz = " D * 8" />
+            <ExecMacro MacroName = "AddCubie" DWx = "-D * 2" DWy = "-D * 0" DWz = " D * 8" />
+            <ExecMacro MacroName = "AddCubie" DWx = " D * 0" DWy = "-D * 0" DWz = " D * 8" />
+            <ExecMacro MacroName = "AddCubie" DWx = " D * 2" DWy = "-D * 0" DWz = " D * 8" />
+            <ExecMacro MacroName = "AddCubie" DWx = "-D * 0" DWy = " D * 2" DWz = " D * 8" />
+            <ExecMacro MacroName = "AddCubie" DWx = " D * 0" DWy = "-D * 0" DWz = " D * 10" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSide" Color = "clWhite" />
+
+        <Turn Axis = "0" From = "0" To = "4" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddSide" Color = "clGreen" />
+
+        <Turn Axis = "1" From = "0" To = "4" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddSide" Color = "clRed" />
+
+        <Turn Axis = "0" From = "0" To = "4" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddSide" Color = "clYellow" />
+
+        <Turn Axis = "1" From = "0" To = "4" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddSide" Color = "clBlue" />
+
+        <Turn Axis = "0" From = "0" To = "4" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddSide" Color = "clOrange" />
+
+        <Undo Repeat = "5" />
+
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

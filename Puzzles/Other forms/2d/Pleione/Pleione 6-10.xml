@@ -1,0 +1,186 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pleione 6-10</Name>
+        <Menu>Other forms\2d\Pleione\Pleione 6-10</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-12-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11219</Link>
+    </Interface>
+
+    <Script>
+        clBlack  := '333333';
+        clRed    := 'FF0000';
+        clOrange := 'F57600';
+        clGreen  := '00FF00';
+        clBlue   := '0077FF';
+        clViolet := 'BB55CC';
+        clPink   := 'FF44C7';
+
+        s5 := sqrt(5);
+
+        Scale := 1.1;
+        C0 := Scale * (3 * s5 + 1) / 44;
+        C1 := Scale * (s5 - 1) / 6;
+        C2 := Scale * (s5 + 4) / 22;
+        C3 := Scale * (s5 + 1) / 10;
+        C4 := Scale / 3;
+        C5 := Scale * (5 * s5 + 9) / 44;
+        C6 := Scale * (s5 + 3) / 10;
+        C7 := Scale * (s5 + 1) / 6;
+        C8 := Scale * (s5 + 4) / 11;
+        C9 := Scale / 5;
+
+        D1 := Scale * sqrt((61 + 29 * s5) / (242 * s5));
+        D2 := Scale * (9 + 5 * s5) * sqrt(3) / 66;
+        D3 := D1 * 1.055;
+        D4 := D2 * 1.00;
+        D5 := D4 * 0.99;
+
+        t  := (D4 * sqrt(3) - C3 - C6) / (3 * C4 - C3 - C6);
+        D6 := (t * C4 * (C3 + C6) + (1 - t) * (C3^2 + C6^2)) / sqrt(C3^2 + C6^2);
+    </Script>
+
+    <Axes TurningAngles = "Pi/5" PlaneDistances = "D3" FixedLayers = "0" >
+        <Axis NormVector = "  0;-C6; C3" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "D4" FixedLayers = "0" >
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFigure">
+            <Part>
+                <Vertices>
+                    <Add Vector = "  0;-C8;  0" />
+                    <Add Vector = "  0;-C1; C7" />
+                    <Add Vector = " C7;  0; C1" />
+                    <Add Vector = " C1;-C7;  0" />
+                    <Add Vector = "-C1;-C7;  0" />
+                    <Add Vector = " C3;  0; C6" />
+                    <Add Vector = " C6;-C3;  0" />
+                    <Add Vector = "  0;-C6; C3" />
+                    <Add Vector = " C0;-C2; C5" />
+                    <Add Vector = "-C0;-C2; C5" />
+                    <Add Vector = " C5;-C0; C2" />
+                    <Add Vector = " C2;-C5; C0" />
+                    <Add Vector = "-C2;-C5; C0" />
+                    <Add Vector = " C4;-C4; C4" />
+                    <Add Vector = "-C4;-C4; C4" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = " 5; 1; 8" />
+                    <Face Color = "Color" VertexIndexes = " 5; 8;13" />
+                    <Face Color = "Color" VertexIndexes = " 5;13;10" />
+                    <Face Color = "Color" VertexIndexes = " 5;10; 2" />
+                    <Face Color = "Color" VertexIndexes = " 6; 2;10" />
+                    <Face Color = "Color" VertexIndexes = " 6;11; 3" />
+                    <Face Color = "Color" VertexIndexes = " 6;10;13" />
+                    <Face Color = "Color" VertexIndexes = " 6;13;11" />
+                    <Face Color = "Color" VertexIndexes = " 7; 0; 3" />
+                    <Face Color = "Color" VertexIndexes = " 7; 3;11" />
+                    <Face Color = "Color" VertexIndexes = " 7;11;13" />
+                    <Face Color = "Color" VertexIndexes = " 7;13; 8" />
+                    <Face Color = "Color" VertexIndexes = " 7; 8; 1" />
+                    <Face Color = "Color" VertexIndexes = " 7; 1; 9" />
+                    <Face Color = "Color" VertexIndexes = " 7; 9;14" />
+                    <Face Color = "Color" VertexIndexes = " 7;14;12" />
+                    <Face Color = "Color" VertexIndexes = " 7;12; 4" />
+                    <Face Color = "Color" VertexIndexes = " 7; 4; 0" />
+
+                    <Face Color = "Color" VertexIndexes = "14; 4;12" />
+                    <Face Color = "Color" VertexIndexes = " 2; 4;14" />
+                    <Face Color = "Color" VertexIndexes = " 2; 6; 4" />
+                    <Face Color = "Color" VertexIndexes = " 2;14; 5" />
+
+                    <Face Color = "Color" VertexIndexes = " 6; 3; 0; 4" />
+                    <Face Color = "Color" VertexIndexes = "14; 9; 1; 5" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "FrameColor">
+            <ExecMacro MacroName = "AddFigure" />
+            <Cut Axis = "0" To = "1" />
+            <Cut Axis = "1" To = "1" />
+            <Turn NormVector = " 1;-1; 1" Angle = " A1" />
+            <Cut InvisibleEdges = "-1" > <Plane NormVector = "-C9; C3; C6" /> </Cut>
+            <Turn NormVector = " 1;-1; 1" Angle = "-A1 + A2" />
+            <Cut InvisibleEdges = "-1" > <Plane NormVector = " C9;-C3;-C6" /> </Cut>
+            <Turn NormVector = " 1;-1; 1" Angle = "-A2" />
+            <HideAll/>
+        </Macro>
+        <ExecMacro MacroName = "FrameColor" Color = "clOrange" A1 = " 0    " A2 = "Pi*3/6" />
+        <ExecMacro MacroName = "FrameColor" Color = "clRed   " A1 = "Pi*3/6" A2 = "Pi*5/6" />
+        <ExecMacro MacroName = "FrameColor" Color = "clPink  " A1 = "Pi*5/6" A2 = "Pi*7/6" />
+        <ExecMacro MacroName = "FrameColor" Color = "clViolet" A1 = "Pi*7/6" A2 = "Pi*9/6" />
+        <ExecMacro MacroName = "FrameColor" Color = "clBlue  " A1 = "Pi*9/6" A2 = " 0    " />
+        <ShowAll/>
+
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 1;-1; 1" NormDistance = " D5" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddFigure" Color = "clBlack" />
+        <Cut Axis = "1" To = "1" />
+        <Split Axis = "0" From  = "1" />
+        <Hide  Axis = "0" From  = "1" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = "-1; 1;-1" NormDistance = "-D5" /> </Cut>
+        <HideAll/>
+
+        <Macro Name = "Split">
+            <SplitByAxes/>
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/5" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "Pi/3" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddFigure" Color = "clBlack" />
+        <Cut Axis = "1" From = "1" />
+        <ShowAll/>
+
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; C6;-C3" NormDistance = "-D6" /> </Cut>
+
+        <ExecMacro MacroName = "Split" Repeat = "6" />
+        <Undo Repeat = "12" />
+
+        <HideContaining Vector = " C4;-C4; C4" />
+        <Cut Axis = "1" To = "1" />
+        <HideAll/>
+
+        <Macro Name = "AddColor" >
+            <ExecMacro MacroName = "AddFigure" />
+            <Cut  Axis = "0" From  = "1" />
+            <Cut  Axis = "1" From  = "1" />
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi/3" />
+            <Cut  Axis = "0" To    = "1" />
+            <HideAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddColor" Color = "clGreen " />
+        <ExecMacro MacroName = "AddColor" Color = "clBlue  " />
+        <ExecMacro MacroName = "AddColor" Color = "clViolet" />
+        <ExecMacro MacroName = "AddColor" Color = "clPink  " />
+        <ExecMacro MacroName = "AddColor" Color = "clRed   " />
+        <ExecMacro MacroName = "AddColor" Color = "clOrange" />
+        <Undo Repeat = "6" />
+
+        <ShowAll/>
+
+        <ExecMacro MacroName = "Split" Repeat = "20" />
+        <Undo Repeat = "40" />
+        <SaveSolvedState/>
+
+        <Turn NormVector = " 1; 0; 0" Angle = "Arctan((s5 - 1) / 2)" />
+        <Turn NormVector = " 0; 1; 0" Angle = "Arcsin((s5 - 1) / 4) + Pi" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Arctan(3 - s5) / 2" />
+
+        <!-- default turn for every puzzle in pCubes -->
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup 2x4x4</Name>
+        <Menu>Other cubes\Mixup\2x4x4</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-05-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2611</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D  := W / 2;
+
+        WX := W;
+        WY := W;
+        WZ := W * sqrt(3) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; Pi/3; Pi/3; Pi" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split1">
+            <Turn  Axis = "Ax1" From = "1" To = "2" Angle = "   Pi/3" />
+            <Split Axis = "0"   From = "1" />
+            <Split Axis = "Ax2" From = "1" />
+            <Split Axis = "Ax2" From = "3" />
+            <Turn  Axis = "Ax1" From = "1" To = "2" Angle = "-2*Pi/3" />
+            <Split Axis = "0"   From = "1" />
+            <Split Axis = "Ax2" From = "1" />
+            <Split Axis = "Ax2" From = "3" />
+            <Undo Repeat = "2" />
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split1" Ax1 = "1" Ax2 = "2" />
+        <ExecMacro MacroName = "Split1" Ax1 = "2" Ax2 = "1" />
+
+        <Macro Name = "Split2">
+            <Turn  Axis = "Ax1" From = "1" To = "2" Angle = "An1" />
+            <Turn  Axis = "Ax2" From = "1" To = "2" Angle = "An2" />
+            <Split Axis = "0" From = "1" />
+            <Split Axis = "1" From = "1" />
+            <Split Axis = "1" From = "3" />
+            <Split Axis = "2" From = "1" />
+            <Split Axis = "2" From = "3" />
+            <Undo Repeat = "2" />
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split2" Ax1 = "1" Ax2 = "2" An1 = " Pi/3" An2 = " Pi/3" />
+        <ExecMacro MacroName = "Split2" Ax1 = "1" Ax2 = "2" An1 = " Pi/3" An2 = "-Pi/3" />
+        <ExecMacro MacroName = "Split2" Ax1 = "1" Ax2 = "2" An1 = "-Pi/3" An2 = "-Pi/3" />
+        <ExecMacro MacroName = "Split2" Ax1 = "1" Ax2 = "2" An1 = "-Pi/3" An2 = " Pi/3" />
+        <ExecMacro MacroName = "Split2" Ax1 = "2" Ax2 = "1" An1 = " Pi/3" An2 = " Pi/3" />
+        <ExecMacro MacroName = "Split2" Ax1 = "2" Ax2 = "1" An1 = " Pi/3" An2 = "-Pi/3" />
+        <ExecMacro MacroName = "Split2" Ax1 = "2" Ax2 = "1" An1 = "-Pi/3" An2 = "-Pi/3" />
+<!--        <ExecMacro1 MacroName = "Split2" Ax1 = "2" Ax2 = "1" An1 = "-Pi/3" An2 = " Pi/3" />-->
+
+    </Figure>
+</xml>

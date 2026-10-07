@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Edge of Andromeda Dodecahedron (Sphere)</Name>
+        <Aliases>Edge of Infinity</Aliases>
+        <Menu>Other forms\2d\Andromeda\Edge of Andromeda Dodecahedron (Sphere)</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-10-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7077</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'DD0055'; // clRed2
+        Colors[ 1] := '00BBFF'; // clBlue1
+        Colors[ 2] := 'FF6000'; // clOrange
+        Colors[ 3] := 'FFFF00'; // clYellow
+        Colors[ 4] := '00AA00'; // clGreen2
+        Colors[ 5] := 'FF0000'; // clRed
+        Colors[ 6] := '0088FF'; // clBlue2
+        Colors[ 7] := 'FF55BB'; // clPink
+        Colors[ 8] := '8800DD'; // clViolett
+        Colors[ 9] := '00FF00'; // clGreen1
+        Colors[10] := '007700'; // clGreen3
+        Colors[11] := '0000EE'; // clBlue3
+
+        K := 0.7;
+
+        Cp0  := 0.192893711352;
+        Cp1  := 0.218483370127;
+        Cp2  := 0.374821658114;
+        Cp3  := 0.567715369466;
+        Cp4  := 0.728335176957;
+        Cp5  := 0.755467260516;
+        Cp6  := 0.824957552676;
+        Cp7  := 0.921228888309;
+        Cp8  := 0.959987701391;
+        Cp9  := 1.137066133860;
+        Cp10 := 1.167123436475;
+        Cp11 := 1.222371704903;
+        Cp12 := 1.272096282575;
+        Cp13 := 1.527703070858;
+        Cp14 := 1.646917940690;
+        Cp15 := 1.746186440985;
+        Cp16 := 1.865401310817;
+        Cp17 := 1.888445389283;
+        Cp18 := 1.977838965420;
+        Cp19 := 2.097053835252;
+
+        // Calcs normal to plane with 3 points
+        procedure Normal(x1, y1, z1, x2, y2, z2, x3, y3, z3, i);
+        begin
+          nx := (y1-y3) * (z2-z3) - (y2-y3) * (z1-z3);
+          ny := (z1-z3) * (x2-x3) - (z2-z3) * (x1-x3);
+          nz := (x1-x3) * (y2-y3) - (x2-x3) * (y1-y3);
+
+          // normalize vector
+          dn := sqrt(nx^2 + ny^2 + nz^2);
+          px[i] := nx / dn; py[i] := ny / dn; pz[i] := nz / dn;
+        end;
+
+        // Calc all Normals and fill array
+        Normal( Cp10,   0, Cp17,   Cp3, -Cp6, Cp16,  Cp13, -Cp4, Cp12,   1); // 24; 36; 76
+        Normal(   0,-Cp17, Cp10,   Cp4,-Cp12, Cp13,  -Cp2, -Cp9, Cp15,  57); // 34; 72; 50
+
+        // All angles there: http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;p=358806
+        A1 := 1.07971961926539; // 61,8633772
+        A2 := 2 * Pi - 4 * A1 ; // 1.96430683;  // 112,546491
+        A3 := A1*2;             // 123,7267545
+        A4 := A2 + A1;          // 174,4098683
+
+        D  := K * 0.932;     // chosen to prevent overhang bandaging
+    </Script>
+
+    <Axes TurningAngles = "0; 2 *Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "D" >
+        <Axis NormVector = " px[ 1]; py[ 1]; pz[ 1]" />
+        <Axis NormVector = " px[57]; py[57]; pz[57]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "ax1" Layer = "1" Angle = "an1" />
+            <SplitByAxes/>
+            <Undo />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax1 = "0" an1 = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = "0" an1 = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = "0" an1 = "-A3" />
+        <ExecMacro MacroName = "Split" ax1 = "0" an1 = " A4" />
+        <ExecMacro MacroName = "Split" ax1 = "1" an1 = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = "1" an1 = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = "1" an1 = "-A3" />
+        <ExecMacro MacroName = "Split" ax1 = "1" an1 = " A4" />
+
+        <Cut> <Plane NormVector = " C17; -C32;  C54" NormDistance = "K * 0.77" /> </Cut>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-31 * Pi/180" />
+        <Turn NormVector = "1;0;0" Angle = " 54 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

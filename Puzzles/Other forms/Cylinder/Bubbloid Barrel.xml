@@ -1,0 +1,111 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bubbloid Barrel</Name>
+        <Menu>Other forms\Cylinder\Bubbloid Barrel</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5627</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0011EE';
+        clGreen  := '00AA00';
+        clRed    := 'DD0000';
+        clOrange := 'FF8800';
+        clYellow := 'EEFF00';
+        clWhite  := 'FFFFFF';
+
+        W := 0.4;
+        R := W;
+        H0 := W * 5 / 4;
+        H := H0 - 0.082;
+        H2 := H + 0.002;
+        A := H0 - W + 0.04;
+        sAngle := 2 * Pi / 3;
+        Angle := Pi / 2;
+        sa := sin(Angle / 2);
+        ca := cos(Angle / 2);
+
+        D := sqrt(3) * W / 3;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1; 1; 1" BaseVector = " 0; 0; A" />
+        <Axis NormVector = "-1; 1; 1" BaseVector = " 0; 0; A" />
+        <Axis NormVector = " 1;-1; 1" BaseVector = " 0; 0; A" />
+        <Axis NormVector = "-1;-1; 1" BaseVector = " 0; 0; A" />
+        <Axis NormVector = " 1; 1;-1" BaseVector = " 0; 0;-A" />
+        <Axis NormVector = "-1; 1;-1" BaseVector = " 0; 0;-A" />
+        <Axis NormVector = " 1;-1;-1" BaseVector = " 0; 0;-A" />
+        <Axis NormVector = "-1;-1;-1" BaseVector = " 0; 0;-A" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0; 0; 1" Angle = "Pi/4" />
+        <Macro Name = "AddQuarter">
+            <Cylinder Radius = "R" Color = "Color" Base = " 0; 0; H" Top = " 0; 0;-H" />
+            <Cut> <Plane NormVector = "-ca;-sa; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " ca;-sa; 0" NormDistance = "0" /> </Cut>
+            <Turn NormVector = "0; 0; 1" Angle = "Angle" />
+            <HideAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddQuarter" Color = "clWhite"  />
+        <ExecMacro MacroName = "AddQuarter" Color = "clBlue"   />
+        <ExecMacro MacroName = "AddQuarter" Color = "clYellow" />
+        <ExecMacro MacroName = "AddQuarter" Color = "clGreen"  />
+
+        <ShowAll/>
+
+        <Circle Radius = "R" Color = "clOrange" Center = "0; 0; H2" />
+        <Circle Radius = "R" Color = "clRed   " Center = "0; 0;-H2" />
+
+        <Macro Name = "Cut">
+            <Turn Axis = "a+0" Angle = " Angle" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "a+1" Angle = " Angle" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "a+3" Angle = " Angle" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "a+2" Angle = " Angle" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "a+1" Angle = "-Angle" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "a+0" Angle = "-Angle" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "a+3" Angle = "-Angle" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "a+2" Angle = "-Angle" Layer = "1" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "2" a = "0"/>
+        <Undo Repeat = "16" />
+        <ExecMacro MacroName = "Cut" Repeat = "2" a = "4"/>
+        <Undo Repeat = "16" />
+
+        <Turn Axis = "a+1" Angle = "-Angle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "a+3" Angle = "-Angle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "a+3" Angle = " Angle" Layer = "1" />
+        <Turn Axis = "a+1" Angle = " Angle" Layer = "1" />
+        <Undo Repeat = "4" />
+
+        <RemoveContaining Vector = "0; 0; H2" />
+        <RemoveContaining Vector = "0; 0;-H2" />
+        <HideAll/>
+        <Circle Radius = "R" Center = "0; 0; H2" />
+        <Circle Radius = "R" Center = "0; 0;-H2" />
+        <SplitByAxes/>
+        <HideContaining Vector = "0; 0; H2" />
+        <HideContaining Vector = "0; 0;-H2" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

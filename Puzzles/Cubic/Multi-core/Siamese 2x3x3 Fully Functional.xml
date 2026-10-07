@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese 2x3x3 Fully Functional</Name>
+        <Menu>Cubic\Multi-core\Siamese 2x3x3 Fully Functional</Menu>
+        <Inventor>Ryan Zhong</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-10-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2677</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 4;
+        D2 :=  D * 2;
+        D3 :=  D * 3;
+        A := Pi;
+    </Script>
+ 
+    <Axes TurningAngles = " 0; A" PlaneDistances = " D" >
+        <Axis NormVector = " 1; 0; 0" BaseVector = " D; D; 0" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = " D; D; 0" />
+
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-D;-D; 0" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "-D;-D; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D3" WY = "WX" WZ = "D2" DWX = " D" DWY = " D" DWZ = "0" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D3" WY = "WX" WZ = "D2" DWX = "-D" DWY = "-D" DWZ = "0" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D2" WY = "D2" WZ = "D2" DWX = "0" DWY = "0" DWZ = "0" />
+        <SplitByAxes/>
+
+        <Split><Plane NormVector = " 1; 0; 0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" /></Split>
+    </Figure>
+</xml>

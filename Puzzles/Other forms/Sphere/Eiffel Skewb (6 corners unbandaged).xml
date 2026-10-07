@@ -1,0 +1,149 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Eiffel Skewb (6 corners unbandaged)</Name>
+        <Menu>Other forms\Sphere\Eiffel Skewb (6 corners unbandaged)</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8293</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF'; // White
+        Colors[1] := 'FFEE00'; // Yellow
+        Colors[2] := '00BB00'; // Green
+        Colors[3] := '0055EE'; // Blue
+        Colors[4] := 'FF6600'; // Orange
+        Colors[5] := 'EE0000'; // Red
+
+        K := 0.6;
+        D1 := K * 0.965;
+        D2 := K * 0.71029864124335 * sqrt(2/3); // C20 * sqrt(2/3)
+
+        D3 := K * 0.99317; // tower's head
+        D4 := K * 0.71029864124335 * 2 / sqrt(3); // C20 * 2 / sqrt(3)
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi;Pi;0;Pi;Pi" PlaneDistances = "-D2;-D1; D1; D2" >
+        <Axis NormVector = " 1; 2; 1" />
+        <Axis NormVector = " 1;-1;-2" />
+        <Axis NormVector = "-2;-1; 1" />
+        <Axis NormVector = " 1; 1; 2" />
+        <Axis NormVector = "-2; 1;-1" />
+        <Axis NormVector = " 1;-2;-1" />
+        <Axis NormVector = "-1;-2; 1" />
+        <Axis NormVector = "-1; 1;-2" />
+        <Axis NormVector = " 2; 1; 1" />
+        <Axis NormVector = "-1;-1; 2" />
+        <Axis NormVector = " 2;-1;-1" />
+        <Axis NormVector = "-1; 2;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+
+        <Macro Name = "Split">
+            <Turn Axis = "a1" Layer = "0" Angle = "3*Pi/3" />
+            <Split Axis = "a2" From = "1" />
+            <Undo />
+        </Macro>
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = " 7" />
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = " 4" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "12" />
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/3" />
+
+        <Split> <Plane NormVector = "-1;-1; 2" NormDistance = "D2" /> </Split>
+        <Split> <Plane NormVector = " 2;-1;-1" NormDistance = "D2" /> </Split>
+        <Split> <Plane NormVector = "-1; 2;-1" NormDistance = "D2" /> </Split>
+
+        <!-- splits to mark tower's head-->
+        <Split> <Plane NormVector = "-1;-1; 2" NormDistance = "D3" /> </Split>
+        <Split> <Plane NormVector = " 2;-1;-1" NormDistance = "D3" /> </Split>
+        <Split> <Plane NormVector = "-1; 2;-1" NormDistance = "D3" /> </Split>
+
+        <Undo />
+        <ShowAll/>
+
+        <HideContaining Vector = "-K*0.5; K*0.5; K*0.5" />
+        <HideContaining Vector = " K*0.5;-K*0.5; K*0.5" />
+        <HideContaining Vector = " K*0.5; K*0.5;-K*0.5" />
+        <HideContaining Vector = " K*0.5;-K*0.5;-K*0.5" />
+        <HideContaining Vector = "-K*0.5;-K*0.5; K*0.5" />
+        <HideContaining Vector = "-K*0.5; K*0.5;-K*0.5" />
+
+        <InvertVisibility/>
+
+        <Split> <Plane NormVector = "-K; K; K" NormDistance = "D4" /> </Split>
+        <Split> <Plane NormVector = " K;-K; K" NormDistance = "D4" /> </Split>
+        <Split> <Plane NormVector = " K; K;-K" NormDistance = "D4" /> </Split>
+        <Split> <Plane NormVector = "-K;-K; K" NormDistance = "D4" /> </Split>
+        <Split> <Plane NormVector = " K;-K;-K" NormDistance = "D4" /> </Split>
+        <Split> <Plane NormVector = "-K; K;-K" NormDistance = "D4" /> </Split>
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc2">
+            <Turn Axis = "a1" Layer = "0" Angle = "Pi" />
+            <Turn Axis = "a2" Layer = "0" Angle = "Pi * Random(2)" />
+            <Turn Axis = "a1" Layer = "0" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "Sc1">
+            <ExecMacro MacroName = "Sc2" a1 = "1" a2 = " 7" />
+            <ExecMacro MacroName = "Sc2" a1 = "2" a2 = " 4" />
+            <ExecMacro MacroName = "Sc2" a1 = "3" a2 = "12" />
+        </Macro>
+
+        <Macro Name = "Sc3">
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/3" />
+            <Turn Axis = "13" Layers="3;4" Angle = "Pi" />
+            <Turn Axis = "14" Layers="3;4" Angle = "Pi" />
+            <Turn Axis = "15" Layers="3;4" Angle = "Pi" />
+            <Turn Axis = "0" Layer = "1" Angle = "-Pi/3" />
+        </Macro>
+
+        <Macro Name = "Sc4">
+            <Turn Axis = "0" Layer = "1" Angle = "2*Pi/3 * Random(3)" />
+        </Macro>
+
+        <Macro Name = "Sc5">
+            <ExecMacro MacroName = "Sc1" />
+            <ExecMacro MacroName = "Sc3" />
+            <ExecMacro MacroName = "Sc4" />
+        </Macro>
+
+        <Macro Name = "Sc1a" >
+            <Turn Axis = "Random(2)" Layer = "Random(6)" Angle = "Pi"/>
+            <Turn Axis = "2" Layer = "Random(6)" Angle = "Pi/2 * Random(4)"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(4)" Layer = "1" Angle = "2*Pi/3 * Random(3)"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc5" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

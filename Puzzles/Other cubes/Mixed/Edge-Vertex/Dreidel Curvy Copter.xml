@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dreidel Curvy Copter</Name>
+        <Menu>Other cubes\Mixed\Edge-Vertex\Dreidel Curvy Copter</Menu>
+        <Inventor>Hyeon Kyu Yee</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2020-09-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8249</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.45;
+
+        A := W * 4 / 3;
+        B := W / 3;
+
+        D1 := W * 2 / sqrt(3);
+        D2 := A / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi/3; 0; Pi/3" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "3" From = "2" />
+
+        <Turn Axis = "0" Layer = "0" Angle = " Pi" />
+        <Turn Axis = "1" Layer = "0" Angle = " Pi" />
+        <Turn Axis = "2" Layer = "0" Angle = " Pi" />
+        <Turn Axis = "3" Layer = "0" Angle = " Pi" />
+        <Turn Axis = "0" Layer = "2" Angle = " Pi" />
+        <Turn Axis = "1" Layer = "2" Angle = " Pi" />
+        <Turn Axis = "2" Layer = "2" Angle = " Pi" />
+        <Turn Axis = "3" Layer = "2" Angle = " Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "8" />
+
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

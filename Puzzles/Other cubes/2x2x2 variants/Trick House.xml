@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Trick House</Name>
+        <Menu>Other cubes\2x2x2 variants\Trick House</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-10-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=39</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clYellow := 'FFFF00';
+
+        W := 0.4;
+        H := W / sqrt(2);
+
+        WX := W;
+        WY := W;
+        WZ := H;
+
+        procedure SetColor(Color);
+        begin
+            for i := 0 to 5 do
+                Colors[i] := Color;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/4" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script>SetColor(clRed);</Script>
+        <LoadFrom File = "Figures\Cuboid.xml" DWZ = "H" />
+        <Split Color1 = "clRed" Color2 = "clRed" Axis = "0" From = "1" />
+        <Split Color1 = "clRed" Color2 = "clRed" Axis = "1" From = "1" />
+
+        <Script>SetColor(clYellow);</Script>
+        <LoadFrom File = "Figures\Cuboid.xml" DWZ = "-H" />
+        <Split Color1 = "clYellow" Color2 = "clYellow" Axis = "0" From = "1" />
+        <Split Color1 = "clYellow" Color2 = "clYellow" Axis = "1" From = "1" />
+
+        <SaveSolvedState/>
+
+        <Turn Axis = "0" Layer = "0" Angle = "Pi" />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "1" Layer = "0" Angle = "Pi" />
+        <Turn Axis = "0" Layer = "0" Angle = "Pi" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "1" Layer = "0" Angle = "Pi/2" />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi  " />
+        <Turn Axis = "1" Layer = "0" Angle = "Pi  " />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/4" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "2" Layer = "0" Angle = "Pi/2" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/4" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi  " />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi  " />
+        <Turn Axis = "0" Layer = "0" Angle = "Pi/4" />
+        <SaveSolvedState/>
+
+        <Undo Repeat = "3" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi  " />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi  " />
+        <Turn Axis = "1" Layer = "0" Angle = "Pi/4" />
+        <SaveSolvedState/>
+
+        <Undo Repeat = "14" />
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

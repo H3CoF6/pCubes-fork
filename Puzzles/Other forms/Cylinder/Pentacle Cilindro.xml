@@ -1,0 +1,228 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentacle Cilindro</Name>
+        <Menu>Other forms\Cylinder\Pentacle Cilindro</Menu>
+        <Programmer>Boris</Programmer>
+        <Inventor>Javier Alla La</Inventor>
+        <Added>2021-12-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9363</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.7;
+        R := W * 0.88;
+
+        N := 40;
+        sAngle := 2 * Pi / 5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        R1 := W * 0.74;
+        RC := W * 0.7;
+        Sc := 1.1;
+        RCut := sqrt(R^2 - R1^2) * 0.8;
+        D := W / 4.5;
+        H := R1;
+
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+            xc[i] := RC * cos(2 * Pi / N * i);
+            yc[i] := RC * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/10; Pi/2; 0; Pi/2; Pi/10" PlaneDistances = "-R1;-D; D; R1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face VertexIndexes = "FromTo(0, N - 1)" />
+                <ExecMacro MacroName = "AddFace" i = "N/8" c = "3" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"           c = "0" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"           c = "2" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"           c = "1" Repeat = "N/4" />
+                <Face VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "Split1">
+            <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "D" /> </Split>
+            <Turn NormVector = " 0; 1; 0" Angle = "sAngle" />
+        </Macro>
+
+        <Macro Name = "Cut">
+            <Cut Color = "101010" InvisibleEdges = "-1" > <Plane NormVector = " 1; 0; 0" NormDistance = "-RCut" /> </Cut>
+            <Turn NormVector = " 0; 1; 0" Angle = "2*Pi / 40" />
+        </Macro>
+
+        <Macro Name = "Split">
+            <Split Color1 = "Colors[c]" > <Plane NormVector = " 0;-1; 0" NormDistance = "R1" /> </Split>
+            <Hide>  <Plane NormVector = " 0;-1; 0" NormDistance = "R1" /> </Hide>
+
+            <ExecMacro MacroName = "Split1" Repeat = "5" />
+
+            <HideContaining Vector = " 0;-R1; D" />
+            <HideContaining Vector = " 0;-R1;-RCut" />
+
+            <ExecMacro MacroName = "Cut" Repeat = "40" />
+            <ShowAll/>
+
+            <HideContaining Vector = " 0;-R;-RCut" />
+            <InvertVisibility/>
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi + sAngle" />
+            <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-D" /> </Cut>
+            <Turn NormVector = " 0; 1; 0" Angle = "-2 * sAngle" />
+            <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-D" /> </Cut>
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi + sAngle" />
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Split" c = "3" />
+        <ExecMacro MacroName = "Split" c = "1" />
+        <ExecMacro MacroName = "Split" c = "2" />
+        <ExecMacro MacroName = "Split" c = "0" />
+
+        <HideAll/>
+
+        // Bottom
+        <Part>
+            <Vertices Vectors = "xc; yc;-H" />
+            <Vertices Vectors = "xc; yc;-H*Sc" />
+
+            <Faces>
+                <Face VertexIndexes = "FromTo(0, N - 1)" />
+                <ExecMacro MacroName = "AddFace" i = "0" c = "4" Repeat = "N" />
+                <Face Color = "Colors[4]" VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        // Top
+        <Part>
+            <Vertices Vectors = "xc; yc; H*Sc" />
+            <Vertices Vectors = "xc; yc; H" />
+
+            <Faces>
+                <Face Color = "Colors[5]" VertexIndexes = "FromTo(0, N - 1)" />
+                <ExecMacro MacroName = "AddFace" i = "0" c = "5" Repeat = "N" />
+                <Face VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "Split2">
+            <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "D" /> </Split>
+            <Turn NormVector = " 0; 0; 1" Angle = "sAngle" />
+        </Macro>
+        <ExecMacro MacroName = "Split2" Repeat = "5" />
+        <ShowAll/>
+
+        <HideContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+        <SplitByAxes/>
+        <ShowAll/>
+    </Figure>
+
+    <Macros>
+        <Macro Name = "Red" >
+            <Turn Axis = "1" Layer = "0" Angle = "-A1"/>
+            <Turn Axis = "1" Layer = "4" Angle = "-A1"/>
+            <Turn Axis = "2" Layer = "0" Angle = " A2"/>
+            <Turn Axis = "2" Layer = "4" Angle = " A2"/>
+            <Turn Axis = "0" Layer = "1" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "1" Layer = "0" Angle = " A1"/>
+            <Turn Axis = "1" Layer = "4" Angle = " A1"/>
+            <Turn Axis = "2" Layer = "0" Angle = "-A2"/>
+            <Turn Axis = "2" Layer = "4" Angle = "-A2"/>
+            <Turn Axis = "0" Layer = "0" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+        <Macro Name = "Orange" >
+            <Turn Axis = "1" Layer = "0" Angle = " A1"/>
+            <Turn Axis = "1" Layer = "4" Angle = " A1"/>
+            <Turn Axis = "0" Layer = "3" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "1" Layer = "0" Angle = "-A1"/>
+            <Turn Axis = "1" Layer = "4" Angle = "-A1"/>
+            <Turn Axis = "0" Layer = "4" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+        <Macro Name = "Blue" >
+            <Turn Axis = "0" Layer = "0" Angle = " A1"/>
+            <Turn Axis = "0" Layer = "4" Angle = " A1"/>
+            <Turn Axis = "2" Layer = "0" Angle = "-A1"/>
+            <Turn Axis = "2" Layer = "4" Angle = "-A1"/>
+            <Turn Axis = "1" Layer = "1" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-A1"/>
+            <Turn Axis = "0" Layer = "4" Angle = "-A1"/>
+            <Turn Axis = "2" Layer = "0" Angle = " A1"/>
+            <Turn Axis = "2" Layer = "4" Angle = " A1"/>
+            <Turn Axis = "1" Layer = "0" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+        <Macro Name = "Green" >
+            <Turn Axis = "0" Layer = "0" Angle = "-A1"/>
+            <Turn Axis = "0" Layer = "4" Angle = "-A1"/>
+            <Turn Axis = "2" Layer = "0" Angle = " A1"/>
+            <Turn Axis = "2" Layer = "4" Angle = " A1"/>
+            <Turn Axis = "1" Layer = "3" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "0" Layer = "0" Angle = " A1"/>
+            <Turn Axis = "0" Layer = "4" Angle = " A1"/>
+            <Turn Axis = "2" Layer = "0" Angle = "-A1"/>
+            <Turn Axis = "2" Layer = "4" Angle = "-A1"/>
+            <Turn Axis = "1" Layer = "4" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+        <Macro Name = "Yellow" >
+            <Turn Axis = "0" Layer = "0" Angle = "-A2"/>
+            <Turn Axis = "0" Layer = "4" Angle = "-A2"/>
+            <Turn Axis = "1" Layer = "0" Angle = " A2"/>
+            <Turn Axis = "1" Layer = "4" Angle = " A2"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "0" Layer = "0" Angle = " A2"/>
+            <Turn Axis = "0" Layer = "4" Angle = " A2"/>
+            <Turn Axis = "1" Layer = "0" Angle = "-A2"/>
+            <Turn Axis = "1" Layer = "4" Angle = "-A2"/>
+            <Turn Axis = "2" Layer = "0" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+        <Macro Name = "White" >
+            <Turn Axis = "2" Layer = "3" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layer = "4" Angle = "2*Pi/5 * (Random(4) + 1)"/>
+        </Macro>
+
+        <Macro Name = "RandomTurn" >
+            <ExecMacro MacroName = "Red" />
+            <ExecMacro MacroName = "Orange" />
+            <ExecMacro MacroName = "Blue" />
+            <ExecMacro MacroName = "Green" />
+            <ExecMacro MacroName = "Yellow" />
+            <ExecMacro MacroName = "White" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" Description = "Replacing of standard scrambling" Sequence = "" >
+            <Script>A1 := Pi/10; A2 := A1 * 2</Script>
+            <ExecMacro MacroName = "RandomTurn" Repeat = "20" />
+        </Macro>
+    </Macros>
+</xml>

@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circle 4x6x6</Name>
+        <Menu>Other forms\Unclassified\Circle 4x6x6</Menu>
+        <Inventor>Silvestre Cruz Quiroz</Inventor>
+        <Programmer>SKallos</Programmer>
+        <Added>2023-08-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11168</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        clWhite := 'FFFFFF';
+        Colors[5] := '333333';
+
+        K := 0.8;
+        W := 0.6;
+
+        C7  := K * 0.37456628469515;
+        C11 := K * 0.50501585343062;
+        C19 := K * 0.70388817049888;
+        C24 := K * 0.85312994431035;
+
+        B := (W-C19)/(C24-C19)*(C7-C11)+C11;
+        A := B / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-B;-A; 0; A; B" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clWhite"/>
+        <Cut Color = "Colors[0]"> <Plane NormVector = "-Cx[0];-Cy[0];-Cz[0]" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[1]"> <Plane NormVector = "-Cx[1];-Cy[1];-Cz[1]" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[2]"> <Plane NormVector = "-Cx[2];-Cy[2];-Cz[2]" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[3]"> <Plane NormVector = "-Cx[3];-Cy[3];-Cz[3]" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[4]"> <Plane NormVector = "-Cx[4];-Cy[4];-Cz[4]" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[5]"> <Plane NormVector = "-Cx[5];-Cy[5];-Cz[5]" NormDistance = "-W" /> </Cut>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "0" From = "5" />
+
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "1" From = "5" />
+
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

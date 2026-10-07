@@ -1,0 +1,157 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Andromeda Dodecahedron (Sphere)</Name>
+        <Menu>Other forms\Sphere\Andromeda Dodecahedron (Sphere)</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-10-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6728</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '00BBFF'; // clBlue1
+        Colors[ 1] := 'FFFF00'; // clYellow
+        Colors[ 2] := 'FF6000'; // clOrange
+        Colors[ 3] := 'FF0000'; // clRed
+        Colors[ 4] := '0000EE'; // clBlue3
+        Colors[ 5] := 'DD0055'; // clRed2
+        Colors[ 6] := '0088FF'; // clBlue2
+        Colors[ 7] := 'FF55BB'; // clPink
+        Colors[ 8] := '8800DD'; // clViolett
+        Colors[ 9] := '00FF00'; // clGreen1
+        Colors[10] := '007700'; // clGreen3
+        Colors[11] := '00AA00'; // clGreen2
+
+        K := 0.7;
+
+        C0  := 0.192893711352;
+        C1  := 0.218483370127;
+        C2  := 0.374821658114;
+        C3  := 0.567715369466;
+        C4  := 0.728335176957;
+        C5  := 0.755467260516;
+        C6  := 0.824957552676;
+        C7  := 0.921228888309;
+        C8  := 0.959987701391;
+        C9  := 1.137066133860;
+        C10 := 1.167123436475;
+        C11 := 1.222371704903;
+        C12 := 1.272096282575;
+        C13 := 1.527703070858;
+        C14 := 1.646917940690;
+        C15 := 1.746186440985;
+        C16 := 1.865401310817;
+        C17 := 1.888445389283;
+        C18 := 1.977838965420;
+        C19 := 2.097053835252;
+
+        // Calcs normal to plane with 3 points
+        procedure Normal(x1, y1, z1, x2, y2, z2, x3, y3, z3, i);
+        begin
+          nx := (y1-y3) * (z2-z3) - (y2-y3) * (z1-z3);
+          ny := (z1-z3) * (x2-x3) - (z2-z3) * (x1-x3);
+          nz := (x1-x3) * (y2-y3) - (x2-x3) * (y1-y3);
+
+          // normalize vector
+          dn := sqrt(nx^2 + ny^2 + nz^2);
+          px[i] := nx / dn; py[i] := ny / dn; pz[i] := nz / dn;
+        end;
+
+        // Calc all Normals and fill array
+        Normal( C10,   0, C17,   C0,  C1, C19,   C3, -C6, C16,   0); // 24;  0; 36
+        Normal( C10,   0, C17,   C3, -C6, C16,  C13, -C4, C12,   1); // 24; 36; 76
+        Normal( C10,   0, C17,  C13, -C4, C12,  C15,  C2,  C9,   2); // 24; 76; 52
+        Normal( C10,   0, C17,  C15,  C2,  C9,   C7,  C8, C14,   3); // 24; 52; 60
+        Normal( C10,   0, C17,   C7,  C8, C14,   C0,  C1, C19,   4); // 24; 60;  0
+        Normal(-C10,   0,-C17,  -C0,  C1,-C19,  -C3, -C6,-C16,   5); // 27;  3; 39
+        Normal(-C10,   0,-C17,  -C3, -C6,-C16, -C13, -C4,-C12,   6); // 27; 39; 79
+        Normal(-C10,   0,-C17, -C13, -C4,-C12, -C15,  C2, -C9,   7); // 27; 79; 55
+        Normal(-C10,   0,-C17, -C15,  C2, -C9,  -C7,  C8,-C14,   8); // 27; 55; 63
+        Normal(-C10,   0,-C17,  -C7,  C8,-C14,  -C0,  C1,-C19,   9); // 27; 63;  3
+        Normal( C10,   0,-C17,   C0, -C1,-C19,   C3,  C6,-C16,  10); // 25;  1; 37
+        Normal( C10,   0,-C17,   C3,  C6,-C16,  C13,  C4,-C12,  11); // 25; 37; 77
+        Normal( C10,   0,-C17,  C13,  C4,-C12,  C15, -C2, -C9,  12); // 25; 77; 53
+        Normal( C10,   0,-C17,  C15, -C2, -C9,   C7, -C8,-C14,  13); // 25; 53; 61
+        Normal( C10,   0,-C17,   C7, -C8,-C14,   C0, -C1,-C19,  14); // 25; 61;  1
+        Normal(-C10,   0, C17,  -C0, -C1, C19,  -C3,  C6, C16,  15); // 26;  2; 38
+        Normal(-C10,   0, C17,  -C3,  C6, C16, -C13,  C4, C12,  16); // 26; 38; 78
+        Normal(-C10,   0, C17, -C13,  C4, C12, -C15, -C2,  C9,  17); // 26; 78; 54
+        Normal(-C10,   0, C17, -C15, -C2,  C9,  -C7, -C8, C14,  18); // 26; 54; 62
+        Normal(-C10,   0, C17,  -C7, -C8, C14,  -C0, -C1, C19,  19); // 26; 62;  2
+        Normal( C17, C10,   0,  C19,  C0,  C1,  C16,  C3, -C6,  20); // 28;  4; 41
+        Normal( C17, C10,   0,  C16,  C3, -C6,  C12, C13, -C4,  21); // 28; 41; 81
+        Normal( C17, C10,   0,  C12, C13, -C4,   C9, C15,  C2,  22); // 28; 81; 56
+        Normal( C17, C10,   0,   C9, C15,  C2,  C14,  C7,  C8,  23); // 28; 56; 64
+        Normal( C17, C10,   0,  C14,  C7,  C8,  C19,  C0,  C1,  24); // 28; 64;  4
+        Normal(-C17,-C10,   0, -C19, -C0,  C1, -C16, -C3, -C6,  25); // 31;  6; 43
+        Normal(-C17,-C10,   0, -C16, -C3, -C6, -C12,-C13, -C4,  26); // 31; 43; 83
+        Normal(-C17,-C10,   0, -C12,-C13, -C4,  -C9,-C15,  C2,  27); // 31; 83; 58
+        Normal(-C17,-C10,   0,  -C9,-C15,  C2, -C14, -C7,  C8,  28); // 31; 58; 66
+        Normal(-C17,-C10,   0, -C14, -C7,  C8, -C19, -C0,  C1,  29); // 31; 66;  6
+        Normal( C17,-C10,   0,  C19, -C0, -C1,  C16, -C3,  C6,  30); // 29;  5; 40
+        Normal( C17,-C10,   0,  C16, -C3,  C6,  C12,-C13,  C4,  31); // 29; 40; 80
+        Normal( C17,-C10,   0,  C12,-C13,  C4,   C9,-C15, -C2,  32); // 29; 80; 57
+        Normal( C17,-C10,   0,   C9,-C15, -C2,  C14, -C7, -C8,  33); // 29; 57; 65
+        Normal( C17,-C10,   0,  C14, -C7, -C8,  C19, -C0, -C1,  34); // 29; 65;  5
+        Normal(-C17, C10,   0, -C19,  C0, -C1, -C16,  C3,  C6,  35); // 30;  7; 42
+        Normal(-C17, C10,   0, -C16,  C3,  C6, -C12, C13,  C4,  36); // 30; 42; 82
+        Normal(-C17, C10,   0, -C12, C13,  C4,  -C9, C15, -C2,  37); // 30; 82; 59
+        Normal(-C17, C10,   0,  -C9, C15, -C2, -C14,  C7, -C8,  38); // 30; 59; 67
+        Normal(-C17, C10,   0, -C14,  C7, -C8, -C19,  C0, -C1,  39); // 30; 67;  7
+        Normal(   0, C17, C10,   C1, C19,  C0,  -C6, C16,  C3,  40); // 32;  8; 46
+        Normal(   0, C17, C10,  -C6, C16,  C3,  -C4, C12, C13,  41); // 32; 46; 74
+        Normal(   0, C17, C10,  -C4, C12, C13,   C2,  C9, C15,  42); // 32; 74; 48
+        Normal(   0, C17, C10,   C2,  C9, C15,   C8, C14,  C7,  43); // 32; 48; 68
+        Normal(   0, C17, C10,   C8, C14,  C7,   C1, C19,  C0,  44); // 32; 68;  8
+        Normal(   0,-C17,-C10,   C1,-C19, -C0,  -C6,-C16, -C3,  45); // 35;  9; 47
+        Normal(   0,-C17,-C10,  -C6,-C16, -C3,  -C4,-C12,-C13,  46); // 35; 47; 75
+        Normal(   0,-C17,-C10,  -C4,-C12,-C13,   C2, -C9,-C15,  47); // 35; 75; 49
+        Normal(   0,-C17,-C10,   C2, -C9,-C15,   C8,-C14, -C7,  48); // 35; 49; 69
+        Normal(   0,-C17,-C10,   C8,-C14, -C7,   C1,-C19, -C0,  49); // 35; 69;  9
+        Normal(   0, C17,-C10,  -C1, C19, -C0,   C6, C16, -C3,  50); // 33; 11; 45
+        Normal(   0, C17,-C10,   C6, C16, -C3,   C4, C12,-C13,  51); // 33; 45; 73
+        Normal(   0, C17,-C10,   C4, C12,-C13,  -C2,  C9,-C15,  52); // 33; 73; 51
+        Normal(   0, C17,-C10,  -C2,  C9,-C15,  -C8, C14, -C7,  53); // 33; 51; 71
+        Normal(   0, C17,-C10,  -C8, C14, -C7,  -C1, C19, -C0,  54); // 33; 71; 11
+        Normal(   0,-C17, C10,  -C1,-C19,  C0,   C6,-C16,  C3,  55); // 34; 10; 44
+        Normal(   0,-C17, C10,   C6,-C16,  C3,   C4,-C12, C13,  56); // 34; 44; 72
+        Normal(   0,-C17, C10,   C4,-C12, C13,  -C2, -C9, C15,  57); // 34; 72; 50
+        Normal(   0,-C17, C10,  -C2, -C9, C15,  -C8,-C14,  C7,  58); // 34; 50; 70
+        Normal(   0,-C17, C10,  -C8,-C14,  C7,  -C1,-C19,  C0,  59); // 34; 70; 10
+
+        // All angles there: http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;p=358806
+        A1 := 1.07971961926539; // 61,8633772
+        A2 := 2 * Pi - 4 * A1 ; // 1.96430683;  // 112,546491
+        A3 := A1*2;             // 123,7267545
+        A4 := A2 + A1;          // 174,4098683
+
+        D  := K * 0.932;     // chosen to prevent overhang bandaging
+    </Script>
+
+    <Axes TurningAngles = "0; 2 *Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "D" NormVectors = " px; py; pz" />
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := '-1';
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

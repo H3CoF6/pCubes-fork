@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bismuth</Name>
+        <Menu>Other forms\Cross\Bismuth</Menu>
+        <Inventor>Junseo Yoon</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-01-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12388</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        phi := (sqrt(5) - 1) / 2; // The golden ratio
+        A := W * phi;
+        B := W - A;
+
+        sAngle := 2 * Pi / 5;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = " phi;   0;   1" />
+        <Axis NormVector = "-phi;   0;   1" />
+        <Axis NormVector = "   1; phi;   0" />
+        <Axis NormVector = "   1;-phi;   0" />
+        <Axis NormVector = "   0;   1; phi" />
+        <Axis NormVector = "   0;   1;-phi" />
+    </Axes>
+
+    <Figure>
+        <!-- Central core -->
+
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "B" WY = "A" WZ = "W" />
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "B" /> </Split>
+        <Split> <Plane NormVector = " 0; 0;-1" NormDistance = "B" /> </Split>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "A" WY = "W" WZ = "B" />
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "B" /> </Split>
+        <Split> <Plane NormVector = " 0;-1; 0" NormDistance = "B" /> </Split>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "B" WZ = "A" />
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "B" /> </Split>
+        <Split> <Plane NormVector = "-1; 0; 0" NormDistance = "B" /> </Split>
+        <ShowAll/>
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <SplitByAxes/>
+
+        <!-- for BSP-engine some parts must be splitted -->
+
+        <HideContaining Vector = " B; B; B" />
+        <HideContaining Vector = " B; B;-B" />
+        <HideContaining Vector = " B;-B; B" />
+        <HideContaining Vector = " B;-B;-B" />
+        <HideContaining Vector = "-B; B; B" />
+        <HideContaining Vector = "-B; B;-B" />
+        <HideContaining Vector = "-B;-B; B" />
+        <HideContaining Vector = "-B;-B;-B" />
+        <InvertVisibility/>
+
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "B" /> </Split>
+        <Split> <Plane NormVector = " 0; 0;-1" NormDistance = "B" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "B" /> </Split>
+        <Split> <Plane NormVector = " 0;-1; 0" NormDistance = "B" /> </Split>
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "B" /> </Split>
+        <Split> <Plane NormVector = "-1; 0; 0" NormDistance = "B" /> </Split>
+        <ShowAll/>
+
+        <!-- remove some invisible internal parts -->
+
+        <Macro Name = "Hide" >
+            <HideContaining Vector = " B; A; W" />
+            <HideContaining Vector = "-B;-A; W" />
+            <HideContaining Vector = "-B; A; W" />
+            <HideContaining Vector = " B;-A; W" />
+            <HideContaining Vector = " B; A;-W" />
+            <HideContaining Vector = "-B;-A;-W" />
+            <HideContaining Vector = "-B; A;-W" />
+            <HideContaining Vector = " B;-A;-W" />
+            <Turn NormVector = "1;1;1" Angle = "2*Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "Hide" Repeat = "3" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+</xml>

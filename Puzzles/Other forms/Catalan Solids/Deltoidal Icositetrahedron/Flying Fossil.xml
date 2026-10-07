@@ -1,0 +1,239 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Flying Fossil</Name>
+        <Alias>FTDI+</Alias>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Flying Fossil</Menu>
+        <Inventor>Ian Henriksen + Michael Montgomery</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-09-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11959</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_24_Colors.inc';
+
+        W  := 0.45;
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_Coordinates.inc'; // for axes
+
+        A1 := ArcCos( s2 / 8 + 0.25);
+        A2 := ArcCos( s2 / 4 - 0.5 );
+        A3 := ArcCos(-s2 / 2 - 0.25); // = A1 + A2
+
+//        D := W * (3 / 2 + s2) / sqrt(5 + 2 * s2);
+        D := W * 1.07;
+
+        S := (W + C1) / 2;
+        T :=  W / 2;
+        U := (W + C0) / 2;
+        V := C0 / 2;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Cx;Cy;Cz" />
+
+    <Figure>
+        <Macro Name = "Split" >
+            <Split> <Plane NormVector = "Cx[ 8];Cy[ 8];Cz[ 8]" NormDistance = " D" /> </Split>
+            <Split> <Plane NormVector = "Cx[10];Cy[10];Cz[10]" NormDistance = " D" /> </Split>
+            <Split> <Plane NormVector = "Cx[13];Cy[13];Cz[13]" NormDistance = " D" /> </Split>
+            <Split> <Plane NormVector = "Cx[15];Cy[15];Cz[15]" NormDistance = " D" /> </Split>
+        </Macro>
+
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split8L" >
+            <HideContaining Vector = " 0; S; T" />
+            <HideContaining Vector = " 0; S;-T" />
+            <HideContaining Vector = " 0;-S; T" />
+            <HideContaining Vector = " 0;-S;-T" />
+            <HideContaining Vector = " 0; T; S" />
+            <HideContaining Vector = " 0; T;-S" />
+            <HideContaining Vector = " 0;-T; S" />
+            <HideContaining Vector = " 0;-T;-S" />
+            <InvertVisibility/>
+            <Turn NormVector = " 0; 1;-1" Angle = " Pi/2" />
+            <ExecMacro MacroName = "Split" />
+            <Turn NormVector = " 0;-1;-1" Angle = "Pi/4" />
+            <ExecMacro MacroName = "Split" />
+            <Turn NormVector = " 0;-1;-1" Angle = "Pi/4" />
+            <ExecMacro MacroName = "Split" />
+            <Turn NormVector = " 0;-1;-1" Angle = "Pi/4" />
+            <ExecMacro MacroName = "Split" />
+            <Turn NormVector = " 0;-1;-1" Angle = "-3*Pi/4" />
+            <Turn NormVector = " 0; 1;-1" Angle = "-Pi/2" />
+            <ShowAll/>
+            <Turn NormVector = " 1; 1; 1" Angle = " 2*Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "Split8L" Repeat = "3" />
+
+        <Macro Name = "Split8S" >
+            <HideContaining Vector = " U; U; V" />
+            <HideContaining Vector = " U; U;-V" />
+            <HideContaining Vector = " U;-U; V" />
+            <HideContaining Vector = " U;-U;-V" />
+            <HideContaining Vector = "-U; U; V" />
+            <HideContaining Vector = "-U; U;-V" />
+            <HideContaining Vector = "-U;-U; V" />
+            <HideContaining Vector = "-U;-U;-V" />
+            <InvertVisibility/>
+            <Turn NormVector = " 1; 1; 0" Angle = " Pi/4" />
+            <Split> <Plane NormVector = "Cx[ 1];Cy[ 1];Cz[ 1]" NormDistance = " D" /> </Split>
+            <Split> <Plane NormVector = "Cx[ 6];Cy[ 6];Cz[ 6]" NormDistance = " D" /> </Split>
+            <Turn NormVector = " 1; 1; 0" Angle = "-Pi/2" />
+            <Split> <Plane NormVector = "Cx[ 3];Cy[ 3];Cz[ 3]" NormDistance = " D" /> </Split>
+            <Split> <Plane NormVector = "Cx[ 4];Cy[ 4];Cz[ 4]" NormDistance = " D" /> </Split>
+            <Turn NormVector = " 1; 1; 0" Angle = " Pi/4" />
+            <Turn NormVector = " 1;-1; 0" Angle = " Pi/4" />
+            <Split> <Plane NormVector = "Cx[ 0];Cy[ 0];Cz[ 0]" NormDistance = " D" /> </Split>
+            <Split> <Plane NormVector = "Cx[ 7];Cy[ 7];Cz[ 7]" NormDistance = " D" /> </Split>
+            <Turn NormVector = " 1;-1; 0" Angle = "-Pi/2" />
+            <Split> <Plane NormVector = "Cx[ 2];Cy[ 2];Cz[ 2]" NormDistance = " D" /> </Split>
+            <Split> <Plane NormVector = "Cx[ 5];Cy[ 5];Cz[ 5]" NormDistance = " D" /> </Split>
+            <Turn NormVector = " 1;-1; 0" Angle = " Pi/4" />
+            <ShowAll/>
+            <Turn NormVector = " 1; 1; 1" Angle = " 2*Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "Split8S" Repeat = "3" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro from Boris -->
+
+        <Macro Name = "Sc1" >
+            <Script>
+                N := Random(24);
+                Ax1 := Ae1[N];
+                Ax2 := Ae2[N];
+                Ax3 := Ae3[N];
+            </Script>
+            <Turn Axis = "Ax2" Layers = "1" Angle = "-A2" />
+            <Turn Axis = "Ax3" Layers = "1" Angle = "-A2" />
+            <Turn Axis = "Ax2" Layers = "1" Angle = "-A3" />
+            <Turn Axis = "Ax3" Layers = "1" Angle = " A2" />
+            <Turn Axis = "Ax2" Layers = "1" Angle = " A1" />
+            <Turn Axis = "Ax1" Layers = "1" Angle = "-A3" />
+            <Turn Axis = "Ax2" Layers = "1" Angle = "-A3" />
+            <Turn Axis = "Ax1" Layers = "1" Angle = " A3" />
+        </Macro>
+
+        <Macro Name = "Sc2" >
+            <Turn Axis = "20" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "10" Layers = "1" Angle = " A1" />
+            <Turn Axis = "20" Layers = "1" Angle = " A1" />
+            <Turn Axis = "10" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "20" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "10" Layers = "1" Angle = " A1" />
+            <Turn Axis = "20" Layers = "1" Angle = " A1" />
+            <Turn Axis = "10" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "20" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "10" Layers = "1" Angle = " A1" />
+            <Turn Axis = "20" Layers = "1" Angle = " A1" />
+            <Turn Axis = "10" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "20" Layers = "1" Angle = "-A2" />
+            <Turn Axis = "23" Layers = "1" Angle = " A3" />
+            <Turn Axis = "20" Layers = "1" Angle = " A2" />
+            <Turn Axis = "20" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "10" Layers = "1" Angle = " A1" />
+            <Turn Axis = "20" Layers = "1" Angle = " A1" />
+            <Turn Axis = "10" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "20" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "10" Layers = "1" Angle = " A1" />
+            <Turn Axis = "20" Layers = "1" Angle = " A1" />
+            <Turn Axis = "10" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "20" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "10" Layers = "1" Angle = " A1" />
+            <Turn Axis = "20" Layers = "1" Angle = " A1" />
+            <Turn Axis = "10" Layers = "1" Angle = "-A1" />
+            <Turn Axis = "20" Layers = "1" Angle = "-A3" />
+            <Turn Axis = "23" Layers = "1" Angle = "-A3" />
+            <Turn Axis = "20" Layers = "1" Angle = " A3" />
+        </Macro>
+
+        <Macro Name = "Sc3" >
+            <Turn Axis = "20" Layers = "1" Angle = "-A3"/>
+            <Turn Axis = "10" Layers = "1" Angle = " A3"/>
+            <Turn Axis = "20" Layers = "1" Angle = " A3"/>
+            <Turn Axis = "10" Layers = "1" Angle = "-A3"/>
+            <Turn Axis = "18" Layers = "1" Angle = "-A3"/>
+            <Turn Axis = "12" Layers = "1" Angle = " A3"/>
+            <Turn Axis = "18" Layers = "1" Angle = " A3"/>
+            <Turn Axis = "12" Layers = "1" Angle = "-A3"/>
+            <Turn Axis = " 3" Layers = "1" Angle = " A2"/>
+            <Turn Axis = " 0" Layers = "1" Angle = "-A2"/>
+            <Turn Axis = " 1" Layers = "1" Angle = "-A3"/>
+            <Turn Axis = " 0" Layers = "1" Angle = " A2"/>
+            <Turn Axis = " 1" Layers = "1" Angle = "-A2"/>
+            <Turn Axis = " 3" Layers = "1" Angle = "-A2"/>
+            <Turn Axis = " 1" Layers = "1" Angle = "-A2"/>
+            <Turn Axis = "10" Layers = "1" Angle = " A3"/>
+            <Turn Axis = "20" Layers = "1" Angle = "-A3"/>
+            <Turn Axis = "10" Layers = "1" Angle = "-A3"/>
+            <Turn Axis = "20" Layers = "1" Angle = " A3"/>
+            <Turn Axis = " 1" Layers = "1" Angle = " A3"/>
+            <Turn Axis = "12" Layers = "1" Angle = "-A1"/>
+            <Turn Axis = " 1" Layers = "1" Angle = "-A3"/>
+            <Turn Axis = "12" Layers = "1" Angle = " A3"/>
+            <Turn Axis = " 1" Layers = "1" Angle = " A3"/>
+            <Turn Axis = "12" Layers = "1" Angle = "-A3"/>
+            <Turn Axis = " 1" Layers = "1" Angle = "-A3"/>
+            <Turn Axis = "12" Layers = "1" Angle = " A1"/>
+        </Macro>
+
+        <Macro Name = "ScAll" >
+            <ExecMacro1 MacroName = "Sc1" Repeat = "20" />
+            <ExecMacro MacroName = "Sc2" Repeat = "1" />
+            <ExecMacro1 MacroName = "Sc3" Repeat = "1" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(24)" Layer = "1" Angle = "2*Pi * Random" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <Script>
+                s2 := sqrt(2);
+                A1 := ArcCos( s2 / 8 + 0.25);
+                A2 := ArcCos( s2 / 4 - 0.5 ); // = (2 * Pi - A1) / 3
+                A3 := A1 + A2;
+//ShowMessage( / A2);
+//A1 + 3 * A2 = 2Pi
+//A2*2 + A3 = 2 * Pi;
+//ShowMessage(A1); // 1.129
+//ShowMessage(A2); // 1.71
+//ShowMessage(A3); // 2.85
+
+                Ae1[ 0] :=  0; Ae2[ 0] :=  3; Ae3[ 0] :=  2;
+                Ae1[ 1] :=  1; Ae2[ 1] :=  0; Ae3[ 1] :=  3;
+                Ae1[ 2] :=  2; Ae2[ 2] :=  1; Ae3[ 2] :=  0;
+                Ae1[ 3] :=  3; Ae2[ 3] :=  2; Ae3[ 3] :=  1;
+                Ae1[ 4] :=  4; Ae2[ 4] :=  7; Ae3[ 4] :=  6;
+                Ae1[ 5] :=  5; Ae2[ 5] :=  4; Ae3[ 5] :=  7;
+                Ae1[ 6] :=  6; Ae2[ 6] :=  5; Ae3[ 6] :=  4;
+                Ae1[ 7] :=  7; Ae2[ 7] :=  6; Ae3[ 7] :=  5;
+                Ae1[ 8] :=  8; Ae2[ 8] := 11; Ae3[ 8] := 10;
+                Ae1[ 9] :=  9; Ae2[ 9] :=  8; Ae3[ 9] := 11;
+                Ae1[10] := 10; Ae2[10] :=  9; Ae3[10] :=  8;
+                Ae1[11] := 11; Ae2[11] := 10; Ae3[11] :=  9;
+                Ae1[12] := 12; Ae2[12] := 15; Ae3[12] := 14;
+                Ae1[13] := 13; Ae2[13] := 12; Ae3[13] := 15;
+                Ae1[14] := 14; Ae2[14] := 13; Ae3[14] := 12;
+                Ae1[15] := 15; Ae2[15] := 14; Ae3[15] := 13;
+                Ae1[16] := 16; Ae2[16] := 19; Ae3[16] := 18;
+                Ae1[17] := 17; Ae2[17] := 16; Ae3[17] := 19;
+                Ae1[18] := 18; Ae2[18] := 17; Ae3[18] := 16;
+                Ae1[19] := 19; Ae2[19] := 18; Ae3[19] := 17;
+                Ae1[20] := 20; Ae2[20] := 23; Ae3[20] := 22;
+                Ae1[21] := 21; Ae2[21] := 20; Ae3[21] := 23;
+                Ae1[22] := 22; Ae2[22] := 21; Ae3[22] := 20;
+                Ae1[23] := 23; Ae2[23] := 22; Ae3[23] := 21;
+            </Script>
+            <ExecMacro MacroName = "ScAll"         Repeat = "1" />
+            <ExecMacro1 MacroName = "Sc3"         Repeat = "1" />
+            <ExecMacro1 MacroName = "Sc1"         Repeat = "1" />
+            <ExecMacro1 MacroName = "Sc1"         Repeat = "20" />
+            <ExecMacro1 MacroName = "RandomTurns" Repeat = "200" />
+        </Macro>
+    </Macros>
+</xml>

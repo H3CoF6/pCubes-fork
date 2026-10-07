@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dutch Design Week</Name>
+        <Menu>Other forms\Unclassified\Dutch Design Week</Menu>
+        <Inventor>Ola Jansson</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-10-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10395</Link>
+    </Interface>
+
+    <Script>
+        Color  := 'FFFFFF'; // White
+
+        W := 0.6;
+        D := W / 3;
+        R := D * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = "0; D; 0" />
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "D" />
+        <Transfer Vector = "0;-D; 0" />
+
+        <HideAll/>
+
+        <Macro Name = "AddQuarter" >
+            <Script>
+                Angle := Quarter * Pi/2;
+                sa := sin(Angle);
+                ca := cos(Angle);
+            </Script>
+            <Cylinder Radius = "R" Color = "Color" Base = " X; 0;-D" Top = " X; 0; D" BaseColor = "Color" TopColor = "Color" />
+            <Cut Color = "Color" > <Plane NormVector = " sa; ca; 0" BaseVector = " X; 0; 0" NormDistance = " 0" /> </Cut>
+            <Cut Color = "Color" > <Plane NormVector = "-ca; sa; 0" BaseVector = " X; 0; 0" NormDistance = " 0" /> </Cut>
+            <HideAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddQuarter" X = "-D*3" Quarter = "1" />
+        <ExecMacro MacroName = "AddQuarter" X = "-D  " Quarter = "3" />
+        <ExecMacro MacroName = "AddQuarter" X = " D  " Quarter = "0" />
+        <ExecMacro MacroName = "AddQuarter" X = " D  " Quarter = "2" />
+        <ExecMacro MacroName = "AddQuarter" X = " D*3" Quarter = "0" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

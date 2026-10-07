@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>RotoPrism 3 Split</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Mixed\RotoPrism 3 Split</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-19</Added>
+    </Interface>
+
+    <Script>
+        clYellow := 'FFFF00';
+        clBlue   := '0000A0';
+        clBlue1  := '0000A1';
+        clRed    := 'FF0000';
+        clRed1   := 'FF0001';
+        clGreen  := '008000';
+        clGreen1 := '008001';
+        clWhite  := 'FFFFFF';
+
+        H := 0.5;
+        sAngle := Pi * 2 / 3;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(sAngle * i);
+            ay[i] := sin(sAngle * i);
+
+            x[i * 2] := H * (sin(sAngle * (i-1)) + cos(sAngle * (i-1)) * sqrt(3) / 2);
+            y[i * 2] := H * (cos(sAngle *  (i-1)) - sin(sAngle * (i-1)) * sqrt(3) / 2);
+
+            x[i * 2 + 1] := H * sin(sAngle * i);
+            y[i * 2 + 1] := H * cos(sAngle * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" NormVectors = "ax; ay; 0" />
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "  0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x; y; H" />
+            <Vertices Vectors = " x; y;-H" />
+
+            <Faces>
+                <Face Color = "clWhite " VertexIndexes = "5;4;3;2;1;0" />
+                <Face Color = "clGreen " VertexIndexes = "0;1;7;6" />
+                <Face Color = "clGreen1" VertexIndexes = "1;2;8;7" />
+                <Face Color = "clRed   " VertexIndexes = "2;3;9;8" />
+                <Face Color = "clRed1  " VertexIndexes = "3;4;10;9" />
+                <Face Color = "clBlue  " VertexIndexes = "4;5;11;10" />
+                <Face Color = "clBlue1 " VertexIndexes = "5;0;6;11" />
+                <Face Color = "clYellow" VertexIndexes = "6;7;8;9;10;11" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Angle = " Pi    " Axis = "0" Layer = "0" />
+        <Turn Angle = " Pi / 2" Axis = "1" Layer = "1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+        <Turn Angle = " Pi    " Axis = "1" Layer = "0" />
+        <Turn Angle = " Pi / 2" Axis = "2" Layer = "1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+        <Turn Angle = " Pi    " Axis = "2" Layer = "0" />
+        <Turn Angle = " Pi / 2" Axis = "0" Layer = "1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+    </Figure>
+</xml>

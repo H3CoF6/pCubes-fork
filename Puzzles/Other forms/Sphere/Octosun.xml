@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octosun (Sphere)</Name>
+        <Menu>Other forms\Sphere\Octosun</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8117</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0088FF'; // Blue1
+        Colors[1] := '00AA00'; // Green2
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := 'FF0000'; // Red
+        Colors[4] := 'FF6000'; // Orange
+        Colors[5] := '8800DD'; // Violett
+        Colors[6] := '00FF00'; // Green1
+        Colors[7] := '0033EE'; // Blue2
+
+        K := 0.6;
+
+        A1 := arccos(-1/9);
+        A2 := arccos(-2/3);
+
+        D := K * 0.8525;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 2" />
+        <Axis NormVector = " 1; 0; 2" />
+        <Axis NormVector = " 0;-1; 2" />
+        <Axis NormVector = "-1; 0; 2" />
+
+        <Axis NormVector = " 0; 2; 1" />
+        <Axis NormVector = " 1; 2; 0" />
+        <Axis NormVector = " 0; 2;-1" />
+        <Axis NormVector = "-1; 2; 0" />
+
+        <Axis NormVector = " 2; 0; 1" />
+        <Axis NormVector = " 2; 1; 0" />
+        <Axis NormVector = " 2; 0;-1" />
+        <Axis NormVector = " 2;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector" >
+            <HideAll/>
+            <Script>Color := Colors[c]; Inc(c); </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = " 1; 0; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "AddSector" Repeat = "4" c = "0" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSector" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

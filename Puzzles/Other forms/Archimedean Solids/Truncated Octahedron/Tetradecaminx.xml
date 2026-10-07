@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tetradecaminx</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Octahedron\Tetradecaminx</Menu>
+        <Inventor>Jacob Keener</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-01-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12452</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '1D9F00'; // Green
+        Colors[1] := 'FFFFFF'; // White
+        Colors[2] := '45575E'; // Gray
+        Colors[3] := 'FF0000'; // Red
+        Colors[4] := '7700CD'; // Violett
+        Colors[5] := 'FF5C00'; // Orange
+        Colors[6] := '0000FF'; // Blue
+        Colors[7] := 'EDFF11'; // Yellow
+
+        Colors[ 8] := 'FFFFF0'; // White1
+        Colors[ 9] := 'EDFF15'; // Yellow1
+        Colors[10] := '0000FD'; // Blue1
+        Colors[11] := '1D9F05'; // Green1
+        Colors[12] := 'FF0005'; // Red1
+        Colors[13] := 'FF5C05'; // Orange1
+
+        W := 0.8;
+
+        D := W * 7 / 27 * sqrt(3);
+        E := W * 5 / 9;
+        H := W * 2 / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-E; E" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+
+        <Cut Color = "Colors[ 8]" > <Plane NormVector = " 1; 0; 0" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[ 9]" > <Plane NormVector = "-1; 0; 0" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[10]" > <Plane NormVector = " 0; 1; 0" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[11]" > <Plane NormVector = " 0;-1; 0" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[12]" > <Plane NormVector = " 0; 0; 1" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[13]" > <Plane NormVector = " 0; 0;-1" NormDistance = "-H" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

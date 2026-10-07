@@ -1,0 +1,78 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Ultra-X</Name>
+        <Menu>Other forms\Archimedean Solids\Cuboctahedron\Ultra-X</Menu>
+        <Inventor>Eric Vergo</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1986</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        D1 := sqrt(3) / 6;
+        D2 := sqrt(2) / (8 / 3);
+        RCut := W/2 * 0.94;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 0;  1; 1" />
+        <Axis NormVector = " 1;  0; 1" />
+        <Axis NormVector = " 0; -1; 1" />
+        <Axis NormVector = "-1;  0; 1" />
+        <Axis NormVector = "-1;  1; 0" />
+        <Axis NormVector = " 1;  1; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "Ex; Ey; Ez" />
+
+            <Faces>
+                <Face Color = "FFFFFF" VertexIndexes = "11; 7; 4; 0" />
+                <Face Color = "FFFF00" VertexIndexes = "10; 1; 5; 6" />
+                <Face Color = "0000C8" VertexIndexes = "11; 2;10; 9" />
+                <Face Color = "009600" VertexIndexes = " 8; 5; 3; 4" />
+                <Face Color = "FF800A" VertexIndexes = " 9; 6; 8; 7" />
+                <Face Color = "C80000" VertexIndexes = " 2; 0; 3; 1" />
+                <Face Color = "999999" VertexIndexes = "11; 9; 7" />
+                <Face Color = "FF88FF" VertexIndexes = "10; 6; 9" />
+                <Face Color = "CCAA00" VertexIndexes = "11; 0; 2" />
+                <Face Color = "00CC55" VertexIndexes = " 2; 1;10" />
+                <Face Color = "FFFFAA" VertexIndexes = " 7; 8; 4" />
+                <Face Color = "962200" VertexIndexes = " 6; 5; 8" />
+                <Face Color = "8800CC" VertexIndexes = " 0; 4; 3" />
+                <Face Color = "0066DD" VertexIndexes = " 1; 3; 5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Cut">
+            <HideContaining Vector = "Ex[0]; Ey[0]; Ez[0]" />
+            <HideContaining Vector = "Ex[1]; Ey[1]; Ez[1]" />
+            <HideContaining Vector = "Ex[6]; Ey[6]; Ez[6]" />
+            <HideContaining Vector = "Ex[7]; Ey[7]; Ez[7]" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-RCut" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-RCut" /> </Cut>
+            <ShowAll/>
+            <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3"/>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "3" />
+    </Figure>
+</xml>

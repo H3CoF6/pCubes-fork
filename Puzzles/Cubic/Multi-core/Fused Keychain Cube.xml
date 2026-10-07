@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fused Keychain Cube</Name>
+        <Menu>Cubic\Multi-core\Fused Keychain Cube</Menu>
+        <Inventor>Vadim Grishin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=963</Link>
+    </Interface>
+
+    <Script>
+        W := 0.35;
+        W1 := W * 2 / 3;
+        D := W / 3;
+        D1 := W1 / 3;
+        T := W1 + D;
+    </Script>
+ 
+    <Axes TurningAngles = "0; Pi / 2; Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0;-1" />
+    </Axes>
+ 
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "D1" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-T;-T; T" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "-T;-T; T" />
+        <Axis NormVector = " 0; 0; 1" BaseVector = "-T;-T; T" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <RemoveContaining Vector = "-W;-W; W" />
+        <HideAll/>
+
+        <Transfer Vector = " T; T;-T" />
+        <LoadFrom File = "Figures\Cube.xml" W = "W1" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = " D1" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = " D1" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D1" /></Split>
+        <Transfer Vector = "-T;-T; T" />
+        <ShowAll/>
+    </Figure>
+</xml>

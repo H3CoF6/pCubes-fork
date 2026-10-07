@@ -1,0 +1,94 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Christmas Tree 3x3x3</Name>
+        <Menu>Other forms\3x3x3 variants\Christmas Tree 3x3x3</Menu>
+        <Inventor>Mason Hynds</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7159</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFEE00'; // Yellow
+        Colors[1] := '0044EE'; // Blue
+        Colors[2] := 'DD0000'; // Red
+        Colors[3] := 'FF7700'; // Orange
+        Colors[4] := '00BB00'; // Green
+
+        H := 0.9;
+        R := H * 2 / 3;
+
+        D := H / 6;
+        Z :=-H * 0.3;
+        DZ := H * 0.125;
+
+        for i := 0 to 23 do begin
+            x[i] := R * cos(Pi / 12 * i);
+            y[i] := R * sin(Pi / 12 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Cone" >
+            <Part>
+                <Vertices Vectors = "x; y; Z">
+                    <Add Vector  = "0; 0; H + Z" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[3]" VertexIndexes = "24; 0; 1" InvisibleEdges = "5" />
+                    <Face Color = "Colors[3]" VertexIndexes = "24; 1; 2" InvisibleEdges = "5" />
+                    <Face Color = "Colors[3]" VertexIndexes = "24; 2; 3" InvisibleEdges = "5" />
+                    <Face Color = "Colors[4]" VertexIndexes = "24; 3; 4" InvisibleEdges = "4" />
+                    <Face Color = "Colors[4]" VertexIndexes = "24; 4; 5" InvisibleEdges = "5" />
+                    <Face Color = "Colors[4]" VertexIndexes = "24; 5; 6" InvisibleEdges = "5" />
+                    <Face Color = "Colors[4]" VertexIndexes = "24; 6; 7" InvisibleEdges = "5" />
+                    <Face Color = "Colors[4]" VertexIndexes = "24; 7; 8" InvisibleEdges = "5" />
+                    <Face Color = "Colors[4]" VertexIndexes = "24; 8; 9" InvisibleEdges = "5" />
+                    <Face Color = "Colors[2]" VertexIndexes = "24; 9;10" InvisibleEdges = "4" />
+                    <Face Color = "Colors[2]" VertexIndexes = "24;10;11" InvisibleEdges = "5" />
+                    <Face Color = "Colors[2]" VertexIndexes = "24;11;12" InvisibleEdges = "5" />
+                    <Face Color = "Colors[2]" VertexIndexes = "24;12;13" InvisibleEdges = "5" />
+                    <Face Color = "Colors[2]" VertexIndexes = "24;13;14" InvisibleEdges = "5" />
+                    <Face Color = "Colors[2]" VertexIndexes = "24;14;15" InvisibleEdges = "5" />
+                    <Face Color = "Colors[1]" VertexIndexes = "24;15;16" InvisibleEdges = "4" />
+                    <Face Color = "Colors[1]" VertexIndexes = "24;16;17" InvisibleEdges = "5" />
+                    <Face Color = "Colors[1]" VertexIndexes = "24;17;18" InvisibleEdges = "5" />
+                    <Face Color = "Colors[1]" VertexIndexes = "24;18;19" InvisibleEdges = "5" />
+                    <Face Color = "Colors[1]" VertexIndexes = "24;19;20" InvisibleEdges = "5" />
+                    <Face Color = "Colors[1]" VertexIndexes = "24;20;21" InvisibleEdges = "5" />
+                    <Face Color = "Colors[3]" VertexIndexes = "24;21;22" InvisibleEdges = "4" />
+                    <Face Color = "Colors[3]" VertexIndexes = "24;22;23" InvisibleEdges = "5" />
+                    <Face Color = "Colors[3]" VertexIndexes = "24;23; 0" InvisibleEdges = "5" />
+
+                    <Face Color = "Colors[0]" VertexIndexes = "23;22;21;20;19;18;17;16;15;14;13;12;11;10;9;8;7;6;5;4;3;2;1;0" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "Cone" />
+        <Cut Axis = "0" From = "2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cone" Z = "Z - DZ" />
+        <Cut Axis = "0" From = "1" To = "2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cone" Z = "Z - DZ" />
+        <Cut Axis = "0" To = "1" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

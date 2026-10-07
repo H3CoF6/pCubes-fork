@@ -1,0 +1,116 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Nova Skewb 1</Name>
+        <Menu>Other cubes\Unclassified\Nova Skewb 1</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7502</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := '00AA00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        S := W * 0.58;
+        D := W * 1.082;
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 2; 1" /> <!--RotatePoint( 1, 1, 0, -f, f,-f, -1*pi/6)-->
+        <Axis NormVector = " 1;-1;-2" /> <!--RotatePoint(-1,-1, 0, -f, f,-f, -3*pi/6)-->
+        <Axis NormVector = "-2;-1; 1" /> <!--RotatePoint( 1, 1, 0, -f, f,-f, -5*pi/6)-->
+        <Axis NormVector = " 1; 1; 2" /> <!--RotatePoint( 0, 1, 1, -f,-f, f, -1*pi/6)-->
+        <Axis NormVector = "-2; 1;-1" /> <!--RotatePoint( 0,-1,-1, -f,-f, f, -3*pi/6)-->
+        <Axis NormVector = " 1;-2;-1" /> <!--RotatePoint( 0, 1, 1, -f,-f, f, -5*pi/6)-->
+        <Axis NormVector = "-1;-2; 1" /> <!--RotatePoint(-1,-1, 0,  f,-f,-f, -1*pi/6)-->
+        <Axis NormVector = "-1; 1;-2" /> <!--RotatePoint( 1, 1, 0,  f,-f,-f, -3*pi/6)-->
+        <Axis NormVector = " 2; 1; 1" /> <!--RotatePoint(-1,-1, 0,  f,-f,-f, -5*pi/6)-->
+        <Axis NormVector = "-1;-1; 2" /> <!--RotatePoint( 0,-1, 1,  f, f, f, -1*pi/6)-->
+        <Axis NormVector = " 2;-1;-1" /> <!--RotatePoint( 0, 1,-1,  f, f, f, -3*pi/6)-->
+        <Axis NormVector = "-1; 2;-1" /> <!--RotatePoint( 0,-1, 1,  f, f, f, -5*pi/6)-->
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "3" From = "2" />
+
+        <Macro Name = "CutV" >
+            <HideContaining Vector = "W;W;W" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "-2;-1; 1" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = "-2; 1;-1" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = " 1;-2;-1" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = "-1;-2; 1" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = "-1; 1;-2" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = " 1;-1;-2" NormDistance = "-D" /></Cut>
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "CutV" Repeat = "4" />
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutV" Repeat = "4" />
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+
+        <Macro Name = "CutC" >
+            <HideContaining Vector = "0;0;W" />
+            <InvertVisibility/>
+            <Split><Plane NormVector = " 1; 1;-2" NormDistance = "-D" /></Split>
+            <HideContaining Vector = "0;0;W" />
+            <Split><Plane NormVector = " 0; W; W" NormDistance = "S" /></Split>
+            <Split><Plane NormVector = " W; 0; W" NormDistance = "S" /></Split>
+            <RemoveContaining Vector = " 0; -D * sqrt(6) + 2 * W; W" />
+            <RemoveContaining Vector = " -D * sqrt(6) + 2 * W; 0; W" />
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+        <Macro Name = "CutC2" >
+            <ExecMacro MacroName = "CutC" Repeat = "4" />
+            <Turn NormVector = " 1; 1; 1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "CutC2" Repeat = "3" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutC2" Repeat = "3" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

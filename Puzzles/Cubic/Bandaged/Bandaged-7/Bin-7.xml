@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bin-7</Name>
+        <Menu>Cubic\Bandaged\Cube 7x7x7\Bin-7</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2014-06-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4401</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 7;
+        W_D := W / N;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('112=033, 063, 635, 005, 013, 053, 655, 031, 061, 011, 051, 035, 065, 015, 055, 623, 025, 625, 621, 643, 045, 645, 641, 631, 001, 611, 651, 021, 041, 633, 003, 613, 653, 023, 043, 505');
+        ParseTxt('211=303, 363, 360, 366, 103, 163, 160, 166, 503, 563, 560, 566, 301, 361, 101, 161, 501, 561, 305, 365, 105, 165, 565, 502, 562, 102, 162, 302, 362, 304, 564, 104, 504, 164, 364, 516');
+        ParseTxt('121=320, 020, 600, 120, 520, 300, 000, 306, 100, 106, 500, 340, 040, 540, 200, 226, 206, 246, 400, 426, 406, 446, 620, 326, 126, 526, 220, 420, 640, 346, 140, 146, 546, 240, 440, 605');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+
+        // split and glue paradox element
+        <HideContaining Vector = " W;-W; W*0.6" />
+        <InvertVisibility/>
+        <Split Axis = "1" From = "1" Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" />
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W_D" WY = "W_D*2" WZ = "W_D" DWX = "W_D * 6" DWY = "-W_D * 5" DWZ = "W_D * 4" />
+        <InvertVisibility/>
+    </Figure>
+
+</xml>

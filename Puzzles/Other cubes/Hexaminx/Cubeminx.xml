@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cubeminx</Name>
+        <Menu>Other cubes\Hexaminx\Cubeminx</Menu>
+        <Inventor>Josh Bostick</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2083</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'ED0000'; // Red
+        Colors[1] := 'FF7700'; // Orange
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := '00AA00'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := '444444'; // Black
+
+        W := 0.5;
+        A := W * 1.2;
+        B := A - W;
+        sAngle := 2 * Pi / 5;
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+        f := 1/sqrt(3);
+
+        // Rotate p around normalized v
+        procedure RotatePoint(Xp, Yp, Zp, Xv, Yv, Zv, Angle);
+        begin
+            ca := Cos(Angle);
+            sa := Sin(Angle);
+            c2 := 1 - ca;
+
+            sum := sqrt(Xv^2+Yv^2+Zv^2);
+            Xv := Xv/sum;
+            Yv := Yv/sum;
+            Zv := Zv/sum;
+
+            px[i] := Xp * (Xv * c2 * Xv + ca) +
+                     Yp * (Yv * c2 * Xv - sa * Zv) +
+                     Zp * (Zv * c2 * Xv + sa * Yv);
+
+            py[i] := Xp * (Xv * c2 * Yv + sa * Zv) +
+                     Yp * (Yv * c2 * Yv + ca) +
+                     Zp * (Zv * c2 * Yv - sa * Xv);
+
+            pz[i] := Xp * (Xv * c2 * Zv - sa * Yv) +
+                     Yp * (Yv * c2 * Zv + sa * Xv) +
+                     Zp * (Zv * c2 * Zv + ca);
+
+            Inc(i);
+        end;
+
+        i := 0;
+        RotatePoint( 0,  ss, cs, -f, f,-f, pi/5);
+        RotatePoint( 0, -ss, cs, -f, f,-f, pi/5);
+        RotatePoint( ss, cs,  0, -f, f,-f, pi/5);
+        RotatePoint(-ss, cs,  0, -f, f,-f, pi/5);
+        RotatePoint( cs,  0, ss, -f, f,-f, pi/5);
+        RotatePoint( cs,  0,-ss, -f, f,-f, pi/5);
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        D := W / (ss + cs) * 1.15;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D; D" NormVectors = " px; py; pz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Cut" >
+            <Hide Axis = "ax1" Layer = "l1" />
+            <Hide Axis = "ax2" Layer = "l2" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = "-cx[i]; -cy[i]; -cz[i]" NormDistance = "-W" /> </Cut>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Cut" ax1 = "1" l1 = "2" ax2 = "3" l2 = "0" i = "0" />
+        <ExecMacro MacroName = "Cut" ax1 = "1" l1 = "0" ax2 = "3" l2 = "2" i = "1" />
+        <ExecMacro MacroName = "Cut" ax1 = "1" l1 = "0" ax2 = "4" l2 = "0" i = "2" />
+        <ExecMacro MacroName = "Cut" ax1 = "1" l1 = "2" ax2 = "4" l2 = "2" i = "3" />
+        <ExecMacro MacroName = "Cut" ax1 = "3" l1 = "0" ax2 = "4" l2 = "2" i = "4" />
+        <ExecMacro MacroName = "Cut" ax1 = "3" l1 = "2" ax2 = "4" l2 = "0" i = "5" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

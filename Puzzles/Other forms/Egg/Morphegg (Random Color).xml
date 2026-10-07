@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Morphegg (Random Color)</Name>
+        <Menu>Other forms\Egg\Morphegg (Random Color)</Menu>
+        <Menu>Other forms\3x3x3 variants\Egg\Morphegg (Random Color)</Menu>
+        <Inventor>Adam G. Cowan</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-03-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1961</Link>
+        <Link>https://www.hknowstore.com/locale/en-US/categoryofcorp.aspx?corpname=nowstore&amp;search=morphegg</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF'; // White
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := '00AA00'; // LightGreen
+        Colors[3] := '3848FF'; // LightBlue
+        Colors[4] := 'FF0000'; // Red
+        Colors[5] := 'EFCC71'; // Gold
+        Colors[6] := 'BFBFBA'; // Silver
+        
+        K := 0.7;
+        
+        D := K * 0.24;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = " 0; 1; 0" Angle = "-ArcTan(sqrt(2))" />
+
+        <LoadFrom File = "Puzzles\Other forms\Egg\_Macro_For_Egg.xml" Color = "Colors[Random(7)]" Nx = "24" />
+
+        <SplitByAxes/>
+        
+        <SaveSolvedState/>
+    </Figure>
+    
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

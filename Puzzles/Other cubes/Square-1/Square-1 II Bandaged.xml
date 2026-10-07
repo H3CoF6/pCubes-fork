@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-1 II Bandaged</Name>
+        <Menu>Other cubes\Square-1\Square-1 II Bandaged</Menu>
+        <Inventor>Milan Vodicka</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-09-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4817</Link>
+    </Interface>
+
+    <Script>
+        S15 := sin (Pi / 12); // 15 degrees
+        C15 := cos (Pi / 12);
+
+        W := 0.5;
+        H := W / C15;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "S15; C15; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "H" />
+        <Split Axis = "0" From  = "2" />
+        <Split Axis = "1" From  = "1" />
+        <HideContaining Vector = " 0; W; 0" />
+        <Split Axis = "0" From  = "1" />
+        <Hide  Axis = "0" From  = "1" To = "1" />
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi / 12" />
+        <Split><Plane NormVector = "0; 1; 0" /></Split>
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi / 3" />
+        <Split><Plane NormVector = "0; 1; 0" /></Split>
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi / 6" />
+        <Split><Plane NormVector = "0; 1; 0" /></Split>
+        <Turn NormVector = "0; 0; 1" Angle = "Pi * 7 / 12" />
+        <ShowAll/>
+    </Figure>
+</xml>

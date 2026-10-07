@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Penta Mixup Gimmick</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Mixed\Penta Mixup Gimmick</Menu>
+        <Inventor>Braden Ganetsky</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-12-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9430</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+
+        R := 0.65;
+
+        H := R * sin(Pi / 5);
+        sAngle := Pi * 2 / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D1 := R * cos(Pi/5)^2/cos(Pi/10);
+        D2 := R * sqrt((5-sqrt(5))/40);
+    </Script>
+
+    <Axes TurningAngles = "sAngle;Pi/10;sAngle" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-D1;D1" NormVectors = "x; y; 0" />
+
+    <Figure>
+        <Turn1 NormVector = "0;0;1" Angle = "Pi/10" />
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "5;6;1;0" />
+                <Face Color = "clBlue  " VertexIndexes = "6;7;2;1" />
+                <Face Color = "clGreen " VertexIndexes = "7;8;3;2" />
+                <Face Color = "clOrange" VertexIndexes = "8;9;4;3" />
+                <Face Color = "clPurple" VertexIndexes = "9;5;0;4" />
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clWhite " VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+        <Turn1 NormVector = "0;0;1" Angle = "-Pi/10" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Turn Axis = "0" Layer = "1" Angle = "-Pi/10" />
+        <Hide Axis = "0" Layers = "0;2" />
+        <SplitByAxes/>
+        <InvertVisibility/>
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "3" From = "2" />
+        <Split Axis = "4" From = "2" />
+        <Split Axis = "5" From = "2" />
+        <ShowAll/>
+        <Undo />
+    </Figure>
+</xml>

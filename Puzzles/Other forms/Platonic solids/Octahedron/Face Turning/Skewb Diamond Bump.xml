@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Diamond Bump</Name>
+        <Menu>Other forms\Octahedron\Face Turning\Skewb Diamond Bump</Menu>
+        <Menu>Other forms\Skewb variants\Octahedron\Skewb Diamond Bump</Menu>
+        <Inventor>César Gustavo Hernández Martínez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-08-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9011</Link>
+    </Interface>
+
+    <Script>
+        Color := '707070';
+        for i := 0 to 7 do
+            Colors[i] := Color;
+
+        W := 0.75;
+
+        DX := 0;
+        DY := W * 0.1;
+        DZ := W * 0.05;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = "-DX;-DY;-DZ" />
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+        <Transfer Vector = " DX; DY; DZ" />
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 8" />
+</xml>

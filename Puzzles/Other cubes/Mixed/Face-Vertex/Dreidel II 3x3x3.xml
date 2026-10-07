@@ -1,0 +1,132 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dreidel II 3x3x3</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\Dreidel II 3x3x3</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2018-09-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5223</Link>
+    </Interface>
+
+    <Script>
+        clGreen  := '009600';
+        clYellow := 'FFFF00';
+        clBlue   := '0000C8';
+        clRed    := 'FF0000';
+        clOrange := 'FF800A';
+        clWhite  := 'FFFFFF';
+
+        clUp    := clWhite;
+        clDown  := clYellow;
+        clLeft  := clRed;
+        clRight := clOrange;
+        clFront := clBlue;
+        clBack  := clGreen;
+
+        K  := 2 / (3 * sqrt(2));
+        C0 := K * 3 * sqrt(2) / 4;
+        C1 := K * 9 * sqrt(2) / 8;
+        C2 := K * sqrt(2) / 4;
+
+        D  := K * sqrt(6) * 3 / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi/3; 0; Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " C0; C0; C0" />
+        <Axis NormVector = "-C0; C0; C0" />
+        <Axis NormVector = " C0;-C0; C0" />
+        <Axis NormVector = "-C0;-C0; C0" />
+    </Axes>
+    <Axes TurningAngles = "Pi/2; 0; Pi/2" PlaneDistances = "-C2; C2" >
+        <Axis NormVector = " C0;  0;  0" />
+        <Axis NormVector = "  0; C0;  0" />
+        <Axis NormVector = "  0;  0; C0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;   0;  C1" />
+                <Add Vector = "  0;   0; -C1" />
+                <Add Vector = " C1;   0;   0" />
+                <Add Vector = "-C1;   0;   0" />
+                <Add Vector = "  0;  C1;   0" />
+                <Add Vector = "  0; -C1;   0" />
+                <Add Vector = " C0;  C0;  C0" />
+                <Add Vector = " C0;  C0; -C0" />
+                <Add Vector = " C0; -C0;  C0" />
+                <Add Vector = " C0; -C0; -C0" />
+                <Add Vector = "-C0;  C0;  C0" />
+                <Add Vector = "-C0;  C0; -C0" />
+                <Add Vector = "-C0; -C0;  C0" />
+                <Add Vector = "-C0; -C0; -C0" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clUp"    VertexIndexes = "0; 6;10" InvisibleEdges = "5" />
+                <Face Color = "clUp"    VertexIndexes = "0;10;12" InvisibleEdges = "5" />
+                <Face Color = "clUp"    VertexIndexes = "0;12; 8" InvisibleEdges = "5" />
+                <Face Color = "clUp"    VertexIndexes = "0; 8; 6" InvisibleEdges = "5" />
+
+                <Face Color = "clDown"  VertexIndexes = "1; 7; 9" InvisibleEdges = "5" />
+                <Face Color = "clDown"  VertexIndexes = "1; 9;13" InvisibleEdges = "5" />
+                <Face Color = "clDown"  VertexIndexes = "1;13;11" InvisibleEdges = "5" />
+                <Face Color = "clDown"  VertexIndexes = "1;11; 7" InvisibleEdges = "5" />
+
+                <Face Color = "clRight" VertexIndexes = "2; 6; 8" InvisibleEdges = "5" />
+                <Face Color = "clRight" VertexIndexes = "2; 8; 9" InvisibleEdges = "5" />
+                <Face Color = "clRight" VertexIndexes = "2; 9; 7" InvisibleEdges = "5" />
+                <Face Color = "clRight" VertexIndexes = "2; 7; 6" InvisibleEdges = "5" />
+
+                <Face Color = "clLeft"  VertexIndexes = "3;10;11" InvisibleEdges = "5" />
+                <Face Color = "clLeft"  VertexIndexes = "3;11;13" InvisibleEdges = "5" />
+                <Face Color = "clLeft"  VertexIndexes = "3;13;12" InvisibleEdges = "5" />
+                <Face Color = "clLeft"  VertexIndexes = "3;12;10" InvisibleEdges = "5" />
+
+                <Face Color = "clBack"  VertexIndexes = "4; 6; 7" InvisibleEdges = "5" />
+                <Face Color = "clBack"  VertexIndexes = "4; 7;11" InvisibleEdges = "5" />
+                <Face Color = "clBack"  VertexIndexes = "4;11;10" InvisibleEdges = "5" />
+                <Face Color = "clBack"  VertexIndexes = "4;10; 6" InvisibleEdges = "5" />
+
+                <Face Color = "clFront" VertexIndexes = "5; 8;12" InvisibleEdges = "5" />
+                <Face Color = "clFront" VertexIndexes = "5;12;13" InvisibleEdges = "5" />
+                <Face Color = "clFront" VertexIndexes = "5;13; 9" InvisibleEdges = "5" />
+                <Face Color = "clFront" VertexIndexes = "5; 9; 8" InvisibleEdges = "5" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "3" From = "2" />
+
+        <Turn Axis = "0" Layer = "0" Angle = " Pi" />
+        <Turn Axis = "1" Layer = "0" Angle = " Pi" />
+        <Turn Axis = "2" Layer = "0" Angle = " Pi" />
+        <Turn Axis = "3" Layer = "0" Angle = " Pi" />
+        <Turn Axis = "0" Layer = "2" Angle = " Pi" />
+        <Turn Axis = "1" Layer = "2" Angle = " Pi" />
+        <Turn Axis = "2" Layer = "2" Angle = " Pi" />
+        <Turn Axis = "3" Layer = "2" Angle = " Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "8" />
+
+        <Cut Color = "clUp   "> <Plane NormVector = " 0; 0;-1" NormDistance = "-C2*4" /> </Cut>
+        <Cut Color = "clDown "> <Plane NormVector = " 0; 0; 1" NormDistance = "-C2*4" /> </Cut>
+        <Cut Color = "clRight"> <Plane NormVector = "-1; 0; 0" NormDistance = "-C2*4" /> </Cut>
+        <Cut Color = "clLeft "> <Plane NormVector = " 1; 0; 0" NormDistance = "-C2*4" /> </Cut>
+        <Cut Color = "clBack "> <Plane NormVector = " 0;-1; 0" NormDistance = "-C2*4" /> </Cut>
+        <Cut Color = "clFront"> <Plane NormVector = " 0; 1; 0" NormDistance = "-C2*4" /> </Cut>
+
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

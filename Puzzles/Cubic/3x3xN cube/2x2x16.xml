@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2x16 Cubic</Name>
+        <Menu>Cubic\3x3xN Cube\2x2x16</Menu>
+        <Inventor>Jonathan Burn</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-04-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6520</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 16;
+
+        WD := 2 * W / N;
+        D[0] := -W + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "N / 2" />
+        <Split Axis = "1" From = "N / 2" />
+        <Macro Name = "Split" >
+            <Split Axis = "2" From = "ax" />
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" ax = "1" Repeat = "N - 1" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(2)" Layer = "Random(N)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(N)" Angle = "Pi/2 * Random(4) " />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script> N := 16; </Script>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

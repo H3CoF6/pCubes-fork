@@ -1,0 +1,155 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>DuGuXin Mixup Magic Cube</Name>
+        <Menu>Other forms\Archimedean Solids\Rhombicuboctahedron\DuGuXin Mixup Magic Cube</Menu>
+        <Inventor>You YuChun</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7339</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF';
+        Colors[1] := '0066FF';
+        Colors[2] := '00AA00';
+        Colors[3] := 'FF6600';
+        Colors[4] := 'FF0000';
+        Colors[5] := 'FFFF00';
+        clBlack   := '020202';
+
+        W := 0.6;
+        A := W * (sqrt(2) - 1);
+        D := A;
+        WC := W + 0.001;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/2" PlaneDistances = "-D;D" >
+        <Axis NormVector = " 1;  0;  0" />
+        <Axis NormVector = " 0;  1;  0" />
+        <Axis NormVector = " 0;  0;  1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " A; A; W" />
+                <Add Vector = " A;-A; W" />
+                <Add Vector = "-A; A; W" />
+                <Add Vector = "-A;-A; W" />
+                <Add Vector = " W; A; A" />
+                <Add Vector = " W; A;-A" />
+                <Add Vector = " W;-A; A" />
+                <Add Vector = " W;-A;-A" />
+                <Add Vector = "-W; A; A" />
+                <Add Vector = "-W; A;-A" />
+                <Add Vector = "-W;-A; A" />
+                <Add Vector = "-W;-A;-A" />
+                <Add Vector = " A; W; A" />
+                <Add Vector = " A; W;-A" />
+                <Add Vector = " A;-W; A" />
+                <Add Vector = " A;-W;-A" />
+                <Add Vector = "-A; W; A" />
+                <Add Vector = "-A; W;-A" />
+                <Add Vector = "-A;-W; A" />
+                <Add Vector = "-A;-W;-A" />
+                <Add Vector = "-A;-A;-W" />
+                <Add Vector = "-A; A;-W" />
+                <Add Vector = " A;-A;-W" />
+                <Add Vector = " A; A;-W" />
+                <Add Vector = "-W;-A;-A" />
+                <Add Vector = "-W; A;-A" />
+                <Add Vector = " W;-A;-A" />
+                <Add Vector = " W; A;-A" />
+                <Add Vector = "-A;-W;-A" />
+                <Add Vector = "-A; W;-A" />
+                <Add Vector = " A;-W;-A" />
+                <Add Vector = " A; W;-A" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = " 0; 1; 6; 4" />
+                <Face Color = "Colors[0]" VertexIndexes = " 0; 2; 3; 1" />
+                <Face Color = "Colors[0]" VertexIndexes = " 0;12;16; 2" />
+                <Face Color = "Colors[1]" VertexIndexes = " 4; 6; 7; 5" />
+                <Face Color = "Colors[4]" VertexIndexes = " 7; 6;14;15" />
+                <Face Color = "Colors[2]" VertexIndexes = " 8; 9;11;10" />
+                <Face Color = "Colors[0]" VertexIndexes = " 8;10; 3; 2" />
+                <Face Color = "Colors[3]" VertexIndexes = " 8;16;17; 9" />
+                <Face Color = "Colors[3]" VertexIndexes = "12;13;17;16" />
+                <Face Color = "Colors[4]" VertexIndexes = "14;18;19;15" />
+                <Face Color = "Colors[1]" VertexIndexes = "13;12; 4; 5" />
+                <Face Color = "Colors[2]" VertexIndexes = "18;10;11;19" />
+                <Face Color = "Colors[0]" VertexIndexes = "18;14; 1; 3" />
+                <Face Color = "Colors[5]" VertexIndexes = "21;23;22;20" />
+                <Face Color = "Colors[5]" VertexIndexes = "22;23;27;26" />
+                <Face Color = "Colors[5]" VertexIndexes = "22;30;28;20" />
+                <Face Color = "Colors[5]" VertexIndexes = "23;21;29;31" />
+                <Face Color = "Colors[5]" VertexIndexes = "24;25;21;20" />
+                <Face Color = "Colors[1]" VertexIndexes = " 0; 4;12" />
+                <Face Color = "Colors[4]" VertexIndexes = " 1;14; 6" />
+                <Face Color = "Colors[3]" VertexIndexes = " 2;16; 8" />
+                <Face Color = "Colors[2]" VertexIndexes = " 3;10;18" />
+                <Face Color = "Colors[3]" VertexIndexes = "25;29;21" />
+                <Face Color = "Colors[2]" VertexIndexes = "28;24;20" />
+                <Face Color = "Colors[4]" VertexIndexes = "26;30;22" />
+                <Face Color = "Colors[1]" VertexIndexes = "31;27;23" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split">
+            <Turn Axis = "Ax1" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+            <Turn Axis = "Ax2" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+            <Undo Repeat = "2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Ax1 = " 0" Ax2 = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = " 0" Ax2 = " 2" />
+        <ExecMacro MacroName = "Split" Ax1 = " 1" Ax2 = " 2" />
+        <ExecMacro MacroName = "Split" Ax1 = " 1" Ax2 = " 0" />
+        <ExecMacro MacroName = "Split" Ax1 = " 2" Ax2 = " 0" />
+        <ExecMacro MacroName = "Split" Ax1 = " 2" Ax2 = " 1" />
+
+        <Circle Radius = "0.05" Color = "clBlack" Center = "0; 0; WC" />
+
+        <SaveSolvedState/>
+        <Turn Axis = "2" From = "1" To = "1" Angle = " Pi/4" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "1" From = "0" To = "2" Angle = " Pi/2" />
+        <SaveSolvedState/>
+        <Turn Axis = "0" From = "1" To = "1" Angle = "-Pi/4" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "2" From = "0" To = "2" Angle = "-Pi/2" />
+        <SaveSolvedState/>
+        <Turn Axis = "1" From = "1" To = "1" Angle = "-Pi/4" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "0" From = "0" To = "2" Angle = " Pi/2" />
+        <SaveSolvedState/>
+        <Turn Axis = "2" From = "1" To = "1" Angle = " Pi/4" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "0" From = "0" To = "2" Angle = " Pi/2" />
+        <SaveSolvedState/>
+        <Turn Axis = "1" From = "1" To = "1" Angle = " Pi/4" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "2" From = "0" To = "2" Angle = " Pi/2" />
+        <SaveSolvedState/>
+        <Turn Axis = "0" From = "1" To = "1" Angle = " Pi/4" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "1" From = "0" To = "2" Angle = " Pi/2" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

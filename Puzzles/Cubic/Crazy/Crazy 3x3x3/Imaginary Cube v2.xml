@@ -1,0 +1,88 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Imaginary Cube v2</Name>
+        <Menu>Cubic\Crazy\Crazy 3x3x3\Imaginary Cube v2</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-06-04</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;t=31863</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        R := W * 0.8;
+        WC := W * 1.004;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W; D; W" FixedLayers = "0;3" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1;  0; 0" />
+        <Axis NormVector = " 0; -1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <!-- cutting to assign "0" to block cube -->
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Split>
+        <HideContaining Vector = "W; -W; 0" />
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "-D" /></Split>
+        <Split> <Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = " D" /></Split>
+
+        <Cylinder Radius = "R" Color = "clRed   "> <Base X = "-W" Y = " 0" Z = " 0" /> <Top Color = "clRed   " X = "-WC" Y = "  0" Z = "  0" /> </Cylinder>
+        <Cylinder Radius = "R" Color = "clOrange"> <Base X = " W" Y = " 0" Z = " 0" /> <Top Color = "clOrange" X = " WC" Y = "  0" Z = "  0" /> </Cylinder>
+        <Cylinder Radius = "R" Color = "clBlue  "> <Base X = " 0" Y = "-W" Z = " 0" /> <Top Color = "clBlue  " X = "  0" Y = "-WC" Z = "  0" /> </Cylinder>
+        <Cylinder Radius = "R" Color = "clGreen "> <Base X = " 0" Y = " W" Z = " 0" /> <Top Color = "clGreen " X = "  0" Y = " WC" Z = "  0" /> </Cylinder>
+        <Cylinder Radius = "R" Color = "clYellow"> <Base X = " 0" Y = " 0" Z = "-W" /> <Top Color = "clYellow" X = "  0" Y = "  0" Z = "-WC" /> </Cylinder>
+        <Cylinder Radius = "R" Color = "clWhite "> <Base X = " 0" Y = " 0" Z = " W" /> <Top Color = "clWhite " X = "  0" Y = "  0" Z = " WC" /> </Cylinder>
+
+<!--
+        <Circle Radius = "R" Color = "clRed   " > <Center X = "-D" Y =  "0" Z =  "0" /> </Circle>
+        <Circle Radius = "R" Color = "clOrange" > <Center X =  "D" Y =  "0" Z =  "0" /> </Circle>
+        <Circle Radius = "R" Color = "clBlue  " > <Center X =  "0" Y = "-D" Z =  "0" /> </Circle>
+        <Circle Radius = "R" Color = "clGreen " > <Center X =  "0" Y =  "D" Z =  "0" /> </Circle>
+        <Circle Radius = "R" Color = "clYellow" > <Center X =  "0" Y =  "0" Z = "-D" /> </Circle>
+        <Circle Radius = "R" Color = "clWhite " > <Center X =  "0" Y =  "0" Z =  "D" /> </Circle>
+-->
+
+        <SplitByAxes/>
+
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "-D" /></Split>
+        <Split> <Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Split>
+
+        <Hide Axis = "0" From = "0" To = "1" />
+        <Hide Axis = "1" From = "0" To = "1" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <Hide Axis = "0" From = "0" To = "2" />
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = " D" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "1" From = "0" To = "2" />
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = " D" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "0" From = "2" To = "3" />
+        <Hide Axis = "1" From = "1" To = "3" />
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = " D" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "1" From = "2" To = "3" />
+        <Hide Axis = "0" From = "1" To = "3" />
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = " D" /></Split>
+        <ShowAll/>
+
+        <Connect Axis = "0" Layers = "0;2;3" />
+        <Connect Axis = "1" Layers = "0;2;3" />
+    </Figure>
+</xml>

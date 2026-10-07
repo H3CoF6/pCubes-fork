@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pocket Change v2</Name>
+        <Menu>Cubic\Bandaged\Cube 5x5x5\Pocket Change v2</Menu>
+        <Inventor>joachimsolborg</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6678</Link>
+    </Interface>
+
+    <Script>
+        clOuter  := 'EED9A4';
+        clOuter  := '5500CD';
+        clBlue   := '0000C8';
+        clOrange := 'FF800A';
+        clWhite  := 'FFFFFF';
+
+        W := 0.5;
+        D1 := W / 5;
+        D2 := 3 * D1;
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2; -D1; D1; D2" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "3" />
+        <HideContaining Vector = "W; -W; W" />
+        <HideContaining Vector = "W; -W; 0" />
+        <HideContaining Vector = "W;  0; W" />
+        <HideContaining Vector = "0; -W; W" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "4" />
+        <HideContaining Vector = "W;  0; 0" />
+        <HideContaining Vector = "0; -W; 0" />
+        <HideContaining Vector = "0;  0; W" />
+
+        <Cut Color = "clOuter" ><Plane NormVector = " 1; 0; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "clOuter" ><Plane NormVector = " 0;-1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "clOuter" ><Plane NormVector = " 0; 0; 1" NormDistance = "-W" /></Cut>
+        <Cut Color = "clOuter" ><Plane NormVector = "-1; 0; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "clOuter" ><Plane NormVector = " 0; 1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "clOuter" ><Plane NormVector = " 0; 0;-1" NormDistance = "-W" /></Cut>
+        <ShowAll/>
+
+        <Cut Color = "clOrange" ><Plane NormVector = "-1; 0; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "clBlue  " ><Plane NormVector = " 0; 1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "clWhite " ><Plane NormVector = " 0; 0;-1" NormDistance = "-W" /></Cut>
+
+        <HideContaining Vector = "W; -W; W" />
+        <HideContaining Vector = "W;  0; 0" />
+        <HideContaining Vector = "0; -W; 0" />
+        <HideContaining Vector = "0;  0; W" />
+        <SplitByAxes />
+        <ShowAll/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+</xml>

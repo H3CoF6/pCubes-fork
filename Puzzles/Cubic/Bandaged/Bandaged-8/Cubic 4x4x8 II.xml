@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cubic 4x4x8 II</Name>
+        <Menu>Cubic\Bandaged\Cube 8x8x8\Cubic 4x4x8 II</Menu>
+        <Inventor>Matthew Street</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7664</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        D := W / 4;
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D*3;-D*2;-D; 0; D; D*2; D*3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "6" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "6" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "7" />
+        <HideContaining Vectors = "Vx;Vy;Vz" />
+        <HideContaining Vectors = "Ex;Ey;Ez" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "7" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "7" />
+        <RemoveGrayParts/>
+        <Hide Axis = "2" Layers = "1-6" />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi/2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "5" />
+        <Undo/>
+        <ShowAll/>
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <Split Axis = "2" From = "5" />
+        <Split Axis = "2" From = "6" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "0" Layer = "Random(8)" Angle = "Pi" />
+            <Turn Axis = "1" Layer = "Random(8)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(6) + 1" Angle = "Pi/2" />
+
+            <Turn Axis = "0" Layers = "2-5" Angle = " Pi/2" />
+            <Turn Axis = "2" Layers = "2-5" Angle = "-Pi/2" />
+            <Turn Axis = "0" Layers = "2-5" Angle = "-Pi/2" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(8)" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Turn Axis = "2" Layer = "0" Angle = "Pi/2"/>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "200" />
+        </Macro>
+    </Macros>
+</xml>

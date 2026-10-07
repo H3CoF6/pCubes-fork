@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyramid Scheme</Name>
+        <Menu>Other forms\Pillowed\Tetrahedron\Pyramid Scheme</Menu>
+        <Inventor>Matt Shepit</Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2018-09-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1863</Link>
+    </Interface>
+
+    <Script>
+        K := 0.45;
+
+        sAngle := 2 * Pi / 5;
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+
+        D := K * 0.82;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "   0;  ss;  cs" />
+        <Axis NormVector = "   0; -ss;  cs" />
+        <Axis NormVector = "  ss;  cs;   0" />
+        <Axis NormVector = " -ss;  cs;   0" />
+        <Axis NormVector = "  cs;   0;  ss" />
+        <Axis NormVector = "  cs;   0; -ss" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyraminx Crystal Uranus</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Crazy\Pyraminx Crystal\Uranus</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-25</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0011EE'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := '8800BB'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := Rsin * As * 1.002;
+
+        RC := R * 0.34;
+
+        D1 := RSin;
+        L := 1.002;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; 0; sAngle; 0" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" PlaneDistances = "-D1  ;-D; D; D1  " />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" PlaneDistances = "-D1*2;-D; D; D1*2" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" PlaneDistances = "-D1*2;-D; D; D1*2" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" PlaneDistances = "-D1  ;-D; D; D1  " />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" PlaneDistances = "-D1*2;-D; D; D1*2" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" PlaneDistances = "-D1*2;-D; D; D1*2" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Vx; Vy; Vz" />
+        <HideContaining Vector = "Ex; Ey; Ez" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = "Cx[i] * L; Cy[i] * L; Cz[i] * L" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "12" i = "0" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

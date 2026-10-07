@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>I2-Cube</Name>
+        <Menu>Cubic\Cross\3x3x3\I2-Cube</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-03</Added>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+
+        D := W / 7;
+
+        WX := D * 2;
+        WY := WX;
+        WZ := WX;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D*5;-D*3;-D; D; D*3; D*5" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <!-- invisible fake parts, preventing some turns -->
+        <LoadFrom File = "Figures\Cuboid.xml" DWX ="-D * 4" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWY ="-D * 4" DWX ="0" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWY =" D * 4" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWZ ="-D * 4" DWY ="0" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWZ =" D * 4" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <HideAll/>
+
+        <!-- Body -->
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D * 5" WY = "D * 3" WZ = "D * 3" DWX = "D * 2" DWZ = "0" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

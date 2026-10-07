@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyracosaminx</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Icosahedron\Pyracosaminx</Menu>
+        <Inventor>Lee Tutt</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1642</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFF00';
+        Colors[ 1] := '004080';
+        Colors[ 2] := '4070FF';
+        Colors[ 3] := '00FF00';
+        Colors[ 4] := 'FFFFFF';
+                             
+        Colors[ 5] := 'FF0000';
+        Colors[ 6] := 'FF0080';
+        Colors[ 7] := '800080';
+        Colors[ 8] := 'BF8040';
+        Colors[ 9] := '309060';
+                             
+        Colors[10] := 'FACC05';
+        Colors[11] := '734082';
+        Colors[12] := 'E23465';
+        Colors[13] := '008000';
+        Colors[14] := 'C1C5C7';
+                             
+        Colors[15] := 'FF800A';
+        Colors[16] := '4D1350';
+        Colors[17] := '9F0000';
+        Colors[18] := '7F8040';
+        Colors[19] := '80BF80';
+
+        CutColors[ 0] := '51C4FA';
+        CutColors[ 1] := '075AFF';
+        CutColors[ 2] := 'FF8009';
+        CutColors[ 3] := 'FFFFFE';
+        CutColors[ 4] := 'FACC06';
+        CutColors[ 5] := '01FF00';
+        CutColors[ 6] := '009484';
+        CutColors[ 7] := '38ABEA';
+        CutColors[ 8] := 'FF0001';
+        CutColors[ 9] := 'C1C5C8';
+        CutColors[10] := 'FFFF01';
+        CutColors[11] := '018000';
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        RCut := (2 * R + RSin) / 3;
+
+        D := (R + 2 * RSin) / 3;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <Macro Name = "CutVertex">
+            <Cut Color = "CutColors[i]"> <Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-RCut" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutVertex" i = "0" Repeat = "12" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

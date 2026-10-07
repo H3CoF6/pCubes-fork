@@ -1,0 +1,127 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Screwball</Name>
+        <Menu>Other forms\Sphere\Marbles\Screwball</Menu>
+        <Inventor>Clever Toys</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1112</Link>
+    </Interface>
+
+    <Script>
+        Colors[1] := 'EE0000'; // Red
+        Colors[2] := 'FF7700'; // Orange
+        Colors[3] := 'FFFF00'; // Yellow
+        Colors[4] := '00CC00'; // Green
+
+        K := 0.6;
+
+        D1  := K * 0.87;
+        D2 := K * 0.965;
+        D3 := K * 0.15;
+
+        R := K * 0.992;
+        RC1 := R * 0.95;
+        RC := R * 0.12;
+        for i := 0 to 15 do begin
+            Rx[i] := Rc * sin(i * 2 * Pi / 16);
+            Ry[i] := -R;
+            Rz[i] := -Rc * cos(i * 2 * Pi / 16);
+        end;
+
+        Color := -1; // sphere color
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/4; 0; Pi/4; 0" PlaneDistances = "-D2;-D1; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/4; 0" PlaneDistances = "-D3; D3" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+
+        <Macro Name = "AddPiece" >
+            <HideAll/>
+            <Part>
+                <Vertices Vectors = "Rx; Ry; Rz" >
+                    <Add Vector = "0; -RC1; 0" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[cl]" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15" />
+                    <Face VertexIndexes = " 1; 0;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 2; 1;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 3; 2;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 4; 3;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 5; 4;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 6; 5;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 7; 6;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 8; 7;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 9; 8;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "10; 9;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "11;10;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "12;11;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "13;12;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "14;13;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "15;14;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 0;15;16" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+            <Turn Axis = "ax" Layer = "L" Angle = "Pi/4" />
+	    </Macro>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+
+        <SplitByAxes/>
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "0" Layer = "3" />
+        <Hide Axis = "1" Layer = "1" />
+        <Hide Axis = "1" Layer = "3" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Hide Axis = "2" Layer = "1" />
+        <InvertVisibility/>
+
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/4" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "1" Angle = "-Pi/4" />
+
+        <Macro Name = "Hide" >
+            <Turn Axis = "2" Layer = "1" Angle = "Pi/4" />
+            <HideContaining Vector = "0; K; 0" />
+        </Macro>
+        <ExecMacro MacroName = "Hide" Repeat = "8" />
+
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/8" />
+
+        <ExecMacro MacroName = "AddPiece" ax = "1" L = "1" cl = "4" Repeat = "8" />
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddPiece" ax = "0" L = "1" cl = "2" Repeat = "8" />
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddPiece" ax = "1" L = "3" cl = "3" Repeat = "8" />
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "AddPiece" ax = "0" L = "3" cl = "1" Repeat = "8" />
+
+        <Turn NormVector = "0;0;1" Angle = "Pi*7/8" />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Starminx II</Name>
+        <Menu>Other forms\Dodecahedron\Starminx\Starminx II</Menu>
+        <Menu>Other forms\Dodecahedron\Edge Turning\Starminx II</Menu>
+        <Inventor>Andrew Cormier</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-04-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2007</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R / sqrt(3);
+
+        A1 := ArcCos(sqrt(5)/5); // = arctan(2)
+        A2 := ArcCos(sqrt(5)/3); // = arcsin(2/3);
+        A3 := Pi - A1;
+        A4 := Pi - A2;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "D" NormVectors = "Ex; Ey; Ez" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+    </Figure>
+
+    <Macros>
+        <Macro Name = "RandomTurns180" >
+            <Turn Axis = "Random(30)" Layer = "1" Angle = "Pi"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(30)" Layer = "1" Angle = "Pi/6 * Random(12)"/>
+        </Macro>
+        <Macro Name = "Scramble180" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns180" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble180" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+</xml>

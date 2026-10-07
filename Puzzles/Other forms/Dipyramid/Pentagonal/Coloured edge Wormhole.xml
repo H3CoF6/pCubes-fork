@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Coloured edge Wormhole</Name>
+        <Aliases>Penta Gem</Aliases>
+        <Menu>Other forms\Dipyramid\Pentagonal\Coloured edge Wormhole</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-07-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8291</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'F0F0F0'; // White
+        Colors[ 1] := 'F0F0F1'; // White1
+        Colors[ 2] := 'FFFF00'; // Yellow
+        Colors[ 3] := 'FFFF01'; // Yellow1
+        Colors[ 4] := 'FF0000'; // Red
+        Colors[ 5] := 'FF0001'; // Red1
+        Colors[ 6] := '0000FF'; // Blue
+        Colors[ 7] := '0000FE'; // Blue1
+        Colors[ 8] := '008000'; // Green
+        Colors[ 9] := '008001'; // Green1
+        Colors[10] := 'FF6000'; // Orange
+        Colors[11] := 'FF6001'; // Orange1
+        Colors[12] := '800080'; // Purple
+        Colors[13] := '800081'; // Purple1
+        Colors[14] := 'FF69B4'; // Pink
+        Colors[15] := 'FF69B5'; // Pink1
+        Colors[16] := 'FF7F50'; // Coral
+        Colors[17] := 'FF7F51'; // Coral1
+        Colors[18] := '00FF00'; // Lime
+        Colors[19] := '00FF01'; // Lime1
+
+        Colors[20] := 'C0C0C0'; // Silver
+        Colors[21] := '505050'; // Black
+
+        R1 := 0.7;
+        R2 := R1 * 0.95;
+
+        N := 5;
+
+        for i := 0 to N - 1 do begin
+            ax[i] := cos(2*Pi/N * i);
+            ay[i] := sin(2*Pi/N * i);
+            x[2 * i] := R1 * cos(2*Pi/N * i);
+            y[2 * i] := R1 * sin(2*Pi/N * i);
+            x[2 * i + 1] := R2 * cos(2*Pi/N * (i+0.5));
+            y[2 * i + 1] := R2 * sin(2*Pi/N * (i+0.5));
+        end;
+
+        D := R1 * 0.82;
+        H := R1 * 2;
+        HCut := R1 * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi"      NormVectors = "ax; ay; 0" PlaneDistances = "-D; D" FixedLayers = "1" />
+    <Axes TurningAngles = "2*Pi/10" NormVectors = " 0;  0; 1" PlaneDistances = "0" />
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Colors[i]" VertexIndexes = " 0; 2 + i mod (N * 2); 2 + (i + 1) mod (N * 2)" />
+            <Face Color = "Colors[i + 2 * N]" VertexIndexes = " 1; 2 + (i + 1) mod (N * 2); 2 + i mod (N * 2); " />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " 0; 0; H" />
+            <Vertices Vectors = " 0; 0;-H" />
+            <Vertices Vectors = " x; y; 0" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N * 2" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "Colors[20]" > <Plane NormVector = "0; 0; 1" NormDistance = "-HCut" /> </Cut>
+        <Cut Color = "Colors[21]" > <Plane NormVector = "0; 0;-1" NormDistance = "-HCut" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

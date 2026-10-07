@@ -1,0 +1,132 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pocket 7x7x7 II</Name>
+        <Menu>Cubic\Bandaged\Cube 7x7x7\Pocket 7x7x7 II</Menu>
+        <Inventor>Javier Alla La</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-08-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10203</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        Colors[6] := '00FFFF'; // Cyan
+        Colors[7] := 'FF69B4'; // Pink
+        Colors[8] := '800080'; // Purple
+
+        W := 0.5;
+
+        D1 := W / 7;
+        D2 := 3 * D1;
+        D3 := 5 * D1;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D3;-D2;-D1; D1; D2; D3" TurnAxesWithLayer = "3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "6" />
+        <Split Axis = "2" From = "1" />
+        <HideContaining Vector = "0; 0; 0" />
+
+        <Cut Color = "Colors[1]" ><Plane NormVector = " 1; 0; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[0]" ><Plane NormVector = "-1; 0; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[3]" ><Plane NormVector = " 0; 1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[2]" ><Plane NormVector = " 0;-1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[4]" ><Plane NormVector = " 0; 0; 1" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[5]" ><Plane NormVector = " 0; 0;-1" NormDistance = "-W" /></Cut>
+        <SplitByAxes/>
+        <InvertVisibility/>
+
+        <Cut Color = "Colors[6]" ><Plane NormVector = "-1; 0; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[7]" ><Plane NormVector = " 0; 1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[8]" ><Plane NormVector = " 0; 0;-1" NormDistance = "-W" /></Cut>
+
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "4" />
+
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <HideContaining Vector = " W; 0; 0" />
+        <HideContaining Vector = " 0; 0; W" />
+        <HideContaining Vector = " 0;-W; 0" />
+        <InvertVisibility/>
+        <Split Axis = "0" From = "6" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "6" />
+        <RemoveContaining Vector = " D1;-D1; D1" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(7)" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+
+        <Macro Name = "Turn0" >
+            <Turn Axis = "0" Layers = "4-6" Angle = " Pi/2" />
+            <Turn Axis = "1" Layers = "6"   Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "0" Layers = "4-6" Angle = "-Pi/2" />
+        </Macro>
+
+        <Macro Name = "Turn1" >
+            <Turn Axis = "0" Layers = "4-6" Angle = "-Pi/2" />
+            <Turn Axis = "2" Layers = "0"   Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "0" Layers = "4-6" Angle = " Pi/2" />
+        </Macro>
+
+        <Macro Name = "Turn2" >
+            <Turn Axis = "1" Layers = "0-2" Angle = " Pi/2" />
+            <Turn Axis = "0" Layers = "0"   Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "1" Layers = "0-2" Angle = "-Pi/2" />
+        </Macro>
+
+        <Macro Name = "Turn3" >
+            <Turn Axis = "1" Layers = "0-2" Angle = "-Pi/2" />
+            <Turn Axis = "2" Layers = "0"   Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "1" Layers = "0-2" Angle = " Pi/2" />
+        </Macro>
+
+        <Macro Name = "Turn4" >
+            <Turn Axis = "2" Layers = "4-6" Angle = " Pi/2" />
+            <Turn Axis = "0" Layers = "0"   Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layers = "4-6" Angle = "-Pi/2" />
+        </Macro>
+
+        <Macro Name = "Turn5" >
+            <Turn Axis = "2" Layers = "4-6" Angle = "-Pi/2" />
+            <Turn Axis = "1" Layers = "6"   Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layers = "4-6" Angle = " Pi/2" />
+        </Macro>
+
+        <Macro Name = "Turn05" >
+            <ExecMacro MacroName = "Turn0" />
+            <ExecMacro MacroName = "Turn1" />
+            <ExecMacro MacroName = "Turn2" />
+            <ExecMacro MacroName = "Turn3" />
+            <ExecMacro MacroName = "Turn4" />
+            <ExecMacro MacroName = "Turn5" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Turn05" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

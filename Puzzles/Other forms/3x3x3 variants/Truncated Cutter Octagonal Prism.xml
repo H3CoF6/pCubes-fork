@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Truncated Cutter Octagonal Prism</Name>
+        <Menu>Other forms\Prism\Octagonal Prism\Truncated Cutter Octagonal Prism</Menu>
+        <Menu>Other forms\3x3x3 variants\Prism\Truncated Cutter Octagonal Prism</Menu>
+        <Inventor>Nathan Wilson</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-02-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12377</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        Colors[6] := '00DCB4'; // Cyan
+        Colors[7] := '800080'; // Violett
+        Colors[8] := 'FF0080'; // LightViolett
+        Colors[9] := '2828FF'; // LightBlue
+
+        W := 0.3;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        D := W / 3;
+        DCut1 := W * sqrt(2) * 2 / 3;
+        DCut2 := (W + D) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "-3 * Pi / 4" />
+        <LoadFrom File = "Figures\Cuboid.xml" WZ = "2.5 * W" />
+
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi/4" />
+        <SplitByAxes/>
+
+        <Cut Color = "Colors[4]" ><Plane NormVector = " 0; 1; 1" NormDistance = "-DCut2" /></Cut>
+        <Cut Color = "Colors[5]" ><Plane NormVector = " 0;-1;-1" NormDistance = "-DCut2" /></Cut>
+
+        <Undo/>
+
+        <Cut Color = "Colors[6]" ><Plane NormVector = " 1; 1; 0" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[7]" ><Plane NormVector = " 1;-1; 0" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[8]" ><Plane NormVector = "-1; 1; 0" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[9]" ><Plane NormVector = "-1;-1; 0" NormDistance = "-DCut1" /></Cut>
+
+        <Turn NormVector = "0;0;1" Angle = " 3 * Pi / 4" />
+    </Figure>
+</xml>

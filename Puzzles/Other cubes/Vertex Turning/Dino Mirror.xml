@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Mirror</Name>
+        <Menu>Other cubes\Vertex Turning\Dino Mirror</Menu>
+        <Inventor>José Ramírez</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9936</Link>
+    </Interface>
+
+    <Script>
+        Color := 'E0C07D'; // Gold
+
+        W := 0.5;
+
+        DWX := W * 0.23;
+        DWY := W * 0.15;
+        DWZ :=-W * 0.07;
+        
+        D := (DWX - W) / sqrt(3);
+        K := (DWX - W) / 2;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = "-DWX;-DWY;-DWZ" />
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" />
+        <Transfer Vector = " DWX; DWY; DWZ" />
+        
+        <SplitByAxes/>
+        
+        <HideContaining Vector = " K; K; 0" />
+        <HideContaining Vector = " K;-K; 0" />
+        <HideContaining Vector = "-K; K; 0" />
+        <HideContaining Vector = "-K;-K; 0" />
+        
+        <HideContaining Vector = " K; 0; K" />
+        <HideContaining Vector = " K; 0;-K" />
+        <HideContaining Vector = "-K; 0; K" />
+        <HideContaining Vector = "-K; 0;-K" />
+        
+        <HideContaining Vector = " 0; K; K" />
+        <HideContaining Vector = " 0; K;-K" />
+        <HideContaining Vector = " 0;-K; K" />
+        <HideContaining Vector = " 0;-K;-K" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

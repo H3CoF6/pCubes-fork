@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Corner 4x4</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\Crazy Corner 4x4</Menu>
+        <Inventor>Diego Montero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-12-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12037</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D1:= W / 2;
+        D2:= (W + D1) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = " 0; Pi/2" NormVectors = "Cx;Cy;Cz" PlaneDistances = "D1" />
+    <Axes TurningAngles = " 0; 2*Pi / 3" NormVectors = "Vx;Vy;Vz" PlaneDistances = "D2" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " Ex; Ey; Ez" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <SplitByAxes/>
+        <Split> <Plane NormVector = "1;0;0" NormDistance = " 0" /> </Split>
+        <Split> <Plane NormVector = "0;1;0" NormDistance = " 0" /> </Split>
+        <Split> <Plane NormVector = "0;0;1" NormDistance = " 0" /> </Split>
+
+        <HideContaining Vector = " Ex; Ey; Ez" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+</xml>

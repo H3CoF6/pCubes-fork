@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>OctoChair AC</Name>
+        <Menu>Other forms\Octahedron\Face Turning\OctoChair AC</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-12</Added>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clBlue   := '0000FF';
+        clBlack  := '333333';
+
+        W := 0.75;
+        D := W / sqrt(3) / 2;
+        DCut := D * 3 / 4;
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi / 3" PlaneDistances = "D" >
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddOcto" >
+            <Script>
+                for i := 0 to 7 do
+                    Colors[i] := cl;
+            </Script>
+            <LoadFrom File = "Figures\Octahedron.xml" />
+            <SplitByAxes/>
+            <HideContaining Vector = "X;0;Z" />
+            <RemoveAllVisible/>
+        </Macro>
+        <ExecMacro MacroName = "AddOcto" cl = "clRed"    X = "-W" Z = "0" />
+        <ExecMacro MacroName = "AddOcto" cl = "clBlue"   X = " W" Z = "0" />
+        <ExecMacro MacroName = "AddOcto" cl = "clYellow" X = " 0" Z = "W" />
+        <ExecMacro MacroName = "AddOcto" cl = "clBlack"  X = " 0" Z = "0" />
+
+        <ShowAll/>
+        <HideContaining Vector = "0;0;0" />
+
+        <Macro Name = "Split" >
+            <Split> <Plane NormVector = "Cx[i];Cy[i];Cz[i]" NormDistance = "D" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "2" Repeat = "6" />
+
+        <InvertVisibility/>
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "0" /> </Split>
+        <HideContaining Vector = "D;0;0" />
+        <Cut Color = "clBlack" > <Plane NormVector = "-1;-1; 1" NormDistance = "DCut" /> </Cut>
+        <ShowAll/>
+        <HideContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+        <Cut Color = "clBlack" > <Plane NormVector = " 1;-1; 1" NormDistance = "DCut" /> </Cut>
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

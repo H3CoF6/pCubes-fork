@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mental Bump</Name>
+        <Menu>Other cubes\Morph\Mental Bump</Menu>
+        <Menu>Other cubes\Skewb variants\Mental Bump</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7978</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := '999999';
+
+        for i := 0 to 5 do
+            Colors[i] := MirrorColor;
+
+        WX := 0.5;
+        WY := WX;
+        WZ := WX * sqrt(2) / 3;
+
+        DX :=-0.10;
+        DY := 0.12;
+        DZ :=-0.05;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi / 4" />
+
+        <Transfer Vector = " DX; DY; DZ" />
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <Transfer Vector = "-DX;-DY;-DZ" />
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

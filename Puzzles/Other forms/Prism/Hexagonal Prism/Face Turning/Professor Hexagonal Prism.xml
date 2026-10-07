@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Professor Hexagonal Prism (5 layers)</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Face Turning\Professor Hexagonal Prism (5 layers)</Menu>
+        <Inventor>Ryan Binter</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2967</Link>
+    </Interface>
+
+    <Script>
+        clBlue    := '0000C8';
+        clGreen   := '009600';
+        clRed     := 'C80000';
+        clPurple  := '800080';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+        clOrange  := 'FF6000';
+        clCyan    := '00FFFF';
+
+        R := 0.6;
+
+        H := R * sin(Pi / 6);
+        sAngle := PI * 2 / 6;
+        for i := 0 to 5 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+        for i := 0 to 2 do begin
+            ax[i] := sin(sAngle * 2 * i + sAngle/2);
+            ay[i] := cos(sAngle * 2 * i + sAngle/2);
+        end;
+
+        D1 := R * sqrt(3) / 2 * 4 / 5;
+        D2 := R * sqrt(3) / 2 * 3 / 5;
+
+        D3 := H / 5;
+        D4 := H * 3 / 5;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1; -D2; D2; D1" FixedLayers = "2" >
+        <Axis NormVector = "ax[0]; ay[0]; 0" />
+        <Axis NormVector = "ax[1]; ay[1]; 0" />
+        <Axis NormVector = "ax[2]; ay[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/6" PlaneDistances = "-D3; -D4; D4; D3" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[3]; y[3]; -H" />
+                <Add Vector = "x[4]; y[4]; -H" />
+                <Add Vector = "x[5]; y[5]; -H" />
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+                <Add Vector = "x[3]; y[3];  H" />
+                <Add Vector = "x[4]; y[4];  H" />
+                <Add Vector = "x[5]; y[5];  H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "6;7;1;0" />
+                <Face Color = "clBlue  " VertexIndexes = "7;8;2;1" />
+                <Face Color = "clGreen " VertexIndexes = "8;9;3;2" />
+                <Face Color = "clOrange" VertexIndexes = "9;10;4;3" />
+                <Face Color = "clPurple" VertexIndexes = "10;11;5;4" />
+                <Face Color = "clCyan  " VertexIndexes = "11;6;0;5" />
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4;5" />
+                <Face Color = "clWhite " VertexIndexes = "11;10;9;8;7;6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4x4x4 Cylinder</Name>
+        <Menu>Other forms\Cylinder\4x4x4 Cylinder</Menu>
+        <Inventor>Vadim Grishnin</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-09-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1718</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.5;
+        H := 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-1/4; 0; 1/4" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddQuarter">
+            <Cylinder Radius = "R" Color = "Color" >
+               <Base X = "0" Y = "0" Z = " H" Color = "clWhite "/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "clYellow" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "ax1; ay1; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = "ax2; ay2; 0" NormDistance = "0" /> </Cut>
+            <HideContaining Vector = "0; 0; 0" />
+        </Macro>
+        <ExecMacro MacroName = "AddQuarter" Color = "clRed"    ax1 = " 1" ay1 = " 0" ax2 = " 0" ay2 = " 1" />
+        <ExecMacro MacroName = "AddQuarter" Color = "clGreen"  ax1 = " 0" ay1 = " 1" ax2 = "-1" ay2 = " 0" />
+        <ExecMacro MacroName = "AddQuarter" Color = "clOrange" ax1 = "-1" ay1 = " 0" ax2 = " 0" ay2 = "-1" />
+        <ExecMacro MacroName = "AddQuarter" Color = "clBlue"   ax1 = " 0" ay1 = "-1" ax2 = " 1" ay2 = " 0" />
+
+        <ShowAll/>
+
+        <SplitByAxes />
+
+        <SaveSolvedState/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

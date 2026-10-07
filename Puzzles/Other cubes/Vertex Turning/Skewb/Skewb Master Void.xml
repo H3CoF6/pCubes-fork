@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Master Void</Name>
+        <Menu>Other cubes\Vertex Turning\Skewb\Skewb Master Void</Menu>
+        <Inventor>Mark Segedin</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-06-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2402</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+ 
+        D := W * sqrt(3) / 6;
+
+        DCut := W * sqrt(3) / 2;
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "RemoveCenter" >
+            <RemoveContaining Vector = "Cx[i]; Cy[i]; Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenter" i = "0" Repeat = "6" />
+
+        <Macro Name = "SplitV" >
+            <Split><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "DCut" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitV" i = "0" Repeat = "8" />
+
+        <RemoveGrayParts/>
+
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

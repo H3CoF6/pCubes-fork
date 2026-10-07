@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+    <Interface>
+        <Name>Void Truncated Icosidodecahedron</Name>
+        <Menu>Other forms\FT Void Puzzles\Void Truncated Icosidodecahedron</Menu>
+        <Inventor>Leslie Lee</Inventor>
+    </Interface>
+
+    <Script>
+        // empiric values
+        R := 0.7;
+        D := 0.8086 * R; 
+        //RCut := (1 + As) / 2 * R; // this value is for real Icosidodecahedron, but for square sides there is another value
+        RCut := 0.751 * R;
+        D1 := 0.769 * R;
+        D2 := 0.709 * R;
+        D3 := 0.786 * R;
+
+        Rout := sqrt(3) / 4 * (1 + sqrt(5));
+        Rin := 0.5 * sqrt(2.5 + 1.1 * sqrt(5));
+
+        dAngle := Arcsin(Rin / Rout);
+        Rsin := sin(dAngle);
+        Rcos := cos(dAngle);
+
+        dAngle2 := dAngle - 2 * Arcsin(1 / 2 / Rout);
+        R2sin := sin(dAngle2);
+        R2cos := cos(dAngle2);
+
+        mAngle := ArcTan(0.5);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+
+        sAngle := PI * 2 / 5;
+
+        for i := 0 to 4 do begin
+            ax[i] := Rcos * sin(sAngle * (i - 0.5)) * D1;
+            ay[i] := Rcos * cos(sAngle * (i - 0.5)) * D1;
+            az[i] := Rsin * D1;
+        end;
+        for i := 5 to 9 do begin
+            ax[i] := R2cos * sin(sAngle * (i - 0.5)) * D1;
+            ay[i] := R2cos * cos(sAngle * (i - 0.5)) * D1;
+            az[i] := R2sin * D1;
+        end;
+
+        bx[0] := 0;
+        by[0] := 0;
+        bz[0] := R;
+
+        for i := 1 to 5 do begin
+            bx[i] := R * sin(sAngle * (i - 1)) * Ac;
+            by[i] := R * cos(sAngle * (i - 1)) * Ac;
+            bz[i] := R * As;
+        end;
+        for i := 6 to 10 do begin
+            bx[i] := R * Ac * sin(sAngle * (i - 0.5));
+            by[i] := R * Ac * cos(sAngle * (i - 0.5));
+            bz[i] := -R * As;
+        end;
+
+        bx[11] := 0;
+        by[11] := 0;
+        bz[11] := -R;
+
+        for i := 0 to 11 do begin
+            dx[i] := bx[i] * D2 / R;
+            dy[i] := by[i] * D2 / R;
+            dz[i] := bz[i] * D2 / R;
+        end;
+
+        for i := 0 to 4 do begin
+            x[i] := Rcos * sin(sAngle * (i - 0.5));
+            y[i] := Rcos * cos(sAngle * (i - 0.5));
+            z[i] := Rsin;
+        end;
+        for i := 5 to 9 do begin
+            x[i] := R2cos * sin(sAngle * (i - 0.5));
+            y[i] := R2cos * cos(sAngle * (i - 0.5));
+            z[i] := R2sin;
+        end;
+        for i := 10 to 14 do begin
+            x[i] := R2cos * sin(sAngle * i);
+            y[i] := R2cos * cos(sAngle * i);
+            z[i] := -R2sin;
+        end;
+
+        for i := 0 to 4 do begin
+          cx[i] := x[i] + x[i + 1];
+          cy[i] := y[i] + y[i + 1];
+          cz[i] := z[i] + z[i + 1];
+
+          cx[i + 5] := x[i] + x[i + 5];
+          cy[i + 5] := y[i] + y[i + 5];
+          cz[i + 5] := z[i] + z[i + 5];
+
+          cx[i + 10] := x[i + 5] + x[i + 10];
+          cy[i + 10] := y[i + 5] + y[i + 10];
+          cz[i + 10] := z[i + 5] + z[i + 10];
+        end;
+
+        cx[4] := x[4] + x[0];
+        cy[4] := y[4] + y[0];
+        cz[4] := z[4] + z[0];
+        br := sqrt(cx[0] ^ 2 + cy[0] ^ 2 + cz[0] ^ 2);
+
+        for i := 0 to 14 do begin
+          cx[i] := cx[i]  * D3 / br;
+          cy[i] := cy[i]  * D3 / br;
+          cz[i] := cz[i]  * D3 / br;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D1" FixedLayer = "0">
+        <Axis NormVector = " ax[0]; ay[0]; az[0]"/>
+        <Axis NormVector = " ax[1]; ay[1]; az[1]"/>
+        <Axis NormVector = " ax[2]; ay[2]; az[2]"/>
+        <Axis NormVector = " ax[3]; ay[3]; az[3]"/>
+        <Axis NormVector = " ax[4]; ay[4]; az[4]"/>
+        <Axis NormVector = " ax[5]; ay[5]; az[5]"/>
+        <Axis NormVector = " ax[6]; ay[6]; az[6]"/>
+        <Axis NormVector = " ax[7]; ay[7]; az[7]"/>
+        <Axis NormVector = " ax[8]; ay[8]; az[8]"/>
+        <Axis NormVector = " ax[9]; ay[9]; az[9]"/>
+        <Axis NormVector = "-ax[0];-ay[0];-az[0]"/>
+        <Axis NormVector = "-ax[1];-ay[1];-az[1]"/>
+        <Axis NormVector = "-ax[2];-ay[2];-az[2]"/>
+        <Axis NormVector = "-ax[3];-ay[3];-az[3]"/>
+        <Axis NormVector = "-ax[4];-ay[4];-az[4]"/>
+        <Axis NormVector = "-ax[5];-ay[5];-az[5]"/>
+        <Axis NormVector = "-ax[6];-ay[6];-az[6]"/>
+        <Axis NormVector = "-ax[7];-ay[7];-az[7]"/>
+        <Axis NormVector = "-ax[8];-ay[8];-az[8]"/>
+        <Axis NormVector = "-ax[9];-ay[9];-az[9]"/>
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D2" FixedLayer = "0">
+        <Axis NormVector = " bx[0]; by[0]; bz[0]"/>
+        <Axis NormVector = " bx[1]; by[1]; bz[1]"/>
+        <Axis NormVector = " bx[2]; by[2]; bz[2]"/>
+        <Axis NormVector = " bx[3]; by[3]; bz[3]"/>
+        <Axis NormVector = " bx[4]; by[4]; bz[4]"/>
+        <Axis NormVector = " bx[5]; by[5]; bz[5]"/>
+        <Axis NormVector = "-bx[0];-by[0];-bz[0]"/>
+        <Axis NormVector = "-bx[1];-by[1];-bz[1]"/>
+        <Axis NormVector = "-bx[2];-by[2];-bz[2]"/>
+        <Axis NormVector = "-bx[3];-by[3];-bz[3]"/>
+        <Axis NormVector = "-bx[4];-by[4];-bz[4]"/>
+        <Axis NormVector = "-bx[5];-by[5];-bz[5]"/>
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D3" FixedLayer = "0">
+        <Axis NormVector = "cx[0]; cy[0]; cz[0]"/>
+        <Axis NormVector = "cx[1]; cy[1]; cz[1]"/>
+        <Axis NormVector = "cx[2]; cy[2]; cz[2]"/>
+        <Axis NormVector = "cx[3]; cy[3]; cz[3]"/>
+        <Axis NormVector = "cx[4]; cy[4]; cz[4]"/>
+
+        <Axis NormVector = "cx[5]; cy[5]; cz[5]"/>
+        <Axis NormVector = "cx[6]; cy[6]; cz[6]"/>
+        <Axis NormVector = "cx[7]; cy[7]; cz[7]"/>
+        <Axis NormVector = "cx[8]; cy[8]; cz[8]"/>
+        <Axis NormVector = "cx[9]; cy[9]; cz[9]"/>
+
+        <Axis NormVector = "cx[10]; cy[10]; cz[10]"/>
+        <Axis NormVector = "cx[11]; cy[11]; cz[11]"/>
+        <Axis NormVector = "cx[12]; cy[12]; cz[12]"/>
+        <Axis NormVector = "cx[13]; cy[13]; cz[13]"/>
+        <Axis NormVector = "cx[14]; cy[14]; cz[14]"/>
+
+        <Axis NormVector = "-cx[0]; -cy[0]; -cz[0]"/>
+        <Axis NormVector = "-cx[1]; -cy[1]; -cz[1]"/>
+        <Axis NormVector = "-cx[2]; -cy[2]; -cz[2]"/>
+        <Axis NormVector = "-cx[3]; -cy[3]; -cz[3]"/>
+        <Axis NormVector = "-cx[4]; -cy[4]; -cz[4]"/>
+
+        <Axis NormVector = "-cx[5]; -cy[5]; -cz[5]"/>
+        <Axis NormVector = "-cx[6]; -cy[6]; -cz[6]"/>
+        <Axis NormVector = "-cx[7]; -cy[7]; -cz[7]"/>
+        <Axis NormVector = "-cx[8]; -cy[8]; -cz[8]"/>
+        <Axis NormVector = "-cx[9]; -cy[9]; -cz[9]"/>
+
+        <Axis NormVector = "-cx[10]; -cy[10]; -cz[10]"/>
+        <Axis NormVector = "-cx[11]; -cy[11]; -cz[11]"/>
+        <Axis NormVector = "-cx[12]; -cy[12]; -cz[12]"/>
+        <Axis NormVector = "-cx[13]; -cy[13]; -cz[13]"/>
+        <Axis NormVector = "-cx[14]; -cy[14]; -cz[14]"/>
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "bx[0]; by[0]; bz[0]"/>
+                <Add Vector = "bx[1]; by[1]; bz[1]"/>
+                <Add Vector = "bx[2]; by[2]; bz[2]"/>
+                <Add Vector = "bx[3]; by[3]; bz[3]"/>
+                <Add Vector = "bx[4]; by[4]; bz[4]"/>
+                <Add Vector = "bx[5]; by[5]; bz[5]"/>
+                <Add Vector = "bx[6]; by[6]; bz[6]"/>
+                <Add Vector = "bx[7]; by[7]; bz[7]"/>
+                <Add Vector = "bx[8]; by[8]; bz[8]"/>
+                <Add Vector = "bx[9]; by[9]; bz[9]"/>
+                <Add Vector = "bx[10]; by[10]; bz[10]"/>
+                <Add Vector = "bx[11]; by[11]; bz[11]"/>
+            </Vertices>
+
+            <Faces>
+                <Face Color = "004080" VertexIndexes = "0;2;1"/>
+                <Face Color = "4070FF" VertexIndexes = "0;3;2"/>
+                <Face Color = "00FF00" VertexIndexes = "0;4;3"/>
+                <Face Color = "FFFFFF" VertexIndexes = "0;5;4"/>
+                <Face Color = "FFFF00" VertexIndexes = "0;1;5"/>
+
+                <Face Color = "C1C5C7" VertexIndexes = "11;6;7"/>
+                <Face Color = "FACC05" VertexIndexes = "11;7;8"/>
+                <Face Color = "734082" VertexIndexes = "11;8;9"/>
+                <Face Color = "E23465" VertexIndexes = "11;9;10"/>
+                <Face Color = "008000" VertexIndexes = "11;10;6"/>
+
+                <Face Color = "FF0080" VertexIndexes = "2;6;1"/>
+                <Face Color = "800080" VertexIndexes = "3;7;2"/>
+                <Face Color = "BF8040" VertexIndexes = "4;8;3"/>
+                <Face Color = "309060" VertexIndexes = "5;9;4"/>
+                <Face Color = "FF0000" VertexIndexes = "1;10;5"/>
+
+                <Face Color = "80BF80" VertexIndexes = "6;2;7"/>
+                <Face Color = "FF800A" VertexIndexes = "7;3;8"/>
+                <Face Color = "4D1350" VertexIndexes = "8;4;9"/>
+                <Face Color = "9F0000" VertexIndexes = "9;5;10"/>
+                <Face Color = "7F8040" VertexIndexes = "10;1;6"/>
+            </Faces>
+        </Part>
+
+        <Cut Color = "51C4FA"> <Plane NormDistance = "-RCut" NormVector = " bx[0];  by[0];  bz[0]"/> </Cut>
+        <Cut Color = "075AFF"> <Plane NormDistance = "-RCut" NormVector = " bx[1];  by[1];  bz[1]"/> </Cut>
+        <Cut Color = "FF8009"> <Plane NormDistance = "-RCut" NormVector = " bx[2];  by[2];  bz[2]"/> </Cut>
+        <Cut Color = "FFFFFE"> <Plane NormDistance = "-RCut" NormVector = " bx[3];  by[3];  bz[3]"/> </Cut>
+        <Cut Color = "FACC06"> <Plane NormDistance = "-RCut" NormVector = " bx[4];  by[4];  bz[4]"/> </Cut>
+        <Cut Color = "01FF00"> <Plane NormDistance = "-RCut" NormVector = " bx[5];  by[5];  bz[5]"/> </Cut>
+        <Cut Color = "009484"> <Plane NormDistance = "-RCut" NormVector = "-bx[0]; -by[0]; -bz[0]"/> </Cut>
+        <Cut Color = "38ABEA"> <Plane NormDistance = "-RCut" NormVector = "-bx[1]; -by[1]; -bz[1]"/> </Cut>
+        <Cut Color = "FF0001"> <Plane NormDistance = "-RCut" NormVector = "-bx[2]; -by[2]; -bz[2]"/> </Cut>
+        <Cut Color = "C1C5C8"> <Plane NormDistance = "-RCut" NormVector = "-bx[3]; -by[3]; -bz[3]"/> </Cut>
+        <Cut Color = "FFFF01"> <Plane NormDistance = "-RCut" NormVector = "-bx[4]; -by[4]; -bz[4]"/> </Cut>
+        <Cut Color = "018000"> <Plane NormDistance = "-RCut" NormVector = "-bx[5]; -by[5]; -bz[5]"/> </Cut>
+ 
+        <Cut Color = "FFFFFD"> <Plane NormDistance = "-D" NormVector = "  cx[0];   cy[0];   cz[0]"/> </Cut>
+        <Cut Color = "FFFF02"> <Plane NormDistance = "-D" NormVector = "  cx[1];   cy[1];   cz[1]"/> </Cut>
+        <Cut Color = "FF00FF"> <Plane NormDistance = "-D" NormVector = "  cx[2];   cy[2];   cz[2]"/> </Cut>
+        <Cut Color = "00FFFF"> <Plane NormDistance = "-D" NormVector = "  cx[3];   cy[3];   cz[3]"/> </Cut>
+        <Cut Color = "FF0002"> <Plane NormDistance = "-D" NormVector = "  cx[4];   cy[4];   cz[4]"/> </Cut>
+
+        <Cut Color = "0000FF"> <Plane NormDistance = "-D" NormVector = "  cx[5];   cy[5];   cz[5]"/> </Cut>
+        <Cut Color = "00FF01"> <Plane NormDistance = "-D" NormVector = "  cx[6];   cy[6];   cz[6]"/> </Cut>
+        <Cut Color = "FF0081"> <Plane NormDistance = "-D" NormVector = "  cx[7];   cy[7];   cz[7]"/> </Cut>
+        <Cut Color = "0000A0"> <Plane NormDistance = "-D" NormVector = "  cx[8];   cy[8];   cz[8]"/> </Cut>
+        <Cut Color = "800000"> <Plane NormDistance = "-D" NormVector = "  cx[9];   cy[9];   cz[9]"/> </Cut>
+
+        <Cut Color = "008001"> <Plane NormDistance = "-D" NormVector = " cx[11];  cy[11];  cz[11]"/> </Cut>
+        <Cut Color = "FF6001"> <Plane NormDistance = "-D" NormVector = "-cx[14]; -cy[14]; -cz[14]"/> </Cut>
+        <Cut Color = "800081"> <Plane NormDistance = "-D" NormVector = " cx[12];  cy[12];  cz[12]"/> </Cut>
+        <Cut Color = "00DCB5"> <Plane NormDistance = "-D" NormVector = "-cx[10]; -cy[10]; -cz[10]"/> </Cut>
+        <Cut Color = "2828FF"> <Plane NormDistance = "-D" NormVector = " cx[13];  cy[13];  cz[13]"/> </Cut>
+        <Cut Color = "008002"> <Plane NormDistance = "-D" NormVector = "-cx[11]; -cy[11]; -cz[11]"/> </Cut>
+
+        <Cut Color = "FF6000"> <Plane NormDistance = "-D" NormVector = " cx[14];  cy[14];  cz[14]"/> </Cut>
+        <Cut Color = "800082"> <Plane NormDistance = "-D" NormVector = "-cx[12]; -cy[12]; -cz[12]"/> </Cut>
+        <Cut Color = "00DCB4"> <Plane NormDistance = "-D" NormVector = " cx[10];  cy[10];  cz[10]"/> </Cut>
+        <Cut Color = "2828FE"> <Plane NormDistance = "-D" NormVector = "-cx[13]; -cy[13]; -cz[13]"/> </Cut>
+
+        <Cut Color = "FFFFFC"> <Plane NormDistance = "-D" NormVector = " -cx[0];  -cy[0];  -cz[0]"/> </Cut>
+        <Cut Color = "FFFF03"> <Plane NormDistance = "-D" NormVector = " -cx[1];  -cy[1];  -cz[1]"/> </Cut>
+        <Cut Color = "FF00FE"> <Plane NormDistance = "-D" NormVector = " -cx[2];  -cy[2];  -cz[2]"/> </Cut>
+        <Cut Color = "00FFFE"> <Plane NormDistance = "-D" NormVector = " -cx[3];  -cy[3];  -cz[3]"/> </Cut>
+        <Cut Color = "FF0003"> <Plane NormDistance = "-D" NormVector = " -cx[4];  -cy[4];  -cz[4]"/> </Cut>
+
+        <Cut Color = "FF00FE"> <Plane NormDistance = "-D" NormVector = " -cx[5];  -cy[5];  -cz[5]"/> </Cut>
+        <Cut Color = "00FF02"> <Plane NormDistance = "-D" NormVector = " -cx[6];  -cy[6];  -cz[6]"/> </Cut>
+        <Cut Color = "FF0082"> <Plane NormDistance = "-D" NormVector = " -cx[7];  -cy[7];  -cz[7]"/> </Cut>
+        <Cut Color = "0000A1"> <Plane NormDistance = "-D" NormVector = " -cx[8];  -cy[8];  -cz[8]"/> </Cut>
+        <Cut Color = "800001"> <Plane NormDistance = "-D" NormVector = " -cx[9];  -cy[9];  -cz[9]"/> </Cut>
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " ax[0];  ay[0];  az[0]"/>
+        <RemoveContaining Vector = " ax[1];  ay[1];  az[1]"/>
+        <RemoveContaining Vector = " ax[2];  ay[2];  az[2]"/>
+        <RemoveContaining Vector = " ax[3];  ay[3];  az[3]"/>
+        <RemoveContaining Vector = " ax[4];  ay[4];  az[4]"/>
+        <RemoveContaining Vector = " ax[5];  ay[5];  az[5]"/>
+        <RemoveContaining Vector = " ax[6];  ay[6];  az[6]"/>
+        <RemoveContaining Vector = " ax[7];  ay[7];  az[7]"/>
+        <RemoveContaining Vector = " ax[8];  ay[8];  az[8]"/>
+        <RemoveContaining Vector = " ax[9];  ay[9];  az[9]"/>
+        <RemoveContaining Vector = "-ax[0]; -ay[0]; -az[0]"/>
+        <RemoveContaining Vector = "-ax[1]; -ay[1]; -az[1]"/>
+        <RemoveContaining Vector = "-ax[2]; -ay[2]; -az[2]"/>
+        <RemoveContaining Vector = "-ax[3]; -ay[3]; -az[3]"/>
+        <RemoveContaining Vector = "-ax[4]; -ay[4]; -az[4]"/>
+        <RemoveContaining Vector = "-ax[5]; -ay[5]; -az[5]"/>
+        <RemoveContaining Vector = "-ax[6]; -ay[6]; -az[6]"/>
+        <RemoveContaining Vector = "-ax[7]; -ay[7]; -az[7]"/>
+        <RemoveContaining Vector = "-ax[8]; -ay[8]; -az[8]"/>
+        <RemoveContaining Vector = "-ax[9]; -ay[9]; -az[9]"/>
+
+        <RemoveContaining Vector = " dx[0];  dy[0];  dz[0]"/>
+        <RemoveContaining Vector = " dx[1];  dy[1];  dz[1]"/>
+        <RemoveContaining Vector = " dx[2];  dy[2];  dz[2]"/>
+        <RemoveContaining Vector = " dx[3];  dy[3];  dz[3]"/>
+        <RemoveContaining Vector = " dx[4];  dy[4];  dz[4]"/>
+        <RemoveContaining Vector = " dx[5];  dy[5];  dz[5]"/>
+        <RemoveContaining Vector = " dx[6];  dy[6];  dz[6]"/>
+        <RemoveContaining Vector = " dx[7];  dy[7];  dz[7]"/>
+        <RemoveContaining Vector = " dx[8];  dy[8];  dz[8]"/>
+        <RemoveContaining Vector = " dx[9];  dy[9];  dz[9]"/>
+        <RemoveContaining Vector = "dx[10]; dy[10]; dz[10]"/>
+        <RemoveContaining Vector = "dx[11]; dy[11]; dz[11]"/>
+
+        <RemoveContaining Vector = "  cx[0];   cy[0];   cz[0]"/>
+        <RemoveContaining Vector = "  cx[1];   cy[1];   cz[1]"/>
+        <RemoveContaining Vector = "  cx[2];   cy[2];   cz[2]"/>
+        <RemoveContaining Vector = "  cx[3];   cy[3];   cz[3]"/>
+        <RemoveContaining Vector = "  cx[4];   cy[4];   cz[4]"/>
+        <RemoveContaining Vector = "  cx[5];   cy[5];   cz[5]"/>
+        <RemoveContaining Vector = "  cx[6];   cy[6];   cz[6]"/>
+        <RemoveContaining Vector = "  cx[7];   cy[7];   cz[7]"/>
+        <RemoveContaining Vector = "  cx[8];   cy[8];   cz[8]"/>
+        <RemoveContaining Vector = "  cx[9];   cy[9];   cz[9]"/>
+        <RemoveContaining Vector = " cx[10];  cy[10];  cz[10]"/>
+        <RemoveContaining Vector = " cx[11];  cy[11];  cz[11]"/>
+        <RemoveContaining Vector = " cx[12];  cy[12];  cz[12]"/>
+        <RemoveContaining Vector = " cx[13];  cy[13];  cz[13]"/>
+        <RemoveContaining Vector = " cx[14];  cy[14];  cz[14]"/>
+        <RemoveContaining Vector = " -cx[0];  -cy[0];  -cz[0]"/>
+        <RemoveContaining Vector = " -cx[1];  -cy[1];  -cz[1]"/>
+        <RemoveContaining Vector = " -cx[2];  -cy[2];  -cz[2]"/>
+        <RemoveContaining Vector = " -cx[3];  -cy[3];  -cz[3]"/>
+        <RemoveContaining Vector = " -cx[4];  -cy[4];  -cz[4]"/>
+        <RemoveContaining Vector = " -cx[5];  -cy[5];  -cz[5]"/>
+        <RemoveContaining Vector = " -cx[6];  -cy[6];  -cz[6]"/>
+        <RemoveContaining Vector = " -cx[7];  -cy[7];  -cz[7]"/>
+        <RemoveContaining Vector = " -cx[8];  -cy[8];  -cz[8]"/>
+        <RemoveContaining Vector = " -cx[9];  -cy[9];  -cz[9]"/>
+        <RemoveContaining Vector = "-cx[10]; -cy[10]; -cz[10]"/>
+        <RemoveContaining Vector = "-cx[11]; -cy[11]; -cz[11]"/>
+        <RemoveContaining Vector = "-cx[12]; -cy[12]; -cz[12]"/>
+        <RemoveContaining Vector = "-cx[13]; -cy[13]; -cz[13]"/>
+        <RemoveContaining Vector = "-cx[14]; -cy[14]; -cz[14]"/>
+    </Figure>
+</xml>

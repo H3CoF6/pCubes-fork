@@ -1,0 +1,110 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Helicopter cube</Name>
+        <Menu>Other cubes\Unclassified\Fisher Helicopter cube</Menu>
+        <Inventor>Tim Koster</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2018-02-27</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=32892</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        Delta := 0.002;
+        CylinderWidth := 0.1;
+        D := sqrt(2) / 4;
+        E := 0.5;
+        F := E + Delta;
+        G := F + CylinderWidth;
+        R := E;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-F; F" FixedLayers = "1" >
+        <Axis NormVector = " D; D; E" />
+        <Axis NormVector = " D;-D; E" />
+        <Axis NormVector = "-D; D; E" />
+        <Axis NormVector = "-D;-D; E" />
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = " 0; E; E" />
+        <HideContaining Vector = " 0; E;-E" />
+        <HideContaining Vector = " 0;-E; E" />
+        <HideContaining Vector = " 0;-E;-E" />
+        <HideContaining Vector = " E; 0; E" />
+        <HideContaining Vector = "-E; 0; E" />
+        <HideContaining Vector = " E; 0;-E" />
+        <HideContaining Vector = "-E; 0;-E" />
+
+        <Cut Color = "clOrange" > <Plane NormVector = "-1; 0; 0" NormDistance = "-E" /> </Cut>
+        <Cut Color = "clRed   " > <Plane NormVector = " 1; 0; 0" NormDistance = "-E" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = " 0;-1; 0" NormDistance = "-E" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormVector = " 0; 1; 0" NormDistance = "-E" /> </Cut>
+
+        <HideContaining Vector = " 0; 0; 0" />
+
+        <Cut Color = "clWhite " > <Plane NormVector = " 0; 0;-1" NormDistance = "-E" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0; 1" NormDistance = "-E" /> </Cut>
+
+        <InvertVisibility/>
+
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-E" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-E" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-E" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-E" /> </Cut>
+        <Cut Color = "clWhite " > <Plane NormVector = " 0; 0;-1" NormDistance = "-G" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0; 1" NormDistance = "-G" /> </Cut>
+
+        <ShowAll/>
+        <HideContaining Vector = " 0; 0; 0" />
+        <InvertVisibility/>
+
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-E" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-E" /> </Cut>
+
+        <ShowAll/>
+
+        <Cylinder Radius = "R" Color = "clRed" >
+            <Base X = "-F" Y = "0" Z = "0" />
+            <Top  X = "-G" Y = "0" Z = "0" Color = "clRed" />
+        </Cylinder>
+        <Cylinder Radius = "R" Color = "clOrange" >
+            <Base X = "F" Y = "0" Z = "0" />
+            <Top  X = "G" Y = "0" Z = "0" Color = "clOrange" />
+        </Cylinder>
+        <Cylinder Radius = "R" Color = "clBlue" >
+            <Base X = "0" Y = "-F" Z = "0" />
+            <Top  X = "0" Y = "-G" Z = "0" Color = "clBlue" />
+        </Cylinder>
+        <Cylinder Radius = "R" Color = "clGreen" >
+            <Base X = "0" Y = "F" Z = "0" />
+            <Top  X = "0" Y = "G" Z = "0" Color = "clGreen" />
+        </Cylinder>
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " E; G; 0" />
+        <RemoveContaining Vector = " E;-G; 0" />
+        <RemoveContaining Vector = "-E; G; 0" />
+        <RemoveContaining Vector = "-E;-G; 0" />
+        <RemoveContaining Vector = " G; E; 0" />
+        <RemoveContaining Vector = " G;-E; 0" />
+        <RemoveContaining Vector = "-G; E; 0" />
+        <RemoveContaining Vector = "-G;-E; 0" />
+
+    </Figure>
+</xml>

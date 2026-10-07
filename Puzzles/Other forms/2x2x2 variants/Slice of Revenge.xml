@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Slice of Revenge</Name>
+        <Menu>Other forms\2x2x2 variants\Slice of Revenge</Menu>
+        <Menu>Other forms\Pyramid\Triangular Pyramid\Slice of Revenge</Menu>
+        <Inventor>Raphaël Mouflin</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2017-12-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6450</Link>
+    </Interface>
+
+    <Script>
+        clSilver := 'A0A0A0';
+        clRed    := 'FF0000';
+        clBlue   := '0000C8';
+        clWhite  := 'FFFFFF';
+
+        D := 0.3;
+        D2 := D * 2;
+        D3 := D * 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " -D; -D;  D" />
+                <Add Vector = " -D; -D;-D3" />
+                <Add Vector = " -D; D3;  D" />
+                <Add Vector = " D3; -D;  D" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clSilver" VertexIndexes = "1;2;3" />
+                <Face Color = "clRed   " VertexIndexes = "1;0;2" />
+                <Face Color = "clBlue  " VertexIndexes = "1;3;0" />
+                <Face Color = "clWhite " VertexIndexes = "2;0;3" />
+            </Faces>
+        </Part>
+
+        <Split><Plane NormVector = "1; 0; 0" NormDistance = "D " /></Split>
+        <Split><Plane NormVector = "1; 0; 0" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = "0; 1; 0" NormDistance = "D " /></Split>
+        <Split><Plane NormVector = "0; 1; 0" NormDistance = "D2" /></Split>
+        <Split><Plane NormVector = "0; 0;-1" NormDistance = "D " /></Split>
+        <Split><Plane NormVector = "0; 0;-1" NormDistance = "D2" /></Split>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

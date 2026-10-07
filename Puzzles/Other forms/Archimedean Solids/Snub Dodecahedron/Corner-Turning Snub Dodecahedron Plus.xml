@@ -1,0 +1,420 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Corner-Turning Snub Dodecahedron Plus</Name>
+        <Menu>Other forms\Archimedean Solids\Snub Dodecahedron\Corner-Turning Snub Dodecahedron Plus</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-23</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Colors.inc';
+
+        Color[00] := clElectricYellow;
+        Color[01] := clCyan;
+        Color[02] := clMaroon;
+        Color[03] := clWhite;
+        Color[04] := clBlue;
+        Color[05] := clViolet;
+        Color[06] := clHanBlue;
+        Color[07] := clPatriarch;
+        Color[08] := clRed;
+        Color[09] := clCadmiumOrange;
+        Color[10] := clElectricGreen;
+        Color[11] := clAo;
+        Color[12] := clAirForceBlue;
+        Color[13] := clAliceBlue;
+        Color[14] := clAlizarinCrimson;
+        Color[15] := clAppleGreen;
+        Color[16] := clAmaranth;
+        Color[17] := clAmber;
+        Color[18] := clAmericanRose;
+        Color[19] := clAmethyst;
+        Color[20] := clAndroidGreen;
+        Color[21] := clAntiqueFuchsia;
+        Color[22] := clAntiqueBrass;
+        Color[23] := clCGRed;
+        Color[24] := clCandyPink;
+        Color[25] := clAquamarine;
+        Color[26] := clArmyGreen;
+        Color[27] := clArylideYellow;
+        Color[28] := clAshGrey;
+        Color[29] := clAsparagus;
+        Color[30] := clAtomicTangerine;
+        Color[31] := clAuburn;
+        Color[32] := clAureolin;
+        Color[33] := clAuroMetalSaurus;
+        Color[34] := clAwesome;
+        Color[35] := clAzure;
+        Color[36] := clAzureMistWeb;
+        Color[37] := clBabyBlue;
+        Color[38] := clBabyBlueEyes;
+        Color[39] := clBabyPink;
+        Color[40] := clBallBlue;
+        Color[41] := clBananaMania;
+        Color[42] := clBananaYellow;
+        Color[43] := clBattleshipGrey;
+        Color[44] := clBazaar;
+        Color[45] := clBeauBlue;
+        Color[46] := clBeaver;
+        Color[47] := clBeige;
+        Color[48] := clBisque;
+        Color[49] := clBistre;
+        Color[50] := clBittersweet;
+        Color[51] := clBleuDeFrance;
+        Color[52] := clBlizzardBlue;
+        Color[53] := clCGBlue;
+        Color[54] := clBlueBell;
+        Color[55] := clBlueGray;
+        Color[56] := clBlueGreen;
+        Color[57] := clBluePurple;
+        Color[58] := clCalPolyPomonaGreen;
+        Color[59] := clBlush;
+        Color[60] := clBole;
+        Color[61] := clBondiBlue;
+        Color[62] := clBostonUniversityRed;
+        Color[63] := clBottleGreen;
+        Color[64] := clBoysenberry;
+        Color[65] := clBrandeisBlue;
+        Color[66] := clBrass;
+        Color[67] := clBrickRed;
+        Color[68] := clBrightCerulean;
+        Color[69] := clBrightGreen;
+        Color[70] := clBrightLavender;
+        Color[71] := clBrightMaroon;
+        Color[72] := clBrightPink;
+        Color[73] := clBrightTurquoise;
+        Color[74] := clBrightUbe;
+        Color[75] := clBrilliantLavender;
+        Color[76] := clBrilliantRose;
+        Color[77] := clBrinkPink;
+        Color[78] := clBritishRacingGreen;
+        Color[79] := clCadet;
+        Color[80] := clBronze;
+        Color[81] := clBubbleGum;
+        Color[82] := clBubbles;
+        Color[83] := clBuff;
+        Color[84] := clBulgarianRose;
+        Color[85] := clBurgundy;
+        Color[86] := clBurlywood;
+        Color[87] := clBurntOrange;
+        Color[88] := clBurntSienna;
+        Color[89] := clBurntUmber;
+        Color[90] := clByzantine;
+        Color[91] := clByzantium;
+
+        C   := 0.3;
+        C0  := 0.192893711352359022108262546061 * C;
+        C1  := 0.330921024729844230963655269187 * C;
+        C2  := 0.374821658114562295266609516608 * C;
+        C3  := 0.567715369466921317374872062669 * C;
+        C4  := 0.643029605914072573107464141441 * C;
+        C5  := 0.728335176957191477360671629838 * C;
+        C6  := 0.847550046789060797396217956030 * C;
+        C7  := 1.103156835071753772627281146446 * C;
+        C8  := 1.24950378846302719500774109632 * C;
+        C9  := 1.41526541625598211477109001870 * C;
+        C10 := 1.45402422933801541929649491091 * C;
+        C11 := 1.64691794069037444140475745697 * C;
+        C12 := 1.74618644098582634573474528789 * C;
+        C13 := 1.97783896542021867236841272616 * C;
+        C14 := 2.097053835252087992403959052348 * C;
+
+        D := (C14^2-C1^2-C2^2) / sqrt(C1^2+C2^2+C14^2);
+
+         // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vx := y1 * z2 - y2 * z1;
+          vy := z1 * x2 - z2 * x1;
+          vz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+
+        A1 := Angle( C6, -C11,  C7,   C1, -C14,  C2,   C8, -C12,  C0);
+        A2 := Angle( C6, -C11,  C7,   C0,  -C8, C12,   C1, -C14,  C2);
+        A3 := Angle( C6, -C11,  C7,   C1, -C14,  C2,  C11,  -C7,  C6);
+        A4 := Angle( C6, -C11,  C7,   C0,  -C8, C12,   C8, -C12,  C0);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A4; -A3; -A2; -A1; 0; A1; A2; A3; A4" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = "  C2; -C1; C14" />
+        <Axis NormVector = "  C2;  C1;-C14" />
+        <Axis NormVector = " -C2;  C1; C14" />
+        <Axis NormVector = " -C2; -C1;-C14" />
+        <Axis NormVector = " C14; -C2;  C1" />
+        <Axis NormVector = " C14;  C2; -C1" />
+        <Axis NormVector = "-C14;  C2;  C1" />
+        <Axis NormVector = "-C14; -C2; -C1" />
+        <Axis NormVector = "  C1;-C14;  C2" />
+        <Axis NormVector = "  C1; C14; -C2" />
+        <Axis NormVector = " -C1; C14;  C2" />
+        <Axis NormVector = " -C1;-C14; -C2" />
+        <Axis NormVector = "  C3;  C4; C13" />
+        <Axis NormVector = "  C3; -C4;-C13" />
+        <Axis NormVector = " -C3; -C4; C13" />
+        <Axis NormVector = " -C3;  C4;-C13" />
+        <Axis NormVector = " C13;  C3;  C4" />
+        <Axis NormVector = " C13; -C3; -C4" />
+        <Axis NormVector = "-C13; -C3;  C4" />
+        <Axis NormVector = "-C13;  C3; -C4" />
+        <Axis NormVector = "  C4; C13;  C3" />
+        <Axis NormVector = "  C4;-C13; -C3" />
+        <Axis NormVector = " -C4;-C13;  C3" />
+        <Axis NormVector = " -C4; C13; -C3" />
+        <Axis NormVector = "  C0; -C8; C12" />
+        <Axis NormVector = "  C0;  C8;-C12" />
+        <Axis NormVector = " -C0;  C8; C12" />
+        <Axis NormVector = " -C0; -C8;-C12" />
+        <Axis NormVector = " C12; -C0;  C8" />
+        <Axis NormVector = " C12;  C0; -C8" />
+        <Axis NormVector = "-C12;  C0;  C8" />
+        <Axis NormVector = "-C12; -C0; -C8" />
+        <Axis NormVector = "  C8;-C12;  C0" />
+        <Axis NormVector = "  C8; C12; -C0" />
+        <Axis NormVector = " -C8; C12;  C0" />
+        <Axis NormVector = " -C8;-C12; -C0" />
+        <Axis NormVector = "  C7; -C6; C11" />
+        <Axis NormVector = "  C7;  C6;-C11" />
+        <Axis NormVector = " -C7;  C6; C11" />
+        <Axis NormVector = " -C7; -C6;-C11" />
+        <Axis NormVector = " C11; -C7;  C6" />
+        <Axis NormVector = " C11;  C7; -C6" />
+        <Axis NormVector = "-C11;  C7;  C6" />
+        <Axis NormVector = "-C11; -C7; -C6" />
+        <Axis NormVector = "  C6;-C11;  C7" />
+        <Axis NormVector = "  C6; C11; -C7" />
+        <Axis NormVector = " -C6; C11;  C7" />
+        <Axis NormVector = " -C6;-C11; -C7" />
+        <Axis NormVector = "  C9;  C5; C10" />
+        <Axis NormVector = "  C9; -C5;-C10" />
+        <Axis NormVector = " -C9; -C5; C10" />
+        <Axis NormVector = " -C9;  C5;-C10" />
+        <Axis NormVector = " C10;  C9;  C5" />
+        <Axis NormVector = " C10; -C9; -C5" />
+        <Axis NormVector = "-C10; -C9;  C5" />
+        <Axis NormVector = "-C10;  C9; -C5" />
+        <Axis NormVector = "  C5; C10;  C9" />
+        <Axis NormVector = "  C5;-C10; -C9" />
+        <Axis NormVector = " -C5;-C10;  C9" />
+        <Axis NormVector = " -C5; C10; -C9" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  C2; -C1; C14" />
+                <Add Vector = "  C2;  C1;-C14" />
+                <Add Vector = " -C2;  C1; C14" />
+                <Add Vector = " -C2; -C1;-C14" />
+                <Add Vector = " C14; -C2;  C1" />
+                <Add Vector = " C14;  C2; -C1" />
+                <Add Vector = "-C14;  C2;  C1" />
+                <Add Vector = "-C14; -C2; -C1" />
+                <Add Vector = "  C1;-C14;  C2" />
+                <Add Vector = "  C1; C14; -C2" />
+                <Add Vector = " -C1; C14;  C2" />
+                <Add Vector = " -C1;-C14; -C2" />
+                <Add Vector = "  C3;  C4; C13" />
+                <Add Vector = "  C3; -C4;-C13" />
+                <Add Vector = " -C3; -C4; C13" />
+                <Add Vector = " -C3;  C4;-C13" />
+                <Add Vector = " C13;  C3;  C4" />
+                <Add Vector = " C13; -C3; -C4" />
+                <Add Vector = "-C13; -C3;  C4" />
+                <Add Vector = "-C13;  C3; -C4" />
+                <Add Vector = "  C4; C13;  C3" />
+                <Add Vector = "  C4;-C13; -C3" />
+                <Add Vector = " -C4;-C13;  C3" />
+                <Add Vector = " -C4; C13; -C3" />
+                <Add Vector = "  C0; -C8; C12" />
+                <Add Vector = "  C0;  C8;-C12" />
+                <Add Vector = " -C0;  C8; C12" />
+                <Add Vector = " -C0; -C8;-C12" />
+                <Add Vector = " C12; -C0;  C8" />
+                <Add Vector = " C12;  C0; -C8" />
+                <Add Vector = "-C12;  C0;  C8" />
+                <Add Vector = "-C12; -C0; -C8" />
+                <Add Vector = "  C8;-C12;  C0" />
+                <Add Vector = "  C8; C12; -C0" />
+                <Add Vector = " -C8; C12;  C0" />
+                <Add Vector = " -C8;-C12; -C0" />
+                <Add Vector = "  C7; -C6; C11" />
+                <Add Vector = "  C7;  C6;-C11" />
+                <Add Vector = " -C7;  C6; C11" />
+                <Add Vector = " -C7; -C6;-C11" />
+                <Add Vector = " C11; -C7;  C6" />
+                <Add Vector = " C11;  C7; -C6" />
+                <Add Vector = "-C11;  C7;  C6" />
+                <Add Vector = "-C11; -C7; -C6" />
+                <Add Vector = "  C6;-C11;  C7" />
+                <Add Vector = "  C6; C11; -C7" />
+                <Add Vector = " -C6; C11;  C7" />
+                <Add Vector = " -C6;-C11; -C7" />
+                <Add Vector = "  C9;  C5; C10" />
+                <Add Vector = "  C9; -C5;-C10" />
+                <Add Vector = " -C9; -C5; C10" />
+                <Add Vector = " -C9;  C5;-C10" />
+                <Add Vector = " C10;  C9;  C5" />
+                <Add Vector = " C10; -C9; -C5" />
+                <Add Vector = "-C10; -C9;  C5" />
+                <Add Vector = "-C10;  C9; -C5" />
+                <Add Vector = "  C5; C10;  C9" />
+                <Add Vector = "  C5;-C10; -C9" />
+                <Add Vector = " -C5;-C10;  C9" />
+                <Add Vector = " -C5; C10; -C9" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Color[00]" VertexIndexes = " 0; 36; 28; 48; 12" />
+                <Face Color = "Color[01]" VertexIndexes = " 1; 37; 29; 49; 13" />
+                <Face Color = "Color[02]" VertexIndexes = " 2; 38; 30; 50; 14" />
+                <Face Color = "Color[03]" VertexIndexes = " 3; 39; 31; 51; 15" />
+                <Face Color = "Color[04]" VertexIndexes = " 4; 40; 32; 53; 17" />
+                <Face Color = "Color[05]" VertexIndexes = " 5; 41; 33; 52; 16" />
+                <Face Color = "Color[06]" VertexIndexes = " 6; 42; 34; 55; 19" />
+                <Face Color = "Color[07]" VertexIndexes = " 7; 43; 35; 54; 18" />
+                <Face Color = "Color[08]" VertexIndexes = " 8; 44; 24; 58; 22" />
+                <Face Color = "Color[09]" VertexIndexes = " 9; 45; 25; 59; 23" />
+                <Face Color = "Color[10]" VertexIndexes = "10; 46; 26; 56; 20" />
+                <Face Color = "Color[11]" VertexIndexes = "11; 47; 27; 57; 21" />
+                <Face Color = "Color[12]" VertexIndexes = " 0;  2; 14" />
+                <Face Color = "Color[13]" VertexIndexes = " 1;  3; 15" />
+                <Face Color = "Color[14]" VertexIndexes = " 2;  0; 12" />
+                <Face Color = "Color[15]" VertexIndexes = " 3;  1; 13" />
+                <Face Color = "Color[16]" VertexIndexes = " 4;  5; 16" />
+                <Face Color = "Color[17]" VertexIndexes = " 5;  4; 17" />
+                <Face Color = "Color[18]" VertexIndexes = " 6;  7; 18" />
+                <Face Color = "Color[19]" VertexIndexes = " 7;  6; 19" />
+                <Face Color = "Color[20]" VertexIndexes = " 8; 11; 21" />
+                <Face Color = "Color[21]" VertexIndexes = " 9; 10; 20" />
+                <Face Color = "Color[22]" VertexIndexes = "10;  9; 23" />
+                <Face Color = "Color[23]" VertexIndexes = "11;  8; 22" />
+                <Face Color = "Color[24]" VertexIndexes = "12; 48; 56" />
+                <Face Color = "Color[25]" VertexIndexes = "13; 49; 57" />
+                <Face Color = "Color[26]" VertexIndexes = "14; 50; 58" />
+                <Face Color = "Color[27]" VertexIndexes = "15; 51; 59" />
+                <Face Color = "Color[28]" VertexIndexes = "16; 52; 48" />
+                <Face Color = "Color[29]" VertexIndexes = "17; 53; 49" />
+                <Face Color = "Color[30]" VertexIndexes = "18; 54; 50" />
+                <Face Color = "Color[31]" VertexIndexes = "19; 55; 51" />
+                <Face Color = "Color[32]" VertexIndexes = "20; 56; 52" />
+                <Face Color = "Color[33]" VertexIndexes = "21; 57; 53" />
+                <Face Color = "Color[34]" VertexIndexes = "22; 58; 54" />
+                <Face Color = "Color[35]" VertexIndexes = "23; 59; 55" />
+                <Face Color = "Color[36]" VertexIndexes = "24; 44; 36" />
+                <Face Color = "Color[37]" VertexIndexes = "25; 45; 37" />
+                <Face Color = "Color[38]" VertexIndexes = "26; 46; 38" />
+                <Face Color = "Color[39]" VertexIndexes = "27; 47; 39" />
+                <Face Color = "Color[40]" VertexIndexes = "28; 36; 40" />
+                <Face Color = "Color[41]" VertexIndexes = "29; 37; 41" />
+                <Face Color = "Color[42]" VertexIndexes = "30; 38; 42" />
+                <Face Color = "Color[43]" VertexIndexes = "31; 39; 43" />
+                <Face Color = "Color[44]" VertexIndexes = "32; 40; 44" />
+                <Face Color = "Color[45]" VertexIndexes = "33; 41; 45" />
+                <Face Color = "Color[46]" VertexIndexes = "34; 42; 46" />
+                <Face Color = "Color[47]" VertexIndexes = "35; 43; 47" />
+                <Face Color = "Color[48]" VertexIndexes = "36;  0; 24" />
+                <Face Color = "Color[49]" VertexIndexes = "37;  1; 25" />
+                <Face Color = "Color[50]" VertexIndexes = "38;  2; 26" />
+                <Face Color = "Color[51]" VertexIndexes = "39;  3; 27" />
+                <Face Color = "Color[52]" VertexIndexes = "40;  4; 28" />
+                <Face Color = "Color[53]" VertexIndexes = "41;  5; 29" />
+                <Face Color = "Color[54]" VertexIndexes = "42;  6; 30" />
+                <Face Color = "Color[55]" VertexIndexes = "43;  7; 31" />
+                <Face Color = "Color[56]" VertexIndexes = "44;  8; 32" />
+                <Face Color = "Color[57]" VertexIndexes = "45;  9; 33" />
+                <Face Color = "Color[58]" VertexIndexes = "46; 10; 34" />
+                <Face Color = "Color[59]" VertexIndexes = "47; 11; 35" />
+                <Face Color = "Color[60]" VertexIndexes = "48; 28; 16" />
+                <Face Color = "Color[61]" VertexIndexes = "49; 29; 17" />
+                <Face Color = "Color[62]" VertexIndexes = "50; 30; 18" />
+                <Face Color = "Color[63]" VertexIndexes = "51; 31; 19" />
+                <Face Color = "Color[64]" VertexIndexes = "52; 33; 20" />
+                <Face Color = "Color[65]" VertexIndexes = "53; 32; 21" />
+                <Face Color = "Color[66]" VertexIndexes = "54; 35; 22" />
+                <Face Color = "Color[67]" VertexIndexes = "55; 34; 23" />
+                <Face Color = "Color[68]" VertexIndexes = "56; 26; 12" />
+                <Face Color = "Color[69]" VertexIndexes = "57; 27; 13" />
+                <Face Color = "Color[70]" VertexIndexes = "58; 24; 14" />
+                <Face Color = "Color[71]" VertexIndexes = "59; 25; 15" />
+                <Face Color = "Color[72]" VertexIndexes = "24;  0; 14" />
+                <Face Color = "Color[73]" VertexIndexes = "25;  1; 15" />
+                <Face Color = "Color[74]" VertexIndexes = "26;  2; 12" />
+                <Face Color = "Color[75]" VertexIndexes = "27;  3; 13" />
+                <Face Color = "Color[76]" VertexIndexes = "28;  4; 16" />
+                <Face Color = "Color[77]" VertexIndexes = "29;  5; 17" />
+                <Face Color = "Color[78]" VertexIndexes = "30;  6; 18" />
+                <Face Color = "Color[79]" VertexIndexes = "31;  7; 19" />
+                <Face Color = "Color[80]" VertexIndexes = "32;  8; 21" />
+                <Face Color = "Color[81]" VertexIndexes = "33;  9; 20" />
+                <Face Color = "Color[82]" VertexIndexes = "34; 10; 23" />
+                <Face Color = "Color[83]" VertexIndexes = "35; 11; 22" />
+                <Face Color = "Color[84]" VertexIndexes = "36; 44; 40" />
+                <Face Color = "Color[85]" VertexIndexes = "37; 45; 41" />
+                <Face Color = "Color[86]" VertexIndexes = "38; 46; 42" />
+                <Face Color = "Color[87]" VertexIndexes = "39; 47; 43" />
+                <Face Color = "Color[88]" VertexIndexes = "48; 52; 56" />
+                <Face Color = "Color[89]" VertexIndexes = "49; 53; 57" />
+                <Face Color = "Color[90]" VertexIndexes = "50; 54; 58" />
+                <Face Color = "Color[91]" VertexIndexes = "51; 55; 59" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "A2" />
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "A1" />
+            <Split Axis = "Ax1" From  = "1" />
+<!--            <Undo Repeat = "2" />-->
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "-A1" />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "-A2" />
+
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "A2" />
+            <Turn  Axis = "Ax3" Layer = "1" Angle = "A1" />
+            <Split Axis = "Ax2" From  = "1" />
+<!--            <Undo Repeat = "2" />-->
+            <Turn  Axis = "Ax3" Layer = "1" Angle = "-A1" />
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "-A2" />
+
+            <Turn  Axis = "Ax3" Layer = "1" Angle = "A2" />
+            <Turn  Axis = "Ax4" Layer = "1" Angle = "A1" />
+            <Split Axis = "Ax3" From  = "1" />
+<!--            <Undo Repeat = "2" />-->
+            <Turn  Axis = "Ax4" Layer = "1" Angle = "-A1" />
+            <Turn  Axis = "Ax3" Layer = "1" Angle = "-A2" />
+
+            <Turn  Axis = "Ax4" Layer = "1" Angle = "A2" />
+            <Turn  Axis = "Ax5" Layer = "1" Angle = "A1" />
+            <Split Axis = "Ax4" From  = "1" />
+<!--            <Undo Repeat = "2" />-->
+            <Turn  Axis = "Ax5" Layer = "1" Angle = "-A1" />
+            <Turn  Axis = "Ax4" Layer = "1" Angle = "-A2" />
+
+            <Turn  Axis = "Ax5" Layer = "1" Angle = "A2" />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "A1" />
+            <Split Axis = "Ax5" From  = "1" />
+<!--            <Undo Repeat = "2" />-->
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "-A1" />
+            <Turn  Axis = "Ax5" Layer = "1" Angle = "-A2" />
+
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "12" Ax2 = "48" Ax3 = "28" Ax4 = "36" ax5 = " 0" />
+        <ExecMacro MacroName = "Split" Ax1 = "13" Ax2 = "49" Ax3 = "29" Ax4 = "37" ax5 = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "14" Ax2 = "50" Ax3 = "30" Ax4 = "38" ax5 = " 2" />
+        <ExecMacro MacroName = "Split" Ax1 = "15" Ax2 = "51" Ax3 = "31" Ax4 = "39" ax5 = " 3" />
+        <ExecMacro MacroName = "Split" Ax1 = "17" Ax2 = "53" Ax3 = "32" Ax4 = "40" ax5 = " 4" />
+        <ExecMacro MacroName = "Split" Ax1 = "16" Ax2 = "52" Ax3 = "33" Ax4 = "41" ax5 = " 5" />
+        <ExecMacro MacroName = "Split" Ax1 = "19" Ax2 = "55" Ax3 = "34" Ax4 = "42" ax5 = " 6" />
+        <ExecMacro MacroName = "Split" Ax1 = "18" Ax2 = "54" Ax3 = "35" Ax4 = "43" ax5 = " 7" />
+        <ExecMacro MacroName = "Split" Ax1 = "22" Ax2 = "58" Ax3 = "24" Ax4 = "44" ax5 = " 8" />
+        <ExecMacro MacroName = "Split" Ax1 = "23" Ax2 = "59" Ax3 = "25" Ax4 = "45" ax5 = " 9" />
+        <ExecMacro MacroName = "Split" Ax1 = "20" Ax2 = "56" Ax3 = "26" Ax4 = "46" ax5 = "10" />
+        <ExecMacro MacroName = "Split" Ax1 = "21" Ax2 = "57" Ax3 = "27" Ax4 = "47" ax5 = "11" />
+    </Figure>
+</xml>

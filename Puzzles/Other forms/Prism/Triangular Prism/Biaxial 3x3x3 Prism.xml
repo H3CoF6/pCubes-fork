@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Biaxial 3x3x3 Prism</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Biaxial 3x3x3 Prism</Menu>
+        <Inventor>Hunter Palshook</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-05-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3482</Link>
+    </Interface>
+
+    <Script>
+        clCut := '707090';
+
+        W := 0.5;
+        D := W / 4;
+
+        WX := W;
+        WY := W;
+        WZ := D * 3;
+
+        DWX :=-D;
+        DWY :=-D;
+        DWZ := 0;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Cut Color = "clCut"><Plane NormVector = "1; 1; 0" NormDistance = "-D * sqrt(2)" /></Cut>
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <HideContaining Vector = "0;0;0"/>
+        <SplitByAxes/>
+        <Split><Plane NormVector = "1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "0; 1; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "0; 0; 1" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "0; 0; 1" NormDistance = " D" /></Split>
+        <ShowAll/>
+    </Figure>
+</xml>

@@ -1,0 +1,110 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Limcube Dual 3x3x3 3.1</Name>
+        <Menu>Cubic\Cube in a cube\Limcube Dual 3x3x3 3.1</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5337</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D2 := W * 0.3;
+        D3 := W * 0.6;
+        D1 := (D3 - D2) / 2;
+
+        Colors[0] := 'EE0000'; // Red;
+        Colors[1] := 'FF6600'; // Orange;
+        Colors[2] := '0099EE'; // Blue;
+        Colors[3] := '00DD00'; // Green;
+        Colors[4] := 'FFFF00'; // Yellow;
+        Colors[5] := 'FFFFFF'; // White;
+
+        D23 := (D3 + D2) / 2;
+        R := W * 0.2;
+        R2 := W * 0.15;
+        Sc := 1.001;
+        Sc2 := 1.002;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D3; D2" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D3; D2" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2; D3" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        // Color parts
+
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Cx[Id]; Cy[Id]; Cz[Id]" NormDistance = "Dis" /></Split>
+            <Script> Inc(Id); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Dis = "D3" Id = "0" Repeat = "6" />
+        <ExecMacro MacroName = "Split" Dis = "D2" Id = "0" Repeat = "6" />
+
+        <HideContaining Vector = "Ex; Ey; Ez" />
+        <HideContaining Vector = "Vx; Vy; Vz" />
+
+        <RemoveAllVisible/>
+
+        // Gray parts
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <ExecMacro MacroName = "Split" Dis = "D3" Id = "0" Repeat = "6" />
+        <RemoveContaining Vector = "0; 0; 0" />
+        <ExecMacro MacroName = "Split" Dis = "D2" Id = "0" Repeat = "6" />
+
+        <RemoveContaining Vector = "Ex; Ey; Ez" />
+        <RemoveContaining Vector = "Vx; Vy; Vz" />
+        <HideContaining Vector = "Cx; Cy; Cz" />
+
+        <ExecMacro MacroName = "Split" Dis = "D1" Id = "0" Repeat = "6" />
+
+        <Macro Name = "RemoveExtras" >
+            <RemoveContaining Vector = "D23;   0;  W" />
+            <RemoveContaining Vector = "D23; D23;  W" />
+            <RemoveContaining Vector = "D23;   0; -W" />
+            <RemoveContaining Vector = "D23; D23; -W" />
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "RemoveExtras" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "RemoveExtras" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "RemoveExtras" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+
+        // Circles
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "R" Color = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+            <Circle Radius = "R2" Center = "Cx[i] * Sc2; Cy[i] * Sc2; Cz[i] * Sc2" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+
+        // inner cube
+
+        <LoadFrom File = "Figures\Cube.xml" W = "D3" />
+
+        <ExecMacro MacroName = "Split" Dis = "D2" Id = "0" Repeat = "6" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

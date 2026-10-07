@@ -1,0 +1,107 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx Constrained</Name>
+        <Class>TConstrained</Class>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bandaged\Megaminx Constrained</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-11-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4058</Link>
+        <Link>https://www.youtube.com/watch?v=AuJsIQ2p3UI</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := (Rsin + R2sin) / 2 + R * 0.05;
+        D2 := Rsin;
+
+        // small parts
+        sProfile := '97,36, 97,56, 84,59, 74,65, 65,74, 59,84, 56,95, 55,105, 56,115, 59,126, 65,136, 74,145, 84,151, 94,154, 105,155, 115,154, 126,151, 136,145, 145,136, 151,126, 154,115, 155,105, 154,95, 151,84, 145,74, 136,65, 126,59, 113,56, 113,36, 105,35';
+        ProfileSize := 210;
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', sProfile);
+          if p = 0 then begin
+            substr := sProfile;
+            sProfile := '';
+          end else begin
+            substr := copy(sProfile, 1, p-1);
+            Delete(sProfile, 1, p);
+          end;
+          Result := StrToInt(Trim(substr));
+        end;
+
+        DD := 1.001 * RSin;
+        pCount := 0;
+        while Length(sProfile) > 0 do begin
+          SVx[pCount] := -(GetInt / ProfileSize - 0.5) * R * 0.35;
+          SVy[pCount] := (GetInt / ProfileSize - 0.5) * R * 0.35;
+          SVz[pCount] := DD;
+          Inc(pCount);
+        end;
+
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; 0; sAngle; 0" PlaneDistances = "-D2; -D1; D1; D2">
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" MinAngles = "0;     -sAngle; 0; -sAngle; 0" MaxAngles = "0; sAngle; 0;     sAngle; 0" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" MinAngles = "0;     -sAngle; 0;       0; 0" MaxAngles = "0; sAngle; 0; 2 * sAngle; 0" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" MinAngles = "0;     -sAngle; 0;       0; 0" MaxAngles = "0; sAngle; 0; 2 * sAngle; 0" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" MinAngles = "0;     -sAngle; 0; -sAngle; 0" MaxAngles = "0; sAngle; 0;     sAngle; 0" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" MinAngles = "0; -2 * sAngle; 0; -sAngle; 0" MaxAngles = "0;      0; 0;     sAngle; 0" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" MinAngles = "0;     -sAngle; 0; -sAngle; 0" MaxAngles = "0; sAngle; 0;     sAngle; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "AddSmallParts" >
+            <Turn NormVector = "0;0;1" Angle = "sC * sAngle" />
+            <Turn NormVector = "Cx[2];Cy[2];Cz[2]" Angle = "sAngle * sB" />
+            <Turn NormVector = "0;0;1" Angle = "sAngle * sA" />
+            <Part>
+                <Vertices Vectors = "SVx; SVy; SVz" />
+                <Faces>
+                    <Face Color = "Colors[Color]" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "-sAngle * sA" />
+            <Turn NormVector = "Cx[2];Cy[2];Cz[2]" Angle = "-sAngle * sB" />
+            <Turn NormVector = "0;0;1" Angle = "-sC * sAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSmallParts" Color = " 0" sA = "2" sB = " 0" sC = " 0" />
+        <ExecMacro MacroName = "AddSmallParts" Color = " 1" sA = "1" sB = "-1" sC = "-2" />
+        <ExecMacro MacroName = "AddSmallParts" Color = " 2" sA = "3" sB = "-1" sC = "-1" />
+        <ExecMacro MacroName = "AddSmallParts" Color = " 3" sA = "4" sB = "-1" sC = " 0" />
+        <ExecMacro MacroName = "AddSmallParts" Color = " 4" sA = "1" sB = "-1" sC = " 1" />
+        <ExecMacro MacroName = "AddSmallParts" Color = " 5" sA = "1" sB = "-1" sC = " 2" />
+
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <ExecMacro MacroName = "AddSmallParts" Color = " 6" sA = "2" sB = "-1" sC = "-2" />
+        <ExecMacro MacroName = "AddSmallParts" Color = " 7" sA = "0" sB = "-1" sC = " 2" />
+        <ExecMacro MacroName = "AddSmallParts" Color = " 8" sA = "4" sB = "-1" sC = " 1" />
+        <ExecMacro MacroName = "AddSmallParts" Color = " 9" sA = "0" sB = "-1" sC = " 0" />
+        <ExecMacro MacroName = "AddSmallParts" Color = "10" sA = "3" sB = "-1" sC = "-1" />
+        <ExecMacro MacroName = "AddSmallParts" Color = "11" sA = "0" sB = " 0" sC = " 0" />
+
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Megaminx Constrained 144" File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Bandaged\Megaminx Constrained 144.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Megaminx Constrained 144 = 51,0,2, 32,0,4, 35,0,4, 40,0,4, 14,0,1, 30,0,0, 26,0,0, 21,0,3, 10,0,2, 29,0,1, 47,0,0, 31,0,1
+
+    </SetTextures>
+</xml>

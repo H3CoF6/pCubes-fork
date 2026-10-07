@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentometer 3 (sphere)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Pentometer 3</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-04</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+
+        K := 0.6;
+        D := K * 0.796;
+
+        Angle := arctan(2);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-Angle;-Angle/2;0" PlaneDistances = " 0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " ss; cs; ss+cs" MinAngles = "-Angle;-Angle" MaxAngles = "0;0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/5"  PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "  0;-cs; ss" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Megaminx_Sphere" >
+            <Script>
+                for i := 0 to 11 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "Megaminx_Sphere" Color = "'0033FF'" />
+        <Cut> <Plane NormVector = "-ss; -cs; -ss-cs" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -cs; ss" NormDistance = "D" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Megaminx_Sphere" Color = "'EE0000'" />
+        <Cut> <Plane NormVector = " ss;    cs; ss+cs" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-cs; ss" NormDistance = "D" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Megaminx_Sphere" Color = "'FFFF00'" />
+        <Cut> <Plane NormVector = " ss;    cs; ss+cs" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = "0; cs;-ss" NormDistance = "-D" /> </Cut>
+        <Cut> <Plane NormVector = "cs;-ss;  0" NormDistance = "D" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "1" To = "0" />
+        <Macro Name = "TurnAndSplit1" >
+            <Split> <Plane NormVector = "cs;-ss;     0" NormDistance = " D" /> </Split>
+            <Split> <Plane NormVector = "ss; cs; ss+cs" NormDistance = " 0" /> </Split>
+            <Turn NormVector = "  0;-cs; ss" Angle = "Pi * 2 / 5" />
+        </Macro>
+        <ExecMacro MacroName = "TurnAndSplit1" Repeat = "5" />
+        <ShowAll/>
+
+        <Hide Axis = "1" From = "1" />
+        <Turn NormVector = "ss; cs; ss+cs" Angle = "-Angle" />
+        <Turn NormVector = "  0;-cs; ss" Angle = "Pi / 5" />
+        <ExecMacro MacroName = "TurnAndSplit1" Repeat = "5" />
+        <Turn NormVector = "  0;-cs; ss" Angle = "-Pi / 5" />
+        <Turn NormVector = "ss; cs; ss+cs" Angle = "Angle" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Megaminx_Sphere" Color = "-1" />
+        <Split> <Plane NormVector = " ss; cs; ss+cs" NormDistance = "0" /> </Split>
+        <Cut> <Plane NormVector = " 0; cs; -ss" NormDistance = "-D" /> </Cut>
+        <Hide Axis = "0" Layer = "0" />
+        <Cut> <Plane NormVector = "-cs; ss;  0" NormDistance = "-D" /> </Cut>
+        <ShowAll/>
+        <SaveSolvedState/>
+        <Turn Axis = "0" Layer = "0" Angle = "Angle/2" />
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-31.7 * Pi/180" />
+        <Turn NormVector = "1;0;0" Angle = " 18 * Pi/180" />
+        <Turn NormVector = "0;1;0" Angle = "-31.5 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Macros>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "0" Layer = "0" Angle = "Angle/2" />
+            <Turn Axis = "1" Layer = "1" Angle = "2*Pi*Random"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Angle" />
+            <Turn Axis = "1" Layer = "1" Angle = "2*Pi*Random"/>
+            <Turn Axis = "0" Layer = "0" Angle = "Angle/2" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script> Angle := arctan(2); </Script>
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

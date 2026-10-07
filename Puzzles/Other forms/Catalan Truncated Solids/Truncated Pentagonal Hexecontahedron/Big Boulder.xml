@@ -1,0 +1,423 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Big Boulder</Name>
+        <Menu>Other forms\Catalan Truncated Solids\Truncated Pentagonal Hexecontahedron\Big Boulder</Menu>
+        <Inventor>Oskar Van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-05-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2530</Link>
+        <Link>http://dmccooey.com/polyhedra/LpentagonalHexecontahedron.html</Link>
+    </Interface>
+
+    <Script>
+        K := 0.3;
+
+        //phi := (1 + sqrt(5)) / 2;
+        //xx := ((phi + sqrt(phi-5/27))/2)^(1/3) + ((phi - sqrt(phi-5/27))/2)^(1/3);
+        C0  := K * 0.192893711352; // phi * sqrt(3 - (xx^2)) / 2;
+        C1  := K * 0.218483370127; // phi * sqrt((xx - 1 - (1/xx)) * phi) / (2 * xx);
+        C2  := K * 0.374821658114; // phi * sqrt((xx - 1 - (1/xx)) * phi) / 2;
+        C3  := K * 0.567715369466; // (xx^2) * phi * sqrt(3 - (xx^2)) / 2;
+        C4  := K * 0.728335176957; // phi * sqrt(1 - xx + (phi + 1) / xx) / 2;
+        C5  := K * 0.755467260516; // sqrt(xx * (xx + phi) + 1) / (2 * xx);
+        C6  := K * 0.824957552676; // sqrt((xx + 2) * phi + 2) / (2 * xx);
+        C7  := K * 0.921228888309; // sqrt(-(xx^2) * (phi + 2) + xx * (3 * phi + 1) + 4) / 2;
+        C8  := K * 0.959987701391; // (phi + 1) * sqrt(1 + (1/xx)) / (2 * xx);
+        C9  := K * 1.137066133860; // sqrt(3 * phi + 2 - 2 * xx + (3/xx)) / 2;
+        C10 := K * 1.167123436475; // sqrt((xx^2)*(225*phi + 392) + xx*(670*phi + 249) + (157*phi + 470))/62;
+        C11 := K * 1.222371704903; // phi * sqrt(xx * (xx + phi) + 1) / (2 * xx);
+        C12 := K * 1.272096282575; // phi * sqrt((xx^2) + xx + phi + 1) / (2 * xx);
+        C13 := K * 1.527703070858; // phi * sqrt((xx^2) + 2 * xx * phi + 2) / (2 * xx);
+        C14 := K * 1.646917940690; // sqrt((xx^2) * (2 * phi + 1) - phi) / 2;
+        C15 := K * 1.746186440985; // phi * sqrt((xx^2) + xx) / 2;
+        C16 := K * 1.865401310817; // (phi^3) * sqrt(xx * (xx + phi) + 1) / (2 * (xx^2));
+        C17 := K * 1.888445389283; // sqrt((xx^2)*(842*phi + 617) + xx*(1589*phi + 919) + (784*phi + 627))/62;
+        C18 := K * 1.977838965420; // (phi^2) * sqrt(xx * (xx + phi) + 1) / (2 * xx);
+        C19 := K * 2.097053835252; // phi * sqrt(xx * (xx + phi) + 1) / 2;
+
+        X[ 0] :=  C0 ; Y[ 0] :=  C1 ; Z[ 0] :=  C19;
+        X[ 1] :=  C0 ; Y[ 1] := -C1 ; Z[ 1] := -C19;
+        X[ 2] := -C0 ; Y[ 2] := -C1 ; Z[ 2] :=  C19;
+        X[ 3] := -C0 ; Y[ 3] :=  C1 ; Z[ 3] := -C19;
+        X[ 4] :=  C19; Y[ 4] :=  C0 ; Z[ 4] :=  C1 ;
+        X[ 5] :=  C19; Y[ 5] := -C0 ; Z[ 5] := -C1 ;
+        X[ 6] := -C19; Y[ 6] := -C0 ; Z[ 6] :=  C1 ;
+        X[ 7] := -C19; Y[ 7] :=  C0 ; Z[ 7] := -C1 ;
+        X[ 8] :=  C1 ; Y[ 8] :=  C19; Z[ 8] :=  C0 ;
+        X[ 9] :=  C1 ; Y[ 9] := -C19; Z[ 9] := -C0 ;
+        X[10] := -C1 ; Y[10] := -C19; Z[10] :=  C0 ;
+        X[11] := -C1 ; Y[11] :=  C19; Z[11] := -C0 ;
+        X[12] :=  0  ; Y[12] :=  C5 ; Z[12] :=  C18;
+        X[13] :=  0  ; Y[13] :=  C5 ; Z[13] := -C18;
+        X[14] :=  0  ; Y[14] := -C5 ; Z[14] :=  C18;
+        X[15] :=  0  ; Y[15] := -C5 ; Z[15] := -C18;
+        X[16] :=  C18; Y[16] :=  0  ; Z[16] :=  C5 ;
+        X[17] :=  C18; Y[17] :=  0  ; Z[17] := -C5 ;
+        X[18] := -C18; Y[18] :=  0  ; Z[18] :=  C5 ;
+        X[19] := -C18; Y[19] :=  0  ; Z[19] := -C5 ;
+        X[20] :=  C5 ; Y[20] :=  C18; Z[20] :=  0  ;
+        X[21] :=  C5 ; Y[21] := -C18; Z[21] :=  0  ;
+        X[22] := -C5 ; Y[22] :=  C18; Z[22] :=  0  ;
+        X[23] := -C5 ; Y[23] := -C18; Z[23] :=  0  ;
+        X[24] :=  C10; Y[24] :=  0  ; Z[24] :=  C17;
+        X[25] :=  C10; Y[25] :=  0  ; Z[25] := -C17;
+        X[26] := -C10; Y[26] :=  0  ; Z[26] :=  C17;
+        X[27] := -C10; Y[27] :=  0  ; Z[27] := -C17;
+        X[28] :=  C17; Y[28] :=  C10; Z[28] :=  0  ;
+        X[29] :=  C17; Y[29] := -C10; Z[29] :=  0  ;
+        X[30] := -C17; Y[30] :=  C10; Z[30] :=  0  ;
+        X[31] := -C17; Y[31] := -C10; Z[31] :=  0  ;
+        X[32] :=  0  ; Y[32] :=  C17; Z[32] :=  C10;
+        X[33] :=  0  ; Y[33] :=  C17; Z[33] := -C10;
+        X[34] :=  0  ; Y[34] := -C17; Z[34] :=  C10;
+        X[35] :=  0  ; Y[35] := -C17; Z[35] := -C10;
+        X[36] :=  C3 ; Y[36] := -C6 ; Z[36] :=  C16;
+        X[37] :=  C3 ; Y[37] :=  C6 ; Z[37] := -C16;
+        X[38] := -C3 ; Y[38] :=  C6 ; Z[38] :=  C16;
+        X[39] := -C3 ; Y[39] := -C6 ; Z[39] := -C16;
+        X[40] :=  C16; Y[40] := -C3 ; Z[40] :=  C6 ;
+        X[41] :=  C16; Y[41] :=  C3 ; Z[41] := -C6 ;
+        X[42] := -C16; Y[42] :=  C3 ; Z[42] :=  C6 ;
+        X[43] := -C16; Y[43] := -C3 ; Z[43] := -C6 ;
+        X[44] :=  C6 ; Y[44] := -C16; Z[44] :=  C3 ;
+        X[45] :=  C6 ; Y[45] :=  C16; Z[45] := -C3 ;
+        X[46] := -C6 ; Y[46] :=  C16; Z[46] :=  C3 ;
+        X[47] := -C6 ; Y[47] := -C16; Z[47] := -C3 ;
+        X[48] :=  C2 ; Y[48] :=  C9 ; Z[48] :=  C15;
+        X[49] :=  C2 ; Y[49] := -C9 ; Z[49] := -C15;
+        X[50] := -C2 ; Y[50] := -C9 ; Z[50] :=  C15;
+        X[51] := -C2 ; Y[51] :=  C9 ; Z[51] := -C15;
+        X[52] :=  C15; Y[52] :=  C2 ; Z[52] :=  C9 ;
+        X[53] :=  C15; Y[53] := -C2 ; Z[53] := -C9 ;
+        X[54] := -C15; Y[54] := -C2 ; Z[54] :=  C9 ;
+        X[55] := -C15; Y[55] :=  C2 ; Z[55] := -C9 ;
+        X[56] :=  C9 ; Y[56] :=  C15; Z[56] :=  C2 ;
+        X[57] :=  C9 ; Y[57] := -C15; Z[57] := -C2 ;
+        X[58] := -C9 ; Y[58] := -C15; Z[58] :=  C2 ;
+        X[59] := -C9 ; Y[59] :=  C15; Z[59] := -C2 ;
+        X[60] :=  C7 ; Y[60] :=  C8 ; Z[60] :=  C14;
+        X[61] :=  C7 ; Y[61] := -C8 ; Z[61] := -C14;
+        X[62] := -C7 ; Y[62] := -C8 ; Z[62] :=  C14;
+        X[63] := -C7 ; Y[63] :=  C8 ; Z[63] := -C14;
+        X[64] :=  C14; Y[64] :=  C7 ; Z[64] :=  C8 ;
+        X[65] :=  C14; Y[65] := -C7 ; Z[65] := -C8 ;
+        X[66] := -C14; Y[66] := -C7 ; Z[66] :=  C8 ;
+        X[67] := -C14; Y[67] :=  C7 ; Z[67] := -C8 ;
+        X[68] :=  C8 ; Y[68] :=  C14; Z[68] :=  C7 ;
+        X[69] :=  C8 ; Y[69] := -C14; Z[69] := -C7 ;
+        X[70] := -C8 ; Y[70] := -C14; Z[70] :=  C7 ;
+        X[71] := -C8 ; Y[71] :=  C14; Z[71] := -C7 ;
+        X[72] :=  C4 ; Y[72] := -C12; Z[72] :=  C13;
+        X[73] :=  C4 ; Y[73] :=  C12; Z[73] := -C13;
+        X[74] := -C4 ; Y[74] :=  C12; Z[74] :=  C13;
+        X[75] := -C4 ; Y[75] := -C12; Z[75] := -C13;
+        X[76] :=  C13; Y[76] := -C4 ; Z[76] :=  C12;
+        X[77] :=  C13; Y[77] :=  C4 ; Z[77] := -C12;
+        X[78] := -C13; Y[78] :=  C4 ; Z[78] :=  C12;
+        X[79] := -C13; Y[79] := -C4 ; Z[79] := -C12;
+        X[80] :=  C12; Y[80] := -C13; Z[80] :=  C4 ;
+        X[81] :=  C12; Y[81] :=  C13; Z[81] := -C4 ;
+        X[82] := -C12; Y[82] :=  C13; Z[82] :=  C4 ;
+        X[83] := -C12; Y[83] := -C13; Z[83] := -C4 ;
+        X[84] :=  C11; Y[84] :=  C11; Z[84] :=  C11;
+        X[85] :=  C11; Y[85] :=  C11; Z[85] := -C11;
+        X[86] :=  C11; Y[86] := -C11; Z[86] :=  C11;
+        X[87] :=  C11; Y[87] := -C11; Z[87] := -C11;
+        X[88] := -C11; Y[88] :=  C11; Z[88] :=  C11;
+        X[89] := -C11; Y[89] :=  C11; Z[89] := -C11;
+        X[90] := -C11; Y[90] := -C11; Z[90] :=  C11;
+        X[91] := -C11; Y[91] := -C11; Z[91] := -C11;
+
+        // Calcs normal to plane with 3 points
+        procedure NormalI(i1, i2, i3);
+        begin
+          px[nindex] := (y[i1]-y[i3]) * (z[i2]-z[i3]) - (y[i2]-y[i3]) * (z[i1]-z[i3]);
+          py[nindex] := (z[i1]-z[i3]) * (x[i2]-x[i3]) - (z[i2]-z[i3]) * (x[i1]-x[i3]);
+          pz[nindex] := (x[i1]-x[i3]) * (y[i2]-y[i3]) - (x[i2]-x[i3]) * (y[i1]-y[i3]);
+          nindex := nindex + 1;
+        end;
+
+        nindex := 0;
+
+        // Calc all normals
+        NormalI( 24,  0, 36);
+        NormalI( 24, 36, 76);
+        NormalI( 24, 76, 52);
+        NormalI( 24, 52, 60);
+        NormalI( 24, 60,  0);
+        NormalI( 27,  3, 39);
+        NormalI( 27, 39, 79);
+        NormalI( 27, 79, 55);
+        NormalI( 27, 55, 63);
+        NormalI( 27, 63,  3);
+        NormalI( 25,  1, 37);
+        NormalI( 25, 37, 77);
+        NormalI( 25, 77, 53);
+        NormalI( 25, 53, 61);
+        NormalI( 25, 61,  1);
+        NormalI( 26,  2, 38);
+        NormalI( 26, 38, 78);
+        NormalI( 26, 78, 54);
+        NormalI( 26, 54, 62);
+        NormalI( 26, 62,  2);
+        NormalI( 28,  4, 41);
+        NormalI( 28, 41, 81);
+        NormalI( 28, 81, 56);
+        NormalI( 28, 56, 64);
+        NormalI( 28, 64,  4);
+        NormalI( 31,  6, 43);
+        NormalI( 31, 43, 83);
+        NormalI( 31, 83, 58);
+        NormalI( 31, 58, 66);
+        NormalI( 31, 66,  6);
+        NormalI( 29,  5, 40);
+        NormalI( 29, 40, 80);
+        NormalI( 29, 80, 57);
+        NormalI( 29, 57, 65);
+        NormalI( 29, 65,  5);
+        NormalI( 30,  7, 42);
+        NormalI( 30, 42, 82);
+        NormalI( 30, 82, 59);
+        NormalI( 30, 59, 67);
+        NormalI( 30, 67,  7);
+        NormalI( 32,  8, 46);
+        NormalI( 32, 46, 74);
+        NormalI( 32, 74, 48);
+        NormalI( 32, 48, 68);
+        NormalI( 32, 68,  8);
+        NormalI( 35,  9, 47);
+        NormalI( 35, 47, 75);
+        NormalI( 35, 75, 49);
+        NormalI( 35, 49, 69);
+        NormalI( 35, 69,  9);
+        NormalI( 33, 11, 45);
+        NormalI( 33, 45, 73);
+        NormalI( 33, 73, 51);
+        NormalI( 33, 51, 71);
+        NormalI( 33, 71, 11);
+        NormalI( 34, 10, 44);
+        NormalI( 34, 44, 72);
+        NormalI( 34, 72, 50);
+        NormalI( 34, 50, 70);
+        NormalI( 34, 70, 10);
+
+        function AngleI(i1, i2, i3);
+        begin
+          vx := py[i1] * pz[i2] - py[i2] * pz[i1];
+          vy := pz[i1] * px[i2] - pz[i2] * px[i1];
+          vz := px[i1] * py[i2] - px[i2] * py[i1];
+          wx := py[i1] * pz[i3] - py[i3] * pz[i1];
+          wy := pz[i1] * px[i3] - pz[i3] * px[i1];
+          wz := px[i1] * py[i3] - px[i3] * py[i1];
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+
+// <!-- All angles there: http://twistypuzzles.com/forum/viewtopic.php?f=1&p=358806  -->
+        A1 := AngleI(0, 19, 15);
+        A2 := 2*Pi - 4 * A1;
+        A3 := A1 * 2;
+        A4 := A1 + A2;
+        A5 := A1 + A3;
+
+        D  := K * 1.95;
+        DCut := D * 1.06;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A5;-A4;-A3;-A2;-A1;0;A1;A2;A3;A4;A5" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " px[ 0]; py[ 0]; pz[ 0]" />
+        <Axis NormVector = " px[ 1]; py[ 1]; pz[ 1]" />
+        <Axis NormVector = " px[ 2]; py[ 2]; pz[ 2]" />
+        <Axis NormVector = " px[ 3]; py[ 3]; pz[ 3]" />
+        <Axis NormVector = " px[ 4]; py[ 4]; pz[ 4]" />
+        <Axis NormVector = " px[ 5]; py[ 5]; pz[ 5]" />
+        <Axis NormVector = " px[ 6]; py[ 6]; pz[ 6]" />
+        <Axis NormVector = " px[ 7]; py[ 7]; pz[ 7]" />
+        <Axis NormVector = " px[ 8]; py[ 8]; pz[ 8]" />
+        <Axis NormVector = " px[ 9]; py[ 9]; pz[ 9]" />
+
+        <Axis NormVector = " px[10]; py[10]; pz[10]" />
+        <Axis NormVector = " px[11]; py[11]; pz[11]" />
+        <Axis NormVector = " px[12]; py[12]; pz[12]" />
+        <Axis NormVector = " px[13]; py[13]; pz[13]" />
+        <Axis NormVector = " px[14]; py[14]; pz[14]" />
+        <Axis NormVector = " px[15]; py[15]; pz[15]" />
+        <Axis NormVector = " px[16]; py[16]; pz[16]" />
+        <Axis NormVector = " px[17]; py[17]; pz[17]" />
+        <Axis NormVector = " px[18]; py[18]; pz[18]" />
+        <Axis NormVector = " px[19]; py[19]; pz[19]" />
+
+        <Axis NormVector = " px[20]; py[20]; pz[20]" />
+        <Axis NormVector = " px[21]; py[21]; pz[21]" />
+        <Axis NormVector = " px[22]; py[22]; pz[22]" />
+        <Axis NormVector = " px[23]; py[23]; pz[23]" />
+        <Axis NormVector = " px[24]; py[24]; pz[24]" />
+        <Axis NormVector = " px[25]; py[25]; pz[25]" />
+        <Axis NormVector = " px[26]; py[26]; pz[26]" />
+        <Axis NormVector = " px[27]; py[27]; pz[27]" />
+        <Axis NormVector = " px[28]; py[28]; pz[28]" />
+        <Axis NormVector = " px[29]; py[29]; pz[29]" />
+
+        <Axis NormVector = " px[30]; py[30]; pz[30]" />
+        <Axis NormVector = " px[31]; py[31]; pz[31]" />
+        <Axis NormVector = " px[32]; py[32]; pz[32]" />
+        <Axis NormVector = " px[33]; py[33]; pz[33]" />
+        <Axis NormVector = " px[34]; py[34]; pz[34]" />
+        <Axis NormVector = " px[35]; py[35]; pz[35]" />
+        <Axis NormVector = " px[36]; py[36]; pz[36]" />
+        <Axis NormVector = " px[37]; py[37]; pz[37]" />
+        <Axis NormVector = " px[38]; py[38]; pz[38]" />
+        <Axis NormVector = " px[39]; py[39]; pz[39]" />
+
+        <Axis NormVector = " px[40]; py[40]; pz[40]" />
+        <Axis NormVector = " px[41]; py[41]; pz[41]" />
+        <Axis NormVector = " px[42]; py[42]; pz[42]" />
+        <Axis NormVector = " px[43]; py[43]; pz[43]" />
+        <Axis NormVector = " px[44]; py[44]; pz[44]" />
+        <Axis NormVector = " px[45]; py[45]; pz[45]" />
+        <Axis NormVector = " px[46]; py[46]; pz[46]" />
+        <Axis NormVector = " px[47]; py[47]; pz[47]" />
+        <Axis NormVector = " px[48]; py[48]; pz[48]" />
+        <Axis NormVector = " px[49]; py[49]; pz[49]" />
+
+        <Axis NormVector = " px[50]; py[50]; pz[50]" />
+        <Axis NormVector = " px[51]; py[51]; pz[51]" />
+        <Axis NormVector = " px[52]; py[52]; pz[52]" />
+        <Axis NormVector = " px[53]; py[53]; pz[53]" />
+        <Axis NormVector = " px[54]; py[54]; pz[54]" />
+        <Axis NormVector = " px[55]; py[55]; pz[55]" />
+        <Axis NormVector = " px[56]; py[56]; pz[56]" />
+        <Axis NormVector = " px[57]; py[57]; pz[57]" />
+        <Axis NormVector = " px[58]; py[58]; pz[58]" />
+        <Axis NormVector = " px[59]; py[59]; pz[59]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "X; Y; Z" />
+
+            <Faces>
+                <Face Color = "A7A2FF" VertexIndexes = "24; 0; 2;14;36" />
+                <Face Color = "8823A3" VertexIndexes = "24;36;72;86;76" />
+                <Face Color = "E8FB01" VertexIndexes = "24;76;40;16;52" />
+                <Face Color = "D28A5A" VertexIndexes = "24;52;64;84;60" />
+                <Face Color = "8AFA70" VertexIndexes = "24;60;48;12; 0" />
+                <Face Color = "251FA3" VertexIndexes = "27; 3; 1;15;39" />
+                <Face Color = "6AA320" VertexIndexes = "27;39;75;91;79" />
+                <Face Color = "EBA2FE" VertexIndexes = "27;79;43;19;55" />
+                <Face Color = "C0FB6F" VertexIndexes = "27;55;67;89;63" />
+                <Face Color = "70D25B" VertexIndexes = "27;63;51;13; 3" />
+                <Face Color = "FF3AE1" VertexIndexes = "25; 1; 3;13;37" />
+                <Face Color = "8E5BD2" VertexIndexes = "25;37;73;85;77" />
+                <Face Color = "5BD3CA" VertexIndexes = "25;77;41;17;53" />
+                <Face Color = "A3FEF9" VertexIndexes = "25;53;65;87;61" />
+                <Face Color = "D25C98" VertexIndexes = "25;61;49;15; 1" />
+                <Face Color = "71A2FF" VertexIndexes = "26; 2; 0;12;38" />
+                <Face Color = "A48421" VertexIndexes = "26;38;74;88;78" />
+                <Face Color = "605BD3" VertexIndexes = "26;78;42;18;54" />
+                <Face Color = "D18585" VertexIndexes = "26;54;66;90;62" />
+                <Face Color = "00F93B" VertexIndexes = "26;62;50;14; 2" />
+                <Face Color = "5BB1D2" VertexIndexes = "28; 4; 5;17;41" />
+                <Face Color = "04BBFF" VertexIndexes = "28;41;77;85;81" />
+                <Face Color = "01FA9C" VertexIndexes = "28;81;45;20;56" />
+                <Face Color = "D35CC4" VertexIndexes = "28;56;68;84;64" />
+                <Face Color = "1F80A1" VertexIndexes = "28;64;52;16; 4" />
+                <Face Color = "C7A2FF" VertexIndexes = "31; 6; 7;19;43" />
+                <Face Color = "72FC8F" VertexIndexes = "31;43;79;91;83" />
+                <Face Color = "FF2501" VertexIndexes = "31;83;47;23;58" />
+                <Face Color = "6A7112" VertexIndexes = "31;58;70;90;66" />
+                <Face Color = "FFC300" VertexIndexes = "31;66;54;18; 6" />
+                <Face Color = "FFC6A1" VertexIndexes = "29; 5; 4;16;40" />
+                <Face Color = "CB3BFF" VertexIndexes = "29;40;76;86;80" />
+                <Face Color = "1FA33E" VertexIndexes = "29;80;44;21;57" />
+                <Face Color = "70D5FF" VertexIndexes = "29;57;69;87;65" />
+                <Face Color = "FF7170" VertexIndexes = "29;65;53;17; 5" />
+                <Face Color = "20A36F" VertexIndexes = "30; 7; 6;18;42" />
+                <Face Color = "91FA00" VertexIndexes = "30;42;78;88;82" />
+                <Face Color = "FF6FBA" VertexIndexes = "30;82;46;22;59" />
+                <Face Color = "38712D" VertexIndexes = "30;59;71;89;67" />
+                <Face Color = "A3211F" VertexIndexes = "30;67;55;19; 7" />
+                <Face Color = "2151A3" VertexIndexes = "32; 8;11;22;46" />
+                <Face Color = "9CD25A" VertexIndexes = "32;46;82;88;74" />
+                <Face Color = "5AD3A0" VertexIndexes = "32;74;38;12;48" />
+                <Face Color = "143771" VertexIndexes = "32;48;60;84;68" />
+                <Face Color = "FF6801" VertexIndexes = "32;68;56;20; 8" />
+                <Face Color = "A4FCD6" VertexIndexes = "35; 9;10;23;47" />
+                <Face Color = "0833FE" VertexIndexes = "35;47;83;91;75" />
+                <Face Color = "C7D25C" VertexIndexes = "35;75;39;15;49" />
+                <Face Color = "7235FF" VertexIndexes = "35;49;61;87;69" />
+                <Face Color = "5CD375" VertexIndexes = "35;69;57;21; 9" />
+                <Face Color = "FF2E8A" VertexIndexes = "33;11; 8;20;45" />
+                <Face Color = "F1FC71" VertexIndexes = "33;45;81;85;73" />
+                <Face Color = "D2B45A" VertexIndexes = "33;73;37;13;51" />
+                <Face Color = "01FBF1" VertexIndexes = "33;51;63;89;71" />
+                <Face Color = "30F801" VertexIndexes = "33;71;59;22;11" />
+                <Face Color = "21A49C" VertexIndexes = "34;10; 9;21;44" />
+                <Face Color = "5920A3" VertexIndexes = "34;44;80;86;72" />
+                <Face Color = "A25521" VertexIndexes = "34;72;36;14;50" />
+                <Face Color = "FFE6A3" VertexIndexes = "34;50;62;90;70" />
+                <Face Color = "055FFE" VertexIndexes = "34;70;58;23;10" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "A24746"> <Plane NormVector = "X[24]; Y[24]; Z[24]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "A26A47"> <Plane NormVector = "X[25]; Y[25]; Z[25]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "A38B45"> <Plane NormVector = "X[26]; Y[26]; Z[26]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "7AA347"> <Plane NormVector = "X[27]; Y[27]; Z[27]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "46A458"> <Plane NormVector = "X[32]; Y[32]; Z[32]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "44A37B"> <Plane NormVector = "X[33]; Y[33]; Z[33]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "4688A2"> <Plane NormVector = "X[34]; Y[34]; Z[34]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "4A45A3"> <Plane NormVector = "X[35]; Y[35]; Z[35]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "6C45A2"> <Plane NormVector = "X[28]; Y[28]; Z[28]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "8F46A2"> <Plane NormVector = "X[29]; Y[29]; Z[29]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "A34696"> <Plane NormVector = "X[30]; Y[30]; Z[30]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "A34675"> <Plane NormVector = "X[31]; Y[31]; Z[31]" NormDistance = "-DCut" /> </Cut>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax1" Layer = "1" Angle = " A1" />
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "-A1" />
+            <Split Axis = "Ax1" From  = "1" />
+            <Undo Repeat = "2" />
+
+            <Turn  Axis = "Ax2" Layer = "1" Angle = " A1" />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "-A1" />
+            <Split Axis = "Ax2" From  = "1" />
+            <Undo Repeat = "2" />
+        </Macro>
+        <SplitByAxes/>
+
+        <ExecMacro MacroName = "Split" Ax1 = " 0" Ax2 = "15" />
+        <ExecMacro MacroName = "Split" Ax1 = " 1" Ax2 = "57" />
+        <ExecMacro MacroName = "Split" Ax1 = " 2" Ax2 = "31" />
+        <ExecMacro MacroName = "Split" Ax1 = " 3" Ax2 = "24" />
+        <ExecMacro MacroName = "Split" Ax1 = " 4" Ax2 = "43" />
+        <ExecMacro MacroName = "Split" Ax1 = " 5" Ax2 = "10" />
+        <ExecMacro MacroName = "Split" Ax1 = " 6" Ax2 = "47" />
+        <ExecMacro MacroName = "Split" Ax1 = " 7" Ax2 = "26" />
+        <ExecMacro MacroName = "Split" Ax1 = " 8" Ax2 = "39" />
+        <ExecMacro MacroName = "Split" Ax1 = " 9" Ax2 = "53" />
+        <ExecMacro MacroName = "Split" Ax1 = "11" Ax2 = "52" />
+        <ExecMacro MacroName = "Split" Ax1 = "12" Ax2 = "21" />
+        <ExecMacro MacroName = "Split" Ax1 = "13" Ax2 = "34" />
+        <ExecMacro MacroName = "Split" Ax1 = "14" Ax2 = "48" />
+        <ExecMacro MacroName = "Split" Ax1 = "16" Ax2 = "42" />
+        <ExecMacro MacroName = "Split" Ax1 = "17" Ax2 = "36" />
+        <ExecMacro MacroName = "Split" Ax1 = "18" Ax2 = "29" />
+        <ExecMacro MacroName = "Split" Ax1 = "19" Ax2 = "58" />
+        <ExecMacro MacroName = "Split" Ax1 = "20" Ax2 = "30" />
+        <ExecMacro MacroName = "Split" Ax1 = "22" Ax2 = "51" />
+        <ExecMacro MacroName = "Split" Ax1 = "23" Ax2 = "44" />
+        <ExecMacro MacroName = "Split" Ax1 = "25" Ax2 = "35" />
+        <ExecMacro MacroName = "Split" Ax1 = "27" Ax2 = "46" />
+        <ExecMacro MacroName = "Split" Ax1 = "28" Ax2 = "59" />
+        <ExecMacro MacroName = "Split" Ax1 = "32" Ax2 = "56" />
+        <ExecMacro MacroName = "Split" Ax1 = "33" Ax2 = "49" />
+        <ExecMacro MacroName = "Split" Ax1 = "37" Ax2 = "41" />
+        <ExecMacro MacroName = "Split" Ax1 = "38" Ax2 = "54" />
+        <ExecMacro MacroName = "Split" Ax1 = "40" Ax2 = "50" />
+        <ExecMacro MacroName = "Split" Ax1 = "45" Ax2 = "55" />
+    </Figure>
+</xml>

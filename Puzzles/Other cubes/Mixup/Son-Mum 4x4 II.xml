@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Son-Mum 4x4 II</Name>
+        <Menu>Other cubes\Mixup\Son-Mum 4x4 II</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2019-02-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9789</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=387342</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * 2 * (2 * sqrt(2) - 1) / 7;
+    </Script>
+
+    <Axes TurningAngles = " Pi/2; Pi/4; Pi/4; Pi/2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = " W; 0; 0" />
+        <HideContaining Vector = "-W; 0; 0" />
+        <HideContaining Vector = " 0; W; 0" />
+        <HideContaining Vector = " 0;-W; 0" />
+        <HideContaining Vector = " 0; 0; W" />
+        <HideContaining Vector = " 0; 0;-W" />
+        <InvertVisibility/>
+
+        <Turn Axis = "0" From = "1" To = "2" Angle = " Pi/4" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <Turn Axis = "1" From = "1" To = "2" Angle = " Pi/4" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <Turn Axis = "2" From = "1" To = "2" Angle = " Pi/4" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split">
+            <Hide Axis = "a0" From = "1" To = "2" />
+            <Hide Axis = "a1" From = "1" To = "2" />
+            <Turn Axis = "a2" From = "1" To = "2" Angle = "Pi/4" />
+            <Turn Axis = "a0" From = "1" To = "2" Angle = "Pi/2" />
+            <Turn Axis = "a2" From = "1" To = "2" Angle = "Pi/2" />
+            <Turn Axis = "a0" From = "1" To = "2" Angle = "Pi/4" />
+            <Split Axis = "0" From = "1" />
+            <Split Axis = "0" From = "3" />
+            <Split Axis = "1" From = "1" />
+            <Split Axis = "1" From = "3" />
+            <Split Axis = "2" From = "1" />
+            <Split Axis = "2" From = "3" />
+            <Undo Repeat = "4" />
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" a0 = "0" a1 = "1" a2 = "2" />
+        <ExecMacro MacroName = "Split" a0 = "1" a1 = "2" a2 = "0" />
+        <ExecMacro MacroName = "Split" a0 = "2" a1 = "0" a2 = "1" />
+    </Figure>
+</xml>

@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 4x4x4 Hexagonal Dipyramid</Name>
+        <Menu>Other forms\Dipyramid\Hexagonal\Crazy 4x4x4 Hexagonal Dipyramid</Menu>
+        <Inventor>Rafael Gulluni</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2319</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 2;
+        Delta := 0.002;
+        R := W * 0.4;
+        C := W + Delta;
+        WX := W;
+        WY := W;
+        WZ := W;
+
+        Colors[ 0] := '0000CC'; // clBlue
+        Colors[ 1] := 'FF0000'; // clRed
+        Colors[ 2] := 'FFFFFF'; // clWhite
+        Colors[ 3] := 'FFFF00'; // clYellow
+        Colors[ 4] := '00AA00'; // clGreen
+        Colors[ 5] := '800080'; // clViolett
+        Colors[ 6] := 'FFFFAA'; // clCream
+        Colors[ 7] := '0066CC'; // clLightBlue
+        Colors[ 8] := 'FF6000'; // clOrange
+        Colors[ 9] := '00FF00'; // clLightGreen
+        Colors[10] := 'FF88CC'; // clLightViolett
+        Colors[11] := '666666'; // clGray
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W;-D; 0; D; W"  >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Cut Color = "Colors[ 6]" > <Plane NormVector = " 2; 2;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 7]" > <Plane NormVector = "-2;-2; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 8]" > <Plane NormVector = " 2;-1; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 9]" > <Plane NormVector = "-2; 1;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[10]" > <Plane NormVector = "-1; 2; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[11]" > <Plane NormVector = " 1;-2;-2" NormDistance = "-W" /> </Cut>
+
+        <SplitByAxes/>
+
+        <Circle Radius = "R" Color = "Colors[0]" > <Center X = "-C" Y = " 0" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[1]" > <Center X = " C" Y = " 0" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[2]" > <Center X = " 0" Y = "-C" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[3]" > <Center X = " 0" Y = " C" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[4]" > <Center X = " 0" Y = " 0" Z = "-C" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[5]" > <Center X = " 0" Y = " 0" Z = " C" /> </Circle>
+
+        <SplitByAxes/>
+        <Connect Layers = "0;2" />
+        <Connect Layers = "3;5" />
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = "0;1;0" Angle = "-ArcTan(sqrt(2))" />
+    </Figure>
+</xml>

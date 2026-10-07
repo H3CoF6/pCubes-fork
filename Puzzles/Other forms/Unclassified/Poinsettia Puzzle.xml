@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Poinsettia Puzzle</Name>
+        <Menu>Other forms\Unclassified\Poinsettia Puzzle</Menu>
+        <Inventor>Jeong Min Kim</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9432</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+
+        D1 := W / 2;
+        D2 := W / sqrt(3);
+
+        R := W * 0.2;
+        W1 := (W + D1) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <SplitByAxes/>
+        <HideContaining Vectors = "Ex;Ey;Ez" />
+        <InvertVisibility/>
+
+        <Macro Name = "HideEdges" >
+            <RemoveContaining Vectors = "Ex[i]*0.9;Ey[i]*0.9;Ez[i]*0.9" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideEdges" i = "0" Repeat = "6" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <SplitByAxes/>
+
+        <Hi1deContaining Vectors = "Ex;Ey;Ez" />
+        <Cut Axis = "3" From = "1" />
+        <Cut Axis = "4" From = "1" />
+        <Cut Axis = "5" From = "1" />
+        <Cut Axis = "6" From = "1" />
+
+        <!-- hidden parts to avoid some turns -->
+        <HideAll/>
+        <Circle Radius = "R" Base = "-D1;-W1;-D1" Center = "  0;-W1;  0" />
+        <Circle Radius = "R" Base = "-D1; W1; D1" Center = "  0; W1;  0" />
+        <Circle Radius = "R" Base = "-W1;-D1;-D1" Center = "-W1;  0;  0" />
+        <Circle Radius = "R" Base = " W1; D1;-D1" Center = " W1;  0;  0" />
+        <Circle Radius = "R" Base = "-D1;-D1;-W1" Center = "  0;  0;-W1" />
+        <Circle Radius = "R" Base = "-D1; D1; W1" Center = "  0;  0; W1" />
+        <InvertVisibility/>
+    </Figure>
+</xml>

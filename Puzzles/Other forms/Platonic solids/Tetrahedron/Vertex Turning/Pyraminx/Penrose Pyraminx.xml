@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Penrose Pyraminx</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Pyraminx\Penrose Pyraminx</Menu>
+        <Inventor>Mason Hynds</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-04-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6961</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clRed    := 'C80000';
+
+        Colors[0] := clBlue;
+        Colors[1] := clBlue;
+        Colors[2] := clRed;
+        Colors[3] := clRed;
+
+        W := 0.65;
+
+        N := 3;
+        D := W * 4 * sqrt(3) / 3 / N;
+        D0 := -W / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2*D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Color = "clRed" Radius = "W / sqrt(3)" Base = " W;-W; 0" Top = "-W; W; 0" />
+        <Cut><Plane NormVector = " 0; 0; 1" NormDistance = " W / 3" /></Cut>
+        <Cut Color = "clBlue" ><Plane NormVector = "-1; 1; 1" NormDistance = "D0" /></Cut>
+        <Cut Color = "clBlue" ><Plane NormVector = " 1;-1; 1" NormDistance = "D0" /></Cut>
+        <HideAll/>
+
+        <Cylinder Color = "clBlue" Radius = "W / sqrt(3)" Base = " W; W; 0" Top = "-W;-W; 0" />
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = " W / 3" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = " 1; 1;-1" NormDistance = "D0" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = "-1;-1;-1" NormDistance = "D0" /></Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "-W / 3" /></Cut>
+        <Cut><Plane NormVector = " 0; 0; 1" NormDistance = "-W / 3" /></Cut>
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

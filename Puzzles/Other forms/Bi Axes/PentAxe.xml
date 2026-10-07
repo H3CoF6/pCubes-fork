@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>PentAxe</Name>
+        <Menu>Other forms\Bi Axes\PentAxe</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-02-24</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=409133</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'EDFF11';
+        clLightGreen   := '80FF80';
+        clGreen        := '009600';
+        clLightViolett := 'FF00B0';
+        clViolett      := '7700CD';
+        clWhite        := 'FFFFFF';
+        clOrange       := 'FF800A';
+        clRed          := 'C80000';
+        clLightBlue1   := '5080FF';
+        clLightBlue2   := '5081FF';
+        clLightBlue3   := '5082FF';
+
+        R := 0.5;
+        include 'Figures\Scripts\Dodecahedron_Sq_Coordinates.inc';
+
+        s5 := sqrt(5);
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "R2sin" FixedLayers = "0" >
+        <Axis NormVector = " Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = " Cx[6]; Cy[6]; Cz[6]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " Cx[2] * s5; Cy[2] * s5; Cz[2] * s5" />
+                <Add Vector = " Cx[6] * s5; Cy[6] * s5; Cz[6] * s5" />
+                <Add Vector = " Vx[12]; Vy[12]; Vz[12]" />
+                <Add Vector = " Vx[ 1]; Vy[ 1]; Vz[ 1]" />
+                <Add Vector = " Vx[16]; Vy[16]; Vz[16]" />
+                <Add Vector = " Vx[13]; Vy[13]; Vz[13]" />
+                <Add Vector = " Vx[17]; Vy[17]; Vz[17]" />
+                <Add Vector = " Vx[ 2]; Vy[ 2]; Vz[ 2]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clYellow"       VertexIndexes = "1;0;3" />
+                <Face Color = "clLightGreen"   VertexIndexes = "0;5;2" />
+                <Face Color = "clGreen"        VertexIndexes = "1;4;6" />
+                <Face Color = "clLightViolett" VertexIndexes = "0;2;3" />
+                <Face Color = "clViolett"      VertexIndexes = "1;3;4" />
+                <Face Color = "clWhite"        VertexIndexes = "0;1;7" />
+                <Face Color = "clOrange"       VertexIndexes = "5;0;7" />
+                <Face Color = "clRed"          VertexIndexes = "1;6;7" />
+                <Face Color = "clLightBlue1"   VertexIndexes = "2;4;3" />
+                <Face Color = "clLightBlue2"   VertexIndexes = "6;5;7" />
+                <Face Color = "clLightBlue3"   VertexIndexes = "2;5;6;4" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <!-- unbandage -->
+        <Macro Name = "Split">
+            <Turn Angle = "sAngle" Axis = "0" Layer = "1" />
+            <Split Axis = "1" From = "1" />
+            <Turn Angle = "sAngle" Axis = "1" Layer = "1" />
+            <Split Axis = "0" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "14" />
+        <Undo Repeat = "28" />
+    </Figure>
+</xml>

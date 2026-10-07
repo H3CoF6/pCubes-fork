@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>DiPie (AC)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\DiPie (AC)</Menu>
+        <Inventor>Karolis Kairys</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11096</Link>
+    </Interface>
+
+    <Script>
+        clRed     := 'FF0000';
+        clGreen   := '007700';
+        clDeepSky := '00BFFF';
+        clBlue    := '0000FF';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        K := 0.6;
+        D := K * 0.75;
+        RC := K / 1.5;
+        DC := D * 1.2;
+
+        S := 0.001;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2; 0" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "0;0" MaxAngles = "Pi/2; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 4" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Radius = "RC" Color = "clWhite"   Base = "0;-D; 0" Top = "0;-DC; 0" TopColor = "clWhite" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0;-S" NormDistance = "0" /> </Cut>
+        <HideAll/>
+
+        <Cylinder Radius = "RC" Color = "clYellow"  Base = " 0;-D; 0" Top = " 0;-DC; 0" TopColor = "clYellow" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1; 0; S" NormDistance = "0" /> </Cut>
+        <HideAll/>
+
+        <Cylinder Radius = "RC" Color = "clBlue"    Base = " 0;-D; 0" Top = " 0;-DC; 0" TopColor = "clBlue" />
+        <Cut Axis = "0" From = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0;-S" NormDistance = "0" /> </Cut>
+        <HideAll/>
+
+        <Cylinder Radius = "RC" Color = "clDeepSky" Base = " 0;-D; 0" Top = "  0;-DC; 0" TopColor = "clDeepSky" />
+        <Cylinder Radius = "RC" Color = "clGreen"   Base = " D; 0; 0" Top = " DC;  0; 0" TopColor = "clGreen" />
+        <Cut Axis = "0" From = "1" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 1; 0; S" NormDistance = "0" /> </Cut>
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 0;-1;-S" NormDistance = "0" /> </Cut>
+        <HideAll/>
+
+        <Cylinder Radius = "RC" Color = "clRed"     Base = " D; 0; 0" Top = " DC; 0; 0" TopColor = "clRed" />
+        <Cut Axis = "0" From = "1" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 0; 1; S" NormDistance = "0" /> </Cut>
+        <ShowAll/>
+
+        <Turn  Axis = "1" Layer = "1" Angle = " Pi/4" />
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi/4" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-Pi/2" />
+        <Turn  Axis = "2" Layer = "1" Angle = "-Pi/2" />
+        <Split Axis = "0" From  = "1" />
+        <Undo Repeat = "4" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "-1" />
+        <Split Axis = "0" From  = "1" />
+        <Cut   Axis = "2" To    = "1" />
+        <Hide  Axis = "0" Layer = "0" />
+        <Cut   Axis = "1" To    = "1" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/4" />
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/4" />
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/4" />
+        <SaveSolvedState/>
+        <Undo Repeat = "3" />
+        <Turn Axis = "0" Layer = "0" Angle = " Pi/2" />
+        <SaveSolvedState/>
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/4" />
+        <SaveSolvedState/>
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/4" />
+        <SaveSolvedState/>
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/4" />
+        <SaveSolvedState/>
+        <Undo Repeat = "4" />
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

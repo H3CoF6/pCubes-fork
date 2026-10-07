@@ -1,0 +1,137 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mandala Cube (Sphere)</Name>
+        <Menu>Other forms\Sphere\Mandala Cube (Sphere)</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7130</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF8800'; // Orange
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := '00DD00'; // Green
+        Colors[3] := '0066FF'; // Blue
+        Colors[4] := 'FF0000'; // Red
+        Colors[5] := 'AA00AA'; // Violett
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        K := 0.6;
+
+        C0 := sqrt(2);
+        C1 := (1 + 2 * sqrt(2)) * 3 / 7;
+        C2 := (2 + 3 * sqrt(2)) * 3 / 7;
+
+        // Calcs normal to plane with 3 points
+        procedure Normal(x1, y1, z1, x2, y2, z2, x3, y3, z3, i);
+        begin
+          nx := (y1-y3) * (z2-z3) - (y2-y3) * (z1-z3);
+          ny := (z1-z3) * (x2-x3) - (z2-z3) * (x1-x3);
+          nz := (x1-x3) * (y2-y3) - (x2-x3) * (y1-y3);
+
+          // normalize vector
+          dn := sqrt(nx^2 + ny^2 + nz^2);
+          px[i] := nx / dn; py[i] := ny / dn; pz[i] := nz / dn;
+        end;
+
+        // Calc all Normal and fill array
+        Normal(  0,  0, C2,   C1,  0, C1,   C0, C0, C0,   0); // " 0;  6; 18"
+        Normal(  0,  0, C2,   C0, C0, C0,    0, C1, C1,   1); // " 0; 18; 14"
+        Normal(  0,  0, C2,    0, C1, C1,  -C0, C0, C0,   2); // " 0; 14; 22"
+        Normal(  0,  0, C2,  -C0, C0, C0,  -C1,  0, C1,   3); // " 0; 22;  8"
+        Normal(  0,  0, C2,  -C1,  0, C1,  -C0,-C0, C0,   4); // " 0;  8; 24"
+        Normal(  0,  0, C2,  -C0,-C0, C0,    0,-C1, C1,   5); // " 0; 24; 16"
+        Normal(  0,  0, C2,    0,-C1, C1,   C0,-C0, C0,   6); // " 0; 16; 20"
+        Normal(  0,  0, C2,   C0,-C0, C0,   C1,  0, C1,   7); // " 0; 20;  6"
+        Normal(  0,  0,-C2,   C1,  0,-C1,   C0,-C0,-C0,   8); // " 1;  7; 21"
+        Normal(  0,  0,-C2,   C0,-C0,-C0,    0,-C1,-C1,   9); // " 1; 21; 17"
+        Normal(  0,  0,-C2,    0,-C1,-C1,  -C0,-C0,-C0,  10); // " 1; 17; 25"
+        Normal(  0,  0,-C2,  -C0,-C0,-C0,  -C1,  0,-C1,  11); // " 1; 25;  9"
+        Normal(  0,  0,-C2,  -C1,  0,-C1,  -C0, C0,-C0,  12); // " 1;  9; 23"
+        Normal(  0,  0,-C2,  -C0, C0,-C0,    0, C1,-C1,  13); // " 1; 23; 15"
+        Normal(  0,  0,-C2,    0, C1,-C1,   C0, C0,-C0,  14); // " 1; 15; 19"
+        Normal(  0,  0,-C2,   C0, C0,-C0,   C1,  0,-C1,  15); // " 1; 19;  7"
+        Normal( C2,  0,  0,   C1,  0, C1,   C0,-C0, C0,  16); // " 2;  6; 20"
+        Normal( C2,  0,  0,   C0,-C0, C0,   C1,-C1,  0,  17); // " 2; 20; 11"
+        Normal( C2,  0,  0,   C1,-C1,  0,   C0,-C0,-C0,  18); // " 2; 11; 21"
+        Normal( C2,  0,  0,   C0,-C0,-C0,   C1,  0,-C1,  19); // " 2; 21;  7"
+        Normal( C2,  0,  0,   C1,  0,-C1,   C0, C0,-C0,  20); // " 2;  7; 19"
+        Normal( C2,  0,  0,   C0, C0,-C0,   C1, C1,  0,  21); // " 2; 19; 10"
+        Normal( C2,  0,  0,   C1, C1,  0,   C0, C0, C0,  22); // " 2; 10; 18"
+        Normal( C2,  0,  0,   C0, C0, C0,   C1,  0, C1,  23); // " 2; 18;  6"
+        Normal(-C2,  0,  0,  -C1,  0, C1,  -C0, C0, C0,  24); // " 3;  8; 22"
+        Normal(-C2,  0,  0,  -C0, C0, C0,  -C1, C1,  0,  25); // " 3; 22; 12"
+        Normal(-C2,  0,  0,  -C1, C1,  0,  -C0, C0,-C0,  26); // " 3; 12; 23"
+        Normal(-C2,  0,  0,  -C0, C0,-C0,  -C1,  0,-C1,  27); // " 3; 23;  9"
+        Normal(-C2,  0,  0,  -C1,  0,-C1,  -C0,-C0,-C0,  28); // " 3;  9; 25"
+        Normal(-C2,  0,  0,  -C0,-C0,-C0,  -C1,-C1,  0,  29); // " 3; 25; 13"
+        Normal(-C2,  0,  0,  -C1,-C1,  0,  -C0,-C0, C0,  30); // " 3; 13; 24"
+        Normal(-C2,  0,  0,  -C0,-C0, C0,  -C1,  0, C1,  31); // " 3; 24;  8"
+        Normal(  0, C2,  0,   C1, C1,  0,   C0, C0,-C0,  32); // " 4, 10, 19"
+        Normal(  0, C2,  0,   C0, C0,-C0,    0, C1,-C1,  33); // " 4, 19, 15"
+        Normal(  0, C2,  0,    0, C1,-C1,  -C0, C0,-C0,  34); // " 4, 15, 23"
+        Normal(  0, C2,  0,  -C0, C0,-C0,  -C1, C1,  0,  35); // " 4, 23, 12"
+        Normal(  0, C2,  0,  -C1, C1,  0,  -C0, C0, C0,  36); // " 4, 12, 22"
+        Normal(  0, C2,  0,  -C0, C0, C0,    0, C1, C1,  37); // " 4, 22, 14"
+        Normal(  0, C2,  0,    0, C1, C1,   C0, C0, C0,  38); // " 4, 14, 18"
+        Normal(  0, C2,  0,   C0, C0, C0,   C1, C1,  0,  39); // " 4, 18, 10"
+        Normal(  0,-C2,  0,   C1,-C1,  0,   C0,-C0, C0,  40); // " 5, 11, 20"
+        Normal(  0,-C2,  0,   C0,-C0, C0,    0,-C1, C1,  41); // " 5, 20, 16"
+        Normal(  0,-C2,  0,    0,-C1, C1,  -C0,-C0, C0,  42); // " 5, 16, 24"
+        Normal(  0,-C2,  0,  -C0,-C0, C0,  -C1,-C1,  0,  43); // " 5, 24, 13"
+        Normal(  0,-C2,  0,  -C1,-C1,  0,  -C0,-C0,-C0,  44); // " 5, 13, 25"
+        Normal(  0,-C2,  0,  -C0,-C0,-C0,    0,-C1,-C1,  45); // " 5, 25, 17"
+        Normal(  0,-C2,  0,    0,-C1,-C1,   C0,-C0,-C0,  46); // " 5, 17, 21"
+        Normal(  0,-C2,  0,   C0,-C0,-C0,   C1,-C1,  0,  47); // " 5, 21, 11"
+
+        // All angles there: http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;p=358806
+        A0 := Arccos((-2 + sqrt(2))/12); // 92.7980362
+        A1 := Arccos((-6 + sqrt(2))/ 8); // 124.9753039
+        A2 := Arccos((-1 - 6 * sqrt(2))/12);  // 142.2266599
+        A3 := A1+A0;        // 217.7733401
+        A4 := A2+A0;        // 235.0246961
+        A5 := A1+A2;        // 267.2019638
+
+        D  := K * 0.935;     // chosen to prevent overhang bandaging
+        DCut := K * 0.9;
+    </Script>
+
+    <Axes TurningAngles = "0; 2 *Pi" AvailableAngles = "-A5;-A4;-A3;-A2;-A1;-A0; 0; A0; A1; A2; A3; A4; A5" PlaneDistances = "D" NormVectors = " px; py; pz" />
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+        <Macro Name = "SplitExtra">
+            <Split> <Plane NormVector = " Cx[id]; Cy[id]; Cz[id]" NormDistance = "DCut" /> </Split>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitExtra" Repeat = "6" id = "0" />
+
+        <RemoveContaining Vector = "0;0;0" />
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := '-1';
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "SplitExtra" Repeat = "6" id = "0" />
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

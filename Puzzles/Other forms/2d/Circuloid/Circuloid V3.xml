@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circuloid V3</Name>
+        <Menu>Other forms\2d\Circuloid\Circuloid V3</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10987</Link>
+    </Interface>
+
+    <Script>
+        clRed     := 'FF0000';
+        clYellow  := 'FFFF00';
+        clDeepSky := '00BFFF';
+        clBlack   := '333333';
+
+        K := 0.6;
+
+        C14 := K * 0.56287826039593;
+        C20 := K * 0.71029864124335;
+        C23 := K * 0.83210907242821;
+
+        D2 := K * 0.61;
+        D1 := ((D2-C14)*(C20-C23)/(C20-C14)+C23)/sqrt(2);
+        D3 := D1 - K * 0.09;
+        D4 := D2 - K * 0.09;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D1" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D2" >
+        <Axis NormVector = " 0; -1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clRed" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "1" From = "1" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clYellow" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clDeepSky" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1;0" NormDistance = " D3" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1;0" NormDistance = " D4" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1;0" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;-1;0" NormDistance = " D4" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1;0" NormDistance = "-D4" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1;-1;0" NormDistance = " D3" /> </Cut>
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "0" Layer = "1" Angle = " Pi" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "Unbandage" Repeat = "10" />
+        <Undo Repeat = "20" />
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/8" />
+
+        <SaveSolvedState/>
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

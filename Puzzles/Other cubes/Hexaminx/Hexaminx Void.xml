@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexaminx void</Name>
+        <Menu>Other Cubes\Hexaminx\Hexaminx Void</Menu>
+        <Inventor>Traiphum Prungtaengkit</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-05-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4856</Link>
+    </Interface>
+
+    <Script>
+        sAngle := 2 * Pi / 5;
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+        
+        W := 0.5;
+        D := W / (ss + cs);
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "  0; ss; cs" />
+        <Axis NormVector = "  0;-ss; cs" />
+        <Axis NormVector = " ss; cs;  0" />
+        <Axis NormVector = "-ss; cs;  0" />
+        <Axis NormVector = " cs;  0; ss" />
+        <Axis NormVector = " cs;  0;-ss" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "    0; ss*D; cs*D" />
+        <RemoveContaining Vector = "    0;-ss*D; cs*D" />
+        <RemoveContaining Vector = " ss*D; cs*D;    0" />
+        <RemoveContaining Vector = "-ss*D; cs*D;    0" />
+        <RemoveContaining Vector = " cs*D;    0; ss*D" />
+        <RemoveContaining Vector = " cs*D;    0;-ss*D" />
+
+        <RemoveContaining Vector = "    0;-ss*D;-cs*D" />
+        <RemoveContaining Vector = "    0; ss*D;-cs*D" />
+        <RemoveContaining Vector = "-ss*D;-cs*D;    0" />
+        <RemoveContaining Vector = " ss*D;-cs*D;    0" />
+        <RemoveContaining Vector = "-cs*D;    0;-ss*D" />
+        <RemoveContaining Vector = "-cs*D;    0; ss*D" />
+    </Figure>
+</xml>

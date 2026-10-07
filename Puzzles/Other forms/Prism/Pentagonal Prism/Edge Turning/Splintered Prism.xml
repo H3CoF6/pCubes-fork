@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Splintered Prism</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Edge Turning\Splintered Prism</Menu>
+        <Inventor>Kyle Jackson</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7949</Link>
+    </Interface>
+
+    <Script>
+        clBlue    := '0066EE';
+        clGreen   := '00AA00';
+        clRed     := 'DD0000';
+        clOrange  := 'FF7700';
+        clViolett := 'AA00DD';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        R := 0.65;
+        H := R * (sqrt(5) - 1) / 2;
+
+        sAngle := PI * 2 / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D := R * (sqrt(5) - 1) / 4;
+   </Script>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+        <Axis NormVector = "x[3]; y[3]; 0" />
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; -H" />
+            <Vertices Vectors = "x; y;  H" />
+            <Faces>
+                <Face Color = "clRed"     VertexIndexes = "5;6;1;0" />
+                <Face Color = "clOrange"  VertexIndexes = "6;7;2;1" />
+                <Face Color = "clViolett" VertexIndexes = "7;8;3;2" />
+                <Face Color = "clGreen"   VertexIndexes = "8;9;4;3" />
+                <Face Color = "clBlue"    VertexIndexes = "9;5;0;4" />
+                <Face Color = "clYellow"  VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clWhite"   VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "Ax1" Angle = "Pi  " Layer = "1" />
+            <Turn Axis = "Ax2" Angle = "Pi/2" Layer = "1" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "1" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "4" />
+        <ExecMacro MacroName = "Split" Ax1 = "4" Ax2 = "3" />
+        <ExecMacro MacroName = "Split" Ax1 = "3" Ax2 = "2" />
+    </Figure>
+</xml>

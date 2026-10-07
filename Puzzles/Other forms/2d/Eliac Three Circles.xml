@@ -1,0 +1,111 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Eliac Three Circles</Name>
+        <Menu>Other forms\2d\Eliac Three Circles</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10548</Link>
+    </Interface>
+
+    <Script>
+        clOrange := 'FF9730';
+        clPurple := '800080';
+        clGreen  := '008000';
+        clYellow := 'FFFF00';
+        clBlack  := '222222';
+
+        K := 0.6;
+
+        D1 := K * 0.71029864124335 / sqrt(2); <!-- C20 / sqrt(2) -->
+        D2 := K * 0.57768415038417; <!-- C15 -->
+
+        DCut1 := D2 - K * 0.1;
+        DCut2 := D1 - K * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D1" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSegment" Color = "clOrange" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "2" From = "1" />
+
+        <ExecMacro MacroName = "AddSegment" Color = "clPurple" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+
+        <ExecMacro MacroName = "AddSegment" Color = "clGreen" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+
+        <ExecMacro MacroName = "AddSegment" Color = "clYellow" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "1" From = "1" />
+
+        <ExecMacro MacroName = "AddSegment" Color = "clBlack" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1; 0; 0" NormDistance = " DCut1" /> </Cut>
+
+        <ExecMacro MacroName = "AddSegment" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1; 0; 0" NormDistance = " DCut1" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = " DCut2" /> </Cut>
+
+        <ExecMacro MacroName = "AddSegment" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0; 0" NormDistance = "-DCut1" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1;-1; 0" NormDistance = " DCut2" /> </Cut>
+
+        <ExecMacro MacroName = "AddSegment" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = " DCut1" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = " DCut2" /> </Cut>
+
+        <ExecMacro MacroName = "AddSegment" Color = "clBlack" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;-1; 0" NormDistance = " DCut1" /> </Cut>
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "a" Layer = "1" Angle = " Pi/2" />
+            <SplitByAxes/>
+            <Turn Axis = "b" Layer = "1" Angle = " Pi/2" />
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "Unbandage" a = "1" b = "2" Repeat = "4" />
+        <ExecMacro MacroName = "Unbandage" a = "2" b = "1" Repeat = "4" />
+        <Undo Repeat = "16" />
+
+        <SaveSolvedState/>
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

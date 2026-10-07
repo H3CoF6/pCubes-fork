@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Infrabread's 346 Cube</Name>
+        <Menu>Other forms\Unclassified\Infrabread's 346 Cube</Menu>
+        <Inventor>Alasdair Paton</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8878</Link>
+        <Link>https://youtube.com/watch?v=Ju3BMD1uVtg</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red   
+        Colors[1] := '00EE00'; // Green 
+        Colors[2] := 'FF7700'; // Orange
+        Colors[3] := '0066FF'; // Blue  
+        Colors[4] := 'EE33EE'; // Rose  
+        Colors[5] := 'AA00EE'; // Purple
+        Colors[6] := 'FFFFFF'; // White 
+        Colors[7] := 'FFEE00'; // Yellow
+
+        W := 0.45;
+
+        H := W * 0.77;
+        D := W / 3;
+
+        for i := 0 to 2 do begin
+            ax[i] := sin(2*Pi / 3 * i);
+            ay[i] := cos(2*Pi / 3 * i);
+        end;
+
+        // CubeMono parameters
+        Color := -1;
+        Width := W * 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "ax[0]; ay[0]; 0" />
+        <Axis NormVector = "ax[1]; ay[1]; 0" />
+        <Axis NormVector = "ax[2]; ay[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-H/3; H/3" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddLayer" >
+            <HideAll/>
+            <LoadFrom File = "Figures\CubeMono.xml" />
+            <Cut Color = "Color1" > <Plane NormVector = " 0; 0; 1" NormDistance = " H1" /> </Cut>
+            <Cut Color = "Color2" > <Plane NormVector = " 0; 0;-1" NormDistance = "-H2" /> </Cut>
+        </Macro>
+
+        <Macro Name = "CutAndSplit" >
+            <Script>
+                A := 2*Pi / N * i;
+                SA := sin(A);
+                CA := cos(A);
+                Inc(i);
+            </Script>
+            <Cut Color = "Colors[c]" > <Plane NormVector = "SA; CA; 0" NormDistance = "-W" /> </Cut>
+            <Split>                    <Plane NormVector = "SA; CA; 0" NormDistance = "-D" /> </Split>
+        </Macro>
+
+        <ExecMacro MacroName = "AddLayer" H1 = "H/3" H2 = "H" Color1 = "-1" Color2 = "Colors[6]" />
+        <ExecMacro MacroName = "CutAndSplit" c = "0" i = "0" N = "6" />
+        <ExecMacro MacroName = "CutAndSplit" c = "5" />
+        <ExecMacro MacroName = "CutAndSplit" c = "3" />
+        <ExecMacro MacroName = "CutAndSplit" c = "2" />
+        <ExecMacro MacroName = "CutAndSplit" c = "1" />
+        <ExecMacro MacroName = "CutAndSplit" c = "4" />
+
+        <ExecMacro MacroName = "AddLayer" H1 = "-H/3" H2 = "H/3" Color1 = "-1" Color2 = "-1" />
+        <ExecMacro MacroName = "CutAndSplit" c = "0" i = "0" N = "4" />
+        <ExecMacro MacroName = "CutAndSplit" c = "3" />
+        <ExecMacro MacroName = "CutAndSplit" c = "2" />
+        <ExecMacro MacroName = "CutAndSplit" c = "1" />
+
+        <ExecMacro MacroName = "AddLayer" H1 = "-H" H2 = "-H/3" Color1 = "Colors[7]" Color2 = "-1" />
+        <ExecMacro MacroName = "CutAndSplit" c = "0" i = "0" N = "3" />
+        <ExecMacro MacroName = "CutAndSplit" c = "3" />
+        <ExecMacro MacroName = "CutAndSplit" c = "1" />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "3" Layer = "1" Angle = "Pi/6" />
+        <SaveSolvedState/>
+        <Turn Axis = "3" Layer = "1" Angle = "-2*Pi/6" />
+        <SaveSolvedState/>
+        <Undo Repeat = "2" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,32 @@
+
+        clYellow       := 'FFFF00';
+        clLightBlue    := '2828FF';
+        clBlue         := '0000A0';
+        clBrown        := '800000';
+        clLightViolett := 'FF0080';
+        clRed          := 'FF0000';
+        clLightGreen   := '00FF00';
+        clGreen        := '008000';
+        clViolett      := '800080';
+        clCyan         := '00DCB4';
+
+        Colors[ 0] := clYellow;
+        Colors[ 1] := clBlue;
+        Colors[ 2] := clLightBlue;
+        Colors[ 3] := clLightGreen;
+        Colors[ 4] := clGreen;
+        Colors[ 5] := clRed;
+        Colors[ 6] := clLightViolett;
+        Colors[ 7] := clViolett;
+        Colors[ 8] := clBrown;
+        Colors[ 9] := clCyan;
+        Colors[10] := Colors[ 0];
+        Colors[11] := Colors[ 1];
+        Colors[12] := Colors[ 2];
+        Colors[13] := Colors[ 3];
+        Colors[14] := Colors[ 4];
+        Colors[15] := Colors[ 5];
+        Colors[16] := Colors[ 6];
+        Colors[17] := Colors[ 7];
+        Colors[18] := Colors[ 8];
+        Colors[19] := Colors[ 9];

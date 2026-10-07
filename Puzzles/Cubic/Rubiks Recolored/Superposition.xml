@@ -1,0 +1,199 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Superposition</Name>
+        <Menu>Cubic\Rubiks Recolored\Superposition</Menu>
+        <Inventor>Joseph Bencic</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7462</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '000000';
+        Colors[1] := '000001';
+        Colors[2] := '000100';
+        Colors[3] := '010000';
+        Colors[4] := '000101';
+        Colors[5] := '010100';
+
+        W := 0.5;
+        W0 := W;
+        
+        D := W / 3;
+        DCut := D * 0.1; // inner cut
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" W = "W * 1.1" />
+        <Script>W := W0;</Script>
+
+        <Cut Color = "Colors[1]" > <Plane NormVector = "-Cx[1];-Cy[1];-Cz[1]" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[2]" > <Plane NormVector = "-Cx[2];-Cy[2];-Cz[2]" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[4]" > <Plane NormVector = "-Cx[4];-Cy[4];-Cz[4]" NormDistance = "-W" /> </Cut>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <HideContaining Vector = " 0; W; W" />
+        <HideContaining Vector = "-W;-W; 0" />
+        <HideContaining Vector = " W; W; 0" />
+        <Cut Color = "Colors[0]" > <Plane NormVector = "-Cx[0];-Cy[0];-Cz[0]" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[5]" > <Plane NormVector = "-Cx[5];-Cy[5];-Cz[5]" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[3]" > <Plane NormVector = "-Cx[3];-Cy[3];-Cz[3]" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+
+        <HideContaining Vector = " W; W; 0" />
+        <Cut Color = "Colors[2]" > <Plane NormVector = "-Cx[0];-Cy[0];-Cz[0]" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[2]" > <Plane NormVector = "-Cx[5];-Cy[5];-Cz[5]" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[4]" > <Plane NormVector = "-Cx[3];-Cy[3];-Cz[3]" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+
+        <Cut Color = "Colors[1]" > <Plane NormVector = "-Cx[3];-Cy[3];-Cz[3]" NormDistance = "-W" /> </Cut>
+
+
+        // inner cut of centrals for solving procedure to recognize central's orientation
+        <Macro Name = "Super">
+            <HideContaining Vector = "0; 0; W" />
+            <HideContaining Vector = "0; 0;-W" />
+            <InvertVisibility/>
+            <Split Color1 = "000000" > <Plane NormVector = " 1; 0; 1" NormDistance = " DCut" /> </Split>
+            <Split Color2 = "000000" > <Plane NormVector = " 1; 0; 1" NormDistance = "-DCut" /> </Split>
+            <RemoveGrayParts/>
+            <ShowAll/>
+            <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "Super" Repeat = "3" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Textures>
+        <Texture Name = "SP1 "  File = "Textures\Superposition\SP1.vec"  />
+        <Texture Name = "SP2 "  File = "Textures\Superposition\SP2.vec"  />
+        <Texture Name = "SP3 "  File = "Textures\Superposition\SP3.vec"  />
+        <Texture Name = "SP4 "  File = "Textures\Superposition\SP4.vec"  />
+        <Texture Name = "SP5 "  File = "Textures\Superposition\SP5.vec"  />
+        <Texture Name = "SP6 "  File = "Textures\Superposition\SP6.vec"  />
+        <Texture Name = "SP7 "  File = "Textures\Superposition\SP7.vec"  />
+        <Texture Name = "SP8 "  File = "Textures\Superposition\SP8.vec"  />
+        <Texture Name = "SP9 "  File = "Textures\Superposition\SP9.vec"  />
+        <Texture Name = "SP10"  File = "Textures\Superposition\SP10.vec" />
+        <Texture Name = "SP11"  File = "Textures\Superposition\SP11.vec" />
+        <Texture Name = "SP12"  File = "Textures\Superposition\SP12.vec" />
+        <Texture Name = "SP13"  File = "Textures\Superposition\SP13.vec" />
+        <Texture Name = "SP14"  File = "Textures\Superposition\SP14.vec" />
+        <Texture Name = "SP15"  File = "Textures\Superposition\SP15.vec" />
+        <Texture Name = "SP16"  File = "Textures\Superposition\SP16.vec" />
+        <Texture Name = "SP17"  File = "Textures\Superposition\SP17.vec" />
+        <Texture Name = "SP18"  File = "Textures\Superposition\SP18.vec" />
+        <Texture Name = "SP19"  File = "Textures\Superposition\SP19.vec" />
+        <Texture Name = "SP20"  File = "Textures\Superposition\SP20.vec" />
+        <Texture Name = "SP21"  File = "Textures\Superposition\SP21.vec" />
+        <Texture Name = "SP22"  File = "Textures\Superposition\SP22.vec" />
+        <Texture Name = "SP23"  File = "Textures\Superposition\SP23.vec" />
+        <Texture Name = "SP24"  File = "Textures\Superposition\SP24.vec" />
+        <Texture Name = "SP25"  File = "Textures\Superposition\SP25.vec" />
+        <Texture Name = "SP26"  File = "Textures\Superposition\SP26.vec" />
+        <Texture Name = "SP27"  File = "Textures\Superposition\SP27.vec" />
+        <Texture Name = "SP28"  File = "Textures\Superposition\SP28.vec" />
+        <Texture Name = "SP29"  File = "Textures\Superposition\SP29.vec" />
+        <Texture Name = "SP30"  File = "Textures\Superposition\SP30.vec" />
+        <Texture Name = "SP31"  File = "Textures\Superposition\SP31.vec" />
+        <Texture Name = "SP32"  File = "Textures\Superposition\SP32.vec" />
+        <Texture Name = "SP33"  File = "Textures\Superposition\SP33.vec" />
+        <Texture Name = "SP34"  File = "Textures\Superposition\SP34.vec" />
+        <Texture Name = "SP35"  File = "Textures\Superposition\SP35.vec" />
+        <Texture Name = "SP36"  File = "Textures\Superposition\SP36.vec" />
+        <Texture Name = "SP37"  File = "Textures\Superposition\SP37.vec" />
+        <Texture Name = "SP38"  File = "Textures\Superposition\SP38.vec" />
+    </Textures>-->
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        SP31 = 8,3,2
+        SP30 = 5,4,2
+        SP32 = 2,4,2
+
+        SP30 = 7,4,2
+        SP37 = 4,5,3
+        SP6 = 1,5,0
+
+        SP29 = 6,4,0
+        SP35 = 3,5,2
+        SP33 = 0,5,0
+
+
+        SP10 = 19,0,3
+        SP17 = 22,0,2
+        SP13 = 25,0,3
+
+        SP11 = 18,0,3
+        SP19 = 21,0,1
+        SP25 = 24,0,1
+
+        SP12 = 17,0,0
+        SP11 = 20,0,0
+        SP14 = 23,0,3
+
+
+        SP4 = 2,0,2
+        SP8 = 11,0,0
+        SP1 = 19,1,1
+
+        SP6 = 1,0,0
+        SP7 = 10,0,3
+        SP1 = 18,1,1
+
+        SP5 = 0,0,2
+        SP1 = 9,0,0
+        SP2 = 17,1,0
+
+
+        SP24 = 25,5,2
+        SP20 = 16,5,1
+        SP21 = 8,5,3
+
+        SP25 = 24,5,0
+        SP26 = 15,5,2
+        SP20 = 7,5,2
+
+        SP23 = 23,5,1
+        SP27 = 14,5,0
+        SP20 = 6,5,1
+
+
+        SP22 = 0,1,1
+        SP20 = 9,1,3
+        SP21 = 17,2,0
+
+        SP36 = 3,0,1
+        SP38 = 12,0,1
+        SP20 = 20,1,3
+
+        SP28 = 6,0,2
+        SP34 = 14,0,2
+        SP20 = 23,1,3
+
+
+        SP2 = 8,4,3
+        SP1 = 16,4,2
+        SP3 = 25,4,2
+
+        SP1 = 5,5,2
+        SP18 = 13,5,1
+        SP16 = 22,5,2
+
+        SP1 = 2,5,3
+        SP15 = 11,5,2
+        SP9 = 19,5,2
+    </SetTextures>
+</xml>

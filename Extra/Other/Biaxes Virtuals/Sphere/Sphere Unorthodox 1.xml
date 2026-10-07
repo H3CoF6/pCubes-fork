@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sphere Unorthodox 1</Name>
+        <Menu>Other forms\Sphere\Biaxes Virtual\Sphere Unorthodox 1</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-02-26</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;t=31829</Link>
+    </Interface>
+
+    <Script>
+        K := 0.7;
+
+        AngleD := 103.83616; // Bram
+
+        Angle  := AngleD * Pi/180;
+        AngleM := (Pi - Angle)/2;
+        x := sin(2*AngleM);
+        y := cos(2*AngleM);
+
+        A1 := Pi*2/3;
+        A2 := Pi/2;
+
+        D := K * 0.0;        // 1 narrow parts
+    </Script>
+
+    <Axes TurningAngles = "A1" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " x; y; 0" />
+    </Axes>
+    <Axes TurningAngles = "A2" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn Axis = "0" Angle = " A1" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A2" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A1" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A2" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A1" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A2" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A1" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A2" Layer = "1" /> <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart" Repeat = "15" />
+        <Undo Repeat = "200" />
+
+        <Turn Axis = "0" Angle = "-A1" Layer = "1" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "-A2" Layer = "1" /> <SplitByAxes/>
+        <Turn Axis = "1" Angle = "-A2" Layer = "1" /> <SplitByAxes/>
+
+        <ExecMacro MacroName = "SplitPart" Repeat = "15" />
+        <Undo Repeat = "200" />
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

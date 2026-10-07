@@ -1,0 +1,103 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rex Barrel Ultimate (8 colors)</Name>
+        <Menu>Other forms\Cylinder\Rex Barrel Ultimate (8 colors)</Menu>
+        <Inventor>Traiphum Prungtaengkit</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4579</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0055EE'; // Blue
+        Colors[1] := 'AA00CC'; // Violett
+        Colors[2] := 'EE0000'; // Red
+        Colors[3] := 'FF800A'; // Orange
+        Colors[4] := 'FFBB00'; //
+        Colors[5] := 'FFFF00'; // Yellow
+        Colors[6] := 'AAFF00'; //
+        Colors[7] := '00DD00'; // LightGreen
+
+        R := 0.5;
+        H := R;
+        D := R / sqrt(6);
+
+        N := 64;
+        N8 := N div 8;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2*Pi / N * i);
+            y[i] := R * sin(2*Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "AddSide" >
+            <ExecMacro MacroName = "AddFace" Color = "Colors[c]" Repeat = "N8" />
+            <Script> Inc(c); </Script>
+        </Macro>
+
+        <Macro Name = "AddTop" >
+            <Script>
+                i1 := c * N8;
+                i0 := (i1 + N8) mod N;
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "i0; N * 2; FromTo( i1, i1 + N8 - 1)" InvisibleEdges = "3" />
+            <Script> Inc(c); </Script>
+        </Macro>
+
+        <Macro Name = "AddBottom" >
+            <Script>
+                i0 := c * N8;
+                i1 := (i0 + N8) mod N;
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "i0 + N; N * 2 + 1; i1 + N; FromTo( i0 + N8 - 1 + N, i0 + 1 + N)" InvisibleEdges = "3" />
+            <Script> Inc(c); </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " x; y; H" />
+            <Vertices Vectors = " x; y;-H" />
+            <Vertices Vectors = " 0; 0; H" />
+            <Vertices Vectors = " 0; 0;-H" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddTop"    c = "0" Repeat = "8" />
+                <ExecMacro MacroName = "AddSide"   c = "0" Repeat = "8" i = "0" />
+                <ExecMacro MacroName = "AddBottom" c = "0" Repeat = "8" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

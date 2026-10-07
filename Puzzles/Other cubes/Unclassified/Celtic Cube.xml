@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Celtic Cube</Name>
+        <Menu>Other cubes\Unclassified\Celtic Cube</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2018-09-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1847</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        A := W * 1.3;
+        B := W * 0.2;
+
+        K  := 0.54;
+        C0 := K * (4 + sqrt(2)) / 7;
+        C1 := K * sqrt(2);
+
+        nA := 1;
+        n0 := sqrt(2) + 1;
+
+        A1 := ArcCos( sqrt(2) / 8 + 0.25);
+        A2 := ArcCos( sqrt(2) / 4 - 0.5 );
+        A3 := ArcCos(-sqrt(2) / 2 - 0.25);
+
+        D := K * 1.01;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3" PlaneDistances = "-D; D" FixedLayers = "1">
+        <Axis NormVector = " nA; nA; n0" />
+        <Axis NormVector = "-nA; nA; n0" />
+        <Axis NormVector = " nA;-nA; n0" />
+        <Axis NormVector = "-nA;-nA; n0" />
+
+        <Axis NormVector = " nA; n0; nA" />
+        <Axis NormVector = "-nA; n0; nA" />
+        <Axis NormVector = " nA; n0;-nA" />
+        <Axis NormVector = "-nA; n0;-nA" />
+
+        <Axis NormVector = " n0; nA; nA" />
+        <Axis NormVector = " n0;-nA; nA" />
+        <Axis NormVector = " n0; nA;-nA" />
+        <Axis NormVector = " n0;-nA;-nA" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

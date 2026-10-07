@@ -1,0 +1,131 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triple Fused Void Gigaminx</Name>
+        <Menu>Other forms\Unclassified\Triple-Fused Dodecahedra\Triple Fused Void Gigaminx</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-21</Added>
+    </Interface>
+
+    <Script>
+        R := 0.4;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+        D := (Rsin + R2sin) / 2 * 1.069;
+        D1 := D;
+        D2 := D1 + (Rsin - D) / 2;
+
+        // planes of symmetry (Unit vectors, Distance = D)
+        Px[0] := Cx[2] / RSin;
+        Py[0] := Cy[2] / RSin;
+        Pz[0] := Cz[2] / RSin;
+        Px[1] := Cx[4] / RSin;
+        Py[1] := Cy[4] / RSin;
+        Pz[1] := Cz[4] / RSin;
+
+        // centers of cores
+        Tx[0] := Px[0] * 2 * D;
+        Ty[0] := Py[0] * 2 * D;
+        Tz[0] := Pz[0] * 2 * D;
+        Tx[1] := Px[1] * 2 * D;
+        Ty[1] := Py[1] * 2 * D;
+        Tz[1] := Pz[1] * 2 * D;
+
+        procedure ReflectVector(CNo, pNo, i); // Center [CNo] reflects via plane [pNo], and writes to variable [i]
+        begin
+            L := 2 * (Cx[CNo] * Px[pNo] + Cy[CNo] * Py[pNo] + Cz[CNo] * Pz[pNo]);
+            VRx[i] := Cx[CNo] - Px[pNo] * L;
+            VRy[i] := Cy[CNo] - Py[pNo] * L;
+            VRz[i] := Cz[CNo] - Pz[pNo] * L;
+        end;
+
+        // axes
+        ReflectVector( 8, 0, 0);
+        ReflectVector(11, 0, 1);
+        ReflectVector( 5, 0, 2);
+        ReflectVector( 6, 0, 3);
+        ReflectVector( 8, 1, 4);
+        ReflectVector(11, 1, 5);
+        ReflectVector(10, 1, 6);
+        ReflectVector( 1, 1, 7);
+
+        procedure Exchange2Colors(c1, c2);
+        begin
+            C := Colors[c1];
+            Colors[c1] := Colors[c2];
+            Colors[c2] := C;
+        end;
+
+        procedure ReflectColors();
+        begin
+            Exchange2Colors( 0, 3);
+            Exchange2Colors( 5, 6);
+            Exchange2Colors( 8,11);
+            Exchange2Colors( 1,10);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D; 2*D+D1; 2*D+D2" FixedLayers = "0" >
+        <Axis NormVector = " Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = " Cx[4]; Cy[4]; Cz[4]" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D1; D2" FixedLayers = "0" >
+        <Axis NormVector = " Cx[ 8]; Cy[ 8]; Cz[ 8]" />
+        <Axis NormVector = " Cx[11]; Cy[11]; Cz[11]" />
+        <Axis NormVector = " VRx[0]; VRy[0]; VRz[0]" BaseVector = " Tx[0]; Ty[0]; Tz[0]" />
+        <Axis NormVector = " VRx[1]; VRy[1]; VRz[1]" BaseVector = " Tx[0]; Ty[0]; Tz[0]" />
+        <Axis NormVector = " VRx[2]; VRy[2]; VRz[2]" BaseVector = " Tx[0]; Ty[0]; Tz[0]" />
+        <Axis NormVector = " VRx[3]; VRy[3]; VRz[3]" BaseVector = " Tx[0]; Ty[0]; Tz[0]" />
+        <Axis NormVector = " VRx[4]; VRy[4]; VRz[4]" BaseVector = " Tx[1]; Ty[1]; Tz[1]" />
+        <Axis NormVector = " VRx[5]; VRy[5]; VRz[5]" BaseVector = " Tx[1]; Ty[1]; Tz[1]" />
+        <Axis NormVector = " VRx[6]; VRy[6]; VRz[6]" BaseVector = " Tx[1]; Ty[1]; Tz[1]" />
+        <Axis NormVector = " VRx[7]; VRy[7]; VRz[7]" BaseVector = " Tx[1]; Ty[1]; Tz[1]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Split" >
+            <Split> <Plane NormVector = " Cx[i]; Cy[i]; Cz[i]" NormDistance = "D1" /> </Split>
+            <Split> <Plane NormVector = " Cx[i]; Cy[i]; Cz[i]" NormDistance = "D2" /> </Split>
+            <RemoveGrayParts/>
+            <Script>inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "Cut" >
+            <Cut> <Plane NormVector = "-Tx[core];-Ty[core];-Tz[core]" NormDistance = "-D" /> </Cut>
+        </Macro>
+
+        <Macro Name = "Trans" >
+            <Turn NormVector = " Vx[v] - Cx[c]; Vy[v] - Cy[c]; Vz[v] - Cz[c]" BaseVector = " Tx[core]/2; Ty[core]/2; Tz[core]/2" Angle = "Pi" /> // V[v] - C[c] = vector of turning symmetry
+        </Macro>
+
+        <Macro Name = "AddCore" >
+            <ExecMacro MacroName = "Trans" />
+            <LoadFrom File = "Figures\Dodecahedron.xml" />
+            <ExecMacro MacroName = "Split" i = "0" Repeat = "12" />
+            <RemoveContaining Vectors = " Cx; Cy; Cz" />
+            <ExecMacro MacroName = "Cut" />
+            <ExecMacro MacroName = "Trans" />
+            <HideAll/>
+        </Macro>
+
+        // central core
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "12" />
+        <RemoveContaining Vectors = " Cx; Cy; Cz" />
+        <ExecMacro MacroName = "Cut" core = "0" />
+        <ExecMacro MacroName = "Cut" core = "1" />
+        <HideAll/>
+
+        <Script> ReflectColors; </Script>
+        <ExecMacro MacroName = "AddCore" core = "0" v = "2" c = "2" />
+        <ExecMacro MacroName = "AddCore" core = "1" v = "3" c = "4" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

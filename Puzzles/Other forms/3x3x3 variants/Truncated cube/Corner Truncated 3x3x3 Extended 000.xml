@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Corner Truncated 3x3x3 Extended 000</Name>
+        <Menu>Other forms\3x3x3 variants\Truncated cube\Corner Truncated 3x3x3 Extended 000</Menu>
+        <Menu>Other forms\Pyramid\Triangular Pyramid\Corner Truncated 3x3x3 Extended 000</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2018-02-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3870</Link>
+    </Interface>
+
+    <Script>
+        clSilver := 'A0A0A0';
+        clRed    := 'FF0000';
+        clBlue   := '0000C8';
+        clWhite  := 'FFFFFF';
+
+        L1 := 0.25;
+        L2 := 11 / 3 * L1;
+        D  := L1 / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-L1; -L1; -L2" />
+                <Add Vector = "-L1;  L2;  L1" />
+                <Add Vector = "-L1; -L1;  L1" />
+                <Add Vector = " L2; -L1;  L1" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clSilver" VertexIndexes = "0;1;3" />
+                <Face Color = "clRed   " VertexIndexes = "0;2;1" />
+                <Face Color = "clBlue  " VertexIndexes = "0;3;2" />
+                <Face Color = "clWhite " VertexIndexes = "1;2;3" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "SplitLine">
+            <Split><Plane NormVector = "rx;ry;rz" NormDistance = "3 * D" /></Split>
+            <Split><Plane NormVector = "rx;ry;rz" NormDistance = "5 * D" /></Split>
+            <Split><Plane NormVector = "rx;ry;rz" NormDistance = "7 * D" /></Split>
+            <Split><Plane NormVector = "rx;ry;rz" NormDistance = "9 * D" /></Split>
+        </Macro>
+        <ExecMacro MacroName = "SplitLine" rx = "1" ry = "0" rz = " 0" />
+        <ExecMacro MacroName = "SplitLine" rx = "0" ry = "1" rz = " 0" />
+        <ExecMacro MacroName = "SplitLine" rx = "0" ry = "0" rz = "-1" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

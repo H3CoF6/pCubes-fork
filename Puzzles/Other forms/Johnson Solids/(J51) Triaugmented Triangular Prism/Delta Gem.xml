@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Delta Gem</Name>
+        <Menu>Other forms\Johnson Solids\(J51) Triaugmented Triangular Prism\Delta Gem</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-08-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8214</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0080'; // LightViolett
+        Colors[1] := '800080'; // Violett
+        Colors[2] := 'C80000'; // Red
+        Colors[3] := '009600'; // Green
+        Colors[4] := 'FF800A'; // Orange
+
+        W := 0.8;
+        D1 := W / 4;
+        D2 := W / sqrt(7);
+        H := W * sqrt(3) / 4;
+
+        for i := 0 to 2 do begin
+            x[i] := W * sin(2 * Pi / 3 * i);
+            y[i] := W * cos(2 * Pi / 3 * i);
+            x2[i] := -x[i] / 2;
+            y2[i] := -y[i] / 2;
+        end;
+        az := W * sqrt(3) / 4;
+
+        A1 := ArcCos(-3 / 4);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" NormVectors = "x; y; 0" PlaneDistances = "D1" FixedLayers = "0" />
+
+    <Axes TurningAngles = "0; 2 * Pi" NormVectors  = "x2; y2;-H" AvailableAngles = "-A1; 0; A1" PlaneDistances = "D2" />
+    <Axes TurningAngles = "0; 2 * Pi" NormVectors  = "x2; y2; H" AvailableAngles = "-A1; 0; A1" PlaneDistances = "D2" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x;  y; 0" />
+            <Vertices Vectors = "x2; y2;-H" />
+            <Vertices Vectors = "x2; y2; H" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "3;4;5" />
+                <Face Color = "Colors[1]" VertexIndexes = "8;7;6" />
+                <Face Color = "Colors[0]" VertexIndexes = "4;3;2" />
+                <Face Color = "Colors[0]" VertexIndexes = "5;4;0" />
+                <Face Color = "Colors[0]" VertexIndexes = "3;5;1" />
+                <Face Color = "Colors[1]" VertexIndexes = "6;7;2" />
+                <Face Color = "Colors[1]" VertexIndexes = "7;8;0" />
+                <Face Color = "Colors[1]" VertexIndexes = "8;6;1" />
+                <Face Color = "Colors[2]" VertexIndexes = "1;6;2;3" />
+                <Face Color = "Colors[3]" VertexIndexes = "2;7;0;4" />
+                <Face Color = "Colors[4]" VertexIndexes = "0;8;1;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

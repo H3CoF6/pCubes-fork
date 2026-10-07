@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Vergo's Little Chop</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Vergo's Little Chop</Menu>
+        <Inventor>Eric Vergo</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-10-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5438</Link>
+    </Interface>
+
+    <Script>
+        W := 0.425;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        CylinderWidth := W / 3;
+        D1 := W / 3;
+        D2 := W;
+        Sc := (D2 + CylinderWidth) / W;
+        R := W * 0.87;
+    </Script>
+
+    <Axes TurningAngles = "Pi/6; 0; Pi/6" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1;  1;  0" />
+        <Axis NormVector = " 1; -1;  0" />
+        <Axis NormVector = " 0;  1;  1" />
+        <Axis NormVector = " 0;  1; -1" />
+        <Axis NormVector = " 1;  0;  1" />
+        <Axis NormVector = "-1;  0;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "R" Color = "Colors[i]" >
+            <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+            <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "0" Angle = "Pi/6" />
+        <Turn Axis = "0" Layer = "2" Angle = "Pi/6" />
+        <Turn Axis = "1" Layer = "0" Angle = "Pi/6" />
+        <Turn Axis = "1" Layer = "2" Angle = "Pi/6" />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi/6" />
+        <Turn Axis = "2" Layer = "2" Angle = "Pi/6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "0" Angle = "Pi/6" />
+        <Turn Axis = "0" Layer = "2" Angle = "Pi/6" />
+        <Turn Axis = "1" Layer = "0" Angle = "Pi/6" />
+        <Turn Axis = "1" Layer = "2" Angle = "Pi/6" />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi/6" />
+        <Turn Axis = "2" Layer = "2" Angle = "Pi/6" />
+        <SplitByAxes/>
+    </Figure>
+
+    <Macros>
+        <Macro Name = "Edge" >
+            <Turn Axis = "Random(6) + 3" Layer = "Random(2)" Angle = "Pi" />
+            <Turn Axis = "Random(3)" Layer = "Random(2) * 2" Angle = "Pi/6 * (Random(11) + 1)" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" Description = "Replacing of standard scrambling" Sequence = "" >
+            <ExecMacro MacroName = "Edge" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

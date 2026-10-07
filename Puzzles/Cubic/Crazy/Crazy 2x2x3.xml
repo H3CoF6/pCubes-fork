@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 2x2x3</Name>
+        <Menu>Cubic\Crazy\Crazy 2x2x3</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2707</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+
+        R := W * 0.75;
+        Sc := 1.005;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-W; 0; W" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W; -D; D; W" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <!-- cutting to assign "0" to block cube -->
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = " 0" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = " 0" /></Split>
+        <SplitByAxes/>
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "R" Color = "Colors[i]" Center = "Cx[i] * Sc; Cy[i] * Sc; Cz[i] * Sc" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+
+        <SplitByAxes/>
+
+        <Connect Axis = "0" Layers  = "0;2;3" />
+        <Connect Axis = "1" Layers  = "0;2;3" />
+        <Connect Axis = "2" Layers  = "0;2;4" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Lock" File = "Puzzles\Cubic\Crazy\2x2x2 Lock.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Lock = 0,0,0, 0,1,1, 0,2,0
+    </SetTextures>
+</xml>

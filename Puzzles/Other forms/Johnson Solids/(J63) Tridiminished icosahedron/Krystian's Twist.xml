@@ -1,0 +1,105 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Krystian's Twist</Name>
+        <Menu>Other forms\Johnson Solids\(J63) Tridiminished icosahedron\Krystian's Twist</Menu>
+        <Inventor>Oskar Van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2380</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '3030FF';
+        clGreen   := '00C000';
+        clRed     := 'FF0000';
+        clYellow1 := 'FFFF01';
+        clBlue1   := '3030FE';
+        clGreen1  := '00C001';
+        clOrange  := 'FF6A00';
+
+        R := 0.7;
+        mAngle := ArcTan(0.5);
+        Rsin := R * sin(mAngle);
+        Rcos := R * cos(mAngle);
+        sAngle := PI * 2 / 5;
+
+        X[0] := 0;
+        Y[0] := 0;
+        Z[0] := R;
+        for i := 1 to 5 do begin
+            X[i] := Rcos * sin(sAngle * (i - 1));
+            Y[i] := Rcos * cos(sAngle * (i - 1));
+            Z[i] := Rsin;
+        end;
+        for i := 6 to 10 do begin
+            X[i] := Rcos * sin(sAngle * (i - 0.5));
+            Y[i] := Rcos * cos(sAngle * (i - 0.5));
+            Z[i] := -Rsin;
+        end;
+        X[11] :=  0;
+        Y[11] :=  0;
+        Z[11] := -R;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "arctan(2)" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "x[ 4] + x[ 8]; y[ 4] + y[ 8]; z[ 4] + z[ 8]" />
+        <Axis NormVector = "x[10] + x[11]; y[10] + y[11]; z[10] + z[11]" />
+        <Axis NormVector = "x[ 2] + x[ 7]; y[ 2] + y[ 7]; z[ 2] + z[ 7]" />
+    </Axes>
+
+    <Figure>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "X[ 0]; Y[ 0]; Z[ 0]" />
+
+                <Add Vector = "X[ 1]; Y[ 1]; Z[ 1]" />
+                <Add Vector = "X[ 2]; Y[ 2]; Z[ 2]" />
+                <Add Vector = "X[ 4]; Y[ 4]; Z[ 4]" />
+                <Add Vector = "X[ 5]; Y[ 5]; Z[ 5]" />
+
+                <Add Vector = "X[ 7]; Y[ 7]; Z[ 7]" />
+                <Add Vector = "X[ 8]; Y[ 8]; Z[ 8]" />
+                <Add Vector = "X[10]; Y[10]; Z[10]" />
+
+                <Add Vector = "X[11]; Y[11]; Z[11]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange"  VertexIndexes = "0;1;4" />
+                <Face Color = "clGreen1"  VertexIndexes = "0;4;3" />
+                <Face Color = "clBlue1"   VertexIndexes = "0;2;1" />
+                <Face Color = "clYellow1" VertexIndexes = "1;7;4" />
+                <Face Color = "clRed"     VertexIndexes = "8;5;6" />
+
+                <Face Color = "clYellow"  VertexIndexes = "0;3;6;5;2" />
+                <Face Color = "clBlue"    VertexIndexes = "4;7;8;6;3" />
+                <Face Color = "clGreen"   VertexIndexes = "1;2;5;8;7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "0" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "0" Angle = "-Pi" Layer = "1" />
+    </Figure>
+</xml>

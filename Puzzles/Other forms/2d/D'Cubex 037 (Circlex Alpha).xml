@@ -1,0 +1,107 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>D'Cubex 037 (Circlex Alpha)</Name>
+        <Menu>Other forms\2d\D'Cubex 037 (Circlex Alpha)</Menu>
+        <Inventor>Donaji Torres Huerta</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10765</Link>
+    </Interface>
+
+    <Script>
+        K := 0.6;
+
+        clWhite := 'DDDDDD';
+        clGray  := '888888';
+        clBlack := '333333';
+
+        D2 := K * 0.8;
+        D1 := D2 / sqrt(2);
+
+        DCut1 := D2 - K * 0.1;
+        DCut2 := D1 - K * 0.1;
+    </Script>
+
+    <Axes TurningAngles = " 0; Pi" PlaneDistances = "D1" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = " 0; Pi/2" PlaneDistances = "D2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1; 0; 0" NormDistance = " DCut1" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1; 0; 0" NormDistance = " DCut1" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = " DCut2" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0; 0" NormDistance = "-DCut1" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1;-1; 0" NormDistance = " DCut2" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = " DCut1" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = " DCut2" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "2" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;-1; 0" NormDistance = " DCut1" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clWhite" />
+        <Cut Axis = "1" From = "1" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "2" To   = "1" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clGray" />
+        <Cut Axis = "2" From = "1" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "0" Layer = "1" Angle = " Pi" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+            <SplitByAxes/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/2" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" Repeat = "6" />
+        <Undo Repeat = "18" />
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+
+        <SaveSolvedState/>
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

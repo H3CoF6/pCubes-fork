@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mirror Face Turning Octahedron</Name>
+        <Menu>Other forms\Octahedron\Face Turning\Mirror Octahedron</Menu>
+        <Inventor>Raphaël Mouflin</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-03-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6090</Link>
+    </Interface>
+
+    <Script>
+        W := 1.5 * 0.5;
+
+        D := sqrt(3) / 8;
+
+        MirrorColor := 'E0C07D';
+
+        X1 :=  1 / 10;
+        Y1 := -1 / 20;
+        Z1 := -1 / 30;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1;  1; 1" />
+        <Axis NormVector = "-1;  1; 1" />
+        <Axis NormVector = "-1; -1; 1" />
+        <Axis NormVector = " 1; -1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+        <Vertices>
+            <Add Vector = "X1-W; Y1  ; Z1  " />
+            <Add Vector = "X1+W; Y1  ; Z1  " />
+            <Add Vector = "X1  ; Y1-W; Z1  " />
+            <Add Vector = "X1  ; Y1+W; Z1  " />
+            <Add Vector = "X1  ; Y1  ; Z1-W" />
+            <Add Vector = "X1  ; Y1  ; Z1+W" />
+        </Vertices>
+
+        <Faces>
+            <Face Color = "MirrorColor" VertexIndexes = "0;2;5" />
+            <Face Color = "MirrorColor" VertexIndexes = "5;2;1" />
+            <Face Color = "MirrorColor" VertexIndexes = "5;1;3" />
+            <Face Color = "MirrorColor" VertexIndexes = "5;3;0" />
+            <Face Color = "MirrorColor" VertexIndexes = "4;2;0" />
+            <Face Color = "MirrorColor" VertexIndexes = "4;1;2" />
+            <Face Color = "MirrorColor" VertexIndexes = "4;3;1" />
+            <Face Color = "MirrorColor" VertexIndexes = "4;0;3" />
+        </Faces>
+    </Part>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 8" />
+</xml>

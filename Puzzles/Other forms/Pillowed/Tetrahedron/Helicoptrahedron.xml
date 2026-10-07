@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Helicoptrahedron</Name>
+        <Menu>Other forms\Pillowed\Tetrahedron\Helicoptrahedron</Menu>
+        <Inventor>Traiphum Prungtaengkit</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2328</Link>
+    </Interface>
+
+    <Script>
+        K := 0.5;
+        D := K * 0.84;
+
+        Colors[0] := 'EEEEEE';
+        Colors[1] := '00AA00';
+        Colors[2] := 'FFEE00';
+        Colors[3] := 'DD0000';
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "RemoveEdges" >
+            <Hide Axis = "a1" Layer = "1" />
+            <Hide Axis = "a2" Layer = "1" />
+            <RemoveAllVisible/>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "RemoveEdges" a1 = "0" a2 = "2" />
+        <ExecMacro MacroName = "RemoveEdges" a1 = "1" a2 = "3" />
+        <ExecMacro MacroName = "RemoveEdges" a1 = "4" a2 = "5" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

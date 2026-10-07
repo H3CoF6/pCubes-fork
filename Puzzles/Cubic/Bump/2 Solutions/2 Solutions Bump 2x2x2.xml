@@ -1,0 +1,112 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2 Solutions Bump 2x2x2</Name>
+        <Menu>Cubic\Bump\2 Solutions\2 Solutions Bump 2x2x2</Menu>
+        <Inventor>Alexander Kiss</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9260</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        SColors[0] := '   gb      ';
+        SColors[1] := '   ro      ';
+        SColors[2] := 'rw bg yw ow';
+        SColors[3] := 'by rw ob yy';
+        SColors[4] := '   gg      ';
+        SColors[5] := '   ro      ';
+
+        W := 0.5;
+
+        N := 2;
+        WD := 2 * W / N;
+        D[0] := WD * (-N/2 + 1);
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+
+        DX :=-0.08;
+        DY :=-0.20;
+        DZ := 0.12;
+
+        SColor := 'robgyw';
+        function GetColor(X, Y);
+        begin
+            Result := -1;
+            C := copy(SColors[N * SY + Y], ((N + 1) * SX + 1) + X, 1);
+            i := Pos(C, SColor);
+            if i > 0 then
+                Result := Colors[i - 1];
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "0" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Script>D[-1] := -W; D[N-1] := W;</Script>
+
+        <Macro Name = "ShowPart" >
+            <Hide><Plane NormVector = " 0;-1; 0" NormDistance = "-D[0]" /></Hide>
+            <Hide><Plane NormVector = " 1; 0; 0" NormDistance = " D[x-1]" /></Hide>
+            <Hide><Plane NormVector = "-1; 0; 0" NormDistance = "-D[x]" /></Hide>
+            <Hide><Plane NormVector = " 0; 0; 1" NormDistance = " D[N-1-y-1]" /></Hide>
+            <Hide><Plane NormVector = " 0; 0;-1" NormDistance = "-D[N-1-y]" /></Hide>
+        </Macro>
+
+        <Macro Name = "CutPart" >
+            <ExecMacro MacroName = "ShowPart" />
+            <Cut Color = "GetColor(X, Y)" > <Plane NormVector = "0; 1; 0" NormDistance = "-DCut" /> </Cut>
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "CycleRow" >
+            <ExecMacro MacroName = "CutPart" />
+            <Script>Inc(Y);</Script>
+        </Macro>
+        <Macro Name = "CycleCol" >
+            <ExecMacro MacroName = "CycleRow" Y = "0" Repeat = "N" />
+            <Script>Inc(X);</Script>
+        </Macro>
+        <Macro Name = "CutFace" >
+            <ExecMacro MacroName = "CycleCol" X = "0" Repeat = "N" />
+        </Macro>
+
+        // face
+        <ExecMacro MacroName = "CutFace" SX = "1" SY = "1" DCut = "W - DY" />
+
+        // right
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi / 2" />
+        <ExecMacro MacroName = "CutFace" SX = "2" SY = "1" DCut = "W + DX" />
+
+        // back
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi / 2" />
+        <ExecMacro MacroName = "CutFace" SX = "3" SY = "1" DCut = "W + DY" />
+
+        // left
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi / 2" />
+        <ExecMacro MacroName = "CutFace" SX = "0" SY = "1" DCut = "W - DX" />
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi / 2" />
+
+        // up
+        <Turn NormVector = "1; 0; 0" Angle = " Pi / 2" />
+        <ExecMacro MacroName = "CutFace" SX = "1" SY = "0" DCut = "W + DZ" />
+
+        // bottom
+        <Turn NormVector = "1; 0; 0" Angle = " Pi" />
+        <ExecMacro MacroName = "CutFace" SX = "1" SY = "2" DCut = "W - DZ" />
+        <Turn NormVector = "1; 0; 0" Angle = " Pi/2" />
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameDirectionOrCountUniquePlanes = 6" />
+</xml>

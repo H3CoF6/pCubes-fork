@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Actual 2x2 Icosahedron</Name>
+        <Menu>Other forms\Icosahedron\Face turning\Actual 2x2 Icosahedron</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=388</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := R * sqrt((1 + 1 / sqrt(5)) / 6);
+
+        jumAngle := Arcsin(1/4) + Pi/6;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi / 3" JumbleAngle = "jumAngle" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Cx;Cy;Cz" />
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 19 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Vx;Vy;Vz" />
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+        <ShowAll/>
+
+        <Macro Name = "HideEdge" >
+            <Hide><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-R * 0.52" /></Hide>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideEdge" i = "0" Repeat = "30" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+
+    <Macros>
+        <Macro Name = "RandomTurns120" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "2*Pi/3"/>
+        </Macro>
+        <Macro Name = "Scramble120" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns120" Repeat = "100" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "2*Pi * Random"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble120" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+</xml>

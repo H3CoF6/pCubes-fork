@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Octahedron Type III - Mercury</Name>
+        <Menu>Other forms\Octahedron\Face Turning\Crazy\Type III - Mercury</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-06-27</Added>
+        <Link>https://cubezz.com/Buy-7592-MF8+Crazy+Octahedron+Cube+III+Mercury+Stickerless.html</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Octahedron_Standard_Colors.inc';
+
+        W := 0.75;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+
+        D1 := W * 0.14;
+        D2 := W / sqrt(3);
+        RC := W * 0.31;
+        DC := 1.001;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "-D2; -D1; D1; D2" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" > <Center X = "Cx[i] * DC" Y =  "Cy[i] * DC" Z =  "Cz[i] * DC" /> </Circle>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "8" />
+
+        <SplitByAxes/>
+
+        <Connect Axis = "0" Layers = "0;2;4" />
+        <Connect Axis = "1" Layers = "0;2;4" />
+        <Connect Axis = "3" Layers = "0;2;4" />
+
+        <Connect Axis = "2" Layers = "0;1" />
+        <Connect Axis = "2" Layers = "3;4" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Triangle" File = "Puzzles\Other forms\Platonic solids\Octahedron\Face Turning\Crazy\Triangle.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Triangle = 70,0,0, 77,0,0, 85,0,0, 89,0,0, 95,0,0, 110,0,0
+    </SetTextures>
+
+</xml>

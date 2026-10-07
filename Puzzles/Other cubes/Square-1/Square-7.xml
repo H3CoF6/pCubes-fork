@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-7</Name>
+        <Menu>Other cubes\Square-1\Square-7</Menu>
+        <Inventor>Alexandr Bezrukov</Inventor>
+        <Programmer>Boris</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11160</Link>
+        <Added>2023-04-28</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 7;
+        sAngle := 2*Pi / 28;
+        RC := W * 0.4;
+        WC := W * 1.001;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D*7;-D*5;-D*3;-D; D; D*3; D*5; D*7" TurnAxesWithLayer = "4" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0; 0; 1" Angle = "sAngle / 2 * 17" />
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Circle Radius = "RC" Color = "Colors[4]" Center = " 0; 0;-WC" />
+        <Circle Radius = "RC" Color = "Colors[5]" Center = " 0; 0; WC" />
+        <Connect Axis = "0" Layers = "0;4;8" />
+
+        <SplitByAxes/>
+        <Macro Name = "Split">
+            <Turn Axis = "0" Layer = "4" Angle = "sAngle" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "14" />
+        <Undo Repeat = "14" />
+    </Figure>
+</xml>

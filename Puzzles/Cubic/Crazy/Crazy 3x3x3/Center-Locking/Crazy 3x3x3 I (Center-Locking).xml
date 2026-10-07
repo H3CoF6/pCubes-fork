@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 3x3x3 I (Center-Locking)</Name>
+        <Menu>Cubic\Crazy\Crazy 3x3x3\Center-Locking\Crazy 3x3x3 I (Center-Locking)</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-09-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10343</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        R := D * sqrt(2);
+        DC := 1.002;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W;-D; D; W" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "R" Color = "Colors[i]" Center = "Cx[i] * DC; Cy[i] * DC; Cz[i] * DC" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Connect Axis = "0" Layers = "0;1" />
+        <Connect Axis = "0" Layers = "3;4" />
+        <Connect Axis = "1" Layers = "0;1" />
+        <Connect Axis = "1" Layers = "3;4" />
+        <Connect Axis = "2" Layers = "0;2;4" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Cross" File = "Puzzles\Cubic\Crazy\Crazy 3x3x3\CrossFace.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Cross = 48,0,0, 53,0,0
+    </SetTextures>
+</xml>

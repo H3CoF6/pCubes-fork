@@ -1,0 +1,116 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Curvy Copter</Name>
+        <Menu>Other cubes\Unclassified\Fisher Curvy Copter</Menu>
+        <Inventor>Tom Koster</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6603</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := '00AA00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        s2 := sqrt(2);
+        A := W * s2;
+        B := W * 0.2075;
+
+        D := W;
+
+        JumAngle := Arccos(1/3);
+
+        WC  := W * 1.06;
+        RC := W * 0.939;
+    </Script>
+
+    <Axes TurningAngles = "Pi;0;Pi" JumbleAngle = "JumAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "-1; 1; s2" />
+        <Axis NormVector = " 1; 1; s2" />
+        <Axis NormVector = " 1;-1; s2" />
+        <Axis NormVector = "-1;-1; s2" />
+        <Axis NormVector = "-1; 0;  0" />
+        <Axis NormVector = " 0; 1;  0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml"  />
+
+        <Macro Name = "Split">
+            <Split Axis = "Id" From = "1" />
+            <Split Axis = "Id" From = "2" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" id = "0" Repeat = "4" />
+
+        <Macro Name = "HideV">
+            <HideContaining Vector = "Vx[id]; Vy[id]; Vz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideV" id = "0" Repeat = "8" />
+        <InvertVisibility/>
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-Cx[id]; -Cy[id]; -Cz[id]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" id = "0" Repeat = "4" />
+
+        <ShowAll/>
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-Cx[id]; -Cy[id]; -Cz[id]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" id = "0" Repeat = "4" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Base = "0;-W; 0" Top = "0;-WC; 0" >
+                <Top Color = "Color" />
+            </Cylinder>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Color = "Colors[2]" />
+        <ExecMacro MacroName = "AddCircle" Color = "Colors[0]" />
+        <ExecMacro MacroName = "AddCircle" Color = "Colors[3]" />
+        <ExecMacro MacroName = "AddCircle" Color = "Colors[1]" />
+        <SplitByAxes/>
+
+        <Macro Name = "Cut">
+            <Hide><Plane NormVector = " 1;-1; s2" NormDistance = "D" /></Hide>
+            <Hide><Plane NormVector = " 1; 1; s2" NormDistance = "D" /></Hide>
+
+            <Turn NormVector = " 1;-1; s2" Angle = "Pi" />
+            <Turn NormVector = " 0; 1; 0" Angle = "JumAngle" />
+            <Cut> <Plane NormVector = "-1;0;0" NormDistance = "-D" /> </Cut>
+            <Turn NormVector = " 0; 1; 0" Angle = "-JumAngle" />
+            <Turn NormVector = " 1;-1; s2" Angle = "Pi" />
+
+            <Turn NormVector = " 1; 1; s2" Angle = "Pi" />
+            <Turn NormVector = " 0; 1; 0" Angle = "JumAngle" />
+            <Cut> <Plane NormVector = "-1;0;0" NormDistance = "-D" /> </Cut>
+            <Turn NormVector = " 0; 1; 0" Angle = "-JumAngle" />
+            <Turn NormVector = " 1; 1; s2" Angle = "Pi" />
+            <ShowAll/>
+
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "Cut" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

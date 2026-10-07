@@ -1,0 +1,112 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Evil Twin 2x2</Name>
+        <Menu>Cubic\Bandaged\Evil Twin 2x2</Menu>
+        <Inventor>Alexander Sosnovsky</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-12-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7198</Link>
+        <Link>https://www.youtube.com/watch?v=I42DLHA6NSQ</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        DW := W * 0.2;
+
+        WX := W + DW;
+        WY := W + DW;
+        WZ := W + DW;
+
+        D := W * 0.1;
+        W1 := D * 3; // size of small part
+        DC3 := W / sqrt(3)/1.1;
+
+        DWX := -W * 0.1;
+        DWY :=  W * 0.1;
+        DWZ :=  W * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D"  >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+
+        <!-- Add a big part -->
+
+        <LoadFrom1> Figures\Cube.xml </LoadFrom1>
+        <SplitByAxes/>
+
+        <!-- Remove middle layers -->
+
+        <Macro Name = "HideCorners" >
+            <HideContaining Vector = "Vx[Id]*0.8; Vy[Id]*0.8; Vz[Id]*0.8" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCorners" Id = "0" Repeat = "8" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <!-- Cut internal parts -->
+
+        <Macro Name = "CutCorners" >
+            <HideContaining Vector = "Vx[Id]; Vy[Id]; Vz[Id]" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "Vx[Id]; Vy[Id]; Vz[Id]" NormDistance = "DC3"/></Cut>
+            <ShowAll/>
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutCorners" Id = "0" Repeat = "8" />
+
+        <!-- Add a small part -->
+
+        <Script> BigW := W1; </Script>
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "BigW" />
+
+        <!-- Split it -->
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+
+<!--        <ShowAll/>
+        <HideContaining Vector = "W1; 0; 0" />
+        <InvertVisibility/>
+        <Split Axis = "2" From = "1" />
+
+        <ShowAll/>
+        <HideContaining Vector = "0; -W1; 0" />
+        <InvertVisibility/>
+        <Split Axis = "0" From = "1" />
+
+        <ShowAll/>
+        <HideContaining Vector = "0; 0; W1" />
+        <InvertVisibility/>
+        <Split Axis = "1" From = "2" />
+
+        <ShowAll/>
+        <HideContaining Vector = "0; 0; 0" />
+        <InvertVisibility/>
+        <Split Axis = "0" From = "1" />
+        <HideContaining Vector = "0; 0; 0" />
+        <Split Axis = "1" From = "2" />
+-->
+
+        <ShowAll/>
+
+<!--        <Cut Color = "clRed  " > <Plane NormVector = " 1; 0; 0" NormDistance = "-W - D" /> </Cut>
+        <Cut Color = "clGreen" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W - D" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W - D" /> </Cut>
+-->
+    </Figure>
+
+</xml>

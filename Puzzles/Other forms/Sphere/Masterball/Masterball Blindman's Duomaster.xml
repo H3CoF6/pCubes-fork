@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Masterball Blindman's Duomaster</Name>
+        <Menu>Other forms\Sphere\Masterball\Masterball Blindman's Duomaster</Menu>
+        <Inventor>Gabe</Inventor>
+        <Programmer>Skallos + Boris</Programmer>
+        <Added>2020-03-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1223</Link>
+    </Interface>
+
+    <Script>
+        clWhite := 'FFFFFF';
+
+        K1 := 0.6;
+        K2 := 0.65;
+
+        D := K1 * 0.55;
+    </Script>
+
+    <Axes TurningAngles = "Pi/4" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = "-1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Add4Sectors" >
+            <HideAll/>
+            <Turn NormVector = "0;0;1" Angle = "Angle" />
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Turn NormVector = "0;0;1" Angle = "-Angle" />
+            <Split Color1 = "clWhite" Color2 = "clWhite" Axis = "1" From = "1" />
+            <Split Color1 = "clWhite" Color2 = "clWhite" Axis = "2" From = "1" />
+            <Split Color1 = "clWhite" Color2 = "clWhite" Axis = "3" From = "1" />
+            <Split Color1 = "clWhite" Color2 = "clWhite" Axis = "4" From = "1" />
+            <RemoveContaining Vector = " Dx;  Dy; 0" />
+            <RemoveContaining Vector = "-Dx; -Dy; 0" />
+            <RemoveContaining Vector = " Dy; -Dx; 0" />
+            <RemoveContaining Vector = "-Dy;  Dx; 0" />
+        </Macro>
+
+        <Script>K := K1; Color := clWhite; Angle := -Pi/8; Dx := 0.1; Dy := 0.2; </Script>
+        <ExecMacro MacroName = "Add4Sectors" />
+
+        <Script>K := K2; Color := clWhite; Angle := Pi/8; Dx := 0.2; Dy := 0.1; </Script>
+        <ExecMacro MacroName = "Add4Sectors" />
+
+        <ShowAll/>
+
+        <Split Color1 = "clWhite" Color2 = "clWhite" Axis = "0" From = "1" />
+        <Split Color1 = "clWhite" Color2 = "clWhite" Axis = "0" From = "2" />
+        <Split Color1 = "clWhite" Color2 = "clWhite" Axis = "0" From = "3" />
+
+        <SaveSolvedState/>
+        <Turn Axis = "0" From = "0" To = "3" Angle = "Pi/4" />
+        <SaveSolvedState/>
+        <Undo/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

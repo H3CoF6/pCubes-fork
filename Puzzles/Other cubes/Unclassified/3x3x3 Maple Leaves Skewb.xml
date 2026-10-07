@@ -1,0 +1,117 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3x3 Maple Leaves Skewb</Name>
+        <Menu>Other cubes\Unclassified\3x3x3 Maple Leaves Skewb</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-21</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36419</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        K := 0.6;
+
+        W := K * 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        W := K * 0.817;
+
+        D := K * 0.71029864124335 * sqrt(3/2); // C20*sqrt(3/2)
+        D2 := K * 0.408;
+
+        CutV := 0.49 * sqrt(3) * 0.96;
+        CutE := 0.49 * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 2; 1" />
+        <Axis NormVector = " 1;-1;-2" />
+        <Axis NormVector = "-2;-1; 1" />
+        <Axis NormVector = " 1; 1; 2" />
+        <Axis NormVector = "-2; 1;-1" />
+        <Axis NormVector = " 1;-2;-1" />
+        <Axis NormVector = "-1;-2; 1" />
+        <Axis NormVector = "-1; 1;-2" />
+        <Axis NormVector = " 2; 1; 1" />
+        <Axis NormVector = "-1;-1; 2" />
+        <Axis NormVector = " 2;-1;-1" />
+        <Axis NormVector = "-1; 2;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;D2" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Macro Name = "Split" >
+            <Split Axis = "a1" From = "1" />
+            <Turn Axis = "a1" Layer = "0" Angle = "2*Pi/2" />
+            <Split Axis = "a2    " From = "2" />
+            <Split Axis = "a2 + 1" From = "2" />
+            <Split Axis = "a2 + 2" From = "2" />
+            <Undo/>
+        </Macro>
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = " 4" />
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = " 7" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "10" />
+        <ExecMacro MacroName = "Split" a1 = "0" a2 = "13" />
+
+        <RemoveContaining Vector = "Vx;Vy;Vz" />
+
+        <HideAll/>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = " 4" />
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = " 7" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "10" />
+        <ExecMacro MacroName = "Split" a1 = "0" a2 = "13" />
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Split Axis = "16" From = "1" />
+        <Split Axis = "16" From = "2" />
+        <Split Axis = "17" From = "1" />
+        <Split Axis = "17" From = "2" />
+        <Split Axis = "18" From = "1" />
+        <Split Axis = "18" From = "2" />
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

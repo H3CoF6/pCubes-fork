@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Whirligig Plate 5 Circles</Name>
+        <Menu>Other forms\Sphere\Cubic axes\Whirligig Plate 5 Circles</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2885</Link>
+    </Interface>
+
+    <Script>
+        K := 0.6;
+
+        D := K * 0.711;
+        D2 := K * 0.499;
+
+        Colors[0] := '0000EE'; // Blue
+        Colors[1] := '00BB00'; // Green
+        Colors[2] := 'EE0000'; // Red
+        Colors[3] := 'FFFF00'; // Yellow
+        Colors[4] := -1;
+        Colors[5] := -1;
+
+        Color := 'FFFFFF'; // White
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2; 0; Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+	<Axes TurningAngles = "0;Pi / 2" PlaneDistances = "D2" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <RemoveContaining Vector = " 0; 0; K" />
+        <Split><Plane NormDistance = "-D2" NormVector = " 0; 0; 1" /></Split>
+        <Split><Plane NormDistance = "-D2" NormVector = " 0; 1; 0" /></Split>
+        <Split><Plane NormDistance = "-D2" NormVector = " 0;-1; 0" /></Split>
+        <Split><Plane NormDistance = "-D2" NormVector = " 1; 0; 0" /></Split>
+        <Split><Plane NormDistance = "-D2" NormVector = "-1; 0; 0" /></Split>
+        <RemoveContaining Vector = " 0; K; 0" />
+        <RemoveContaining Vector = " 0;-K; 0" />
+        <RemoveContaining Vector = " K; 0; 0" />
+        <RemoveContaining Vector = "-K; 0; 0" />
+
+        <InvertVisibility/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = " 0; 0; 0" />
+        <HideContaining Vector = " 0; 0; K" />
+        <Split><Plane NormDistance = "-D2" NormVector = " 0; 0; 1" /></Split>
+        <Split><Plane NormDistance = "-D2" NormVector = " 0; 1; 0" /></Split>
+        <Split><Plane NormDistance = "-D2" NormVector = " 0;-1; 0" /></Split>
+        <Split><Plane NormDistance = "-D2" NormVector = " 1; 0; 0" /></Split>
+        <Split><Plane NormDistance = "-D2" NormVector = "-1; 0; 0" /></Split>
+        <HideContaining Vector = " 0; K; 0" />
+        <HideContaining Vector = " 0;-K; 0" />
+        <HideContaining Vector = " K; 0; 0" />
+        <HideContaining Vector = "-K; 0; 0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,144 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fenzy D Dual (83deg axis)</Name>
+        <Menu>Other forms\Unclassified\Fenzy D Dual (83deg axis)</Menu>
+        <Inventor></Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2020-08-13</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'FAFAFA';
+        clYellow := 'F0E400';
+        clBlue   := '1010D0';
+        clRed    := 'C80000';
+        clOrange := 'F07000';
+        clGreen  := '008000';
+        clViolet := '640064';
+        clGray   := '5F5F5F';
+
+        clCyan   := '20D0C0';
+        clPink   := 'E860C0';
+
+        K  := 0.65;
+
+        // angle between axes = 83degs
+        N1 :=  0.76512772641559767178;
+        N2 :=  0.64387853067958270039;
+        N3 :=  0.70112333817564542796;
+        N4 := -0.30634376506686278194;
+
+        C1 :=  K * N1;
+        C2 :=  K * N2;
+        C3 :=  K * N3;
+        C4 :=  K * N4;
+        C5 :=  K * 0.49921350756724830053;
+        C6 :=  K * 0.55831939386428147284;
+
+        Vx[ 0,0] := C1;  Vy[ 0,0] :=  0;  Vz[ 0] :=  C2;
+        Vx[ 1,0] := C3;  Vy[ 1,0] := C4;  Vz[ 1] := -C2;
+        Vx[ 2,0] := C5;  Vy[ 2,0] := C6;  Vz[ 2] :=   0;
+
+        cos1 := cos(Pi*2/3);
+        sin1 := sin(Pi*2/3);
+        cos2 := cos(Pi*4/3);
+        sin2 := sin(Pi*4/3);
+
+        for i := 0 to 2 do begin
+            Vx[i,1] := Vx[i,0] * cos1 - Vy[i,0] * sin1;
+            Vy[i,1] := Vx[i,0] * sin1 + Vy[i,0] * cos1;
+            Vx[i,2] := Vx[i,0] * cos2 - Vy[i,0] * sin2;
+            Vy[i,2] := Vx[i,0] * sin2 + Vy[i,0] * cos2;
+        end;
+
+        D  := K * (0.38196209604088445573 + 0.0181); // smaller value causes overhang bandagings.
+
+        A1 := arctan(9.15103255567986085730); // 83.76361813813520689187 degs
+        A2 := Pi-arctan(1.72227389860018545831); // 120.140639022813555011 degs
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2-A1; -A2; -A1; 0; A1; A2; A2+A1" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "N1;      0;        N2" />
+        <Axis NormVector = "N1*cos1; N1*sin1;  N2" />
+        <Axis NormVector = "N1*cos2; N1*sin2;  N2" />
+        <Axis NormVector = "N3;      N4;      -N2" />
+        <Axis NormVector = "N3*cos1+N4*sin1; -N3*sin1+N4*cos1; -N2" />
+        <Axis NormVector = "N3*cos2+N4*sin2; -N3*sin2+N4*cos2; -N2" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "Vx[ 0,0]; Vy[ 0,0]; Vz[ 0]" />
+                <Add Vector = "Vx[ 0,1]; Vy[ 0,1]; Vz[ 0]" />
+                <Add Vector = "Vx[ 0,2]; Vy[ 0,2]; Vz[ 0]" />
+                <Add Vector = "Vx[ 1,0]; Vy[ 1,0]; Vz[ 1]" />
+                <Add Vector = "Vx[ 1,1]; Vy[ 1,1]; Vz[ 1]" />
+                <Add Vector = "Vx[ 1,2]; Vy[ 1,2]; Vz[ 1]" />
+                <Add Vector = "Vx[ 2,0]; Vy[ 2,0]; Vz[ 2]" />
+                <Add Vector = "Vx[ 2,1]; Vy[ 2,1]; Vz[ 2]" />
+                <Add Vector = "Vx[ 2,2]; Vy[ 2,2]; Vz[ 2]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clViolet" VertexIndexes = "0;1;2" />
+                <Face Color = "clGray"   VertexIndexes = "3;5;4" />
+
+                <Face Color = "clRed"    VertexIndexes = "6;4;1" InvisibleEdges = "4" />
+                <Face Color = "clRed"    VertexIndexes = "6;1;0" InvisibleEdges = "1" />
+                <Face Color = "clYellow" VertexIndexes = "6;0;3" InvisibleEdges = "4" />
+                <Face Color = "clYellow" VertexIndexes = "6;3;4" InvisibleEdges = "1" />
+
+                <Face Color = "clWhite"  VertexIndexes = "7;5;2" InvisibleEdges = "4" />
+                <Face Color = "clWhite"  VertexIndexes = "7;2;1" InvisibleEdges = "1" />
+                <Face Color = "clGreen"  VertexIndexes = "7;1;4" InvisibleEdges = "4" />
+                <Face Color = "clGreen"  VertexIndexes = "7;4;5" InvisibleEdges = "1" />
+
+                <Face Color = "clOrange" VertexIndexes = "8;3;0" InvisibleEdges = "4" />
+                <Face Color = "clOrange" VertexIndexes = "8;0;2" InvisibleEdges = "1" />
+                <Face Color = "clBlue"   VertexIndexes = "8;2;5" InvisibleEdges = "4" />
+                <Face Color = "clBlue"   VertexIndexes = "8;5;3" InvisibleEdges = "1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split1" >
+            <Hide  Axis = "ax2" Layer = "0" />
+            <Turn  Axis = "ax1" Layer = "1" Angle = "-A1" />
+            <Split Axis = "ax2" From = "1" />
+            <Undo Repeat = "1" />
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split1" ax1 = " 0" ax2 = " 2" />
+        <ExecMacro MacroName = "Split1" ax1 = " 1" ax2 = " 0" />
+        <ExecMacro MacroName = "Split1" ax1 = " 2" ax2 = " 1" />
+        <ExecMacro MacroName = "Split1" ax1 = " 3" ax2 = " 5" />
+        <ExecMacro MacroName = "Split1" ax1 = " 4" ax2 = " 3" />
+        <ExecMacro MacroName = "Split1" ax1 = " 5" ax2 = " 4" />
+
+        <Macro Name = "Split2" >
+            <Turn  Axis = "ax1" Layer = "1" Angle = "-A2" />
+            <Hide  Axis = "ax2" Layer = "0" />
+            <Turn  Axis = "ax1" Layer = "1" Angle = "-A1" />
+            <Split Axis = "ax2" From = "1" />
+            <Undo Repeat = "2" />
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split2" ax1 = " 0" ax2 = " 2" />
+        <ExecMacro MacroName = "Split2" ax1 = " 1" ax2 = " 0" />
+        <ExecMacro MacroName = "Split2" ax1 = " 2" ax2 = " 1" />
+        <ExecMacro MacroName = "Split2" ax1 = " 3" ax2 = " 5" />
+        <ExecMacro MacroName = "Split2" ax1 = " 4" ax2 = " 3" />
+        <ExecMacro MacroName = "Split2" ax1 = " 5" ax2 = " 4" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

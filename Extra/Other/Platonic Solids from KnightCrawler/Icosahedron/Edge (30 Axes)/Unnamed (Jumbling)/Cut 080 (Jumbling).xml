@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Edge Cut 080 (Jumbling)</Name>
+    <Class>TBigChop</Class>
+        <Menu>KnightCrawler\Icosahedron\Edge (30 Axes)\Unnamed (Jumbling)\Edge Cut 080 (Jumbling)</Menu>
+        <Programmer></Programmer>
+        <Added></Added>
+    </Interface>
+
+    <Script>    Degree:=80;
+        
+        R := 0.7;
+        dAngle := (Arctan(2) + Arcsin(2/3)) / 2;
+        dAngle2 := (Arctan(2) - Arcsin(2/3)) / 2;
+        Rsin := R * sin(dAngle);
+        Rcos := R * cos(dAngle);
+        R2sin := R * sin(dAngle2);
+        R2cos := R * cos(dAngle2);
+        sAngle := PI * 2 / 5;
+
+        for i := 0 to 4 do begin
+         x[i] := Rcos * sin(sAngle * (i - 0.5));
+         y[i] := Rcos * cos(sAngle * (i - 0.5));
+         z[i] := Rsin;
+        end;
+
+        for i := 5 to 9 do begin
+         x[i] := R2cos * sin(sAngle * (i - 0.5));
+         y[i] := R2cos * cos(sAngle * (i - 0.5));
+         z[i] := R2sin;
+        end;
+        for i := 10 to 14 do begin
+         x[i] := R2cos * sin(sAngle * i);
+         y[i] := R2cos * cos(sAngle * i);
+         z[i] := -R2sin;
+        end;
+
+        for i := 15 to 19 do begin
+         x[i] := Rcos * sin(sAngle * i);
+         y[i] := Rcos * cos(sAngle * i);
+         z[i] := -Rsin;
+        end;
+
+        Cut := (180-Degree)/180*0.7 / sqrt(10 + 2 * sqrt(5)) * ( 1 + sqrt(5) );
+    </Script>
+    <Axes TurningAngles = "Pi" PlaneDistances = "-Cut;Cut" FixedLayers = "1" >
+
+        <Axis NormVector = " x[0] + x[1];  y[0] + y[1];  z[0] + z[1]" /><Axis NormVector = " x[1] + x[2];  y[1] + y[2];  z[1] + z[2]" /><Axis NormVector = " x[2] + x[3];  y[2] + y[3];  z[2] + z[3]" /><Axis NormVector = " x[3] + x[4];  y[3] + y[4];  z[3] + z[4]" /><Axis NormVector = " x[4] + x[0];  y[4] + y[0];  z[4] + z[0]" /><Axis NormVector = " x[0] + x[5];  y[0] + y[5];  z[0] + z[5]" /><Axis NormVector = " x[1] + x[6];  y[1] + y[6];  z[1] + z[6]" /><Axis NormVector = " x[2] + x[7];  y[2] + y[7];  z[2] + z[7]" /><Axis NormVector = " x[3] + x[8];  y[3] + y[8];  z[3] + z[8]" /><Axis NormVector = " x[4] + x[9];  y[4] + y[9];  z[4] + z[9]" /><Axis NormVector = "x[10] + x[5]; y[10] + y[5]; z[10] + z[5]" /><Axis NormVector = "x[11] + x[6]; y[11] + y[6]; z[11] + z[6]" /><Axis NormVector = "x[12] + x[7]; y[12] + y[7]; z[12] + z[7]" /><Axis NormVector = "x[13] + x[8]; y[13] + y[8]; z[13] + z[8]" /><Axis NormVector = "x[14] + x[9]; y[14] + y[9]; z[14] + z[9]" />
+    </Axes>
+    <Axes>
+
+        <Axis NormVector = " -x[0] -x[1]; -y[0] -y[1]; -z[0] -z[1]" /><Axis NormVector = " -x[1] -x[2]; -y[1] -y[2]; -z[1] -z[2]" /><Axis NormVector = " -x[2] -x[3]; -y[2] -y[3]; -z[2] -z[3]" /><Axis NormVector = " -x[3] -x[4]; -y[3] -y[4]; -z[3] -z[4]" /><Axis NormVector = " -x[4] -x[0]; -y[4] -y[0]; -z[4] -z[0]" /><Axis NormVector = " -x[0] -x[5]; -y[0] -y[5]; -z[0] -z[5]" /><Axis NormVector = " -x[1] -x[6]; -y[1] -y[6]; -z[1] -z[6]" /><Axis NormVector = " -x[2] -x[7]; -y[2] -y[7]; -z[2] -z[7]" /><Axis NormVector = " -x[3] -x[8]; -y[3] -y[8]; -z[3] -z[8]" /><Axis NormVector = " -x[4] -x[9]; -y[4] -y[9]; -z[4] -z[9]" /><Axis NormVector = "-x[10] -x[5]; -y[10] -y[5]; -z[10] -z[5]" /><Axis NormVector = "-x[11] -x[6]; -y[11] -y[6]; -z[11] -z[6]" /><Axis NormVector = "-x[12] -x[7]; -y[12] -y[7]; -z[12] -z[7]" /><Axis NormVector = "-x[13] -x[8]; -y[13] -y[8]; -z[13] -z[8]" /><Axis NormVector = "-x[14] -x[9]; -y[14] -y[9]; -z[14] -z[9]" />
+    </Axes>
+
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+    </Figure>
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

@@ -1,0 +1,115 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Prism custom size</Name>
+        <Menu>Other forms\Prism\Prism Custom Size</Menu>
+        <Inventor>different</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-08-18</Added>
+    </Interface>
+
+    <Script>
+        clTop      := 'FFFFFF'; // clWhite;
+        clBottom   := 'AFAFAF';
+        Colors[ 0] := 'FF0000'; // clRed;
+        Colors[ 1] := 'FF6000'; // clOrange;
+        Colors[ 2] := 'FFFF00'; // clYellow;
+        Colors[ 3] := '008000'; // clGreen;
+        Colors[ 4] := '2828FF'; // clLightBlue;
+        Colors[ 5] := '0000A0'; // clBlue;
+        Colors[ 6] := '800080'; // clViolett;
+        Colors[ 7] := 'FF0080'; // clLightViolett;
+        Colors[ 8] := '00FF00'; // clLightGreen;
+        Colors[ 9] := '800000'; // clBrown;
+
+        Order := 5;
+        NWidth := 1;
+        NHeight := 1;
+
+        RequestNumbers('Input prism orders', 'Order:', 'Width:', 'Height:', Order, NWidth, NHeight);
+
+        Order := Min(Max(Order, 3), 10);
+        NWidth := Min(Max(NWidth, 1), 10);
+        NHeight := Min(Max(NHeight, 1), 10);
+
+        R := 0.5;
+
+        RCut := R * cos(Pi/Order);
+
+        ColumnsOnSide := NWidth * 2 + 1;
+        SideLength := 2 * R * sin(Pi/Order);
+        dW := SideLength / ColumnsOnSide * sin(2 * Pi/Order);
+
+        H := Min(SideLength / ColumnsOnSide * NHeight / 2, R);
+        dH := 2 * H / NHeight;
+        for i := 0 to NHeight - 1 do
+            HArray[i] := -H + (i + 1) * dH;
+
+        for i := 0 to NWidth - 1 do
+            WArray[i] := RCut - (i + 1) * dW;
+
+        NAxes := Order;
+        for i := 0 to NAxes - 1 do begin
+            Ax[i] := sin(2*Pi/Order * i);
+            Ay[i] := cos(2*Pi/Order * i);
+            Az[i] := 0;
+        end;
+        NSplits := NWidth;
+        Fixed := 0;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / Order" PlaneDistances = "HArray" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "WArray" NormVectors = "Ax; Ay; Az" FixedLayers = "0" />
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-R;-R;-H" />
+                <Add Vector = "-R;-R; H" />
+                <Add Vector = "-R; R;-H" />
+                <Add Vector = "-R; R; H" />
+                <Add Vector = " R;-R;-H" />
+                <Add Vector = " R;-R; H" />
+                <Add Vector = " R; R;-H" />
+                <Add Vector = " R; R; H" />
+            </Vertices>
+
+            <Faces>
+                <Face                    VertexIndexes = "1;0;4;5" />
+                <Face                    VertexIndexes = "2;3;7;6" />
+                <Face                    VertexIndexes = "0;1;3;2" />
+                <Face                    VertexIndexes = "5;4;6;7" />
+                <Face Color = "clBottom" VertexIndexes = "0;2;6;4" />
+                <Face Color = "clTop   " VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "MakeSide" >
+            <Cut Color = "Colors[i]" > <Plane NormDistance = "-RCut" NormVector = "-sin(2*Pi*i/Order); -cos(2*Pi*i/Order); 0" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "MakeSide" Repeat = "Order" i = "0" />
+
+        <Macro Name = "HorizontalSplit" >
+            <Split Axis = "0" From = "i" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HorizontalSplit" Repeat = "NHeight - 1" i = "1" />
+
+        <Macro Name = "Split" >
+            <Split Axis = "i" From = "From" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <Macro Name = "Splits" >
+            <ExecMacro MacroName = "Split" Repeat = "NAxes" i = "1" From = "j" />
+            <Script> Inc(j); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Splits" Repeat = "NSplits" j = "1" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

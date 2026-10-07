@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Krystian's Pyramid</Name>
+        <Menu>Other forms\Pyramid\Triangular Pyramid\Krystian's Pyramid</Menu>
+        <Inventor>Oskar Van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2381</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '3030FF';
+        clGreen   := '00C000';
+        clRed     := 'FF0000';
+
+        R := 0.45;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        DCut1 := R * sin(mAngle);
+        DCut2 := R * sin(dAngle);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "arctan(2)" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "Ex[18]; Ey[18]; Ez[18]" />
+        <Axis NormVector = "Ex[29]; Ey[29]; Ez[29]" />
+        <Axis NormVector = "Ex[11]; Ey[11]; Ez[11]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <Cut Color = "clRed   " > <Plane NormVector = "Vx[ 2]; Vy[ 2]; Vz[ 2]" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = "Vx[ 4]; Vy[ 4]; Vz[ 4]" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = "Vx[10]; Vy[10]; Vz[10]" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormVector = "Cx[10]; Cy[10]; Cz[10]" NormDistance = "-DCut2" /> </Cut>
+
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Angle = " Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "0" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "0" Angle = "-Pi" Layer = "1" />
+
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi / 5" />
+        <Turn NormVector = " 1; 0; 0" Angle = "arctan(3 - sqrt(5)) + Pi" />
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi / 5" />
+    </Figure>
+</xml>

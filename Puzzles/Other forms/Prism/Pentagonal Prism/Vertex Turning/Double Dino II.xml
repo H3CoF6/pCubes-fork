@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Double Dino II</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Vertex Turning\Double Dino II</Menu>
+        <Inventor>Matt Lozano</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-02-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12436</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '0000A0';
+        clOrange  := 'FF6000';
+        clRed     := 'FF0000';
+        clGreen   := '008000';
+        clWhite   := 'FFFFFF';
+        clViolett := '800080';
+
+        H := 0.4;
+        R := H * sqrt(2 * (1 + 1 / sqrt(5)));
+        D := H * 1.1;
+
+        for i := 0 to 4 do begin
+            x[i] := R * cos(2 * Pi / 5 * i);
+            y[i] := R * sin(2 * Pi / 5 * i);
+        end;
+
+        A1 := ArcCos((sqrt(5) - 5) / 8);
+        A2 := ArcCos(-(1 + 5 * sqrt(5)) / 16);
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "D" NormVectors = " x; y; H" />
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "D" NormVectors = " x; y;-H" />
+
+    <Axes TurningAngles = "2*Pi / 5" PlaneDistances = "0" NormVectors = "0; 0; 1" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "clWhite  " VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clGreen  " VertexIndexes = "5;6;1;0" />
+                <Face Color = "clRed    " VertexIndexes = "6;7;2;1" />
+                <Face Color = "clOrange " VertexIndexes = "7;8;3;2" />
+                <Face Color = "clViolett" VertexIndexes = "8;9;4;3" />
+                <Face Color = "clBlue   " VertexIndexes = "9;5;0;4" />
+                <Face Color = "clYellow " VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

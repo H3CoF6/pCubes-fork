@@ -1,0 +1,107 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese Hexagonal Dipyramids</Name>
+        <Menu>Other forms\Multi-core\Siamese Hexagonal Dipyramids</Menu>
+        <Inventor>Benjy Oliver</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-10-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3397</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF0000'; // Red
+        Colors[ 1] := '008000'; // Green
+        Colors[ 2] := 'FFFF00'; // Yellow
+        Colors[ 3] := 'FF6000'; // Orange
+        Colors[ 4] := '2828FF'; // LightBlue
+        Colors[ 5] := '0000A0'; // Blue
+        Colors[ 6] := '800080'; // Violett
+        Colors[ 7] := 'FF0080'; // LightViolett
+        Colors[ 8] := '00FF00'; // LightGreen
+        Colors[ 9] := '800000'; // Brown
+        Colors[10] := 'FF69B4'; // Pink
+        Colors[11] := 'FFFFFF'; // White
+
+        W := 0.3;
+        D := W / 3;
+        T := D * 2;
+
+        procedure ExchColors(i1,i2);
+        begin
+            c := Colors[i1];
+            Colors[i1] := Colors[i2];
+            Colors[i2] := c;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi / 2; Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-T; 0;-T" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = "-T; 0;-T" />
+        <Axis NormVector = " 1; 0; 0" BaseVector = " T; 0; T" />
+        <Axis NormVector = " 0; 0; 1" BaseVector = " T; 0; T" />
+    </Axes>
+
+
+    <Figure>
+        <Transfer Vector = " T; 0; T" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut Color = "Colors[ 6]" > <Plane NormVector = " 2; 2;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 7]" > <Plane NormVector = "-2;-2; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 8]" > <Plane NormVector = " 2;-1; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 9]" > <Plane NormVector = "-2; 1;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[10]" > <Plane NormVector = "-1; 2; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[11]" > <Plane NormVector = " 1;-2;-2" NormDistance = "-W" /> </Cut>
+        <Transfer Vector = "-T; 0;-T" />
+        <HideAll/>
+
+        <Script>
+            ExchColors(0,5);
+            ExchColors(1,4);
+        </Script>
+
+        <Transfer Vector = "-T; 0;-T" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut Color = "Colors[10]" > <Plane NormVector = "-2; 2; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[11]" > <Plane NormVector = " 2;-2;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 8]" > <Plane NormVector = "-2;-1;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 9]" > <Plane NormVector = " 2; 1; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 6]" > <Plane NormVector = " 1; 2;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 7]" > <Plane NormVector = "-1;-2; 2" NormDistance = "-W" /> </Cut>
+        <Transfer Vector = " T; 0; T" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Script>
+            Colors[0] := -1;
+            Colors[1] := -1;
+            Colors[4] := -1;
+            Colors[5] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "W" WZ = "D" />
+
+        <Turn Axis = "1" Layers = "1;2" Angle = " Pi/2" />
+        <Turn Axis = "2" Layers = "1;2" Angle = "-Pi/2" />
+        <SplitByAxes/>
+        <Undo/>
+        <Undo/>
+
+        <Turn Axis = "0" Layers = "1;2" Angle = " Pi/2" />
+        <Turn Axis = "3" Layers = "1;2" Angle = "-Pi/2" />
+        <SplitByAxes/>
+        <Undo/>
+        <Undo/>
+
+        <RemoveGrayParts/>
+
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi/4" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Magic Change AC</Name>
+        <Menu>Cubic\Bandaged\Cube 6x6x6\Magic Change AC</Menu>
+        <Inventor>Jack.S.N.Triton</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7402</Link>
+    </Interface>
+
+     <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        clBlack  := '444444';
+
+        W := 0.5;
+        D1 := W/3;
+        D2 := W * 2/3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2; -D1; 0; D1; D2" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0;-1; 0" />
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <HideContaining Vector = "0; 0; 0" />
+        <Cut Color = "clOrange" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clRed   " > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite " > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+        <SplitByAxes/>
+        <InvertVisibility/>
+        <Cut Color = "clBlack" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <ShowAll/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

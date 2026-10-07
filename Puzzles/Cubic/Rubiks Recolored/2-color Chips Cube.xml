@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2-color Chips Cube</Name>
+        <Menu>Cubic\Rubiks Recolored\2-color Chips Cube</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-04</Added>
+        <Link>https://cubezz.com/Buy-6012-FanXin+2-color+Chips+3x3x3+Magic+Cube+Puzzle.html</Link>
+    </Interface>
+
+    <Script>
+        Color1 := 'FFFF00';
+        Color2 := 'FF0000';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name ="Body">
+            <Part>
+                <Vertices>
+                    <Add Vector = "Vx[0]; Vy[0]; Vz[0]" />
+                    <Add Vector = "Vx[1]; Vy[1]; Vz[1]" />
+                    <Add Vector = "Vx[2]; Vy[2]; Vz[2]" />
+                    <Add Vector = "Vx[3]; Vy[3]; Vz[3]" />
+                    <Add Vector = "Vx[4]; Vy[4]; Vz[4]" />
+                    <Add Vector = "Vx[5]; Vy[5]; Vz[5]" />
+                    <Add Vector = "Vx[6]; Vy[6]; Vz[6]" />
+                    <Add Vector = "Vx[7]; Vy[7]; Vz[7]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;3;2" />
+                    <Face Color = "Color" VertexIndexes = "5;4;6;7" />
+                    <Face Color = "Color" VertexIndexes = "1;0;4;5" />
+                    <Face Color = "Color" VertexIndexes = "2;3;7;6" />
+                    <Face Color = "Color" VertexIndexes = "0;2;6;4" />
+                    <Face Color = "Color" VertexIndexes = "3;1;5;7" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Script> Color := Color1; </Script>
+        <ExecMacro MacroName = "Body"/>
+        <SplitByAxes/>
+        <Hide Axis = "1" Layer = "1" />
+        <Hide Axis = "2" Layer = "1" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <Script> Color := Color2; </Script>
+        <ExecMacro MacroName = "Body"/>
+        <SplitByAxes/>
+        <Hide Axis = "1" Layer = "1" />
+        <Hide Axis = "2" Layer = "1" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

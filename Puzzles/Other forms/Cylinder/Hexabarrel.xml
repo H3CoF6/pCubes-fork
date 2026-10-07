@@ -1,0 +1,100 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexabarrel</Name>
+        <Menu>Other forms\Cylinder\Hexabarrel</Menu>
+        <Inventor>Alexandr Bezrukov</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6684</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00AA00'; // Green
+        Colors[1] := 'EE0000'; // Red
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := 'FF800A'; // Orange
+        clLeft    := '00CC77'; // Mint
+        clRight   := 'AA00AA'; // Violett
+        clTop     := 'FFFFFF'; // White
+        clBottom  := 'FFFF00'; // Yellow
+
+        R := 0.5;
+        H := R * 0.93;
+        D := R * 0.7;
+
+        phi := (sqrt(5) - 1) / 2; // The golden ratio
+
+        N := 60;
+        N4 := N div 4;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2*Pi / N * i);
+            y[i] := R * sin(2*Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi / 5" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "   0; phi;   1" />
+        <Axis NormVector = "   0;-phi;   1" />
+        <Axis NormVector = " phi;   1;   0" />
+        <Axis NormVector = "-phi;   1;   0" />
+        <Axis NormVector = "   1;   0; phi" />
+        <Axis NormVector = "   1;   0;-phi" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "Cylinder" >
+            <Part>
+                <Vertices Vectors = " x; y; H" />
+                <Vertices Vectors = " x; y;-H" />
+
+                <Faces>
+                    <Face Color = "clTop"    VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" Color = "Color1" Repeat = "N4" i = "0" />
+                    <ExecMacro MacroName = "AddFace" Color = "Color2" Repeat = "N4" />
+                    <ExecMacro MacroName = "AddFace" Color = "Color3" Repeat = "N4" />
+                    <ExecMacro MacroName = "AddFace" Color = "Color4" Repeat = "N4" />
+                    <Face Color = "clBottom" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "Cylinder" Color1 = "Colors[0]" Color2 = "Colors[1]" Color3 = "Colors[2]" Color4 = "Colors[3]" />
+        <SplitByAxes/>
+        <Hide Axis = "3" Layers = "0;2" />
+        <Hide Axis = "2" Layers = "0;2" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Cylinder" Color1 = "clRight" Color2 = "clLeft" Color3 = "clLeft" Color4 = "clRight" />
+        <SplitByAxes/>
+        <Cut Axis = "3" To = "2" />
+        <Cut Axis = "2" To = "2" />
+        <Cut Axis = "3" From = "1" />
+        <Cut Axis = "2" From = "1" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>
+                                             	

@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Gigaminx Void</Name>
+        <Menu>Other forms\Void\Dodecahedron\Gigaminx</Menu>
+        <Inventor>William Kretschmer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-06-27</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := (3 * Rsin + 1 * R2sin) / 4;
+        D2 := (2 * Rsin + 2 * R2sin) / 4;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; sAngle; 0; sAngle; sAngle" PlaneDistances = "-D1; -D2; D2; D1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "Remove" >
+            <RemoveContaining Vector = " Cx[i]; Cy[i]; Cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Remove" Repeat = "12" i = "0" />
+
+    </Figure>
+</xml>

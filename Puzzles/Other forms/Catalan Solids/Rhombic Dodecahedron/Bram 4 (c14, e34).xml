@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhombic Dodecahedron - Corner edge 4 (c14, e34) - Bram</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Bram 4 (c14, e34)</Menu>
+        <Inventor>Bram Cohen</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-02-27</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;t=31442</Link>
+    </Interface>
+
+    <Script>
+        // Angle
+        aB := Pi;
+        aC := 2*Pi/3;
+
+        E34 := sqrt(2) / (60/7);
+        C14 := sqrt(3) / (90/7);
+    </Script>
+
+    <Axes TurningAngles = "aB" PlaneDistances = "E34" FixedLayers = "0" >
+        <Axis NormVector = " 0; -1; 1" />
+    </Axes>
+    <Axes TurningAngles = "aC" PlaneDistances = "C14" FixedLayers = "0" >
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn Axis = "0" Angle = "aB" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "aC" Layer = "1" /> <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart" Repeat = "10" />
+        <Undo Repeat = "200" />
+    </Figure>
+</xml>

@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Eye</Name>
+        <Menu>Other cubes\Vertex Turning\Dino Eye</Menu>
+        <Inventor>Bozhao Chen</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7667</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        Colors[0] := 'DD0000';
+        Colors[2] := '0033EE';
+        Colors[3] := '00AA00';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        A := W * 1.3;
+        B := W * 0.4;
+        D1 := -W / sqrt(3);
+        D2 :=  A / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D1; D2" FixedLayers = "1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Hide" >
+            <HideContaining Vector = "Vx[1];Vy[1];Vz[1]" />
+            <HideContaining Vector = "Vx[2];Vy[2];Vz[2]" />
+            <HideContaining Vector = "Vx[4];Vy[4];Vz[4]" />
+            <HideContaining Vector = "Vx[7];Vy[7];Vz[7]" />
+        </Macro>
+
+        <ExecMacro MacroName = "Hide" />
+
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := '-1';
+        </Script>
+
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Hide" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyritohedron 2-3</Name>
+        <Menu>Other forms\Pyritohedron\Pyritohedron 2-3</Menu>
+        <Inventor>Bo HU</Inventor>
+        <Programmer>Evgeniy Grigoriev, Boris</Programmer>
+        <Added>2016-11-12</Added>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clLightBlue    := '2828FF';
+        clBlue         := '0000A0';
+        clBrown        := '800000';
+        clOrange       := 'FF6000';
+        clLightViolett := 'FF0080';
+        clRed          := 'FF0000';
+        clLightGreen   := '00FF00';
+        clGreen        := '008000';
+        clViolett      := '800080';
+        clCyan         := '00DCB4';
+        clWhite        := 'FFFFFF';
+
+        DCut := 0.55;
+
+        // Solve(x^4 + x^3 - 2 * x^2 - x - 1 = 0 near x = 1.37)
+        x := 1.373132853176455;
+        ss := sin(arctan(x));
+        cs := cos(arctan(x));
+        D := DCut * (ss^3 - cs^3) / (cs - 3 * cs^2 * ss + cs * ss^2 + ss);
+
+        A1 := ArcCos(ss * cs / (1 + cs * ss));       // A1 := Angle( ss, cs, 0,  cs,  0, ss,  0, ss, cs);
+        A2 := ArcCos((ss^4 - cs^2) / (ss^4 + cs^2)); // A2 := Angle( ss, cs, 0,   0, ss,-cs,  0, ss, cs);
+        A3 := A1 + A2;
+        A4 := A1 + A2 + A1;
+    </Script>
+
+ss * cs * / (1 + cs * ss)
+
+    <Axes TurningAngles = "2 * Pi; 0; 2 * Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "-D; D" >
+        <Axis NormVector = "  0; ss; cs" />
+        <Axis NormVector = "  0;-ss; cs" />
+        <Axis NormVector = " ss; cs;  0" />
+        <Axis NormVector = "-ss; cs;  0" />
+        <Axis NormVector = " cs;  0; ss" />
+        <Axis NormVector = " cs;  0;-ss" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "DCut * 2" />
+        <Cut Color = "clCyan        " > <Plane NormVector = "  0; ss; cs" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clBrown       " > <Plane NormVector = "  0;-ss;-cs" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clLightBlue   " > <Plane NormVector = "  0;-ss; cs" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clBlue        " > <Plane NormVector = "  0; ss;-cs" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clGreen       " > <Plane NormVector = " ss; cs;  0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clLightGreen  " > <Plane NormVector = "-ss;-cs;  0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clLightViolett" > <Plane NormVector = "-ss; cs;  0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clViolett     " > <Plane NormVector = " ss;-cs;  0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clWhite       " > <Plane NormVector = " cs;  0; ss" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clYellow      " > <Plane NormVector = "-cs;  0;-ss" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clRed         " > <Plane NormVector = " cs;  0;-ss" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clOrange      " > <Plane NormVector = "-cs;  0; ss" NormDistance = "-DCut" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

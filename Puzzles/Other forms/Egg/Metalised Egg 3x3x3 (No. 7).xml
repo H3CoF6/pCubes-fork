@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Metalised Egg 3x3x3 (No. 7)</Name>
+        <Menu>Other forms\Egg\Metalised Egg 3x3x3 (No. 7)</Menu>
+        <Menu>Other forms\3x3x3 variants\Egg\Metalised Egg 3x3x3 (No. 7)</Menu>
+        <Inventor>Adam G. Cowan</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-03-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1961</Link>
+        <Link>https://www.hknowstore.com/locale/en-US/categoryofcorp.aspx?corpname=nowstore&amp;search=Metalised+egg+3x3</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'BFBFBA'; // Silver
+        Colors[1] := '3848FF'; // LightBlue
+
+        K := 0.7;
+        D := K * 0.2;
+
+        sColors[2] := '000 000 000';
+        sColors[1] := '111 121 111';
+        sColors[0] := '000 000 000';
+
+        procedure TestColor(No);
+        begin
+            ix := No mod 3;
+            iy := No div 3 mod 3;
+            iz := No div 9;
+            substr := copy(sColors[iz], iy * 4 + ix + 1, 1);
+            if HexToInt(substr) = ColorIndex then
+                DD := 10 // any big
+            else
+                DD := D * 1.01;
+        end;
+
+        AT2 := ArcTan(sqrt(2));
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "RemovePart" >
+            <Script>TestColor(i); Inc(i);</Script>
+            <RemoveContaining Vector = "(ix - 1) * DD; (iy - 1) * DD; (iz - 1) * DD" />
+        </Macro>
+
+        <Macro Name = "ColorEgg" >
+            <Turn NormVector = "-1;1;0" Angle = "-AT2" />
+            <LoadFrom File = "Puzzles\Other forms\Egg\_Macro_For_Egg.xml" Color = "Colors[ColorIndex]" Nx = "24" />
+            <SplitByAxes/>
+            <Turn NormVector = "-1;1;0" Angle = " AT2" />
+            <ExecMacro MacroName = "RemovePart" i = "0" Repeat = "27" />
+            <HideAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "ColorEgg" ColorIndex = "1" />
+        <ExecMacro MacroName = "ColorEgg" ColorIndex = "0" />
+        <Turn NormVector = "-1; 1; 0" Angle = "-AT2" />
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/4" />
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

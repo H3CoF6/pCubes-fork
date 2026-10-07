@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Axis Cube Illusion</Name>
+        <Menu>Other forms\Unclassified\Axis Cube Illusion</Menu>
+        <Inventor>Chester de Guzman</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-12-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9357</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <RemoveContaining Vector = "0;0;0" />
+        <HideAll/>
+
+        <Turn NormVector = "1;1;1" Angle = "Pi" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Turn NormVector = "1;1;1" Angle = "Pi" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "2" From = "1" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

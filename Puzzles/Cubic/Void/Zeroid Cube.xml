@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Zeroid Cube</Name>
+        <Menu>Cubic\Void\Zeroid Cube</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-09-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2062</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        W := 0.5;
+        Delta := 0.002;
+        R := 0.4;
+        D := 0.5 + Delta;
+
+        D1 := 1/6;
+        D2 := 1/2;
+        DCut := D1 * sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2; -D1; D1; D2" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Vx; Vy; Vz" />
+
+        <Macro Name = "SplitEdge" >
+            <Split> <Plane NormVector = "Cx[i]; Cy[i]; Cz[i]" NormDistance = " DCut" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitEdge" i = "0" Repeat = "6" />
+
+        <HideContaining Vector = "Ex; Ey; Ez" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Circle Radius = "R" Color = "clBlue  " Center = " 0; -D;  0" />
+        <Circle Radius = "R" Color = "clOrange" Center = " D;  0;  0" />
+        <Circle Radius = "R" Color = "clRed   " Center = "-D;  0;  0" />
+        <Circle Radius = "R" Color = "clGreen " Center = " 0;  D;  0" />
+        <Circle Radius = "R" Color = "clWhite " Center = " 0;  0;  D" />
+        <Circle Radius = "R" Color = "clYellow" Center = " 0;  0; -D" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "HideAx" >
+            <Hide Axis = "Ax1" From = "0" To = "1"/>
+            <Hide Axis = "Ax1" From = "3" To = "4"/>
+            <Hide Axis = "Ax2" From = "0" To = "1"/>
+            <Hide Axis = "Ax2" From = "3" To = "4"/>
+            <RemoveAllVisible/>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "HideAx" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "HideAx" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "HideAx" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+        <RemoveGrayParts/>
+        <Connect Layers = "0;2;4" />
+    </Figure>
+</xml>

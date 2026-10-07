@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Aleh's 5x5 Infinity</Name>
+        <Menu>Cubic\Unclassified\Aleh's 5x5 Infinity</Menu>
+        <Inventor>Aleh Hladzilin</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-15</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36051</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'DD0000'; // Blue
+        Colors[1] := 'FF7700'; // Green
+        Colors[2] := '0000EE'; // Red
+        Colors[3] := '00AA00'; // Orange
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        CylinderHeight := W * 0.02;
+        RC := W * 0.85;
+
+        D1 := W * 3/5;
+        D2 := W * 1/5;
+        Dx := D2 + CylinderHeight;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D1;-D2; D2; D1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Hide Axis = "0" Layer = "2" />
+        <Turn Axis = "0" Layers = "0;1" Angle = "Pi" />
+        <Cut Axis = "1" To = "3" />
+        <Undo/>
+        <HideAll/>
+
+        <Macro Name = "AddCylinder" >
+            <Cylinder Radius = "RC" Color = "Color" Base = "0; D2; 0" Top = "0; Dx; 0" >
+                <Top  Color = "Color" />
+            </Cylinder>
+            <Cut> <Plane NormVector = " 1;-1; 0" NormDistance = "0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = " 1; 1; 0" Angle = "Pi" />
+        </Macro>
+        <ExecMacro MacroName = "AddCylinder" Color = "Colors[3]" />
+        <ExecMacro MacroName = "AddCylinder" Color = "Colors[1]" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCylinder" Color = "Colors[0]" />
+        <ExecMacro MacroName = "AddCylinder" Color = "Colors[2]" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

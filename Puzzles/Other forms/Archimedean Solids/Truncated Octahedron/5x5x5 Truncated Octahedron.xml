@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>5x5x5 Truncated Octahedron</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Octahedron\5x5x5 Truncated Octahedron</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1683</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 6] := '006622';
+        Colors[ 7] := '8800FF';
+        Colors[ 8] := '999999';
+        Colors[ 9] := 'FFBB00';
+        Colors[10] := 'AA4400';
+        Colors[11] := 'FF88FF';
+        Colors[12] := 'EE00EE';
+        Colors[13] := '00CCCC';
+
+        W := 0.5;
+        D := W * 0.17;
+        DCut := (W + 4 * D) / sqrt(3);
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-3*D;-D; D; 3*D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "CutV" >
+            <Cut Color = "Colors[v + 6]"> <Plane NormVector = "-Vx[v];-Vy[v];-Vz[v]" NormDistance = "-DCut" /></Cut>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" v = "0" Repeat = "8" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

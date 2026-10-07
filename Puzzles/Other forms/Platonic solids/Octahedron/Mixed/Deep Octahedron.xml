@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Deep Octahedron</Name>
+        <Menu>Other forms\Octahedron\Mixed\Deep Octahedron</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9129</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE55BB'; // Rose
+        Colors[1] := '0066FF'; // LightBlue
+        Colors[2] := 'EE0000'; // Red
+        Colors[3] := 'FFEE00'; // Yellow
+        Colors[4] := 'FF6600'; // Orange
+        Colors[5] := 'FFFFFF'; // White
+        Colors[6] := 'AA00DD'; // Purple
+        Colors[7] := '00AA00'; // Green
+
+        W := 0.75;
+        D1 := W * 0.14;
+        D2 := D1 / sqrt(3);
+
+        RCut := (W - D1) * 0.95;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+
+        <SplitByAxes />
+        <RemoveGrayParts/>
+
+        <!-- cut parts for better control -->
+        <HideContaining Vector = " Vx; Vy; Vz" />
+        <Macro Name = "Cut" >
+            <Cut> <Plane NormVector = "-Vx[v];-Vy[v];-Vz[v]" NormDistance = "-RCut" /> </Cut>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" v = "0" Repeat = "6" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

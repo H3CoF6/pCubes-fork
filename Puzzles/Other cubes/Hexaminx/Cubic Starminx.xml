@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cubic Starminx</Name>
+        <Menu>Other Cubes\Hexaminx\Cubic Starminx</Menu>
+        <Inventor>Joseph Wong</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-10-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4483</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        sAngle := 2 * Pi / 5;
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+        
+        width := 0.5;
+        D := sqrt(2) * sin(mAngle / 2 - Pi / 4) * width;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "   0;  ss;  cs" />
+        <Axis NormVector = "   0; -ss;  cs" />
+        <Axis NormVector = "  ss;  cs;   0" />
+        <Axis NormVector = " -ss;  cs;   0" />
+        <Axis NormVector = "  cs;   0;  ss" />
+        <Axis NormVector = "  cs;   0; -ss" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

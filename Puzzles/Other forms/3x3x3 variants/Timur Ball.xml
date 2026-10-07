@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Timur Ball</Name>
+        <Menu>Other forms\Sphere\Timur Ball</Menu>
+        <Menu>Other forms\3x3x3 variants\Timur Ball</Menu>
+        <Inventor>Timur Evbatyrov</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2019-04-26</Added>
+        <Link>https://www.youtube.com/watch?v=qFu7MPG0SBc</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        K := 0.6;
+
+        D:= K * 0.450;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D;D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Segment" >
+            <Hide Axis = "0" From = "0" To = "5" />
+            <Script>Color := Colors[f0];</Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = "Cx[f0]; Cy[f0]; Cz[f0]" NormDistance = " D" /> </Cut>
+            <Cut> <Plane NormVector = "Cx[f1]; Cy[f1]; Cz[f1]" NormDistance = "-D" /> </Cut>
+            <Cut> <Plane NormVector = "Cx[f2]; Cy[f2]; Cz[f2]" NormDistance = "-D" /> </Cut>
+        </Macro>
+        <ExecMacro MacroName = "Segment" f0 = "0" f1 = "2" f2 = "3" />
+        <ExecMacro MacroName = "Segment" f0 = "1" f1 = "2" f2 = "3" />
+        <ExecMacro MacroName = "Segment" f0 = "2" f1 = "4" f2 = "5" />
+        <ExecMacro MacroName = "Segment" f0 = "3" f1 = "4" f2 = "5" />
+        <ExecMacro MacroName = "Segment" f0 = "4" f1 = "0" f2 = "1" />
+        <ExecMacro MacroName = "Segment" f0 = "5" f1 = "0" f2 = "1" />
+        <ShowAll/>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+        <Turn Axis = "0" From = "0" To = "2" Angle = "Pi / 2" />
+        <SaveSolvedState/>
+        <Undo/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

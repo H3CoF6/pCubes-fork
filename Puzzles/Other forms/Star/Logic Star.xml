@@ -1,0 +1,147 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Logic Star</Name>
+        <Menu>Other forms\Star\Logic Star</Menu>
+        <Inventor>Zbyněk Pieter</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1631</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFF00'; // clYellow
+        Colors[1] := 'FF00B0'; // clLightViolett
+        Colors[2] := '009600'; // clGreen
+        Colors[3] := 'C80000'; // clRed
+        Colors[4] := '0000C8'; // clBlue
+        Colors[5] := 'FF800A'; // clOrange
+
+        R := 0.5;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := Rsin;
+
+        k := 1 + 2 * sqrt(7 - 3 * sqrt(5)); // 2.0803630269509;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = " Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = " Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = " Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = " Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = " Vx[5]; Vy[5]; Vz[5]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCenter">
+            <Part>
+                <Vertices>
+                    <Add Vector = "(Vx[v0] + Vx[v1] + Vx[v2]) / 3 * k; (Vy[v0] + Vy[v1] + Vy[v2]) / 3 * k; (Vz[v0] + Vz[v1] + Vz[v2]) / 3 * k" />
+                    <Add Vector = "Vx[v0]; Vy[v0]; Vz[v0]" />
+                    <Add Vector = "Vx[v1]; Vy[v1]; Vz[v1]" />
+                    <Add Vector = "Vx[v2]; Vy[v2]; Vz[v2]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[c0]" VertexIndexes = "0;3;1" />
+                    <Face Color = "Colors[c1]" VertexIndexes = "0;1;2" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "0;2;3" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "AddCenter" v0 = " 0" v1 = " 1" v2 = " 5" c0 = "0" c1 = "0" c2 = "1" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 0" v1 = " 2" v2 = " 1" c0 = "0" c1 = "0" c2 = "1" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 0" v1 = " 3" v2 = " 2" c0 = "0" c1 = "0" c2 = "1" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 0" v1 = " 4" v2 = " 3" c0 = "0" c1 = "0" c2 = "1" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 0" v1 = " 5" v2 = " 4" c0 = "0" c1 = "0" c2 = "1" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 1" v1 = "10" v2 = " 5" c0 = "1" c1 = "2" c2 = "2" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 2" v1 = " 6" v2 = " 1" c0 = "1" c1 = "2" c2 = "2" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 3" v1 = " 7" v2 = " 2" c0 = "1" c1 = "2" c2 = "2" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 4" v1 = " 8" v2 = " 3" c0 = "1" c1 = "2" c2 = "2" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 5" v1 = " 9" v2 = " 4" c0 = "1" c1 = "2" c2 = "2" />
+        <ExecMacro MacroName = "AddCenter" v0 = "11" v1 = " 7" v2 = " 8" c0 = "5" c1 = "5" c2 = "4" />
+        <ExecMacro MacroName = "AddCenter" v0 = "11" v1 = " 8" v2 = " 9" c0 = "5" c1 = "5" c2 = "4" />
+        <ExecMacro MacroName = "AddCenter" v0 = "11" v1 = " 9" v2 = "10" c0 = "5" c1 = "5" c2 = "4" />
+        <ExecMacro MacroName = "AddCenter" v0 = "11" v1 = "10" v2 = " 6" c0 = "5" c1 = "5" c2 = "4" />
+        <ExecMacro MacroName = "AddCenter" v0 = "11" v1 = " 6" v2 = " 7" c0 = "5" c1 = "5" c2 = "4" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 7" v1 = " 3" v2 = " 8" c0 = "4" c1 = "3" c2 = "3" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 8" v1 = " 4" v2 = " 9" c0 = "4" c1 = "3" c2 = "3" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 9" v1 = " 5" v2 = "10" c0 = "4" c1 = "3" c2 = "3" />
+        <ExecMacro MacroName = "AddCenter" v0 = "10" v1 = " 1" v2 = " 6" c0 = "4" c1 = "3" c2 = "3" />
+        <ExecMacro MacroName = "AddCenter" v0 = " 6" v1 = " 2" v2 = " 7" c0 = "4" c1 = "3" c2 = "3" />
+
+        <HideAll/>
+
+
+        // make gray icosahedron
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <Macro Name = "CutCenters">
+            <Cut> <Plane NormVector = "-Cx[i];-Cy[i];-Cz[i]" NormDistance = "-Rin" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutCenters" i = "0" Repeat = "20" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "RemoveCenters">
+            <RemoveContaining Vector = "Cx[i];Cy[i];Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" i = "0" Repeat = "20" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+
+        <Turn Axis = "2" Layers = "2" Angle = " sAngle*2" />
+        <Turn Axis = "3" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "4" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "3" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "4" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "3" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "4" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "3" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "4" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "3" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "4" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "3" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "4" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "2" Layers = "2" Angle = "-sAngle*2" />
+        <Turn Axis = "4" Layers = "2" Angle = "-sAngle*2" />
+        <Turn Axis = "2" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "3" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "2" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "3" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "2" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "3" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "2" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "3" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "2" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "3" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "2" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "3" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "4" Layers = "2" Angle = " sAngle*2" />
+        <Turn Axis = "5" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "0" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "4" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "0" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "5" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "4" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "5" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "0" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "1" Layers = "2" Angle = " sAngle  " />
+        <Turn Axis = "5" Layers = "2" Angle = "-sAngle  " />
+        <Turn Axis = "3" Layers = "0" Angle = " sAngle  " />
+        <Turn Axis = "5" Layers = "2" Angle = " sAngle  " />
+        <SaveSolvedState/>
+        <Undo Repeat = "40" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

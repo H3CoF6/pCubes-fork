@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Half Hexaminx</Name>
+        <Menu>Other Cubes\Hexaminx\Half Hexaminx</Menu>
+        <Inventor>Rex Rossano Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-11-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2379</Link>
+    </Interface>
+
+    <Script>
+        sAngle := 2 * Pi / 5;
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+        
+        W := 0.5;
+        D := W / (ss + cs);
+
+//        vcx := 0.31; // may be varied
+//        vcz := sqrt(1 - vcx^2);
+//        dvc := W * (vcx - (sqrt(5) - 2) * vcz);
+        vcx := sqrt(9 - 4 * sqrt(5));
+        vcz := 1;
+        dvc := 0;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" >
+        <Axis NormVector = "   0;  ss;  cs" />
+        <Axis NormVector = "   0; -ss;  cs" />
+        <Axis NormVector = "  cs;   0;  ss" />
+    </Axes>
+
+    <Axes1 TurningAngles = "0" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "  ss;  cs;   0" />
+        <Axis NormVector = " -ss;  cs;   0" />
+        <Axis NormVector = "  cs;   0; -ss" />
+    </Axes1>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut Color = "FF7070" ><Plane NormVector = "vcx; 0; vcz" NormDistance = "dvc" /></Cut>
+        <SplitByAxes/>
+
+
+        <Macro Name = "SplitLayer" >
+            <Turn  Axis = "axis" Layer = "layer" Angle = "sAngle" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "SplitLayer" axis = "0" layer = "1" Repeat = "5" />
+        <ExecMacro MacroName = "SplitLayer" axis = "1" layer = "1" Repeat = "5" />
+        <ExecMacro MacroName = "SplitLayer" axis = "2" layer = "1" Repeat = "5" />
+
+    </Figure>
+</xml>

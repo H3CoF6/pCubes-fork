@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Lotus Ball 4x4x4</Name>
+        <Menu>Other forms\Star\Lotus Ball 4x4x4</Menu>
+        <Inventor>Manish Rathod</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-12-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11509</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.3;
+        D := W / 2;
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "Pyr" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " W;-W; W*2" />
+                    <Add Vector = " W;-W; W" />
+                    <Add Vector = " 0;-W; W" />
+                    <Add Vector = " 0; 0; W" />
+                    <Add Vector = " W; 0; W" />
+                </Vertices>
+
+                <Faces>
+                    <Face                 VertexIndexes = "1;2;3;4" />
+                    <Face Color = "Color" VertexIndexes = "0;3;2" />
+                    <Face Color = "Color" VertexIndexes = "0;1;4" />
+                    <Face Color = "Color" VertexIndexes = "0;4;3" />
+                    <Face Color = "Color" VertexIndexes = "0;2;1" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Pyr" Color = "Colors[5]" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Pyr" Color = "Colors[3]" Repeat = "4" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Pyr" Color = "Colors[0]" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Pyr" Color = "Colors[4]" Repeat = "4" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Pyr" Color = "Colors[2]" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Pyr" Color = "Colors[1]" Repeat = "4" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,140 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Eitan's Cluster</Name>
+        <Menu>Other forms\Icosahedron\Face turning\Radiolarian\Eitan's Cluster</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2026-02-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=13179</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+        include 'Figures\Scripts\Icosahedron_20_Colors_FTOServer.inc';
+
+
+        jumAngle := Arcsin(1/4) + Pi/6;
+
+        // pillow
+        k := 1.08213;
+        for i := 0 to 19 do begin
+          Cx[i] := Cx[i] * k;
+          Cy[i] := Cy[i] * k;
+          Cz[i] := Cz[i] * k;
+        end;
+
+        D[0] := R * (5 + 3 * Sqrt(5)) / sqrt(Sqrt(5) + 5) / 3 / sqrt(6) * k;
+        D[2] := R * sqrt((1 + 1 / sqrt(5)) / 6);
+        D[1] := (D[0] + D[2]) / 2;
+
+        Artefacts := 0.75;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi / 3" JumbleAngle = "jumAngle" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Colors[c]" VertexIndexes = "IntToStr(v1) + '';'' + IntToStr(v2) + '';'' + IntToStr(v3)" InvisibleEdges = "6" />
+        </Macro>
+        <Macro Name = "AddPillow" >
+            <ExecMacro MacroName = "AddFace" v1 = "i1" v2 = "i2" v3 = "i0" />
+            <ExecMacro MacroName = "AddFace" v1 = "i2" v2 = "i3" v3 = "i0" />
+            <ExecMacro MacroName = "AddFace" v1 = "i3" v2 = "i1" v3 = "i0" />
+        </Macro>
+
+        <Macro Name = "DelArtefacts" >
+            <RemoveContaining Vector = "Vx[i1] * Artefacts + Vx[i2] * (1 - Artefacts); Vy[i1] * Artefacts + Vy[i2] * (1 - Artefacts); Vz[i1] * Artefacts + Vz[i2] * (1 - Artefacts)" />
+            <RemoveContaining Vector = "Vx[i2] * Artefacts + Vx[i1] * (1 - Artefacts); Vy[i2] * Artefacts + Vy[i1] * (1 - Artefacts); Vz[i2] * Artefacts + Vz[i1] * (1 - Artefacts)" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" /> // 0..11
+            <Vertices Vectors = "Cx; Cy; Cz" /> // 12..31
+
+            <Faces>
+                <ExecMacro MacroName = "AddPillow" c = " 0" i0 = "12" i1 = " 0" i2 = " 1" i3 = " 5" />
+                <ExecMacro MacroName = "AddPillow" c = " 1" i0 = "13" i1 = " 0" i2 = " 2" i3 = " 1" />
+                <ExecMacro MacroName = "AddPillow" c = " 2" i0 = "14" i1 = " 0" i2 = " 3" i3 = " 2" />
+                <ExecMacro MacroName = "AddPillow" c = " 3" i0 = "15" i1 = " 0" i2 = " 4" i3 = " 3" />
+                <ExecMacro MacroName = "AddPillow" c = " 4" i0 = "16" i1 = " 0" i2 = " 5" i3 = " 4" />
+                <ExecMacro MacroName = "AddPillow" c = " 5" i0 = "17" i1 = " 1" i2 = "10" i3 = " 5" />
+                <ExecMacro MacroName = "AddPillow" c = " 6" i0 = "18" i1 = " 2" i2 = " 6" i3 = " 1" />
+                <ExecMacro MacroName = "AddPillow" c = " 7" i0 = "19" i1 = " 3" i2 = " 7" i3 = " 2" />
+                <ExecMacro MacroName = "AddPillow" c = " 8" i0 = "20" i1 = " 4" i2 = " 8" i3 = " 3" />
+                <ExecMacro MacroName = "AddPillow" c = " 9" i0 = "21" i1 = " 5" i2 = " 9" i3 = " 4" />
+                <ExecMacro MacroName = "AddPillow" c = "10" i0 = "22" i1 = "11" i2 = " 7" i3 = " 8" />
+                <ExecMacro MacroName = "AddPillow" c = "11" i0 = "23" i1 = "11" i2 = " 8" i3 = " 9" />
+                <ExecMacro MacroName = "AddPillow" c = "12" i0 = "24" i1 = "11" i2 = " 9" i3 = "10" />
+                <ExecMacro MacroName = "AddPillow" c = "13" i0 = "25" i1 = "11" i2 = "10" i3 = " 6" />
+                <ExecMacro MacroName = "AddPillow" c = "14" i0 = "26" i1 = "11" i2 = " 6" i3 = " 7" />
+                <ExecMacro MacroName = "AddPillow" c = "15" i0 = "27" i1 = " 7" i2 = " 3" i3 = " 8" />
+                <ExecMacro MacroName = "AddPillow" c = "16" i0 = "28" i1 = " 8" i2 = " 4" i3 = " 9" />
+                <ExecMacro MacroName = "AddPillow" c = "17" i0 = "29" i1 = " 9" i2 = " 5" i3 = "10" />
+                <ExecMacro MacroName = "AddPillow" c = "18" i0 = "30" i1 = "10" i2 = " 1" i3 = " 6" />
+                <ExecMacro MacroName = "AddPillow" c = "19" i0 = "31" i1 = " 6" i2 = " 2" i3 = " 7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 0" i2 = " 1" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 0" i2 = " 2" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 0" i2 = " 3" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 0" i2 = " 4" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 0" i2 = " 5" />
+                                                                
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 1" i2 = " 2" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 2" i2 = " 3" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 3" i2 = " 4" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 4" i2 = " 5" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 5" i2 = " 1" />
+                                                                
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 1" i2 = " 6" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 2" i2 = " 7" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 3" i2 = " 8" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 4" i2 = " 9" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 5" i2 = "10" />
+                                                                
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 1" i2 = "10" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 2" i2 = " 6" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 3" i2 = " 7" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 4" i2 = " 8" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 5" i2 = " 9" />
+                                                                
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 6" i2 = " 7" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 7" i2 = " 8" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 8" i2 = " 9" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = " 9" i2 = "10" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = "10" i2 = " 6" />
+                                                                
+        <ExecMacro MacroName = "DelArtefacts" i1 = "11" i2 = " 6" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = "11" i2 = " 7" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = "11" i2 = " 8" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = "11" i2 = " 9" />
+        <ExecMacro MacroName = "DelArtefacts" i1 = "11" i2 = "10" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Macros>
+        <Macro Name = "RandomTurns120" >
+            <Turn Axis = "Random(20)" Layer = "Random(3) + 1" Angle = "2*Pi/3"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(20)" Layer = "Random(3) + 1" Angle = "Pi/12 * Random(24)"/>
+        </Macro>
+        <Macro Name = "Scramble120" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns120" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble120" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-3 Plus</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other cubes\Square-1\Square-3 Plus</Menu>
+        <Inventor>Calvin Fan</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-08-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6868</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        A := Pi / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi/6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "A/2" /> <!-- turn axes -->
+
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+        <Macro Name = "Split" >
+            <Turn Axis = "0" Layer = "L" Angle = "A * N" />
+            <Split Axis = "1" From = "1" />
+            <Undo/>
+        </Macro>
+        <ExecMacro MacroName = "Split" L = "0" N = "1" />
+        <ExecMacro MacroName = "Split" L = "0" N = "2" />
+        <ExecMacro MacroName = "Split" L = "0" N = "3" />
+        <ExecMacro MacroName = "Split" L = "0" N = "4" />
+        <ExecMacro MacroName = "Split" L = "0" N = "5" />
+        <ExecMacro MacroName = "Split" L = "2" N = "1" />
+        <ExecMacro MacroName = "Split" L = "2" N = "3" />
+        <ExecMacro MacroName = "Split" L = "2" N = "4" />
+    </Figure>
+</xml>

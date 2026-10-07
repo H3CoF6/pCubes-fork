@@ -1,0 +1,109 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Centre Pyramid</Name>
+        <Menu>Other forms\Tetrahedron\Edge Turning\Camouflage\Centre Pyramid</Menu>
+        <Inventor>A J Lu</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4567</Link>
+    </Interface>
+
+    <Script>
+        clRed     := 'C80000';
+        clYellow  := 'FFFF00';
+        clGreen   := '009600';
+        clBlue    := '0000C8';
+        clViolett := 'FF0080';
+
+        W := 0.5;
+
+        D := W / 8;
+
+        dx := -D;
+        dy :=  D;
+        dz := -D;
+
+        X1 := -W + dx;
+        X2 := X1 + 2 * W;
+        Y1 := -W + dy;
+        Y2 := Y1 + 2 * W;
+        Z1 := -W + dz;
+        Z2 := Z1 + 2 * W;
+
+        DCut := W * 0.95;
+        DCut2 := W * 1.54;
+        DCut3 := W * 1.83;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "X1;Y1;Z2" />
+                <Add Vector = "X2;Y2;Z2" />
+                <Add Vector = "X1;Y2;Z1" />
+                <Add Vector = "X2;Y1;Z1" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clViolett" VertexIndexes = "1;0;3" />
+                <Face                     VertexIndexes = "0;2;3" />
+                <Face                     VertexIndexes = "0;1;2" />
+                <Face                     VertexIndexes = "1;3;2" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "1" />
+
+        <HideContaining Vector = " 0; 0; 0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SplitByAxes/>
+        <InvertVisibility/>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "X1;Y1;Z2" />
+                <Add Vector = "X2;Y2;Z2" />
+                <Add Vector = "X1;Y2;Z1" />
+                <Add Vector = "X2;Y1;Z1" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clBlue  " VertexIndexes = "1;0;3" />
+                <Face Color = "clYellow" VertexIndexes = "0;2;3" />
+                <Face Color = "clRed   " VertexIndexes = "0;1;2" />
+                <Face Color = "clGreen " VertexIndexes = "1;3;2" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "1" />
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <ShowAll/>
+
+        <!-- cut edges for better control -->
+        <Cut> <Plane NormVector = "-1;  0;  0" NormDistance = "-DCut - dx" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  0;  0" NormDistance = "-DCut + dx" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1;  0" NormDistance = "-DCut - dy" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  1;  0" NormDistance = "-DCut + dy" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  0; -1" NormDistance = "-DCut - dz" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  0;  1" NormDistance = "-DCut + dz" /> </Cut>
+
+        <Cut> <Plane NormVector = "-1; -1; -1" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  1" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  1" NormDistance = "-DCut3" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  1; -1" NormDistance = "-DCut2" /> </Cut>
+
+    </Figure>
+</xml>

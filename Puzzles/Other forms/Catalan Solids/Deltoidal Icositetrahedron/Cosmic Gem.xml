@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cosmic Gem</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Cosmic Gem</Menu>
+        <Inventor>Adrián Cures</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9578</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_24_Colors.inc';
+        clBody := -1;
+
+        W  := 0.45;
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_Coordinates.inc'; // for axes
+
+        A1 := ArcCos( s2 / 8 + 0.25);
+        A2 := ArcCos( s2 / 4 - 0.5 );
+        A3 := ArcCos(-s2 / 2 - 0.25); // = A1 + A2
+
+        D := W * 1.13;
+        DC := D * sqrt(7 - 4 * s2);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Cx;Cy;Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+
+        <Macro Name = "CutV" >
+            <Cut Color = "clBody" ><Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "-DC" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "18" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

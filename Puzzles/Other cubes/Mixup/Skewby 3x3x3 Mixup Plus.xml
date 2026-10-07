@@ -1,0 +1,78 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewby 3x3x3 Mixup Plus</Name>
+        <Menu>Other cubes\Mixup\Skewby 3x3x3 Mixup Plus</Menu>
+        <Inventor>Lim Cube</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-08-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11319</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.985;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "SplitAxes" >
+            <Split Axis = "0" From = "1" />
+            <Split Axis = "0" From = "2" />
+            <Split Axis = "1" From = "1" />
+            <Split Axis = "1" From = "2" />
+            <Split Axis = "2" From = "1" />
+            <Split Axis = "2" From = "2" />
+        </Macro>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <ExecMacro MacroName = "SplitAxes" />
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "Ax1" Angle = "Pi/4" Layer = "1" />
+            <ExecMacro MacroName = "SplitAxes" />
+            <Turn Axis = "Ax2" Angle = "Pi/4" Layer = "1" />
+            <ExecMacro MacroName = "SplitAxes" />
+            <Undo/>
+            <Turn Axis = "Ax3" Angle = "Pi/4" Layer = "1" />
+            <ExecMacro MacroName = "SplitAxes" />
+            <Undo/>
+            <Undo/>
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+
+        <SplitByAxes/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

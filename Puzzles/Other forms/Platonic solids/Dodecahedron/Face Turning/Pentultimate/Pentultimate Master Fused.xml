@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentultimate Master Fused</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Pentultimate\Pentultimate Master Fused</Menu>
+        <Inventor>Scott Bedard</Inventor>
+        <Programmer>Julian Wilkinson</Programmer>
+        <Added>2020-07-05</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=35862</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        D := R * 0.08;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "Cx[11]; Cy[11]; Cz[11]" />
+        <Axis NormVector = "Cx[ 8]; Cy[ 8]; Cz[ 8]" />
+        <Axis NormVector = "Cx[ 9]; Cy[ 9]; Cz[ 9]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0; 0; RSin" />
+
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Cx[i]; Cy[i]; Cz[i]" NormDistance = "D" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "12" />
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

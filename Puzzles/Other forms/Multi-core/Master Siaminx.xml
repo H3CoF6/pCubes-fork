@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Master Siaminx</Name>
+        <Menu>Other forms\Multi-core\Master Siaminx</Menu>
+        <Inventor>Jay Matthews</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6332</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 4;
+        D := W * 2 * 2 * sqrt(3) / 3 / N;
+        D0 := -W * 2 * sqrt(3) / 6;
+
+        DWX := 0;
+        DWY := D * sqrt(3) / 2;
+        DWZ := 0;
+
+        WI := D / 10; // size of invisible cubes
+        W1 := W / 6;
+        W4 := W1 * 4;
+        W7 := W1 * 7;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 3; 0" PlaneDistances = "D0 + D" >
+        <Axis NormVector = " 1; 1;-1" BaseVector = "-DWX;-DWY;-DWZ" />
+        <Axis NormVector = " 1;-1; 1" BaseVector = " DWX; DWY; DWZ" />
+        <Axis NormVector = "-1; 1; 1" BaseVector = "-DWX;-DWY;-DWZ" />
+        <Axis NormVector = "-1;-1;-1" BaseVector = " DWX; DWY; DWZ" />
+    </Axes>
+
+    <Axes TurningAngles = "0; 2 * Pi / 3; 2 * Pi / 3" PlaneDistances = "D0 + D * 2; D0 + D * 3" >
+        <Axis NormVector = " 1; 1;-1" BaseVector = " DWX; DWY; DWZ" />
+        <Axis NormVector = " 1;-1; 1" BaseVector = "-DWX;-DWY;-DWZ" />
+        <Axis NormVector = "-1; 1; 1" BaseVector = " DWX; DWY; DWZ" />
+        <Axis NormVector = "-1;-1;-1" BaseVector = "-DWX;-DWY;-DWZ" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " DWX; DWY; DWZ" />
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <Transfer Vector = "-DWX;-DWY;-DWZ" />
+
+        <Transfer Vector = "-DWX;-DWY;-DWZ" />
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <Transfer Vector = " DWX; DWY; DWZ" />
+
+        <Split> <Plane NormVector = " 1; 1;-1" BaseVector = "-DWX;-DWY;-DWZ" NormDistance = "D0 + D * 2" /> </Split>
+        <Split> <Plane NormVector = " 1; 1;-1" BaseVector = "-DWX;-DWY;-DWZ" NormDistance = "D0 + D * 3" /> </Split>
+        <Split> <Plane NormVector = "-1;-1;-1" BaseVector = " DWX; DWY; DWZ" NormDistance = "D0 + D * 2" /> </Split>
+        <Split> <Plane NormVector = "-1;-1;-1" BaseVector = " DWX; DWY; DWZ" NormDistance = "D0 + D * 3" /> </Split>
+        <Split> <Plane NormVector = "-1; 1; 1" BaseVector = "-DWX;-DWY;-DWZ" NormDistance = "D0 + D * 2" /> </Split>
+        <Split> <Plane NormVector = "-1; 1; 1" BaseVector = "-DWX;-DWY;-DWZ" NormDistance = "D0 + D * 3" /> </Split>
+        <Split> <Plane NormVector = " 1;-1; 1" BaseVector = " DWX; DWY; DWZ" NormDistance = "D0 + D * 2" /> </Split>
+        <Split> <Plane NormVector = " 1;-1; 1" BaseVector = " DWX; DWY; DWZ" NormDistance = "D0 + D * 3" /> </Split>
+
+        <SplitByAxes/>
+
+        <Hide Axis = "0" Layer = "0" />
+        <Hide Axis = "1" Layer = "0" />
+        <Hide Axis = "2" Layer = "0" />
+        <Hide Axis = "3" Layer = "0" />
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+            WX := WI;
+            WY := WI;
+            WZ := WI;
+        </Script>
+        <LoadFrom File = "Figures\Tetrahedron.xml" W = "W / 2" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cuboid.xml" DWX = " W4" DWY = "-W1" DWZ = " W4" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWX = "-W4" DWY = "-W1" DWZ = "-W4" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWX = " W4" DWY = " W1" DWZ = "-W4" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWX = "-W4" DWY = " W1" DWZ = " W4" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWX = " W4" DWY = "-W7" DWZ = " W4" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWX = "-W4" DWY = "-W7" DWZ = "-W4" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWX = " W4" DWY = " W7" DWZ = "-W4" />
+        <LoadFrom File = "Figures\Cuboid.xml" DWX = "-W4" DWY = " W7" DWZ = " W4" />
+        <InvertVisibility/>
+    </Figure>
+</xml>

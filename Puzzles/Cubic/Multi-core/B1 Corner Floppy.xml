@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>B1 Corner Floppy</Name>
+        <Menu>Cubic\Multi-core\B1 Corner Floppy</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-05</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0077EE'; // Blue
+        Colors[3] := '00CC00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W / 3;
+        D  := W / 3;
+        D2 := D * 2;
+
+        dAngle := 0.001;
+        t := Tan(dAngle);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" AvailableAngles = "0; Pi/2 + dAngle; Pi; -Pi/2 + dAngle; Pi" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = "-1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; 0; Pi/2" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = " 0;-t; 1" BaseVector = " D2;  0; 0" />
+        <Axis NormVector = " 0; t; 1" BaseVector = "-D2;  0; 0"/>
+        <Axis NormVector = "-t; 0; 1" BaseVector = "  0;-D2; 0" />
+        <Axis NormVector = " t; 0; 1" BaseVector = "  0; D2; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "-W;  W; 0" />
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Cut Color = "Colors[2]" > <Plane NormVector = "0; 1; 0" NormDistance = "D" /> </Cut>
+        <Cut Color = "Colors[1]" > <Plane NormVector = "-1; 0; 0" NormDistance = "D" /> </Cut>
+
+        <Split> <Plane NormVector = "0; 1; 0" NormDistance = " D2" /> </Split>
+        <Split> <Plane NormVector = "1; 0; 0" NormDistance = "-D2" /> </Split>
+        <HideContaining Vector = "-D; D; 0" />
+        <Split> <Plane NormVector = "0; 0; 1" NormDistance = "0" /> </Split>
+
+        <ShowAll/>
+
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+    </Figure>
+</xml>

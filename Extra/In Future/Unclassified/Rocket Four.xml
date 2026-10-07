@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rocket Four</Name>
+        <Menu>Grigr\Rocket Four</Menu>
+        <Inventor></Inventor>
+        <Programmer>Evgeniy Grigoriev, Boris</Programmer>
+        <Added></Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        K := 0.5;
+
+        A1 := ArcCos(3/4);
+        A2 := Pi - ArcCos(3/4);
+        A3 := ArcCos(9/16);
+        A4 := Pi - A3;
+
+        s6 := sqrt(6);
+    </Script>       
+
+<!--    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1;-A2; 0; A1;A2" PlaneDistances = "0" TurnAxesWithPartNo = "1" > -->
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1;-A2;-A3;-A4; 0; A4;A3;A1;A2" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+<!--    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A3; 0; A3; A2" PlaneDistances = "0" TurnAxesWithPartNo = "1" > -->
+        <Axis NormVector = " s6;  0; 1" />
+        <Axis NormVector = "-s6;  0; 1" />
+        <Axis NormVector = "  0;-s6; 1" />
+        <Axis NormVector = "  0; s6; 1" />
+
+<!--        <Axis NormVector = "  0; 1; s6" />
+        <Axis NormVector = "  0; 1;-s6" />
+        <Axis NormVector = "-s6; 1;  0" />
+        <Axis NormVector = " s6; 1;  0" />
+
+        <Axis NormVector = " 1; s6;  0" />
+        <Axis NormVector = " 1;-s6;  0" />
+        <Axis NormVector = " 1;  0;-s6" />
+        <Axis NormVector = " 1;  0; s6" />-->
+
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <Sp1litByAxes/>
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+
+        <HideContaining Vector = " K/2; K/2; 0" />
+        <HideContaining Vector = "-K/2;-K/2; 0" />
+        <InvertVisibility/>
+        <Split><Plane NormVector = " s6; -s6; 4" /></Split>
+        <Split><Plane NormVector = "-s6;  s6; 4" /></Split>
+        <ShowAll/>
+
+        <HideContaining Vector = "-K/2; K/2; 0" />
+        <HideContaining Vector = " K/2;-K/2; 0" />
+        <InvertVisibility/>
+        <Split><Plane NormVector = " s6;  s6; 4" /></Split>
+        <Split><Plane NormVector = "-s6; -s6; 4" /></Split>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

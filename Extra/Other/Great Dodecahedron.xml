@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml>
+       <Script>
+          R := 0.7;
+          mAngle := ArcTan(0.5);
+          Rsin := R * sin(mAngle);
+          Rcos := R * cos(mAngle);
+          sAngle := PI * 2 / 5;
+
+          for i := 1 to 5 do begin
+             X[i] := Rcos * sin(sAngle * (i - 1));
+             Y[i] := Rcos * cos(sAngle * (i - 1));
+             Z[i] := Rsin;
+          end;
+          for i := 6 to 10 do begin
+             X[i] := Rcos * sin(sAngle * (i - 0.5));
+             Y[i] := Rcos * cos(sAngle * (i - 0.5));
+             Z[i] := -Rsin;
+          end;
+       </Script>
+
+       <Part>
+          <Vertices>
+             <Add Vector = "0; 0; R" />
+
+             <Add Vector = "X[1]; Y[1]; Z[1]" />
+             <Add Vector = "X[2]; Y[2]; Z[2]" />
+             <Add Vector = "X[3]; Y[3]; Z[3]" />
+             <Add Vector = "X[4]; Y[4]; Z[4]" />
+             <Add Vector = "X[5]; Y[5]; Z[5]" />
+
+             <Add Vector = "X[6]; Y[6]; Z[6]" />
+             <Add Vector = "X[7]; Y[7]; Z[7]" />
+             <Add Vector = "X[8]; Y[8]; Z[8]" />
+             <Add Vector = "X[9]; Y[9]; Z[9]" />
+             <Add Vector = "X[10]; Y[10]; Z[10]" />
+
+             <Add Vector = "0; 0; -R" />
+          </Vertices>
+
+          <Faces>
+             <Face Color = "FFFF00" VertexIndexes = "1;5;4;3;2" />
+             <Face Color = "FF0080" VertexIndexes = "6;7;8;9;10" />
+             <Face Color = "0000A0" VertexIndexes = "0;1;10;9;4" />
+             <Face Color = "FF0000" VertexIndexes = "0;2;6;10;5" />
+             <Face Color = "800000" VertexIndexes = "0;3;7;6;1" />
+             <Face Color = "00FF00" VertexIndexes = "0;4;8;7;2" />
+             <Face Color = "00DCB4" VertexIndexes = "0;5;9;8;3" />
+             
+             <Face Color = "008000" VertexIndexes = "11;10;1;2;7" />
+             <Face Color = "800080" VertexIndexes = "11;6;2;3;8" />
+             <Face Color = "2828FF" VertexIndexes = "11;7;3;4;9" />
+             <Face Color = "FF6000" VertexIndexes = "11;8;4;5;10" />
+             <Face Color = "FFFFFF" VertexIndexes = "11;9;5;1;6" />
+
+          </Faces>
+       </Part>
+</xml>

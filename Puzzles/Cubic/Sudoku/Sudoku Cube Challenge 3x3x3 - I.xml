@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Sudoku Cube Challenge 3x3x3 - I</Name>
+        <Menu>Cubic\Sudoku\3x3x3 Challenge - I</Menu>
+        <Inventor></Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-02-17</Added>
+        <Link>https://www.hknowstore.com/locale/en-US/product/3x3x3-Sudoku-Cube-Challenge-Stickerless-version-1-NS-CB5471</Link>
+    </Interface>
+
+    <Script>
+        Colors[1] := '0000C8'; // Blue
+        Colors[2] := '009600'; // Green
+        Colors[3] := 'C80000'; // Red
+        Colors[4] := 'FF800A'; // Orange
+        Colors[5] := 'FFFF00'; // Yellow
+        Colors[6] := 'FFFFFF'; // White
+        Colors[7] := '45575E'; // Gray
+        Colors[8] := '71FFD9'; // Magenta
+        Colors[9] := '5500CD'; // Violett
+
+        W := 0.5;
+        N := 3;
+        WD := W*2 / N;
+
+        function GetColor(): integer;
+        begin
+          substr := copy(SColors[sy + y], sx + x, 1));
+          Result := StrToInt(substr);
+        end;
+
+        SColors[0] := '   387      ';
+        SColors[1] := '   219      ';
+        SColors[2] := '   564      ';
+        SColors[3] := '142436971397';
+        SColors[4] := '873751248615';
+        SColors[5] := '695928536824';
+        SColors[6] := '   152      ';
+        SColors[7] := '   463      ';
+        SColors[8] := '   789      ';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-WD/2;WD/2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W*1.1" Color = "-1" />
+        <SplitByAxes/>
+
+        <Macro Name = "CutCell" >
+            <HideContaining Vector = "-W + WD/2 + x * WD; -W; W - WD/2 - y * WD" />
+            <InvertVisibility/>
+            <Cut Color = "Colors[GetColor]"><Plane NormVector = "0;1;0" NormDistance = "-W" /></Cut>
+            <ShowAll/>
+            <Script>Inc(x);</Script>
+        </Macro>
+
+        <Macro Name = "CutRow" >
+            <ExecMacro MacroName = "CutCell" x = "0" Repeat = "N" />
+            <Script>Inc(y);</Script>
+        </Macro>
+
+        <Macro Name = "CutFace" >
+            <ExecMacro MacroName = "CutRow" y = "0" Repeat = "N" /> 
+        </Macro>
+
+        <ExecMacro MacroName = "CutFace" sx = "N+1" sy = "N" /> // Face
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace"  sx = "1" sy = "N" /> // Left
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" sx = "3*N+1" sy = "N" /> // Back
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" sx = "2*N+1" sy = "N" /> // Right
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" sx = "N+1" sy = "0" /> // Up
+
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutFace" sx = "N+1" sy = "2*N" /> // Down
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+    </Figure>
+    <Procedures CheckSolved="EachFaceConsistsOfDifferentColors" />
+</xml>

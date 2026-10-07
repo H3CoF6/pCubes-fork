@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexa-Face</Name>
+        <Menu>Other forms\2d\Hexa-Face</Menu>
+        <Inventor>Nathan Wilson</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-22</Added>
+        <Link>https://www.youtube.com/watch?v=TpxUkwqrmcI</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF8800'; // Orange
+        Colors[2] := '00DD00'; // Green
+        Colors[3] := '0066FF'; // Blue
+        Colors[4] := -1;
+        Colors[5] := 'FFEE00'; // Yellow
+
+        W := 0.5;
+        A := W * 1.2;
+        B := W * 0.35;
+
+        phi := (Sqrt(5) - 1) / 2; // The golden ratio
+
+        D := W * 0.93;
+        RCut := W * 0.2;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "   0;-phi;  -1" />
+        <Axis NormVector = "   0; phi;  -1" />
+        <Axis NormVector = "   1;   0; phi" />
+        <Axis NormVector = "  -1;   0; phi" />
+        <Axis NormVector = " phi;   1;   0" />
+        <Axis NormVector = " phi;  -1;   0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <Hide Axis = "1" Layer = "0" />
+        <Hide Axis = "0" Layer = "0" />
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 4 do
+                Colors[i] := -1;
+        </Script>
+
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "0" From = "1" />
+
+        <ShowAll/>
+
+        <Cut> <Plane NormVector = "0; 0; 1" NormDistance = "RCut" /> </Cut>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

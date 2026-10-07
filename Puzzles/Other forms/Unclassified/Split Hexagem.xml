@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Split Hexagem</Name>
+        <Menu>Other forms\Unclassified\Split Hexagem</Menu>
+        <Inventor>Alasdair Paton</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-10-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12014</Link>
+    </Interface>
+
+    <Script>
+        R := 0.65;
+        H := R;
+        z := R / 2;
+
+        D := R * 0.75;
+
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 3 * (i+0.5));
+            y[i] := R * sin(Pi / 3 * (i+0.5));
+        end;
+
+        A1 := ArcCos(-1/4);
+        A2 := ArcCos(-7/8); // 2*(Pi-A1)
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" NormVectors = " x; y; z" PlaneDistances = "-D; D" FixedLayers = "1" />
+
+    <Axes TurningAngles = "Pi/3" NormVectors = " 0; 0; 1" PlaneDistances = "0" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " 0; 0; H" />
+            <Vertices Vectors = " x; y; z" />
+            <Vertices Vectors = " x; y;-z" />
+            <Vertices Vectors = " 0; 0;-H" />
+
+            <Faces>
+                <Face Color = "5d8aa8" VertexIndexes = "0;1;2" />
+                <Face Color = "0f4d92" VertexIndexes = "0;2;3" />
+                <Face Color = "89cfd0" VertexIndexes = "0;3;4" />
+                <Face Color = "21abcd" VertexIndexes = "0;4;5" />
+                <Face Color = "5070a0" VertexIndexes = "0;5;6" />
+                <Face Color = "80d0ff" VertexIndexes = "0;6;1" />
+
+                <Face Color = "cc0000" VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "ff6000" VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "ffff00" VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "009000" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "000090" VertexIndexes = "11;12; 6; 5" />
+                <Face Color = "900090" VertexIndexes = "12; 7; 1; 6" />
+
+                <Face Color = "e1a95f" VertexIndexes = " 8; 7;13" />
+                <Face Color = "e9d66b" VertexIndexes = " 9; 8;13" />
+                <Face Color = "fdfd96" VertexIndexes = "10; 9;13" />
+                <Face Color = "fdcf3f" VertexIndexes = "11;10;13" />
+                <Face Color = "af940c" VertexIndexes = "12;11;13" />
+                <Face Color = "e9d6ac" VertexIndexes = " 7;12;13" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0;0;0" />
+        <Split> <Plane NormVector = "x[0]; y[0]; 0" NormDistance = "0" /> </Split>
+        <Split> <Plane NormVector = "x[1]; y[1]; 0" NormDistance = "0" /> </Split>
+        <Split> <Plane NormVector = "x[2]; y[2]; 0" NormDistance = "0" /> </Split>
+        <ShowAll/>
+    </Figure>
+</xml>

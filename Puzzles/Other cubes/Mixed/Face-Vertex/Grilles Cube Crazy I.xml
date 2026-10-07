@@ -1,0 +1,122 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Grilles Cube Crazy I</Name>
+        <Aliases>Cell Cube Crazy</Aliases>
+        <Menu>Other cubes\Mixed\Face-Vertex\Grilles Cube Crazy I</Menu>
+        <Inventor>Mr. Fok</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-07-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11152</Link>
+        <Link>https://www.ziicube.com/mf8-Crazy-Grilles</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        WC := W * 1.004;
+        D1 := WC * 4 / 7;
+        R := D1 * sqrt(2);
+        D2 := (WC + D1) / sqrt(3);
+        DCut := W * 1.31;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W; -D1; D1; W" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "3" />
+
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "Hide">
+            <HideContaining Vector = "Cx[id]; Cy[id]; Cz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" Repeat = "6" id = "0" />
+
+        <!-- avoid almost invisible artefact faces -->
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "3" From = "2" />
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "4" From = "2" />
+        <Split Axis = "5" From = "1" />
+        <Split Axis = "5" From = "2" />
+        <Split Axis = "6" From = "1" />
+        <Split Axis = "6" From = "2" />
+        <Macro Name = "HideE">
+            <HideContaining Vector = " Ex[id]*D1/W; Ey[id]*D1/W; Ez[id]*D1/W" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideE" Repeat = "12" id = "0" />
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-Cx[id]; -Cy[id]; -Cz[id]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "6" id = "0" />
+
+        <ShowAll/>
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-Cx[id]; -Cy[id]; -Cz[id]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "6" id = "0" />
+
+        <!-- cut vertices for better control-->
+        <Macro Name = "Cut">
+            <HideContaining Vector = " Ex[e1]; Ey[e1]; Ez[e1]" />
+            <HideContaining Vector = " Ex[e2]; Ey[e2]; Ez[e2]" />
+            <HideContaining Vector = " Ex[e3]; Ey[e3]; Ez[e3]" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = "-Vx[v1]; -Vy[v1]; -Vz[v1]" NormDistance = "-DCut" /> </Cut>
+
+            <ShowAll/>
+            <HideContaining Vector = "-Ex[e1];-Ey[e1];-Ez[e1]" />
+            <HideContaining Vector = "-Ex[e2];-Ey[e2];-Ez[e2]" />
+            <HideContaining Vector = "-Ex[e3];-Ey[e3];-Ez[e3]" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = " Vx[v1]; Vy[v1]; Vz[v1]" NormDistance = "-DCut" /> </Cut>
+
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Cut" e1 = " 7" e2 = " 9" e3 = "11" v1 = " 0"  />
+        <ExecMacro MacroName = "Cut" e1 = " 0" e2 = " 2" e3 = "11" v1 = " 1"  />
+        <ExecMacro MacroName = "Cut" e1 = " 6" e2 = " 9" e3 = "10" v1 = " 2"  />
+        <ExecMacro MacroName = "Cut" e1 = " 1" e2 = " 2" e3 = "10" v1 = " 3"  />
+
+        <Circle Radius = "R" Color = "clRed   " Center = "-WC;  0;  0" />
+        <Circle Radius = "R" Color = "clOrange" Center = " WC;  0;  0" />
+        <Circle Radius = "R" Color = "clBlue  " Center = "  0;-WC;  0" />
+        <Circle Radius = "R" Color = "clGreen " Center = "  0; WC;  0" />
+        <Circle Radius = "R" Color = "clYellow" Center = "  0;  0;-WC" />
+        <Circle Radius = "R" Color = "clWhite " Center = "  0;  0; WC" />
+
+        <SplitByAxes/>
+
+        <Connect Axis = "0" Layers = "0;2;4" />
+        <Connect Axis = "1" Layers = "0;2;4" />
+        <Connect Axis = "2" Layers = "0;2;4" />
+    </Figure>
+</xml>

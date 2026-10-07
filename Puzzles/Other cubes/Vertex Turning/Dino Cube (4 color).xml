@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Cube (4 color)</Name>
+        <Menu>Other cubes\Vertex Turning\Dino Cube (4 color)</Menu>
+        <Inventor>S. Y. Liou</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-11-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=828</Link>
+    </Interface>
+        
+    <Script>
+        clBlue   := '0050C8';
+        clRed    := 'C80000';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        W := 0.5;
+        D := W / sqrt(3);
+        sAngle := 2 * Pi / 3;
+    </Script>
+        
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <SplitByAxes/>
+
+        <Hide Axis = "3" Layer = "1" />
+        <Cut Color = "clYellow" > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "2" Layer = "1" />
+        <Cut Color = "clWhite" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+        <Hide Axis = "1" Layer = "1" />
+        <Cut Color = "clRed" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clRed" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clRed" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+        <Cut Color = "clBlue" > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlue" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlue" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+                
+        <SaveSolvedState/>
+                
+        <Turn Axis = "0" Layer = "0" Angle = " sAngle" />
+        <Turn Axis = "3" Layer = "2" Angle = " sAngle" />
+        <Turn Axis = "0" Layer = "0" Angle = " sAngle" />
+        <Turn Axis = "3" Layer = "2" Angle = " sAngle" />
+        <Turn Axis = "3" Layer = "0" Angle = "-sAngle" />
+        <Turn Axis = "0" Layer = "2" Angle = "-sAngle" />
+        <Turn Axis = "3" Layer = "0" Angle = "-sAngle" />
+        <Turn Axis = "0" Layer = "2" Angle = "-sAngle" />
+        <SaveSolvedState/>
+
+        <Undo Repeat = "8"/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Axis-1</Name>
+        <Menu>Other cubes\Axis\Axis-1</Menu>
+        <Menu>Other cubes\Square-1\Axis-1</Menu>
+        <Inventor>Minh Thang Vo</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-06-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2247</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+
+        ax := sqrt(3) - 1;
+        ay := sqrt(3) + 1;
+        az := 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi/6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "-2;  2; -1" />
+    </Axes>
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = " ax;  ay; az" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+
+        <Turn  Axis = "0" Layer = "1" Angle = "Pi/6"/>
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "0" Layer = "1" Angle = "Pi/3"/>
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "0" Layer = "1" Angle = "Pi/6"/>
+        <Split Axis = "1" From = "1" />
+        <Turn  Axis = "0" Layer = "1" Angle = "Pi/3"/>
+        <Split Axis = "1" From = "1" />
+        <Undo Repeat = "4"/>
+    </Figure>
+</xml>

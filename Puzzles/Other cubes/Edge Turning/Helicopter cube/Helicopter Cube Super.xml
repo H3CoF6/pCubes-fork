@@ -1,0 +1,143 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Helicopter Cube Super</Name>
+        <Menu>Other cubes\Edge Turning\Helicopter cube\Helicopter Cube Super</Menu>
+        <Inventor>Brian Deplae</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-01-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2391</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        s2 := sqrt(2);
+        D := W / s2;
+        WD := 0.03;
+        Delta := 0.001;
+    </Script>
+ 
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddSegments">
+            <Part>
+                <Vertices>
+                    <Add Vector = "-W         ; -W     ; W + Delta" />
+                    <Add Vector = "-W + WD    ; -W + WD; W + Delta" />
+                    <Add Vector = "-WD - Delta; -W + WD; W + Delta" />
+                    <Add Vector = "     -Delta; -W     ; W + Delta" />
+                    <Add Vector = "-W         ; -W     ; W        " />
+                    <Add Vector = "-W + WD    ; -W + WD; W        " />
+                    <Add Vector = "-WD        ; -W + WD; W        " />
+                    <Add Vector = " 0         ; -W     ; W        " />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "3;2;1;0" InvisibleEdges = "6" />
+                    <Face                 VertexIndexes = "4;5;6;7" />
+                    <Face                 VertexIndexes = "5;4;0;1" InvisibleEdges = "15" />
+                    <Face                 VertexIndexes = "6;5;1;2" InvisibleEdges = "15" />
+                    <Face                 VertexIndexes = "7;6;2;3" />
+                    <Face                 VertexIndexes = "4;7;3;0" />
+                </Faces>
+            </Part>
+     
+            <Part>
+                <Vertices>
+                    <Add Vector = " W         ; -W     ; W + Delta" />
+                    <Add Vector = " W - WD    ; -W + WD; W + Delta" />
+                    <Add Vector = " WD + Delta; -W + WD; W + Delta" />
+                    <Add Vector = "      Delta; -W     ; W + Delta" />
+                    <Add Vector = " W         ; -W     ; W        " />
+                    <Add Vector = " W - WD    ; -W + WD; W        " />
+                    <Add Vector = " WD        ; -W + WD; W        " />
+                    <Add Vector = " 0         ; -W     ; W        " />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2;3" InvisibleEdges = "3" />
+                    <Face                 VertexIndexes = "7;6;5;4" />
+                    <Face                 VertexIndexes = "1;0;4;5" InvisibleEdges = "15" />
+                    <Face                 VertexIndexes = "2;1;5;6" InvisibleEdges = "15" />
+                    <Face                 VertexIndexes = "3;2;6;7" />
+                    <Face                 VertexIndexes = "0;3;7;4" />
+                </Faces>
+            </Part>
+     
+            <Part>
+                <Vertices>
+                    <Add Vector = "-Delta        ; -W + Delta          ; W + Delta" />
+                    <Add Vector = "-W/2          ; -W/2                ; W + Delta" />
+                    <Add Vector = "-W/2 + WD / s2; -W/2 + WD / s2      ; W + Delta" />
+                    <Add Vector = "-Delta        ; -W + WD * s2 + Delta; W + Delta" />
+                    <Add Vector = " 0            ; -W                  ; W        " />
+                    <Add Vector = "-W/2          ; -W/2                ; W        " />
+                    <Add Vector = "-W/2 + WD / s2; -W/2 + WD / s2      ; W        " />
+                    <Add Vector = " 0            ; -W + WD * s2        ; W        " />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "3;2;1;0" InvisibleEdges = "3" />
+                    <Face                 VertexIndexes = "4;5;6;7" />
+                    <Face                 VertexIndexes = "5;4;0;1" />
+                    <Face                 VertexIndexes = "6;5;1;2" InvisibleEdges = "15" />
+                    <Face                 VertexIndexes = "7;6;2;3" InvisibleEdges = "15" />
+                    <Face                 VertexIndexes = "4;7;3;0" />
+                </Faces>
+            </Part>
+     
+            <Part>
+                <Vertices>
+                    <Add Vector = " Delta        ; -W + Delta          ; W + Delta" />
+                    <Add Vector = " W/2          ; -W/2                ; W + Delta" />
+                    <Add Vector = " W/2 - WD / s2; -W/2 + WD / s2      ; W + Delta" />
+                    <Add Vector = " Delta        ; -W + WD * s2 + Delta; W + Delta" />
+                    <Add Vector = " 0            ; -W                  ; W        " />
+                    <Add Vector = " W/2          ; -W/2                ; W        " />
+                    <Add Vector = " W/2 - WD / s2; -W/2 + WD / s2      ; W        " />
+                    <Add Vector = " 0            ; -W + WD * s2        ; W        " />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2;3" InvisibleEdges = "6" />
+                    <Face                 VertexIndexes = "7;6;5;4" />
+                    <Face                 VertexIndexes = "1;0;4;5" />
+                    <Face                 VertexIndexes = "2;1;5;6" InvisibleEdges = "15" />
+                    <Face                 VertexIndexes = "3;2;6;7" InvisibleEdges = "15" />
+                    <Face                 VertexIndexes = "0;3;7;4" />
+                </Faces>
+            </Part>
+
+            <Turn NormVector = "0;1;0" Angle = "Pi /2" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSegments" Color = "Colors[2]" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi /2" />
+        <ExecMacro MacroName = "AddSegments" Color = "Colors[5]" Repeat = "4" />
+        <Turn NormVector = "0;0;1" Angle = "Pi /2" />
+        <ExecMacro MacroName = "AddSegments" Color = "Colors[0]" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi /2" />
+        <ExecMacro MacroName = "AddSegments" Color = "Colors[3]" Repeat = "4" />
+        <Turn NormVector = "0;0;1" Angle = "Pi /2" />
+        <ExecMacro MacroName = "AddSegments" Color = "Colors[4]" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi /2" />
+        <ExecMacro MacroName = "AddSegments" Color = "Colors[1]" Repeat = "4" />
+        <Turn NormVector = "0;0;1" Angle = "Pi /2" />
+ 
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

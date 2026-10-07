@@ -1,0 +1,205 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Collider Rhombdo</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Collider Rhombdo</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7160</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF6600'; // Orange
+        Colors[ 1] := 'FF2299'; // Fuchsia
+        Colors[ 2] := 'FFAADD'; // Rose
+        Colors[ 3] := 'FFEE00'; // Yellow
+        Colors[ 4] := '00EE00'; // LightGreen
+        Colors[ 5] := 'EE0000'; // Red
+        Colors[ 6] := 'AA00FF'; // Violett
+        Colors[ 7] := '00AAFF'; // LighterBlue
+        Colors[ 8] := '00AA00'; // Green
+        Colors[ 9] := '0000FF'; // Blue
+        Colors[10] := '0055FF'; // LightBlue
+        Colors[11] := '00CCCC'; // Cyan
+
+        W1 := 0.7;
+        W2 := W1 / 2;
+
+        A  := W2 * 1.18; // pillow
+        W := A;
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        C0 := sqrt(2);
+        C1 := (1 + 2 * sqrt(2)) * 3 / 7;
+        C2 := (2 + 3 * sqrt(2)) * 3 / 7;
+
+        // Calcs normal to plane with 3 points
+        procedure Normal(x1, y1, z1, x2, y2, z2, x3, y3, z3, i);
+        begin
+          nx := (y1-y3) * (z2-z3) - (y2-y3) * (z1-z3);
+          ny := (z1-z3) * (x2-x3) - (z2-z3) * (x1-x3);
+          nz := (x1-x3) * (y2-y3) - (x2-x3) * (y1-y3);
+
+          // normalize vector
+          dn := sqrt(nx^2 + ny^2 + nz^2);
+          px[i] := nx / dn; py[i] := ny / dn; pz[i] := nz / dn;
+        end;
+
+        // Calc all Normal and fill array
+        Normal(  0,  0, C2,   C1,  0, C1,   C0, C0, C0,   0); // " 0;  6; 18"
+        Normal(  0,  0, C2,   C0, C0, C0,    0, C1, C1,   1); // " 0; 18; 14"
+        Normal(  0,  0, C2,    0, C1, C1,  -C0, C0, C0,   2); // " 0; 14; 22"
+        Normal(  0,  0, C2,  -C0, C0, C0,  -C1,  0, C1,   3); // " 0; 22;  8"
+        Normal(  0,  0, C2,  -C1,  0, C1,  -C0,-C0, C0,   4); // " 0;  8; 24"
+        Normal(  0,  0, C2,  -C0,-C0, C0,    0,-C1, C1,   5); // " 0; 24; 16"
+        Normal(  0,  0, C2,    0,-C1, C1,   C0,-C0, C0,   6); // " 0; 16; 20"
+        Normal(  0,  0, C2,   C0,-C0, C0,   C1,  0, C1,   7); // " 0; 20;  6"
+        Normal(  0,  0,-C2,   C1,  0,-C1,   C0,-C0,-C0,   8); // " 1;  7; 21"
+        Normal(  0,  0,-C2,   C0,-C0,-C0,    0,-C1,-C1,   9); // " 1; 21; 17"
+        Normal(  0,  0,-C2,    0,-C1,-C1,  -C0,-C0,-C0,  10); // " 1; 17; 25"
+        Normal(  0,  0,-C2,  -C0,-C0,-C0,  -C1,  0,-C1,  11); // " 1; 25;  9"
+        Normal(  0,  0,-C2,  -C1,  0,-C1,  -C0, C0,-C0,  12); // " 1;  9; 23"
+        Normal(  0,  0,-C2,  -C0, C0,-C0,    0, C1,-C1,  13); // " 1; 23; 15"
+        Normal(  0,  0,-C2,    0, C1,-C1,   C0, C0,-C0,  14); // " 1; 15; 19"
+        Normal(  0,  0,-C2,   C0, C0,-C0,   C1,  0,-C1,  15); // " 1; 19;  7"
+        Normal( C2,  0,  0,   C1,  0, C1,   C0,-C0, C0,  16); // " 2;  6; 20"
+        Normal( C2,  0,  0,   C0,-C0, C0,   C1,-C1,  0,  17); // " 2; 20; 11"
+        Normal( C2,  0,  0,   C1,-C1,  0,   C0,-C0,-C0,  18); // " 2; 11; 21"
+        Normal( C2,  0,  0,   C0,-C0,-C0,   C1,  0,-C1,  19); // " 2; 21;  7"
+        Normal( C2,  0,  0,   C1,  0,-C1,   C0, C0,-C0,  20); // " 2;  7; 19"
+        Normal( C2,  0,  0,   C0, C0,-C0,   C1, C1,  0,  21); // " 2; 19; 10"
+        Normal( C2,  0,  0,   C1, C1,  0,   C0, C0, C0,  22); // " 2; 10; 18"
+        Normal( C2,  0,  0,   C0, C0, C0,   C1,  0, C1,  23); // " 2; 18;  6"
+        Normal(-C2,  0,  0,  -C1,  0, C1,  -C0, C0, C0,  24); // " 3;  8; 22"
+        Normal(-C2,  0,  0,  -C0, C0, C0,  -C1, C1,  0,  25); // " 3; 22; 12"
+        Normal(-C2,  0,  0,  -C1, C1,  0,  -C0, C0,-C0,  26); // " 3; 12; 23"
+        Normal(-C2,  0,  0,  -C0, C0,-C0,  -C1,  0,-C1,  27); // " 3; 23;  9"
+        Normal(-C2,  0,  0,  -C1,  0,-C1,  -C0,-C0,-C0,  28); // " 3;  9; 25"
+        Normal(-C2,  0,  0,  -C0,-C0,-C0,  -C1,-C1,  0,  29); // " 3; 25; 13"
+        Normal(-C2,  0,  0,  -C1,-C1,  0,  -C0,-C0, C0,  30); // " 3; 13; 24"
+        Normal(-C2,  0,  0,  -C0,-C0, C0,  -C1,  0, C1,  31); // " 3; 24;  8"
+        Normal(  0, C2,  0,   C1, C1,  0,   C0, C0,-C0,  32); // " 4, 10, 19"
+        Normal(  0, C2,  0,   C0, C0,-C0,    0, C1,-C1,  33); // " 4, 19, 15"
+        Normal(  0, C2,  0,    0, C1,-C1,  -C0, C0,-C0,  34); // " 4, 15, 23"
+        Normal(  0, C2,  0,  -C0, C0,-C0,  -C1, C1,  0,  35); // " 4, 23, 12"
+        Normal(  0, C2,  0,  -C1, C1,  0,  -C0, C0, C0,  36); // " 4, 12, 22"
+        Normal(  0, C2,  0,  -C0, C0, C0,    0, C1, C1,  37); // " 4, 22, 14"
+        Normal(  0, C2,  0,    0, C1, C1,   C0, C0, C0,  38); // " 4, 14, 18"
+        Normal(  0, C2,  0,   C0, C0, C0,   C1, C1,  0,  39); // " 4, 18, 10"
+        Normal(  0,-C2,  0,   C1,-C1,  0,   C0,-C0, C0,  40); // " 5, 11, 20"
+        Normal(  0,-C2,  0,   C0,-C0, C0,    0,-C1, C1,  41); // " 5, 20, 16"
+        Normal(  0,-C2,  0,    0,-C1, C1,  -C0,-C0, C0,  42); // " 5, 16, 24"
+        Normal(  0,-C2,  0,  -C0,-C0, C0,  -C1,-C1,  0,  43); // " 5, 24, 13"
+        Normal(  0,-C2,  0,  -C1,-C1,  0,  -C0,-C0,-C0,  44); // " 5, 13, 25"
+        Normal(  0,-C2,  0,  -C0,-C0,-C0,    0,-C1,-C1,  45); // " 5, 25, 17"
+        Normal(  0,-C2,  0,    0,-C1,-C1,   C0,-C0,-C0,  46); // " 5, 17, 21"
+        Normal(  0,-C2,  0,   C0,-C0,-C0,   C1,-C1,  0,  47); // " 5, 21, 11"
+
+        // All angles there: http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;p=358806
+        A0 := Arccos((-2 + sqrt(2)) / 12);      //  92.7980362
+        A1 := Arccos((-6 + sqrt(2)) / 8);       // 124.9753039
+        A2 := Arccos((-1 - 6 * sqrt(2)) / 12);  // 142.2266599
+        A3 := A1+A0;        // 217.7733401
+        A4 := A2+A0;        // 235.0246961
+        A5 := A1+A2;        // 267.2019638
+
+        D  := A * 1.31;
+        f  := D * 0.423;
+        f2 := D * 1.0;
+    </Script>
+
+    <Axes TurningAngles = "0; 2 *Pi" AvailableAngles = "-A5;-A4;-A3;-A2;-A1;-A0; 0; A0; A1; A2; A3; A4; A5" PlaneDistances = "D" NormVectors = " px; py; pz" />
+
+    <Figure>
+        <Macro Name = "Add4Face" >
+            <Face Color = "Color" VertexIndexes = "i1;i2;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i2;i3;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i3;i4;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i4;i1;i5" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;  0; W1" />
+                <Add Vector = " W2; W2; W2" />
+                <Add Vector = " W2;-W2; W2" />
+                <Add Vector = "-W2;-W2; W2" />
+                <Add Vector = "-W2; W2; W2" />
+                <Add Vector = " W1;  0;  0" />
+                <Add Vector = "  0;-W1;  0" />
+                <Add Vector = "-W1;  0;  0" />
+                <Add Vector = "  0; W1;  0" />
+                <Add Vector = " W2; W2;-W2" />
+                <Add Vector = " W2;-W2;-W2" />
+                <Add Vector = "-W2;-W2;-W2" />
+                <Add Vector = "-W2; W2;-W2" />
+                <Add Vector = "  0;  0;-W1" />
+
+                <Add Vector = " A; 0; A" />
+                <Add Vector = " 0;-A; A" />
+                <Add Vector = "-A; 0; A" />
+                <Add Vector = " 0; A; A" />
+
+                <Add Vector = " A; A; 0" />
+                <Add Vector = " A;-A; 0" />
+                <Add Vector = "-A;-A; 0" />
+                <Add Vector = "-A; A; 0" />
+
+                <Add Vector = " A; 0;-A" />
+                <Add Vector = " 0;-A;-A" />
+                <Add Vector = "-A; 0;-A" />
+                <Add Vector = " 0; A;-A" />
+            </Vertices>
+
+            <Faces>
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 0]" i1 = " 0" i2 = " 2" i3 = " 5" i4 = " 1" i5 = "14" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 1]" i1 = " 0" i2 = " 3" i3 = " 6" i4 = " 2" i5 = "15" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 2]" i1 = " 0" i2 = " 4" i3 = " 7" i4 = " 3" i5 = "16" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 3]" i1 = " 0" i2 = " 1" i3 = " 8" i4 = " 4" i5 = "17" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 4]" i1 = " 1" i2 = " 5" i3 = " 9" i4 = " 8" i5 = "18" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 5]" i1 = " 2" i2 = " 6" i3 = "10" i4 = " 5" i5 = "19" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 6]" i1 = " 3" i2 = " 7" i3 = "11" i4 = " 6" i5 = "20" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 7]" i1 = " 4" i2 = " 8" i3 = "12" i4 = " 7" i5 = "21" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 8]" i1 = "13" i2 = " 9" i3 = " 5" i4 = "10" i5 = "22" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 9]" i1 = "13" i2 = "10" i3 = " 6" i4 = "11" i5 = "23" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[10]" i1 = "13" i2 = "11" i3 = " 7" i4 = "12" i5 = "24" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[11]" i1 = "13" i2 = "12" i3 = " 8" i4 = " 9" i5 = "25" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "CutEdge1">
+            <HideContaining Vector = "W2/2; W2/2; (W1+W2)/2" />
+            <Hide><Plane NormVector = " px[0]; py[0]; pz[0]" NormDistance = "D" /></Hide>
+            <Hide><Plane NormVector = " px[1]; py[1]; pz[1]" NormDistance = "D" /></Hide>
+            <RemoveAllVisible/>
+            <ShowAll/>
+
+            <HideContaining Vector = "0; A/2; (W1+A)/2" />
+            <Hide><Plane NormVector = " px[1]; py[1]; pz[1]" NormDistance = "D" /></Hide>
+            <Hide><Plane NormVector = " px[2]; py[2]; pz[2]" NormDistance = "D" /></Hide>
+            <RemoveAllVisible/>
+            <ShowAll/>
+
+            <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "CutEdge2">
+            <ExecMacro MacroName = "CutEdge1" Repeat = "2" />
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "CutEdge2" Repeat = "4" />
+        <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi/3" />
+        <ExecMacro MacroName = "CutEdge2" Repeat = "4" />
+        <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi/3" />
+        <ExecMacro MacroName = "CutEdge2" Repeat = "4" />
+        <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi/3" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

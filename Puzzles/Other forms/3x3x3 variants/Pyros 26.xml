@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyros 26</Name>
+        <Menu>Other forms\3x3x3 variants\Pyros 26</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-06-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8950</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'DD0000'; // Red
+        Colors[1] := 'FFEE00'; // Yellow
+        Colors[2] := '00BB00'; // Green
+        Colors[3] := '0044EE'; // Blue
+
+        H := 0.5;
+        D := H / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddTetra" >
+            <Part>
+                <Script>
+                    DX := 2 * D * (i mod 3 - 1);
+                    DY := 2 * D * (i div 3 mod 3 - 1);
+                    DZ := 2 * D * (i div 9 - 1);
+                    Inc(i);
+                </Script>
+
+                <Vertices>
+                    <Add Vector  = "-D + DX; D + DY; D + DZ" />
+                    <Add Vector  = " D + DX;-D + DY; D + DZ" />
+                    <Add Vector  = " D + DX; D + DY;-D + DZ" />
+                    <Add Vector  = "-D + DX;-D + DY;-D + DZ" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[0]" VertexIndexes = " 0; 1; 2" />
+                    <Face Color = "Colors[1]" VertexIndexes = " 0; 3; 1" />
+                    <Face Color = "Colors[2]" VertexIndexes = " 0; 2; 3" />
+                    <Face Color = "Colors[3]" VertexIndexes = " 1; 3; 2" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "AddTetra" i = "0" Repeat = "27" />
+        <RemoveContaining Vector = "0;0;0" /> 
+    </Figure>
+</xml>

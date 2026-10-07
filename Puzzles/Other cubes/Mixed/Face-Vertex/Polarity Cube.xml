@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Polarity Cube</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\Polarity Cube</Menu>
+        <Inventor>Michael Sun</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-06-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6234</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D1:= 0.4;
+        D2:= sqrt(3) / 4.5;
+
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D1;D1" FixedLayers = "1" >
+        <Axis NormVector = " 0;  0;  1" />
+        <Axis NormVector = " 0;  1;  0" />
+        <Axis NormVector = " 1;  0;  0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = " W; 0; 0" />
+        <HideContaining Vector = "-W; 0; 0" />
+        <HideContaining Vector = " 0; W; 0" />
+        <HideContaining Vector = " 0;-W; 0" />
+        <HideContaining Vector = " 0; 0; W" />
+        <HideContaining Vector = " 0; 0;-W" />
+
+        <HideContaining Vector = " W; W; W" />
+        <HideContaining Vector = "-W; W; W" />
+        <HideContaining Vector = " W;-W; W" />
+        <HideContaining Vector = "-W;-W; W" />
+        <HideContaining Vector = " W; W;-W" />
+        <HideContaining Vector = "-W; W;-W" />
+        <HideContaining Vector = " W;-W;-W" />
+        <HideContaining Vector = "-W;-W;-W" />
+
+        <Cut Color = "clOrange" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clRed   " > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite " > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+
+        <ShowAll/>
+
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+    </Figure>
+</xml>

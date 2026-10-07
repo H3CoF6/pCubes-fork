@@ -1,0 +1,121 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagonish Block</Name>
+        <Menu>Other forms\Prism\Hexagonish Block</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-06-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2917</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clOrange := 'FF6000';
+        clGreen  := '009600';
+        clBlue   := '0000C8';
+        clPurple := '800080';
+        clPink   := 'FF69B4';
+        clWhite  := 'FFFFFF';
+        clYellow := 'FFFF00';
+
+        R := 0.65;
+        H := R * 0.7;
+
+        procedure SetCoordinates(idx, Angle);
+        begin
+            x[idx] := R * cos(Angle);
+            y[idx] := R * sin(Angle);
+        end;
+
+        SetCoordinates(0,  9 * Pi/15);
+        SetCoordinates(1,  4 * Pi/15);
+        SetCoordinates(2, 28 * Pi/15);
+        SetCoordinates(3, 23 * Pi/15);
+        SetCoordinates(4, 18 * Pi/15);
+        SetCoordinates(5, 13 * Pi/15);
+
+        sAngle := 2 * Pi / 15;
+        for i := 0 to 14 do begin
+            ax[i] := cos(sAngle * i);
+            ay[i] := sin(sAngle * i);
+        end;
+
+        D := R * 0.18;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; 0" PlaneDistances = "-D">
+        <Axis NormVector = " ax[ 0]; ay[ 0]; 0" />
+        <Axis NormVector = " ax[ 5]; ay[ 5]; 0" />
+        <Axis NormVector = " ax[11]; ay[11]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[3]; y[3]; -H" />
+                <Add Vector = "x[4]; y[4]; -H" />
+                <Add Vector = "x[5]; y[5]; -H" />
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+                <Add Vector = "x[3]; y[3];  H" />
+                <Add Vector = "x[4]; y[4];  H" />
+                <Add Vector = "x[5]; y[5];  H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "clOrange" VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "clBlue  " VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "clPurple" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "clPink  " VertexIndexes = "11; 6; 0; 5" />
+
+                <Face Color = "clWhite " VertexIndexes = "11;10;9;8;7;6" />
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Hide Axis = "1" Layer = "1" />
+        <Split> <Plane NormVector = "ax[4]; ay[4]; 0" NormDistance = "-D" /> </Split>
+        <ShowAll/>
+
+        <Hide Axis = "2" Layer = "1" />
+        <Split> <Plane NormVector = "ax[1]; ay[1]; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "ax[9]; ay[9]; 0" NormDistance = "-D" /> </Split>
+        <ShowAll/>
+
+        <Hide Axis = "3" Layer = "1" />
+        <Split> <Plane NormVector = "ax[7]; ay[7]; 0" NormDistance = "-D" /> </Split>
+        <ShowAll/>
+
+        <HideContaining Vector = " 0; 0; 0" />
+        <HideContaining Vector = "(x[0] + x[1]) / 2; (y[0] + y[1]) / 2; 0" />
+        <HideContaining Vector = "(x[2] + x[3]) / 2; (y[2] + y[3]) / 2; 0" />
+        <HideContaining Vector = "(x[4] + x[5]) / 2; (y[4] + y[5]) / 2; 0" />
+
+        <Split> <Plane NormVector = "ax[ 1]; ay[ 1]; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "ax[ 2]; ay[ 2]; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "ax[ 3]; ay[ 3]; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "ax[ 4]; ay[ 4]; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "ax[ 6]; ay[ 6]; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "ax[ 7]; ay[ 7]; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "ax[ 9]; ay[ 9]; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "ax[10]; ay[10]; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "ax[12]; ay[12]; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "ax[13]; ay[13]; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "ax[14]; ay[14]; 0" NormDistance = "-D" /> </Split>
+        <ShowAll/>
+
+    </Figure>
+</xml>

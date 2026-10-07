@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Kilominx Gem</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Octahedron\Kilominx Gem</Menu>
+        <Inventor>Justin Eplett</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-12-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7129</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        Colors[ 0] := '008000'; // clGreen;
+        Colors[ 1] := '0000A0'; // clBlue;
+        Colors[ 2] := 'FFFF00'; // clYellow;
+        Colors[ 3] := 'FF6000'; // clOrange;
+        Colors[ 4] := 'FF0000'; // clRed;
+        Colors[ 5] := 'FFFFFF'; // clWhite;
+        Colors[ 6] := '808000'; // clOlive;
+        Colors[ 7] := '00DCB4'; // clCyan;
+        Colors[ 8] := '2828FF'; // clLightBlue;
+        Colors[ 9] := 'FF0080'; // clLightViolett;
+        Colors[10] := '00FF00'; // clLightGreen;
+        Colors[11] := '800000'; // clBrown;
+        Colors[12] := '800080'; // clViolett;
+        Colors[13] := 'AAAAAA'; // clGray;
+
+        D := RSin;
+
+        procedure AddV(N, E, V1, V2);
+        begin
+            Tx[N] := Ex[E] - (Vx[V1] - Vx[V2])/2;
+            Ty[N] := Ey[E] - (Vy[V1] - Vy[V2])/2;
+            Tz[N] := Ez[E] - (Vz[V1] - Vz[V2])/2;
+        end;
+
+        AddV(12,  3, 1, 2);
+        AddV(13,  3, 2, 1);
+        AddV(14, 25, 1, 2);
+        AddV(15, 25, 2, 1);
+        AddV(16,  5, 7, 3);
+        AddV(17,  5, 3, 7);
+        AddV(18, 22, 7, 3);
+        AddV(19, 22, 3, 7);
+        AddV(20, 17, 4, 0);
+        AddV(21, 17, 0, 4);
+        AddV(22, 14, 4, 0);
+        AddV(23, 14, 0, 4);
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "Vx[ 0]; Vy[ 0]; Vz[ 0]" />
+                <Add Vector = "Vx[ 1]; Vy[ 1]; Vz[ 1]" />
+                <Add Vector = "Vx[ 2]; Vy[ 2]; Vz[ 2]" />
+                <Add Vector = "Vx[ 3]; Vy[ 3]; Vz[ 3]" />
+                <Add Vector = "Vx[ 4]; Vy[ 4]; Vz[ 4]" />
+                <Add Vector = "Vx[ 5]; Vy[ 5]; Vz[ 5]" />
+                <Add Vector = "Vx[ 6]; Vy[ 6]; Vz[ 6]" />
+                <Add Vector = "Vx[ 7]; Vy[ 7]; Vz[ 7]" />
+                <Add Vector = "Vx[ 8]; Vy[ 8]; Vz[ 8]" />
+                <Add Vector = "Vx[ 9]; Vy[ 9]; Vz[ 9]" />
+                <Add Vector = "Vx[10]; Vy[10]; Vz[10]" />
+                <Add Vector = "Vx[11]; Vy[11]; Vz[11]" />
+
+                <Add Vector = "Tx[12]; Ty[12]; Tz[12]" />
+                <Add Vector = "Tx[13]; Ty[13]; Tz[13]" />
+                <Add Vector = "Tx[14]; Ty[14]; Tz[14]" />
+                <Add Vector = "Tx[15]; Ty[15]; Tz[15]" />
+                <Add Vector = "Tx[16]; Ty[16]; Tz[16]" />
+                <Add Vector = "Tx[17]; Ty[17]; Tz[17]" />
+                <Add Vector = "Tx[18]; Ty[18]; Tz[18]" />
+                <Add Vector = "Tx[19]; Ty[19]; Tz[19]" />
+                <Add Vector = "Tx[20]; Ty[20]; Tz[20]" />
+                <Add Vector = "Tx[21]; Ty[21]; Tz[21]" />
+                <Add Vector = "Tx[22]; Ty[22]; Tz[22]" />
+                <Add Vector = "Tx[23]; Ty[23]; Tz[23]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = " 0;13; 4;12" />
+                <Face Color = "Colors[ 1]" VertexIndexes = "11;15; 6;14" />
+                <Face Color = "Colors[ 2]" VertexIndexes = " 1;16; 2;17" />
+                <Face Color = "Colors[ 3]" VertexIndexes = "18; 9;19; 8" />
+                <Face Color = "Colors[ 4]" VertexIndexes = " 3;21; 7;20" />
+                <Face Color = "Colors[ 5]" VertexIndexes = " 5;22;10;23" />
+                <Face Color = "Colors[ 6]" VertexIndexes = " 0;12; 3;20; 2; 16" />
+                <Face Color = "Colors[ 7]" VertexIndexes = " 4;18; 8;21; 3; 12" />
+                <Face Color = "Colors[ 8]" VertexIndexes = " 8;19;11;14; 7; 21" />
+                <Face Color = "Colors[ 9]" VertexIndexes = " 7;14; 6;17; 2; 20" />
+                <Face Color = "Colors[10]" VertexIndexes = " 0;16; 1;22; 5; 13" />
+                <Face Color = "Colors[11]" VertexIndexes = " 1;17; 6;15;10; 22" />
+                <Face Color = "Colors[12]" VertexIndexes = " 4;13; 5;23; 9; 18" />
+                <Face Color = "Colors[13]" VertexIndexes = "10;15;11;19; 9; 23" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

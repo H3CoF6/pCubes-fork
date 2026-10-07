@@ -1,0 +1,147 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhombdo Copter</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Edge Turning\Rhombdo Copter</Menu>
+        <Inventor>k3DW (Braden Ganetsky)</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-02</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=4&amp;t=36337</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FF0000'; // Red
+        Colors[ 2] := '00AA00'; // Green
+        Colors[ 3] := '8800BB'; // Violett
+        Colors[ 4] := 'FFFF00'; // Yellow
+        Colors[ 5] := '0033EE'; // Blue
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0088EE'; // LightBlue
+        Colors[ 8] := '00FF00'; // LightGreen
+        Colors[ 9] := 'FF66CC'; // LightViolett
+        Colors[10] := '666666'; // Gray
+        Colors[11] := 'FF6000'; // Orange
+
+        W1 := 0.7;
+        W2 := W1 / 2;
+        A  := W2 * 1.225; // pillow
+
+        s := 1 + sqrt(2);
+
+        D := A * (1 + s) / sqrt(2 + s^2);
+
+        A1 := ArcCos( (s + 1) / 8);     // A3 * 3 - 2 * A1 = 2 * Pi
+        A2 := ArcCos(-(3 - s) / 4);     // A1     + 3 * A2 = 2 * Pi
+        A3 := ArcCos(-(2 * s - 1) / 4); // A3     + 2 * A2 = 2 * Pi
+
+        DCut := W1 * 0.8;
+    </Script>
+
+    <Axes TurningAngles = "Pi*2" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; s" />
+        <Axis NormVector = "-1; 1; s" />
+        <Axis NormVector = " 1;-1; s" />
+        <Axis NormVector = "-1;-1; s" />
+
+        <Axis NormVector = " s; 1; 1" />
+        <Axis NormVector = "-s; 1; 1" />
+        <Axis NormVector = " s;-1; 1" />
+        <Axis NormVector = "-s;-1; 1" />
+
+        <Axis NormVector = " 1; s; 1" />
+        <Axis NormVector = "-1; s; 1" />
+        <Axis NormVector = " 1;-s; 1" />
+        <Axis NormVector = "-1;-s; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Add4Face" >
+            <Face Color = "Color" VertexIndexes = "i1;i2;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i2;i3;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i3;i4;i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = "i4;i1;i5" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;  0; W1" />
+                <Add Vector = " W2; W2; W2" />
+                <Add Vector = " W2;-W2; W2" />
+                <Add Vector = "-W2;-W2; W2" />
+                <Add Vector = "-W2; W2; W2" />
+                <Add Vector = " W1;  0;  0" />
+                <Add Vector = "  0;-W1;  0" />
+                <Add Vector = "-W1;  0;  0" />
+                <Add Vector = "  0; W1;  0" />
+                <Add Vector = " W2; W2;-W2" />
+                <Add Vector = " W2;-W2;-W2" />
+                <Add Vector = "-W2;-W2;-W2" />
+                <Add Vector = "-W2; W2;-W2" />
+                <Add Vector = "  0;  0;-W1" />
+
+                <Add Vector = " A; 0; A" />
+                <Add Vector = " 0;-A; A" />
+                <Add Vector = "-A; 0; A" />
+                <Add Vector = " 0; A; A" />
+
+                <Add Vector = " A; A; 0" />
+                <Add Vector = " A;-A; 0" />
+                <Add Vector = "-A;-A; 0" />
+                <Add Vector = "-A; A; 0" />
+
+                <Add Vector = " A; 0;-A" />
+                <Add Vector = " 0;-A;-A" />
+                <Add Vector = "-A; 0;-A" />
+                <Add Vector = " 0; A;-A" />
+            </Vertices>
+
+            <Faces>
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 0]" i1 = " 0" i2 = " 2" i3 = " 5" i4 = " 1" i5 = "14" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 1]" i1 = " 0" i2 = " 3" i3 = " 6" i4 = " 2" i5 = "15" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 2]" i1 = " 0" i2 = " 4" i3 = " 7" i4 = " 3" i5 = "16" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 3]" i1 = " 0" i2 = " 1" i3 = " 8" i4 = " 4" i5 = "17" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 4]" i1 = " 1" i2 = " 5" i3 = " 9" i4 = " 8" i5 = "18" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 5]" i1 = " 2" i2 = " 6" i3 = "10" i4 = " 5" i5 = "19" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 6]" i1 = " 3" i2 = " 7" i3 = "11" i4 = " 6" i5 = "20" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 7]" i1 = " 4" i2 = " 8" i3 = "12" i4 = " 7" i5 = "21" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 8]" i1 = "13" i2 = " 9" i3 = " 5" i4 = "10" i5 = "22" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[ 9]" i1 = "13" i2 = "10" i3 = " 6" i4 = "11" i5 = "23" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[10]" i1 = "13" i2 = "11" i3 = " 7" i4 = "12" i5 = "24" />
+                <ExecMacro MacroName = "Add4Face" Color = "Colors[11]" i1 = "13" i2 = "12" i3 = " 8" i4 = " 9" i5 = "25" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Cut1" >
+            <Hide><Plane NormVector = " 1; 1; s" NormDistance = "D" /></Hide>
+            <Hide><Plane NormVector = " 1;-1; s" NormDistance = "D" /></Hide>
+            <Turn NormVector = " 1; 1; s" Angle = " A1" />
+            <Cut><Plane NormVector = "-s; 1;-1" NormDistance = "-D" /></Cut>
+            <Turn NormVector = " 1; 1; s" Angle = "-A1" />
+            <Turn NormVector = " 1;-1; s" Angle = "-A1" />
+            <Cut><Plane NormVector = "-s;-1;-1" NormDistance = "-D" /></Cut>
+            <Turn NormVector = " 1;-1; s" Angle = " A1" />
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi / 2" />
+        </Macro>
+        <Macro Name = "Cut3" >
+            <Hide><Plane NormVector = " 0; 0;-1" NormDistance = "-DCut" /></Hide>
+            <InvertVisibility/>
+            <RemoveAllVisible/>
+            <ShowAll/>
+            <ExecMacro MacroName = "Cut1" Repeat = "4" />
+            <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "Cut3" Repeat = "3" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "Cut3" Repeat = "3" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

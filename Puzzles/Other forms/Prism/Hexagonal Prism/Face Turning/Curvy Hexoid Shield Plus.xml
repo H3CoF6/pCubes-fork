@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Curvy Hexoid Shield Plus</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Face Turning\Curvy Hexoid Shield Plus</Menu>
+        <Inventor>Mohammad Badir</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-02-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12433</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0055EE';
+        clGreen  := '00AA00';
+        clRed    := 'EE0000';
+        clPurple := '8800BB';
+        clYellow := 'FFEE00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6600';
+        clRose   := 'EE77AA';
+
+        R := 0.6;
+
+        H := R * sin(Pi / 9);
+        sAngle := 2 * Pi / 6;
+        for i := 0 to 5 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+        for i := 0 to 2 do begin
+            ax[i] := sin(sAngle * (2 * i + 0.5));
+            ay[i] := cos(sAngle * (2 * i + 0.5));
+        end;
+
+        D0 := R * 0.69;
+        D1 := R * 0.52;
+        D2 := H / 3;
+        DCut := R * 0.75;
+    </Script>
+
+    <Axes TurningAngles = "Pi; 0; Pi; Pi" PlaneDistances = "-D1; D0; D1" NormVectors = "ax; ay; 0" />
+
+    <Axes TurningAngles = "2*Pi / 6" PlaneDistances = "-D2; D2" TurnAxesWithLayer = "1" NormVectors = "0; 0; 1" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x; y;-H" />
+            <Vertices Vectors = " x; y; H" />
+            <Faces>
+                <Face Color = "clPurple" VertexIndexes = " 6; 7; 1; 0" />
+                <Face                    VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "clOrange" VertexIndexes = " 8; 9; 3; 2" />
+                <Face                    VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "clRose"   VertexIndexes = "10;11; 5; 4" />
+                <Face                    VertexIndexes = "11; 6; 0; 5" />
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                <Face Color = "clWhite " VertexIndexes = "11;10; 9; 8; 7; 6" />
+            </Faces>
+        </Part>
+        <Cut Color = "clBlue " > <Plane NormVector = " ax[0]; ay[0]; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clRed  " > <Plane NormVector = " ax[1]; ay[1]; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clGreen" > <Plane NormVector = " ax[2]; ay[2]; 0" NormDistance = "-DCut" /> </Cut>
+
+        <SplitByAxes/>
+
+        <Hide Axis = "0" From = "2" />
+        <Hide Axis = "1" From = "2" />
+        <Hide Axis = "2" From = "2" />
+
+        <Turn Axis = "3" Layers = "0;2" Angle = " Pi / 3" />
+
+        <SplitByAxes/>
+        <Undo/>
+        <ShowAll/>
+    </Figure>
+</xml>

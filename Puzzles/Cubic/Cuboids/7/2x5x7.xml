@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cuboid 2x5x7</Name>
+        <Menu>Cubic\Cuboids\7\2x5x7</Menu>
+        <Inventor>Traiphum Prungtaengkit</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-11-04</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=33869</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        X := 5;
+        Y := 7;
+        Z := 2;
+        Add := 0.5;
+
+        N := Max(x, y);
+        WD := W / (N / 2 + Add);
+        for i := 0 to Y - 2 do
+            D[i] := WD * i - WD * (N / 2 - 1);
+
+        WX := WD * (X / 2 + Add);
+        WY := WD * (Y / 2 + Add);
+        WZ := WD * (Z / 2 + Add);
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Macro Name = "Split" >
+            <Split Axis = "ax" From = "i" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" ax = "0" i = "(Y - X) div 2 + 1" Repeat = "X - 1" />
+        <ExecMacro MacroName = "Split" ax = "1" i = "(Y - Y) div 2 + 1" Repeat = "Y - 1" />
+        <ExecMacro MacroName = "Split" ax = "2" i = "(Z - Z) div 2 + 1" Repeat = "Z - 1" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(2)" Layer = "Random(N)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(2)" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "Sc2" >
+            <Turn Axis = "Random(2)" Layer = "Random(N)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(2)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script> N := 7; </Script>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "Sc2" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

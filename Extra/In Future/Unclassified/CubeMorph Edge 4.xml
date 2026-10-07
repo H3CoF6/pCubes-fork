@@ -1,0 +1,165 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+hanging parts
+
+
+    <Interface>
+        <Name>CubeMorph Edge 4</Name>
+        <Menu>Other cubes\Morph\CubeMorph Edge 4</Menu>
+        <Inventor></Inventor>
+        <Programmer>Knightcrawler</Programmer>
+    </Interface>
+
+    <Script>
+        clGreen  := '009600';
+        clYellow := 'FFFF00';
+        clBlue   := '0000C8';
+        clRed    := 'FF0000';
+        clOrange := 'FF800A';
+        clWhite  := 'FFFFFF';
+        clGold   := 'E0C07D';
+        clSilver := 'C0C0C0';
+
+        clUp    := clWhite;
+        clDown  := clYellow;
+        clLeft  := clRed;
+        clRight := clOrange;
+        clFront := clBlue;
+        clBack  := clGreen;
+        cut1 := sqrt(2) / 4;
+        translateX := 0;
+        translateY := 0;
+        translateZ := 0;
+        rotateX := 0;
+        rotateY := 0;
+        rotateZ := 45;
+
+
+        VecX1 := -0.5 + translateX;
+        VecY1 := -0.5 + translateY;
+        VecZ1 := -0.5 + translateZ;
+        VecX2 := VecX1 + 1;
+        VecY2 := VecY1 + 1;
+        VecZ2 := VecZ1 + 1;
+
+        <!-- Initial XYZ -->
+        X1 := -1;
+        Y1 := -1;
+        Z1 :=  0;
+        X2 :=  1;
+        Y2 := -1;
+        Z2 :=  0;
+        X3 := -1;
+        Y3 :=  0;
+        Z3 := -1;
+        X4 := -1;
+        Y4 :=  0;
+        Z4 :=  1;
+        X5 :=  0;
+        Y5 := -1;
+        Z5 := -1;
+        X6 :=  0;
+        Y6 :=  1;
+        Z6 := -1;
+
+        radX := rotateX * Pi / 180;
+        radY := rotateY * Pi / 180;
+        radZ := rotateZ * Pi / 180;
+
+        <!-- Rotate X -->
+        X11 := X1;
+        X21 := X2;
+        X31 := X3;
+        X41 := X4;
+        X51 := X5;
+        X61 := X6;
+        Y11 := Y1 * cos(radX) - Z1 * sin(radX);
+        Z11 := Y1 * sin(radX) + Z1 * cos(radX);
+        Y21 := Y2 * cos(radX) - Z2 * sin(radX);
+        Z21 := Y2 * sin(radX) + Z2 * cos(radX);
+        Y31 := Y3 * cos(radX) - Z3 * sin(radX);
+        Z31 := Y3 * sin(radX) + Z3 * cos(radX);
+        Y41 := Y4 * cos(radX) - Z4 * sin(radX);
+        Z41 := Y4 * sin(radX) + Z4 * cos(radX);
+        Y51 := Y5 * cos(radX) - Z5 * sin(radX);
+        Z51 := Y5 * sin(radX) + Z5 * cos(radX);
+        Y61 := Y6 * cos(radX) - Z6 * sin(radX);
+        Z61 := Y6 * sin(radX) + Z6 * cos(radX);
+
+        <!-- Rotate Y -->
+        Y12 := Y11;
+        Y22 := Y21;
+        Y32 := Y31;
+        Y42 := Y41;
+        Y52 := Y51;
+        Y62 := Y61;
+        Z12 := Z11 * cos(radY) - X11 * sin(radY);
+        X12 := Z11 * sin(radY) + X11 * cos(radY);
+        Z22 := Z21 * cos(radY) - X21 * sin(radY);
+        X22 := Z21 * sin(radY) + X21 * cos(radY);
+        Z32 := Z31 * cos(radY) - X31 * sin(radY);
+        X32 := Z31 * sin(radY) + X31 * cos(radY);
+        Z42 := Z41 * cos(radY) - X41 * sin(radY);
+        X42 := Z41 * sin(radY) + X41 * cos(radY);
+        Z52 := Z51 * cos(radY) - X51 * sin(radY);
+        X52 := Z51 * sin(radY) + X51 * cos(radY);
+        Z62 := Z61 * cos(radY) - X61 * sin(radY);
+        X62 := Z61 * sin(radY) + X61 * cos(radY);
+
+        <!-- Rotate Z -->
+        Z13 := Z12;
+        Z23 := Z22;
+        Z33 := Z32;
+        Z43 := Z42;
+        Z53 := Z52;
+        Z63 := Z62;
+        X13 := X12 * cos(radZ) - Y12 * sin(radZ);
+        Y13 := X12 * sin(radZ) + Y12 * cos(radZ);
+        X23 := X22 * cos(radZ) - Y22 * sin(radZ);
+        Y23 := X22 * sin(radZ) + Y22 * cos(radZ);
+        X33 := X32 * cos(radZ) - Y32 * sin(radZ);
+        Y33 := X32 * sin(radZ) + Y32 * cos(radZ);
+        X43 := X42 * cos(radZ) - Y42 * sin(radZ);
+        Y43 := X42 * sin(radZ) + Y42 * cos(radZ);
+        X53 := X52 * cos(radZ) - Y52 * sin(radZ);
+        Y53 := X52 * sin(radZ) + Y52 * cos(radZ);
+        X63 := X62 * cos(radZ) - Y62 * sin(radZ);
+        Y63 := X62 * sin(radZ) + Y62 * cos(radZ);
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-cut1;cut1" >
+        <Axis NormVector = "X13; Y13; Z13" />
+        <Axis NormVector = "X23; Y23; Z23" />
+        <Axis NormVector = "X33; Y33; Z33" />
+        <Axis NormVector = "X43; Y43; Z43" />
+        <Axis NormVector = "X53; Y53; Z53" />
+        <Axis NormVector = "X63; Y63; Z63" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "VecX1; VecY1; VecZ1" />
+                <Add Vector = "VecX1; VecY1; VecZ2" />
+                <Add Vector = "VecX1; VecY2; VecZ1" />
+                <Add Vector = "VecX1; VecY2; VecZ2" />
+                <Add Vector = "VecX2; VecY1; VecZ1" />
+                <Add Vector = "VecX2; VecY1; VecZ2" />
+                <Add Vector = "VecX2; VecY2; VecZ1" />
+                <Add Vector = "VecX2; VecY2; VecZ2" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clFront" VertexIndexes = "1;0;4;5" />
+                <Face Color = "clBack"  VertexIndexes = "2;3;7;6" />
+                <Face Color = "clLeft"  VertexIndexes = "0;1;3;2" />
+                <Face Color = "clRight" VertexIndexes = "5;4;6;7" />
+                <Face Color = "clDown"  VertexIndexes = "0;2;6;4" />
+                <Face Color = "clUp"    VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

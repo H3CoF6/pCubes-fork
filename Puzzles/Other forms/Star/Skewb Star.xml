@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Star</Name>
+        <Menu>Other forms\Star\Skewb Star</Menu>
+        <Menu>Other forms\Skewb variants\Star\Skewb Star</Menu>
+        <Inventor>Jean-Claude Constantin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-12-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=626</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // white1
+        Colors[ 1] := '640064'; // violet
+        Colors[ 2] := 'C80000'; // red1
+        Colors[ 3] := '009600'; // dark green1
+        Colors[ 4] := '0000C8'; // dark blue1
+        Colors[ 5] := 'FF800A'; // orange1
+        Colors[ 6] := 'FFFF00'; // yellow1
+        Colors[ 7] := '5F5F5F'; // gray
+        
+        Colors[ 8] := '0000C7'; // dark blue2
+        Colors[ 9] := '009601'; // dark green2
+        Colors[10] := 'FFFFFE'; // white2
+        Colors[11] := 'FFFF01'; // yellow2
+        Colors[12] := 'FF800B'; // orange2
+        Colors[13] := 'C80001'; // red2
+
+        W := 1.5 * 0.5;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+
+        // Vertices of Cube
+        for i := 0 to 7 do begin
+            VCx[i] := Cx[i] * 3/2;
+            VCy[i] := Cy[i] * 3/2;
+            VCz[i] := Cz[i] * 3/2;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "RemoveCenters" >
+            <RemoveContaining Vector = "Cx[i]; Cy[i]; Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" i = "0" Repeat = "8" />
+        <InvertVisibility/>
+
+        <Part>
+            <Vertices Vectors = "VCx; VCy; VCz" />
+
+            <Faces>
+                <Face Color = "Colors[ 8]" VertexIndexes = "0;1;2;3" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "5;4;7;6" />
+                <Face Color = "Colors[10]" VertexIndexes = "1;0;4;5" />
+                <Face Color = "Colors[11]" VertexIndexes = "3;2;6;7" />
+                <Face Color = "Colors[12]" VertexIndexes = "4;0;3;7" />
+                <Face Color = "Colors[13]" VertexIndexes = "2;1;5;6" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+
+        <Macro Name = "RemoveCubeCenters" >
+            <RemoveContaining Vector = "Vx[i] / 2; Vy[i] / 2; Vz[i] / 2" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCubeCenters" i = "0" Repeat = "6" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

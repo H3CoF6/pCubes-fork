@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circle Puzzle - Mastercard</Name>
+        <Menu>Other forms\2d\Circle Puzzle - Mastercard</Menu>
+        <Inventor>Serguei and Alexandre Bagdassarian</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5046</Link>
+    </Interface>
+
+    <Script>
+        K := 0.6;
+
+        D := K * 0.579;
+
+        Colors[0] := 'EE2200'; // clRed
+        Colors[1] := 'FFCC00'; // clYellow
+        Colors[2] := 'EE2200'; // clRed
+        Colors[3] := -1;
+        Colors[4] := 'EE2200'; // clRed
+        Colors[5] := 'EE2200'; // clRed
+
+        Color := 'FFCC00'; // clYellow
+    </Script>
+
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <Cut Axis = "1" From = "1" />
+        <Split Axis = "0" From = "1" />
+        <InvertVisibility/>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To = "1" />
+        <ShowAll/>
+        
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = " D" /></Split>
+        
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi / 180 * 45" />
+        <Turn NormVector = "1;0;0" Angle = "-Pi / 180 * 20" />
+        <Turn NormVector = "0;0;1" Angle = " Pi / 180 * 30" />
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

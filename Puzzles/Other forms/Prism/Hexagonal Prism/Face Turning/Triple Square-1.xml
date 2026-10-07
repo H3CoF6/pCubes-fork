@@ -1,0 +1,100 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triple Square-1</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Face Turning\Triple Square-1</Menu>
+        <Inventor>not invented (idea of David Chua)</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-05-05</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=258253</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+        clCyan   := '00FFFF';
+
+        R := 0.6;
+
+        H := R * sin(Pi / 6);
+        sAngle := PI * 2 / 6;
+        for i := 0 to 5 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+        for i := 0 to 2 do begin
+            ax[i] := sin(sAngle * 2 * i + sAngle/2);
+            ay[i] := cos(sAngle * 2 * i + sAngle/2);
+        end;
+
+        D := x[1] * 2 / 3;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi / 12" PlaneDistances = "D" NormVectors = "ax; ay; 0" />
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "clBlue  " VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "clOrange" VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "clPurple" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "clCyan  " VertexIndexes = "11; 6; 0; 5" />
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                <Face Color = "clWhite " VertexIndexes = "11;10; 9; 8; 7; 6" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Macro Name = "TurnAndSplit" >
+            <Turn Axis = "0" Layer = "1" Angle = "A" />
+            <Turn Axis = "1" Layer = "1" Angle = "A" />
+            <Turn Axis = "2" Layer = "1" Angle = "A" />
+            <Split Axis = "3" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "TurnAndSplit" A = "Pi/12" />
+        <ExecMacro MacroName = "TurnAndSplit" A = "Pi/3" />
+        <ExecMacro MacroName = "TurnAndSplit" A = "Pi/6" />
+        <ExecMacro MacroName = "TurnAndSplit" A = "Pi/3" />
+        <Undo Repeat = "12" />
+    </Figure>
+
+    <Macros>
+        <Macro Name = "Sc1" >
+            <Script> i := Random(2) * 2 - 1; </Script>
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/12 * i + Pi/2 * (Random(3) + 1)" />
+            <Turn Axis = "1" Layer = "1" Angle = "Pi/12 * i + Pi/2 * (Random(3) + 1)" />
+            <Turn Axis = "2" Layer = "1" Angle = "Pi/12 * i + Pi/2 * (Random(3) + 1)" />
+
+            <Turn Axis = "3" Layer = "Random(2)" Angle = "2 * Pi * Random" />
+
+            <Turn Axis = "0" Layer = "1" Angle = "-Pi/12 * i" />
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi/12 * i" />
+            <Turn Axis = "2" Layer = "1" Angle = "-Pi/12 * i" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(4)" Layer = "1" Angle = "2 * Pi * Random" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "500" />
+        </Macro>
+    </Macros>
+</xml>

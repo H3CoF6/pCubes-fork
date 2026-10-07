@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2x2 Glacier Blue Mirror Octagon</Name>
+        <Menu>Other forms\Prism\Octagonal Prism\2x2x2 Glacier Blue Mirror Octagon</Menu>
+        <Menu>Other forms\2x2x2 variants\2x2x2 Glacier Blue Mirror Octagone</Menu>
+        <Inventor>Eoin Dowling</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10874</Link>
+    </Interface>
+
+    <Script>
+        clBlue := '4E7BCE';
+
+        R := 0.55;
+
+        H := R * cos(Pi/8);
+        sAngle := 2*Pi / 8;
+        for i := 0 to 7 do begin
+            A := sAngle * (i + 0.5);
+            x[i] := R * sin(A);
+            y[i] := R * cos(A);
+        end;
+
+        DX := R * 0.20;
+        DY := R * 0.30;
+        Dz := R * 0.25;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " DX; DY; DZ" />
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Faces>
+                <Face Color = "clBlue" VertexIndexes = " 8; 9; 1; 0" />
+                <Face Color = "clBlue" VertexIndexes = " 9;10; 2; 1" />
+                <Face Color = "clBlue" VertexIndexes = "10;11; 3; 2" />
+                <Face Color = "clBlue" VertexIndexes = "11;12; 4; 3" />
+                <Face Color = "clBlue" VertexIndexes = "12;13; 5; 4" />
+                <Face Color = "clBlue" VertexIndexes = "13;14; 6; 5" />
+                <Face Color = "clBlue" VertexIndexes = "14;15; 7; 6" />
+                <Face Color = "clBlue" VertexIndexes = "15; 8; 0; 7" />
+
+                <Face Color = "clBlue" VertexIndexes = "0;1;2;3;4;5;6;7" />
+                <Face Color = "clBlue" VertexIndexes = "15;14;13;12;11;10;9;8" />
+            </Faces>
+        </Part>
+        <Transfer Vector = "-DX;-DY;-DZ" />
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <!--<Procedures CheckSolved = "CountUniquePlanes = 10" />-->
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

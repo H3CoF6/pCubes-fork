@@ -1,0 +1,107 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Double Crazy Megaminx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Crazy\Double Crazy Megaminx</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-07-03</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // clWhite
+        Colors[ 1] := 'FFFF00'; // clYellow
+        Colors[ 2] := '0000CC'; // clBlue
+        Colors[ 3] := 'FF0000'; // clRed
+        Colors[ 4] := '00AA00'; // clGreen
+        Colors[ 5] := '800080'; // clViolett
+        Colors[ 6] := 'FFFFAA'; // clCream
+        Colors[ 7] := '0066CC'; // clLightBlue
+        Colors[ 8] := 'FF6000'; // clOrange
+        Colors[ 9] := '00FF00'; // clLightGreen
+        Colors[10] := 'FF88CC'; // clLightViolett
+        Colors[11] := '666666'; // clGray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        L := 1.001;
+
+        D1 := (3 * Rsin + 1 * R2sin) / 5;
+        D2 := RSin;
+        D3 := RSin * L^2;
+
+        R1 := R * 0.395;
+        R2 := R * 0.295;
+        L2 := L^3;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D3; -D2; -D1; D1; D2; D3" FixedLayers = "3" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Dodecahedron" >
+            <Part>
+                <Vertices Vectors = "Vx; Vy; Vz" />
+
+                <Faces>
+                    <Face Color = "Colors[ 0]" VertexIndexes = "4;3;2;1;0" />
+                    <Face Color = "Colors[ 1]" VertexIndexes = "0;1;6;10;5" />
+                    <Face Color = "Colors[ 2]" VertexIndexes = "1;2;7;11;6" />
+                    <Face Color = "Colors[ 3]" VertexIndexes = "2;3;8;12;7" />
+                    <Face Color = "Colors[ 4]" VertexIndexes = "3;4;9;13;8" />
+                    <Face Color = "Colors[ 5]" VertexIndexes = "4;0;5;14;9" />
+                    <Face Color = "Colors[ 6]" VertexIndexes = "18;17;12;8;13" />
+                    <Face Color = "Colors[ 7]" VertexIndexes = "19;18;13;9;14" />
+                    <Face Color = "Colors[ 8]" VertexIndexes = "15;19;14;5;10" />
+                    <Face Color = "Colors[ 9]" VertexIndexes = "16;15;10;6;11" />
+                    <Face Color = "Colors[10]" VertexIndexes = "17;16;11;7;12" />
+                    <Face Color = "Colors[11]" VertexIndexes = "15;16;17;18;19" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "Dodecahedron" />
+
+        <Macro Name = "AddCircles" >
+            <Circle Radius = "R1" Color = "Colors[i]" > <Center X = "Cx[i] * L " Y =  "Cy[i] * L " Z =  "Cz[i] * L " /> </Circle>
+            <Circle Radius = "R2" Color = "Colors[i]" > <Center X = "Cx[i] * L2" Y =  "Cy[i] * L2" Z =  "Cz[i] * L2" /> </Circle>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircles" Repeat = "12" i = "0" />
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Connect Axis = "0" Layers = "1;2" />
+        <Connect Axis = "1" Layers = "1;2" />
+        <Connect Axis = "2" Layers = "0;1;2" />
+        <Connect Axis = "3" Layers = "0;1;2" />
+        <Connect Axis = "0" Layers = "4;5" />
+        <Connect Axis = "1" Layers = "4;5" />
+        <Connect Axis = "0" Layers = "0;3;6" />
+        <Connect Axis = "1" Layers = "0;3;6" />
+        <Connect Axis = "2" Layers = "4;5;6" />
+        <Connect Axis = "3" Layers = "4;5;6" />
+        <Connect Axis = "4" Layers = "0;1;3;5;6" />
+        <Connect Axis = "5" Layers = "0;1;3;5;6" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Dot" File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Crazy\Textures\Dot.vec" />
+        <Texture Name = "RingAndDot" File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Crazy\Textures\RingAndDot.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Dot = 73,0,0, 99,0,0, 211,0,0, 325,0,0
+        RingAndDot = 166,0,0, 187,0,0, 276,0,0, 299,0,0
+    </SetTextures>
+</xml>

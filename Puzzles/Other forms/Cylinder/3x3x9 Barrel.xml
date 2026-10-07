@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3x9 Barrel</Name>
+        <Menu>Other forms\Cylinder\3x3x9 Barrel</Menu>
+        <Inventor>Caleb Cox</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-09-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5018</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.5;
+        H := R;
+        H2 := H + 0.002;
+
+        D := R / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-7/18; -5/18; -3/18; -1/18; 1/18; 3/18; 5/18; 7/18" TurnAxesWithLayer = "5" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddQuarter">
+            <Cylinder Radius = "R" Color = "Color" >
+               <Base X = "0" Y = "0" Z = " H" Color = "clWhite "/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "clYellow" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "ax1; ay1; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = "ax2; ay2; 0" NormDistance = "0" /> </Cut>
+            <HideContaining Vector = "0; 0; 0" />
+        </Macro>
+        <ExecMacro MacroName = "AddQuarter" Color = "clRed"    ax1 = " 1" ay1 = " 1" ax2 = " 1" ay2 = "-1" />
+        <ExecMacro MacroName = "AddQuarter" Color = "clGreen"  ax1 = " 1" ay1 = " 1" ax2 = "-1" ay2 = " 1" />
+        <ExecMacro MacroName = "AddQuarter" Color = "clOrange" ax1 = "-1" ay1 = "-1" ax2 = "-1" ay2 = " 1" />
+        <ExecMacro MacroName = "AddQuarter" Color = "clBlue"   ax1 = "-1" ay1 = "-1" ax2 = " 1" ay2 = "-1" />
+
+        <ShowAll/>
+
+        <Circle Radius = "R" Color = "clWhite " > <Center X =  "0" Y =  "0" Z = " H2" /> </Circle>
+        <Circle Radius = "R" Color = "clYellow" > <Center X =  "0" Y =  "0" Z = "-H2" /> </Circle>
+
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "6" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "6" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <Split Axis = "2" From = "5" />
+        <Split Axis = "2" From = "6" />
+        <Split Axis = "2" From = "7" />
+        <Split Axis = "2" From = "8" />
+
+        <RemoveGrayParts/>
+
+        <Turn  Axis = "2" From = "0" To = "0" Angle = " Pi/2"/>
+        <Turn  Axis = "1" From = "3" To = "5" Angle = " Pi/2" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "0" From = "5" />
+        <Undo Repeat = "2" />
+
+        <SaveSolvedState/> <!-- first solving state -->
+
+		<Turn Axis = "1" From = "3" To = "5" Angle = " Pi/2" />
+		<Turn Axis = "2" From = "6" To = "8" Angle = " Pi/2" />
+		<Turn Axis = "1" From = "3" To = "5" Angle = "-Pi/2" />
+		<Turn Axis = "0" From = "3" To = "5" Angle = " Pi  " />
+		<Turn Axis = "1" From = "3" To = "5" Angle = "-Pi/2" />
+		<Turn Axis = "2" From = "0" To = "2" Angle = " Pi/2" />
+		<Turn Axis = "1" From = "3" To = "5" Angle = " Pi/2" />
+		<Turn Axis = "0" From = "3" To = "5" Angle = " Pi  " />
+
+        <SaveSolvedState/> <!-- second solving state -->
+        <Undo Repeat = "8" />
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

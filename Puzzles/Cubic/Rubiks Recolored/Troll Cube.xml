@@ -1,0 +1,119 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Troll Cube</Name>
+        <Menu>Cubic\Rubiks Recolored\Troll Cube</Menu>
+        <Inventor>Choong Myoung Lee</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2019-10-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3457</Link>
+    </Interface>
+
+    <Script>
+        W  := 0.5;
+        W2 := W * 2 / 3;
+        D  := W / 3;
+        D3 := D / 3;
+
+        Delta := 0.001;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "AddFace" >
+            <Script>
+                Colors[0] := -1;
+                Colors[1] := -1;
+                Colors[2] := -1;
+                Colors[3] := -1;
+                Colors[4] := -1;
+                Colors[5] := color;
+                WX := d3;
+                WY := d3;
+                WZ := delta;
+                DWX := x + d3;
+                DWY := y + d3;
+                DWZ := W + delta;
+            </Script>
+
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddFace" x = "-D" y = "D3" y2 = "D" color = "clGreen" />
+        <Turn Axis = "0" Layer = "1" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "AddFace" x = "-D3" y = "-D" color = "clYellow" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "AddFace" x = "D3" y = "D3" color = "clGreen" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "AddFace" x = "-D" y = "-D" color = "clBlue" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi / 2" />
+        <ExecMacro MacroName = "AddFace" x = "D3" y = "D3" color = "clWhite" />
+        <Undo Repeat = "4" />
+        <Turn Axis = "0" Layer = "1" Angle = "-Pi" />
+        <ExecMacro MacroName = "AddFace" x = " D3" y = "-D" color = "clRed" />
+        <ExecMacro MacroName = "AddFace" x = "-D" y = "-D3" color = "clBlue" />
+        <Undo/>
+
+        <Script>
+            WX := d;
+            WY := d;
+            WZ := d;
+            DWX := -W2;
+            DWY :=  W2;
+            DWZ :=  W2;
+            Colors[0] := clGreen;
+            Colors[3] := clGreen;
+            Colors[5] := clGreen;
+        </Script>
+        <RemoveContaining Vector = "DWX; DWY; DWZ" />
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Script>
+            DWX :=  W2;
+            DWY :=  W2;
+            DWZ := -W2;
+            Colors[0] := -1;
+            Colors[1] := clWhite;
+            Colors[3] := clBlue;
+            Colors[4] := clRed;
+            Colors[5] := -1;
+        </Script>
+        <RemoveContaining Vector = "DWX; DWY; DWZ" />
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Script>
+            DWX :=   0;
+            DWY := -W2;
+            DWZ := -W2;
+            Colors[1] := -1;
+            Colors[2] := clYellow;
+            Colors[3] := -1;
+            Colors[4] := clYellow;
+        </Script>
+        <RemoveContaining Vector = "DWX; DWY; DWZ" />
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Script>
+            DWX := -W2;
+            DWY :=   0;
+            DWZ := -W2;
+            Colors[0] := clRed;
+            Colors[2] := -1;
+            Colors[4] := clBlue;
+        </Script>
+        <RemoveContaining Vector = "DWX; DWY; DWZ" />
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

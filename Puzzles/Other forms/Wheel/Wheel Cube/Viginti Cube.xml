@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+   <Interface>
+        <Name>Viginti Cube</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Viginti Cube</Menu>
+        <Inventor>Tim Fitzrandolph</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7437</Link>
+    </Interface>
+
+     <Script>
+        W := 0.48;
+        H := W * (1 + 0.08);
+        R1 := W * 0.1;
+        R2 := R1 * 0.8;
+
+        delta := W * 0.75;
+        for i := 0 to 9 do begin
+            x1[i] := R1 * cos(2 * Pi / 10 * i);
+            y1[i] := R1 * sin(2 * Pi / 10 * i) - delta;
+            x2[i] := R2 * cos(2 * Pi / 10 * i);
+            y2[i] := R2 * sin(2 * Pi / 10 * i) - delta;
+        end;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/10; Pi/2; Pi/2; Pi/2; Pi/10" PlaneDistances = "-W;-D; D; W" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "AddPuck">
+            <Part>
+                <Vertices Vectors = " x2; y2; H" />
+                <Vertices Vectors = " x1; y1; W" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;2;3;4;5;6;7;8;9" />
+
+                    <Face Color = "cl" VertexIndexes = "10;11;1;0" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "11;12;2;1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "12;13;3;2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "13;14;4;3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "14;15;5;4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "15;16;6;5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "16;17;7;6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "17;18;8;7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "18;19;9;8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "19;10;0;9" InvisibleEdges = "10" />
+
+                    <Face VertexIndexes = "19;18;17;16;15;14;13;12;11;10" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddPucks">
+            <ExecMacro MacroName = "AddPuck" />
+            <Turn Axis = "2" Layer = "4" Angle = "Pi/10" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddPucks" cl = "clWhite " Repeat = "20" />
+        <Turn Axis = "0" From = "0" To = "4" Angle = "Pi/2" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clGreen " Repeat = "20" />
+        <Turn Axis = "1" From = "0" To = "4" Angle = "Pi/2" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clRed   " Repeat = "20" />
+        <Turn Axis = "0" From = "0" To = "4" Angle = "Pi/2" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clYellow" Repeat = "20" />
+        <Turn Axis = "1" From = "0" To = "4" Angle = "Pi/2" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clBlue  " Repeat = "20" />
+        <Turn Axis = "0" From = "0" To = "4" Angle = "Pi/2" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clOrange" Repeat = "20" />
+        <Turn Axis = "1" From = "0" To = "4" Angle = "Pi/2" />
+    </Figure>
+</xml>

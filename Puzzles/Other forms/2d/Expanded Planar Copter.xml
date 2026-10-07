@@ -1,0 +1,120 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Expanded Planar Copter</Name>
+        <Menu>Other forms\2d\Expanded Planar Copter</Menu>
+        <Inventor>Joshua Riegel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10805</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'FFFFFF';
+        clYellow := 'FFFF00';
+        clBlue   := '0000CC';
+        clRed    := 'FF0000';
+        clGreen  := '00AA00';
+        clOrange := 'FF6000';
+        clBlack  := '333333';
+
+        K := 0.6;
+        phi := (sqrt(5) - 1) / 2; // The golden ratio
+        D := K * 0.90;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "ArcTan(2)" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "0;-1; 0" />
+        <Axis NormVector = "-phi  ;    -1; phi-1" />
+        <Axis NormVector = " phi  ;    -1;-phi-1" />
+        <Axis NormVector = " phi+1;-phi  ;    -1" />
+        <Axis NormVector = "     1;-phi-1;-phi  " />
+        <Axis NormVector = "     1;-phi-1; phi  " />
+        <Axis NormVector = "-phi  ;    -1;-phi+1" />
+        <Axis NormVector = " phi  ;    -1; phi+1" />
+        <Axis NormVector = " phi+1;-phi  ;     1" />
+    </Axes>
+
+    <Figure>
+        <Script>
+            Colors[ 0] := clBlue;
+            Colors[ 1] := clYellow;
+            Colors[ 2] := clOrange;
+            Colors[ 3] := clWhite;
+            Colors[ 4] := clBlue;
+            Colors[ 5] := clBlack;
+            Colors[ 6] := clRed;
+            Colors[ 7] := clBlack;
+            Colors[ 8] := clBlack;
+            Colors[ 9] := clYellow;
+            Colors[10] := clGreen;
+            Colors[11] := clRed;
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut Axis = "7" To = "1" />
+        <RemoveContaining Vector = "0;0;0" />
+        <HideAll/>
+        
+        <Script>
+            Colors[ 1] := clBlue;
+            Colors[ 4] := clRed;
+            Colors[11] := clYellow;
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+        <Hide Axis = "1" Layer = "1" />
+        <Hide Axis = "3" Layer = "1" />
+        <Hide Axis = "7" Layer = "1" />
+        <RemoveAllVisible/>
+        
+        <Script>
+            Colors[ 0] := clBlack;
+            Colors[ 1] := clBlack;
+            Colors[ 2] := clBlack;
+            Colors[ 3] := clBlack;
+            Colors[ 4] := clBlack;
+            Colors[ 6] := clBlack;
+            Colors[ 9] := clBlack;
+            Colors[10] := clBlack;
+            Colors[11] := clBlack;
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+        <Cut Axis = "4" To = "1" />
+        <Cut Axis = "5" To = "1" />
+        <Cut Axis = "6" To = "1" />
+        <Cut Axis = "7" To = "1" />
+        <Cut Axis = "8" To = "1" />
+        <Cut Color = "clBlack" > <Plane NormVector = " 1;-2-phi; 0" NormDistance = " 0" /> </Cut>
+        <ShowAll/>
+        
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "3" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "7" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+        
+        <Turn Axis = "2" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "6" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "8" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+        
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-Arctan(1-phi)" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedaures CheckSolved = "CheckSavedStates" />
+</xml>

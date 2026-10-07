@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexacle Cube</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Hexacle Cube</Menu>
+        <Inventor>Justin Costa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-26</Added>
+        <Link>https://www.instagram.com/p/CI8u_uupsNE/</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W / 3;
+
+        RC := W * 2/3;
+        Sc := 1.1;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/12; Pi/2; 0; Pi/2; 2*Pi/12" PlaneDistances = "-W;-D; D; W" NormVectors = "Cx;Cy;Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Rotate" >
+            <Turn  Axis = "i"  Layer = "4" Angle = "2*Pi/6" />
+            <Split Axis = "s1" From  = "2" />
+        </Macro>
+
+        <Macro Name = "AddCircle" >
+            <HideAll/>
+            <Cylinder Radius = "RC" Color = "Colors[i]" Base = "Cx[i]; Cy[i]; Cz[i]" Top = "Cx[i]*Sc; Cy[i]*Sc; Cz[i]*Sc" >
+                <Top  Color = "Colors[i]" />
+            </Cylinder>
+            <ExecMacro MacroName = "Rotate" Repeat = "6" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" s1 = "2" />
+        <ExecMacro MacroName = "AddCircle" i = "1" s1 = "3" />
+        <ExecMacro MacroName = "AddCircle" i = "2" s1 = "4" />
+        <ExecMacro MacroName = "AddCircle" i = "3" s1 = "5" />
+        <ExecMacro MacroName = "AddCircle" i = "4" s1 = "0" />
+        <ExecMacro MacroName = "AddCircle" i = "5" s1 = "1" />
+   </Figure>
+</xml>

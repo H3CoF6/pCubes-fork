@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Seven Star UFO AC</Name>
+        <Menu>Cubic\Multi-core\Seven Star UFO AC</Menu>
+        <Inventor>Leslie Le</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2018-12-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6552</Link>
+    </Interface>
+
+    <Script>
+        Color0 := 'FF0000'; // clRed
+        Color1 := 'FF6000'; // clOrange
+        Color2 := 'FFFF00'; // clYellow
+        Color3 := '00FF00'; // clLightGreen
+        Color4 := '3868BF'; // clLightBlue
+        Color5 := '0000A0'; // clBlue
+        Color6 := '800080'; // clViolett
+
+        W := 0.1;
+
+        Ay := -W * 6.4; // -W * (1 + cos(sAngle) + sin(sAngle)) / (1 - cos(sAngle))
+
+        sAngle := 2 * Pi / 7;
+
+        for i := 0 to 6 do begin
+            Qx[i] := Ay * sin(sAngle * i);
+            Qy[i] := Ay * cos(sAngle * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2; 0" PlaneDistances = "-W; 0; W" >
+        <Axis NormVector = " Qx[0];Qy[0];0" BaseVector = "Qx[0];Qy[0];0" />
+        <Axis NormVector = " Qx[1];Qy[1];0" BaseVector = "Qx[1];Qy[1];0" />
+        <Axis NormVector = " Qx[2];Qy[2];0" BaseVector = "Qx[2];Qy[2];0" />
+        <Axis NormVector = " Qx[3];Qy[3];0" BaseVector = "Qx[3];Qy[3];0" />
+        <Axis NormVector = " Qx[4];Qy[4];0" BaseVector = "Qx[4];Qy[4];0" />
+        <Axis NormVector = " Qx[5];Qy[5];0" BaseVector = "Qx[5];Qy[5];0" />
+        <Axis NormVector = " Qx[6];Qy[6];0" BaseVector = "Qx[6];Qy[6];0" />
+        <Axis NormVector = "-Qy[0];Qx[0];0" BaseVector = "Qx[0];Qy[0];0" />
+        <Axis NormVector = "-Qy[1];Qx[1];0" BaseVector = "Qx[1];Qy[1];0" />
+        <Axis NormVector = "-Qy[2];Qx[2];0" BaseVector = "Qx[2];Qy[2];0" />
+        <Axis NormVector = "-Qy[3];Qx[3];0" BaseVector = "Qx[3];Qy[3];0" />
+        <Axis NormVector = "-Qy[4];Qx[4];0" BaseVector = "Qx[4];Qy[4];0" />
+        <Axis NormVector = "-Qy[5];Qx[5];0" BaseVector = "Qx[5];Qy[5];0" />
+        <Axis NormVector = "-Qy[6];Qx[6];0" BaseVector = "Qx[6];Qy[6];0" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCube">
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W" DWY = "Ay" />
+            <Turn NormVector = "0; 0; 1" Angle = "sAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCube" Color = "Color0"/>
+        <ExecMacro MacroName = "AddCube" Color = "Color1"/>
+        <ExecMacro MacroName = "AddCube" Color = "Color2"/>
+        <ExecMacro MacroName = "AddCube" Color = "Color3"/>
+        <ExecMacro MacroName = "AddCube" Color = "Color4"/>
+        <ExecMacro MacroName = "AddCube" Color = "Color5"/>
+        <ExecMacro MacroName = "AddCube" Color = "Color6"/>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

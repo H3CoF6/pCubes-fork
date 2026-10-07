@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Ball in a cube 7x7x7</Name>
+        <Menu>Other forms\Unclassified\Ball in a cube\Ball in a cube 7x7x7</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-03-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5309</Link>
+    </Interface>                   
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := 'FF6000'; // Orange
+        Colors[2] := '0000A0'; // Blue
+        Colors[3] := '008000'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.13;
+        for i := 0 to 5 do
+            DD[i] := (-5 + 2 * i) * D;
+
+        K := W * 1.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "DD" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "6" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "6" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "6" />
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <RemoveContaining Vector = " W; 0; 0" />
+        <RemoveContaining Vector = "-W; 0; 0" />
+        <RemoveContaining Vector = " 0; W; 0" />
+        <RemoveContaining Vector = " 0;-W; 0" />
+        <RemoveContaining Vector = " 0; 0; W" />
+        <RemoveContaining Vector = " 0; 0;-W" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Split Color2 = "Colors[1]" Axis = "0" From = "1" />
+        <Split Color1 = "Colors[0]" Axis = "0" From = "6" />
+        <Split Color2 = "Colors[3]" Axis = "1" From = "1" />
+        <Split Color1 = "Colors[2]" Axis = "1" From = "6" />
+        <Split Color2 = "Colors[5]" Axis = "2" From = "1" />
+        <Split Color1 = "Colors[4]" Axis = "2" From = "6" />
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <HideContaining Vector = " W; 0; 0" />
+        <HideContaining Vector = "-W; 0; 0" />
+        <HideContaining Vector = " 0; W; 0" />
+        <HideContaining Vector = " 0;-W; 0" />
+        <HideContaining Vector = " 0; 0; W" />
+        <HideContaining Vector = " 0; 0;-W" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

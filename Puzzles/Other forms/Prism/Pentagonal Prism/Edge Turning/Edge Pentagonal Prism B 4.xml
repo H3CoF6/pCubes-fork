@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Edge Pentagonal Prism B 4</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Edge Turning\Edge Pentagonal Prism B 4</Menu>
+        <Inventor>virtual</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-08-02</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+        clCyan   := '00FFFF';
+
+        R := 0.6;
+        sAngle := PI * 2 / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+        AZ := R * 5^(1/4) / 2;
+
+        H := R * 0.95;
+        D := -R * sqrt((17 - 7 * sqrt(5)) / 22) + H * sqrt((4 * sqrt(5) - 5) / 11);
+
+        A1 := ArcCos((5 * sqrt(5) - 3) / 12);
+        A2 := ArcCos((3 - sqrt(5)) / 4);
+        A3 := A2*2;
+
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1;-A2;-A3;0;A3;A2;A1" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = " -x[0]; -y[0]; AZ" />
+        <Axis NormVector = " -x[1]; -y[1]; AZ" />
+        <Axis NormVector = " -x[2]; -y[2]; AZ" />
+        <Axis NormVector = " -x[3]; -y[3]; AZ" />
+        <Axis NormVector = " -x[4]; -y[4]; AZ" />
+        <Axis NormVector = " -x[0]; -y[0];-AZ" />
+        <Axis NormVector = " -x[1]; -y[1];-AZ" />
+        <Axis NormVector = " -x[2]; -y[2];-AZ" />
+        <Axis NormVector = " -x[3]; -y[3];-AZ" />
+        <Axis NormVector = " -x[4]; -y[4];-AZ" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Vector X = "x[0]" Y = "y[0]" Z = "-H" />
+                <Vector X = "x[1]" Y = "y[1]" Z = "-H" />
+                <Vector X = "x[2]" Y = "y[2]" Z = "-H" />
+                <Vector X = "x[3]" Y = "y[3]" Z = "-H" />
+                <Vector X = "x[4]" Y = "y[4]" Z = "-H" />
+                <Vector X = "x[0]" Y = "y[0]" Z = " H" />
+                <Vector X = "x[1]" Y = "y[1]" Z = " H" />
+                <Vector X = "x[2]" Y = "y[2]" Z = " H" />
+                <Vector X = "x[3]" Y = "y[3]" Z = " H" />
+                <Vector X = "x[4]" Y = "y[4]" Z = " H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 5; 6; 1; 0" />
+                <Face Color = "clBlue  " VertexIndexes = " 6; 7; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = " 7; 8; 3; 2" />
+                <Face Color = "clOrange" VertexIndexes = " 8; 9; 4; 3" />
+                <Face Color = "clPurple" VertexIndexes = " 9; 5; 0; 4" />
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clWhite " VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

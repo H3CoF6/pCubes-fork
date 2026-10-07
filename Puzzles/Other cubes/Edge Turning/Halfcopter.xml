@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Halfcopter</Name>
+        <Menu>Other cubes\Edge Turning\Halfcopter</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-08-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6298</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        D := W * sqrt(2) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Cut Color = "404040" > <Plane NormVector = " 1; -1;  1" NormDistance = "0" /> </Cut>
+
+        <Turn Axis = "0" Angle = "Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Angle = "Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+    </Figure>
+
+    <Macros>
+        <Macro Name = "RandomTurns180" >
+            <Turn Axis = "Random(3)" Layer = "1" Angle = "Pi"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "1" Angle = "Pi/6 * Random(12)"/>
+        </Macro>
+        <Macro Name = "Scramble180" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns180" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble180" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+</xml>

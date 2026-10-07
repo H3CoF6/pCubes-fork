@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Multi StarMinx</Name>
+        <Menu>Other forms\Dodecahedron\Vertex Turning\Multi StarMinx</Menu>
+        <Menu>Other forms\Multi-puzzles\Multi StarMinx</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2019-11-15</Added>
+        <Link>http://bbs.mf8-china.com/forum.php?mod=viewthread&amp;tid=104056</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        R2 := R * 0.57;
+
+        D := R / 3;
+        jumAngle := Arcsin(1/4) + Pi/6;
+        DCut := R * sqrt(5) / 3;
+    </Script>
+
+    <Axes TurningAngles = " 0; 2*Pi/3" JumbleAngle = "jumAngle" PlaneDistances = "D" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Macro Name = "RemoveCenter" >
+            <RemoveContaining Vector = " Cx[i]; Cy[i]; Cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenter" Repeat = "12" i = "0" />
+        <RemoveGrayParts/>
+
+        <Macro Name = "SplitV" >
+            <Split><Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "DCut" /></Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitV" Repeat = "20" i = "0" />
+        <RemoveGrayParts/>
+
+        <!-- add small figure -->
+        <Script> R := R2; </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+      
+        <SplitByAxes/>
+      
+    </Figure>
+</xml>

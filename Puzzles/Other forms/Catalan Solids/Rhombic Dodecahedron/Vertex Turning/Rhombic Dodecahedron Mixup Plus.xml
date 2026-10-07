@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhombic Dodecahedron Mixup Plus</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Vertex Turning\Mixup Plus</Menu>
+        <Inventor>Ilya Toporgilka</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9560</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        D := R * 0.4;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/2" PlaneDistances = "-D/2; D/2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "Ax1" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "Ax2" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Turn Axis = "Ax3" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Undo/>
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+    </Figure>
+</xml>

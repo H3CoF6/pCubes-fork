@@ -1,0 +1,116 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Curvy Copter Orbits</Name>
+        <Menu>Other cubes\Edge Turning\Helicopter cube\Curvy Copter Orbits</Menu>
+        <Inventor>Claus Simmelkjaer</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-02</Added>
+        <Link>https://oliverstickers.com/stickers/special-stickers/scimage-s-designs/scimage-s-curvy-copter-orbits.html</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        C := W * 0.1; // size of central square
+        D := (W + C) / sqrt(2);
+
+        Colors[6] := 'F84040'; // clRed   
+        Colors[7] := 'CCBB00'; // clYellow
+        Colors[8] := '4040F8'; // clBlue  
+        Colors[9] := '00CF00'; // clGreen 
+
+        DH := W * 0.001;
+        DW := W * 0.2;
+        Angle := Pi * 2 / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0;  1; 1" />
+        <Axis NormVector = " 1;  0; 1" />
+        <Axis NormVector = " 0; -1; 1" />
+        <Axis NormVector = "-1;  0; 1" />
+        <Axis NormVector = "-1;  1; 0" />
+        <Axis NormVector = " 1;  1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0; 0; 0" />
+        <InvertVisibility/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0; 0; 0" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <Macro Name = "AddSticker">
+            <Part>
+                <Vertices>
+                    <Add Vector = "-DW + S;-W     ; W     " />
+                    <Add Vector = " 0  + S;-W     ; W     " />
+                    <Add Vector = "-W     ; 0  + S; W     " />
+                    <Add Vector = "-W     ;-DW + S; W     " />
+                    <Add Vector = "-DW + S;-W     ; W + DH" />
+                    <Add Vector = " 0  + S;-W     ; W + DH" />
+                    <Add Vector = "-W     ; 0  + S; W + DH" />
+                    <Add Vector = "-W     ;-DW + S; W + DH" />
+                </Vertices>
+
+                <Faces>
+                    <Face                 VertexIndexes = "3;2;1;0" />
+                    <Face Color = "Color" VertexIndexes = "4;5;6;7" InvisibleEdges = "8" />
+                    <Face                 VertexIndexes = "0;1;5;4" />
+                    <Face                 VertexIndexes = "1;2;6;5" />
+                    <Face                 VertexIndexes = "2;3;7;6" />
+                    <Face Color = "Color" VertexIndexes = "3;0;4;7" InvisibleEdges = "5" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "StickerColor">
+            <InvertVisibility/>
+            <ExecMacro MacroName = "AddSticker" S = " 3 * C" />
+            <Split><Plane NormVector = "1;0;0" /></Split>
+            <Split><Plane NormVector = "0;1;0" /></Split>
+            <Split><Plane NormVector = "1;0;0" NormDistance = "-W + DW" /></Split>
+            <Split><Plane NormVector = "0;1;0" NormDistance = "-W + DW" /></Split>
+            <RemoveContaining Vector = " 0 + DW / 4;-W + DW + DW / 4; W" />
+            <RemoveContaining Vector = " 0 - DW / 4;-W + DW - DW / 4; W" />
+            <RemoveContaining Vector = "-W + DW + DW / 4; 0 + DW / 4; W" />
+            <RemoveContaining Vector = "-W + DW - DW / 4; 0 - DW / 4; W" />
+            <SplitByAxes/>
+            <RemoveContaining Vector = " C + DW;-W; W" />
+            <RemoveContaining Vector = "-W; C + DW; W" />
+            <ShowAll/>
+
+            <ExecMacro MacroName = "AddSticker" S = "-C" />
+
+            <Turn NormVector = "1;1;1" Angle = "Angle" />
+        </Macro>
+
+        <Macro Name = "StickerOrbit">
+            <ExecMacro MacroName = "StickerColor" Color = "Color" Repeat = "3" />
+            <Turn NormVector = "0;-1;1" Angle = "Pi" />
+            <ExecMacro MacroName = "StickerColor" Color = "Color" Repeat = "3" />
+            <Turn NormVector = "0;-1;1" Angle = "Pi" />
+
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "StickerOrbit" Color = "Colors[7]" />
+        <ExecMacro MacroName = "StickerOrbit" Color = "Colors[9]" />
+        <ExecMacro MacroName = "StickerOrbit" Color = "Colors[8]" />
+        <ExecMacro MacroName = "StickerOrbit" Color = "Colors[6]" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

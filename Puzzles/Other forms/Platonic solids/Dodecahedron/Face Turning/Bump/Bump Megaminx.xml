@@ -1,0 +1,38 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bump Megaminx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bump\Bump Megaminx</Menu>
+        <Inventor>Jaybert Christian Estrella</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6499</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10186</Link>
+    </Interface>
+
+    <Script>
+        clColor := 'EEEEEE';
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "R" />
+        <SplitByAxes/>
+
+        <Macro Name = "CutFaces" >
+            <Cut Color = "clColor" > <Plane NormVector = "Cx[i];Cy[i];Cz[i]" NormDistance = "-Rsin+0.016*i" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "CutFaces" Repeat = "12" i = "0" />
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 12" />
+</xml>

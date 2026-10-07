@@ -1,0 +1,179 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super Six Spot Cube Dots</Name>
+        <Menu>Other cubes\Vertex Turning\Super Six Spot Cube Dots</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-28</Added>
+        <Link>https://oliverstickers.com/super-six-spot-cube-dots.html</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7013</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF'; // clWhite
+        Colors[1] := '0088FF'; // clLightBlue
+        Colors[2] := 'FF0000'; // clRed
+        Colors[3] := 'FFFF00'; // clYellow
+        Colors[4] := '00FF00'; // clLime
+        Colors[5] := 'FF8800'; // clOrange
+        Colors[6] := '202020'; // clBlack
+
+        K  := 0.4;
+        C0 := K;
+        C1 := K * 3 / 2;
+        D := K / sqrt(3);
+
+        CC := 0.91*C1;
+        CB := 0.1;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D" FixedLayers = "1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Hexahedron">
+            <Part>
+                <Vertices>
+                    <Add Vector = "  0;  0; C1" />
+                    <Add Vector = "  0;  0;-C1" />
+                    <Add Vector = " C1;  0;  0" />
+                    <Add Vector = "-C1;  0;  0" />
+                    <Add Vector = "  0; C1;  0" />
+                    <Add Vector = "  0;-C1;  0" />
+                    <Add Vector = " C0; C0; C0" />
+                    <Add Vector = " C0; C0;-C0" />
+                    <Add Vector = " C0;-C0; C0" />
+                    <Add Vector = " C0;-C0;-C0" />
+                    <Add Vector = "-C0; C0; C0" />
+                    <Add Vector = "-C0; C0;-C0" />
+                    <Add Vector = "-C0;-C0; C0" />
+                    <Add Vector = "-C0;-C0;-C0" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[0]" VertexIndexes = "0; 6;10" InvisibleEdges = "5" />
+                    <Face Color = "Colors[0]" VertexIndexes = "0;10;12" InvisibleEdges = "5" />
+                    <Face Color = "Colors[0]" VertexIndexes = "0;12; 8" InvisibleEdges = "5" />
+                    <Face Color = "Colors[0]" VertexIndexes = "0; 8; 6" InvisibleEdges = "5" />
+                    <Face Color = "Colors[3]" VertexIndexes = "1; 7; 9" InvisibleEdges = "5" />
+                    <Face Color = "Colors[3]" VertexIndexes = "1; 9;13" InvisibleEdges = "5" />
+                    <Face Color = "Colors[3]" VertexIndexes = "1;13;11" InvisibleEdges = "5" />
+                    <Face Color = "Colors[3]" VertexIndexes = "1;11; 7" InvisibleEdges = "5" />
+                    <Face Color = "Colors[5]" VertexIndexes = "2; 6; 8" InvisibleEdges = "5" />
+                    <Face Color = "Colors[5]" VertexIndexes = "2; 8; 9" InvisibleEdges = "5" />
+                    <Face Color = "Colors[5]" VertexIndexes = "2; 9; 7" InvisibleEdges = "5" />
+                    <Face Color = "Colors[5]" VertexIndexes = "2; 7; 6" InvisibleEdges = "5" />
+                    <Face Color = "Colors[2]" VertexIndexes = "3;10;11" InvisibleEdges = "5" />
+                    <Face Color = "Colors[2]" VertexIndexes = "3;11;13" InvisibleEdges = "5" />
+                    <Face Color = "Colors[2]" VertexIndexes = "3;13;12" InvisibleEdges = "5" />
+                    <Face Color = "Colors[2]" VertexIndexes = "3;12;10" InvisibleEdges = "5" />
+                    <Face Color = "Colors[4]" VertexIndexes = "4; 6; 7" InvisibleEdges = "5" />
+                    <Face Color = "Colors[4]" VertexIndexes = "4; 7;11" InvisibleEdges = "5" />
+                    <Face Color = "Colors[4]" VertexIndexes = "4;11;10" InvisibleEdges = "5" />
+                    <Face Color = "Colors[4]" VertexIndexes = "4;10; 6" InvisibleEdges = "5" />
+                    <Face Color = "Colors[1]" VertexIndexes = "5; 8;12" InvisibleEdges = "5" />
+                    <Face Color = "Colors[1]" VertexIndexes = "5;12;13" InvisibleEdges = "5" />
+                    <Face Color = "Colors[1]" VertexIndexes = "5;13; 9" InvisibleEdges = "5" />
+                    <Face Color = "Colors[1]" VertexIndexes = "5; 9; 8" InvisibleEdges = "5" />
+                </Faces>
+            </Part>
+        </Macro>
+
+
+        <ExecMacro MacroName = "Hexahedron" />
+
+        <Macro Name = "HideCenters">
+            <HideContaining Vector = " C1;  0;  0" />
+            <HideContaining Vector = "-C1;  0;  0" />
+            <HideContaining Vector = "  0; C1;  0" />
+            <HideContaining Vector = "  0;-C1;  0" />
+            <HideContaining Vector = "  0;  0; C1" />
+            <HideContaining Vector = "  0;  0;-C1" />
+        </Macro>
+
+        <SplitByAxes/>
+        <HideContaining Vector = " C0; C0; C0" />
+        <HideContaining Vector = " C0;-C0;-C0" />
+        <HideContaining Vector = "-C0;-C0; C0" />
+        <HideContaining Vector = "-C0; C0;-C0" />
+        <Split> <Plane NormDistance = "D" NormVector = "-1;-1;-1" /> </Split>
+        <Split> <Plane NormDistance = "D" NormVector = " 1; 1;-1" /> </Split>
+        <Split> <Plane NormDistance = "D" NormVector = " 1;-1; 1" /> </Split>
+        <Split> <Plane NormDistance = "D" NormVector = "-1; 1; 1" /> </Split>
+
+        <RemoveContaining Vector = "-CB; CB; CC" />
+        <RemoveContaining Vector = " CB;-CB; CC" />
+        <RemoveContaining Vector = " CB; CB;-CC" />
+        <RemoveContaining Vector = "-CB;-CB;-CC" />
+        <RemoveContaining Vector = " CB; CC;-CB" />
+        <RemoveContaining Vector = "-CB; CC; CB" />
+        <RemoveContaining Vector = " CB;-CC; CB" />
+        <RemoveContaining Vector = "-CB;-CC;-CB" />
+        <RemoveContaining Vector = " CC; CB;-CB" />
+        <RemoveContaining Vector = " CC;-CB; CB" />
+        <RemoveContaining Vector = "-CC; CB; CB" />
+        <RemoveContaining Vector = "-CC;-CB;-CB" />
+        <ShowAll/>
+
+        <Macro Name = "AddDot">
+            <Turn NormVector = "0;0;1" Angle = "Pi/2 * a"/>
+            <HideContaining Vector = "-C0;-C0; C0" />
+            <InvertVisibility/>
+            <Cut Color = "Colors[ 6]"> <Plane NormVector = "0;0;-1" NormDistance = "-0.5335" /> </Cut>
+            <ShowAll/>
+            <HideContaining Vector = " 0; 0;C1" />
+            <InvertVisibility/>
+            <Cut Color = "Colors[ 6]"> <Plane NormVector = "1; 1;-1" NormDistance = "-0.385 " /> </Cut>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "-Pi/2 * a"/>
+        </Macro>
+        <ExecMacro MacroName = "AddDot" a = "2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2"/>
+        <ExecMacro MacroName = "AddDot" a = "1" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2"/>
+        <ExecMacro MacroName = "AddDot" a = "0" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2"/>
+        <ExecMacro MacroName = "AddDot" a = "1" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2"/>
+        <ExecMacro MacroName = "AddDot" a = "2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2"/>
+        <ExecMacro MacroName = "AddDot" a = "1" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2"/>
+
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+
+        <ExecMacro MacroName = "Hexahedron" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " C0; C0; C0" />
+        <RemoveContaining Vector = " C0;-C0;-C0" />
+        <RemoveContaining Vector = "-C0;-C0; C0" />
+        <RemoveContaining Vector = "-C0; C0;-C0" />
+        <RemoveContaining Vector = "  0;  0;  0" />
+        <Split> <Plane NormDistance = "D" NormVector = "-1;-1;-1" /> </Split>
+        <Split> <Plane NormDistance = "D" NormVector = " 1; 1;-1" /> </Split>
+        <Split> <Plane NormDistance = "D" NormVector = " 1;-1; 1" /> </Split>
+        <Split> <Plane NormDistance = "D" NormVector = "-1; 1; 1" /> </Split>
+        <RemoveContaining Vector = "  0;  0; C1" />
+        <RemoveContaining Vector = "  0;  0;-C1" />
+        <RemoveContaining Vector = "  0; C1;  0" />
+        <RemoveContaining Vector = "  0;-C1;  0" />
+        <RemoveContaining Vector = " C1;  0;  0" />
+        <RemoveContaining Vector = "-C1;  0;  0" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

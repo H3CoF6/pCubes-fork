@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyrastar Cube</Name>
+        <Menu>Other forms\Star\Stellated Octahedron\Pyrastar Cube</Menu>
+        <Inventor>Manish Rathod</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-09-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11428</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'C80000'; // Red
+        Colors[ 1] := 'FF800A'; // Orange
+        Colors[ 2] := '0000C8'; // Blue
+        Colors[ 3] := '009600'; // Green
+        Colors[ 4] := 'FFFF00'; // Yellow
+        Colors[ 5] := 'FFFFFF'; // White
+
+        Colors[10] := 'C80001'; // Red1
+        Colors[11] := 'FF810A'; // Orange1
+        Colors[12] := '0100C8'; // Blue1
+        Colors[13] := '009601'; // Green1
+        Colors[14] := 'FFFF01'; // Yellow1
+        Colors[15] := 'FFFFFE'; // White1
+
+        Colors[20] := 'C80002'; // Red2
+        Colors[21] := 'FF820A'; // Orange2
+        Colors[22] := '0200C8'; // Blue2
+        Colors[23] := '009602'; // Green2
+        Colors[24] := 'FFFF02'; // Yellow2
+        Colors[25] := 'FFFFFD'; // White2
+
+        Colors[30] := 'C80003'; // Red3
+        Colors[31] := 'FF830A'; // Orange3
+        Colors[32] := '0300C8'; // Blue3
+        Colors[33] := '009603'; // Green3
+        Colors[34] := 'FFFF03'; // Yellow3
+        Colors[35] := 'FFFFFC'; // White3
+
+        W := 0.5;
+        D := W / 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "-1; 2; 2" />
+        <Axis NormVector = " 2;-1; 2" />
+        <Axis NormVector = " 2; 2;-1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddV" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " 0; 0; W" />
+                    <Add Vector = " 0; W; 0" />
+                    <Add Vector = " W; 0; 0" />
+                    <Add Vector = " W; W; W" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[c0]" VertexIndexes = "2;3;0" />
+                    <Face Color = "Colors[c1]" VertexIndexes = "3;1;0" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "3;2;1" />
+                    <Face                      VertexIndexes = "1;2;0" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "AddV" c0 = " 1" c1 = " 4" c2 = " 2" />
+        <ExecMacro MacroName = "AddV" c0 = "12" c1 = " 0" c2 = "11" />
+        <ExecMacro MacroName = "AddV" c0 = " 5" c1 = "10" c2 = "22" />
+        <ExecMacro MacroName = "AddV" c0 = "15" c1 = "32" c2 = "14" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddV" c0 = "24" c1 = " 3" c2 = "25" />
+        <ExecMacro MacroName = "AddV" c0 = "20" c1 = "35" c2 = "13" />
+        <ExecMacro MacroName = "AddV" c0 = "23" c1 = "21" c2 = "30" />
+        <ExecMacro MacroName = "AddV" c0 = "34" c1 = "31" c2 = "33" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

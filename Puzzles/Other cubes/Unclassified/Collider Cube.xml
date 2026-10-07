@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Collider Cube</Name>
+        <Menu>Other cubes\Unclassified\Collider Cube</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-11-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7098</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        A1 := arccos(-1/9);
+        A2 := arccos(-2/3);
+
+        W := 0.5;
+        A := W * 1.35;
+        B := W * 0.5;
+
+        D := 2 * A / sqrt(5);
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "-D; D" FixedLayers = "1">
+        <Axis NormVector = " 0; 1; 2" />
+        <Axis NormVector = " 1; 0; 2" />
+        <Axis NormVector = " 0;-1; 2" />
+        <Axis NormVector = "-1; 0; 2" />
+
+        <Axis NormVector = " 0; 2; 1" />
+        <Axis NormVector = " 1; 2; 0" />
+        <Axis NormVector = " 0; 2;-1" />
+        <Axis NormVector = "-1; 2; 0" />
+
+        <Axis NormVector = " 2; 0; 1" />
+        <Axis NormVector = " 2; 1; 0" />
+        <Axis NormVector = " 2; 0;-1" />
+        <Axis NormVector = " 2;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes />
+
+        <HideContaining Vector = " Ex; Ey; Ez" />
+
+        <Macro Name = "HideCenters">
+            <HideContaining Vector = " Cx[i]*A/W; Cy[i]*A/W; Cz[i]*A/W" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenters" i = "0" Repeat = "6" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

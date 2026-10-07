@@ -1,0 +1,152 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sunstone</Name>
+        <Menu>Other forms\Catalan Truncated Solids\8-Truncated Triakis Octahedron\Sunstone</Menu>
+        <Inventor>Ian Henriksen</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-12-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11675</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=426300</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF00FF'; // Fuchsia    
+        Colors[ 1] := 'FF69B4'; // Pink       
+        Colors[ 2] := '800080'; // Purple     
+
+        Colors[ 3] := 'F4A460'; // SandyBrown 
+        Colors[ 4] := 'C26519'; // Chocolate  
+        Colors[ 5] := 'CD853F'; // Peru       
+
+        Colors[ 6] := 'A0A0A0'; // Silver     
+        Colors[ 7] := 'F0F0F0'; // White      
+        Colors[ 8] := '707070'; // Gray       
+
+        Colors[ 9] := '00FF00'; // Lime       
+        Colors[10] := '006400'; // DarkGreen  
+        Colors[11] := 'ADFF2F'; // GreenYellow
+
+        Colors[12] := '00FFFF'; // Cyan       
+        Colors[13] := '000080'; // Navy       
+        Colors[14] := '008080'; // Teal       
+
+        Colors[15] := '800000'; // Brown      
+        Colors[16] := 'CD5C5C'; // Indian     
+        Colors[17] := 'FF7F50'; // Coral      
+
+        Colors[18] := '4B0082'; // Indigo     
+        Colors[19] := '6A5ACD'; // Slate      
+        Colors[20] := '483D8B'; // DarkSlate  
+
+        Colors[21] := '808000'; // Olive      
+        Colors[22] := 'DDBB20'; // Golden     
+        Colors[23] := 'F0E68C'; // Khaki      
+
+        clBlack    := '202020';
+
+        K  := 0.13;
+        s2 := sqrt(2);
+
+        C0 := K * sqrt(2 + s2);
+        C1 := K * s2 * sqrt(2 + s2);
+        C2 := K * s2 * (s2 - 1 + 2 * sqrt(2 - s2));
+        C3 := K * s2 * (1 + sqrt(2 + s2));
+
+        S  := 1.0505;
+
+        D1 := K * (2 * sqrt(2 + s2) - s2) * S;
+        D2 := C2 * sqrt((16 * s2 + 23) / 17);
+        D3 := s2 * ((C1 + C3) / 2 * (1 - D1 / C2) + D1);
+
+        Rc := K * 0.9;
+        R1 := D2 / sqrt(4 * s2 + 7) * (1 + s2);
+        R2 := D2 / sqrt(4 * s2 + 7);
+
+        Hx1 := 0;             Hy1 := D1 * s2 - C1 - C3; Hz1 := D1 * s2;
+        Hx2 := (C0 + C2) / 2; Hy2 :=-(C0 + C2) / 2;     Hz2 := (C3 + C2) / 2;
+        Hx3 := D1;            Hy3 :=-D1;                Hz3 := C3 - (D1 - C0) * s2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/4; 0; Pi/4" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "C3" Color = "clBlack" />
+
+        <Macro Name = "MakeBody" >
+            <Cut Color = "Colors[c    ]" ><Plane NormVector = " R2; R1; R1" NormDistance = "-D2" /></Cut>
+            <Cut Color = "Colors[c + 1]" ><Plane NormVector = " R1; R2; R1" NormDistance = "-D2" /></Cut>
+            <Cut Color = "Colors[c + 2]" ><Plane NormVector = " R1; R1; R2" NormDistance = "-D2" /></Cut>
+            <Script>c := c + 3;</Script>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "MakeBody" Repeat = "4" c = "0" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "MakeBody" Repeat = "4" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+
+        <Macro Name = "Unbandage" >
+            <SplitByAxes/>
+            <Turn Axis = "0" Layers = "0;2" Angle = " Pi/4" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layers = "0;2" Angle = " Pi/4" />
+            <SplitByAxes/>
+            <Turn Axis = "2" Layers = "0;2" Angle = " Pi/4" />
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" Repeat = "5" />
+        <Undo Repeat = "15" />
+
+        <Macro Name = "HideParts" >
+            <HideContaining Vector = "   0;   0;  C3" />
+            <HideContaining Vector = " Hx1; Hy1; Hz1" />
+            <HideContaining Vector = " Hx2; Hy2; Hz2" />
+            <HideContaining Vector = " Hx3; Hy3; Hz3" />
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <Macro Name = "HideParts2" >
+            <ExecMacro MacroName = "HideParts" Repeat = "4" />
+            <Turn NormVector = "1;0;0" Angle = "Pi" />
+            <ExecMacro MacroName = "HideParts" Repeat = "4" />
+            <Turn NormVector = "1;0;0" Angle = "Pi" />
+            <Turn NormVector = "1;1;1" Angle = "2*Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "HideParts2" Repeat = "3" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "CutCorner" >
+            <Cut Color = "clBlack" ><Plane NormVector = " 0; 1; s2 + 2" NormDistance = "-D2" /></Cut>
+            <Turn NormVector = "0;0;1" Angle = "Pi/4" />
+        </Macro>
+        <Macro Name = "CutSide" >
+            <Cut Color = "clBlack" ><Plane NormVector = " 0; 0;-1" NormDistance = "-D3" /></Cut>
+            <ExecMacro MacroName = "CutCorner" Repeat = "8" />
+            <Turn NormVector = "1;1;1" Angle = "2*Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "CutSide" Repeat = "3" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutSide" Repeat = "3" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+
+        <Macro Name = "Circle" >
+            <Circle Radius = "Rc" Color = "Colors[c    ]" Center = "-R2;-R1;-R1" />
+            <Circle Radius = "Rc" Color = "Colors[c + 1]" Center = "-R1;-R2;-R1" />
+            <Circle Radius = "Rc" Color = "Colors[c + 2]" Center = "-R1;-R1;-R2" />
+            <Script>c := c + 3;</Script>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Circle" Repeat = "4" c = "0" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "Circle" Repeat = "4" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

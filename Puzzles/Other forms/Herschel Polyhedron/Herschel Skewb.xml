@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Herschel Skewb</Name>
+        <Menu>Other forms\Herschel Polyhedron\Herschel Skewb</Menu>
+        <Menu>Other forms\Skewb variants\Herschel Skewb</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '0000A0';
+        clOrange  := 'FF6000';
+        clRed     := 'FF0000';
+        clGreen   := '008000';
+        clViolett := '800080';
+        clPink    := 'FF69B4';
+        clCoral   := 'FF7F50';
+        clLime    := '00FF00';
+
+        R := 1.4;
+        H := R / sqrt(5);
+        RC := R / 3;
+
+        for i := 0 to 2 do begin
+            x[i] := R * sin(2 * Pi / 3 * i);
+            y[i] := R * cos(2 * Pi / 3 * i);
+        end;
+
+        z := R * sqrt(2) / 4;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3"  PlaneDistances = "0" >
+        <Axis NormVector = "   0;    0; 1" />
+        <Axis NormVector = "x[0]; y[0]; z" />
+        <Axis NormVector = "x[1]; y[1]; z" />
+        <Axis NormVector = "x[2]; y[2]; z" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0];  0" />
+                <Add Vector = "x[1]; y[1];  0" />
+                <Add Vector = "x[2]; y[2];  0" />
+                <Add Vector = "   0;    0;  H" />
+                <Add Vector = "   0;    0; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange " VertexIndexes = "0;3;1" />
+                <Face Color = "clYellow " VertexIndexes = "1;3;2" />
+                <Face Color = "clRed    " VertexIndexes = "2;3;0" />
+                <Face Color = "clViolett" VertexIndexes = "0;1;4" />
+                <Face Color = "clGreen  " VertexIndexes = "1;2;4" />
+                <Face Color = "clBlue   " VertexIndexes = "2;0;4" />
+            </Faces>
+        </Part>
+
+        <Cut Color = " clPink " ><Plane NormVector = "-x[0]; -y[0]; 0" NormDistance = "-RC" /></Cut>
+        <Cut Color = " clCoral "><Plane NormVector = "-x[1]; -y[1]; 0" NormDistance = "-RC" /></Cut>
+        <Cut Color = " clLime " ><Plane NormVector = "-x[2]; -y[2]; 0" NormDistance = "-RC" /></Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

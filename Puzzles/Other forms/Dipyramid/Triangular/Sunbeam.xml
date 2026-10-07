@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sunbeam</Name>
+        <Menu>Other forms\Dipyramid\Triangular\Sunbeam</Menu>
+        <Inventor>Kevin Uhrik</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-07-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8127</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'FFFF00';
+        clBlue   := '0000EE';
+        clOrange := 'FF6600';
+        clRed    := 'FF0000';
+        clGreen  := '00AA00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.8;
+        H := R / sqrt(3);
+
+        for i := 0 to 2 do begin
+            x[i] := R * sin(2 * Pi / 3 * i);
+            y[i] := R * cos(2 * Pi / 3 * i);
+        end;
+
+        D1 := R / 4;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D1" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; 0" />
+                <Add Vector = "x[1]; y[1]; 0" />
+                <Add Vector = "x[2]; y[2]; 0" />
+
+                <Add Vector = " 0; 0; H" />
+                <Add Vector = " 0; 0;-H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange" VertexIndexes = "3;1;0" />
+                <Face Color = "clYellow" VertexIndexes = "3;2;1" />
+                <Face Color = "clGreen " VertexIndexes = "3;0;2" />
+                <Face Color = "clWhite " VertexIndexes = "4;0;1" />
+                <Face Color = "clBlue  " VertexIndexes = "4;1;2" />
+                <Face Color = "clRed   " VertexIndexes = "4;2;0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/2" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+    </Figure>
+</xml>

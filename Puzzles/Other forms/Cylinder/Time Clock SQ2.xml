@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Time Clock SQ2</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other forms\Cylinder\Time Clock SQ2</Menu>
+        <Menu>Other forms\Square-1\Time Clock SQ2</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Added>2018-09-24</Added>
+        <Programmer>Skallos</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7001</Link>
+    </Interface>
+
+    <Script>
+        H := 0.7;
+        R := 0.50;
+
+        C := 0.001;
+        DC := (-R * C + H / 2) / sqrt(C^2 + 1) * 0.99;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-H/6; H/6" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Radius = "R" Color = "FFFF00" >
+            <Base X = "0" Y = "0" Z = "-H/6" />
+            <Top  X = "0" Y = "0" Z = "-H/2" Color = "FFFF00"/>
+        </Cylinder>
+        <Cylinder Radius = "R" Color = "444444" >
+            <Base X = "0" Y = "0" Z = " H/6" />
+            <Top  X = "0" Y = "0" Z = "-H/6"/>
+        </Cylinder>
+        <Cylinder Radius = "R" Color = "FFFFFF" >
+            <Base X = "0" Y = "0" Z = " H/2" Color = "FFFFFF"/>
+            <Top  X = "0" Y = "0" Z = " H/6" />
+        </Cylinder>
+
+        <!-- for solving procedure -->
+        <Cut Color = "FFFF01" > <Plane NormVector = "-C;  0;  1" NormDistance = "-DC" /> </Cut>
+        <Cut Color = "FFFFFE" > <Plane NormVector = " C;  0; -1" NormDistance = "-DC" /> </Cut>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+            <Split Axis = "1" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "5" />
+        <Undo Repeat = "5" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_06.vec" />
+        <Texture Name = "tm_07" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_07.vec" />
+        <Texture Name = "tm_08" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_08.vec" />
+        <Texture Name = "tm_09" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_09.vec" />
+        <Texture Name = "tm_10" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_10.vec" />
+        <Texture Name = "tm_11" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_11.vec" />
+        <Texture Name = "tm_12" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_12.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 = 19,7, 6,  4,7,6
+        tm_02 = 25,7, 6,  3,7,6
+        tm_03 = 24,7, 6,  2,7,6
+        tm_04 = 23,7, 6,  1,7,6
+        tm_05 = 22,7,10,  0,7,6
+        tm_06 = 21,7, 7,  6,7,6
+        tm_07 = 20,7, 7,  7,7,6
+        tm_08 = 14,7, 6,  8,7,6
+        tm_09 = 15,7, 6,  9,7,1
+        tm_10 = 16,7, 6, 10,7,6
+        tm_11 = 17,7, 6, 11,7,7
+        tm_12 = 18,7, 6,  5,7,6
+    </SetTextures>
+</xml>

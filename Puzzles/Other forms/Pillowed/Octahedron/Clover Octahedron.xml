@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Clover Octahedron</Name>
+        <Menu>Other forms\Pillowed\Octahedron\Clover Octahedron</Menu>
+        <Inventor>Leslie Le</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6151</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF6000'; // Orange
+        Colors[1] := '0088FF'; // Blue2
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := '00FF00'; // Green1
+        Colors[4] := '8800DD'; // Violett
+        Colors[5] := 'FF0000'; // Red
+        Colors[6] := '007700'; // Green3
+        Colors[7] := '0000EE'; // Blue3
+
+        K := 0.6;
+
+        nA := 1;
+        n0 := 1 + sqrt(2);
+
+        A1 := ArcCos(-1 / (7 + 4 * sqrt(2)));
+
+        D := K * 1.075;
+        f1 := K * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi" AvailableAngles = "-A1; 0; A1" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "  0; nA; n0" />
+        <Axis NormVector = " nA;  0; n0" />
+        <Axis NormVector = "  0;-nA; n0" />
+        <Axis NormVector = "-nA;  0; n0" />
+
+        <Axis NormVector = "  0; n0; nA" />
+        <Axis NormVector = " nA; n0;  0" />
+        <Axis NormVector = "  0; n0;-nA" />
+        <Axis NormVector = "-nA; n0;  0" />
+
+        <Axis NormVector = " n0;  0; nA" />
+        <Axis NormVector = " n0; nA;  0" />
+        <Axis NormVector = " n0;  0;-nA" />
+        <Axis NormVector = " n0;-nA;  0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "HalfBody" >
+            <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+
+            <RemoveContaining Vector = "-f1;-f1;-f1" />
+            <RemoveContaining Vector = " f1;-f1; f1" />
+            <RemoveContaining Vector = " f1; f1;-f1" />
+            <RemoveContaining Vector = "-f1; f1; f1" />
+        </Macro>
+
+        <ExecMacro MacroName = "HalfBody" />
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <HideAll/>
+
+        <Script>
+            Colors[0] := Colors[4];
+            Colors[1] := Colors[5];
+            Colors[2] := Colors[6];
+            Colors[3] := Colors[7];
+        </Script>
+
+        <ExecMacro MacroName = "HalfBody" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

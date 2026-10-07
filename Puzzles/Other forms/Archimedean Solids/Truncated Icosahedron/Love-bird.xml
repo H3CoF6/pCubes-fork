@@ -1,0 +1,131 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Love-Bird</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Icosahedron\Love-Bird</Menu>
+        <Inventor>Leslie Le</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-02-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5649</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFF00'; // ArtyClick Yellow
+        Colors[ 1] := '004080'; // Deep Sea Blue
+        Colors[ 2] := '4070FF'; // Ultramarine Blue
+        Colors[ 3] := '00FF00'; // Hot Green
+        Colors[ 4] := 'FFFFFF'; // White
+
+        Colors[ 5] := 'FF0000'; // Bright Red
+        Colors[ 6] := 'FF0080'; // Deep Pink
+        Colors[ 7] := '800080'; // Dark Magenta
+        Colors[ 8] := 'BF8040'; // Tiger Orange
+        Colors[ 9] := '309060'; // Sea Green
+
+        Colors[10] := 'FACC05'; // Mikado Yellow
+        Colors[11] := '734082'; // Dirty Purple
+        Colors[12] := 'E23465'; // Deep Rose
+        Colors[13] := '008000'; // Tree Green
+        Colors[14] := 'C1C5C7'; // Metallic Silver
+
+        Colors[15] := 'FF800A'; // Dark Orange
+        Colors[16] := '4D1350'; // Deep Violet
+        Colors[17] := '9F0000'; // Dark Red
+        Colors[18] := '7F8040'; // Khaki Green
+        Colors[19] := '80BF80'; // Soft Green (Olivine)
+
+        Colors[20] := '51C4FA'; // Crystal Blue
+        Colors[21] := '075AFF'; // Bright Blue
+        Colors[22] := 'FF8009'; // Dark Orange
+        Colors[23] := 'FFFFFE'; // White
+        Colors[24] := 'FACC06'; // Mikado Yellow
+        Colors[25] := '01FF00'; // Hot Green
+        Colors[26] := 'FFFF01'; // ArtyClick Yellow
+        Colors[27] := '018000'; // Tree Green
+        Colors[28] := '38ABEA'; // Butterfly Blue
+        Colors[29] := 'FF0001'; // Bright Red
+        Colors[30] := 'C1C5C8'; // Metallic Silver
+        Colors[31] := '009484'; // Teal (Dark Cyan)
+
+        R := 0.7;
+
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        RCut := (2 * R + RSin) / 3;
+
+        D1 := Rin - R * cos(dAngle) / 6;
+        D2 := (R + RSin) / 2;
+
+        // Edges pairs (edge is a pair of vertices)
+
+        v1[ 0] :=  0; v2[ 0] :=  1;
+        v1[ 1] :=  0; v2[ 1] :=  2;
+        v1[ 2] :=  0; v2[ 2] :=  3;
+        v1[ 3] :=  0; v2[ 3] :=  4;
+        v1[ 4] :=  0; v2[ 4] :=  5;
+        v1[ 5] :=  1; v2[ 5] :=  2;
+        v1[ 6] :=  2; v2[ 6] :=  3;
+        v1[ 7] :=  3; v2[ 7] :=  4;
+        v1[ 8] :=  4; v2[ 8] :=  5;
+        v1[ 9] :=  5; v2[ 9] :=  1;
+        v1[10] :=  1; v2[10] :=  6;
+        v1[11] :=  2; v2[11] :=  7;
+        v1[12] :=  3; v2[12] :=  8;
+        v1[13] :=  4; v2[13] :=  9;
+        v1[14] :=  5; v2[14] := 10;
+        v1[15] :=  1; v2[15] := 10;
+        v1[16] :=  2; v2[16] :=  6;
+        v1[17] :=  3; v2[17] :=  7;
+        v1[18] :=  4; v2[18] :=  8;
+        v1[19] :=  5; v2[19] :=  9;
+        v1[20] :=  6; v2[20] :=  7;
+        v1[21] :=  7; v2[21] :=  8;
+        v1[22] :=  8; v2[22] :=  9;
+        v1[23] :=  9; v2[23] := 10;
+        v1[24] := 10; v2[24] :=  6;
+        v1[25] := 11; v2[25] :=  6;
+        v1[26] := 11; v2[26] :=  7;
+        v1[27] := 11; v2[27] :=  8;
+        v1[28] := 11; v2[28] :=  9;
+        v1[29] := 11; v2[29] := 10;
+
+        K := 0.4;
+        for i := 0 to 29 do begin
+            VBx[i*2  ] := K * Vx[V1[i]] + (1-K) * Vx[V2[i]];
+            VBy[i*2  ] := K * Vy[V1[i]] + (1-K) * Vy[V2[i]];
+            VBz[i*2  ] := K * Vz[V1[i]] + (1-K) * Vz[V2[i]];
+            VBx[i*2+1] := K * Vx[V2[i]] + (1-K) * Vx[V1[i]];
+            VBy[i*2+1] := K * Vy[V2[i]] + (1-K) * Vy[V1[i]];
+            VBz[i*2+1] := K * Vz[V2[i]] + (1-K) * Vz[V1[i]];
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D1" FixedLayers = "0" NormVectors = "Cx; Cy; Cz" />
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D2" FixedLayers = "0" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <Macro Name = "CutV" >
+            <Cut Color="Colors[v + 20]" > <Plane NormVector = " Vx[v]; Vy[v]; Vz[v]" NormDistance = "-RCut" /> </Cut>
+            <Script>Inc(v);</Script>
+        </Macro>
+
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <ExecMacro MacroName = "CutV" v = "0" Repeat = "12" />
+        <SplitByAxes/>
+        <HideContaining Vector = "VBx;VBy;VBz" />
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 31 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <ExecMacro MacroName = "CutV" v = "0" Repeat = "12" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "VBx;VBy;VBz" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+    <Interface>
+        <Name>Void Dodecahedron (Void Megaminx)</Name>
+        <Menu>Other forms\FT Void Puzzles\Void Dodecahedron (Void Megaminx)</Menu>
+        <Inventor>Lee Tutt</Inventor>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        mAngle := ArcTan(0.5);
+        sAngle := PI * 2 / 5;
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+        D2 := 0.709 * R;
+        
+        bx[0] := 0;
+        by[0] := 0;
+        bz[0] := R;
+        
+        for i := 1 to 5 do begin
+            bx[i] := R * sin(sAngle * (i - 1)) * Ac;
+            by[i] := R * cos(sAngle * (i - 1)) * Ac;
+            bz[i] := R * As;
+        end;
+        for i := 6 to 10 do begin
+            bx[i] := R * Ac * sin(sAngle * (i - 0.5));
+            by[i] := R * Ac * cos(sAngle * (i - 0.5));
+            bz[i] := -R * As;
+        end;
+        
+        bx[11] := 0;
+        by[11] := 0;
+        bz[11] := -R;
+        
+        for i := 0 to 11 do begin
+            dx[i] := bx[i] * D2 / R;
+            dy[i] := by[i] * D2 / R;
+            dz[i] := bz[i] * D2 / R;
+        end;
+    </Script>
+    
+    <Axes TurningAngles = "Pi * 2 / 5" PlaneDistances = "0.45" FixedLayer = "0">
+        <Axis NormVector = " bx[0]; by[0]; bz[0]"/>
+        <Axis NormVector = " bx[1]; by[1]; bz[1]"/>
+        <Axis NormVector = " bx[2]; by[2]; bz[2]"/>
+        <Axis NormVector = " bx[3]; by[3]; bz[3]"/>
+        <Axis NormVector = " bx[4]; by[4]; bz[4]"/>
+        <Axis NormVector = " bx[5]; by[5]; bz[5]"/>
+        <Axis NormVector = "-bx[0];-by[0];-bz[0]"/>
+        <Axis NormVector = "-bx[1];-by[1];-bz[1]"/>
+        <Axis NormVector = "-bx[2];-by[2];-bz[2]"/>
+        <Axis NormVector = "-bx[3];-by[3];-bz[3]"/>
+        <Axis NormVector = "-bx[4];-by[4];-bz[4]"/>
+        <Axis NormVector = "-bx[5];-by[5];-bz[5]"/>
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0"/>
+
+        <RemoveContaining Vector = " dx[0]; dy[0]; dz[0]"/>
+        <RemoveContaining Vector = " dx[1]; dy[1]; dz[1]"/>
+        <RemoveContaining Vector = " dx[2]; dy[2]; dz[2]"/>
+        <RemoveContaining Vector = " dx[3]; dy[3]; dz[3]"/>
+        <RemoveContaining Vector = " dx[4]; dy[4]; dz[4]"/>
+        <RemoveContaining Vector = " dx[5]; dy[5]; dz[5]"/>
+        <RemoveContaining Vector = " dx[6]; dy[6]; dz[6]"/>
+        <RemoveContaining Vector = " dx[7]; dy[7]; dz[7]"/>
+        <RemoveContaining Vector = " dx[8]; dy[8]; dz[8]"/>
+        <RemoveContaining Vector = " dx[9]; dy[9]; dz[9]"/>
+        <RemoveContaining Vector = "dx[10];dy[10];dz[10]"/>
+        <RemoveContaining Vector = "dx[11];dy[11];dz[11]"/>
+    </Figure>
+</xml>

@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Animal Cube - Goat, Cabbage and Wolf 2</Name>
+        <Menu>Cubic\Constrained\Animal Cube\Goat, Cabbage and Wolf 2</Menu>
+        <Class>TTenon</Class>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-06-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3855</Link>
+    </Interface>
+ 
+   <Script>
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Textures>
+        <Texture Name = "Wolf"    File = "Textures\Wolf.vec" />
+        <Texture Name = "Goat"    File = "Textures\Goat.vec" />
+        <Texture Name = "Cabbage" File = "Textures\Cabbage.vec" />
+    </Textures>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <HideContaining Vector = " 0;-W; 0" />
+        <InvertVisibility/>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" ><Plane NormVector = " 0;-1; 0" NormDistance = "W * 0.99" /></Split>
+        <ShowAll/>
+
+        <HideContaining Vector = " W; 0; 0" />
+        <InvertVisibility/>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" ><Plane NormVector = " 1; 0; 0" NormDistance = "W * 0.99" /></Split>
+        <ShowAll/>
+
+        <Script>
+            procedure AddTexture(TextureName, x, y, z, nx, ny, nz, Rotate);
+            begin
+              PartNo := CallGlobal('GetVisiblePartContaining', x, y, z);
+              FaceNo := CallGlobal('FindFaceByNorm', PartNo, nx, ny, nz);
+              CallGlobal('SetTexture', TextureName, PartNo, FaceNo, Rotate);
+            end;
+
+            AddTexture('Wolf',     W,-W, W,  1, 0, 0,  1);
+            AddTexture('Wolf',     W,-W, W,  0,-1, 0,  1);
+            AddTexture('Wolf',     W,-W, W,  0, 0, 1,  1);
+                                  
+            AddTexture('Wolf',    -W,-W,-W, -1, 0, 0,  1);
+            AddTexture('Wolf',    -W,-W,-W,  0,-1, 0,  1);
+            AddTexture('Wolf',    -W,-W,-W,  0, 0,-1,  1);
+                                  
+            AddTexture('Wolf',     W, W,-W,  1, 0, 0,  1);
+            AddTexture('Wolf',     W, W,-W,  0, 1, 0,  1);
+            AddTexture('Wolf',     W, W,-W,  0, 0,-1,  1);
+                                  
+            AddTexture('Goat',     0, W, W,  0, 1, 0,  1);
+            AddTexture('Goat',     0, W, W,  0, 0, 1,  0);
+                                  
+            AddTexture('Goat',    -W, 0, W, -1, 0, 0,  1);
+            AddTexture('Goat',    -W, 0, W,  0, 0, 1,  0);
+                                  
+            AddTexture('Goat',    -W, W, 0, -1, 0, 0,  1);
+            AddTexture('Goat',    -W, W, 0,  0, 1, 0,  0);
+
+            AddTexture('Cabbage',  0,-W, 0,  0,-1, 0,  3);
+            AddTexture('Cabbage',  W, 0, 0,  1, 0, 0,  3);
+
+            // Add tenon or groove to every gray side
+            for PartNo := 0 to 27 do begin
+              Goat := False;
+              Wolf := False;
+              Cabbage := False;
+              for FaceNo := 0 to 5 do begin
+                TextureName := CallGlobal('GetTexture', PartNo, FaceNo);
+                if TextureName = 'Wolf' then
+                  Wolf := True;
+                if TextureName = 'Goat' then
+                  Goat := True;
+                if TextureName = 'Cabbage' then
+                  Cabbage := True;
+              end;
+              for FaceNo := 0 to 5 do
+                if CallGlobal('GetColor', PartNo, FaceNo) = '-1' then begin // if gray
+                  if Wolf then
+                    CallGlobal('SetTenon', 1, PartNo, FaceNo)
+                  else if not Goat then
+                    CallGlobal('SetGroove', 1, PartNo, FaceNo);
+                  if Cabbage then
+                    CallGlobal('SetTenon', 2, PartNo, FaceNo) // tenon "radius" = 2
+                  else if not Goat then
+                    CallGlobal('SetGroove', 2, PartNo, FaceNo);
+                end;
+            end;
+        </Script>
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

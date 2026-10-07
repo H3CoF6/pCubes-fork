@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Six Windmills Void</Name>
+        <Menu>Other forms\3x3x3 variants\Six Windmills Void</Menu>
+        <Inventor>Mark Lodge</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10611</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        D := W / 3;
+        W1 := W - D;
+        W2 := (2 * W - D) / sqrt(5);
+
+        RCut := (D + 2 * W1) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "SplitSide" >
+            <HideContaining Vector = " W; D; W" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = " 2; 1; 0" NormDistance = " W2" /></Cut>
+            <ShowAll/>
+
+            <HideContaining Vector = " W;-D; D*1.1" />
+            <InvertVisibility/>
+            <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" ><Plane NormVector = " 0; 1; 0" NormDistance = "-W1" /></Split>
+            <ShowAll/>
+            <Turn NormVector = "1; 0; 0" Angle = "Pi/2" />
+        </Macro>
+
+        <Macro Name = "AddSide" >
+            <HideAll/>
+            <LoadFrom File = "Figures\CubeMono.xml" Color = "Colors[c]" Width = "W" />
+            <Cut><Plane NormVector = "1; 0; 0" NormDistance = "W1" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0;-1; 2" NormDistance = "-W2" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0; 2; 1" NormDistance = "-W2" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0; 1;-2" NormDistance = "-W2" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0;-2;-1" NormDistance = "-W2" /></Cut>
+            <SplitByAxes/>
+            <ShowAll/>
+            <ExecMacro MacroName = "SplitSide" Repeat = "4" />
+            <Turn NormVector = "1; 1; 1" Angle = "2*Pi/3" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSide" c = "1" />
+        <ExecMacro MacroName = "AddSide" c = "5" />
+        <ExecMacro MacroName = "AddSide" c = "3" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSide" c = "2" />
+        <ExecMacro MacroName = "AddSide" c = "4" />
+        <ExecMacro MacroName = "AddSide" c = "0" />
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+
+        <HideAll/>
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "W1" />
+        <SplitByAxes/>
+
+        <Cut><Plane NormVector = "-1;-1;-1" NormDistance = "-RCut" /></Cut>
+        <Cut><Plane NormVector = "-1;-1; 1" NormDistance = "-RCut" /></Cut>
+        <Cut><Plane NormVector = "-1; 1;-1" NormDistance = "-RCut" /></Cut>
+        <Cut><Plane NormVector = "-1; 1; 1" NormDistance = "-RCut" /></Cut>
+        <Cut><Plane NormVector = " 1;-1;-1" NormDistance = "-RCut" /></Cut>
+        <Cut><Plane NormVector = " 1;-1; 1" NormDistance = "-RCut" /></Cut>
+        <Cut><Plane NormVector = " 1; 1;-1" NormDistance = "-RCut" /></Cut>
+        <Cut><Plane NormVector = " 1; 1; 1" NormDistance = "-RCut" /></Cut>
+        <ShowAll/>
+
+        <RemoveContaining Vector = "  0;  0;  0" />
+        <RemoveContaining Vector = "-W1;  0;  0" />
+        <RemoveContaining Vector = " W1;  0;  0" />
+        <RemoveContaining Vector = "  0;-W1;  0" />
+        <RemoveContaining Vector = "  0; W1;  0" />
+        <RemoveContaining Vector = "  0;  0;-W1" />
+        <RemoveContaining Vector = "  0;  0; W1" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

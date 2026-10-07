@@ -1,0 +1,133 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Fisher</Name>
+        <Menu>Other forms\Unclassified\Dino Fisher</Menu>
+        <Inventor>José Ramírez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-05-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9913</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / sqrt(6);
+        sAngle := 2 * Pi / 3;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "Pi/4" />
+
+        // bottom
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Color1 = "Colors[4]" Axis = "0" From = "1" />
+        <Split Color1 = "Colors[4]" Axis = "1" From = "1" />
+        <Split Color1 = "Colors[4]" Axis = "2" From = "1" />
+        <Split Color1 = "Colors[4]" Axis = "3" From = "1" />
+
+        <Split Color2 = "Colors[3]" Axis = "0" From = "2" />
+        <Split Color2 = "Colors[2]" Axis = "1" From = "2" />
+        <Split Color2 = "Colors[1]" Axis = "2" From = "2" />
+        <Split Color2 = "Colors[0]" Axis = "3" From = "2" />
+
+        <HideContaining Vector = " W; W;-W" />
+        <HideContaining Vector = " W;-W;-W" />
+        <HideContaining Vector = "-W;-W;-W" />
+        <HideContaining Vector = "-W; W;-W" />
+        <RemoveAllVisible/>
+
+        // top
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Color1 = "Colors[2]" Axis = "0" From = "1" />
+        <Split Color1 = "Colors[3]" Axis = "1" From = "1" />
+        <Split Color1 = "Colors[0]" Axis = "2" From = "1" />
+        <Split Color1 = "Colors[1]" Axis = "3" From = "1" />
+
+        <Split Color2 = "Colors[5]" Axis = "0" From = "2" />
+        <Split Color2 = "Colors[5]" Axis = "1" From = "2" />
+        <Split Color2 = "Colors[5]" Axis = "2" From = "2" />
+        <Split Color2 = "Colors[5]" Axis = "3" From = "2" />
+
+        <HideContaining Vector = " W; W; W" />
+        <HideContaining Vector = " W;-W; W" />
+        <HideContaining Vector = "-W;-W; W" />
+        <HideContaining Vector = "-W; W; W" />
+        <RemoveAllVisible/>
+
+        // middle
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Color1 = "Colors[2]" Axis = "0" From = "1" />
+        <Split Color1 = "Colors[3]" Axis = "1" From = "1" />
+        <Split Color1 = "Colors[0]" Axis = "2" From = "1" />
+        <Split Color1 = "Colors[1]" Axis = "3" From = "1" />
+
+        <Split Color2 = "Colors[3]" Axis = "0" From = "2" />
+        <Split Color2 = "Colors[2]" Axis = "1" From = "2" />
+        <Split Color2 = "Colors[1]" Axis = "2" From = "2" />
+        <Split Color2 = "Colors[0]" Axis = "3" From = "2" />
+
+        <HideContaining Vector = " W; 0; 0" />
+        <HideContaining Vector = "-W; 0; 0" />
+        <HideContaining Vector = " 0; W; 0" />
+        <HideContaining Vector = " 0;-W; 0" />
+        <RemoveAllVisible/>
+
+        // gray
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <HideContaining Vector = " W/2;   0; W/2" />
+        <HideContaining Vector = "-W/2;   0; W/2" />
+        <HideContaining Vector = "   0; W/2; W/2" />
+        <HideContaining Vector = "   0;-W/2; W/2" />
+        <HideContaining Vector = " W/2;   0;-W/2" />
+        <HideContaining Vector = "-W/2;   0;-W/2" />
+        <HideContaining Vector = "   0; W/2;-W/2" />
+        <HideContaining Vector = "   0;-W/2;-W/2" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <Macro Name = "AddState" >
+            <Turn Axis = "2" Layers = "2" Angle = "-sAngle" />
+            <Turn Axis = "1" Layers = "0" Angle = " sAngle" />
+            <Turn Axis = "0" Layers = "2" Angle = "-sAngle" />
+            <Turn Axis = "1" Layers = "0" Angle = "-sAngle" />
+            <Turn Axis = "0" Layers = "2" Angle = "-sAngle" />
+            <Turn Axis = "3" Layers = "2" Angle = " sAngle" />
+            <Turn Axis = "0" Layers = "2" Angle = "-sAngle" />
+            <Turn Axis = "1" Layers = "2" Angle = "-sAngle" />
+            <Turn Axis = "3" Layers = "2" Angle = " sAngle" />
+            <Turn Axis = "1" Layers = "2" Angle = " sAngle" />
+            <Turn Axis = "3" Layers = "2" Angle = "-sAngle" />
+            <Turn Axis = "2" Layers = "0" Angle = "-sAngle" />
+            <Turn Axis = "3" Layers = "2" Angle = " sAngle" />
+            <Turn Axis = "2" Layers = "0" Angle = " sAngle" />
+            <Turn Axis = "0" Layers = "0" Angle = "-sAngle" />
+            <Turn Axis = "2" Layers = "0" Angle = "-sAngle" />
+            <Turn Axis = "1" Layers = "2" Angle = "-sAngle" />
+            <Turn Axis = "3" Layers = "2" Angle = " sAngle" />
+            <Turn Axis = "1" Layers = "2" Angle = " sAngle" />
+            <Turn Axis = "3" Layers = "2" Angle = "-sAngle" />
+            <SaveSolvedState/>
+        </Macro>
+        <ExecMacro MacroName = "AddState" Repeat = "2" />
+        <Undo Repeat = "40" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

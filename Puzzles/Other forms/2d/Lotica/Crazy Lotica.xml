@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Lotica</Name>
+        <Menu>Other forms\2d\Lotica\Crazy Lotica</Menu>
+        <Inventor>Jose Romero</Inventor>
+        <Programmer>xchemist + Skallos</Programmer>
+        <Added>2022-12-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9251</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clGreen  := '00BB00';
+        clBlack  := '333333';
+
+        K := 0.6;
+        D1 := K * 0.7115;
+        D2 := K * 0.85;
+
+        DCut := D1 - K * 0.09;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D1" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2" PlaneDistances = "D1; D2" >
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSegment" Color = "clGreen" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "1" From = "1" />
+
+        <ExecMacro MacroName = "AddSegment" Color = "clYellow" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+
+        <ExecMacro MacroName = "AddSegment" Color = "clRed" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+
+        <ExecMacro MacroName = "AddSegment" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 0" NormDistance = " DCut" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = " DCut" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSegment" Color = "clBlack" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 0;-1; 0" NormDistance = " DCut" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSegment" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormVector = " 1;-1; 0" NormDistance = " DCut" /> </Cut>
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "0" Layer = "1" Angle = " Pi" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layers = "1;2" Angle = " Pi/2" />
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "Unbandage" Repeat = "8" />
+        <Undo Repeat = "16" />
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/8" />
+
+        <SaveSolvedState/>
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

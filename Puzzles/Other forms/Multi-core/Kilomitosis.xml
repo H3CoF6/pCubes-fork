@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Kilomitosis</Name>
+        <Menu>Other forms\Multi-core\Kilomitosis</Menu>
+        <Inventor>Mauricio Andrés Covarrubias Benavides</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-06-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11961</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        D := (Rsin + R2sin) / 2;
+        DD := (RSin - D) / As / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D">
+        <Axis NormVector = " Cx[ 0]; Cy[ 0]; Cz[ 0]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = " Cx[ 1]; Cy[ 1]; Cz[ 1]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = " Cx[ 2]; Cy[ 2]; Cz[ 2]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = " Cx[ 3]; Cy[ 3]; Cz[ 3]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = " Cx[ 4]; Cy[ 4]; Cz[ 4]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = " Cx[ 5]; Cy[ 5]; Cz[ 5]" BaseVector = " 0; 0; DD" />
+        <Axis NormVector = " Cx[ 6]; Cy[ 6]; Cz[ 6]" BaseVector = " 0; 0;-DD" />
+        <Axis NormVector = " Cx[ 7]; Cy[ 7]; Cz[ 7]" BaseVector = " 0; 0;-DD" />
+        <Axis NormVector = " Cx[ 8]; Cy[ 8]; Cz[ 8]" BaseVector = " 0; 0;-DD" />
+        <Axis NormVector = " Cx[ 9]; Cy[ 9]; Cz[ 9]" BaseVector = " 0; 0;-DD" />
+        <Axis NormVector = " Cx[10]; Cy[10]; Cz[10]" BaseVector = " 0; 0;-DD" />
+        <Axis NormVector = " Cx[11]; Cy[11]; Cz[11]" BaseVector = " 0; 0;-DD" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Split" >
+            <Turn Axis = "ax" Layer = "1" Angle = "2 * sAngle" />
+            <SplitByAxes/>
+            <Undo/>
+            <Script>Inc(Ax);</Script>
+        </Macro>
+
+        <Transfer Vector = " 0; 0;-DD" />
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <ExecMacro MacroName = "Split" ax = "0" Repeat = "12" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <HideContaining Vectors = " Vx; Vy; Vz" />
+        <RemoveAllVisible/>
+        <Transfer Vector = " 0; 0; DD" />
+
+        <Transfer Vector = " 0; 0; DD" />
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <ExecMacro MacroName = "Split" ax = "0" Repeat = "12" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <HideContaining Vectors = " Vx; Vy; Vz" />
+        <RemoveAllVisible/>
+        <Transfer Vector = " 0; 0;-DD" />
+
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := -1;
+        </Script>
+
+        <Transfer Vector = " 0; 0;-DD" />
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <ExecMacro MacroName = "Split" ax = "0" Repeat = "12" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <RemoveContaining Vectors = " Vx; Vy; Vz" />
+        <Transfer Vector = " 0; 0; DD" />
+        <HideAll/>
+
+        <Transfer Vector = " 0; 0; DD" />
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <ExecMacro MacroName = "Split" ax = "0" Repeat = "12" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <RemoveContaining Vectors = " Vx; Vy; Vz" />
+        <Transfer Vector = " 0; 0;-DD" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

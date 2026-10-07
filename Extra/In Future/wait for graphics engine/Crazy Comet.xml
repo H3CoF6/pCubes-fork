@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+visualization-engin must be updated
+
+
+    <Interface>
+        <Name>Crazy Comet</Name>
+        <Menu>Grigr\Crazy Comet</Menu>
+        <Inventor>Oskar</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-01-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1523</Link>
+    </Interface>
+
+    <Script>
+        clBlue         := '0000A0';
+        clViolett      := '800080';
+        clGreen        := '008000';
+        clBrown        := '800000';
+        clYellow       := 'FFFF00';
+        clRed          := 'FF0000';
+        clGray         := '505050';
+        clLightBlue    := '4848FF';
+        clLightViolett := 'FF1090';
+        clLightGreen   := '00FF00';
+        clCyan         := '00DCB4';
+        clOrange       := 'FF6000';
+        clWhite        := 'FFFFFF';
+
+        p0 := 0.75;
+        p1 := 0.8;
+        p2 := 5/6;
+
+        p3 := 0.2;
+        p4 := 0.5;
+        p5 := 1/6;
+        p6 := 1/30;
+        p7 := 0.1 + 2/3;
+
+        D  := 0.565685425;
+
+        A1 := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "A1" PlaneDistances = "-D; D " FixedLayers = "1" >
+        <Axis NormVector = "1;  1;  0" /> 0
+        <Axis NormVector = "1; -1;  0" /> 1
+        <Axis NormVector = "1;  0;  1" /> 2
+        <Axis NormVector = "1;  0; -1" /> 3
+        <Axis NormVector = "0;  1;  1" /> 4
+        <Axis NormVector = "0;  1; -1" /> 5
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;   0;  p0" /> 0 Верх
+                <Add Vector = " p3;   0;  p1" /> 1
+                <Add Vector = "  0; -p3;  p1" /> 2
+                <Add Vector = "-p3;   0;  p1" /> 3
+                <Add Vector = "  0;  p3;  p1" /> 4
+
+                <Add Vector = " p5; -p5;  p2" /> 5
+                <Add Vector = "-p5; -p5;  p2" /> 6
+                <Add Vector = "-p5;  p5;  p2" /> 7
+                <Add Vector = " p5;  p5;  p2" /> 8
+
+                <Add Vector = " p4; -p4;  p4" /> 9 Углы
+                <Add Vector = "-p4; -p4;  p4" /> 10
+                <Add Vector = "-p4;  p4;  p4" /> 11
+                <Add Vector = " p4;  p4;  p4" /> 12
+
+                <Add Vector = " p0;   0;   0" /> 13 Право
+
+                <Add Vector = " p1;   0;  p3" /> 14
+                <Add Vector = " p1;  p3;   0" /> 15
+                <Add Vector = " p1;   0; -p3" /> 16
+                <Add Vector = " p1; -p3;   0" /> 17
+
+                <Add Vector = " p2;  p5;  p5" /> 18
+                <Add Vector = " p2;  p5; -p5" /> 19
+                <Add Vector = " p2; -p5; -p5" /> 20
+                <Add Vector = " p2; -p5;  p5" /> 21
+
+                <Add Vector = "  0; -p0;   0" /> 22 Перед
+
+                <Add Vector = "  0; -p1;  p3" /> 23
+                <Add Vector = " p3; -p1;   0" /> 24
+                <Add Vector = "  0; -p1; -p3" /> 25
+                <Add Vector = "-p3; -p1;   0" /> 26
+
+                <Add Vector = "-p5; -p2;  p5" /> 27
+                <Add Vector = "-p5; -p2; -p5" /> 28
+                <Add Vector = " p5; -p2; -p5" /> 29
+                <Add Vector = " p5; -p2;  p5" /> 30
+
+                <Add Vector = "-p0;   0;   0" /> 31 Лево
+
+                <Add Vector = "-p1;   0;  p3" /> 32
+                <Add Vector = "-p1; -p3;   0" /> 33
+                <Add Vector = "-p1;   0; -p3" /> 34
+                <Add Vector = "-p1;  p3;   0" /> 35
+
+                <Add Vector = "-p2;  p5;  p5" /> 36
+                <Add Vector = "-p2;  p5; -p5" /> 37
+                <Add Vector = "-p2; -p5; -p5" /> 38
+                <Add Vector = "-p2; -p5;  p5" /> 39
+
+                <Add Vector = "  0;  p0;   0" /> 40 Тыл
+
+                <Add Vector = "  0;  p1;  p3" /> 41
+                <Add Vector = "-p3;  p1;   0" /> 42
+                <Add Vector = "  0;  p1; -p3" /> 43
+                <Add Vector = " p3;  p1;   0" /> 44
+
+                <Add Vector = " p5;  p2;  p5" /> 45
+                <Add Vector = " p5;  p2; -p5" /> 46
+                <Add Vector = "-p5;  p2; -p5" /> 47
+                <Add Vector = "-p5;  p2;  p5" /> 48
+
+                <Add Vector = " p4; -p4; -p4" /> 49 Углы
+                <Add Vector = "-p4; -p4; -p4" /> 50
+                <Add Vector = "-p4;  p4; -p4" /> 51
+                <Add Vector = " p4;  p4; -p4" /> 52
+
+                <Add Vector = "  0;   0; -p0" /> 53 Низ
+                <Add Vector = " p3;   0; -p1" /> 54
+                <Add Vector = "  0; -p3; -p1" /> 55
+                <Add Vector = "-p3;   0; -p1" /> 56
+                <Add Vector = "  0;  p3; -p1" /> 57
+
+                <Add Vector = " p5; -p5; -p2" /> 58
+                <Add Vector = "-p5; -p5; -p2" /> 59
+                <Add Vector = "-p5;  p5; -p2" /> 60
+                <Add Vector = " p5;  p5; -p2" /> 61
+<!--
+                <Add Vector = " p6;  p6;  p7" /> 62 Верх
+                <Add Vector = " p6; -p6;  p7" /> 63
+                <Add Vector = "-p6; -p6;  p7" /> 64
+                <Add Vector = "-p6;  p6;  p7" /> 65
+
+                <Add Vector = " p7;  p6;  p6" /> 66 Право
+                <Add Vector = " p7;  p6; -p6" /> 67
+                <Add Vector = " p7; -p6; -p6" /> 68
+                <Add Vector = " p7; -p6;  p6" /> 69
+
+                <Add Vector = " p6; -p7;  p6" /> 70 Перед
+                <Add Vector = " p6; -p7; -p6" /> 71
+                <Add Vector = "-p6; -p7; -p6" /> 72
+                <Add Vector = "-p6; -p7;  p6" /> 73
+
+                <Add Vector = "-p7; -p6;  p6" /> 74 Лево
+                <Add Vector = "-p7; -p6; -p6" /> 75
+                <Add Vector = "-p7;  p6; -p6" /> 76
+                <Add Vector = "-p7;  p6;  p6" /> 77
+
+                <Add Vector = "-p6;  p7;  p6" /> 78 Тыл
+                <Add Vector = "-p6;  p7; -p6" /> 79
+                <Add Vector = " p6;  p7; -p6" /> 80
+                <Add Vector = " p6;  p7;  p6" /> 81
+
+                <Add Vector = " p6;  p6; -p7" /> 82 Низ
+                <Add Vector = "-p6;  p6; -p7" /> 83
+                <Add Vector = "-p6; -p6; -p7" /> 84
+                <Add Vector = " p6; -p6; -p7" /> 85
+-->
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue  " VertexIndexes = "1;5;9 ;21;14;18;12;8" /> // Верхние Ромбы
+                <Face Color = "clGreen " VertexIndexes = "2;6;10;27;23;30;9 ;5" />
+                <Face Color = "clViolett" VertexIndexes = "3;7;11;36;32;39;10;6" />
+                <Face Color = "clBrown " VertexIndexes = "4;8;12;45;41;48;11;7" />
+
+                <Face Color = "clGray  " VertexIndexes = "0;2;5;1" /> // Верхний угол
+                <Face Color = "clGray  " VertexIndexes = "0;3;6;2" />
+                <Face Color = "clGray  " VertexIndexes = "0;4;7;3" />
+                <Face Color = "clGray  " VertexIndexes = "0;1;8;4" />
+<!--
+                <Face Color = "clGray  " VertexIndexes = "63;2;5;1" /> // Верхний угол
+                <Face Color = "clGray  " VertexIndexes = "64;3;6;2" />
+                <Face Color = "clGray  " VertexIndexes = "65;4;7;3" />
+                <Face Color = "clGray  " VertexIndexes = "62;1;8;4" />
+
+                <Face Color = "clGray  " VertexIndexes = "62;65;64;63" />
+                <Face Color = "clGray  " VertexIndexes = "62;63;1" />
+                <Face Color = "clGray  " VertexIndexes = "63;64;2" />
+                <Face Color = "clGray  " VertexIndexes = "64;65;3" />
+                <Face Color = "clGray  " VertexIndexes = "65;62;4" />
+-->
+                <Face Color = "clLightBlue" VertexIndexes = "16;20;49;58;54;61;52;19" /> // Нижние Ромбы
+                <Face Color = "clLightGreen" VertexIndexes = "25;28;50;59;55;58;49;29" />
+                <Face Color = "clLightViolett" VertexIndexes = "34;37;51;60;56;59;50;38" />
+                <Face Color = "clCyan  " VertexIndexes = "43;46;52;61;57;60;51;47" />
+
+                <Face Color = "clGray  " VertexIndexes = "53;54;58;55" /> // Нижний угол
+                <Face Color = "clGray  " VertexIndexes = "53;55;59;56" />
+                <Face Color = "clGray  " VertexIndexes = "53;56;60;57" />
+                <Face Color = "clGray  " VertexIndexes = "53;57;61;54" />
+<!--
+                <Face Color = "clGray  " VertexIndexes = "85;54;58;55" /> // Нижний угол
+                <Face Color = "clGray  " VertexIndexes = "84;55;59;56" />
+                <Face Color = "clGray  " VertexIndexes = "83;56;60;57" />
+                <Face Color = "clGray  " VertexIndexes = "82;57;61;54" />
+
+                <Face Color = "clGray  " VertexIndexes = "85;84;83;82" />
+                <Face Color = "clGray  " VertexIndexes = "85;82;54" />
+                <Face Color = "clGray  " VertexIndexes = "84;85;55" />
+                <Face Color = "clGray  " VertexIndexes = "83;84;56" />
+                <Face Color = "clGray  " VertexIndexes = "82;83;57" />
+-->
+                <Face Color = "clYellow" VertexIndexes = "17;21; 9;30;24;29;49;20" /> // Боковые ромбы
+                <Face Color = "clOrange" VertexIndexes = "26;27;10;39;33;38;50;28" />
+                <Face Color = "clRed   " VertexIndexes = "35;36;11;48;42;47;51;37" />
+                <Face Color = "clWhite " VertexIndexes = "44;45;12;18;15;19;52;46" />
+
+                <Face Color = "clGray  " VertexIndexes = "13;15;18;14" /> // Right corner
+                <Face Color = "clGray  " VertexIndexes = "13;16;19;15" />
+                <Face Color = "clGray  " VertexIndexes = "13;17;20;16" />
+                <Face Color = "clGray  " VertexIndexes = "13;14;21;17" />
+
+                <Face Color = "clGray  " VertexIndexes = "22;24;30;23" /> // Front Corner
+                <Face Color = "clGray  " VertexIndexes = "22;25;29;24" />
+                <Face Color = "clGray  " VertexIndexes = "22;26;28;25" />
+                <Face Color = "clGray  " VertexIndexes = "22;23;27;26" />
+
+                <Face Color = "clGray  " VertexIndexes = "31;33;39;32" /> // Left Corner
+                <Face Color = "clGray  " VertexIndexes = "31;34;38;33" />
+                <Face Color = "clGray  " VertexIndexes = "31;35;37;34" />
+                <Face Color = "clGray  " VertexIndexes = "31;32;36;35" />
+
+                <Face Color = "clGray  " VertexIndexes = "40;41;45;44" /> // Back Corner
+                <Face Color = "clGray  " VertexIndexes = "40;44;46;43" />
+                <Face Color = "clGray  " VertexIndexes = "40;43;47;42" />
+                <Face Color = "clGray  " VertexIndexes = "40;42;48;41" />
+
+<!--
+                <Face Color = "clGray  " VertexIndexes = "66;15;18;14" /> // Right corner
+                <Face Color = "clGray  " VertexIndexes = "67;16;19;15" />
+                <Face Color = "clGray  " VertexIndexes = "68;17;20;16" />
+                <Face Color = "clGray  " VertexIndexes = "69;14;21;17" />
+
+                <Face Color = "clGray  " VertexIndexes = "69;68;67;66" />
+                <Face Color = "clGray  " VertexIndexes = "69;66;14" />
+                <Face Color = "clGray  " VertexIndexes = "68;69;17" />
+                <Face Color = "clGray  " VertexIndexes = "67;68;16" />
+                <Face Color = "clGray  " VertexIndexes = "66;67;15" />
+
+                <Face Color = "clGray  " VertexIndexes = "70;24;30;23" /> // Front Corner
+                <Face Color = "clGray  " VertexIndexes = "71;25;29;24" />
+                <Face Color = "clGray  " VertexIndexes = "72;26;28;25" />
+                <Face Color = "clGray  " VertexIndexes = "73;23;27;26" />
+
+                <Face Color = "clGray  " VertexIndexes = "73;72;71;70" />
+                <Face Color = "clGray  " VertexIndexes = "73;70;23" />
+                <Face Color = "clGray  " VertexIndexes = "72;73;26" />
+                <Face Color = "clGray  " VertexIndexes = "71;72;25" />
+                <Face Color = "clGray  " VertexIndexes = "70;71;24" />
+
+                <Face Color = "clGray  " VertexIndexes = "74;33;39;32" /> // Left Corner
+                <Face Color = "clGray  " VertexIndexes = "75;34;38;33" />
+                <Face Color = "clGray  " VertexIndexes = "76;35;37;34" />
+                <Face Color = "clGray  " VertexIndexes = "77;32;36;35" />
+
+                <Face Color = "clGray  " VertexIndexes = "77;76;75;74" />
+                <Face Color = "clGray  " VertexIndexes = "77;74;32" />
+                <Face Color = "clGray  " VertexIndexes = "76;77;35" />
+                <Face Color = "clGray  " VertexIndexes = "75;76;34" />
+                <Face Color = "clGray  " VertexIndexes = "74;75;33" />
+
+                <Face Color = "clGray  " VertexIndexes = "81;41;45;44" /> // Back Corner
+                <Face Color = "clGray  " VertexIndexes = "80;44;46;43" />
+                <Face Color = "clGray  " VertexIndexes = "79;43;47;42" />
+                <Face Color = "clGray  " VertexIndexes = "78;42;48;41" />
+
+                <Face Color = "clGray  " VertexIndexes = "81;80;79;78" />
+                <Face Color = "clGray  " VertexIndexes = "81;78;41" />
+                <Face Color = "clGray  " VertexIndexes = "80;81;44" />
+                <Face Color = "clGray  " VertexIndexes = "79;80;43" />
+                <Face Color = "clGray  " VertexIndexes = "78;79;42" />
+
+                <Turn  Axis = "1" Angle = "Pi" Layer = "2" />
+                <Hide  Axis = "1" Layer = "1" />
+                <Split Axis = "0" From = "1"/>
+                <Split Axis = "0" From = "2"/>
+-->
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn  Axis = "1" Angle = "A1" Layer = "0" />
+        <Turn  Axis = "1" Angle = "A1" Layer = "2" />
+        <Hide  Axis = "3" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Hide  Axis = "5" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Turn  Axis = "1" Angle = "-A1" Layer = "0" />
+        <Turn  Axis = "1" Angle = "-A1" Layer = "2" />
+
+        <Turn  Axis = "1" Angle = "-A1" Layer = "0" />
+        <Turn  Axis = "1" Angle = "-A1" Layer = "2" />
+        <Hide  Axis = "2" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Hide  Axis = "4" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Turn  Axis = "1" Angle = "A1" Layer = "0" />
+        <Turn  Axis = "1" Angle = "A1" Layer = "2" />
+
+        <Turn  Axis = "0" Angle = "A1" Layer = "0" />
+        <Turn  Axis = "0" Angle = "A1" Layer = "2" />
+        <Hide  Axis = "2" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Hide  Axis = "5" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Turn  Axis = "0" Angle = "-A1" Layer = "0" />
+        <Turn  Axis = "0" Angle = "-A1" Layer = "2" />
+
+        <Turn  Axis = "0" Angle = "-A1" Layer = "0" />
+        <Turn  Axis = "0" Angle = "-A1" Layer = "2" />
+        <Hide  Axis = "3" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Hide  Axis = "4" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Turn  Axis = "0" Angle = "A1" Layer = "0" />
+        <Turn  Axis = "0" Angle = "A1" Layer = "2" />
+
+        <Turn  Axis = "2" Angle = "A1" Layer = "0" />
+        <Turn  Axis = "2" Angle = "A1" Layer = "2" />
+        <Hide  Axis = "1" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Turn  Axis = "2" Angle = "-2*A1" Layer = "0" />
+        <Turn  Axis = "2" Angle = "-2*A1" Layer = "2" />
+        <Hide  Axis = "0" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Turn  Axis = "2" Angle = "A1" Layer = "0" />
+        <Turn  Axis = "2" Angle = "A1" Layer = "2" />
+
+        <Turn  Axis = "3" Angle = "A1" Layer = "0" />
+        <Turn  Axis = "3" Angle = "A1" Layer = "2" />
+        <Hide  Axis = "0" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Turn  Axis = "3" Angle = "-2*A1" Layer = "0" />
+        <Turn  Axis = "3" Angle = "-2*A1" Layer = "2" />
+        <Hide  Axis = "1" Layer = "1" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Turn  Axis = "3" Angle = "A1" Layer = "0" />
+        <Turn  Axis = "3" Angle = "A1" Layer = "2" />
+    </Figure>
+</xml>

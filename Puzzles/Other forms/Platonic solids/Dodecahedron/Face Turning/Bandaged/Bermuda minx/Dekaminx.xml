@@ -1,0 +1,119 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dekaminx</Name>
+        <Aliases>Sunminx</Aliases>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bandaged\Bermuda minx\Dekaminx</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-11-18</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=25504</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6869</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        R := 0.7;
+        D := R * sqrt((25 + 2 * sqrt(5)) / 3) / 5;
+
+        mAngle := ArcTan(0.5);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+        sAngle := 2 * Pi / 5;
+        tAngle := Pi / 5;
+        for i := 0 to 4 do begin
+            ax[i] := sin(sAngle * i) * Ac;
+            ay[i] := cos(sAngle * i) * Ac;
+            az[i] := As;
+        end;
+        ax[5] := 0;
+        ay[5] := 0;
+        az[5] := 1;
+
+        P := 4 / sqrt(5) - 1;
+    </Script>
+
+    <Axes TurningAngles = "tAngle; 0; tAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = " ax[0]; ay[0]; az[0]" />
+        <Axis NormVector = " ax[1]; ay[1]; az[1]" />
+        <Axis NormVector = " ax[2]; ay[2]; az[2]" />
+        <Axis NormVector = " ax[3]; ay[3]; az[3]" />
+        <Axis NormVector = " ax[4]; ay[4]; az[4]" />
+        <Axis NormVector = " ax[5]; ay[5]; az[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Unbandage">
+            <Turn Axis = "Axis" Angle = " tAngle" Layer = "0" />
+            <Turn Axis = "Axis" Angle = " tAngle" Layer = "2" />
+            <SplitByAxes/>
+            <Turn Axis = "Axis" Angle = "-tAngle" Layer = "0" />
+            <Turn Axis = "Axis" Angle = "-tAngle" Layer = "2" />
+            <Script>Inc(axis);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" Axis = "0" Repeat = "6" />
+
+        <RemoveGrayParts/>
+
+        <Macro Name = "Unbandage2">
+            <Turn Axis = "x" Angle = " tAngle" Layer = "0" />
+            <Turn Axis = "x" Angle = " tAngle" Layer = "2" />
+            <SplitByAxes/>
+            <Undo/>
+            <Undo/>
+            <Turn Axis = "x" Angle = "-tAngle" Layer = "0" />
+            <Turn Axis = "x" Angle = "-tAngle" Layer = "2" />
+            <SplitByAxes/>
+            <Undo/>
+            <Undo/>
+        </Macro>
+
+        <Macro Name = "Unbandage3">
+            <Hide Axis = "b" Layer = "0" />
+            <Hide Axis = "c" Layer = "0" />
+            <Hide Axis = "d" Layer = "0" />
+            <Hide Axis = "e" Layer = "0" />
+            <Hide Axis = "f" Layer = "0" />
+            <Hide Axis = "b" Layer = "2" />
+            <Hide Axis = "c" Layer = "2" />
+            <Hide Axis = "d" Layer = "2" />
+            <Hide Axis = "e" Layer = "2" />
+            <Hide Axis = "f" Layer = "2" />
+            <Turn Axis = "a" Angle = "tAngle" Layer = "0" />
+            <Turn Axis = "a" Angle = "tAngle" Layer = "2" />
+            <ExecMacro MacroName = "Unbandage2" x = "b" />
+            <ExecMacro MacroName = "Unbandage2" x = "c" />
+            <ExecMacro MacroName = "Unbandage2" x = "d" />
+            <ExecMacro MacroName = "Unbandage2" x = "e" />
+            <ExecMacro MacroName = "Unbandage2" x = "f" />
+            <Undo/>
+            <Undo/>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Unbandage3" a = "5" b = "0" c = "1" d = "2" e = "3" f = "4" />
+        <ExecMacro MacroName = "Unbandage3" a = "4" b = "0" c = "1" d = "2" e = "3" f = "5" />
+        <ExecMacro MacroName = "Unbandage3" a = "3" b = "0" c = "1" d = "2" e = "5" f = "4" />
+        <ExecMacro MacroName = "Unbandage3" a = "2" b = "0" c = "1" d = "5" e = "3" f = "4" />
+        <ExecMacro MacroName = "Unbandage3" a = "1" b = "0" c = "5" d = "2" e = "3" f = "4" />
+        <ExecMacro MacroName = "Unbandage3" a = "0" b = "5" c = "1" d = "2" e = "3" f = "4" />
+
+        <Macro Name = "HideCorners">
+            <HideContaining Vector = " Vx[i]; Vy[i]; Vz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCorners" i = "0" Repeat = "20" />
+
+        <Macro Name = "RemovePieces">
+            <RemoveContaining  Vector = " Vx[i] * P; Vy[i] * P; Vz[i] * P" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemovePieces" i = "0" Repeat = "20" />
+        <RemoveGrayParts/>
+
+        <ShowAll/>
+    </Figure>
+</xml>

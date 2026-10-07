@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Axis in a Cube</Name>
+        <Menu>Other forms\3x3x3 variants\Axis in a Cube</Menu>
+        <Inventor>Javier Alla La</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-01-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9687</Link>
+    </Interface>
+
+    <Script>
+        clPink        := 'FF69B4';
+        clDeepPink    := '8B0A50';
+        clDeepSky     := '00BFFF';
+        clRed         := 'C80000';
+        clGreenYellow := 'ADFF2F';
+        clYellow      := 'FFFF00';
+        clGray        := 'C0C0C0';
+
+        W := 0.5;
+
+        D  := W / 5;
+        D2 := D * 3;
+        D3 := D * 4 / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "clRed" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "-D ; D2; D2" />
+        <RemoveContaining Vector = " D2;-D ; D2" />
+        <RemoveContaining Vector = " D2; D2;-D " />
+        <Cut Color = "clRed" ><Plane NormVector = " 0;-1;-1" NormDistance = "-D3" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = "-1; 0;-1" NormDistance = "-D3" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = "-1;-1; 0" NormDistance = "-D3" /></Cut>
+
+        <Cut Color = "clDeepPink" ><Plane NormVector = " 1; 0; 0" NormDistance = "-D2" /></Cut>
+        <Cut Color = "clPink    " ><Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /></Cut>
+        <Cut Color = "clDeepSky " ><Plane NormVector = " 0; 0; 1" NormDistance = "-D2" /></Cut>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = " D2" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = " D2" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D2" /></Split>
+        <Hide ><Plane NormVector = " 1; 0; 0" NormDistance = "-D " /></Hide >
+        <Hide ><Plane NormVector = " 0; 1; 0" NormDistance = "-D " /></Hide >
+        <Hide ><Plane NormVector = " 0; 0; 1" NormDistance = "-D " /></Hide >
+        <RemoveAllVisible/>
+
+        <HideAll/>
+        <Turn NormVector = " 1; 1; 1" Angle = " Pi / 3" />
+        <LoadFrom File = "Figures\Cube.xml" W = "W * 0.6; Colors[1] := clGreenYellow; Colors[3] := clYellow; Colors[5] := clGray;"  />
+        <Turn NormVector = " 1; 1; 1" Angle = "-Pi / 3" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "  -D; D*2; D*2" />
+        <HideContaining Vector = " D*2;  -D; D*2" />
+        <HideContaining Vector = " D*2; D*2;  -D" />
+
+        <HideContaining Vector = " D*4;   D;   D" />
+        <HideContaining Vector = "   D; D*4;   D" />
+        <HideContaining Vector = "   D;   D; D*4" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

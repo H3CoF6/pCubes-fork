@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circle X 3x3x3</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\Circle X 3x3x3</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-06</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0011EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.7;
+
+        A := W * 1.21; // = D * sqrt(3) - delta
+        B := W * 0.75;
+        C := W * 0.15;
+
+        RCut := W * 1.56;
+
+        R := W * 0.70; // = B - delta
+        WC := D * sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-A*2; -W/4; W/4; A*2" FixedLayers = "2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed 2.xml" />
+         <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-cx[id];-cy[id];-cz[id]" NormDistance = "-A+0.005" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "6" id = "0" />
+
+        <Macro Name = "SplitV">
+            <Split Axis = "3" From = "1"/>
+            <Split Axis = "4" From = "1"/>
+            <Split Axis = "5" From = "1"/>
+            <Split Axis = "6" From = "1"/>
+            <Split Axis = "3" From = "2"/>
+            <Split Axis = "4" From = "2"/>
+            <Split Axis = "5" From = "2"/>
+            <Split Axis = "6" From = "2"/>
+        </Macro>
+        <ExecMacro MacroName = "SplitV" />
+
+        <HideContaining Vector = "Vx; Vy; Vz" />
+
+        <RemoveAllVisible/>
+
+        <Circle Radius = "R" Color = "Colors[0]" Center = "-WC;  0;  0" />
+        <Circle Radius = "R" Color = "Colors[1]" Center = " WC;  0;  0" />
+        <Circle Radius = "R" Color = "Colors[2]" Center = "  0;-WC;  0" />
+        <Circle Radius = "R" Color = "Colors[3]" Center = "  0; WC;  0" />
+        <Circle Radius = "R" Color = "Colors[4]" Center = "  0;  0;-WC" />
+        <Circle Radius = "R" Color = "Colors[5]" Center = "  0;  0; WC" />
+
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cube Pillowed 2.xml" />
+
+        <!-- cut vertices for better control -->
+        <Macro Name = "CutVertex">
+            <Cut> <Plane NormVector = "-Vx[v];-Vy[v];-Vz[v]" NormDistance = "-RCut" /> </Cut>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutVertex" Repeat = "8" v = "0" />
+
+        <ExecMacro MacroName = "SplitV" />
+
+        <HideContaining Vector = "Ex; Ey; Ez" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

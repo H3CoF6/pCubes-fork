@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Lotus I</Name>
+        <Menu>Other forms\Trapezohedron\Vertex Turning\Lotus I</Menu>
+        <Inventor>Tanner Frisby</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-03-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3319</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'F0F0F0';
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clGreen  := '008000';
+        clPink   := 'FF69B4';
+
+        K  := 0.7;
+        C0 := K * sqrt(3) / 6;
+        C1 := K * sqrt(3) / 3;
+        C2 := K * 0.5;
+        H  := K * sqrt(6) / 6;
+
+        HD := H - K * 0.18;
+        D  := K * 0.2;
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vx := y1 * z2 - y2 * z1;
+          vy := z1 * x2 - z2 * x1;
+          vz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+
+        A1 := Angle( 0, C1, HD,  C2, -C0, HD,  -C2, -C0, HD);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi; 0; 2*Pi" AvailableAngles = "-A1; 0; A1" PlaneDistances = "-D;D">
+        <Axis NormVector = " C2;-C0; HD" />
+        <Axis NormVector = "-C2;-C0; HD" />
+        <Axis NormVector = "  0; C1; HD" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " C2; -C0;  H" />
+                <Add Vector = "-C2; -C0;  H" />
+                <Add Vector = "  0;  C1;  H" />
+                <Add Vector = " C2;  C0; -H" />
+                <Add Vector = "-C2;  C0; -H" />
+                <Add Vector = "  0; -C1; -H" />
+
+                <Add Vector = "  0;   0;  H*3" />
+                <Add Vector = "  0;   0; -H*3" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clRed"    VertexIndexes = " 0; 6; 1; 5" />
+                <Face Color = "clBlue"   VertexIndexes = " 1; 6; 2; 4" />
+                <Face Color = "clGreen"  VertexIndexes = " 2; 6; 0; 3" />
+
+                <Face Color = "clOrange" VertexIndexes = " 3; 7; 4; 2" />
+                <Face Color = "clCyan"   VertexIndexes = " 4; 7; 5; 1" />
+                <Face Color = "clPink"   VertexIndexes = " 5; 7; 3; 0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " 0; 0; H*3" />
+        <RemoveContaining Vector = " 0; 0;-H*3" />
+    </Figure>
+</xml>

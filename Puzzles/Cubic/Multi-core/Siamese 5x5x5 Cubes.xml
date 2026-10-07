@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese 5x5x5 Cubes</Name>
+        <Menu>Cubic\Multi-core\Siamese 5x5x5 Cubes</Menu>
+        <Inventor>Marcel Gillen</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4331</Link>
+    </Interface>
+
+    <Script>
+        W  := 0.5;
+        D  := W / 9;
+        D3 := D * 3;
+        D4 := D * 4;
+        D5 := D * 5;
+        W  := D * 5;
+        A  := Pi / 2;
+    </Script>
+
+    <Axes>
+        <Axis TurningAngles = " 0; A; A; A; A" NormVector = " 1; 0; 0" BaseVector = " D4; D4; 0" PlaneDistances = "-D3;-D; D; D3" />
+        <Axis TurningAngles = " 0; A; A; A; A" NormVector = " 0; 1; 0" BaseVector = " D4; D4; 0" PlaneDistances = "-D3;-D; D; D3" />
+
+        <Axis TurningAngles = " 0; A; A; A; A" NormVector = "-1; 0; 0" BaseVector = "-D4;-D4; 0" PlaneDistances = "-D3;-D; D; D3" />
+        <Axis TurningAngles = " 0; A; A; A; A" NormVector = " 0;-1; 0" BaseVector = "-D4;-D4; 0" PlaneDistances = "-D3;-D; D; D3" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " D4; D4; 0" />
+        <LoadFrom File = "Figures\Cube.xml" W = "D * 5" />
+        <Transfer Vector = "-D4;-D4; 0" />
+        <Transfer Vector = "-D4;-D4; 0" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Transfer Vector = " D4; D4; 0" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D3" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D " /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D " /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D3" /></Split>
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D" WZ = "D5" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

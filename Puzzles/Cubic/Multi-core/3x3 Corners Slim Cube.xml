@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3 Corners Slim Cube</Name>
+        <Menu>Cubic\Multi-core\3x3 Corners Slim Cube</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-05</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0077EE'; // Blue
+        Colors[3] := '00CC00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W / 3;
+        D := W / 3;
+        D1 := D * 5 / 3;
+        D2 := D * 7 / 3;
+        DC := D * 2; //(D1+D2)/2;
+        D3 := W / 9;
+
+        dAngle := 0.001;
+        t := Tan(dAngle);
+    </Script>
+
+    <Axes TurningAngles = "0;Pi" AvailableAngles = "0; Pi/2 + dAngle; Pi; -Pi/2 + dAngle; Pi" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = "-1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; Pi/2; 0; Pi/2; Pi/2" PlaneDistances = "-D2;-D1; D1; D2" >
+        <Axis NormVector = " 0;-t; 1" BaseVector = " DC;  0; 0" />
+        <Axis NormVector = " 0; t; 1" BaseVector = "-DC;  0; 0"/>
+        <Axis NormVector = "-t; 0; 1" BaseVector = "  0;-DC; 0" />
+        <Axis NormVector = " t; 0; 1" BaseVector = "  0; DC; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D3; D3" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Macro Name = "SplitCorner" >
+            <Hide> <Plane NormVector = "1;0;0" NormDistance = "D"  /></Hide>
+            <Hide> <Plane NormVector = "0;1;0" NormDistance = "D"  /></Hide>
+            <Split><Plane NormVector = "1;0;0" NormDistance = "D1" /></Split>
+            <Split><Plane NormVector = "1;0;0" NormDistance = "D2" /></Split>
+            <Split><Plane NormVector = "0;1;0" NormDistance = "D1" /></Split>
+            <Split><Plane NormVector = "0;1;0" NormDistance = "D2" /></Split>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "SplitCorner" Repeat = "4" />
+    </Figure>
+</xml>

@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pocket Star</Name>
+        <Menu>Other forms\Star\Escher's solid\Pocket Star</Menu>
+        <Inventor>Mark Lodge</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8661</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Rhombic Dodecahedron_12_Colors.inc';
+
+        W := 0.5;
+        D  := W / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCorner" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " W; 0; W" />
+                    <Add Vector = " 0; 0; W" />
+                    <Add Vector = " W; 0; 0" />
+                    <Add Vector = " D; D; D" />
+                    <Add Vector = " D;-D; D" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = " 1; 4; 0" InvisibleEdges = "1" />
+                    <Face Color = "Color" VertexIndexes = " 2; 3; 0" InvisibleEdges = "1" />
+                    <Face Color = "Color" VertexIndexes = " 3; 1; 0" InvisibleEdges = "1" />
+                    <Face Color = "Color" VertexIndexes = " 4; 2; 0" InvisibleEdges = "1" />
+                    <Face                 VertexIndexes = " 3; 2; 4; 1" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;1;0" Angle = "Pi/2"/>
+        </Macro>
+        <Macro Name = "AddBelt" >
+            <ExecMacro MacroName = "AddCorner" Color = "Colors[c1]" />
+            <ExecMacro MacroName = "AddCorner" Color = "Colors[c2]"  />
+            <ExecMacro MacroName = "AddCorner" Color = "Colors[c3]"  />
+            <ExecMacro MacroName = "AddCorner" Color = "Colors[c4]"  />
+            <Turn NormVector = "1;1;1" Angle = "2*Pi/3"/>
+        </Macro>
+        <ExecMacro MacroName = "AddBelt" c1 = " 1" c2 = "10" c3 = " 4" c4 = "11" />
+        <ExecMacro MacroName = "AddBelt" c1 = " 0" c2 = " 7" c3 = " 6" c4 = " 9" />
+        <ExecMacro MacroName = "AddBelt" c1 = " 2" c2 = " 5" c3 = " 8" c4 = " 3" />
+
+<!--
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" R = "W2" />
+-->
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

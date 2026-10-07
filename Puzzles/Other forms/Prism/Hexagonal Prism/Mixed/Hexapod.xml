@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexapod</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Mixed\Hexapod</Menu>
+        <Inventor>Diogo Sousa</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-11-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6390</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // clRed    
+        Colors[1] := 'FF6000'; // clOrange 
+        Colors[2] := '009600'; // clGreen  
+        Colors[3] := '0060BF'; // clSkyBlue
+        Colors[4] := '0000C8'; // clBlue   
+        Colors[5] := '800080'; // clPurple 
+        clBottom  := 'FFFF00'; // clYellow 
+        clTop     := 'FFFFFF'; // clWhite  
+
+        R := 0.57;
+        H := R * 0.84;
+        D := R / 2;
+
+        for i := 0 to 5 do begin
+            x[i] := R * sin(Pi/3 * i);
+            y[i] := R * cos(Pi/3 * i);
+        end;
+
+        for i := 0 to 2 do begin
+            nx[i] := sin(2*Pi/3 * i);
+            ny[i] := cos(2*Pi/3 * i);
+        end;
+        nz := sqrt(5) / 2;
+
+        A1 := ArcCos( 1/4);
+        A2 := ArcCos(-11/16);
+        A3 := ArcCos(-7/8);
+
+        B1 := ArcCos( 1/4);
+        B2 := ArcCos(-1/4);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1;0;A1;A2;A3" PlaneDistances = "-D" FixedLayers = "1">
+        <Axis NormVector = " nx[0]; ny[0]; nz" />
+        <Axis NormVector = " nx[1]; ny[1]; nz" />
+        <Axis NormVector = " nx[2]; ny[2]; nz" />
+        <Axis NormVector = " nx[0]; ny[0];-nz" />
+        <Axis NormVector = " nx[1]; ny[1];-nz" />
+        <Axis NormVector = " nx[2]; ny[2];-nz" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-B2;-B1;0;B1;B2;Pi" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = " nx[0]; ny[0]; 0" />
+        <Axis NormVector = " nx[1]; ny[1]; 0" />
+        <Axis NormVector = " nx[2]; ny[2]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[3]; y[3]; -H" />
+                <Add Vector = "x[4]; y[4]; -H" />
+                <Add Vector = "x[5]; y[5]; -H" />
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+                <Add Vector = "x[3]; y[3];  H" />
+                <Add Vector = "x[4]; y[4];  H" />
+                <Add Vector = "x[5]; y[5];  H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "Colors[1]" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "Colors[2]" VertexIndexes = "11; 6; 0; 5" />
+                <Face Color = "Colors[3]" VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "Colors[4]" VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "Colors[5]" VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "clBottom " VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                <Face Color = "clTop    " VertexIndexes = "11;10; 9; 8; 7; 6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

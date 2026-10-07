@@ -1,0 +1,128 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Space Massager 3</Name>
+        <Menu>Other forms\Sphere\Marbles\Space Massager 3</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4660</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '222222'; // Black
+        Colors[1] := '0055FF'; // Blue
+        Colors[2] := 'AA00AA'; // clViolett
+        Colors[3] := 'EE0000'; // Red
+        Colors[4] := 'FF7700'; // Orange
+        Colors[5] := 'FFFF00'; // Yellow
+        Colors[6] := '00DD00'; // Green
+
+        K := 0.6;
+
+        Ax := 2*Pi / 12;
+        Ay := 2*Pi / 24;
+
+        D  := K * sin(Ay/2);
+        D2 := K * cos(4 * Ay);
+        D3 := K * cos(5 * Ay);
+
+        R := K * cos(Ay/2);
+        R1 := R * 0.9;
+        RC := D * 0.99;
+        for i := 0 to 15 do begin
+            Rx[i] := Rc * sin(i * 2 * Pi / 16);
+            Ry[i] :=-Rc * cos(i * 2 * Pi / 16);
+            Rz[i] := R;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Ay; 0" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Ax" PlaneDistances = "-D3;-D2; 0; D2; D3" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script>Color := -1;</Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "5" />
+
+        <Hide Axis = "1" Layer = "0" />
+        <Hide Axis = "1" Layer = "5" />
+
+        <Macro Name = "Cut" >
+            <Turn Axis = "1" From = "1" To = "1" Angle = "Ax" />
+            <Split Axis = "0" From = "1" />
+            <Split Axis = "0" From = "2" />
+            <RemoveContaining Vector = "0; K; 0" />
+            <RemoveContaining Vector = "0; -K; 0" />
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "5" />
+        <Turn Axis = "1" From = "1" To = "1" Angle = "-5 * Ax" />
+
+        <ShowAll/>
+
+        <Macro Name = "AddMarble" >
+            <Turn NormVector = "0;0;1" Angle = " x * Ax" />
+            <Turn NormVector = "1;0;0" Angle = " y * Ay" />
+            <Part>
+                <Vertices Vectors = "Rx; Ry; Rz" >
+                    <Add Vector = "0; 0; R1" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[cl]" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15" />
+                    <Face VertexIndexes = " 1; 0;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 2; 1;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 3; 2;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 4; 3;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 5; 4;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 6; 5;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 7; 6;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 8; 7;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 9; 8;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "10; 9;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "11;10;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "12;11;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "13;12;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "14;13;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "15;14;16" InvisibleEdges = "6" />
+                    <Face VertexIndexes = " 0;15;16" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "1;0;0" Angle = "-y * Ay" />
+            <Turn NormVector = "0;0;1" Angle = "-x * Ax" />
+            <Script> Inc(y); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddMarble" cl = "0" x = " 0" y = "-3.5" Repeat = "8" />
+        <ExecMacro MacroName = "AddMarble" cl = "0" x = " 0" y = " 8.5" Repeat = "8" />
+        <ExecMacro MacroName = "AddMarble" cl = "1" x = " 0" y = " 4.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarble" cl = "2" x = " 1" y = " 4.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarble" cl = "3" x = " 2" y = " 4.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarble" cl = "4" x = " 3" y = " 4.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarble" cl = "5" x = " 4" y = " 4.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarble" cl = "6" x = " 5" y = " 4.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarble" cl = "1" x = " 6" y = " 4.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarble" cl = "2" x = " 7" y = " 4.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarble" cl = "3" x = " 8" y = " 4.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarble" cl = "4" x = " 9" y = " 4.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarble" cl = "5" x = "10" y = " 4.5" Repeat = "4" />
+        <ExecMacro MacroName = "AddMarble" cl = "6" x = "11" y = " 4.5" Repeat = "4" />
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

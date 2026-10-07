@@ -1,0 +1,106 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cubo H</Name>
+        <Menu>Other forms\Unclassified\Ball in a cube\Cubo H</Menu>
+        <Inventor>Javier Alla La</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9072</Link>
+    </Interface>                   
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := 'FF6000'; // Orange
+        Colors[2] := '0000A0'; // Blue
+        Colors[3] := '008000'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        for i := 0 to 5 do
+            Cols[i] := Colors[i];
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.15;
+        for i := 0 to 4 do
+            DD[i] := (-4 + 2 * i) * D;
+
+        K := W * 1.3;
+
+        DZ := W * 0.3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "DD" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "5" />
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <RemoveContaining Vector = " 0; 0; W" />
+        <RemoveContaining Vector = " W; 0; W" />
+        <RemoveContaining Vector = " 0; W; W" />
+        <RemoveContaining Vector = "-W; 0; W" />
+        <RemoveContaining Vector = " 0;-W; W" />
+        <RemoveContaining Vector = " W; 0;-W" />
+        <RemoveContaining Vector = " 0; W;-W" />
+        <RemoveContaining Vector = "-W; 0;-W" />
+        <RemoveContaining Vector = " 0;-W;-W" />
+        <RemoveContaining Vector = " 0; 0;-W" />
+        <HideAll/>
+
+        <Script>
+           for i := 0 to 5 do
+               Colors[i] := Cols[4];
+        </Script>
+        <Transfer Vector = " 0; 0;-DZ" />
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <Transfer Vector = " 0; 0; DZ" />
+
+        <Split Color2 = "Cols[5]" Axis = "2" From = "1" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "5" />
+        <Hide Axis = "0" Layers = "1-4" />
+        <Hide Axis = "1" Layers = "1-4" />
+        <RemoveAllVisible/>
+
+        <Script>
+           for i := 0 to 5 do
+               Colors[i] := Cols[5];
+           DZ := -DZ;
+        </Script>
+        <Transfer Vector = " 0; 0;-DZ" />
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <Transfer Vector = " 0; 0; DZ" />
+
+        <Split Color1 = "Cols[4]" Axis = "2" From = "5" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "5" />
+        <Hide Axis = "0" Layers = "1-4" />
+        <Hide Axis = "1" Layers = "1-4" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

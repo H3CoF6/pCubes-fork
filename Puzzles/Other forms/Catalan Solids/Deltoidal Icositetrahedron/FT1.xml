@@ -1,0 +1,94 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Deltoidal Icositetrahedron FT1</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\FT1</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-01-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1893</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_24_Colors.inc';
+
+        W  := 0.45;
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_Coordinates.inc'; // for axes
+
+        A1 := ArcCos( s2 / 8 + 0.25);
+        A2 := ArcCos( s2 / 4 - 0.5 ); // (2*Pi - A1) / 3
+        A3 := ArcCos(-s2 / 2 - 0.25); // = A1 + A2
+
+        D := W * 1;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Cx;Cy;Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+        <SplitByAxes/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro from Boris -->
+
+        <Macro Name = "Sc1" >
+            <Script>
+                N := Random(24);
+                Ax1 := Ae1[N];
+                Ax2 := Ae2[N];
+                Ax3 := Ae3[N];
+            </Script>
+            <Turn Axis = "Ax2" Layers = "1" Angle = "-A2" />
+            <Turn Axis = "Ax3" Layers = "1" Angle = "-A2" />
+            <Turn Axis = "Ax2" Layers = "1" Angle = "-A3" />
+            <Turn Axis = "Ax3" Layers = "1" Angle = " A2" />
+            <Turn Axis = "Ax2" Layers = "1" Angle = " A1" />
+            <Turn Axis = "Ax1" Layers = "1" Angle = "-A3" />
+            <Turn Axis = "Ax2" Layers = "1" Angle = "-A3" />
+            <Turn Axis = "Ax1" Layers = "1" Angle = " A3" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(24)" Layer = "1" Angle = "2*Pi * Random" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <Script>
+                s2 := sqrt(2);
+                A1 := ArcCos( s2 / 8 + 0.25);
+                A2 := ArcCos( s2 / 4 - 0.5 );
+                A3 := A1 + A2;
+
+                Ae1[ 0] :=  3; Ae2[ 0] :=  2; Ae3[ 0] :=  1;
+                Ae1[ 1] :=  2; Ae2[ 1] :=  1; Ae3[ 1] :=  0;
+                Ae1[ 2] :=  1; Ae2[ 2] :=  0; Ae3[ 2] :=  3;
+                Ae1[ 3] :=  0; Ae2[ 3] :=  3; Ae3[ 3] :=  2;
+                Ae1[ 4] :=  7; Ae2[ 4] :=  6; Ae3[ 4] :=  5;
+                Ae1[ 5] :=  6; Ae2[ 5] :=  5; Ae3[ 5] :=  4;
+                Ae1[ 6] :=  5; Ae2[ 6] :=  4; Ae3[ 6] :=  7;
+                Ae1[ 7] :=  4; Ae2[ 7] :=  7; Ae3[ 7] :=  6;
+                Ae1[ 8] := 11; Ae2[ 8] := 10; Ae3[ 8] :=  9;
+                Ae1[ 9] := 10; Ae2[ 9] :=  9; Ae3[ 9] :=  8;
+                Ae1[10] :=  9; Ae2[10] :=  8; Ae3[10] := 11;
+                Ae1[11] :=  8; Ae2[11] := 11; Ae3[11] := 10;
+                Ae1[12] := 15; Ae2[12] := 14; Ae3[12] := 13;
+                Ae1[13] := 14; Ae2[13] := 13; Ae3[13] := 12;
+                Ae1[14] := 13; Ae2[14] := 12; Ae3[14] := 15;
+                Ae1[15] := 12; Ae2[15] := 15; Ae3[15] := 14;
+                Ae1[16] := 19; Ae2[16] := 18; Ae3[16] := 17;
+                Ae1[17] := 18; Ae2[17] := 17; Ae3[17] := 16;
+                Ae1[18] := 17; Ae2[18] := 16; Ae3[18] := 19;
+                Ae1[19] := 16; Ae2[19] := 19; Ae3[19] := 18;
+                Ae1[20] := 23; Ae2[20] := 22; Ae3[20] := 21;
+                Ae1[21] := 22; Ae2[21] := 21; Ae3[21] := 20;
+                Ae1[22] := 21; Ae2[22] := 20; Ae3[22] := 23;
+                Ae1[23] := 20; Ae2[23] := 23; Ae3[23] := 22;
+            </Script>
+
+            <ExecMacro MacroName = "Sc1"         Repeat = "400" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "500" />
+        </Macro>
+    </Macros>
+</xml>

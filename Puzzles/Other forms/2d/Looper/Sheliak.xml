@@ -1,0 +1,107 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sheliak</Name>
+        <Menu>Other forms\2d\Looper\Sheliak</Menu>
+        <Menu>Other forms\Prism\Heptagonal Prism\Sheliak</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-05-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11141</Link>
+    </Interface>
+
+    <Script>
+        clWhite   := 'FFFFFF';
+        clDeepSky := '00BFFF';
+        clBlue    := '0000FF';
+        clBlack   := '333333';
+
+        R := 0.65;
+        H := 2 * R * sin(Pi / 14);
+        A := 2 * Pi / 7;
+
+        for i := 0 to 6 do begin
+            x[i] := R * cos(A * (i+0.5));
+            y[i] := R * sin(A * (i+0.5));
+        end;
+        for i := 0 to 2 do begin
+            ax[i] :=-cos(A * (i + 3/2));
+            ay[i] :=-sin(A * (i + 3/2));
+        end;
+
+        D := -R * cos(2 * A);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D" NormVectors = " ax; ay; 0" />
+
+    <Axes TurningAngles = "A" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "-2*A;-2*A" MaxAngles = " 2*A; 2*A" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "CreatePrism" >
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2;3;4;5;6" />
+                    <Face Color = "Color" VertexIndexes = " 7; 8;1;0" />
+                    <Face Color = "Color" VertexIndexes = " 8; 9;2;1" />
+                    <Face Color = "Color" VertexIndexes = " 9;10;3;2" />
+                    <Face Color = "Color" VertexIndexes = "10;11;4;3" />
+                    <Face Color = "Color" VertexIndexes = "11;12;5;4" />
+                    <Face Color = "Color" VertexIndexes = "12;13;6;5" />
+                    <Face Color = "Color" VertexIndexes = "13; 7;0;6" />
+                    <Face Color = "Color" VertexIndexes = "13;12;11;10;9;8;7" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <!-- central part -->
+        <ExecMacro MacroName = "CreatePrism" Color = "clBlack" />
+        <SplitByAxes/>
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clBlue" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clWhite" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "2" To = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clDeepSky" />
+        <Cut Axis = "2" From = "1" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "3" Layer = "1" Angle = " A*2" />
+        <Turn Axis = "2" Layer = "1" Angle = " Pi"  />
+        <Turn Axis = "3" Layer = "1" Angle = "-A*4" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi"  />
+        <Turn Axis = "3" Layer = "1" Angle = " A*2" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "3" Layer = "1" Angle = " A*1" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi"  />
+        <Turn Axis = "3" Layer = "1" Angle = "-A*2" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi"  />
+        <Turn Axis = "3" Layer = "1" Angle = " A*1" />
+        <SaveSolvedState/>
+        <Undo Repeat = "10" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

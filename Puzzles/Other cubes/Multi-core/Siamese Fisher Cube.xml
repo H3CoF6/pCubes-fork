@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese Fisher Cube</Name>
+        <Menu>Other cubes\Multi-core\Siamese Fisher Cube</Menu>
+        <Inventor>Rex Rossano Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3803</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        s2 := sqrt(2);
+
+        D := W / 5;
+        D2 := D * 2;
+        DS2 := D / s2;
+        W2 := D2 * s2;
+        H := D * 3;
+    </Script>
+ 
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D" >
+        <Axis NormVector = "-1;-1; 0" BaseVector = "-DS2;-DS2; D2" />
+        <Axis NormVector = " 1; 1; 0" BaseVector = " DS2; DS2;-D2" />
+    </Axes>
+    <Axes TurningAngles = "0; Pi/4; Pi/4" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 0; 0; 1" BaseVector = "-DS2;-DS2; D2" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = " DS2; DS2;-D2" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W2" WY = "WX" WZ = "H" DWX = "-DS2" DWY = "-DS2" DWZ = " D2" />
+        <Split><Plane NormVector = "-1;-1; 0" NormDistance = "0" /></Split>
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <RemoveContaining Vector = " WX + DWX; WY + DWY;-WZ + DWZ" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W2" WY = "WX" WZ = "H" DWX = " DS2" DWY = " DS2" DWZ = "-D2" />
+        <Split><Plane NormVector = " 1; 1; 0" NormDistance = "0" /></Split>
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "3" From = "2" />
+        <RemoveContaining Vector = "-WX + DWX;-WY + DWY; WZ + DWZ" />
+        <ShowAll/>
+        <S1plitByAxes/>
+
+        <Split><Plane NormVector = "-1; 1; 0" NormDistance = "D" /></Split>
+        <Split><Plane NormVector = " 1;-1; 0" NormDistance = "D" /></Split>
+    </Figure>
+</xml>

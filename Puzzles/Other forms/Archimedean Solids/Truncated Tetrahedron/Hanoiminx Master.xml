@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hanoiminx Master</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Tetrahedron\Hanoiminx Master</Menu>
+        <Inventor>Sengso</Inventor>
+        <Programmer>Misdrop</Programmer>
+        <Added>2025-03-16</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        K := 0.45;
+
+        D1 := K * 0.69;
+        D2 := K * 0.49;
+        D3 := K * 1.1;
+        D4 := K * 0.9;
+
+        DCut := D3 + (D3 - D4);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D1;-D2; D3; D4" FixedLayers = "2" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Cut Color = "clRed   " > <Plane NormDistance = "-DCut" NormVector = "-1;-1; 1" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormDistance = "-DCut" NormVector = "-1; 1;-1" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormDistance = "-DCut" NormVector = " 1;-1;-1" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormDistance = "-DCut" NormVector = " 1; 1; 1" /> </Cut>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

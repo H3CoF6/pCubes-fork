@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cross Pyraminx Crystal</Name>
+        <Menu>Other forms\Cross\Cross Pyraminx Crystal</Menu>
+        <Inventor>Michael Sun</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9581</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := Cz[1];
+        D2 := Rsin * 0.82;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; sAngle" PlaneDistances = "D1; D2" NormVectors = "Cx;Cy;Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "ColorSplit" >
+            <Split Color2 = "Colors[i]" Axis = "i" From = "2" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "ColorSplit" i = "0" Repeat = "12" />
+        <HideContaining Vectors = "Cx; Cy; Cz" />
+        <RemoveAllVisible/>
+
+        <!-- gray core -->
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" R = "R * D2 / RSin" />
+        <SplitByAxes/>
+        <HideContaining Vectors = "Vx; Vy; Vz" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

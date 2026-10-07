@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bai Niao Chao Feng Cube</Name>
+        <Menu>Other cubes\Mixed\Face-Edge\Bai Niao Chao Feng Cube</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-03</Added>
+        <Link>https://www.hknowstore.com/locale/en-US/item.aspx?corpname=nowstore&amp;itemid=72fdfd17-b1af-4959-8422-06cf1568c70c</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        A := W * 1.15;
+        B := W * 0.2;
+
+        D := W / sqrt(2);
+
+        Color[0] := 'FFFF00';
+        Color[1] := 'FF0000';
+        Color[2] := '0066FF';
+
+        procedure SetColor(C);
+        begin
+            for i := 0 to 5 do
+                Colors[i] := C;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2"  PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script>SetColor (Color[0]);</Script>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <Cut Axis = "2" From = "2" />
+        <InvertVisibility/>
+
+        <Script>SetColor (Color[1]);</Script>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <Cut Axis = "2" To = "1" />
+
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <Script>SetColor (Color[2]);</Script>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <Cut Axis = "2" From = "1" To = "2" />
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

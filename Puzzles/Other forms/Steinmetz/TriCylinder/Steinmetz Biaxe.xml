@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Steinmetz Biaxe</Name>
+        <Menu>Other forms\Steinmetz\TriCylinder\Steinmetz Biaxe</Menu>
+        <Menu>Other forms\Bi Axes\Steinmetz Biaxe</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-10-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12711</Link>
+    </Interface>
+
+    <Script>
+        clDeepSky := '00BFFF';
+        clOrange  := 'FF6000';
+        clGreen   := '00A600';
+        clOrchid  := 'DA70D6';
+
+        Colors[ 0] := clGreen;
+        Colors[ 1] := clGreen;
+        Colors[ 2] := clDeepSky;
+        Colors[ 3] := clDeepSky;
+        Colors[ 4] := clOrange;
+        Colors[ 5] := clGreen;
+        Colors[ 6] := clOrchid;
+        Colors[ 7] := clDeepSky;
+        Colors[ 8] := clOrange;
+        Colors[ 9] := clOrchid;
+        Colors[10] := clOrchid;
+        Colors[11] := clOrange;
+
+        R := 0.5;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "R / sqrt(3)" TurnAxesWithLayer = "1" FixedLayers = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "_Macro_For_TriCylinder.xml" />
+        <SplitByAxes/>
+        <Split> <Plane NormVector = " 1;-1; 1" NormDistance = "-R / sqrt(3)" /> </Split>
+        <Split> <Plane NormVector = " 1; 1;-1" NormDistance = "-R / sqrt(3)" /> </Split>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

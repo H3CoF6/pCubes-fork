@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>QJ Octahedron</Name>
+        <Menu>Other forms\Dipyramid\Tetragonal\QJ Octahedron</Menu>
+        <Menu>Other forms\3x3x3 variants\Dipyramid\QJ Octahedron</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4290</Link>
+    </Interface>
+ 
+    <Script>
+        include 'Figures\Scripts\Octahedron_Standard_Colors.inc';
+        Colors[0] := 'C80000';
+        Colors[1] := 'FFFF00';
+        Colors[2] := '00A600';
+        Colors[3] := '4080FF';
+        Colors[4] := Colors[2];
+        Colors[5] := Colors[3];
+        Colors[6] := Colors[0];
+        Colors[7] := Colors[1];
+
+        W := 0.6;
+        s2 := sqrt(2);
+        D := W / 3;
+        H := W;
+
+        CutV1 := W * s2 * 0.95;
+        CutV2 := W * 0.95;
+        CutE1 := W * 0.98;
+        CutE2 := W * sqrt(2/3) * 0.985;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-W;-W; 0" />
+                <Add Vector = "-W; W; 0" />
+                <Add Vector = " W; W; 0" />
+                <Add Vector = " W;-W; 0" />
+                <Add Vector = " 0; 0;-H" />
+                <Add Vector = " 0; 0; H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "0;1;4" />
+                <Face Color = "Colors[1]" VertexIndexes = "1;2;4" />
+                <Face Color = "Colors[2]" VertexIndexes = "2;3;4" />
+                <Face Color = "Colors[3]" VertexIndexes = "3;0;4" />
+                <Face Color = "Colors[4]" VertexIndexes = "1;0;5" />
+                <Face Color = "Colors[5]" VertexIndexes = "2;1;5" />
+                <Face Color = "Colors[6]" VertexIndexes = "3;2;5" />
+                <Face Color = "Colors[7]" VertexIndexes = "0;3;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <!-- cut edges and vertices for better control -->
+        <Cut><Plane NormVector = " 1; 1; 0" NormDistance = "-CutV1" /></Cut>
+        <Cut><Plane NormVector = " 1;-1; 0" NormDistance = "-CutV1" /></Cut>
+        <Cut><Plane NormVector = "-1;-1; 0" NormDistance = "-CutV1" /></Cut>
+        <Cut><Plane NormVector = "-1; 1; 0" NormDistance = "-CutV1" /></Cut>
+
+        <Cut><Plane NormVector = " 1; 0; 0" NormDistance = "-CutE1" /></Cut>
+        <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-CutE1" /></Cut>
+        <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "-CutE1" /></Cut>
+        <Cut><Plane NormVector = " 0;-1; 0" NormDistance = "-CutE1" /></Cut>
+
+        <Cut><Plane NormVector = " 0; 0; 1" NormDistance = "-CutV2" /></Cut>
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "-CutV2" /></Cut>
+
+        <Cut><Plane NormVector = "-1;-1;-2" NormDistance = "-CutE2" /></Cut>
+        <Cut><Plane NormVector = " 1;-1;-2" NormDistance = "-CutE2" /></Cut>
+        <Cut><Plane NormVector = "-1; 1;-2" NormDistance = "-CutE2" /></Cut>
+        <Cut><Plane NormVector = " 1; 1;-2" NormDistance = "-CutE2" /></Cut>
+        <Cut><Plane NormVector = "-1;-1; 2" NormDistance = "-CutE2" /></Cut>
+        <Cut><Plane NormVector = " 1;-1; 2" NormDistance = "-CutE2" /></Cut>
+        <Cut><Plane NormVector = "-1; 1; 2" NormDistance = "-CutE2" /></Cut>
+        <Cut><Plane NormVector = " 1; 1; 2" NormDistance = "-CutE2" /></Cut>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

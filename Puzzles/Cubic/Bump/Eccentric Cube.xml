@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Eccentric Cube</Name>
+        <Menu>Cubic\Bump\Eccentric Cube</Menu>
+        <Menu>Cubic\3x3x3 variants\Eccentric Cube</Menu>
+        <Inventor>Nob Yoshigahara</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2020-01-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4168</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W;
+        DWX := -W / 4;
+        DWY :=  W / 4;
+        DWZ := -W / 4;
+
+        Color := 'E0C07D';
+        for i := 0 to 5 do
+            Colors[i] := Color;
+
+        D := W / 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <Split><Plane NormDistance = "-3 * D" NormVector = "1; 0; 0" /></Split>
+        <Split><Plane NormDistance = " 3 * D" NormVector = "0; 1; 0" /></Split>
+        <Split><Plane NormDistance = "-3 * D" NormVector = "0; 0; 1" /></Split>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

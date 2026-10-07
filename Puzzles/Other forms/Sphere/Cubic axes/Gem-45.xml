@@ -1,0 +1,126 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Gem-45</Name>
+        <Menu>Other forms\Sphere\Cubic axes\Gem-45</Menu>
+        <Inventor>Sam Jiang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-12-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7447</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        K := 0.6;
+        D := K * 0.57768415038417; // = C15
+
+        W := D;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        // trianlge's inner point
+        Tx := D * 1.03;
+        Ty := D * 1.35;
+        Tz := Tx * Tan(Pi/16);
+
+        // Circles
+        Rx := D * 1.17;
+        Ry := Rx;
+        Rz := Rx * Tan(Pi/8);
+        RC := K * 0.13;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddColor" >
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut><Plane NormVector = "-1; 0; 0" NormDistance = " D" /></Cut>
+            <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Cut>
+            <Turn NormVector = "0;1;0" Angle = "Pi" />
+            <HideAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddColor" Color = "Colors[0]" />
+        <ExecMacro MacroName = "AddColor" Color = "Colors[1]" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "AddColor" Color = "Colors[2]" />
+        <ExecMacro MacroName = "AddColor" Color = "Colors[3]" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "AddColor" Color = "Colors[4]" />
+        <ExecMacro MacroName = "AddColor" Color = "Colors[5]" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "0" Layers = "0;2" Angle = "Pi / 4" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layers = "0;2" Angle = "Pi / 4" />
+            <SplitByAxes/>
+            <Turn Axis = "2" Layers = "0;2" Angle = "Pi / 4" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "5" />
+        <Undo Repeat = "15" />
+
+        <Macro Name = "HideArtefacts" >
+            <Hide><Plane NormVector = "Ex[i];Ey[i];Ez[i];" NormDistance = "-K * 0.82" /></Hide>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideArtefacts" i = "0" Repeat = "12" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <HideContaining Vectors = "Cx;Cy;Cz" />
+        <HideContaining Vectors = "Vx;Vy;Vz" />
+        <HideContaining Vectors = "Ex;Ey;Ez" />
+
+        <Macro Name = "HideTriangles" >
+            <HideContaining Vector = " Tx;-Ty; Tz" />
+            <HideContaining Vector = " Tx; Ty; Tz" />
+            <Turn NormVector = "0;1;0" Angle = "Pi/8" />
+        </Macro>
+        <ExecMacro MacroName = "HideTriangles" i = "0" Repeat = "16" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "HideTriangles" i = "0" Repeat = "16" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "HideTriangles" i = "0" Repeat = "16" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "Circles" >
+            <Circle Color = "Color" Radius = "RC" Center = " Rx; Ry;-Rz" />
+            <Circle Color = "Color" Radius = "RC" Center = " Rx; Ry; Rz" />
+            <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Circles" i = "0" Repeat = "2" Color = "Colors[3]" />
+        <ExecMacro MacroName = "Circles" i = "0" Repeat = "2" Color = "Colors[2]" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "Circles" i = "0" Repeat = "2" Color = "Colors[5]" />
+        <ExecMacro MacroName = "Circles" i = "0" Repeat = "2" Color = "Colors[4]" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "Circles" i = "0" Repeat = "2" Color = "Colors[1]" />
+        <ExecMacro MacroName = "Circles" i = "0" Repeat = "2" Color = "Colors[0]" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "1" Layer = "0" Angle = "-Pi/2" />
+        <Turn Axis = "1" Layer = "2" Angle = " Pi/2" />
+        <Turn Axis = "0" Layer = "0" Angle = "-Pi/2" />
+        <Turn Axis = "0" Layer = "2" Angle = " Pi/2" />
+        <SaveSolvedState/>
+        <Undo Repeat = "4" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

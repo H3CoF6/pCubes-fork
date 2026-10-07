@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Chimera Rex Cube</Name>
+        <Menu>Other forms\Chimera\Chimera Rex Cube</Menu>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7662</Link>
+    </Interface>
+
+    <Script>
+        W := 0.38;
+
+        RCut := W * 8 / 3 / sqrt(3);
+
+        OW := W * 2;
+        D := W * sqrt(3) * 2 / 9;
+    </Script>
+
+    <Axes TurningAngles = "Pi*2/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1;  1;  1" TurnAxesWithLayer = "0" />
+        <Axis NormVector = "-1;  1;  1" TurnAxesWithLayer = "0" />
+        <Axis NormVector = " 1; -1;  1" TurnAxesWithLayer = "0" />
+        <Axis NormVector = "-1; -1;  1" TurnAxesWithLayer = "2" />
+    </Axes>
+
+    <Figure>
+        // cube part
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut> <Plane NormVector = "-1; -1; -1" /> </Cut>
+
+        <!-- cut vertices -->
+        <Cut> <Plane NormVector = " 1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  1" NormDistance = "-RCut" /> </Cut>
+
+        <InvertVisibility/>
+
+        // octahedron part
+        <Part>
+            <Vertices>
+                <Add Vector = "-OW;  0;  0" />
+                <Add Vector = " OW;  0;  0" />
+                <Add Vector = "  0;-OW;  0" />
+                <Add Vector = "  0; OW;  0" />
+                <Add Vector = "  0;  0;-OW" />
+                <Add Vector = "  0;  0; OW" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "FFFFFE" VertexIndexes = "0;2;5" />
+                <Face Color = "FF77EE" VertexIndexes = "5;2;1" />
+                <Face Color = "0077FF" VertexIndexes = "5;1;3" />
+                <Face Color = "999999" VertexIndexes = "5;3;0" />
+                <Face Color = "      " VertexIndexes = "4;2;0" />
+                <Face Color = "FF800A" VertexIndexes = "4;1;2" />
+                <Face Color = "AA00CC" VertexIndexes = "4;3;1" />
+                <Face Color = "009600" VertexIndexes = "4;0;3" />
+            </Faces>
+        </Part>
+        <Cut> <Plane NormVector = "1; 1; 1" /> </Cut>
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

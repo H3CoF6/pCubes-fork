@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Chopper (24 colors)</Name>
+        <Menu>Other forms\Sphere\Cubic axes\Crazy Chopper (24 colors)</Menu>
+        <Inventor>Leslie Le</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-14</Added>
+        <Link>http://www.verypuzzle.com/index.php?route=product/product&amp;product_id=141</Link>
+    </Interface>
+
+    <Script>
+        Col[ 0] := '995500'; // clBrown1
+        Col[ 1] := '773300'; // clBrown2
+        Col[ 2] := '551100'; // clBrown3
+        Col[ 3] := 'FFAA00'; // clOrange1
+        Col[ 4] := 'FF8800'; // clOrange2
+        Col[ 5] := 'FF6600'; // clOrange3
+        Col[ 6] := 'EE0000'; // clRed1
+        Col[ 7] := 'DD0000'; // clRed2
+        Col[ 8] := 'CC0000'; // clRed3
+        Col[ 9] := 'FF55CC'; // clPink1
+        Col[10] := 'FF44AA'; // clPink2
+        Col[11] := 'FF3388'; // clPink3
+        Col[12] := 'FFFF11'; // clYellow
+        Col[13] := 'FFEE00'; // clYellow
+        Col[14] := 'EEDD00'; // clYellow
+        Col[15] := 'BB00EE'; // clViolett1
+        Col[16] := 'AA00DD'; // clViolett2
+        Col[17] := '9900CC'; // clViolett3
+        Col[18] := '00EE00'; // clGreen1
+        Col[19] := '00CC00'; // clGreen2
+        Col[20] := '00AA00'; // clGreen3
+        Col[21] := '0066FF'; // clBlue1
+        Col[22] := '0044FF'; // clBlue2
+        Col[23] := '0011FF'; // clBlue3
+
+        Colors[1] := -1;
+        Colors[2] := -1;
+        Colors[4] := -1;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        K := 0.6;
+        D1 := K * 0.767;
+        D2 := K * 0.777;
+        JumAngle := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi"  JumbleAngle = "JumAngle" PlaneDistances = "D2" NormVectors = "Ex; Ey; Ez" />
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "D1" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <Script>
+                Colors[0] := Col[c];
+                Colors[5] := Col[c+1];
+                Colors[3] := Col[c+2];
+                c := c + 3;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 0; 0" NormDistance = "0" /> </Cut>
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0; 1; 0" NormDistance = "0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" c = "0" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSegment" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

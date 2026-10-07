@@ -1,0 +1,145 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dayan Crystal 4</Name>
+        <Menu>Skallos\Dayan Crystal 4</Menu>
+        <Menu>Other forms\Dayan Crystal\Dayan Crystal 4</Menu>
+        <Inventor></Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-02-26</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+
+        dAngle := (Arctan(2) + Arcsin(2/3)) / 2;
+        dAngle2 := (Arctan(2) - Arcsin(2/3)) / 2;
+        Rsin := sin(dAngle);
+        Rcos := cos(dAngle);
+        R2sin := sin(dAngle2);
+        R2cos := cos(dAngle2);
+
+        mAngle := ArcTan(0.5);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+
+        sAngle := PI * 2 / 5;
+
+        for i := 0 to 4 do begin
+            x[i] := Rcos * sin(sAngle * (i - 0.5));
+            y[i] := Rcos * cos(sAngle * (i - 0.5));
+            z[i] := Rsin;
+        end;
+
+        for i := 5 to 9 do begin
+            x[i] := R2cos * sin(sAngle * (i - 0.5));
+            y[i] := R2cos * cos(sAngle * (i - 0.5));
+            z[i] := R2sin;
+        end;
+        xv[0] := 0;
+        yv[0] := 0;
+        zv[0] := R;
+        for i := 1 to 5 do begin
+            xv[i] := R * sin(sAngle * (i - 1)) * Ac;
+            yv[i] := R * cos(sAngle * (i - 1)) * Ac;
+            zv[i] := R * As;
+        end;
+        for i := 6 to 10 do begin
+            xv[i] := R * Ac * sin(sAngle * (i - 0.5));
+            yv[i] := R * Ac * cos(sAngle * (i - 0.5));
+            zv[i] := -R * As;
+        end;
+        xv[11] := 0;
+        yv[11] := 0;
+        zv[11] := -R;
+
+        RCut := (2 + As) / 3 * R;
+        D1 := (RSin - RCos / 6) * R;
+        D2 := (1 + As) / 2 * R;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = "x[0]; y[0]; z[0]" />
+        <Axis NormVector = "x[1]; y[1]; z[1]" />
+        <Axis NormVector = "x[2]; y[2]; z[2]" />
+        <Axis NormVector = "x[3]; y[3]; z[3]" />
+        <Axis NormVector = "x[4]; y[4]; z[4]" />
+        <Axis NormVector = "x[5]; y[5]; z[5]" />
+        <Axis NormVector = "x[6]; y[6]; z[6]" />
+        <Axis NormVector = "x[7]; y[7]; z[7]" />
+        <Axis NormVector = "x[8]; y[8]; z[8]" />
+        <Axis NormVector = "x[9]; y[9]; z[9]" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = "xv[0]; yv[0]; zv[0]" />
+        <Axis NormVector = "xv[1]; yv[1]; zv[1]" />
+        <Axis NormVector = "xv[2]; yv[2]; zv[2]" />
+        <Axis NormVector = "xv[3]; yv[3]; zv[3]" />
+        <Axis NormVector = "xv[4]; yv[4]; zv[4]" />
+        <Axis NormVector = "xv[5]; yv[5]; zv[5]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "xv[ 0]; yv[ 0]; zv[ 0]" />
+                <Add Vector = "xv[ 1]; yv[ 1]; zv[ 1]" />
+                <Add Vector = "xv[ 2]; yv[ 2]; zv[ 2]" />
+                <Add Vector = "xv[ 3]; yv[ 3]; zv[ 3]" />
+                <Add Vector = "xv[ 4]; yv[ 4]; zv[ 4]" />
+                <Add Vector = "xv[ 5]; yv[ 5]; zv[ 5]" />
+                <Add Vector = "xv[ 6]; yv[ 6]; zv[ 6]" />
+                <Add Vector = "xv[ 7]; yv[ 7]; zv[ 7]" />
+                <Add Vector = "xv[ 8]; yv[ 8]; zv[ 8]" />
+                <Add Vector = "xv[ 9]; yv[ 9]; zv[ 9]" />
+                <Add Vector = "xv[10]; yv[10]; zv[10]" />
+                <Add Vector = "xv[11]; yv[11]; zv[11]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "004080" VertexIndexes = "0;2;1" />
+                <Face Color = "4070FF" VertexIndexes = "0;3;2" />
+                <Face Color = "00FF00" VertexIndexes = "0;4;3" />
+                <Face Color = "FFFFFF" VertexIndexes = "0;5;4" />
+                <Face Color = "FFFF00" VertexIndexes = "0;1;5" />
+
+                <Face Color = "C1C5C7" VertexIndexes = "11;6;7" />
+                <Face Color = "FACC05" VertexIndexes = "11;7;8" />
+                <Face Color = "734082" VertexIndexes = "11;8;9" />
+                <Face Color = "E23465" VertexIndexes = "11;9;10" />
+                <Face Color = "008000" VertexIndexes = "11;10;6" />
+
+                <Face Color = "FF0080" VertexIndexes = "2;6;1" />
+                <Face Color = "800080" VertexIndexes = "3;7;2" />
+                <Face Color = "BF8040" VertexIndexes = "4;8;3" />
+                <Face Color = "309060" VertexIndexes = "5;9;4" />
+                <Face Color = "FF0000" VertexIndexes = "1;10;5" />
+
+                <Face Color = "80BF80" VertexIndexes = "6;2;7" />
+                <Face Color = "FF800A" VertexIndexes = "7;3;8" />
+                <Face Color = "4D1350" VertexIndexes = "8;4;9" />
+                <Face Color = "9F0000" VertexIndexes = "9;5;10" />
+                <Face Color = "7F8040" VertexIndexes = "10;1;6" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "51C4FA" > <Plane NormVector = " xv[0];  yv[0];  zv[0]" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "075AFF" > <Plane NormVector = " xv[1];  yv[1];  zv[1]" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "FF8009" > <Plane NormVector = " xv[2];  yv[2];  zv[2]" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "FFFFFE" > <Plane NormVector = " xv[3];  yv[3];  zv[3]" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "FACC06" > <Plane NormVector = " xv[4];  yv[4];  zv[4]" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "01FF00" > <Plane NormVector = " xv[5];  yv[5];  zv[5]" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "009484" > <Plane NormVector = "-xv[0]; -yv[0]; -zv[0]" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "38ABEA" > <Plane NormVector = "-xv[1]; -yv[1]; -zv[1]" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "FF0001" > <Plane NormVector = "-xv[2]; -yv[2]; -zv[2]" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "C1C5C8" > <Plane NormVector = "-xv[3]; -yv[3]; -zv[3]" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "FFFF01" > <Plane NormVector = "-xv[4]; -yv[4]; -zv[4]" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "018000" > <Plane NormVector = "-xv[5]; -yv[5]; -zv[5]" NormDistance = "-RCut" /> </Cut>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

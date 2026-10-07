@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Void Ube</Name>
+        <Menu>Cubic\Void\Ube Void</Menu>
+        <Inventor>Ryan Allsop</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-04-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3134</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; 0; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Split>
+
+        <RemoveContaining Vector = " Cx; Cy; Cz" />
+    </Figure>
+</xml>

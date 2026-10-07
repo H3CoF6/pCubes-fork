@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Son-Mum cube II</Name>
+        <Menu>Other cubes\Mixup\Son-Mum cube II</Menu>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-06-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7900</Link>
+        <Link>http://bbs.mf8-china.com/forum.php?mod=viewthread&amp;tid=107380</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / (sqrt(2) + 1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Turn  Axis = "0" Angle = " Pi / 4" Layer = "1" />
+        <SplitByAxes/>
+        <Turn  Axis = "0" Angle = "-Pi / 4" Layer = "1" />
+
+        <Turn  Axis = "1" Angle = " Pi / 4" Layer = "1" />
+        <SplitByAxes/>
+        <Turn  Axis = "1" Angle = "-Pi / 4" Layer = "1" />
+
+        <Turn  Axis = "2" Angle = " Pi / 4" Layer = "1" />
+        <SplitByAxes/>
+        <Turn  Axis = "2" Angle = "-Pi / 4" Layer = "1" />
+
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split">
+            <Hide Axis = "a0" Layer = "1" />
+            <Hide Axis = "a1" Layer = "1" />
+            <Turn Axis = "a2" Layer = "1" Angle = "Pi/4" />
+            <Turn Axis = "a0" Layer = "1" Angle = "Pi/2" />
+            <Turn Axis = "a2" Layer = "1" Angle = "Pi/2" />
+            <Turn Axis = "a0" Layer = "1" Angle = "Pi/4" />
+            <SplitByAxes/>
+            <Undo Repeat = "4" />
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" a0 = "0" a1 = "1" a2 = "2" />
+        <ExecMacro MacroName = "Split" a0 = "1" a1 = "2" a2 = "0" />
+        <ExecMacro MacroName = "Split" a0 = "2" a1 = "0" a2 = "1" />
+    </Figure>
+</xml>

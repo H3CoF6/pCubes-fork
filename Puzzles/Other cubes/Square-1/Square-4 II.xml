@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-4 II</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other cubes\Square-1\Square-4 II</Menu>
+        <Inventor>NongMl</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-26</Added>
+        <Link>http://bbs.mf8-china.com/forum.php?mod=viewthread&amp;tid=116058&amp;extra=page%3D1</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 20" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "cos(Pi/20); sin(Pi/20); 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split">
+            <Turn Axis = "0" Layer = "1" Angle = "Pi / 10" />
+            <Split Axis = "1" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "10" />
+
+        <Turn Axis = "0" Layers = "1" Angle = "-Pi / 20" />
+        <Split Axis = "1" From = "1" />
+
+        <Turn Axis = "0" Layers = "1" Angle = "-Pi / 2" />
+        <Split Axis = "1" From = "1" />
+
+        <Undo Repeat = "12" />
+    </Figure>
+</xml>

@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3x5 Barrel</Name>
+        <Menu>Other forms\Cylinder\3x3x5 Barrel</Menu>
+        <Inventor>Sam Hardy</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-09-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5197</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.5;
+        H := 0.5;
+        H2 := H + 0.002;
+
+        D := R / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-2 * D; -D; D; 2 * D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddQuarter">
+            <Cylinder Radius = "R" Color = "Color" >
+               <Base X = "0" Y = "0" Z = " H" Color = "clWhite "/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "clYellow" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "ax1; ay1; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = "ax2; ay2; 0" NormDistance = "0" /> </Cut>
+            <HideContaining Vector = "0; 0; 0" />
+        </Macro>
+        <ExecMacro MacroName = "AddQuarter" Color = "clRed"    ax1 = " 1" ay1 = " 1" ax2 = " 1" ay2 = "-1" />
+        <ExecMacro MacroName = "AddQuarter" Color = "clGreen"  ax1 = " 1" ay1 = " 1" ax2 = "-1" ay2 = " 1" />
+        <ExecMacro MacroName = "AddQuarter" Color = "clOrange" ax1 = "-1" ay1 = "-1" ax2 = "-1" ay2 = " 1" />
+        <ExecMacro MacroName = "AddQuarter" Color = "clBlue"   ax1 = "-1" ay1 = "-1" ax2 = " 1" ay2 = "-1" />
+
+        <ShowAll/>
+
+        <Circle Radius = "R" Color = "clWhite " > <Center X =  "0" Y =  "0" Z = " H2" /> </Circle>
+        <Circle Radius = "R" Color = "clYellow" > <Center X =  "0" Y =  "0" Z = "-H2" /> </Circle>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

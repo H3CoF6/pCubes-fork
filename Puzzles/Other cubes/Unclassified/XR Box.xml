@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>XR Box</Name>
+        <Menu>Other cubes\Unclassified\XR Box</Menu>
+        <Inventor>Justin Eplett</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7797</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        W := 0.9;
+        D := W * sqrt(3) / 6;
+        for i := 1 to 2 do begin
+            Ax[i] := cos(Pi / 3 * i);
+            Ay[i] := sin(Pi / 3 * i);
+        end;
+        Wx := W * sqrt(3) / 3;
+        Wy := W / 3;
+        Wz := W / 4;
+        DWy := Wy;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "Ax[1]; Ay[1]; 0" />
+        <Axis NormVector = "Ax[2]; Ay[2]; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <HideContaining Vector = "0; 0; 0" />
+        <Split><Plane NormVector = "1;0;0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "1;0;0" NormDistance = " D" /></Split>
+        <ShowAll/>
+        <RemoveContaining Vector = " Wx * 0.9; Wy * 2; 0" />
+        <RemoveContaining Vector = "-Wx * 0.9; Wy * 2; 0" />
+    </Figure>
+</xml>

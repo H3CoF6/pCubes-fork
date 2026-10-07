@@ -1,0 +1,187 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Spectrolite Gem</Name>
+        <Menu>Other forms\Catalan Solids\Pentagonal Icositetrahedron\Spectrolite Gem</Menu>
+        <Inventor>Adrián Cures</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9435</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'F0F0F0'; // White      
+        Colors[ 1] := 'C0C0C0'; // Silver     
+        Colors[ 2] := '808080'; // Gray       
+        Colors[ 3] := '202020'; // Black      
+        Colors[ 4] := '00FFFF'; // Cyan       
+        Colors[ 5] := '008080'; // Teal       
+        Colors[ 6] := '0000FF'; // Blue       
+        Colors[ 7] := '000080'; // Navy       
+        Colors[ 8] := 'FF0000'; // Red        
+        Colors[ 9] := '800000'; // Brown      
+        Colors[10] := 'FF7F50'; // Coral      
+        Colors[11] := 'CD5C5C'; // Indian     
+        Colors[12] := 'FFFF00'; // Yellow     
+        Colors[13] := '808000'; // Olive      
+        Colors[14] := 'FF6000'; // Orange     
+        Colors[15] := 'DDBB20'; // Golden     
+        Colors[16] := '00FF00'; // Lime       
+        Colors[17] := '008000'; // Green      
+        Colors[18] := '006400'; // DarkGreen  
+        Colors[19] := 'ADFF2F'; // GreenYellow
+        Colors[20] := 'FF00FF'; // Fuchsia    
+        Colors[21] := '800080'; // Purple     
+        Colors[22] := 'FF69B4'; // Pink       
+        Colors[23] := 'DB7093'; // Pale       
+
+        clBody := '-1';
+
+        K  := 0.5;
+
+        K1 := (6 * (9 + sqrt(33)))^(1/3);
+        K2 := (6 * (9 - sqrt(33)))^(1/3);
+        K3 := (2 * (1777 + 33*sqrt(33)))^(1/3);
+        K4 := (2 * (1777 - 33*sqrt(33)))^(1/3);
+
+        C0 := K * sqrt(6 * (-6 + K1 + K2)) / 12;
+        C1 := K * sqrt(6 * ( 6 + K1 + K2)) / 12;
+        C2 := K * sqrt(6 * (18 + K1 + K2)) / 12;
+        C3 := K * sqrt(6 * (14 + K3 + K4)) / 12;
+
+        n1 := (c1 - c0)^2;
+        n2 := (c1 - c2)^2;
+        n3 := (c1 - c2) * (c0 - c1);
+
+        bgx := -n2*n3 + n1^2;
+        bgy :=  n1*n2 - n3^2;
+        bgz := -n1*n3 + n2^2;
+
+        byx := -n2^2 + n1*n3;
+        byy :=  n1^2 - n2*n3;
+        byz := -n3^2 + n1*n2;
+
+        A1 := ArcCos((bgx*byx + bgy*byy + bgz*byz) / (bgx^2 + bgy^2 + bgz^2));
+        A2 := 2 * Pi - 4 * A1;
+        A3 := 2 * A1;
+        A4 := 3 * A1;
+
+        D  := 1.055 * K;
+
+        DCut := D * sqrt(n1^2 + n2^2 + n3^2) / n1;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "D" >
+        <Axis NormVector = " n2; n3; n1" />
+        <Axis NormVector = " n3;-n2; n1" />
+        <Axis NormVector = "-n2;-n3; n1" />
+        <Axis NormVector = "-n3; n2; n1" />
+
+        <Axis NormVector = "-n2; n3;-n1" />
+        <Axis NormVector = "-n3;-n2;-n1" />
+        <Axis NormVector = " n2;-n3;-n1" />
+        <Axis NormVector = " n3; n2;-n1" />
+
+        <Axis NormVector = "-n2; n1; n3" />
+        <Axis NormVector = " n2; n1;-n3" />
+        <Axis NormVector = "-n3; n1;-n2" />
+        <Axis NormVector = " n3; n1; n2" />
+
+        <Axis NormVector = "-n3;-n1; n2" />
+        <Axis NormVector = " n3;-n1;-n2" />
+        <Axis NormVector = "-n2;-n1;-n3" />
+        <Axis NormVector = " n2;-n1; n3" />
+
+        <Axis NormVector = "-n1; n3; n2" />
+        <Axis NormVector = "-n1;-n3;-n2" />
+        <Axis NormVector = "-n1;-n2; n3" />
+        <Axis NormVector = "-n1; n2;-n3" />
+
+        <Axis NormVector = " n1;-n3; n2" />
+        <Axis NormVector = " n1; n3;-n2" />
+        <Axis NormVector = " n1;-n2;-n3" />
+        <Axis NormVector = " n1; n2; n3" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;  0;-C3" />
+                <Add Vector = "  0;  0; C3" />
+                <Add Vector = "-C3;  0;  0" />
+                <Add Vector = " C3;  0;  0" />
+                <Add Vector = "  0;-C3;  0" />
+                <Add Vector = "  0; C3;  0" />
+                <Add Vector = "-C1; C0;-C2" />
+                <Add Vector = "-C1;-C0; C2" />
+                <Add Vector = " C1;-C0;-C2" />
+                <Add Vector = " C1; C0; C2" />
+                <Add Vector = "-C2; C1;-C0" />
+                <Add Vector = "-C2;-C1; C0" />
+                <Add Vector = " C2;-C1;-C0" />
+                <Add Vector = " C2; C1; C0" />
+                <Add Vector = "-C0; C2;-C1" />
+                <Add Vector = "-C0;-C2; C1" />
+                <Add Vector = " C0;-C2;-C1" />
+                <Add Vector = " C0; C2; C1" />
+                <Add Vector = "-C0;-C1;-C2" />
+                <Add Vector = "-C0; C1; C2" />
+                <Add Vector = " C0; C1;-C2" />
+                <Add Vector = " C0;-C1; C2" />
+                <Add Vector = "-C2;-C0;-C1" />
+                <Add Vector = "-C2; C0; C1" />
+                <Add Vector = " C2; C0;-C1" />
+                <Add Vector = " C2;-C0; C1" />
+                <Add Vector = "-C1;-C2;-C0" />
+                <Add Vector = "-C1; C2; C0" />
+                <Add Vector = " C1; C2;-C0" />
+                <Add Vector = " C1;-C2; C0" />
+                <Add Vector = "-C1;-C1;-C1" />
+                <Add Vector = "-C1;-C1; C1" />
+                <Add Vector = "-C1; C1;-C1" />
+                <Add Vector = "-C1; C1; C1" />
+                <Add Vector = " C1;-C1;-C1" />
+                <Add Vector = " C1;-C1; C1" />
+                <Add Vector = " C1; C1;-C1" />
+                <Add Vector = " C1; C1; C1" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = " 0;18;30;22; 6" />
+                <Face Color = "Colors[ 1]" VertexIndexes = " 0; 8;34;16;18" />
+                <Face Color = "Colors[ 2]" VertexIndexes = " 0;20;36;24; 8" />
+                <Face Color = "Colors[ 3]" VertexIndexes = " 0; 6;32;14;20" />
+                <Face Color = "Colors[ 4]" VertexIndexes = " 1;19;33;23; 7" />
+                <Face Color = "Colors[ 5]" VertexIndexes = " 1; 9;37;17;19" />
+                <Face Color = "Colors[ 6]" VertexIndexes = " 1;21;35;25; 9" />
+                <Face Color = "Colors[ 7]" VertexIndexes = " 1; 7;31;15;21" />
+                <Face Color = "Colors[ 8]" VertexIndexes = " 2;23;33;27;10" />
+                <Face Color = "Colors[ 9]" VertexIndexes = " 2;11;31; 7;23" />
+                <Face Color = "Colors[10]" VertexIndexes = " 2;22;30;26;11" />
+                <Face Color = "Colors[11]" VertexIndexes = " 2;10;32; 6;22" />
+                <Face Color = "Colors[12]" VertexIndexes = " 3;25;35;29;12" />
+                <Face Color = "Colors[13]" VertexIndexes = " 3;13;37; 9;25" />
+                <Face Color = "Colors[14]" VertexIndexes = " 3;24;36;28;13" />
+                <Face Color = "Colors[15]" VertexIndexes = " 3;12;34; 8;24" />
+                <Face Color = "Colors[16]" VertexIndexes = " 4;29;35;21;15" />
+                <Face Color = "Colors[17]" VertexIndexes = " 4;16;34;12;29" />
+                <Face Color = "Colors[18]" VertexIndexes = " 4;26;30;18;16" />
+                <Face Color = "Colors[19]" VertexIndexes = " 4;15;31;11;26" />
+                <Face Color = "Colors[20]" VertexIndexes = " 5;28;36;20;14" />
+                <Face Color = "Colors[21]" VertexIndexes = " 5;17;37;13;28" />
+                <Face Color = "Colors[22]" VertexIndexes = " 5;27;33;19;17" />
+                <Face Color = "Colors[23]" VertexIndexes = " 5;14;32;10;27" />
+            </Faces>
+        </Part>
+
+        <Cut><Plane NormVector = " 1; 0; 0" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 0;-1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 0; 0; 1" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "-DCut" /></Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

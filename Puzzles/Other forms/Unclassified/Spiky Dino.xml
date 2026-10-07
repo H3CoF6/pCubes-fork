@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Spiky Dino</Name>
+        <Menu>Other forms\Unclassified\Spiky Dino</Menu>
+        <Inventor>Alberto Costa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6431</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 6] := 'AF1F00';
+        Colors[ 7] := '7F00FF';
+        Colors[ 8] := 'FFAF00';
+        Colors[ 9] := '00FF7F';
+        Colors[10] := '007FFF';
+        Colors[11] := 'AFFF00';
+        Colors[12] := 'FF007F';
+        Colors[13] := '1FAF00';
+
+        W := 0.5;
+        D := W / sqrt(3);
+        RCut := D * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "Split" >
+            <Split> <Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "D" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "8" />
+
+        <Macro Name = "HideInnerV" >
+            <HideContaining Vector = "Vx[i]*0.9; Vy[i]*0.9; Vz[i]*0.9" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideInnerV" i = "0" Repeat = "8" />
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Colors[i + 6]" > <Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-RCut" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "8" />
+
+        <ShowAll/>
+
+        <Macro Name = "CutGray" >
+            <Cut> <Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-RCut" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" i = "0" Repeat = "8" />
+
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "SplitC" >
+            <Split Color1 = "Colors[i + 6]" > <Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-D" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitC" i = "0" Repeat = "8" />
+
+        <Macro Name = "Split2" >
+            <Split> <Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-RCut" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split2" i = "0" Repeat = "8" />
+
+        <ExecMacro MacroName = "HideInnerV" i = "0" Repeat = "8" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+</xml>

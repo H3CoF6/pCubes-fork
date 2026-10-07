@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mirror Cubes 3x3x3</Name>
+        <Menu>Other cubes\Multi-core\Mirror Cubes 3x3x3</Menu>
+        <Inventor>Josh Bostick</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2516</Link>
+    </Interface>
+
+    <Script>
+        W := 0.3;
+        D := W / 3;
+        T := W * 2 / 3;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi/2" PlaneDistances = "D" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-T;-T;-T" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "-T;-T;-T" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = "-T;-T;-T" />
+    </Axes>
+
+    <Axes TurningAngles = "0;Pi/2" PlaneDistances = "D" >
+        <Axis NormVector = "-1; 2; 2" BaseVector = " T; T; T" />
+        <Axis NormVector = " 2;-1; 2" BaseVector = " T; T; T" />
+        <Axis NormVector = " 2; 2;-1" BaseVector = " T; T; T" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " T; T; T" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "-D" /></Split>
+        <Cut><Plane NormVector = "-1;-1;-1" NormDistance = "-W * 2 / sqrt(3)" /></Cut>
+        <HideAll/>
+        <Transfer Vector = "-T*2;-T*2;-T*2" />
+        <Turn NormVector = "-1;-1;-1" Angle = "Pi" />
+
+        <Script>
+            Colors[0] := 'FF810A';
+            Colors[1] := 'C80001';
+            Colors[2] := '009601';
+            Colors[3] := '0001C8';
+            Colors[4] := 'FFFFFE';
+            Colors[5] := 'FFFF01';
+        </Script>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = " D" /></Split>
+        <Cut><Plane NormVector = " 1; 1; 1" NormDistance = "-W * 2 / sqrt(3)" /></Cut>
+        <ShowAll/>
+        <Turn NormVector = "-1;-1;-1" Angle = "Pi" />
+        <Transfer Vector = " T; T; T" />
+    </Figure>
+</xml>

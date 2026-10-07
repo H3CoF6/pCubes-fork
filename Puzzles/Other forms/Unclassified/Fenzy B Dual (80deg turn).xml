@@ -1,0 +1,166 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fenzy B Dual (80deg turn)</Name>
+        <Menu>Other forms\Unclassified\Fenzy B Dual (80deg turn)</Menu>
+        <Inventor></Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2020-08-13</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=387700#p387700</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'FAFAFA';
+        clYellow := 'F0E400';
+        clBlue   := '1010D0';
+        clRed    := 'C80000';
+        clOrange := 'F07000';
+        clGreen  := '008000';
+        clViolet := '640064';
+        clGray   := '5F5F5F';
+
+        clCyan   := '20D0C0';
+        clPink   := 'E860C0';
+
+        K  := 0.65;
+
+        // angle between axes = 77.869542155423386806 degs
+        N1 :=  0.62843523424033001745;
+        N2 :=  0.77786191343020616003;
+        N3 :=  0.96281863809995625155;
+        N4 :=  0.27014860748733366741;
+        N5 :=  0.84668850065537765228;
+        N6 := -0.33438340385962623410;
+        N7 := -0.41389167916400379868;
+
+        C1 :=  K * N1;
+        C2 :=  K * N2;
+        C3 :=  K * N3;
+        C4 :=  K * N4;
+        C5 :=  K * N5;
+        C6 :=  K * N6;
+        C7 :=  K * N7;
+        C8 :=  K * 0.60697525222770588341;
+        C9 :=  K * 0.51230509679575141817;
+        C10 := -K * 0.22022716258953223008;
+        C11 :=  K * 0.53792907292676175304;
+        C12 := -K * 0.49420127665919560086;
+        C13 :=  K * 0.14934761376295169128;
+        C14 :=  K * 0.44092874412830571510;
+        C15 := -K * 0.58994488138776836345;
+        C16 :=  K * 0.10823138195336604172;
+        C17 :=  K * 0.04274391098259212873;
+        C18 := -K * 0.82438788067084942560;
+
+        D  := K * 0.43376283428410288621;
+
+        A1 := Pi * 4/9; // 80 degs
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1*3; -A1*2; -A1; 0; A1; A1*2; A1*3" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = " N1; 0; N2" />
+        <Axis NormVector = "-N1; 0; N2" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1*3; -A1*2; -A1; 0; A1; A1*2" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = "  0; N3; N4" />
+        <Axis NormVector = "  0;-N3; N4" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1; 0; A1; A1*2; A1*3" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = " N5; N6; N7" />
+        <Axis NormVector = "-N5;-N6; N7" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  C1;   0;  C2" />
+                <Add Vector = " -C1;   0;  C2" />
+                <Add Vector = "   0;  C3;  C4" />
+                <Add Vector = "   0; -C3;  C4" />
+                <Add Vector = "  C5;  C6;  C7" />
+                <Add Vector = " -C5; -C6;  C7" />
+                <Add Vector = "  C8;  C9; C10" />
+                <Add Vector = " -C8; -C9; C10" />
+                <Add Vector = "   0; C11; C12" />
+                <Add Vector = "   0;-C11; C12" />
+                <Add Vector = " C13; C14; C15" />
+                <Add Vector = "-C13;-C14; C15" />
+                <Add Vector = " C16; C17; C18" />
+                <Add Vector = "-C16;-C17; C18" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clGreen"  VertexIndexes = " 0; 2; 1" />
+                <Face Color = "clWhite"  VertexIndexes = " 0; 1; 3" />
+                <Face Color = "clViolet" VertexIndexes = " 0; 3; 4" />
+                <Face Color = "clGray"   VertexIndexes = " 1; 2; 5" />
+
+                <Face Color = "clRed"    VertexIndexes = " 0; 4; 6" InvisibleEdges = "4" />
+                <Face Color = "clRed"    VertexIndexes = " 0; 6; 2" InvisibleEdges = "1" />
+                <Face Color = "clBlue"   VertexIndexes = " 1; 5; 7" InvisibleEdges = "4" />
+                <Face Color = "clBlue"   VertexIndexes = " 1; 7; 3" InvisibleEdges = "1" />
+
+                <Face Color = "clYellow" VertexIndexes = " 2; 8; 5" InvisibleEdges = "3" />
+                <Face Color = "clYellow" VertexIndexes = " 2; 6;10; 8" InvisibleEdges = "14" />
+                <Face Color = "clYellow" VertexIndexes = " 5; 8;10;12;13" InvisibleEdges = "7" />
+                <Face Color = "clYellow" VertexIndexes = " 4;12;10; 6" InvisibleEdges = "6" />
+
+                <Face Color = "clOrange" VertexIndexes = " 3; 9; 4" InvisibleEdges = "3" />
+                <Face Color = "clOrange" VertexIndexes = " 3; 7;11; 9" InvisibleEdges = "14" />
+                <Face Color = "clOrange" VertexIndexes = " 4; 9;11;13;12" InvisibleEdges = "7" />
+                <Face Color = "clOrange" VertexIndexes = " 5;13;11; 7" InvisibleEdges = "6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn  Axis = "2" Layer = "1" Angle = "-A1" />
+        <Split Axis = "0" From = "1"/>
+        <Undo Repeat = "1"/>
+
+        <Turn  Axis = "3" Layer = "1" Angle = "-A1" />
+        <Split Axis = "1" From = "1"/>
+        <Undo Repeat = "1"/>
+
+        <Turn  Axis = "4" Layer = "1" Angle = "A1" />
+        <Split Axis = "0" From = "1"/>
+        <Turn  Axis = "4" Layer = "1" Angle = "A1" />
+        <Split Axis = "0" From = "1"/>
+        <Undo Repeat = "2"/>
+
+        <Turn  Axis = "5" Layer = "1" Angle = "A1" />
+        <Split Axis = "1" From = "1"/>
+        <Turn  Axis = "5" Layer = "1" Angle = "A1" />
+        <Split Axis = "1" From = "1"/>
+        <Undo Repeat = "2"/>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "ax1" Layer = "1" Angle = "angle" />
+            <Hide  Axis = "ax2" Layer = "0" />
+            <Turn  Axis = "ax1" Layer = "1" Angle = "angle" />
+            <Split Axis = "ax2" From = "1"/>
+            <Undo Repeat = "2"/>
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax1 = " 2" ax2 = " 0" angle = "-A1"/>
+        <ExecMacro MacroName = "Split" ax1 = " 2" ax2 = " 1" angle = " A1"/>
+        <ExecMacro MacroName = "Split" ax1 = " 3" ax2 = " 1" angle = "-A1"/>
+        <ExecMacro MacroName = "Split" ax1 = " 3" ax2 = " 0" angle = " A1"/>
+
+        <Turn  Axis = "4" Layer = "1" Angle = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 4" ax2 = " 0" angle = " A1"/>
+        <Undo Repeat = "1"/>
+
+        <Turn  Axis = "5" Layer = "1" Angle = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = " 5" ax2 = " 1" angle = " A1"/>
+        <Undo Repeat = "1"/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

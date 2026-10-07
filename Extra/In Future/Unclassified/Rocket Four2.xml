@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rocket Four2</Name>
+        <Menu>Grigr\Rocket Four2</Menu>
+        <Inventor></Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added></Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        K := 0.5;
+
+        A1 := Pi/2;
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vx := y1 * z2 - y2 * z1;
+          vy := z1 * x2 - z2 * x1;
+          vz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+        A1 := Angle(-27.77492045,-0.00014384,-11.33815655, -0.00042335,27.77461953,-11.33889366,  0.00126567,27.7741288,11.34009559);
+ShowMessage(cos(A1));
+        A2 := Pi-A1;
+
+        D := K* 0.0;       
+    </Script>       
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1;-A2; 0; A1;A2" PlaneDistances = "D"> 
+        <Axis NormVector = " -27.77492045; -0.00014384; -11.33815655" />
+        <Axis NormVector = " -27.77544802; -0.00014387;  11.33686409" />
+        <Axis NormVector = " -0.00042335; 27.77461953; -11.33889366" />
+        <Axis NormVector = " 0.00126567; 27.7741288;  11.34009559" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn Axis = "0" Angle = " A1" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A2" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A1" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A2" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A1" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A2" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A1" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A2" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A1" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A2" Layer = "1" /> <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+
+        /////////////////////
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

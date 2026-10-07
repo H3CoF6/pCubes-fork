@@ -1,0 +1,109 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Orion unbandaged</Name>
+        <Menu>Other forms\Dodecahedron\Mixed\Face-Vertex\Orion unbandaged</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Link></Link>
+        <Added>2018-01-26</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R2sin;
+        D2 := R / 3;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "-Cx[1]; -Cy[1]; -Cz[1]" />
+        <Axis NormVector = " Cx[2];  Cy[2];  Cz[2]" />
+        <Axis NormVector = " Cx[5];  Cy[5];  Cz[5]" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "-D2;D2" FixedLayers = "1" >
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" /> 5
+        <Axis NormVector = "Vx[8]; Vy[8]; Vz[8]" /> 6
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "SplitByAxis">
+            <Split Axis = "0" From = "1"/>
+            <Split Axis = "1" From = "1"/>
+            <Split Axis = "2" From = "1"/>
+            <Split Axis = "3" From = "1"/>
+            <Split Axis = "3" From = "2"/>
+        </Macro>
+
+        /////////////////////
+
+        <ExecMacro MacroName = "SplitByAxis"/>
+        <Turn  Axis = "0" Layer = "1" Angle = "-2*sAngle" />
+        <Turn  Axis = "1" Layer = "1" Angle = " 2*sAngle" />
+        <Turn  Axis = "0" Layer = "1" Angle = " 2*sAngle" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-2*sAngle" />
+        <ExecMacro MacroName = "SplitByAxis"/>
+        <Turn  Axis = "0" Layer = "1" Angle = "-2*sAngle" />
+        <Turn  Axis = "1" Layer = "1" Angle = " 2*sAngle" />
+        <Turn  Axis = "0" Layer = "1" Angle = " 2*sAngle" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-2*sAngle" />
+        <ExecMacro MacroName = "SplitByAxis"/>
+        <Undo Repeat = "8"/>
+
+        ///////////////////////////////////////////////////////////////
+
+        <Macro Name = "SplitPart">
+            <Turn  Axis = "0" Layer = "1" Angle = "-2*sAngle" />
+            <Turn  Axis = "1" Layer = "1" Angle = " 2*sAngle" />
+            <Split Axis = "5" From = "1"/>
+            <Undo Repeat = "2"/>
+
+            <Turn  Axis = "1" Layer = "1" Angle = "-2*sAngle" />
+            <Turn  Axis = "2" Layer = "1" Angle = " 2*sAngle" />
+            <Split Axis = "6" From = "1"/>
+            <Undo Repeat = "2"/>
+
+            <Turn  Axis = "2" Layer = "1" Angle = "-2*sAngle" />
+            <Turn  Axis = "0" Layer = "1" Angle = " 2*sAngle" />
+            <Split Axis = "4" From = "1"/>
+            <Undo Repeat = "2"/>
+
+            <RemoveGrayParts/>
+        </Macro>
+
+        <Macro Name = "TurnPart">
+            <Turn  Axis = "0" Layer = "1" Angle = "-2*sAngle" />
+            <Turn  Axis = "1" Layer = "1" Angle = " 2*sAngle" />
+            <Turn  Axis = "5" Layer = "0" Angle = " 2*Pi/3" />
+            <Turn  Axis = "1" Layer = "1" Angle = "-2*sAngle" />
+            <Turn  Axis = "0" Layer = "1" Angle = " 2*sAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart"/>
+
+        <ExecMacro MacroName = "TurnPart"/>
+        <ExecMacro MacroName = "SplitPart"/>
+        <Undo Repeat = "5"/>
+
+        <Turn  Axis = "3" Layer = "2" Angle = " 2*Pi/3" />
+
+        <ExecMacro MacroName = "TurnPart"/>
+        <ExecMacro MacroName = "SplitPart"/>
+        <Undo Repeat = "5"/>
+
+        <Turn  Axis = "3" Layer = "2" Angle = " 2*Pi/3" />
+
+        <ExecMacro MacroName = "TurnPart"/>
+        <ExecMacro MacroName = "SplitPart"/>
+        <Undo Repeat = "7"/>
+
+    </Figure>
+</xml>

@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>NZ Cube (AC)</Name>
+        <Menu>Other cubes\3x3x3 variants\NZ Cube (AC)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-09-26</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Color1 := '222222'; // Black
+        Color2 := '770000'; // Red
+
+        W := 0.5;
+        D := W / 3;
+        DCut := D * 1.1;
+
+        Angle := 2 * arctan((3 + sqrt(13)) / sqrt(8));
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "-1; 1; 0" Angle = " Angle" />
+
+        <Macro Name = "Body" >
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "0.5" />
+            <SplitByAxes/>
+            <Turn NormVector = "-1; 1; 0" Angle = "-Angle" />
+            <HideContaining Vector = " D;-D; 0" />
+            <HideContaining Vector = " 0;-DCut; D" />
+            <HideContaining Vector = " DCut; 0;-D" />
+            <HideContaining Vector = "-D; D; 0" />
+            <HideContaining Vector = " 0; DCut;-D" />
+            <HideContaining Vector = "-DCut; 0; D" />
+            <Turn NormVector = "-1; 1; 0" Angle = " Angle" />
+        </Macro>
+
+        <ExecMacro MacroName = "Body" Color = "Color1" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ExecMacro MacroName = "Body" Color = "Color2" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

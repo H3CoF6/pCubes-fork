@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Venomish 2x2x2</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Venomish 2x2x2</Menu>
+        <Inventor>Erlend Fredriksen</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9150</Link>
+    </Interface>
+
+    <Script>
+        Col[0] := '9900EE'; // Purple
+        Col[1] := '00DD00'; // Green
+        Col[2] := 'FF8800'; // Orange
+        Col[3] := 'FFFF00'; // Yellow
+        Col[4] := '0055FF'; // Blue
+        Col[5] := 'FF0000'; // Red
+
+        Colors[ 0] := Col[0];
+        Colors[ 1] := Col[0];
+        Colors[ 2] := Col[0];
+        Colors[ 3] := Col[0];
+        Colors[ 4] := Col[3];
+        Colors[ 5] := Col[3];
+        Colors[ 6] := Col[3];
+        Colors[ 7] := Col[3];
+        Colors[ 8] := Col[2];
+        Colors[ 9] := Col[2];
+        Colors[10] := Col[2];
+        Colors[11] := Col[2];
+        Colors[12] := Col[5];
+        Colors[13] := Col[5];
+        Colors[14] := Col[5];
+        Colors[15] := Col[5];
+        Colors[16] := Col[1];
+        Colors[17] := Col[1];
+        Colors[18] := Col[1];
+        Colors[19] := Col[1];
+        Colors[20] := Col[4];
+        Colors[21] := Col[4];
+        Colors[22] := Col[4];
+        Colors[23] := Col[4];
+
+        W := 0.45;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 1.15;
+        DCut := W * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+
+        <Macro Name = "SplitE" >
+            <Split><Plane NormVector = "0;1;1" NormDistance = "D" /></Split>
+            <Hide><Plane NormVector = "0;1;1" NormDistance = "D" /></Hide>
+            <Cut><Plane NormVector = " 1; 0; 0" NormDistance = "-DCut" /></Cut>
+            <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /></Cut>
+            <Cut><Plane NormVector = " 0; 1;-1" NormDistance = "-DCut" /></Cut>
+            <Cut><Plane NormVector = " 0;-1; 1" NormDistance = "-DCut" /></Cut>
+            <ShowAll/>
+            <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "SplitE" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "SplitE" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "SplitE" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

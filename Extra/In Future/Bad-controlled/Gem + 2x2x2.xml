@@ -1,0 +1,210 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Gem + 2x2x2</Name>
+        <Menu>Grigr\Gem + 2x2x2</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3574</Link>
+    </Interface>
+
+    <Script>
+        Scale := 1.1;
+        R := 0.5 * 1.5 * Scale;
+        D := sqrt(2) / 4 * Scale;
+        DCut := 0.5 * Scale;
+
+        clYellow  := 'EDFF11';
+        clBlue    := '0000FF';
+        clOrange  := 'FF5C00';
+        clRed     := 'FF0000';
+        clGreen   := '1D9F00';
+        clViolett := '7700CD';
+        clGray    := '45575E';
+        clWhite   := 'FFFFFF';
+
+        clYellow1 := 'EDFF15';
+        clBlue1   := '0000FD';
+        clOrange1 := 'FF5C05';
+        clRed1    := 'FF0005';
+        clGreen1  := '1D9F05';
+        clWhite1  := 'FFFFF0';
+
+        RCut  := 0.42;
+        RCut2 := 0.36;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1;  1;  0" />
+        <Axis NormVector = " 1; -1;  0" />
+        <Axis NormVector = " 1;  0;  1" />
+        <Axis NormVector = " 1;  0; -1" />
+        <Axis NormVector = " 0;  1;  1" />
+        <Axis NormVector = " 0;  1; -1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-R;  0;  0" />
+                <Add Vector = " R;  0;  0" />
+                <Add Vector = " 0; -R;  0" />
+                <Add Vector = " 0;  R;  0" />
+                <Add Vector = " 0;  0; -R" />
+                <Add Vector = " 0;  0;  R" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clGreen"   VertexIndexes = "0;2;5" />
+                <Face Color = "clWhite"   VertexIndexes = "5;2;1" />
+                <Face Color = "clGray"    VertexIndexes = "5;1;3" />
+                <Face Color = "clRed"     VertexIndexes = "5;3;0" />
+                <Face Color = "clViolett" VertexIndexes = "4;2;0" />
+                <Face Color = "clOrange"  VertexIndexes = "4;1;2" />
+                <Face Color = "clBlue"    VertexIndexes = "4;3;1" />
+                <Face Color = "clYellow"  VertexIndexes = "4;0;3" />
+            </Faces>
+        </Part>
+           <Cut Color="clWhite1" >
+               <Plane>
+                   <NormVector X="1" Y="0" Z="0" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>- ->
+           <Cut Color="clYellow1" >
+               <Plane>
+                   <NormVector X="-1" Y="0" Z="0" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>
+           <Cut Color="clBlue1" >
+               <Plane>
+                   <NormVector X="0" Y="1" Z="0" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>
+           <Cut Color="clGreen1" >
+               <Plane>
+                   <NormVector X="0" Y="-1" Z="0" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>
+           <Cut Color="clRed1" >
+               <Plane>
+                   <NormVector X="0" Y="0" Z="1" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>
+           <Cut Color="clOrange1" >
+               <Plane>
+                   <NormVector X="0" Y="0" Z="-1" />
+                   <NormDistance> -DCut </NormDistance>
+               </Plane>
+           </Cut>
+        <SplitByAxes/>
+
+        <Axis NormVector = " 1;  1;  0" />
+        <Hide Axis = "0" Layer = "1" />
+        <Cut> <Plane NormVector = " -1;  1;  sqrt(2) " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "  1; -1;  sqrt(2) " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " -1;  1; -sqrt(2) " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "  1; -1; -sqrt(2) " NormDistance = "-RCut" /> </Cut>
+        <ShowAll/>
+
+        <Axis NormVector = " 1; -1;  0" />
+        <Hide Axis = "1" Layer = "1" />
+        <Cut> <Plane NormVector = "  1;  1;  sqrt(2) " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "  1;  1; -sqrt(2) " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " -1; -1; -sqrt(2) " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " -1; -1;  sqrt(2) " NormDistance = "-RCut" /> </Cut>
+        <ShowAll/>
+
+        <Axis NormVector = " 1;  0;  1" />
+        <Hide Axis = "2" Layer = "1" />
+        <Cut> <Plane NormVector = " -1;  sqrt(2);  1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "  1;  sqrt(2); -1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " -1; -sqrt(2);  1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "  1; -sqrt(2); -1 " NormDistance = "-RCut" /> </Cut>
+        <ShowAll/>
+
+        <Axis NormVector = " 1;  0; -1" />
+        <Hide Axis = "3" Layer = "1" />
+        <Cut> <Plane NormVector = "  1;  sqrt(2);  1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "  1; -sqrt(2);  1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " -1; -sqrt(2); -1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " -1;  sqrt(2); -1 " NormDistance = "-RCut" /> </Cut>
+        <ShowAll/>
+        
+        <Axis NormVector = " 0;  1;  1" />
+        <Hide Axis = "4" Layer = "1" />
+        <Cut> <Plane NormVector = "  sqrt(2); -1;  1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "  sqrt(2);  1; -1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " -sqrt(2); -1;  1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " -sqrt(2);  1; -1 " NormDistance = "-RCut" /> </Cut>
+        <ShowAll/>
+
+        <Axis NormVector = " 0;  1; -1" />
+        <Hide Axis = "5" Layer = "1" />
+        <Cut> <Plane NormVector = "  sqrt(2);  1;  1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " -sqrt(2);  1;  1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " -sqrt(2); -1; -1 " NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "  sqrt(2); -1; -1 " NormDistance = "-RCut" /> </Cut>
+        <ShowAll/>
+
+<!--        <Axis NormVector = " 1;  1;  0" />
+        <Hide Axis = "0" Layer = "1" />
+        <Cut> <Plane NormVector = " 1; -1;  0 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  0 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  0; -1 " NormDistance = "-0.25" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  0;  1 " NormDistance = "-0.25" /> </Cut>
+        <ShowAll/>
+
+        <Axis NormVector = " 1; -1;  0" />
+        <Hide Axis = "1" Layer = "1" />
+        <Cut> <Plane NormVector = " 1;  1;  0 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  0 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  0; -1 " NormDistance = "-0.25" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  0;  1 " NormDistance = "-0.25" /> </Cut>
+        <ShowAll/>
+
+        <Axis NormVector = " 1;  0;  1" />
+        <Hide Axis = "2" Layer = "1" />
+        <Cut> <Plane NormVector = " 1;  0; -1 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0;  1 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1;  0 " NormDistance = "-0.25" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  1;  0 " NormDistance = "-0.25" /> </Cut>
+        <ShowAll/>
+
+        <Axis NormVector = " 1;  0; -1" />
+        <Hide Axis = "3" Layer = "1" />
+        <Cut> <Plane NormVector = " 1;  0;  1 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0; -1 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1;  0 " NormDistance = "-0.25" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  1;  0 " NormDistance = "-0.25" /> </Cut>
+        <ShowAll/>
+        
+        <Axis NormVector = " 0;  1;  1" />
+        <Hide Axis = "4" Layer = "1" />
+        <Cut> <Plane NormVector = " 0;  1; -1 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1;  1 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0;  0 " NormDistance = "-0.25" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  0;  0 " NormDistance = "-0.25" /> </Cut>
+        <ShowAll/>
+
+        <Axis NormVector = " 0;  1; -1" />
+        <Hide Axis = "5" Layer = "1" />
+        <Cut> <Plane NormVector = " 0;  1;  1 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1; -1 " NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0;  0 " NormDistance = "-0.25" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  0;  0 " NormDistance = "-0.25" /> </Cut>
+        <ShowAll/>-->
+    </Figure>
+</xml>

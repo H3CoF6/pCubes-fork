@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Half Hex</Name>
+        <Menu>Other forms\Unclassified\Half Hex</Menu>
+        <Inventor>Justin Eplett</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1867</Link>
+    </Interface>
+
+    <Script>
+        clLightBlue    := '2828FF';
+        clBrown        := '800000';
+        clLightViolett := 'FF0080';
+        clLightGreen   := '00FF00';
+        clViolett      := '800080';
+        clWhite        := 'FFFFFF';
+
+        W := 0.7;
+
+        D := W * 4 * sqrt(3) / 9;
+        D0 := -W * sqrt(3) / 3;
+
+        DCut1 := W * 0.5;
+        DCut2 := W / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2*D" >
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <Cut Color = "clBrown       " > <Plane NormVector = " 0; 0; 1" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clLightBlue   " > <Plane NormVector = " 0; 0;-1" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "clLightGreen  " > <Plane NormVector = "-1;-1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clLightViolett" > <Plane NormVector = "-1; 1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clViolett     " > <Plane NormVector = " 1;-1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "clWhite       " > <Plane NormVector = " 1; 1; 0" NormDistance = "-DCut2" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>DaYan Gem 1</Name>
+        <Menu>Other forms\DaYan\DaYan Gem 1</Menu>
+        <Menu>Other forms\Archimedean Solids\DaYan\DaYan Gem 1</Menu>
+        <Menu>Other forms\Archimedean Solids\Truncated Octahedron\DaYan Gem 1</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-04-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1842</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '1D9F00'; // Green
+        Colors[1] := 'FFFFFF'; // White
+        Colors[2] := '45575E'; // Gray
+        Colors[3] := 'FF0000'; // Red
+        Colors[4] := '7700CD'; // Violett
+        Colors[5] := 'FF5C00'; // Orange
+        Colors[6] := '0000FF'; // Blue
+        Colors[7] := 'EDFF11'; // Yellow
+
+        CColors[0] := 'EDFF15'; // Yellow1
+        CColors[1] := 'FFFFF0'; // White1
+        CColors[2] := '1D9F05'; // Green1
+        CColors[3] := '0000FD'; // Blue1
+        CColors[4] := 'FF5C05'; // Orange1
+        CColors[5] := 'FF0005'; // Red1
+
+        K := 1.1;
+        R := K * 0.75;
+        D := K * sqrt(2) / 4;
+        DCut := K * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 1;-1; 0" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 1; 0;-1" />
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 0; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" W = "R" />
+
+        <Macro Name = "CutV" >
+            <Cut Color = "CColors[i]" > <Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "6" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Void Icosahedron</Name>
+        <Menu>Other forms\Void\Icosahedron</Menu>
+        <Menu>Other forms\Icosahedron\Face turning\Void</Menu>
+        <Programmer>Knightcrawler</Programmer>
+        <Added>2016-10-24</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := 0.47;
+    </Script>
+    
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+        <Axis NormVector = "Cx[6]; Cy[6]; Cz[6]" />
+        <Axis NormVector = "Cx[7]; Cy[7]; Cz[7]" />
+        <Axis NormVector = "Cx[8]; Cy[8]; Cz[8]" />
+        <Axis NormVector = "Cx[9]; Cy[9]; Cz[9]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "RemovePart" >
+            <RemoveContaining Vector = " Cx[Id]; Cy[Id]; Cz[Id]" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemovePart" Id = "0" Repeat = "20" />
+
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

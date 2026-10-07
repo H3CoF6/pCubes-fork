@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pocket Siamese Cube</Name>
+        <Menu>Cubic\Multi-core\Pocket Siamese Cube</Menu>
+        <Inventor>Jean-Claude Constantin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=704</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        D2 := D * 2;
+        A := Pi / 2;
+    </Script>
+
+    <Axes>
+        <Axis TurningAngles = " 0; A" NormVector = " 1; 0; 0" BaseVector = " D; D; 0" PlaneDistances = "0" />
+        <Axis TurningAngles = " 0; A" NormVector = " 0; 1; 0" BaseVector = " D; D; 0" PlaneDistances = "0" />
+
+        <Axis TurningAngles = " A; 0" NormVector = " 1; 0; 0" BaseVector = "-D;-D; 0" PlaneDistances = "0" />
+        <Axis TurningAngles = " A; 0" NormVector = " 0; 1; 0" BaseVector = "-D;-D; 0" PlaneDistances = "0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D2" WY = "WX" WZ = "WX" DWX = " D" DWY = " D" DWZ = "0" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D2" WY = "WX" WZ = "WX" DWX = "-D" DWY = "-D" DWZ = "0" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " 0" /></Split>
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D" WZ = "D2" DWX = "0" DWY = "0" DWZ = "0" />
+    </Figure>
+</xml>

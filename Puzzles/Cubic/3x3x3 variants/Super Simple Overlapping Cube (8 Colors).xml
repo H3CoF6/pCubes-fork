@@ -1,0 +1,97 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super Simple Overlapping Cube (8 colors)</Name>
+        <Menu>Cubic\3x3x3 variants\Super Simple Overlapping Cube (8 colors)</Menu>
+        <Inventor>Tanner Frisby</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2353</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        dz := 0.97;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        D := W * 0.3;
+
+        C1 := 'C80000';
+        C2 := '0000C8';
+        C3 := '0066FF';
+        C4 := '009600';
+        C5 := 'E0C07D';
+        C6 := 'FF800A';
+        C7 := 'FFFF00';
+        C8 := 'FFFFFF';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Add8ColorsCube">
+            <Part>
+                <Vertices Vectors = "Cx; Cy; Cz" />
+                <Vertices Vectors = "Vx; Vy; Vz" />
+                <Vertices Vectors = "Ex; Ey; Ez" />
+
+                <Faces>
+                    <Face Color = "C4" VertexIndexes = "1; 18; 10; 22" />
+                    <Face Color = "C4" VertexIndexes = "2; 21; 10; 18" />
+                    <Face Color = "C4" VertexIndexes = "4; 22; 10; 21" />
+                    <Face Color = "C3" VertexIndexes = "0; 16; 09; 24" />
+                    <Face Color = "C3" VertexIndexes = "5; 15; 09; 16" />
+                    <Face Color = "C3" VertexIndexes = "3; 24; 09; 15" />
+                    <Face Color = "C5" VertexIndexes = "1; 17; 11; 18" />
+                    <Face Color = "C5" VertexIndexes = "2; 18; 11; 14" />
+                    <Face Color = "C5" VertexIndexes = "5; 14; 11; 17" />
+                    <Face Color = "C1" VertexIndexes = "5; 16; 07; 14" />
+                    <Face Color = "C1" VertexIndexes = "2; 14; 07; 25" />
+                    <Face Color = "C1" VertexIndexes = "0; 25; 07; 16" />
+                    <Face Color = "C8" VertexIndexes = "1; 19; 13; 17" />
+                    <Face Color = "C8" VertexIndexes = "5; 17; 13; 15" />
+                    <Face Color = "C8" VertexIndexes = "3; 15; 13; 19" />
+                    <Face Color = "C6" VertexIndexes = "1; 22; 12; 19" />
+                    <Face Color = "C6" VertexIndexes = "3; 19; 12; 20" />
+                    <Face Color = "C6" VertexIndexes = "4; 20; 12; 22" />
+                    <Face Color = "C2" VertexIndexes = "3; 20; 08; 24" />
+                    <Face Color = "C2" VertexIndexes = "0; 24; 08; 23" />
+                    <Face Color = "C2" VertexIndexes = "4; 23; 08; 20" />
+                    <Face Color = "C7" VertexIndexes = "0; 23; 06; 25" />
+                    <Face Color = "C7" VertexIndexes = "2; 25; 06; 21" />
+                    <Face Color = "C7" VertexIndexes = "4; 21; 06; 23" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Ex; Ey; Ez" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Add8ColorsCube"/>
+        <SplitByAxes/>
+        <HideContaining Vector = "Vx; Vy; Vz" />
+        <RemoveAllVisible/>
+
+        <Script>
+            W := W * dz;
+            include 'Figures\Scripts\Cube_Coordinates.inc';
+        </Script>
+
+        <ExecMacro MacroName = "Add8ColorsCube"/>
+        <SplitByAxes/>
+        <HideContaining Vector = "Cx; Cy; Cz" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

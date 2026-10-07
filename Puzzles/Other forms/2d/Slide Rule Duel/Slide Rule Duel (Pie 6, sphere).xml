@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Slide Rule Duel (Pie 6, sphere)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Pie 6 (sphere)</Menu>
+        <Inventor>Douglas A. Engel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4557</Link>
+    </Interface>
+
+    <Script>
+        Color1 := 'EE0000'; // Red
+        Color2 := 'AAAAAA'; // Gray
+        Color3 := '009900'; // Green
+        Color4 := 'FFFFFF'; // White
+        Color5 := '333333'; // Black
+        Color6 := 'FFFF00'; // Yellow
+
+        K := 0.6;
+        D := K * 0.75;
+        RC := K / 1.5;
+        DC := D * 1.2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2; 0" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "0;0" MaxAngles = "Pi/2; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 4" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddQuarter" >
+            <Cylinder Radius = "RC" Color = "Color" Base = "0; -D; 0" Top = "0;-DC; 0" TopColor = "Color" />
+            <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 0; 0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0;1;0" Angle = "-Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "AddQuarter" Color = "Color1" />
+        <ExecMacro MacroName = "AddQuarter" Color = "Color2" />
+        <ExecMacro MacroName = "AddQuarter" Color = "Color4" />
+        <ExecMacro MacroName = "AddQuarter" Color = "Color3" />
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "AddQuarter" Color = "Color5" />
+        <ExecMacro MacroName = "AddQuarter" Color = "Color6" />
+        <Turn NormVector = "0;1;0" Angle = " Pi" />
+        <Turn NormVector = "0;0;1" Angle = " Pi/2" />
+
+        <ShowAll/>
+
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi/4" />
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi/4" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi/2" />
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <Split Axis = "0" From  = "1" />
+        <Undo  Repeat = "4" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "-1" />
+        <Split Axis = "0" From = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Hide Axis = "0" Layer = "0" />
+        <Cut Axis = "1" To = "1" />
+        <ShowAll/>
+        <SaveSolvedState/>
+        <Turn Axis = "0" Layer = "0" Angle = " Pi/2" />
+        <SaveSolvedState/>
+        <Undo/>
+
+        <Turn NormVector = "0;0;1" Angle = "-45 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

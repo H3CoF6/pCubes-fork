@@ -1,0 +1,110 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Oh Cube</Name>
+        <Menu>Other cubes\Vertex Turning\Oh Cube</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2928</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        clRed    := 'EE0000';
+        clOrange := 'FF9900';
+        clBlue   := '0088EE';
+        clGreen  := '00EE00';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        Colors[0] := clRed;
+        Colors[1] := clOrange;
+        Colors[2] := clBlue;
+        Colors[3] := clGreen;
+        Colors[4] := clYellow;
+        Colors[5] := clWhite;
+
+        W := 0.5;
+        A := W * 1.4;
+        B := W * 0.15;
+        D := (A - W * 0.15) / sqrt(3);
+    </Script>
+
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "HideCenters">
+            <HideContaining Vector = "Cx[id]*f; Cy[id]*f; Cz[id]*f" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenters" Repeat = "6" id = "0" f = "0.7" />
+
+        <Macro Name = "HideEdges">
+            <HideContaining Vector = "Ex[id]*f; Ey[id]*f; Ez[id]*f" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideEdges" Repeat = "12" id = "0" f = "0.5" />
+
+        <Macro Name = "HideCorners">
+            <HideContaining Vector = "Vx[id]*f; Vy[id]*f; Vz[id]*f" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCorners" Repeat = "8" id = "0" f = "0.5" />
+
+        <Macro Name = "RemovePieces">
+            <RemoveContaining Vector = "Cx[id]*f; Cy[id]*f; Cz[id]*f" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemovePieces" Repeat = "6" id = "0" f = "D * sqrt(3)" />
+
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <Script>
+            Colors[0] := -1;
+            Colors[1] := -1;
+            Colors[2] := -1;
+            Colors[3] := -1;
+            Colors[4] := -1;
+            Colors[5] := -1;
+        </Script>
+
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "RemoveCenters">
+            <RemoveContaining Vector = "Cx[id]*f; Cy[id]*f; Cz[id]*f" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" Repeat = "6" id = "0" f = "0.7" />
+
+        <Macro Name = "RemoveEdges">
+            <RemoveContaining Vector = "Ex[id]*f; Ey[id]*f; Ez[id]*f" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveEdges" Repeat = "12" id = "0" f = "0.5" />
+
+        <Macro Name = "RemoveCorners">
+            <RemoveContaining Vector = "Vx[id]*f; Vy[id]*f; Vz[id]*f" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCorners" Repeat = "8" id = "0" f = "0.5" />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

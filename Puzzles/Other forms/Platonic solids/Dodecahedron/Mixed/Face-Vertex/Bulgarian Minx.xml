@@ -1,0 +1,94 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bulgarian Minx</Name>
+        <Menu>Other forms\Dodecahedron\Mixed\Face-Vertex\Bulgarian Minx</Menu>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Programmer>Skallos + Evgeniy Grigoriev</Programmer>
+        <Added>2017-06-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6245</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (3 * Rsin + R2sin) / 4;
+        D1 := RSin;
+
+        RC := 0.131;
+        L := 1.004;
+
+        RCut := 0.46;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; 0; sAngle; 0" PlaneDistances = "-D1; -D; D; D1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3; 2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[8]; Vy[8]; Vz[8]" />
+        <Axis NormVector = "Vx[9]; Vy[9]; Vz[9]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" > <Center X = "Cx[i] * L" Y =  "Cy[i] * L" Z =  "Cz[i] * L" /> </Circle>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "12" i = "0" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split">
+            <Turn Axis = "Id" Layer = "1" Angle = "sAngle*2" />
+            <Turn Axis = "Id" Layer = "3" Angle = "sAngle*2" />
+            <SplitByAxes/>
+            <Turn Axis = "Id" Layer = "1" Angle = "sAngle*2" />
+            <Turn Axis = "Id" Layer = "3" Angle = "sAngle*2" />
+            <SplitByAxes/>
+            <Turn Axis = "Id" Layer = "1" Angle = "sAngle" />
+            <Turn Axis = "Id" Layer = "3" Angle = "sAngle" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "6" Id = "0" />
+
+        <!-- cut edges for better control -->
+
+        <Macro Name = "Cut">
+            <HideContaining Vector = " Vx[3]; Vy[3]; Vz[3]" />
+            <HideContaining Vector = "-Vx[3];-Vy[3];-Vz[3]" />
+            <InvertVisibility/>
+            <Hide1 Axis = "0" From = "2" To = "2" />
+            <Cut> <Plane NormVector = " 0;  1; 0" NormDistance = "-RCut" /> </Cut>
+            <Cut> <Plane NormVector = " 0; -1; 0" NormDistance = "-RCut" /> </Cut>
+            <Turn NormVector = "0;0;1"  Angle = "sAngle" />
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Cut" Repeat = "5" Id = "0" />
+        <Turn NormVector = "Cx[1]; Cy[1]; Cz[1]"  Angle = "sAngle" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" Id = "0" />
+        <Turn NormVector = "Cx[1]; Cy[1]; Cz[1]"  Angle = "sAngle" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" Id = "0" />
+        <Turn NormVector = "Cx[1]; Cy[1]; Cz[1]"  Angle = "sAngle" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" Id = "0" />
+        <Turn NormVector = "Cx[1]; Cy[1]; Cz[1]"  Angle = "sAngle" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" Id = "0" />
+        <Turn NormVector = "Cx[1]; Cy[1]; Cz[1]"  Angle = "sAngle" />
+        <Turn NormVector = "Cx[2]; Cy[2]; Cz[2]"  Angle = "sAngle" />
+        <ExecMacro MacroName = "Cut" Repeat = "5" Id = "0" />
+        <Turn NormVector = "Cx[2]; Cy[2]; Cz[2]"  Angle = "-sAngle" />
+    </Figure>
+</xml>

@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mirror Illusion 2x2 inside 3x3</Name>
+        <Menu>Cubic\Bump\Mirror Illusion 2x2 inside 3x3</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8182</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'EEFF00';
+        MirrorColor2 := '00FF00';
+
+        W := 0.5;
+        D := W / 3;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+
+        DWX := W * 0.3;
+        DWY :=-W * 0.2;
+        DWZ := W * 0.1;
+
+        DX := W * 0.9;
+        DY := W * 0.8;
+        DZ := W * 0.7;
+
+        procedure SetColor(Color);
+        begin
+            for i := 0 to 5 do
+                Colors[i] := Color;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Cube" >
+            <Script> SetColor(Color); </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "2" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "1" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "1" From = "2" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "2" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "2" From = "2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cube" Color = "MirrorColor" />
+        <RemoveContaining Vector = " D;-D; D" />
+
+        <HideAll/>
+
+        <ExecMacro MacroName = "Cube" Color = "MirrorColor2" />
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Cut Color = "MirrorColor2" > <Plane NormVector = "-1; 0; 0" NormDistance = "-DX" /> </Cut>
+        <Cut Color = "MirrorColor2" > <Plane NormVector = " 0; 1; 0" NormDistance = "-DY" /> </Cut>
+        <Cut Color = "MirrorColor2" > <Plane NormVector = " 0; 0;-1" NormDistance = "-DZ" /> </Cut>
+        <HideContaining Vector = " D;-D; D" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

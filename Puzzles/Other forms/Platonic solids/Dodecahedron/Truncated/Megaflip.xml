@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaflip</Name>
+        <Menu>Other forms\Dodecahedron\Truncated\Megaflip</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8319</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '333333'; // Black
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0000CC'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := '8800AA'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2 * 1.1;
+        DCut := D * 1.08;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Cut Color = "Colors[ 0]" > <Plane NormVector = "-Cx[ 0]; -Cy[ 0]; -Cz[ 0]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[11]" > <Plane NormVector = "-Cx[11]; -Cy[11]; -Cz[11]" NormDistance = "-DCut" /> </Cut>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

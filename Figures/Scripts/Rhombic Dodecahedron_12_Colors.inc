@@ -1,0 +1,19 @@
+//        clBlue   := '0000C8';
+//        clGreen  := '009600';
+//        clRed    := 'C80000';
+//        clOrange := 'FF800A';
+//        clYellow := 'FFFF00';
+//        clWhite  := 'FFFFFF';
+
+        Colors[ 0] := 'C80000'; // Red
+        Colors[ 1] := '0000D8'; // LightBlue
+        Colors[ 2] := '00A600'; // LightGreen
+        Colors[ 3] := 'FFFFFF'; // White
+        Colors[ 4] := 'FF0080'; // LightViolett
+        Colors[ 5] := 'BF8040'; // Brown
+        Colors[ 6] := '800040'; // DarkViolett
+        Colors[ 7] := '808000'; // Olive
+        Colors[ 8] := '005600'; // DarkGreen
+        Colors[ 9] := 'FFFF00'; // Yellow
+        Colors[10] := 'FF800A'; // Orange
+        Colors[11] := '000078'; // DarkBlue

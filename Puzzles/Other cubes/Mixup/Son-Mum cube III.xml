@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Son-Mum cube III</Name>
+        <Aliases>30° Son-Mum Cube</Aliases>
+        <Menu>Other cubes\Mixup\Son-Mum cube III</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2020-01-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7757</Link>
+        <Link>http://bbs.mf8-china.com/forum.php?mod=viewthread&amp;tid=115730</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * (sqrt(3) - 1) / 2;
+        Angle := Pi / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Angle; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Angle = "Angle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Angle" Layer = "1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "1" Angle = "Angle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Angle" Layer = "1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "2" Angle = "Angle" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Angle = "Angle" Layer = "1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+        <HideContaining Vector = "Ex; Ey; Ez" />
+
+        <RemoveGrayParts/>
+        <ShowAll/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "0" Layer = "1" Angle = "-Pi/6" />
+            <Turn Axis = "0" Layer = "1" Angle = " Pi/6" />
+            <Turn Axis = "0" Layer = "1" Angle = "-Pi/6" />
+            <Turn Axis = "2" Layer = "2" Angle = " Pi/2" />
+            <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+            <Turn Axis = "2" Layer = "0" Angle = "-Pi/2" />
+            <Turn Axis = "0" Layer = "2" Angle = " Pi  " />
+            <Turn Axis = "2" Layer = "0" Angle = " Pi/2" />
+            <Turn Axis = "0" Layer = "1" Angle = "-Pi/2" />
+            <Turn Axis = "2" Layer = "2" Angle = "-Pi/2" />
+            <Turn Axis = "0" Layer = "1" Angle = " Pi/6" />
+            <Turn Axis = "0" Layer = "2" Angle = " Pi/2" />
+            <Turn Axis = "0" Layer = "2" Angle = "-Pi/2" />
+            <Turn Axis = "0" Layer = "0" Angle = " Pi/2" />
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/2" />
+            <Turn Axis = "2" Layer = "0" Angle = "-Pi/2" />
+            <Turn Axis = "2" Layer = "0" Angle = " Pi/2" />
+            <Turn Axis = "2" Layer = "2" Angle = "-Pi/2" />
+            <Turn Axis = "2" Layer = "2" Angle = " Pi/2" />
+
+            <ExecMacro MacroName = "RandomTurns" Repeat = "10" />
+        </Macro>
+
+        <Macro Name = "Sc2" >
+            <Turn Axis = "Random(3)" Layer = "1" Angle = "Pi/6 * Random(12)" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(3)" Angle = "Pi/2 * (Random(3) + 1) " />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc1" Repeat = "50" />
+            <ExecMacro MacroName = "Sc2" Repeat = "50" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "50" />
+        </Macro>
+    </Macros>
+</xml>

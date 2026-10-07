@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>113+3 b Geoda cube</Name>
+        <Aliases>Monkey-Cat Cube</Aliases>
+        <Menu>Other Cubes\Unclassified\113+3 b Geoda cube</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8295</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF00AA'; // Pink
+        Colors[1] := '00BB00'; // Green
+        Colors[2] := '0099FF'; // LightBlue
+        Colors[3] := 'EE0000'; // Red
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := '0055EE'; // Blue
+
+        Colors[6] := '444444'; // Black
+        Colors[7] := 'FFFFEE'; // Cream
+
+        W := 0.5;
+        D1 := W * 0.7;
+        D2 := W * 0.84;
+
+        A := W * 1.25;
+        B := W * 0.2;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "-D1; D1" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D2" >
+        <Axis NormVector = " 1;-2; 1" />
+        <Axis NormVector = " 1; 1;-2" />
+        <Axis NormVector = "-2; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddBody" >
+            <LoadFrom File = "Figures\Cube Pillowed.xml"  />
+            <Split Axis = "0" From = "1" />
+            <Split Axis = "0" From = "2" />
+            <Turn Axis = "0" Layer = "2" Angle = "2*Pi/6" />
+            <SplitByAxes/>
+            <Undo />
+        </Macro>
+
+        <Macro Name = "SetBodyColor" >
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := Color;
+            </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddBody" />
+        <RemoveContaining Vector = " W; W; W" />
+        <RemoveContaining Vector = "-W;-W;-W" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "SetBodyColor" Color = "Colors[7]" />
+        <ExecMacro MacroName = "AddBody" />
+        <HideContaining Vector = "W;W;W" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "SetBodyColor" Color = "Colors[6]" />
+        <ExecMacro MacroName = "AddBody" />
+        <HideContaining Vector = "-W;-W;-W" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+        <SaveSolvedState/>
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

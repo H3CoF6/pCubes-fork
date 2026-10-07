@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Curvy Copter III</Name>
+        <Menu>Other cubes\Unclassified\Fisher Curvy Copter III</Menu>
+        <Inventor>Tom Koster</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6823</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := '00AA00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        s2 := sqrt(2);
+        A := W * 1.39;
+        B := W * 0.2;
+        D := A / sqrt(3)+0.02;
+
+        JumAngle := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi;0;Pi" JumbleAngle = "JumAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "-1; 1; s2" />
+        <Axis NormVector = " 1; 1; s2" />
+        <Axis NormVector = " 1;-1; s2" />
+        <Axis NormVector = "-1;-1; s2" />
+        <Axis NormVector = "-1; 0;  0" />
+        <Axis NormVector = " 0; 1;  0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml"  />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <InvertVisibility/>
+        <Cut> <Plane NormVector = "0; 0; 1" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = "0; 0;-1" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

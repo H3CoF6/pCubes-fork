@@ -1,0 +1,102 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Compound-3 Cube (3 Color, no Jumble)</Name>
+        <Menu>Other forms\Star\Compound-3 Cube (3 Color, no Jumble)</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-09-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1783</Link>
+        <Link>https://www.youtube.com/watch?v=Ynn3A2jfPEs</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF0000'; // Red   
+        Colors[ 1] := '800080'; // Purple
+        Colors[ 2] := '0000FF'; // Blue  
+        Colors[ 3] := '008000'; // Green 
+        Colors[ 4] := 'FFFF00'; // Yellow
+        Colors[ 5] := 'F0F0F0'; // White 
+
+        Colors[ 6] := '800000'; // Brown 
+        Colors[ 7] := 'FF69B4'; // Pink  
+        Colors[ 8] := '000080'; // Navy  
+        Colors[ 9] := '00FF00'; // Lime  
+        Colors[10] := 'AABB20'; // Golden
+        Colors[11] := '202020'; // Black 
+
+        Colors[12] := '808000'; // Olive 
+        Colors[13] := '00FFFF'; // Cyan  
+        Colors[14] := 'FF7F50'; // Coral 
+        Colors[15] := '907090'; // Pale  
+        Colors[16] := 'FF6000'; // Orange
+        Colors[17] := '909090'; // Silver
+
+        W := 0.5;
+
+        s2 := sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W; W" FixedLayers = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = "-1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-W; W" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0;  0" />
+        <Axis NormVector = " 0; 1;  0" />
+        <Axis NormVector = " 1; 1; s2" />
+        <Axis NormVector = "-1; 1; s2" />
+        <Axis NormVector = " 1;-1; s2" />
+        <Axis NormVector = "-1;-1; s2" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCube" >
+            <LoadFrom File = "Figures\Cube.xml" Width = "W" />
+            <SplitByAxes/>
+            <HideContaining Vector = "Vx;Vy;Vz" />
+            <RemoveContaining Vector = " W; W; 0" />
+            <RemoveContaining Vector = "-W; W; 0" />
+            <RemoveContaining Vector = " W;-W; 0" />
+            <RemoveContaining Vector = "-W;-W; 0" />
+            <HideContaining Vector = "Ex; Ey; Ez" />
+            <RemoveAllVisible/>
+            <Turn NormVector = "s2; 0; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+
+        <Macro Name = "AddGray" >
+            <HideAll/>
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+            <SplitByAxes/>
+            <RemoveContaining Vector = "Vx;Vy;Vz" />
+            <Cut><Plane NormVector = "-1; 1; s2" NormDistance = "-W" /> </Cut>
+            <Cut><Plane NormVector = " 1;-1; s2" NormDistance = "-W" /> </Cut>
+            <Cut><Plane NormVector = "-1; 1;-s2" NormDistance = "-W" /> </Cut>
+            <Cut><Plane NormVector = " 1;-1;-s2" NormDistance = "-W" /> </Cut>
+            <Cut><Plane NormVector = "-1; 1;  0" NormDistance = "-W" /> </Cut>
+            <Cut><Plane NormVector = " 1;-1;  0" NormDistance = "-W" /> </Cut>
+            <RemoveContaining Vector = " 0; 0; KeepCenter" />
+            <Turn NormVector = "s2; 0; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCube" />
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := Colors[i + 6];
+        </Script>
+        <ExecMacro MacroName = "AddCube" />
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := Colors[i + 12];
+        </Script>
+        <ExecMacro MacroName = "AddCube" />
+        <ExecMacro MacroName = "AddGray" KeepCenter = "0" />
+        <ExecMacro MacroName = "AddGray" KeepCenter = "0" />
+        <ExecMacro MacroName = "AddGray" KeepCenter = "1" />
+        <ShowAll/>
+    </Figure>
+</xml>

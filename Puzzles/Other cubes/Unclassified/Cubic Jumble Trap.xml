@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cubic Jumble Trap</Name>
+        <Menu>Other cubes\Unclassified\Cubic Jumble Trap</Menu>
+        <Inventor>Tom Koster</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2017-12-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6459</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        A := W * 1.1;
+        B := W * 0.45;
+        D := W * 0.54;
+
+        for i := 0 to 7 do begin
+            ax[i] := cos(Pi / 4 * i);
+            ay[i] := sin(Pi / 4 * i);
+        end;
+        az := 1/ 8^0.25;
+
+        A1 := ArcCos((sqrt(2) - 1) / 2);
+        A2 := 2 * A1;
+        A3 := ArcCos(sqrt(2) - 2);
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "ax[0]; ay[0];  az" />
+        <Axis NormVector = "ax[1]; ay[1]; -az" />
+        <Axis NormVector = "ax[2]; ay[2];  az" />
+        <Axis NormVector = "ax[3]; ay[3]; -az" />
+        <Axis NormVector = "ax[4]; ay[4];  az" />
+        <Axis NormVector = "ax[5]; ay[5]; -az" />
+        <Axis NormVector = "ax[6]; ay[6];  az" />
+        <Axis NormVector = "ax[7]; ay[7]; -az" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

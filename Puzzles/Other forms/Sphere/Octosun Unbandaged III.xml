@@ -1,0 +1,107 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octosun Unbandaged III (Sphere)</Name>
+        <Menu>Other forms\Sphere\Octosun Unbandaged III</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-16</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0088FF'; // Blue1
+        Colors[1] := '00AA00'; // Green2
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := 'FF0000'; // Red
+        Colors[4] := 'FF6000'; // Orange
+        Colors[5] := '8800DD'; // Violett
+        Colors[6] := '00FF00'; // Green1
+        Colors[7] := '0033EE'; // Blue2
+
+        Colors[8] := '333333'; // Black
+
+        K := 0.6;
+
+        A1 := ArcCos(-1/9);
+        A2 := ArcCos(-2/3);
+
+        D := K * 0.8525;
+        DC1 := K * 0.935;
+        DC2 := K * 0.915;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 2" />
+        <Axis NormVector = " 1; 0; 2" />
+        <Axis NormVector = " 0;-1; 2" />
+        <Axis NormVector = "-1; 0; 2" />
+
+        <Axis NormVector = " 0; 2; 1" />
+        <Axis NormVector = " 1; 2; 0" />
+        <Axis NormVector = " 0; 2;-1" />
+        <Axis NormVector = "-1; 2; 0" />
+
+        <Axis NormVector = " 2; 0; 1" />
+        <Axis NormVector = " 2; 1; 0" />
+        <Axis NormVector = " 2; 0;-1" />
+        <Axis NormVector = " 2;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Unbandage" >
+            <Hide> <Plane NormVector = " 1; 0; 2" NormDistance = "D" /> </Hide>
+            <Hide> <Plane NormVector = " 2; 0; 1" NormDistance = "D" /> </Hide>
+            <Turn NormVector = " 1; 0; 2" Angle = "A2" />
+            <Split> <Plane NormVector = " 0;-1; 2" NormDistance = "D" /> </Split>
+            <Split> <Plane NormVector = "-1; 0; 2" NormDistance = "D" /> </Split>
+            <Turn NormVector = " 1; 0; 2" Angle = "-A2" />
+            <ShowAll/>
+
+            <Hide> <Plane NormVector = " 0; 1; 2" NormDistance = "D" /> </Hide>
+            <Hide> <Plane NormVector = " 1; 0; 2" NormDistance = "D" /> </Hide>
+            <Turn NormVector = " 1; 0; 2" Angle = "A1" />
+            <Split> <Plane NormVector = " 0; 1; 2" NormDistance = "D" /> </Split>
+            <Split> <Plane NormVector = "-1; 0; 2" NormDistance = "D" /> </Split>
+            <Turn NormVector = " 1; 0; 2" Angle = "-A1" />
+            <ShowAll/>
+            <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+
+        <Macro Name = "AddSector" >
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[c]" />
+            <Cut> <Plane NormVector = " 1; 0; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+            <SplitByAxes/>
+
+            <Split><Plane NormVector = "-1;-1;-1" NormDistance = "-DC1" /></Split>
+            <Hide> <Plane NormVector = "-1;-1;-1" NormDistance = "-DC1" /></Hide>
+            <Cut>  <Plane NormVector = "-1;-1;-1" NormDistance = "-DC2" /></Cut>
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[8]" />
+            <Cut>  <Plane NormVector = " 1; 1; 1" NormDistance = " DC2" /></Cut>
+            <Cut>  <Plane NormVector = "-1;-1;-1" NormDistance = "-DC1" /></Cut>
+            <SplitByAxes/>
+
+            <ShowAll/>
+            <ExecMacro MacroName = "Unbandage" Repeat = "3" />
+            <RemoveGrayParts/>
+
+            <HideAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi / 2" />
+            <Script> Inc(c); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" Repeat = "4" c = "0" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSector" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

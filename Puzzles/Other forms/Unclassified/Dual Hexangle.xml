@@ -1,0 +1,113 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dual Hexangle</Name>
+        <Menu>Other forms\Unclassified\Dual Hexangle</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2020-05-13</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=9&amp;t=35631</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'F0F0F0'; // White
+        Colors[ 1] := '202020'; // Black
+
+        Colors[ 2] := 'FF0000'; // Red
+        Colors[ 3] := '800000'; // Brown
+        Colors[ 4] := 'FF7F50'; // Coral
+        Colors[ 5] := 'FF6000'; // Orange
+        Colors[ 6] := 'CD5C5C'; // Indian
+
+        Colors[ 7] := '0000FF'; // Blue
+        Colors[ 8] := '000080'; // Navy
+        Colors[ 9] := '66CDAA'; // AquaMarine
+        Colors[10] := '008080'; // Teal
+        Colors[11] := '00FFFF'; // Cyan
+
+        Colors[12] := '800080'; // Purple
+        Colors[13] := '483D8B'; // DarkSlate
+        Colors[14] := 'FF69B4'; // Pink
+        Colors[15] := 'DA70D6'; // Orchid
+        Colors[16] := 'FF00FF'; // Fuchsia
+
+        Colors[17] := '008000'; // Green
+        Colors[18] := '006400'; // DarkGreen
+        Colors[19] := '808000'; // Olive
+        Colors[20] := '3cb371'; // Sea
+        Colors[21] := '00FF00'; // Lime
+
+        W := 0.55;
+        A := W * 3 / 8;
+        B := A * 2;
+        H := A * sqrt(3);
+        D := H * 2 / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "-B; B" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddQuarter" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " W; A; H" />
+                    <Add Vector = " W;-A; H" />
+                    <Add Vector = " W;-B; 0" />
+                    <Add Vector = " W;-A;-H" />
+                    <Add Vector = " W; A;-H" />
+                    <Add Vector = " W; B; 0" />
+
+                    <Add Vector = " A; A; H" />
+                    <Add Vector = " A;-A; H" />
+                    <Add Vector = " B;-B; 0" />
+                    <Add Vector = " A;-A;-H" />
+                    <Add Vector = " A; A;-H" />
+                    <Add Vector = " B; B; 0" />
+
+                    <Add Vector = " 0; 0; H" />
+                    <Add Vector = " 0; 0;-H" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[0  ]" VertexIndexes = " 1; 0; 6;12; 7" InvisibleEdges = "12" />
+                    <Face Color = "Colors[1  ]" VertexIndexes = " 4; 3; 9;13;10" InvisibleEdges = "12" />
+                    <Face Color = "Colors[c  ]" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                    <Face Color = "Colors[c+1]" VertexIndexes = " 2; 1; 7; 8" />
+                    <Face Color = "Colors[c+2]" VertexIndexes = " 3; 2; 8; 9" />
+                    <Face Color = "Colors[c+3]" VertexIndexes = " 5; 4;10;11" />
+                    <Face Color = "Colors[c+4]" VertexIndexes = " 0; 5;11; 6" />
+                    <Face                       VertexIndexes = "12;13; 9; 8; 7" InvisibleEdges = "19" />
+                    <Face                       VertexIndexes = "13;12; 6;11;10" InvisibleEdges = "19" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddQuarter" c = " 2" />
+        <ExecMacro MacroName = "AddQuarter" c = " 7" />
+        <ExecMacro MacroName = "AddQuarter" c = "12" />
+        <ExecMacro MacroName = "AddQuarter" c = "17" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "1" Layer = "0" Angle = "Pi/3" />
+        <Turn Axis = "1" Layer = "2" Angle = "Pi/3" />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi/3" />
+        <Turn Axis = "2" Layer = "2" Angle = "Pi/3" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "0" Angle = "Pi/3" />
+        <Turn Axis = "1" Layer = "2" Angle = "Pi/3" />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi/3" />
+        <Turn Axis = "2" Layer = "2" Angle = "Pi/3" />
+        <SplitByAxes/>
+        <Undo Repeat = "8"/>
+    </Figure>
+</xml>

@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>N64 2x2x2</Name>
+        <Menu>Other forms\2x2x2 variants\N64 2x2x2</Menu>
+        <Inventor>Joachim Solborg</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-06-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8567</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        Colors[0] := clRed;
+        Colors[1] := clOrange;
+        Colors[2] := clBlue;
+        Colors[3] := clGreen;
+        Colors[4] := clYellow;
+        Colors[5] := clWhite;
+        Colors[6] := '';
+
+        R := 0.5;
+        S := 5 * R / 12;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Wedge" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " R;-R; R" />
+                    <Add Vector = " R;-S; R" />
+                    <Add Vector = " S;-R; R" />
+                    <Add Vector = " S;-S; R" />
+                    <Add Vector = " R;-R; 0" />
+                    <Add Vector = " R; S; 0" />
+                    <Add Vector = " S;-R; 0" />
+                    <Add Vector = " S; S; 0" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[x]" VertexIndexes = "1;0;4;5" />
+                    <Face Color = "         " VertexIndexes = "2;3;7;6" />
+                    <Face Color = "Colors[y]" VertexIndexes = "0;2;6;4" />
+                    <Face Color = "         " VertexIndexes = "3;1;5;7" />
+                    <Face Color = "Colors[z]" VertexIndexes = "0;1;3;2" />
+                    <Face Color = "         " VertexIndexes = "5;4;6;7" />
+                </Faces>
+            </Part>
+
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Wedge" x = "1" y = "2" z = "5" />
+        <ExecMacro MacroName = "Wedge" x = "2" y = "0" z = "5" />
+        <ExecMacro MacroName = "Wedge" x = "0" y = "3" z = "5" />
+        <ExecMacro MacroName = "Wedge" x = "3" y = "1" z = "5" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+
+        <ExecMacro MacroName = "Wedge" x = "0" y = "2" z = "4" />
+        <ExecMacro MacroName = "Wedge" x = "2" y = "1" z = "4" />
+        <ExecMacro MacroName = "Wedge" x = "1" y = "3" z = "4" />
+        <ExecMacro MacroName = "Wedge" x = "3" y = "0" z = "4" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+
+        <SplitByAxes />
+    </Figure>
+</xml>

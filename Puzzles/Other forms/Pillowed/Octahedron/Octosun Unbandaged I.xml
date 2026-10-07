@@ -1,0 +1,128 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octosun Unbandaged I</Name>
+        <Menu>Other forms\Pillowed\Octahedron\Octosun Unbandaged I</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-31</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF6000'; // Orange
+        Colors[1] := '0088FF'; // Blue2
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := '00FF00'; // Green1
+        Colors[4] := '8800DD'; // Violett
+        Colors[5] := 'FF0000'; // Red
+        Colors[6] := '007700'; // Green3
+        Colors[7] := '0000EE'; // Blue3
+
+        K := 0.4;
+
+        A1 := ArcCos(-1/9);
+        A2 := ArcCos(-2/3);
+
+        D := K * 1.385;
+
+        f1 := K * 0.1;
+        Pillow := 1.49;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 2" />
+        <Axis NormVector = " 1; 0; 2" />
+        <Axis NormVector = " 0;-1; 2" />
+        <Axis NormVector = "-1; 0; 2" />
+
+        <Axis NormVector = " 0; 2; 1" />
+        <Axis NormVector = " 1; 2; 0" />
+        <Axis NormVector = " 0; 2;-1" />
+        <Axis NormVector = "-1; 2; 0" />
+
+        <Axis NormVector = " 2; 0; 1" />
+        <Axis NormVector = " 2; 1; 0" />
+        <Axis NormVector = " 2; 0;-1" />
+        <Axis NormVector = " 2;-1; 0" />
+    </Axes>
+
+    <Figure>
+         <LoadFrom File = "..\Tetrahedron\_Macro_Pillowed_Tetrahedron_v2.xml" />
+         <ExecMacro MacroName = "CalcCoordinates" />
+
+         <Macro Name = "AddHalf">
+            <ExecMacro MacroName = "AddPillowedTetrahedron" />
+
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+
+            <RemoveContaining Vector = "-f1;-f1;-f1" />
+            <RemoveContaining Vector = " f1;-f1; f1" />
+            <RemoveContaining Vector = " f1; f1;-f1" />
+            <RemoveContaining Vector = "-f1; f1; f1" />
+        </Macro>
+        <ExecMacro MacroName = "AddHalf" />
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+
+        <HideAll/>
+
+        <Script>
+            Colors[0] := Colors[4];
+            Colors[1] := Colors[5];
+            Colors[2] := Colors[6];
+            Colors[3] := Colors[7];
+        </Script>
+
+        <ExecMacro MacroName = "AddHalf" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Macro Name = "unbandage1">
+            <Turn Axis = "ax1" Layer = "l1" Angle = "-an1" />
+            <Turn Axis = "ax2" Layer = "l2" Angle = " an2" />
+            <Turn Axis = "ax1" Layer = "l1" Angle = " an1" />
+            <Turn Axis = "ax2" Layer = "l2" Angle = "-an2" />
+            <SplitByAxes />
+            <Undo Repeat = "4" />
+        </Macro>
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 1" ax2 = " 2" l1 = "2" l2 = "2" an1 = " A2" an2 = " A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 2" ax2 = " 3" l1 = "2" l2 = "2" an1 = " A2" an2 = " A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 0" ax2 = " 1" l1 = "2" l2 = "2" an1 = " A2" an2 = " A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 3" ax2 = " 0" l1 = "2" l2 = "2" an1 = " A2" an2 = " A2" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 1" ax2 = " 2" l1 = "0" l2 = "0" an1 = " A2" an2 = " A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 2" ax2 = " 3" l1 = "0" l2 = "0" an1 = " A2" an2 = " A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 0" ax2 = " 1" l1 = "0" l2 = "0" an1 = " A2" an2 = " A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 3" ax2 = " 0" l1 = "0" l2 = "0" an1 = " A2" an2 = " A2" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 2" ax2 = " 1" l1 = "2" l2 = "2" an1 = "-A2" an2 = "-A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 3" ax2 = " 2" l1 = "2" l2 = "2" an1 = "-A2" an2 = "-A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 1" ax2 = " 0" l1 = "2" l2 = "2" an1 = "-A2" an2 = "-A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 0" ax2 = " 3" l1 = "2" l2 = "2" an1 = "-A2" an2 = "-A2" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 2" ax2 = " 1" l1 = "0" l2 = "0" an1 = "-A2" an2 = "-A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 3" ax2 = " 2" l1 = "0" l2 = "0" an1 = "-A2" an2 = "-A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 1" ax2 = " 0" l1 = "0" l2 = "0" an1 = "-A2" an2 = "-A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 0" ax2 = " 3" l1 = "0" l2 = "0" an1 = "-A2" an2 = "-A2" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 5" ax2 = " 9" l1 = "2" l2 = "2" an1 = " A2" an2 = " A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 5" ax2 = " 9" l1 = "0" l2 = "0" an1 = "-A2" an2 = "-A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 7" ax2 = "11" l1 = "2" l2 = "0" an1 = " A2" an2 = "-A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 7" ax2 = "11" l1 = "0" l2 = "2" an1 = "-A2" an2 = " A2" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 9" ax2 = " 5" l1 = "2" l2 = "2" an1 = " A2" an2 = " A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 9" ax2 = " 5" l1 = "0" l2 = "0" an1 = "-A2" an2 = "-A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = "11" ax2 = " 7" l1 = "2" l2 = "0" an1 = " A2" an2 = "-A2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = "11" ax2 = " 7" l1 = "0" l2 = "2" an1 = "-A2" an2 = " A2" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Petaminx Cube</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Kilominx\Petaminx Cube</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2019-11-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7024</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        D1 := (7 * Rsin + 1 * R2sin) / 8;
+        D2 := (6 * Rsin + 2 * R2sin) / 8;
+        D3 := (5 * Rsin + 3 * R2sin) / 8;
+        D4 := (4 * Rsin + 4 * R2sin) / 8;
+
+        DCut := RSin;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; sAngle; sAngle; sAngle; 0; sAngle; sAngle; sAngle; sAngle" PlaneDistances = "-D1; -D2; -D3; -D4; D4; D3; D2; D1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Macro Name = "Split">
+            <Split Axis = "id" From = "4" />
+            <Split Axis = "id" From = "5" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "6" id = "0" />
+
+        <HideContaining Vectors = "Vx; Vy; Vz" />
+
+        <HideContaining Vectors = "Cx; Cy; Cz" />
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "12" id = "0" />
+
+        <ShowAll/>
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "12" id = "0" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "HideLayer">
+            <Hide Axis = "id" Layer = "0" />
+            <Hide Axis = "id" Layer = "8" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideLayer" Repeat = "6" id = "0" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+    </Figure>
+</xml>

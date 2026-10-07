@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Wigwam</Name>
+        <Menu>Other forms\Skewb variants\Wigwam</Menu>
+        <Inventor>Christopher Murray</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-09-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4857</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '5070B8';
+        clGreen  := '009600';
+        clWhite  := 'FFFFFF';
+
+        K := 0.11;
+        s2 := sqrt(2);
+        s6 := sqrt(6);
+        A1 := K * s6;
+        A2 := K * 2 * sqrt(3);
+        A3 := K * (2 + s2);
+        A4 := K * (2 + 3 * s2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " s6; -1;     s2" />
+        <Axis NormVector = "  0;  1; 2 * s2" />
+        <Axis NormVector = "-s6; -1;     s2" />
+        <Axis NormVector = "  0; -1;      0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-A3; A2;-A2" />
+                <Add Vector = "  0; A2; A1" />
+                <Add Vector = " A3; A2;-A2" />
+                <Add Vector = "-A3;-A2;-A2" />
+                <Add Vector = " A3;-A2;-A2" />
+                <Add Vector = "  0;-A2; A1" />
+                <Add Vector = " A4;  0;-A2" />
+                <Add Vector = "-A4;  0;-A2" />
+                <Add Vector = "  0;  0; 3 * A1" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clBlue " VertexIndexes = "3; 4; 5"/>
+                <Face Color = "clBlue " VertexIndexes = "3; 5; 8; 7"/>
+                <Face Color = "clBlue " VertexIndexes = "5; 4; 6; 8"/>
+                <Face Color = "clWhite" VertexIndexes = "0; 1; 2"/>
+                <Face Color = "clWhite" VertexIndexes = "1; 0; 7; 8"/>
+                <Face Color = "clWhite" VertexIndexes = "2; 1; 8; 6"/>
+                <Face Color = "clGreen" VertexIndexes = "0; 2; 6; 4; 3; 7"/>
+            </Faces>
+        </Part>
+
+        <Split Axis = "3" From = "1"/>
+        <Turn Axis = "3" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

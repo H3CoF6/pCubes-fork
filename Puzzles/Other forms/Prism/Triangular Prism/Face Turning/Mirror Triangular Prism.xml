@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mirror Triangular Prism</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Face Turning\Mirror Triangular Prism</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-07-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8846</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36854</Link>
+    </Interface>
+
+    <Script>
+        Color := 'E0C07D';
+
+        R := 0.6;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(2*Pi/3 * i);
+            y[i] := R * cos(2*Pi/3 * i);
+        end;
+
+        H := R * 0.7;
+
+        D1 := H / 3;
+        D2 :=-R * 0.15;
+
+        DX := R * 0.05;
+        DY := R * 0.10;
+        DZ :=-R * 0.12;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" NormVectors = "x; y; 0" PlaneDistances = "D2" />
+
+    <Figure>
+        <Transfer Vector = "-DX;-DY;-DZ" />
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+
+            <Faces>
+                <Face Color = "Color" VertexIndexes = "0;1;2" />
+                <Face Color = "Color" VertexIndexes = "4;3;5" />
+                <Face Color = "Color" VertexIndexes = "0;3;4;1" />
+                <Face Color = "Color" VertexIndexes = "1;4;5;2" />
+                <Face Color = "Color" VertexIndexes = "2;5;3;0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <Transfer Vector = " DX; DY; DZ" />
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 5" />
+</xml>

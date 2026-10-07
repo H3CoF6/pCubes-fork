@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Temple 4x4x4</Name>
+        <Menu>Cubic\Rubiks Recolored\Temple 4x4x4</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-04</Added>
+        <Link>https://www.youtube.com/watch?v=eh0M6T1WfDU</Link>
+    </Interface>
+
+    <Script>
+        C1 := '00AAFF';
+        C2 := '00EE00';
+        C3 := 'FFFF00';
+        C4 := 'FF9900';
+
+        W := 0.5;
+        D := W / 2;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "3" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "MonoCube" >
+            <ShowAll/>
+            <InvertVisibility/>
+            <Script>
+                for i := 0 to 5 do
+                  Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "MonoCube" Color = "C1" />
+        <Cut Axis = "2" From = "3" />
+
+        <ExecMacro MacroName = "MonoCube" Color = "C2" />
+        <Cut Axis = "2" To = "1" />
+
+        <ExecMacro MacroName = "MonoCube" Color = "C3" />
+        <HideContaining Vector = " W; 0; 0" />
+        <HideContaining Vector = "-W; 0; 0" />
+        <HideContaining Vector = " 0; W; 0" />
+        <HideContaining Vector = " 0;-W; 0" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "MonoCube" Color = "C4" />
+        <HideContaining Vector = " W; W; 0" />
+        <HideContaining Vector = " W;-W; 0" />
+        <HideContaining Vector = "-W;-W; 0" />
+        <HideContaining Vector = "-W; W; 0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

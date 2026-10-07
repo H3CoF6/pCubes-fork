@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rubik's Cheese</Name>
+        <Menu>Other forms\Cylinder\Rubik's Cheese</Menu>
+        <Inventor>Ernő Rubik</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-04-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2773</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        R := 0.6;
+        H := R * 0.5;
+
+        N := 10;
+        for i := 0 to N do begin
+            x[i] := R * cos(2 * Pi / 6 / N * i);
+            y[i] := R * sin(2 * Pi / 6 / N * i);
+        end;
+
+        for i := 0 to 2 do begin
+            ax[i] := R * cos(2*Pi / 3 * i + Pi / 6);
+            ay[i] := R * sin(2*Pi / 3 * i + Pi / 6);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi" NormVectors = "ax; ay; 0" PlaneDistances = "0" />
+
+    <Axes TurningAngles = "Pi / 3" NormVectors = " 0; 0; 1" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Color" VertexIndexes = "i; i + 1; i + N + 2; i + N + 1" InvisibleEdges = "ie" />
+            <Script>
+                i1 := i;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+        </Macro>
+
+        <Macro Name = "AddSegment" >
+            <Part>
+                <Vertices Vectors = "0; 0;-H" /> 0
+                <Vertices Vectors = "x; y;-H" /> 1 .. N + 1
+                <Vertices Vectors = "x; y; H" /> N + 2 .. 2N + 2
+                <Vertices Vectors = "0; 0; H" /> 2N + 3
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "FromTo(N + 1, 0)" />
+                    <ExecMacro MacroName = "AddFace" i = "1" c = "3" ie = "2"  Repeat = "1" />
+                    <ExecMacro MacroName = "AddFace" i = "2" c = "3" ie = "10" Repeat = "N - 2" />
+                    <ExecMacro MacroName = "AddFace" i = "N" c = "3" ie = "8"  Repeat = "1" />
+                    <Face Color = "Color" VertexIndexes = "FromTo(N + 2, 2 * N + 3)" />
+                    <Face Color = "Color" VertexIndexes = "0; 1; N + 2; 2 * N + 3" />
+                    <Face Color = "Color" VertexIndexes = "0; 2 * N + 3; 2 * N + 2; N + 1" />
+                </Faces>
+            </Part>
+            <Split Color1 = "Color" Color2 = "Color" Axis = "3" From = "1" />
+            <Turn NormVector = "0;0;1" Angle = "Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[0]" />
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[1]" />
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[2]" />
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[3]" />
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[4]" />
+        <ExecMacro MacroName = "AddSegment" Color = "Colors[5]" />
+
+        <SaveSolvedState/>
+
+        <Turn Axis = "3" Layers = "1" Angle = " Pi" />
+        <Turn Axis = "1" Layers = "0" Angle = "-Pi" />
+        <Turn Axis = "3" Layers = "0" Angle = "-Pi / 3" />
+        <Turn Axis = "0" Layers = "1" Angle = "-Pi" />
+        <Turn Axis = "3" Layers = "1" Angle = " 2 * Pi / 3" />
+        <Turn Axis = "0" Layers = "1" Angle = " Pi" />
+        <SaveSolvedState/>
+
+        <Turn Axis = "3" Layers = "0;1" Angle = "Pi / 3" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

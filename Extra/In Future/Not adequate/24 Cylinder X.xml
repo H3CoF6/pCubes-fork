@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>24 Cylinder X</Name>
+        <Menu>Other forms\Cylinder\24 Cylinder X</Menu>
+        <Inventor>Zhanqiang Li</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-08-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6219</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // clRed
+        Colors[1] := 'FF800A'; // clOrange
+        Colors[2] := 'FFFF00'; // clYellow
+        Colors[3] := '009600'; // clGreen
+        Colors[4] := '0040C8'; // clBlue
+        Colors[5] := '800080'; // clViolett
+
+        R := 0.5;
+        H := R;
+
+        for i := 0 to 5 do begin
+            ax[i] := R * cos(Pi / 3 * i);
+            ay[i] := R * sin(Pi / 3 * i);
+        end;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "    1;            0; 0" />
+        <Axis NormVector = " -1/2;  sqrt(3) / 2; 0" />
+        <Axis NormVector = " -1/2; -sqrt(3) / 2; 0" />
+
+        <Axis NormVector = "            0;    1; sqrt(2)" />
+        <Axis NormVector = "  sqrt(3) / 2; -1/2; sqrt(2)" />
+        <Axis NormVector = " -sqrt(3) / 2; -1/2; sqrt(2)" />
+    </Axes>
+
+    <!-- fake axis for creation (besause cylinder consists of 64 segments) -->
+    <Axes TurningAngles = "0" PlaneDistances = "-100" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn Axis = "6" Angle = "Pi/6" From = "0" To = "1" />
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "R" Color = "Colors[i]" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Colors[i]"/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Colors[i]" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "-cos(Pi/6); -sin(Pi/6); 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " cos(Pi/6); -sin(Pi/6); 0" NormDistance = "0" /> </Cut>
+            <Turn Axis = "6" Angle = "Pi/3" From = "0" To = "1" />
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "6" />
+        <Undo/>
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

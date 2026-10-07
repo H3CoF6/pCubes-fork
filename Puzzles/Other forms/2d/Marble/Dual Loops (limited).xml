@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+   <Interface>
+        <Name>Dual Loops (limited)</Name>
+        <Menu>Other forms\2d\Marble\Dual Loops (limited)</Menu>
+        <Inventor>Tim Fitzrandolph</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7301</Link>
+    </Interface>
+
+     <Script>
+        CubeColor := 'FFFFFF';
+        clRed     := 'EE0000';
+        clBlue    := '0055EE';
+        clGreen   := 'AAFF00';
+
+        W := 0.5;
+
+        H := W * 1.08;
+
+        sAngle := 2 * Pi / 12;
+
+        R1 := W * 0.12;
+        R2 := R1 * 0.8;
+        Shift := W * 0.84;
+        for i := 0 to 11 do begin
+            A := 2*Pi / 12 * i + Pi/12;
+            x1[i] := R1 * cos(A) + Shift;
+            y1[i] := R1 * sin(A);
+            x2[i] := R2 * cos(A) + Shift;
+            y2[i] := R2 * sin(A);
+        end;
+
+        D := W * 1.13;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+
+        for i := 0 to 5 do
+            Colors[i] := CubeColor;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "W" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Split Axis = "2" From = "1" />
+
+        <Macro Name = "AddPucks">
+            <Part>
+                <Vertices Vectors = "x2; y2; H" />
+                <Vertices Vectors = "x1; y1; W" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11" />
+
+                    <Face Color = "cl" VertexIndexes = "12;13; 1; 0" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "13;14; 2; 1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "14;15; 3; 2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "15;16; 4; 3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "16;17; 5; 4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "17;18; 6; 5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "18;19; 7; 6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "19;20; 8; 7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "20;21; 9; 8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "21;22;10; 9" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "22;23;11;10" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "23;12; 0;11" InvisibleEdges = "10" />
+
+                    <Face VertexIndexes = "23;22;21;20;19;18;17;16;15;14;13;12" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0; 0; 1" Angle = "sAngle" />
+        </Macro>
+
+        <Turn NormVector = " 1;-1; 1" Angle = "2 * Pi / 3" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clGreen" Repeat = "2" />
+        <ExecMacro MacroName = "AddPucks" cl = "clBlue " Repeat = "9" />
+        <ExecMacro MacroName = "AddPucks" cl = "clGreen" Repeat = "1" />
+
+        <Turn NormVector = " 1;-1; 1" Angle = "2 * Pi / 3" />
+
+        <ExecMacro MacroName = "AddPucks" cl = "clRed  " Repeat = "2" />
+        <ExecMacro MacroName = "AddPucks" cl = "clGreen" Repeat = "3" />
+        <ExecMacro MacroName = "AddPucks" cl = "clRed  " Repeat = "7" />
+
+        <Turn NormVector = " 1;-1; 1" Angle = "2 * Pi / 3" />
+
+        <Turn NormVector = "0;0;1" Angle = "  -45 * Pi/180" />
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

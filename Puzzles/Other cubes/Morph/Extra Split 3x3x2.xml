@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Extra Split 3x3x2</Name>
+        <Menu>Other cubes\Morph\Extra Split 3x3x2</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2020-04-16</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=35602</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        s3 := sqrt(3);
+
+        WX := W;
+        WY := W;
+        WZ := W / s3;
+        D  := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0;0;0" />
+        <Split><Plane NormVector = "s3; 0; 1" /></Split>
+        <Split><Plane NormVector = "s3; 0;-1" /></Split>
+        <Split><Plane NormVector = " 0;s3; 1" /></Split>
+        <Split><Plane NormVector = " 0;s3;-1" /></Split>
+        <ShowAll/>
+    </Figure>
+</xml>

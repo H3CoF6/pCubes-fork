@@ -1,0 +1,143 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tartan Pyraminx</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Pyraminx\Tartan Pyraminx</Menu>
+        <Inventor>Adam Zamora</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-01-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4852</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '222222'; <!-- Black  -->
+        Colors[1] := 'EC7578'; <!-- Coral  -->
+        Colors[2] := '6B30BC'; <!-- Purple -->
+        Colors[3] := '4040FF'; <!-- Blue   -->
+
+        sColors[0] := '     3 30222133302 2 21333022213';
+        sColors[1] := '    021 113000211 130 002111300 ';
+        sColors[2] := '   00311 1200031 11200 0311120  ';
+        sColors[3] := '  3122203 33122 2033312 22033   ';
+        sColors[4] := ' 330222133 302 221333022 213    ';
+        sColors[5] := '02111300021 1 13000211130 0     ';
+
+        W := 0.5;
+
+        N := 6;
+        D := W * 4 / sqrt(3) / N;
+        D0 := -W / sqrt(3);
+
+        D1 := D0 + D;
+        D2 := D0 + D * 2;
+        D3 := D0 + D * 3;
+        D4 := D0 + D * 4;
+        D5 := D0 + D * 5;
+
+        vc := 0;
+        for x := 0 to 6 do
+            for y := 0 to 6 do
+                for z := 0 to 6 do
+                    if (x + y - z = 0) or (x - y + z = 0) or (-x + y + z = 0) or (x + y + z = 12) then begin
+                        Vx[vc] := -W + W / 3 * x;
+                        Vy[vc] := -W + W / 3 * y;
+                        Vz[vc] := -W + W / 3 * z;
+                        Idx[ x, y, z] := vc;
+                        Inc(vc);
+                    end;
+
+        function GetId(x4, y4);
+        begin
+            xi := x + dx1 * y4 + dx2 * x4;
+            yi := y + dy1 * y4 + dy2 * x4;
+            zi := z + dz1 * y4 + dz2 * x4;
+            Result := Idx[xi, yi, zi];
+        end;
+
+        function GetColor1(x3, y3);
+        begin
+            char := copy(sColors[sy + x3 * dir], sx + 5 - dir * (-5 + y3 * 2 + x3 - 1), 1);
+            Result := Colors[StrToInt(char)];
+        end;
+
+        function GetColor2(x3, y3);
+        begin
+            char := copy(sColors[sy + x3 * dir], sx + 5 - dir * (-5 + y3 * 2 + x3), 1);
+            Result := Colors[StrToInt(char)];
+        end;
+
+        procedure MakeSticker1(x1, y1, x2, y2, x3, y3, ies);
+        begin
+            S[cf] := IntToStr(GetId(x1, y1)) + ';' + IntToStr(GetId(x2, y2)) + ';' + IntToStr(GetId(x3, y3));
+            Cl[cf] := GetColor1(x1,y1);
+            IE[cf] := ies;
+            Inc(cf);
+        end;
+
+        procedure MakeSticker2(x1, y1, x2, y2, x3, y3, ies);
+        begin
+            S[cf] := IntToStr(GetId(x1, y1)) + ';' + IntToStr(GetId(x2, y2)) + ';' + IntToStr(GetId(x3, y3));
+            Cl[cf] := GetColor2(x1,y1);
+            IE[cf] := ies;
+            Inc(cf);
+        end;
+
+        procedure MakeSide(x, y, z, dx1, dy1, dz1, dx2, dy2, dz2, sx, sy, dir);
+        // x, y, z - vertex of side
+        // dx1, dy1, dz1 - 1st counting vector
+        // dx2, dy2, dz2 - 2nd counting vector
+        // sx, sy, dy - left letter in sColors
+        begin
+            for i := 0 to 4 do
+                for j := 0 to 4 - i do
+                    MakeSticker1( i + 0, j + 1,   i + 1, j + 1,  i + 1, j + 0,  -1);
+            for i := 1 to 3 do
+                for j := 1 to 4 - i do
+                    MakeSticker2( i + 0, j + 0,   i + 0, j + 1,   i + 1, j + 0,  -1);
+            for i := 1 to 4 do
+                MakeSticker2( i + 0, 0,  i + 0, 1,  i + 1, 0,  3);
+            for j := 1 to 4 do
+                MakeSticker2( 0, j + 0,  0, j + 1,  1, j + 0,  6);
+            for i := 1 to 4 do
+                MakeSticker2( i + 0, 5 - i,  i + 0, 6 - i,  i + 1, 5 - i,  5);
+            MakeSticker2(0, 0,  0, 1,  1, 0,  2);
+            MakeSticker2(0, 5,  0, 6,  1, 5,  4);
+            MakeSticker2(5, 0,  5, 1,  6, 0,  1);
+        end;
+
+        cf := 0;
+        MakeSide( 0, 6, 6,  0,-1,-1,  1,-1, 0,  1, 5,-1); // --+
+        MakeSide( 6, 6, 0,  0,-1, 1, -1,-1, 0,  8, 0, 1); // +--
+        MakeSide( 0, 0, 0,  0, 1, 1,  1, 1, 0, 15, 5,-1); // -+-
+        MakeSide( 6, 0, 6,  0, 1,-1, -1, 1, 0, 22, 0, 1); // +++
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = " D2; D4" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Cl[i]" VertexIndexes = "S[i]" InvisibleEdges = "IE[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "cf" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

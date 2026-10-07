@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 4x4x4 Jumble</Name>
+        <Menu>Cubic\Crazy\Crazy 4x4x4\Crazy 4x4x4 Jumble</Menu>
+        <Inventor>Daniel Kwan</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-11-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5122</Link>
+    </Interface>
+
+    <Script>
+        Delta := 0.002;
+        R := 1 / sqrt(8);
+        D := 0.5 + Delta;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi/4;Pi/2;Pi/2;Pi/4;0" PlaneDistances = "-1/2; -1/4; 0; 1/4; 1/2" FixedLa1yers = "0;5" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "RemoveCenter">
+            <RemoveContaining Vector = "Cx[i];Cy[i];Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenter" Repeat = "6" i = "0" />
+
+        <Hide Axis = "0" From = "2" To = "3" />
+        <Hide Axis = "1" From = "2" To = "3" />
+        <Hide Axis = "2" From = "2" To = "3" />
+
+        <Split><Plane NormVector = " 1; 1; 0" /></Split>
+        <Split><Plane NormVector = "-1; 1; 0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 1" /></Split>
+        <Split><Plane NormVector = " 0;-1; 1" /></Split>
+        <Split><Plane NormVector = " 1; 0; 1" /></Split>
+        <Split><Plane NormVector = " 1; 0;-1" /></Split>
+
+        <Circle Radius = "R" Color = "Colors[0]" > <Center X = "-D" Y = " 0" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[1]" > <Center X = " D" Y = " 0" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[2]" > <Center X = " 0" Y = "-D" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[3]" > <Center X = " 0" Y = " D" Z = " 0" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[4]" > <Center X = " 0" Y = " 0" Z = "-D" /> </Circle>
+        <Circle Radius = "R" Color = "Colors[5]" > <Center X = " 0" Y = " 0" Z = " D" /> </Circle>
+
+        <SplitByAxes/>
+
+        <ShowAll/>
+
+        <Connect Layers = "0;2" />
+        <Connect Layers = "3;5" />
+    </Figure>
+</xml>

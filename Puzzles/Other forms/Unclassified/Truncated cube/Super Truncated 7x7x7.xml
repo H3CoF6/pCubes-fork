@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super Truncated 7x7x7</Name>
+        <Menu>Other forms\Unclassified\Truncated cube\Super Truncated 7x7x7</Menu>
+        <Inventor>Ben Greaves</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-03-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8518</Link>
+    </Interface>
+
+    <Script>
+        clGold := 'E0C07D';
+
+        W := 0.5;
+        N := 7;
+
+        WD := 2 * W / N;
+        D[0] := -W + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+
+        Cut := W * sqrt(3) * 3.1 / 7;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "3"/>
+        <Split Axis = "1" From = "4"/>
+        <Split Axis = "2" From = "3"/>
+        <HideContaining Vector = " 0; 0; 0" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "0" From = "N - 1" />
+        <Split Axis = "1" From = "N - 1" />
+        <Split Axis = "2" From = "N - 1" />
+        <RemoveGrayParts/>
+        <SplitByAxes/>
+        <ShowAll/>
+        <Cut Color="clGold" > <Plane NormVector = "-1; 1;-1" NormDistance = "-Cut" /> </Cut>
+    </Figure>
+</xml>

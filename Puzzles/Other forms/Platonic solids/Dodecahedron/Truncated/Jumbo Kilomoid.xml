@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jumbo Kilomoid</Name>
+        <Menu>Other forms\Dodecahedron\Truncated\Jumbo Kilomoid</Menu>
+        <Inventor>Mark Lodge</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-07-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8062</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0000CC'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := 'AA00AA'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF55BB'; // Pink
+        Colors[11] := '666666'; // Gray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2;
+    </Script>
+
+    <Axes TurningAngles = " 0;sAngle" PlaneDistances = "D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+    </Axes>
+
+    <Axes TurningAngles = "0; 0; sAngle" PlaneDistances = "-D;D" >
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <SplitByAxes/>
+
+        <Macro Name = "HideCorner">
+            <HideContaining Vector = "vx[id]; vy[id]; vz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCorner" Repeat = "15" id = "0" />
+
+        <Macro Name = "HideC">
+            <HideContaining Vector = "cx[id]; cy[id]; cz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideC" Repeat = "12" id = "0" />
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-cx[id];-cy[id];-cz[id]" NormDistance = "-RSin" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "12" id = "0" />
+
+        <ShowAll/>
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-cx[id];-cy[id];-cz[id]" NormDistance = "-RSin" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "12" id = "0" />
+
+        <Macro Name = "CutCenters">
+            <HideContaining Vector = "0.8*cx[id]; 0.8*cy[id]; 0.8*cz[id]" />
+            <InvertVisibility/>
+            <Cut Color = "Colors[id]"> <Plane NormVector = " 0; 0; 1" NormDistance = "-D" /> </Cut>
+            <ShowAll/>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutCenters" Repeat = "5" id = "6" />
+
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-D" /> </Cut>
+        <RemoveContaining Vector = "0;0;0" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>
+
+

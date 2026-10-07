@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crystal 3x3x3+</Name>
+        <Aliases>Small Meteor</Aliases>
+        <Menu>Cubic\3x3x3 variants\Crystal 3x3x3</Menu>
+        <Inventor>Jean-Claude Constantin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-05-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=443</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.6;
+        N := 5;
+        D := W / N;
+        WX := D;
+        WY := D;
+        WZ := D;
+
+        S[0] := '     |     |  1  |     |     ';
+        S[1] := '     |  1  | 101 |  1  |     ';
+        S[2] := '  1  | 101 |10 01| 101 |  1  ';
+        S[3] := '     |  1  | 101 |  1  |     ';
+        S[4] := '     |     |  1  |     |     ';
+
+        function GetType(x1, y1, z1);
+        begin
+            if (x1 &lt; 0) or (y1 &lt; 0) or (z1 &lt; 0) or (x1 &gt;= N) or (y1 &gt;= N) or (z1 &gt;= N) then
+                Result := ' '
+            else
+                Result := copy(S[N-1-z1], (N + 1) * y1 + x1 + 1, 1);
+        end;
+
+        procedure CalcCubie(No);
+        begin
+            x := No mod N;
+            y := No div N mod N;
+            z := No div N div N;
+            for i := 0 to 5 do
+                Colors[i] := -1;
+            CType := GetType(x,y,z);
+            if CType = '1' then begin
+                if GetType(x-1,y,z) = ' ' then Colors[0] := clRed;
+                if GetType(x+1,y,z) = ' ' then Colors[1] := clOrange;
+                if GetType(x,y-1,z) = ' ' then Colors[2] := clBlue;
+                if GetType(x,y+1,z) = ' ' then Colors[3] := clGreen;
+                if GetType(x,y,z-1) = ' ' then Colors[4] := clYellow;
+                if GetType(x,y,z+1) = ' ' then Colors[5] := clWhite;
+            end;
+            if CType &lt;&gt; ' ' then begin 
+                DWX := D * (2 * x - N + 1);
+                DWY := D * (2 * y - N + 1);
+                DWZ := D * (2 * z - N + 1);
+                CCount := 1;
+            end else
+                CCount := 0;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" K = "D * 2.2" Color = "222222" />
+        <SplitByAxes/>
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <Hide Axis = "2" Layer = "1" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "AddCubie">
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <Macro Name = "AddCubies">
+            <Script> CalcCubie(No); Inc(No); </Script>
+            <ExecMacro MacroName = "AddCubie" Repeat = "CCount" /> // if CCount = 1 then draw cubie
+        </Macro>
+
+        <ExecMacro MacroName = "AddCubies" No = "0" Repeat = "N*N*N" />
+    </Figure>
+</xml>

@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Roadblock Cube</Name>
+        <Menu>Cubic\Cross\2x2x2\Roadblock Cube</Menu>
+        <Inventor>Oskar Van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-10-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3935</Link>
+    </Interface>
+
+    <Script>
+        W := 0.2;
+        L := W * 3;
+        D := W * 0.35;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-L; -W; 0; W; L" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+
+        <Macro Name = "ColorCube" >
+            <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W" />
+        </Macro>
+
+        <ExecMacro MacroName = "ColorCube" DWX = " 0" DWY = " 0" DWZ = " 0" />
+        <ExecMacro MacroName = "ColorCube" DWX = " L" DWY = " 0" DWZ = " 0" />
+        <ExecMacro MacroName = "ColorCube" DWX = "-L" DWY = " 0" DWZ = " 0" />
+        <ExecMacro MacroName = "ColorCube" DWX = " 0" DWY = " L" DWZ = " 0" />
+        <ExecMacro MacroName = "ColorCube" DWX = " 0" DWY = "-L" DWZ = " 0" />
+        <ExecMacro MacroName = "ColorCube" DWX = " 0" DWY = " 0" DWZ = " L" />
+        <ExecMacro MacroName = "ColorCube" DWX = " 0" DWY = " 0" DWZ = "-L" />
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <Macro Name = "BodyCuboid" >
+            <LoadFrom File = "Figures\Cuboid.xml" WX = "(X2-X1)/2" WY = "(Y2-Y1)/2" WZ = "(Z2-Z1)/2" DWX = "(X2+X1)/2" DWY = "(Y2+Y1)/2" DWZ = "(Z2+Z1)/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "BodyCuboid" X1 = " W"       Y1 = "-D"       Z1 = "-D"       X2 = " L - W"   Y2 = " D"       Z2 = " D"       />
+        <ExecMacro MacroName = "BodyCuboid" X1 = "-L + W"   Y1 = "-D"       Z1 = "-D"       X2 = "-W"       Y2 = " D"       Z2 = " D"       />
+        <ExecMacro MacroName = "BodyCuboid" X1 = "-D"       Y1 = " W"       Z1 = "-D"       X2 = " D"       Y2 = " L - W"   Z2 = " D"       />
+        <ExecMacro MacroName = "BodyCuboid" X1 = "-D"       Y1 = "-L + W"   Z1 = "-D"       X2 = " D"       Y2 = "-W"       Z2 = " D"       />
+        <ExecMacro MacroName = "BodyCuboid" X1 = "-D"       Y1 = "-D"       Z1 = " W"       X2 = " D"       Y2 = " D"       Z2 = " L - W"   />
+        <ExecMacro MacroName = "BodyCuboid" X1 = "-D"       Y1 = "-D"       Z1 = "-L + W"   X2 = " D"       Y2 = " D"       Z2 = "-W"       />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

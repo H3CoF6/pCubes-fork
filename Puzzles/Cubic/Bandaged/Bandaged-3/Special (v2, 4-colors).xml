@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Special (v2, 4-colors)</Name>
+        <Menu>Cubic\Bandaged\Cube 3x3x3\Special (v2, 4-colors)</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-22</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clViolett := '800080';
+        clBlue    := '0000C8';
+        clYellow  := 'FFFF00';
+        clGreen   := '009600';
+
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W * 1.1" Color = "-1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "2" />
+
+        <Hide Axis = "0" Layer = "2" />
+        <Hide Axis = "1" Layer = "0" />
+        <Split Axis = "2" From = "1" />
+        <Hide Axis = "2" Layer = "0" />
+        <SplitByAxes/>
+        <Cut Color = "clBlue  " > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <InvertVisibility/>
+
+        <Cut Color = "clViolett" > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clViolett" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clViolett" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clViolett" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clViolett" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clViolett" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <SaveSolvedState/>
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

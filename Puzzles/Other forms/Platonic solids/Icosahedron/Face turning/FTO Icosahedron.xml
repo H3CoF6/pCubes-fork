@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>FTO Icosahedron</Name>
+        <Menu>Other forms\Icosahedron\Face turning\FTO Icosahedron</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-11-22</Added>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clLightBlue    := '2828FF';
+        clBlue         := '0000A0';
+        clBrown        := '800000';
+        clOrange       := 'FF6000';
+        clLightViolett := 'FF0080';
+        clRed          := 'FF0000';
+        clLightGreen   := '00FF00';
+        clGreen        := '008000';
+        clViolett      := '800080';
+        clCyan         := '00DCB4';
+        clWhite        := 'FFFFFF';
+
+        W := 0.9;
+        D := sqrt(3) / 9 * W;
+        DCut := 4 * sqrt(5) / 15 * W;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1;  1; 1" />
+        <Axis NormVector = "-1;  1; 1" />
+        <Axis NormVector = "-1; -1; 1" />
+        <Axis NormVector = " 1; -1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-W;  0;  0" />
+                <Add Vector = " W;  0;  0" />
+                <Add Vector = " 0; -W;  0" />
+                <Add Vector = " 0;  W;  0" />
+                <Add Vector = " 0;  0; -W" />
+                <Add Vector = " 0;  0;  W" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clLightGreen"   VertexIndexes = "0;2;5" />
+                <Face Color = "clViolett"      VertexIndexes = "5;2;1" />
+                <Face Color = "clLightViolett" VertexIndexes = "5;1;3" />
+                <Face Color = "clYellow"       VertexIndexes = "5;3;0" />
+                <Face Color = "clLightViolett" VertexIndexes = "4;2;0" />
+                <Face Color = "clYellow"       VertexIndexes = "4;1;2" />
+                <Face Color = "clLightGreen"   VertexIndexes = "4;3;1" />
+                <Face Color = "clViolett"      VertexIndexes = "4;0;3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Cut Color = "clBrown"     > <Plane NormDistance = "-DCut" NormVector = " 1;  2;  0" /> </Cut>
+        <Cut Color = "clRed"       > <Plane NormDistance = "-DCut" NormVector = "-1;  2;  0" /> </Cut>
+        <Cut Color = "clRed"       > <Plane NormDistance = "-DCut" NormVector = " 1; -2;  0" /> </Cut>
+        <Cut Color = "clBrown"     > <Plane NormDistance = "-DCut" NormVector = "-1; -2;  0" /> </Cut>
+                                                                   
+        <Cut Color = "clBlue"      > <Plane NormDistance = "-DCut" NormVector = " 0;  1;  2" /> </Cut>
+        <Cut Color = "clLightBlue" > <Plane NormDistance = "-DCut" NormVector = " 0; -1;  2" /> </Cut>
+        <Cut Color = "clLightBlue" > <Plane NormDistance = "-DCut" NormVector = " 0;  1; -2" /> </Cut>
+        <Cut Color = "clBlue"      > <Plane NormDistance = "-DCut" NormVector = " 0; -1; -2" /> </Cut>
+                                                                   
+        <Cut Color = "clCyan"      > <Plane NormDistance = "-DCut" NormVector = " 2;  0;  1" /> </Cut>
+        <Cut Color = "clGreen"     > <Plane NormDistance = "-DCut" NormVector = " 2;  0; -1" /> </Cut>
+        <Cut Color = "clGreen"     > <Plane NormDistance = "-DCut" NormVector = "-2;  0;  1" /> </Cut>
+        <Cut Color = "clCyan"      > <Plane NormDistance = "-DCut" NormVector = "-2;  0; -1" /> </Cut>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

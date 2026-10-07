@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>BiN-4</Name>
+        <Menu>Cubic\Bandaged\Cube 4x4x4\BiN-4</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-04-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4070</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 4;
+        W_D := W / N;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('112=100, 130, 230, 232, 330, 332, 132, 200');
+        ParseTxt('121=000, 001, 002, 020, 021, 302, 022, 301');
+        ParseTxt('211=220, 003, 013, 203, 213, 223, 023, 210');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+
+        // split and glue paradox element
+        <HideContaining Vector = " W;-W;-W/4" />
+        <HideContaining Vector = "-W; W; W/4" />
+        <InvertVisibility/>
+        <Split Axis = "1" From = "1" Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" />
+        <Split Axis = "1" From = "3" Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" />
+        <HideAll/>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W_D" WY = "W_D*2" WZ = "W_D" DWX = " W_D * 3" DWY = "-W_D * 2" DWZ = "-W_D * 1" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W_D" WY = "W_D*2" WZ = "W_D" DWX = "-W_D * 3" DWY = " W_D * 2" DWZ = " W_D * 1" />
+        <InvertVisibility/>
+    </Figure>
+</xml>

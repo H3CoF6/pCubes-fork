@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4x4x4 Burr Mirror</Name>
+        <Menu>Cubic\Bump\Bandaged\4x4x4 Burr Mirror</Menu>
+        <Inventor>Manish Rathod</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-07-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11258</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := '2040AD';
+
+        W := 0.5;
+        D := W * 0.25;
+
+        DX := -W * 0.03;
+        DY := -W * 0.12;
+        DZ := -W * 0.15;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D*2; 0; D*2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = "-DX;-DY;-DZ" />
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "MirrorColor" />
+        <Transfer Vector = " DX; DY; DZ" />
+
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+
+        <Turn Axis = "2" Layers = "0;2" Angle = "Pi/2" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "3" />
+
+        <Turn Axis = "0" Layers = "1;2" Angle = "Pi/2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "3" />
+
+        <Turn Axis = "2" Layers = "1;2" Angle = "Pi/2" />
+        <Split Axis = "1" From = "2" />
+        <Undo Repeat = "3" />
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

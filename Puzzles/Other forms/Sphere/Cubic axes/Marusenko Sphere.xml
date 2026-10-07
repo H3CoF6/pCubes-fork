@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Marusenko Sphere</Name>
+        <Menu>Other forms\Sphere\Cubic axes\Marusenko Sphere</Menu>
+        <Inventor>Alexandr Marusenko</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-05-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4074</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Octahedron_Standard_Colors.inc';
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        R := 0.6;
+        D := R * 0.75;
+        DC := R * 0.63;
+        K := R * 1.01;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector" >
+            <HideAll/>
+            <Script>Color := Colors[c]</Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = "Cx[k1]; Cy[k1]; Cz[k1]" /> </Cut>
+            <Cut> <Plane NormVector = "Cx[k2]; Cy[k2]; Cz[k2]" /> </Cut>
+            <Cut> <Plane NormVector = "Cx[k3]; Cy[k3]; Cz[k3]" /> </Cut>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" c = "4" k1 = "0" k2 = "2" k3 = "4" />
+        <ExecMacro MacroName = "AddSector" c = "0" k1 = "0" k2 = "2" k3 = "5" />
+        <ExecMacro MacroName = "AddSector" c = "7" k1 = "0" k2 = "3" k3 = "4" />
+        <ExecMacro MacroName = "AddSector" c = "3" k1 = "0" k2 = "3" k3 = "5" />
+        <ExecMacro MacroName = "AddSector" c = "5" k1 = "1" k2 = "2" k3 = "4" />
+        <ExecMacro MacroName = "AddSector" c = "1" k1 = "1" k2 = "2" k3 = "5" />
+        <ExecMacro MacroName = "AddSector" c = "6" k1 = "1" k2 = "3" k3 = "4" />
+        <ExecMacro MacroName = "AddSector" c = "2" k1 = "1" k2 = "3" k3 = "5" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <HideContaining Vector = "0;0;0" />
+
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Cx[i]; Cy[i]; Cz[i]" NormDistance = "-DC" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "6" />
+
+        <Macro Name = "Hide" >
+            <HideContaining Vector = "Cx[i] * D; Cy[i] * D; Cz[i] * D" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" i = "0" Repeat = "6" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

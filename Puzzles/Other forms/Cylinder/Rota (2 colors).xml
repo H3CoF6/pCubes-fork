@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rota (2 colors)</Name>
+        <Menu>Other forms\Cylinder\Rota (2 colors)</Menu>
+        <Menu>Other forms\2x2x2 variants\Rota (2 colors)</Menu>
+        <Inventor>Eugen F. Gehrer and Manfred Vonderlinn</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1470</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFEE'; // clCream
+        Colors[1] := 'EEDD33'; // clGold
+
+        R := 0.5;
+        H := R;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "R" Color = "Colors[i]" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Colors[i]"/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Colors[i]" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "1; 0; 0" NormDistance = "0" /> </Cut>
+            <Turn NormVector = "0; 0; 1" Angle = "Pi" />
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "2" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <SaveSolvedState/>
+        <Undo Repeat = "2" />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <SaveSolvedState/>
+        <Undo Repeat = "2" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "0" Layer = "0" Angle = "Pi" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

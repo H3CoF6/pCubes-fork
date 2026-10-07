@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Soviet Union Piece Shuffle Cube III</Name>
+        <Menu>Other forms\3x3x3 variants\Soviet Union Piece Shuffle Cube III</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-08-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3936</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        Colors[0] := clWhite;
+        Colors[1] := clWhite;
+        Colors[2] := clWhite;
+        Colors[3] := clWhite;
+        Colors[4] := clWhite;
+        Colors[5] := clRed;
+
+        W := 0.5;
+        D := W / 3;
+
+        DCutE := W * 2 / 3 * sqrt(2);
+        DCutV := W * 5 / 3 / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vectors = " Vx; Vy; Vz" />
+        <Cut Axis = "2" From = "1" />
+
+        <Cut Color = "clRed" ><Plane NormVector = " 1; 0;-1" NormDistance = "-DCutE" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = "-1; 0;-1" NormDistance = "-DCutE" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = " 0; 1;-1" NormDistance = "-DCutE" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = " 0;-1;-1" NormDistance = "-DCutE" /></Cut>
+
+        <Cut Color = "clWhite" ><Plane NormVector = " 1; 1; 0" NormDistance = "-DCutE" /></Cut>
+        <Cut Color = "clWhite" ><Plane NormVector = " 1;-1; 0" NormDistance = "-DCutE" /></Cut>
+        <Cut Color = "clWhite" ><Plane NormVector = "-1; 1; 0" NormDistance = "-DCutE" /></Cut>
+        <Cut Color = "clWhite" ><Plane NormVector = "-1;-1; 0" NormDistance = "-DCutE" /></Cut>
+
+        <InvertVisibility/>
+
+        <Cut Color = "clYellow" ><Plane NormVector = " 1; 1; 1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "clYellow" ><Plane NormVector = " 1;-1; 1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "clYellow" ><Plane NormVector = "-1; 1; 1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "clYellow" ><Plane NormVector = "-1;-1; 1" NormDistance = "-DCutV" /></Cut>
+
+        <Cut Color = "clRed" ><Plane NormVector = " 1; 1;-1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = " 1;-1;-1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = "-1; 1;-1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "clRed" ><Plane NormVector = "-1;-1;-1" NormDistance = "-DCutV" /></Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "clYellow" />
+        <Cut Axis = "2" To = "1" />
+        <SplitByAxes/>
+        <RemoveContaining Vectors = " Vx; Vy; Vz" />
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Trimixup Prism</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Face Turning\Trimixup Prism</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8623</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'FFEE00';
+        clBlue   := '0066EE';
+        clRed    := 'EE1100';
+        clGreen  := '33BB00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.6;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(2*Pi/3 * i);
+            y[i] := R * cos(2*Pi/3 * i);
+        end;
+
+        H := R * 0.54;
+
+        D1 := H / 3;
+        D2 :=-R * 0.15;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "-D1; D1" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D2" NormVectors = "x; y; 0" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+
+            <Faces>
+                <Face Color = "clYellow" VertexIndexes = "0;1;2" />
+                <Face Color = "clWhite " VertexIndexes = "4;3;5" />
+                <Face Color = "clRed   " VertexIndexes = "0;3;4;1" />
+                <Face Color = "clBlue  " VertexIndexes = "1;4;5;2" />
+                <Face Color = "clGreen " VertexIndexes = "2;5;3;0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "2 * Pi / 6" />
+        <SplitByAxes/>
+        <Undo/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

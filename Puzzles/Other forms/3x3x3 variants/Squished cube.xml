@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Squished cube</Name>
+        <Menu>Other forms\3x3x3 variants\Squished cube</Menu>
+        <Menu>Other forms\Trapezohedron\Squished cube</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-02-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1532</Link>
+    </Interface>
+
+    <Script>
+        W := 0.4;
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        RCut := W * sqrt(2) * 2 / 3;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Cut Color = "Colors[0]" > <Plane NormVector = "-1; 1; 0" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "Colors[1]" > <Plane NormVector = " 1;-1; 0" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "Colors[2]" > <Plane NormVector = " 0; 1; 1" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "Colors[3]" > <Plane NormVector = " 0;-1;-1" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "Colors[4]" > <Plane NormVector = "-1; 0; 1" NormDistance = "-RCut" /> </Cut>
+        <Cut Color = "Colors[5]" > <Plane NormVector = " 1; 0;-1" NormDistance = "-RCut" /> </Cut>
+
+        <SplitByAxes/>
+
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "-D * 5" /> </Split>
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "-D * 3" /> </Split>
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = " D * 3" /> </Split>
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = " D * 5" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "-D * 5" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "-D * 3" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = " D * 3" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 0" NormDistance = " D * 5" /> </Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "-D * 5" /> </Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "-D * 3" /> </Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = " D * 3" /> </Split>
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = " D * 5" /> </Split>
+    </Figure>
+</xml>

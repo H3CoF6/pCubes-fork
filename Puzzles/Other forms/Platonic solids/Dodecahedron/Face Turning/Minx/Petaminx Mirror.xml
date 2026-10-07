@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Petaminx Mirror</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Minx\Petaminx Mirror</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2025-10-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12100</Link>
+    </Interface>
+
+    <Script>
+        Color := '404040';
+
+        R := 0.7;
+
+        // get Cx Cy Cz
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        // cuts
+        for i := 0 to 11 do
+          RC[ i] := R * (0.69 + 0.01 * i);
+
+        // randomize cuts
+        for i := 0 to 10 do begin
+            i1 := Random(12);
+            i2 := Random(12);
+            RCX := RC[i1];
+            RC[i1] := RC[i2];
+            RC[i2] := RCX;
+        end;
+
+        // layers
+        for i := 0 to 3 do
+            D[i] := R * (0.5 + 0.05 * i);
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; sAngle; sAngle; sAngle" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <!-- make any big figure, e.g. dodecahedron -->
+        <LoadFrom File = "Figures\Dodecahedron.xml" R = "R * 2" />
+
+        <!-- cut sides -->
+        <Macro Name = "CutSide" >
+          <Cut Color = "Color" > <Plane NormVector = "Cx[i];Cy[i];Cz[i]" NormDistance  = "-RC[i]" /> </Cut>
+          <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutSide" i = "0" Repeat = "12" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 12" />
+</xml>

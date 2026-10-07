@@ -1,0 +1,143 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Looper</Name>
+        <Menu>Other forms\2d\Looper\Crazy Looper</Menu>
+        <Menu>Other forms\Prism\Heptagonal Prism\Crazy Looper</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-08-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9419</Link>
+    </Interface>
+
+    <Script>
+        clWhite   := 'FFFFFF';
+        clRed     := 'FF0000';
+        clOrange  := 'FF6000';
+        clYellow  := 'FFFF00';
+        clLime    := '00FF00';
+        clDeepSky := '00BFFF';
+        clBlack   := '333333';
+
+        R := 0.65;
+        H := 2 * R * sin(Pi / 18);
+        A := 2 * Pi / 7;
+
+        for i := 0 to 6 do begin
+            x[i] := R * cos(A * (i+0.5));
+            y[i] := R * sin(A * (i+0.5));
+        end;
+        for i := 0 to 2 do begin
+            ax[i] := cos(A * (i - 2));
+            ay[i] := sin(A * (i - 2));
+        end;
+
+        D1 := -R * cos(2 * A);
+        D2 := D1 * 3;
+
+        Height := 0.001;
+
+        // dots
+        dr := 0.025;
+        dx[0] := 0.84; dy[0] := 0;
+        dx[1] := 0.84; dy[1] := 0.27;
+        dx[2] := 0.84; dy[2] :=-0.27;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi; Pi" PlaneDistances = "D1; D2" NormVectors = " ax; ay; 0" />
+
+    <Figure>
+        <Macro Name = "CreatePrism" >
+            <HideAll/>
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "0;1;2;3;4;5;6" />
+                    <Face Color = "Color" VertexIndexes = " 7; 8;1;0" />
+                    <Face Color = "Color" VertexIndexes = " 8; 9;2;1" />
+                    <Face Color = "Color" VertexIndexes = " 9;10;3;2" />
+                    <Face Color = "Color" VertexIndexes = "10;11;4;3" />
+                    <Face Color = "Color" VertexIndexes = "11;12;5;4" />
+                    <Face Color = "Color" VertexIndexes = "12;13;6;5" />
+                    <Face Color = "Color" VertexIndexes = "13; 7;0;6" />
+                    <Face Color = "Color" VertexIndexes = "13;12;11;10;9;8;7" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "CreateSector" >
+            <ExecMacro MacroName = "CreatePrism" />
+            <Cut> <Plane NormVector = "-x[0];-y[0]; 0" NormDistance = " D1" /> </Cut>
+            <Cut> <Plane NormVector = "-x[1];-y[1]; 0" NormDistance = " D1" /> </Cut>
+            <Cut> <Plane NormVector = " x[2]; y[2]; 0" NormDistance = "-D1" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = "-A" />
+        </Macro>
+
+        <Macro Name = "Unbandage" >
+            <Split> <Plane NormVector = " x[i]; y[i]; 0" NormDistance = "-D1" /> </Split>
+            <Split> <Plane NormVector = " x[i]; y[i]; 0" NormDistance = "-D2" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "CreateSector" Color = "clRed    " />
+        <ExecMacro MacroName = "CreateSector" Color = "clOrange " />
+        <ExecMacro MacroName = "CreateSector" Color = "clYellow " />
+        <ExecMacro MacroName = "CreateSector" Color = "clLime   " />
+        <ExecMacro MacroName = "CreateSector" Color = "clDeepSky" />
+        <Turn NormVector = "0;0;1" Angle = "A*5" />
+
+        <ShowAll/>
+        <ExecMacro MacroName = "Unbandage" i = "0" Repeat = "7" />
+        <Hide Axis = "0" From = "1" />
+        <Cut  Axis = "2" From = "1" />
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clWhite" />
+        <ExecMacro MacroName = "Unbandage" i = "0" Repeat = "7" />
+        <RemoveContaining Vector = "0;0;0" />
+        <HideContaining Vector = "-x[1]/R*D1;-y[1]/R*D1; 0" />
+        <HideContaining Vector = "-x[2]/R*D1;-y[2]/R*D1; 0" />
+        <HideContaining Vector = "-x[3]/R*D1;-y[3]/R*D1; 0" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "CreatePrism" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+
+        <ShowAll/>
+
+        <Macro Name = "Remove" >
+            <RemoveContaining Vector = "Dis; 0; 0" />
+            <Turn NormVector = "0;0;1" Angle = "-A" />
+        </Macro>
+        <Turn NormVector = "0;0;1" Angle = "-A/2" />
+        <ExecMacro MacroName = "Remove" Dis = "-R*0.65" Repeat = "5" />
+        <Turn NormVector = "0;0;1" Angle = "A*5" />
+        <Turn NormVector = "0;0;1" Angle = " A/2" />
+
+        <Macro Name = "CreateDot" >
+            <!-- <Cylinder Radius = "DR" Color = "clBlack" Base = "-dotX * R; -dotY * R; H" Top = "-dotX * R; -dotY * R; H + Height" TopColor = "clBlack" /> -->
+            <Circle Radius = "DR * R" Color = "clBlack" Base = "-dotX * R; -dotY * R; H" Center = "-dotX * R; -dotY * R; H + Height" />
+        </Macro>
+
+        <Macro Name = "CreateDots" >
+            <ExecMacro MacroName = "CreateDot" dotX = "dx[0]" dotY = "dy[0]" />
+            <ExecMacro MacroName = "CreateDot" dotX = "dx[1]" dotY = "dy[1]" />
+            <ExecMacro MacroName = "CreateDot" dotX = "dx[2]" dotY = "dy[2]" />
+            <Turn NormVector = "0;0;1" Angle = "-A" />
+        </Macro>
+
+        <Turn NormVector = "0;0;1" Angle = "-A/2" />
+        <ExecMacro MacroName = "CreateDots" Repeat = "5" />
+        <Turn NormVector = "0;0;1" Angle = " A/2" />
+        <Turn NormVector = "0;0;1" Angle = "A * 5" />
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

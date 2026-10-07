@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhombohedral Skewb</Name>
+        <Menu>Other forms\Trapezohedron\Vertex Turning\Rhombohedral Skewb</Menu>
+        <Menu>Other forms\Skewb variants\Trapezohedron\Rhombohedral Skewb</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-05-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1625</Link>
+    </Interface>
+
+    <Script>
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clRed    := 'FF0000';
+        clOrange := 'FF6000';
+        clGreen  := '008000';
+        clPink   := 'FF69B4';
+
+        R  := 0.7;
+        C0 := R / 2;
+        C1 := R;
+        C2 := R * sqrt(3) / 2;
+        H  := R / sqrt(2) / 6;
+
+        az := sqrt(2) / 4;
+
+        RCut := R * 0.95;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; 2*Pi/3" PlaneDistances = "0">
+        <Axis NormVector = "         0;   0;  1" />
+        <Axis NormVector = "         0;  -1; az" />
+        <Axis NormVector = " sqrt(3)/2; 1/2; az" />
+        <Axis NormVector = "-sqrt(3)/2; 1/2; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " C2; -C0;  H" />
+                <Add Vector = "-C2; -C0;  H" />
+                <Add Vector = "  0;  C1;  H" />
+                <Add Vector = " C2;  C0; -H" />
+                <Add Vector = "-C2;  C0; -H" />
+                <Add Vector = "  0; -C1; -H" />
+
+                <Add Vector = "  0;   0;  H*3" />
+                <Add Vector = "  0;   0; -H*3" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clRed"    VertexIndexes = " 0; 6; 1; 5" />
+                <Face Color = "clBlue"   VertexIndexes = " 1; 6; 2; 4" />
+                <Face Color = "clGreen"  VertexIndexes = " 2; 6; 0; 3" />
+
+                <Face Color = "clOrange" VertexIndexes = " 3; 7; 4; 2" />
+                <Face Color = "clCyan"   VertexIndexes = " 4; 7; 5; 1" />
+                <Face Color = "clPink"   VertexIndexes = " 5; 7; 3; 0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <!-- cut corners for better control -->
+        <Cut> <Plane NormVector = " C2; -C0;  H" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-C2; -C0;  H" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "  0;  C1;  H" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " C2;  C0; -H" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-C2;  C0; -H" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "  0; -C1; -H" NormDistance = "-RCut" /> </Cut>
+
+    </Figure>
+</xml>

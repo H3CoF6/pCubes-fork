@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Radio 3 Tetrahedron</Name>
+        <Aliases>Tetradiolarian</Aliases>
+        <Menu>Other forms\Pillowed\Tetrahedron\Radio 3 Tetrahedron</Menu>
+        <Inventor>Raphaël Mouflin, Anthone Poole</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6469</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0022'; // Red
+        Colors[1] := '0099FF'; // Blue2
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := '00CC00'; // Green1
+
+        K := 0.6;
+
+        include 'Figures\Scripts\Dodecahedron_Sq_Coordinates.inc';
+
+        D := K * 1.1;
+        jumAngle := Arcsin(1/4) + Pi/6;
+
+        phi := (sqrt(5) - 1) / 2; // The golden ratio
+
+        Pillow := 1.4;
+    </Script>
+
+    <Axes TurningAngles = " 0; 2*Pi / 3" JumbleAngle = "jumAngle" PlaneDistances = "D" NormVectors = " Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "_Macro_Pillowed_Tetrahedron_v2.xml" />
+        <ExecMacro MacroName = "CalcCoordinates" />
+        <ExecMacro MacroName = "AddPillowedTetrahedron" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Macros>
+        <Macro Name = "RandomTurns120" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "2*Pi/3"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "2 * Pi * Random"/>
+        </Macro>
+        <Macro Name = "Scramble120" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns120" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble120" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

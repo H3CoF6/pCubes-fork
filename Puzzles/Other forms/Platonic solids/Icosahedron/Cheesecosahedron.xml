@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cheesecosahedron</Name>
+        <Menu>Other forms\Icosahedron\Cheesecosahedron</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-03-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3668</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Icosahedron_20_Colors.inc';
+
+        R := 0.7;
+        for i := 0 to 2 do begin
+            ax[i] := cos(2*Pi/3 * i);
+            ay[i] := sin(2*Pi/3 * i);
+        end;
+
+        D := R * sqrt((5 - 2 * sqrt(5)) / 15);
+        An := arctan((3 + sqrt(5)) / 2);
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" NormVectors = " ax; ay; 0" />
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "-D; D" NormVectors = " 0; 0; 1" />
+
+    <Figure>
+        <Turn NormVector = "1;0;0" Angle = "An" />
+        <LoadFrom File = "Figures\IcosahedronSq.xml" />
+        <Turn NormVector = "1;0;0" Angle = "-An" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

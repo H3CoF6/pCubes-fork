@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tetraminx</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Tetrahedron\Tetraminx</Menu>
+        <Inventor>Uwe Mèffert</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-03-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=548</Link>
+    </Interface>
+
+    <Script>
+        clBlue1   := '0000C9';
+        clGreen1  := '009700';
+        clRed1    := 'C90000';
+        clYellow1 := 'FFFE00';
+
+        W := 0.67;
+        D := W / 9 * sqrt(3);
+        DCut := D * 5;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <Cut Color = "clGreen1 " > <Plane NormDistance = "-DCut" NormVector = "-1;-1; 1" /> </Cut>
+        <Cut Color = "clYellow1" > <Plane NormDistance = "-DCut" NormVector = "-1; 1;-1" /> </Cut>
+        <Cut Color = "clRed1   " > <Plane NormDistance = "-DCut" NormVector = " 1;-1;-1" /> </Cut>
+        <Cut Color = "clBlue1  " > <Plane NormDistance = "-DCut" NormVector = " 1; 1; 1" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

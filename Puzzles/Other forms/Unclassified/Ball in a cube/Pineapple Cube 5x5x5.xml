@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pineapple Cube 5x5x5</Name>
+        <Menu>Other forms\Unclassified\Ball in a cube\Pineapple Cube 5x5x5</Menu>
+        <Inventor>Calvin Fan</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-03-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7134</Link>
+    </Interface>                   
+
+    <Script>
+        clRed    := 'FF0000';
+        clOrange := 'FF6000';
+        clBlue   := '0000A0';
+        clGreen  := '008000';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D  := W * 0.18;
+        K  := 0.52;
+        CW := 3 * D;
+        CH := (W - CW) / 2;
+        H  := (W + CW) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-3 * D; -1 * D; 1 * D; 3 * D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "4" />
+
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <RemoveContaining Vector = " W; 0; 0" />
+        <RemoveContaining Vector = "-W; 0; 0" />
+        <RemoveContaining Vector = " 0; W; 0" />
+        <RemoveContaining Vector = " 0;-W; 0" />
+        <RemoveContaining Vector = " 0; 0; W" />
+        <RemoveContaining Vector = " 0; 0;-W" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "AddCenter" >
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "2" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "3" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "1" From = "2" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "1" From = "3" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "2" From = "2" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "2" From = "3" />
+        </Macro>
+        <ExecMacro MacroName = "AddCenter" Color = "clWhite"  WX = "CW" WY = "CW" WZ = "CH" DWX = " 0" DWY = " 0" DWZ = " H" />
+        <ExecMacro MacroName = "AddCenter" Color = "clYellow" WX = "CW" WY = "CW" WZ = "CH" DWX = " 0" DWY = " 0" DWZ = "-H" />
+        <ExecMacro MacroName = "AddCenter" Color = "clGreen"  WX = "CW" WY = "CH" WZ = "CW" DWX = " 0" DWY = " H" DWZ = " 0" />
+        <ExecMacro MacroName = "AddCenter" Color = "clBlue"   WX = "CW" WY = "CH" WZ = "CW" DWX = " 0" DWY = "-H" DWZ = " 0" />
+        <ExecMacro MacroName = "AddCenter" Color = "clOrange" WX = "CH" WY = "CW" WZ = "CW" DWX = " H" DWY = " 0" DWZ = " 0" />
+        <ExecMacro MacroName = "AddCenter" Color = "clRed"    WX = "CH" WY = "CW" WZ = "CW" DWX = "-H" DWY = " 0" DWZ = " 0" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

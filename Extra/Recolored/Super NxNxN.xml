@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super 13x13x13</Name>
+        <Menu>Cubes\Recolored\Super 13x13x13</Menu>
+        <Programmer>xchemist, Boris</Programmer>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        dW := W * 0.04;
+        N := 13;
+        N2 := (N - 1) div 2;
+
+        WD := 2 * W / N;
+        D[0] := -W + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+
+        WA[0] := W;
+        for i := 1 to N2 do
+            WA[i] := WA[i - 1] + dW;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSlice" >
+            <LoadFrom File = "Puzzles\Cubic\Classic Rubiks\_Macro_For_Super.xml" WE = "D[N - 2 - i]" DCut1 = "WA[i]" DCut2 = "WA[i + 1]" />
+            <HideAll/>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSlice" i = "0" Repeat = "N2" />
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhombitero</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Rhombitero</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2026-01-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12847</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        D1 := R / 3;
+        D2 := R * sqrt(2) / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 1;-1; 0" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 1; 0;-1" />
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 0; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+        <SplitByAxes/>
+    </Figure>
+
+    <Macros>
+        <Macro Name = "RandomTurnNonJumble" >
+            <Turn Axis = "0 + Random(3)" Layer = "2*Random(2)" Angle = "Pi/2" />
+            <Turn Axis = "3 + Random(6)" Layer = "2*Random(2)" Angle = "Pi" />
+        </Macro>
+
+        <Macro Name = "RandomTurnJumble" >
+            <Turn Axis = "Random(9)" Layer = "2*Random(2)" Angle = "2*Pi*Random" />
+        </Macro>
+
+        <Macro Name = "Scramble" >
+            <ExecMacro MacroName = "RandomTurnNonJumble" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurnJumble" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

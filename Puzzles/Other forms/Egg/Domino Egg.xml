@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Domino Egg</Name>
+        <Menu>Other forms\Egg\Domino Egg</Menu>
+        <Inventor>Javier Alla La</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-05-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9795</Link>
+    </Interface>
+
+    <Script>
+        clWhite := 'FFFFFF';
+        clBlack := '303030';
+
+        K := 0.7;
+        D := K * 0.22;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Egg\_Macro_For_Egg.xml" Color = "clWhite" />
+        <Cut Axis = "2" From = "1" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Egg\_Macro_For_Egg.xml" Color = "clBlack" />
+        <Cut Axis = "2" To = "1" />
+        <ShowAll/>
+
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "D" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "D" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "D" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "D" /></Split>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

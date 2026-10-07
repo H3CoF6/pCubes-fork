@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx Barrel Bicono</Name>
+        <Menu>Other forms\Bicone\Megaminx Barrel Bicono</Menu>
+        <Inventor>Silvestre Cruz Quiroz</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-11-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9521</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00B800'; // Green
+        Colors[1] := 'FF5000'; // Orange
+        Colors[2] := 'C6F000'; // Yellow
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D :=  R * 0.6;
+        H1 := R * 0.25;
+        H2 := R * 1.0;
+
+        N := 54;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = " Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = " Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = " Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = " Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = " Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = " Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "1;0;0" Angle = "-Arctan(RCos/RSin)" />
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+
+            <Face Color = "Colors[0]" VertexIndexes = " 0; i2 + 1; i1 + 1" InvisibleEdges = "5" />
+            <Face Color = "Colors[1]" VertexIndexes = " i1 + 1; i2 + 1; i2 + 1 + N; i1 + 1 + N" InvisibleEdges = "10" />
+            <Face Color = "Colors[2]" VertexIndexes = " 2 * N + 1; i1 + N + 1; i2 + N + 1" InvisibleEdges = "5" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " 0; 0;-H2" /> 0
+            <Vertices Vectors = " x; y;-H1" /> 1..N
+            <Vertices Vectors = " x; y; H1" /> N+1..2*N
+            <Vertices Vectors = " 0; 0; H2" /> 2*N + 1
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Gem I</Name>
+        <Menu>Other forms\Skewb variants\Skewb Gem I</Menu>
+        <Inventor>daddrivesmecrazy</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4104</Link>
+    </Interface>
+
+    <Script>
+        D := sqrt(2) / 4 + 0.045;
+
+        A := 0.5;
+        B := 0.05;
+        C := 0.45;
+
+        clBlue1   := '0000C8';
+        clBlue2   := '0100C8';
+        clGreen1  := '009601';
+        clGreen2  := '009600';
+        clRed     := 'C80000';
+        clOrange1 := 'FF810A';
+        clOrange2 := 'FF800A';
+        clYellow  := 'FFFF00';
+        clWhite1  := 'FFFFFE';
+        clWhite2  := 'FFFFFF';
+
+        W := 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Split Axis = "0" From = "1" />
+        <Cut Color = "clRed   " > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlue1 " > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+        <Turn Axis = "0" Angle = " Pi / 3" Layer = "0" />
+        <Cut Color = "clGreen1 " > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite1 " > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clOrange1" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "-Pi / 3" Layer = "0" />
+
+        <HideContaining Vector = "10; 0; 0" />
+
+        <Cut Color = "clOrange2" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clGreen2 " > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite2 " > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+
+        <Cut Color = "clBlue2 " > <Plane NormVector = "-1;-1;-1" NormDistance = "-W" /> </Cut>
+
+        <ShowAll/>
+
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+    </Figure>
+</xml>

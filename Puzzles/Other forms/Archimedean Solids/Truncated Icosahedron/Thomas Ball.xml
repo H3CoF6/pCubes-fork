@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Thomas Ball</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Icosahedron\Thomas Ball</Menu>
+        <Inventor>Zdenek Blazek</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-10-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=25</Link>
+    </Interface>
+
+    <Script>
+        VColors[ 0] := '51C4FA';
+        VColors[ 1] := '075AFF';
+        VColors[ 2] := 'FF8009';
+        VColors[ 3] := '4D1350';
+        VColors[ 4] := 'FACC06';
+        VColors[ 5] := '01FF00';
+        VColors[ 6] := '009484';
+        VColors[ 7] := '7F8040';
+        VColors[ 8] := 'FF0001';
+        VColors[ 9] := 'C1C5C8';
+        VColors[10] := 'FFFF01';
+        VColors[11] := '018000';
+        VColors[12] := 'FFFFFF';
+
+        CutColor := '222222';
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        RCut := (2 * R + RSin) / 3;
+        RCut2 := (R + RSin) / 2;
+
+        D := RSin;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <Macro Name = "AddColorBody" >
+            <Script>
+                Color := VColors[v];
+                for i := 0 to 19 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Figures\Icosahedron.xml" />
+        </Macro>
+
+        <Macro Name = "AddColor" >
+            <ExecMacro MacroName = "AddColorBody" />
+            <Cut Color = "CutColor"> <Plane NormVector = "Vx[v]; Vy[v]; Vz[v]" NormDistance = "-RCut" /> </Cut>
+            <Cut> <Plane NormVector = "-Vx[v]; -Vy[v]; -Vz[v]" NormDistance = "RCut2" /> </Cut>
+            <HideAll/>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddColor" v = "0" Repeat = "12" />
+
+        <ExecMacro MacroName = "AddColorBody" />
+        <Macro Name = "CutVertex2" >
+            <Cut> <Plane NormVector = "Vx[v]; Vy[v]; Vz[v]" NormDistance = "-RCut2" /> </Cut>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutVertex2"  v = "0" Repeat = "12" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

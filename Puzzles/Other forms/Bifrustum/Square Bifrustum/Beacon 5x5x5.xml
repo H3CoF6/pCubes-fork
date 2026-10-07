@@ -1,0 +1,97 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Beacon 5x5x5</Name>
+        <Menu>Other forms\Bifrustum\Square Bifrustum\Beacon 5x5x5</Menu>
+        <Inventor>Isaiah Tucker (TwistyTurtle)</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-12</Added>
+    </Interface>
+
+    <Script>
+        clBlack  := '202020';
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clCoral  := 'FF7F50';
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clGolden := 'DDBB20';
+        clLime   := '00FF00';
+        clGreen  := '008000';
+
+        W  := 0.55;
+        W1 := W * 0.7;
+        H  := W * sqrt(3) / 2;
+
+        D1 := W1 / 5;
+        D2 := D1 * 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi; Pi/2; Pi" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " W1; W1; H" />
+                <Add Vector = " W1;-W1; H" />
+                <Add Vector = "-W1;-W1; H" />
+                <Add Vector = "-W1; W1; H" />
+
+                <Add Vector = "  W;  W; 0" />
+                <Add Vector = "  W; -W; 0" />
+                <Add Vector = " -W; -W; 0" />
+                <Add Vector = " -W;  W; 0" />
+
+                <Add Vector = " W1; W1;-H" />
+                <Add Vector = " W1;-W1;-H" />
+                <Add Vector = "-W1;-W1;-H" />
+                <Add Vector = "-W1; W1;-H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlack " VertexIndexes = " 0; 3; 2; 1" />
+
+                <Face Color = "clRed   " VertexIndexes = " 0; 1; 5; 4" />
+                <Face Color = "clGreen " VertexIndexes = " 1; 2; 6; 5" />
+                <Face Color = "clGolden" VertexIndexes = " 2; 3; 7; 6" />
+                <Face Color = "clCyan  " VertexIndexes = " 3; 0; 4; 7" />
+
+                <Face Color = "clOrange" VertexIndexes = " 4; 5; 9; 8" />
+                <Face Color = "clBlue  " VertexIndexes = " 5; 6;10; 9" />
+                <Face Color = "clCoral " VertexIndexes = " 6; 7;11;10" />
+                <Face Color = "clLime  " VertexIndexes = " 7; 4; 8;11" />
+
+                <Face Color = "clYellow" VertexIndexes = " 8; 9;10;11" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+        <RemoveContaining Vector = " D2;0;0" />
+        <RemoveContaining Vector = "-D2;0;0" />
+        <RemoveContaining Vector = "0; D2;0" />
+        <RemoveContaining Vector = "0;-D2;0" />
+        <RemoveContaining Vector = "0;0; D2" />
+        <RemoveContaining Vector = "0;0;-D2" />
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

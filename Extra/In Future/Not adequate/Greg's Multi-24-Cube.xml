@@ -1,0 +1,78 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+// Greg's physical Multi-24-Cube includes Little Chop jumbling, which can cause some moves to become
+// unavailable due to internal bandaging, despite appearing possible from the surface. This pCubes
+// version scrambles and solves with 180 degree turns only, so there is no bandaging.
+// This scrambled puzzle solves the same as a scrambled Multi-24-Cube that has been unjumbled.
+
+    <Interface>
+        <Name>Greg's Multi-24-Cube (non-jumbling version)</Name>
+        <Menu>Other cubes\Edge Turning\Greg's Multi-24-Cube (non-jumbling version)</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Julian Wilkinson</Programmer>
+        <Added>2020-07-05</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=35823</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3 / sqrt(2);
+        C := D * 0.9; // Far enough from the origin to reach the vertices
+    </Script>
+
+// Define 6 axes with 180 degree edge turns
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0;-1" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 0;-1;-1" />
+        <Axis NormVector = " 0; 1;-1" />
+        <Axis NormVector = "-1; 0;-1" />
+        <Axis NormVector = "-1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        // The following macros create the cuts of the puzzle by turning every pair of edges
+        // back and forth enough times to return the puzzle to the solved state
+
+        <Macro Name = "TurnEdges" >
+            <Turn Axis = "EdgeA" Angle = "Pi" Layer = "1"/>
+            <SplitByAxes/>
+            <Turn Axis = "EdgeB" Angle = "Pi" Layer = "1"/>
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "0" EdgeB = "1" Repeat = "12" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "0" EdgeB = "2" Repeat = "12" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "0" EdgeB = "3" Repeat = "12" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "0" EdgeB = "4" Repeat = "6" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "0" EdgeB = "5" Repeat = "6" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "1" EdgeB = "2" Repeat = "6" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "1" EdgeB = "3" Repeat = "12" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "1" EdgeB = "4" Repeat = "6" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "1" EdgeB = "5" Repeat = "6" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "2" EdgeB = "3" Repeat = "6" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "2" EdgeB = "4" Repeat = "12" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "2" EdgeB = "5" Repeat = "6" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "3" EdgeB = "4" Repeat = "12" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "3" EdgeB = "5" Repeat = "12" />
+        <ExecMacro MacroName = "TurnEdges" EdgeA = "4" EdgeB = "5" Repeat = "12" />
+
+        // Remove 6 corners (the other two corners are fused to the white-blue edge)
+
+        <RemoveContaining Vector = "-C; -C; -C" />
+        <RemoveContaining Vector = "-C;  C; -C" />
+        <RemoveContaining Vector = "-C;  C;  C" />
+        <RemoveContaining Vector = " C; -C; -C" />
+        <RemoveContaining Vector = " C;  C; -C" />
+        <RemoveContaining Vector = " C;  C;  C" />
+
+        <ShowAll/>
+
+    </Figure>
+
+</xml>

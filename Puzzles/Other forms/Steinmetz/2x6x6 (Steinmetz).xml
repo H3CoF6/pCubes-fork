@@ -1,0 +1,105 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x6x6 (Steinmetz)</Name>
+        <Menu>Other forms\Steinmetz\2x6x6 (Steinmetz)</Menu>
+        <Inventor>Matthew Street</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7996</Link>
+    </Interface>
+ 
+    <Script>
+        Color[0] := '800080'; // Violett
+        Color[1] := 'FFFFFF'; // White
+        Color[2] := 'F67F05'; // Orange
+        Color[3] := '005600'; // Green
+        Color[4] := 'FFFF00'; // Yellow
+        Color[5] := '000078'; // Blue
+        Color[6] := 'F80000'; // Red
+        Color[7] := '999999'; // Gray
+        for i := 0 to 5 do
+            Colors[i] := -1;
+
+        W := 0.5;
+
+        RC := W * 0.55;
+        DC := W - RC;
+        D := DC / 2;
+        HC := 0;
+        H := HC + RC;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D*2;-D; 0; D; D*2" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "RC" Color = "Color[c]" Base = "DC;-W; HC" Top = "DC; W; HC" />
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "DC" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "HC" /> </Cut>
+            <Cut InvisibleEdges = "-1" Color = "-2" > <Plane NormVector = " 1; 1; 0" NormDistance = "0" /> </Cut>
+            <Cut InvisibleEdges = "-1" Color = "-2" > <Plane NormVector = " 1;-1; 0" NormDistance = "0" /> </Cut>
+            <HideAll/>
+
+            <Script> Colors[1] := Color[c]; Colors[5] := Color[c];</Script>
+            <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "H" />
+            <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-DC" /> </Cut>
+            <Cut InvisibleEdges = "-1" Color = "-2" > <Plane NormVector = " 1; 1; 0" NormDistance = "0" /> </Cut>
+            <Cut InvisibleEdges = "-1" Color = "-2" > <Plane NormVector = " 1;-1; 0" NormDistance = "0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+            <Script>Inc(c);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" Repeat = "4" c = "0" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSector" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ShowAll/>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "1" From = "5" />
+
+        <Hide  Axis = "0" From = "5" />
+        <Hide  Axis = "0" To   = "0" />
+        <Hide  Axis = "1" From = "5" />
+        <Hide  Axis = "1" To   = "0" />
+        <Split Axis = "2" From = "1" />
+        <Hide  Axis = "2" To   = "0" />
+        <Cut   Axis = "2" From = "5" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(2)" Layer = "Random(N)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(N)" Angle = "Pi/2 * Random(4)" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script> N := 6; </Script>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

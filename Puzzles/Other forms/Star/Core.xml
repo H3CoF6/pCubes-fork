@@ -1,0 +1,113 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Core</Name>
+        <Menu>Other forms\Star\Core</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-07-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8231</Link>
+    </Interface>
+
+    <Script>
+        R := 0.5;
+        H := R * 1.2;
+
+        D := R / sqrt(6);
+
+        for i := 0 to 39 do begin
+            x[i] := R * cos(2 * Pi / 40 * i);
+            y[i] := R * sin(2 * Pi / 40 * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i;
+                i2 := (i + 1) mod 40;
+                Color := Colors[(i+35) mod 40 div 10];
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + 40; i2 + 40; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "AddCylinder" >
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Colors[5]" VertexIndexes = "FromTo(0, 39)" />
+                    <Face Color = "Colors[4]" VertexIndexes = "FromTo(79, 40)" />
+
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "40" />
+                </Faces>
+            </Part>
+            <Split><Plane NormVector = "1; 0; 1" /></Split>
+            <Split><Plane NormVector = "1; 0;-1" /></Split>
+            <Split><Plane NormVector = "0; 1; 1" /></Split>
+            <Split><Plane NormVector = "0; 1;-1" /></Split>
+            <HideContaining Vector = "0; 0; H" />
+            <HideContaining Vector = "0; 0;-H" />
+            <RemoveAllVisible/>
+            <Turn NormVector = "1; 1; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+
+        <Script>
+            Colors[0] := '009600'; // Green
+            Colors[1] := 'C80000'; // Red
+            Colors[2] := '0000C8'; // Blue
+            Colors[3] := 'FF800A'; // Orange
+            Colors[4] := 'FFFF00'; // Yellow
+            Colors[5] := 'FFFFFF'; // White
+        </Script>
+        <ExecMacro MacroName = "AddCylinder" />
+
+        <Script>
+            Colors[0] := 'FF800A'; // Orange
+            Colors[1] := 'FFFF00'; // Yellow
+            Colors[2] := 'C80000'; // Red
+            Colors[3] := 'FFFFFF'; // White
+            Colors[4] := '0000C8'; // Blue
+            Colors[5] := '009600'; // Green
+        </Script>
+
+        <ExecMacro MacroName = "AddCylinder" />
+
+        <Script>
+            Colors[0] := 'FFFFFF'; // White
+            Colors[1] := '0000C8'; // Blue
+            Colors[2] := 'FFFF00'; // Yellow
+            Colors[3] := '009600'; // Green
+            Colors[4] := 'C80000'; // Red
+            Colors[5] := 'FF800A'; // Orange
+        </Script>
+        <ExecMacro MacroName = "AddCylinder" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <S1aveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

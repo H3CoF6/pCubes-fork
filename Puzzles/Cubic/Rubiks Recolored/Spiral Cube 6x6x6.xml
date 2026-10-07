@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Spiral Cube 6x6x6</Name>
+        <Menu>Cubic\Rubiks Recolored\Spiral Cube 6x6x6</Menu>
+        <Inventor>Denny Härtel</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11211</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red
+        Colors[1] := '222222'; // Black
+        Colors[2] := 'FF50A0'; // 
+        Colors[3] := '008000'; // Green
+        Colors[4] := '0000E8'; // Blue
+        Colors[5] := '7F0050'; // 
+
+        W  := 0.5;
+        N := 6;
+        WD := 2 * W / N;
+        D[0] := -W + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+
+        SColors[0] := '012345';
+        SColors[1] := '012344';
+        SColors[2] := '012333';
+        SColors[3] := '012222';
+        SColors[4] := '011111';
+        SColors[5] := '000000';
+
+        function GetInt(): integer;
+        begin
+          Result := StrToInt(copy(SColors[Y], X+1, 1));
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" TurnAxesWithLayer = "0" > <!-- TurnAxes - for Solving procedure -->
+        <Axis NormVector = "-1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "0" From = "N - 1" />
+        <Split Axis = "1" From = "N - 1" />
+        <Split Axis = "2" From = "N - 1" />
+        <RemoveContaining Vector = "0;0;0" />
+        <SplitByAxes/>
+
+        <Macro Name = "CutCubie" >
+            <HideContaining Vector = "(x - (N - 1) / 2) * WD; -W; -(y - (N - 1) / 2) * WD" /> // cut face surface
+            <InvertVisibility />
+            <Cut Color = "Colors[GetInt]"><Plane NormVector = "0;1;0" NormDistance = "-W" /></Cut>
+            <ShowAll/>
+            <Script>Inc(x);</Script>
+        </Macro>
+
+        <Macro Name = "CutRow" >
+            <ExecMacro MacroName = "CutCubie" x = "0" Repeat = "N" />
+            <Script>Inc(y);</Script>
+        </Macro>
+
+        <Macro Name = "CutFace" >
+            <ExecMacro MacroName = "CutRow" y = "0" Repeat = "N" />
+            <Turn NormVector = " 1;-1; 1" Angle = "2*Pi/3" />
+        </Macro>
+
+        <ExecMacro MacroName = "CutFace" Side = "0" Repeat = "3" />
+        <Cut Color = "Colors[0]"><Plane NormVector = " 1; 0; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[0]"><Plane NormVector = " 0;-1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Colors[0]"><Plane NormVector = " 0; 0; 1" NormDistance = "-W" /></Cut>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

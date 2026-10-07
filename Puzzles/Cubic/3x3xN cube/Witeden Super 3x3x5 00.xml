@@ -1,0 +1,100 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Witeden Super 3x3x5 00</Name>
+        <Menu>Cubic\3x3xN Cube\Witeden Super 3x3x5 00</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2748</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        R := W * 0.85;
+
+        WX := W;
+        WY := W;
+        WZ := W * 7 / 9;
+
+        WC := WZ * 1.004;
+
+        D := W / 9;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-7*D;-5*D;-3*D; 3*D; 5*D; 7*D" TurnAxesWithLayer = "3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "5" />
+        <RemoveGrayParts/>
+        <HideContaining Vector = " W; 0; 0" />
+        <HideContaining Vector = "-W; 0; 0" />
+        <HideContaining Vector = " 0; W; 0" />
+        <HideContaining Vector = " 0;-W; 0" />
+        <InvertVisibility/>
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "6" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "6" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <Split Axis = "2" From = "5" />
+
+        <Hide Axis = "2" From = "0" To = "2" />
+        <Hide Axis = "2" From = "4" To = "6" />
+
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "6" />
+        <ShowAll/>
+
+        <Circle Radius = "R" Color = "Colors[5]" Center = " 0; 0; WC" />
+        <Circle Radius = "R" Color = "Colors[4]" Center = " 0; 0;-WC" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+
+        <Connect Axis = "2" Layers = "4;6" />
+        <Connect Axis = "2" Layers = "0;2" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "0" Layer = "4" Angle = "Pi/2" />
+            <Turn Axis = "2" Layer = "3" Angle = "Pi" />
+            <Turn Axis = "0" Layer = "2" Angle = "Pi/2" />
+            <Turn Axis = "2" Layer = "Random(7)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Sc2" >
+            <Turn Axis = "Random(2)" Layer = "Random(7)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(7)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(7)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc1" Repeat = "200" />
+            <ExecMacro MacroName = "Sc2" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "20" />
+        </Macro>
+    </Macros>
+</xml>

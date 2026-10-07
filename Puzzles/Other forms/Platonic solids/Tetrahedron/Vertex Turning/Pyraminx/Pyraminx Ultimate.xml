@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyraminx Ultimate</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Pyraminx\Pyraminx Ultimate</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8617</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Tetrahedron_Standard_Colors.inc';
+
+        W := 0.5;
+        include 'Figures\Scripts\Tetrahedron_Coordinates.inc';
+
+        N := 3;
+        D := W * 4 * sqrt(3) / 3 / N;
+        D0 := -W * sqrt(3) / 3;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2*D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "Vx;Vy;Vz" />
+            <Vertices Vectors = "Cx;Cy;Cz" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "3;6;1" InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = "1;7;2" InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = "2;5;3" InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = "0;6;3" InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = "3;4;2" InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = "2;7;0" InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = "3;5;0" InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = "0;7;1" InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = "1;4;3" InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = "1;6;0" InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = "0;5;2" InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = "2;4;1" InvisibleEdges = "3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

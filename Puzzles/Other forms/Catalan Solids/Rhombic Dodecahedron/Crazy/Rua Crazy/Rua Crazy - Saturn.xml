@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rua Crazy - Saturn</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Crazy\Rua Crazy\Rua Crazy - Saturn</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-09-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6991</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        D1 := R * sqrt(2) / 2;
+        D2 := R * sqrt(2) / 4;
+
+        RC := R * 0.3;
+        KC := 1.005;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D1; -D2; D2; D1" FixedLayers = "0;2;4" >
+        <Axis NormVector = "1;  1;  0" />
+        <Axis NormVector = "1; -1;  0" />
+    </Axes>
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-2*D1; -D2; D2; 2*D1" FixedLayers = "0;2;4" >
+        <Axis NormVector = "1;  0;  1" />
+        <Axis NormVector = "1;  0; -1" />
+        <Axis NormVector = "0;  1;  1" />
+        <Axis NormVector = "0;  1; -1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i]*KC" Y = "Cy[i]*KC" Z = "Cz[i]*KC" Color = "Colors[i]" />
+            </Cylinder>
+            <SplitByAxes/>
+            <RemoveContaining Vector = "Cx[i]*KC; Cy[i]*KC; Cz[i]*KC" />
+            <RemoveContaining Vector = "(Cx[i]*KC + (Vx[v1] + Vx[v2]) / 2) / 2; (Cy[i]*KC + (Vy[v1] + Vy[v2]) / 2) / 2; (Cz[i]*KC + (Vz[v1] + Vz[v2]) / 2) / 2" />
+            <RemoveContaining Vector = "(Cx[i]*KC + (Vx[v2] + Vx[v3]) / 2) / 2; (Cy[i]*KC + (Vy[v2] + Vy[v3]) / 2) / 2; (Cz[i]*KC + (Vz[v2] + Vz[v3]) / 2) / 2" />
+            <RemoveContaining Vector = "(Cx[i]*KC + (Vx[v3] + Vx[v4]) / 2) / 2; (Cy[i]*KC + (Vy[v3] + Vy[v4]) / 2) / 2; (Cz[i]*KC + (Vz[v3] + Vz[v4]) / 2) / 2" />
+            <RemoveContaining Vector = "(Cx[i]*KC + (Vx[v4] + Vx[v1]) / 2) / 2; (Cy[i]*KC + (Vy[v4] + Vy[v1]) / 2) / 2; (Cz[i]*KC + (Vz[v4] + Vz[v1]) / 2) / 2" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCircle" i = " 0" v1 = " 0" v2 = " 2" v3 = " 5" v4 = " 1" />
+        <ExecMacro MacroName = "AddCircle" i = " 1" v1 = " 0" v2 = " 3" v3 = " 6" v4 = " 2" />
+        <ExecMacro MacroName = "AddCircle" i = " 2" v1 = " 0" v2 = " 4" v3 = " 7" v4 = " 3" />
+        <ExecMacro MacroName = "AddCircle" i = " 3" v1 = " 0" v2 = " 1" v3 = " 8" v4 = " 4" />
+        <ExecMacro MacroName = "AddCircle" i = " 4" v1 = " 1" v2 = " 5" v3 = " 9" v4 = " 8" />
+        <ExecMacro MacroName = "AddCircle" i = " 5" v1 = " 2" v2 = " 6" v3 = "10" v4 = " 5" />
+        <ExecMacro MacroName = "AddCircle" i = " 6" v1 = " 3" v2 = " 7" v3 = "11" v4 = " 6" />
+        <ExecMacro MacroName = "AddCircle" i = " 7" v1 = " 4" v2 = " 8" v3 = "12" v4 = " 7" />
+        <ExecMacro MacroName = "AddCircle" i = " 8" v1 = "13" v2 = " 9" v3 = " 5" v4 = "10" />
+        <ExecMacro MacroName = "AddCircle" i = " 9" v1 = "13" v2 = "10" v3 = " 6" v4 = "11" />
+        <ExecMacro MacroName = "AddCircle" i = "10" v1 = "13" v2 = "11" v3 = " 7" v4 = "12" />
+        <ExecMacro MacroName = "AddCircle" i = "11" v1 = "13" v2 = "12" v3 = " 8" v4 = " 9" />
+    </Figure>
+</xml>

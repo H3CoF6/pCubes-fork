@@ -1,0 +1,159 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Mixup Cube - Jupiter</Name>
+        <Menu>Other cubes\OctoCube\Crazy Mixup Cube - Jupiter</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2019-07-31</Added>
+        <Link>http://bbs.mf8-china.com/forum.php?mod=viewthread&amp;tid=115619</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        Delta := 0.001;
+        R := 1 / sqrt(8);
+        D := 0.5 + Delta;
+        cut0 := 1; 
+        cutX := 1/2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/4" FixedLayers = "0;2;4">
+        <Axis NormVector = "1; 0; 0" PlaneDistances = "-cut0 ; -1/4; 1/4; cut0" /> 0 red orange
+        <Axis NormVector = "0; 1; 0" PlaneDistances = "-cut0 ; -1/4; 1/4; cut0" /> 1 blue green
+        <Axis NormVector = "0; 0; 1" PlaneDistances = "-cut0 ; -1/4; 1/4; cutX" /> 2 yellow white
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Cylinder Radius = "R" Color = "Colors[0]" >
+            <Base X = "-1/2" Y = " 0" Z = " 0" />
+            <Top  X = "-D  " Y = " 0" Z = " 0" Color = "Colors[0]" />
+        </Cylinder>
+        <Cylinder Radius = "R" Color = "Colors[1]" >
+            <Base X = " 1/2" Y = " 0" Z = " 0" />
+            <Top  X = " D  " Y = " 0" Z = " 0" Color = "Colors[1]" />
+        </Cylinder>
+        <Cylinder Radius = "R" Color = "Colors[2]" >
+            <Base X = " 0" Y = "-1/2" Z = " 0" />
+            <Top  X = " 0" Y = "-D  " Z = " 0" Color = "Colors[2]" />
+        </Cylinder>
+        <Cylinder Radius = "R" Color = "Colors[3]" >
+            <Base X = " 0" Y = " 1/2" Z = " 0" />
+            <Top  X = " 0" Y = " D  " Z = " 0" Color = "Colors[3]" />
+        </Cylinder>
+        <Cylinder Radius = "R" Color = "Colors[4]" >
+            <Base X = " 0" Y = " 0" Z = "-1/2" />
+            <Top  X = " 0" Y = " 0" Z = "-D  " Color = "Colors[4]" />
+        </Cylinder>
+        <Cylinder Radius = "R" Color = "Colors[5]" >
+            <Base X = " 0" Y = " 0" Z = " 1/2" />
+            <Top  X = " 0" Y = " 0" Z = " D  " Color = "Colors[5]" />
+        </Cylinder>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "1" Layer = "1" Angle = "-Pi/2" />
+        <Turn Axis = "1" Layer = "3" Angle = "-Pi/2" />
+        <Turn Axis = "2" Layer = "3" Angle = " Pi/4" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi  " />
+        <Turn Axis = "0" Layer = "3" Angle = " Pi  " />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "1" Layer = "3" Angle = " Pi/2" />
+        <Turn Axis = "2" Layer = "3" Angle = " Pi/4" />
+        <SplitByAxes/>
+        <Undo Repeat = "5" />
+
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "1" Layer = "3" Angle = "-Pi/2" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "0" Layer = "3" Angle = "-Pi/2" />
+        <Turn Axis = "2" Layer = "3" Angle = " Pi/4" />
+        <SplitByAxes/>
+        <Undo Repeat = "5" />
+        
+        <Turn Axis = "1" Layer = "1" Angle = "-Pi/2" />
+        <Turn Axis = "1" Layer = "3" Angle = " Pi/2" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "0" Layer = "3" Angle = "-Pi/2" />
+        <Turn Axis = "2" Layer = "3" Angle = " Pi/4" />
+        <SplitByAxes/>
+        <Undo Repeat = "5" />
+        
+        <Hide  Axis = "2" From = "0" To = "3" />
+        <Turn  Axis = "0" Layer = "1" Angle = " Pi/4" />
+        <Turn  Axis = "0" Layer = "3" Angle = " Pi/4" />
+        <Split Axis = "1" From = "2" />
+        <Undo Repeat = "2" />
+
+        <Turn  Axis = "0" Layer = "1" Angle = "-Pi/4" />
+        <Turn  Axis = "0" Layer = "3" Angle = "-Pi/4" />
+        <Split Axis = "1" From = "3" />
+        <Undo Repeat = "2" />
+        <ShowAll/>
+
+        /////////////////////
+
+        <Macro Name = "SplitSegment">
+            <Hide  Axis = "2" From = "0" To = "3" />
+            <Turn  Axis = "0" Layer = "1" Angle = " Pi/4" />
+            <Turn  Axis = "0" Layer = "3" Angle = " Pi/4" />
+            <Split Axis = "1" From = "2" />
+            <Undo Repeat = "2" />
+            <Turn  Axis = "0" Layer = "1" Angle = "-Pi/4" />
+            <Turn  Axis = "0" Layer = "3" Angle = "-Pi/4" />
+            <Split Axis = "1" From = "3" />
+            <Undo Repeat = "2" />
+            <ShowAll/>
+        </Macro>
+
+        <Turn Axis = "0" Layer = "1" Angle = " Pi  " />
+        <Turn Axis = "0" Layer = "3" Angle = " Pi  " />
+        <ExecMacro MacroName = "SplitSegment" />
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "0" Layer = "1" Angle = "-Pi/2" />
+        <Turn Axis = "0" Layer = "3" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "SplitSegment" />
+        <Undo Repeat = "3" />
+
+        <Turn Axis = "1" Layer = "3" Angle = " Pi/2" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "0" Layer = "3" Angle = " Pi/2" />
+        <ExecMacro MacroName = "SplitSegment" />
+        <Undo Repeat = "3" />
+
+        <Turn Axis = "1" Layer = "3" Angle = " Pi/2" />
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi  " />
+        <Turn Axis = "0" Layer = "3" Angle = " Pi  " />
+        <ExecMacro MacroName = "SplitSegment" />
+        <Undo Repeat = "5" />
+
+        <Turn Axis = "1" Layer = "3" Angle = "-Pi/2" />
+        <Turn Axis = "1" Layer = "1" Angle = "-Pi/2" />
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi  " />
+        <Turn Axis = "0" Layer = "3" Angle = " Pi  " />
+        <ExecMacro MacroName = "SplitSegment" />
+        <Undo Repeat = "5" />
+
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Cross" File = "Puzzles\Cubic\Crazy\Crazy 3x3x3\CrossFace.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Cross = 138,1,0
+    </SetTextures>
+</xml>

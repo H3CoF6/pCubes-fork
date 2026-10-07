@@ -1,0 +1,111 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Constrained Cube Mix IV</Name>
+        <Menu>Cubic\Constrained\Constrained Cube Mix IV</Menu>
+        <Inventor>Tom van der Zanden</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-11-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1691</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+
+        // small parts
+        sProfile := '97,36, 97,56, 84,59, 74,65, 65,74, 59,84, 56,95, 55,105, 56,115, 59,126, 65,136, 74,145, 84,151, 94,154, 105,155, 115,154, 126,151, 136,145, 145,136, 151,126, 154,115, 155,105, 154,95, 151,84, 145,74, 136,65, 126,59, 113,56, 113,36, 105,35';
+        ProfileSize := 210;
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', sProfile);
+          if p = 0 then begin
+            substr := sProfile;
+            sProfile := '';
+          end else begin
+            substr := copy(sProfile, 1, p-1);
+            Delete(sProfile, 1, p);
+          end;
+          Result := StrToInt(Trim(substr));
+        end;
+
+        Delta := 1.001;
+        pCount := 0;
+
+        SPx := Delta * W;
+        while Length(sProfile) > 0 do begin
+          SPy[pCount] := -(GetInt / ProfileSize - 0.5) * D * 2;
+          SPz[pCount] :=  (GetInt / ProfileSize - 0.5) * D * 2;
+          Inc(pCount);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+ 
+    <Axes TurningAngles = "0; Pi/2; 0; Pi/2; 0" PlaneDistances = "-W;-D; D; W" >
+        <Axis NormVector = "1; 0; 0" MinAngles = "0;     0; 0; -Pi/2; 0" MaxAngles = "0; Pi/2; 0; 0; 0" />
+        <Axis NormVector = "0; 1; 0" MinAngles = "0; -Pi/2; 0; -Pi  ; 0" MaxAngles = "0; Pi/2; 0; 0; 0" />
+        <Axis NormVector = "0; 0; 1" MinAngles = "0; -9999; 0;     0; 0" MaxAngles = "0; 9999; 0; 0; 0" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "AddSmallParts" >
+           <Part>
+               <Vertices Vectors = "SPx; SPy; SPz" />
+               <Faces>
+                   <Face Color = "Color" VertexIndexes = "FromTo(0, pCount - 1)" />
+               </Faces>
+           </Part>
+        </Macro>
+
+        <Turn NormVector = "0;0;1" Angle = " Pi" />
+        <Turn NormVector = "1;0;0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "AddSmallParts" Color = "clRed"    />
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <Turn NormVector = "0;0;1" Angle = " Pi" />
+
+        <Turn NormVector = "1;0;0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "AddSmallParts" Color = "clOrange" />
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+
+        <Turn NormVector = "0;0;1" Angle = " Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "AddSmallParts" Color = "clBlue"   />
+        <Turn NormVector = "1;0;0" Angle = " Pi/2" />
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "AddSmallParts" Color = "clGreen"  />
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <Turn NormVector = "0;0;1" Angle = " Pi/2" />
+
+        <Turn NormVector = "0;1;0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "AddSmallParts" Color = "clWhite"  />
+        <Turn NormVector = "0;1;0" Angle = "-Pi/2" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Quarter 0"   File = "Quarter 0.vec" />
+        <Texture Name = "Quarter 90"  File = "Quarter 90.vec" />
+        <Texture Name = "Quarter 180" File = "Quarter 180.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Quarter 0 = 13,0,1
+        Quarter 90 = 4,0,0, 21,0,0
+        Quarter 180 = 10,0,2, 15,0,1
+    </SetTextures>
+</xml>

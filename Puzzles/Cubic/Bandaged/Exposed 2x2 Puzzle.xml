@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Exposed 2x2 Puzzle</Name>
+        <Menu>Cubic\Bandaged\Exposed 2x2 Puzzle</Menu>
+        <Inventor>Grant Anderson</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-20</Added>
+        <Link>https://www.etsy.com/listing/842339624/exposed-2x2-puzzle</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // clRed
+        Colors[1] := 'FF6600'; // clOrange
+        Colors[2] := '0000DD'; // clBlue
+        Colors[3] := '00AA00'; // clGreen
+        Colors[4] := 'FFEE00'; // clYellow
+        Colors[5] := 'FFFFFF'; // clWhite
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := -W / 4;
+        K := W * 0.85;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+        <Axis NormVector = " 0; 0;-1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Split">
+            <Split><Plane NormDistance = "-D" NormVector = "Cx[id]; Cy[id]; Cz[id]" /></Split>
+            <Script>Inc(id);</Script>
+        </Macro>
+
+        // Corners
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <ExecMacro MacroName = "Split" Repeat = "6" id = "0" />
+        <HideContaining Vector = "Vx; Vy; Vz" />
+        <RemoveAllVisible/>
+
+        // Centers
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <ExecMacro MacroName = "Split" Repeat = "6" id = "0" />
+        <HideContaining Vector = "Cx; Cy; Cz" />
+        <RemoveAllVisible/>
+
+        // Edges
+        <Script>
+            W := W / 2;
+            include 'Figures\Scripts\Cube_Coordinates.inc'; // for Ex,...
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <ExecMacro MacroName = "Split" Repeat = "6" id = "0" />
+        <HideContaining Vector = "Ex; Ey; Ez" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

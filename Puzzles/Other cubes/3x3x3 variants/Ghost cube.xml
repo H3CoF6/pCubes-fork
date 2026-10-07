@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Ghost cube 3x3x3</Name>
+        <Menu>Other cubes\3x3x3 variants\Ghost cube</Menu>
+        <Inventor>Adam G. Cowan</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-07-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1946</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'E0C07D';
+
+        W := 0.5;
+        D := W / 3;
+
+        RAxesX :=  37 * Pi / 180;
+        RAxesY :=  53 * Pi / 180;
+        RAxesZ := 140 * Pi / 180;
+
+        A1 := 61 * Pi / 180;
+        A2 := 34 * Pi / 180;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+    <Axes TurningAngles = "0;Pi/2;0" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "0; 2 * Pi" AvailableAngles = "-Pi/2; 0; Pi/2; Pi;-A1" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+    <Axes TurningAngles = "0; 2 * Pi" AvailableAngles = "-Pi/2; 0; Pi/2; Pi; A2" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 1; 0" Angle = "RAxesY" />
+        <Turn NormVector = " 1; 0; 0" Angle = "RAxesX" />
+        <Turn NormVector = " 0; 0; 1" Angle = "RAxesZ" />
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W * 2" Color = "-1" />
+
+        <SplitByAxes/>
+        <Turn Axis = "3" Layer = "1" Angle = "-A1" />
+        <Turn Axis = "4" Layer = "1" Angle =  "A2" />
+
+        <Cut Color = "MirrorColor" > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "MirrorColor" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "MirrorColor" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "MirrorColor" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "MirrorColor" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "MirrorColor" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Compraminx</Name>
+        <Menu>Other forms\Dipyramid\Triangular\Compraminx</Menu>
+        <Inventor>Coren Broughton</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6778</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'FFFF00';
+        clBlue   := '0000EE';
+        clOrange := 'FF6600';
+        clRed    := 'FF0000';
+        clGreen  := '00AA00';
+        clWhite  := 'FFFFFF';
+        clGray1  := 'CCCCCC';
+        clGray2  := 'CCCCCD';
+
+        R := 0.8;
+        H := R * 3/4;
+
+        for i := 0 to 2 do begin
+            x[i] := R * sin(2 * Pi / 3 * i);
+            y[i] := R * cos(2 * Pi / 3 * i);
+        end;
+
+        D1 := R / 4;
+        D2 := R / 2;
+        DZ := R * 3 / 8;
+        DC := H * (1 - D1 / R);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi; Pi" PlaneDistances = "D1; D2" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-DZ; 0; DZ" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; 0" />
+                <Add Vector = "x[1]; y[1]; 0" />
+                <Add Vector = "x[2]; y[2]; 0" />
+
+                <Add Vector = " 0; 0; H" />
+                <Add Vector = " 0; 0;-H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange" VertexIndexes = "3;1;0" />
+                <Face Color = "clYellow" VertexIndexes = "3;2;1" />
+                <Face Color = "clGreen " VertexIndexes = "3;0;2" />
+                <Face Color = "clWhite " VertexIndexes = "4;0;1" />
+                <Face Color = "clBlue  " VertexIndexes = "4;1;2" />
+                <Face Color = "clRed   " VertexIndexes = "4;2;0" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "clGray1" > <Plane NormVector = "0;0;-1" NormDistance = "-DC" /> </Cut>
+        <Cut Color = "clGray2" > <Plane NormVector = "0;0; 1" NormDistance = "-DC" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

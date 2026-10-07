@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Biconenix (10 colors)</Name>
+        <Menu>Other forms\Bicone\Biconenix (10 colors)</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3325</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00AA00'; // Green
+        Colors[1] := 'FF0000'; // Red
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := 'FFEE00'; // Yellow
+        Colors[4] := 'AA00CC'; // Violett
+
+        Colors[5] := '0077FF'; // LightBlue
+        Colors[6] := 'FFFFAA'; // Cream
+        Colors[7] := 'FF66DD'; // LightViolett
+        Colors[8] := '00DD00'; // LightGreen
+        Colors[9] := 'FF6000'; // Orange
+
+        H := 0.7;
+        R := H * 0.725;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := H / sqrt(5);
+
+        for i := 0 to 59 do begin
+            x[i] := R * cos(2 * Pi / 60 * (i+3));
+            y[i] := R * sin(2 * Pi / 60 * (i+3));
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi / 5" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <Macro Name = "AddFace1" >
+            <Face Color = "Colors[i div 12]" VertexIndexes = "0; i + 2; (i + 1) mod 60 + 2" InvisibleEdges = "5" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "AddFace2" >
+            <Face Color = "Colors[i div 12 + 5]" VertexIndexes = "1; (i + 1) mod 60 + 2; i + 2" InvisibleEdges = "5" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "0; 0; H" />
+            <Vertices Vectors = "0; 0;-H" />
+            <Vertices Vectors = "x; y; 0" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace1" i = "0" Repeat = "60" />
+                <ExecMacro MacroName = "AddFace2" i = "0" Repeat = "60" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

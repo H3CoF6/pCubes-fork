@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Swap Cube</Name>
+        <Menu>Cubic\Multi-core\Swap Cube</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-08-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2877</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.1;
+
+        Ay := -W * 4.1;
+
+        sAngle := 2 * Pi / 5;
+
+        for i := 0 to 4 do begin
+            Qx[i] := Ay * sin(sAngle * i);
+            Qy[i] := Ay * cos(sAngle * i);
+        end;
+
+        Permutation[0] := 1;
+        Permutation[1] := 2;
+        Permutation[2] := 4;
+        Permutation[3] := 0;
+        Permutation[4] := 3;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2; 0" PlaneDistances = "-W; 0; W" >
+        <Axis NormVector = " Qx[0];Qy[0];0" BaseVector = "Qx[0];Qy[0];0" />
+        <Axis NormVector = " Qx[1];Qy[1];0" BaseVector = "Qx[1];Qy[1];0" />
+        <Axis NormVector = " Qx[2];Qy[2];0" BaseVector = "Qx[2];Qy[2];0" />
+        <Axis NormVector = " Qx[3];Qy[3];0" BaseVector = "Qx[3];Qy[3];0" />
+        <Axis NormVector = " Qx[4];Qy[4];0" BaseVector = "Qx[4];Qy[4];0" />
+
+        <Axis NormVector = "-Qy[0];Qx[0];0" BaseVector = "Qx[0];Qy[0];0" />
+        <Axis NormVector = "-Qy[1];Qx[1];0" BaseVector = "Qx[1];Qy[1];0" />
+        <Axis NormVector = "-Qy[2];Qx[2];0" BaseVector = "Qx[2];Qy[2];0" />
+        <Axis NormVector = "-Qy[3];Qx[3];0" BaseVector = "Qx[3];Qy[3];0" />
+        <Axis NormVector = "-Qy[4];Qx[4];0" BaseVector = "Qx[4];Qy[4];0" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCube">
+            <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "W" DWY = "Ay" />
+            <Turn NormVector = "0; 0; 1" Angle = "sAngle" />
+            <Script>
+                for i := 0 to 4 do
+                    TempColors[i] := Colors[i];
+
+                for i := 0 to 4 do
+                    Colors[i] := TempColors[Permutation[i]];
+            </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddCube" Repeat = "5" />
+
+        <SplitByAxes/>
+    </Figure>
+
+    <Procedures CheckSolved = "AdjoiningFacesHaveSameColors" />
+</xml>

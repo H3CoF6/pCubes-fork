@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Two Disks</Name>
+        <Menu>Other forms\3x3x3 variants\Two Disks</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-11-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3663</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        clBlack := '202020';
+        R := W * 1.2;
+        D := W * 0.21;
+        dx := W * 0.15;
+        dy := W * 0.1;
+        dz := -W * 0.15;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <Cylinder Radius = "R" Color = "clOrange" >
+           <Base X = "dx" Y = " D" Z = "dz" Color = "clBlack " />
+           <Top  X = "dx" Y = "-D" Z = "dz" Color = "clYellow" />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clRed" >
+           <Base X = " D" Y = "dy" Z = "dz" Color = "clBlue  " />
+           <Top  X = "-D" Y = "dy" Z = "dz" Color = "clGreen " />
+        </Cylinder>
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "0; 0; D" />
+        <RemoveContaining Vector = "0; 0;-D" />
+
+        <HideAll/>
+        <Cylinder Radius = "R" Color = "clRed" >
+           <Base X = " D" Y = "dy" Z = "dz" />
+           <Top  X = "-D" Y = "dy" Z = "dz" />
+        </Cylinder>
+        <Cut Axis = "1" From = "1" To = "2" />
+        <Cut Axis = "2" From = "1" />
+        <SplitByAxes/>
+
+        <HideAll/>
+        <Cylinder Radius = "R" Color = "clOrange" >
+           <Base X = "dx" Y = " D" Z = "dz" />
+           <Top  X = "dx" Y = "-D" Z = "dz" />
+        </Cylinder>
+        <Cut Axis = "0" From = "1" To = "2" />
+        <Cut Axis = "2" To = "1" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

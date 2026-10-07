@@ -1,0 +1,103 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Flirt Cube</Name>
+        <Menu>Other cubes\Unclassified\Flirt Cube</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-06-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11172</Link>
+        <Link>https://twistypuzzles.com/forum/viewtopic.php?p=423049</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        A := W * 0.5;
+        R := W * 0.6;
+        K := W + R * 0.5;
+        H := W * 0.2 / (2 * sqrt(2));
+        L := W + A * sqrt(2 / 3);
+
+        D1 := W / sqrt(3);
+        D2 := A / 3;
+        D3 := W * sqrt(2 / 3) + D2;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi / 3" PlaneDistances = "D1" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0;Pi" PlaneDistances = "D2" >
+        <Axis NormVector = "-1; 1; 2" BaseVector = " 0; 0; W" />
+        <Axis NormVector = " 1;-1; 2" BaseVector = " 0; 0; W" />
+        <Axis NormVector = " 1; 1;-2" BaseVector = " 0; 0;-W" />
+        <Axis NormVector = "-1;-1;-2" BaseVector = " 0; 0;-W" />
+        <Axis NormVector = "-1; 2; 1" BaseVector = " 0; W; 0" />
+        <Axis NormVector = " 1; 2;-1" BaseVector = " 0; W; 0" />
+        <Axis NormVector = " 1;-2; 1" BaseVector = " 0;-W; 0" />
+        <Axis NormVector = "-1;-2;-1" BaseVector = " 0;-W; 0" />
+        <Axis NormVector = " 2;-1; 1" BaseVector = " W; 0; 0" />
+        <Axis NormVector = " 2; 1;-1" BaseVector = " W; 0; 0" />
+        <Axis NormVector = "-2; 1; 1" BaseVector = "-W; 0; 0" />
+        <Axis NormVector = "-2;-1;-1" BaseVector = "-W; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut Color = "Colors[5]" > <Plane NormVector = " 1;-1;-2" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Colors[5]" > <Plane NormVector = "-1; 1;-2" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Colors[4]" > <Plane NormVector = "-1;-1; 2" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Colors[4]" > <Plane NormVector = " 1; 1; 2" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Colors[3]" > <Plane NormVector = " 1;-2;-1" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Colors[3]" > <Plane NormVector = "-1;-2; 1" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Colors[2]" > <Plane NormVector = "-1; 2;-1" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Colors[2]" > <Plane NormVector = " 1; 2; 1" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Colors[1]" > <Plane NormVector = "-2; 1;-1" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Colors[1]" > <Plane NormVector = "-2;-1; 1" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Colors[0]" > <Plane NormVector = " 2;-1;-1" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Colors[0]" > <Plane NormVector = " 2; 1; 1" NormDistance = "-D3" /> </Cut>
+        <HideAll/>
+
+        <Macro Name = "AddCenter" >
+            <Cylinder Radius = "R" Color = "Color" Base = "-W; H;-H" Top = "-W;-H; H" >
+                <Base Color = "Color"/>
+                <Top  Color = "Color" />
+            </Cylinder>
+            <SplitByAxes/>
+            <Cut Color = "Color" > <Plane NormVector = " 1; 0; 0" NormDistance = "-L" /> </Cut>
+            <Turn  Axis = "ax1" Layer = "1" Angle = "Pi" />
+            <SplitByAxes/>
+            <Cut Color = "Color" > <Plane NormVector = " 1; 0; 0" NormDistance = "-L" /> </Cut>
+            <Turn  Axis = "ax2" Layer = "1" Angle = "Pi" />
+            <SplitByAxes/>
+            <Cut Color = "Color" > <Plane NormVector = " 1; 0; 0" NormDistance = "-L" /> </Cut>
+            <HideContaining Vector = "-K; 0; 0" />
+            <Undo/>
+            <HideContaining Vector = "-K; 0; 0" />
+            <Undo/>
+            <HideContaining Vector = "-K; 0; 0" />
+            <RemoveAllVisible/>
+            <Turn NormVector = "0;0;1" Angle = "Pi" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCenter" Color = "Colors[0]" ax1 = "14" ax2 = "15" />
+        <ExecMacro MacroName = "AddCenter" Color = "Colors[1]" ax1 = "12" ax2 = "13" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi / 3" />
+        <ExecMacro MacroName = "AddCenter" Color = "Colors[2]" ax1 = "10" ax2 = "11" />
+        <ExecMacro MacroName = "AddCenter" Color = "Colors[3]" ax1 = " 8" ax2 = " 9" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi / 3" />
+        <ExecMacro MacroName = "AddCenter" Color = "Colors[4]" ax1 = " 6" ax2 = " 7" />
+        <ExecMacro MacroName = "AddCenter" Color = "Colors[5]" ax1 = " 4" ax2 = " 5" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi / 3" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>X-Block Supreme</Name>
+        <Menu>Other cubes\Vertex Turning\X-Block Supreme</Menu>
+        <Inventor>Ryan Thompson</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2052</Link>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+        WZ := W * 0.5;
+        D1 := W * 0.5;
+        D2 := W;
+
+        K := 0.96;
+        DCut := W * (3 * K + 1) / 2 / sqrt(3);
+        DCu1 := W * (K + 1) / 2 / sqrt(2);
+        DCu2 := W * (K / 2 + 1) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D2" WY = "D1" WZ = "WZ" />
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" ><Plane NormVector = " 1; 1; 0" /></Split>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" ><Plane NormVector = "-1; 1; 0" /></Split>
+        <RemoveContaining Vector = "0; D1; 0" />
+        <RemoveContaining Vector = "0;-D1; 0" />
+        <!-- cut edges for better control -->
+        <Cut> <Plane NormVector = " 0;-1;-1" NormDistance = "-DCu1" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 1" NormDistance = "-DCu1" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 1" NormDistance = "-DCu1" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1;-1" NormDistance = "-DCu1" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D1" WY = "D2" WZ = "WZ" />
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" ><Plane NormVector = " 1; 1; 0" /></Split>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" ><Plane NormVector = "-1; 1; 0" /></Split>
+        <RemoveContaining Vector = " D1; 0; 0" />
+        <RemoveContaining Vector = "-D1; 0; 0" />
+        <!-- cut edges for better control -->
+        <Cut> <Plane NormVector = "-1; 0;-1" NormDistance = "-DCu1" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 0; 1" NormDistance = "-DCu1" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 1" NormDistance = "-DCu1" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0;-1" NormDistance = "-DCu1" /> </Cut>
+        <ShowAll/>
+
+        <!-- cut edges for better control -->
+        <Cut> <Plane NormVector = "-1; 0;-1" NormDistance = "-DCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 0; 1" NormDistance = "-DCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 1" NormDistance = "-DCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0;-1" NormDistance = "-DCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1;-1" NormDistance = "-DCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 1" NormDistance = "-DCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 1" NormDistance = "-DCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1;-1" NormDistance = "-DCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1; 0" NormDistance = "-DCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 0" NormDistance = "-DCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 1; 0" NormDistance = "-DCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1; 0" NormDistance = "-DCu2" /> </Cut>
+
+        <!-- cut vertices for better control -->
+        <Cut> <Plane NormVector = " 1; 1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1;-1" NormDistance = "-DCut" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Delta Slice</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Delta Slice</Menu>
+        <Inventor>Matt Lozano</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-07-09</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=37011</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        H := R * 0.5;
+        D := R * 0.2;
+
+        for i := 0 to 2 do begin
+            x[i] := R * cos(2 * Pi / 3 * i);
+            y[i] := R * sin(2 * Pi / 3 * i);
+        end;
+    </Script>
+
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "y[0]; x[0]; 0" />
+        <Axis NormVector = "y[1]; x[1]; 0" />
+        <Axis NormVector = "y[2]; x[2]; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "FFFF00" VertexIndexes = " 1; 0; 3; 4" />
+                <Face Color = "FF64FF" VertexIndexes = " 2; 1; 4; 5" />
+                <Face Color = "FF6000" VertexIndexes = " 0; 2; 5; 3" />
+
+                <Face Color = "646464" VertexIndexes = "5;4;3" />
+                <Face Color = "C8C8C8" VertexIndexes = "0;1;2" />
+            </Faces>
+        </Part>
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "5" From = "1" />
+        <Split Axis = "6" From = "1" />
+    </Figure>
+</xml>

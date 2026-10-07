@@ -1,0 +1,78 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Celtic Cube Junior Unbandaged (flat, 6 colors)</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Celtic Cube Junior\Celtic Cube Junior Unbandaged (6 colors)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-15</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Col[0] := '9900EE'; // Purple
+        Col[1] := 'FFFF00'; // Yellow
+        Col[2] := 'FF8800'; // Orange
+        Col[3] := 'FF0000'; // Red
+        Col[4] := '00DD00'; // Green
+        Col[5] := '0055FF'; // Blue
+
+        for i := 0 to 23 do
+            Colors[ i] := Col[i div 4];
+
+        W := 0.45;
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_Coordinates.inc'; // for axes
+
+        A1 := ArcCos( s2 / 8 + 0.25);
+        A2 := ArcCos( s2 / 4 - 0.5 );
+        A3 := ArcCos(-s2 / 2 - 0.25);
+
+        D := W * 1.12;
+        DCut := W * 1.01;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Cx;Cy;Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "HideV" >
+            <Hide><Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "-DCut" /></Hide>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideV" i = "0" Repeat = "18" />
+
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "SplitEdge" >
+            <HideContaining Vector = "(Vx[ 5] + Vx[16]) / 2; (Vy[ 5] + Vy[16]) / 2; (Vz[ 5] + Vz[16]) / 2" />
+            <HideContaining Vector = "(Vx[11] + Vx[20]) / 2; (Vy[11] + Vy[20]) / 2; (Vz[11] + Vz[20]) / 2" />
+            <InvertVisibility/>
+            <Turn NormVector = " C2;-C3; C2" Angle = " A1" />
+            <Split><Plane NormVector = " C3;-C2; C2" NormDistance = "D" /> </Split>
+            <Split><Plane NormVector = "-C2;-C3; C2" NormDistance = "D" /> </Split>
+            <Turn NormVector = " C2;-C3; C2" Angle = "-2*A1" />
+            <Split><Plane NormVector = "-C2;-C3; C2" NormDistance = "D" /> </Split>
+            <Turn NormVector = " C2;-C3; C2" Angle = " A1" />
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+        <Macro Name = "SplitEdges" >
+            <ExecMacro MacroName = "SplitEdge" Repeat = "4" />
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+            <ExecMacro MacroName = "SplitEdge" Repeat = "4" />
+            <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+            <Turn NormVector = " 1; 1; 1" Angle = "2*Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "SplitEdges" Repeat = "3" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

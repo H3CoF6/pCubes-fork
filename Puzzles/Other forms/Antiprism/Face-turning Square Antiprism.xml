@@ -1,0 +1,96 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Face-turning Square Antiprism</Name>
+        <Menu>Other forms\Antiprism\Face-turning Square Antiprism</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-04-27</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'F0F0F0';
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clLime   := '00FF00';
+        clGreen  := '008000';
+        clPink   := 'FF69B4';
+        clPurple := '800080';
+
+        K  := 0.9;
+        C0 := K * sqrt(2 * sqrt(2)) / 4;
+        C1 := K * sqrt(2) / 2;
+        C2 := K * 0.5;
+
+        D1 := K * 0.357177395; // sqrt((sqrt(2) * 11 + 12) / 6 ) / 6 ?
+        D2 := K * 0.14014940;  // sqrt(sqrt(2) / 2) / 6 ?
+
+        // Calc all Normals
+        //Normal( C2, C2, C0, C2,-C2, C0, C1, 0,-C0, 0, 1); // " 0, 1, 4"
+        //Normal(  0,-C1,-C0, C2,-C2, C0, C1, 0,-C0, 1,-1); // " 7, 1, 4"
+        px[0] :=  sqrt(8 + 6 * sqrt(2));
+        py[0] :=  0;
+        pz[0] :=  1;
+        px[1] :=  sqrt(4 + 3 * sqrt(2));
+        py[1] := -sqrt(4 + 3 * sqrt(2));
+        pz[1] := -1;
+
+        // Calc all Jumble Angles
+        //A1 := Angle( py[0],-px[0],pz[0],  px[1],py[1],pz[1], -px[1],py[1],pz[1] ); // "1 - 4,5"
+        //A2 := Angle( py[0],-px[0],pz[0],  px[0],py[0],pz[0], -px[0],py[0],pz[0] ); // "1 - 0,2"
+        A1 := ArcCos(-0.5);
+        A2 := ArcCos(-(3 * sqrt(2) + 2) / 7);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2;D2" FixedLayers = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1;-A2; 0; A2;A1" PlaneDistances = "D1" FixedLayers = "0">
+        <Axis NormVector = " px[0]; py[0]; pz[0]" />
+        <Axis NormVector = " py[0];-px[0]; pz[0]" />
+        <Axis NormVector = "-px[0]; py[0]; pz[0]" />
+        <Axis NormVector = " py[0]; px[0]; pz[0]" />
+
+        <Axis NormVector = " px[1]; py[1]; pz[1]" />
+        <Axis NormVector = "-px[1]; py[1]; pz[1]" />
+        <Axis NormVector = "-px[1];-py[1]; pz[1]" />
+        <Axis NormVector = " px[1];-py[1]; pz[1]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  C2;   C2;  C0" />
+                <Add Vector = "  C2;  -C2;  C0" />
+                <Add Vector = " -C2;   C2;  C0" />
+                <Add Vector = " -C2;  -C2;  C0" />
+
+                <Add Vector = "  C1;    0; -C0" />
+                <Add Vector = " -C1;    0; -C0" />
+                <Add Vector = "   0;   C1; -C0" />
+                <Add Vector = "   0;  -C1; -C0" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clGreen " VertexIndexes = " 0; 2; 3; 1" />
+                <Face Color = "clWhite " VertexIndexes = " 4; 7; 5; 6" />
+                <Face Color = "clCyan  " VertexIndexes = " 1; 3; 7" />
+                <Face Color = "clLime  " VertexIndexes = " 1; 7; 4" />
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 4" />
+                <Face Color = "clOrange" VertexIndexes = " 0; 4; 6" />
+                <Face Color = "clRed   " VertexIndexes = " 2; 0; 6" />
+                <Face Color = "clPurple" VertexIndexes = " 2; 6; 5" />
+                <Face Color = "clPink  " VertexIndexes = " 3; 2; 5" />
+                <Face Color = "clBlue  " VertexIndexes = " 3; 5; 7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

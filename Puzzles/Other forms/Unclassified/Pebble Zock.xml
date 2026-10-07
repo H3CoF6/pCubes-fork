@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pebble Zock</Name>
+        <Menu>Other forms\Unclassified\Pebble Zock</Menu>
+        <Inventor>Joshua Riegel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-01-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8591</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 2;
+
+        DCut := W * 2 / sqrt(5);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithPartNo = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "0" From  = "2" />
+        <Turn  Axis = "0" Layer = "2" Angle = "Pi/2" />
+        <Split Axis = "2" From  = "2" />
+        <Split Axis = "1" From  = "1" />
+        <Split Axis = "1" From  = "3" />
+
+        <Undo/>
+
+        <Cut Color = "clBlue  "> <Plane NormVector = "-1; 2; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clGreen "> <Plane NormVector = "-1;-2; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clYellow"> <Plane NormVector = " 1; 0; 2" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clWhite "> <Plane NormVector = " 1; 0;-2" NormDistance = "-DCut" /> </Cut>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

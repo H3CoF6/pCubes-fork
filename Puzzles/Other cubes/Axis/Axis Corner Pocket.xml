@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Axis Corner Pocket</Name>
+        <Menu>Other cubes\Axis\Axis Corner Pocket</Menu>
+        <Inventor>Javier Alla La</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9066</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "-1; 2; 2" />
+        <Axis NormVector = " 2;-1; 2" />
+        <Axis NormVector = " 2; 2;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "2" From = "1" />
+        <SplitByAxes/>
+        <HideAll/>
+
+        <Script>
+            for i := 1 to 5 do
+            Colors[i] := Colors[0]; // Red
+        </Script>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <RemoveContaining Vector = "0;0;0"/>
+        <ShowAll/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cornered Radiolarian</Name>
+        <Menu>Other forms\Icosahedron\Face turning\Radiolarian\Cornered Radiolarian</Menu>
+        <Inventor>Jason Smith</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-08-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1745</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+        include 'Figures\Scripts\Icosahedron_Standard_10_Colors.inc';
+
+        DCut := Rin;
+        D := 0.44;
+
+        jumAngle := Arcsin(1/4) + Pi/6;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi / 3" JumbleAngle = "jumAngle" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <SplitByAxes/>
+
+        <Script>K := 0.2;</Script>
+        <Macro Name = "Hide">
+            <HideContaining Vector = "Vx[id]*(1-K) + Vx[id1]*K; Vy[id]*(1-K) + Vy[id1]*K; Vz[id]*(1-K) + Vz[id1]*K" />
+            <HideContaining Vector = "Vx[id]*(1-K) + Vx[id2]*K; Vy[id]*(1-K) + Vy[id2]*K; Vz[id]*(1-K) + Vz[id2]*K" />
+            <HideContaining Vector = "Vx[id]*(1-K) + Vx[id3]*K; Vy[id]*(1-K) + Vy[id3]*K; Vz[id]*(1-K) + Vz[id3]*K" />
+            <HideContaining Vector = "Vx[id]*(1-K) + Vx[id4]*K; Vy[id]*(1-K) + Vy[id4]*K; Vz[id]*(1-K) + Vz[id4]*K" />
+            <HideContaining Vector = "Vx[id]*(1-K) + Vx[id5]*K; Vy[id]*(1-K) + Vy[id5]*K; Vz[id]*(1-K) + Vz[id5]*K" />
+        </Macro>
+        <ExecMacro MacroName = "Hide" id = " 0" id1 = " 1" id2 = " 2" id3 = " 3" id4 = " 4" id5 = " 5" />
+        <ExecMacro MacroName = "Hide" id = " 1" id1 = " 0" id2 = " 2" id3 = " 6" id4 = "10" id5 = " 5" />
+        <ExecMacro MacroName = "Hide" id = " 2" id1 = " 0" id2 = " 1" id3 = " 6" id4 = " 7" id5 = " 3" />
+        <ExecMacro MacroName = "Hide" id = " 3" id1 = " 0" id2 = " 2" id3 = " 7" id4 = " 8" id5 = " 4" />
+        <ExecMacro MacroName = "Hide" id = " 4" id1 = " 0" id2 = " 3" id3 = " 8" id4 = " 9" id5 = " 5" />
+        <ExecMacro MacroName = "Hide" id = " 5" id1 = " 0" id2 = " 4" id3 = " 9" id4 = "10" id5 = " 1" />
+        <ExecMacro MacroName = "Hide" id = " 6" id1 = "11" id2 = " 7" id3 = " 2" id4 = " 1" id5 = "10" />
+        <ExecMacro MacroName = "Hide" id = " 7" id1 = "11" id2 = " 6" id3 = " 2" id4 = " 3" id5 = " 8" />
+        <ExecMacro MacroName = "Hide" id = " 8" id1 = "11" id2 = " 7" id3 = " 3" id4 = " 4" id5 = " 9" />
+        <ExecMacro MacroName = "Hide" id = " 9" id1 = "11" id2 = " 8" id3 = " 4" id4 = " 5" id5 = "10" />
+        <ExecMacro MacroName = "Hide" id = "10" id1 = "11" id2 = " 9" id3 = " 5" id4 = " 1" id5 = " 6" />
+        <ExecMacro MacroName = "Hide" id = "11" id1 = " 6" id2 = " 7" id3 = " 8" id4 = " 9" id5 = "10" />
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[id]" > <Plane NormVector = "-Cx[id]; -Cy[id]; -Cz[id]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "20" id = "0" />
+
+        <ShowAll/>
+
+        <Macro Name = "CutGray">
+            <Cut> <Plane NormVector = "-Cx[id]; -Cy[id]; -Cz[id]" NormDistance = "-DCut" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutGray" Repeat = "20" id = "0" />
+
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+
+    <Macros>
+        <Macro Name = "RandomTurns120" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "2*Pi/3"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "Pi/12 * Random(24)"/>
+        </Macro>
+        <Macro Name = "Scramble120" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns120" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble120" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+</xml>

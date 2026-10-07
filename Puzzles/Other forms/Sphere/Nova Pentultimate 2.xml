@@ -1,0 +1,121 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Nova Pentultimate 2 (Ball)</Name>
+        <Menu>Other forms\Sphere\Nova Pentultimate 2</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-16</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // clWhite
+        Colors[ 1] := 'FFFF00'; // clYellow
+        Colors[ 2] := '0000CC'; // clBlue
+        Colors[ 3] := 'FF0000'; // clRed
+        Colors[ 4] := '00AA00'; // clGreen
+        Colors[ 5] := '800080'; // clViolett
+        Colors[ 6] := 'FFFFAA'; // clCream
+        Colors[ 7] := '0066CC'; // clLightBlue
+        Colors[ 8] := 'FF6000'; // clOrange
+        Colors[ 9] := '00FF00'; // clLightGreen
+        Colors[10] := 'FF88CC'; // clLightViolett
+        Colors[11] := '666666'; // clGray
+
+        K := 0.6;
+        D := K * 0.978;
+
+        s5 := sqrt(5);
+        A1 := (s5 - 1) / 2; // 0.618
+        A2 := A1 + 1;       // 1.618 - golden ratio
+        A3 := s5;           // 2.236
+        A4 := A1 + 2;       // 2.618
+        A5 := s5 + 1;       // 3.236
+        A6 := A1 + 3;       // 3.618
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/10" PlaneDistances = "0" TurnAxesWithLayer = "1">
+        <Axis NormVector = "  0; -1; A1" /> <!--   0;-cs; ss -->
+        <Axis NormVector = "  0; -1;-A1" /> <!--   0;-cs;-ss -->
+        <Axis NormVector = "-A1;  0; -1" /> <!-- -ss;  0;-cs -->
+        <Axis NormVector = " A1;  0; -1" /> <!--  ss;  0;-cs -->
+        <Axis NormVector = "  1;-A1;  0" /> <!--  cs;-ss;  0 -->
+        <Axis NormVector = "  1; A1;  0" /> <!--  cs; ss;  0 -->
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; 0; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " A6;-A1;  1" />
+        <Axis NormVector = "-A3; A2;-A4" />
+        <Axis NormVector = "  0; -2; A5" />
+        <Axis NormVector = " A3; A2;-A4" />
+        <Axis NormVector = "-A6;-A1;  1" />
+        <Axis NormVector = "-A6;-A1; -1" />
+        <Axis NormVector = " A3; A2; A4" />
+        <Axis NormVector = "  0; -2;-A5" />
+        <Axis NormVector = "-A3; A2; A4" />
+        <Axis NormVector = " A6;-A1; -1" />
+        <Axis NormVector = "  1; A6;-A1" />
+        <Axis NormVector = "-A4;-A3; A2" />
+        <Axis NormVector = " A5;  0; -2" />
+        <Axis NormVector = "-A4; A3; A2" />
+        <Axis NormVector = "  1;-A6;-A1" />
+        <Axis NormVector = " -1;-A6;-A1" />
+        <Axis NormVector = " A4; A3; A2" />
+        <Axis NormVector = "-A5;  0; -2" />
+        <Axis NormVector = " A4;-A3; A2" />
+        <Axis NormVector = " -1; A6;-A1" />
+        <Axis NormVector = " A1;  1;-A6" />
+        <Axis NormVector = "-A2;-A4; A3" />
+        <Axis NormVector = "  2; A5;  0" />
+        <Axis NormVector = "-A2;-A4;-A3" />
+        <Axis NormVector = " A1;  1; A6" />
+        <Axis NormVector = " A1; -1; A6" />
+        <Axis NormVector = "-A2; A4;-A3" />
+        <Axis NormVector = "  2;-A5;  0" />
+        <Axis NormVector = "-A2; A4; A3" />
+        <Axis NormVector = " A1; -1;-A6" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+
+        <Macro Name = "Turn">
+            <Turn Axis = "id" Layer = "2" Angle = "Pi/2" />
+            <Script>Inc(id);</Script>
+        </Macro>
+
+        <Macro Name = "Split">
+            <Split Axis = "a1" From = "1" />
+            <Turn Axis = "a1" Layer = "0" Angle = "2*Pi/10" />
+            <Split Axis = "a2    " From = "2" />
+            <Split Axis = "a2 + 1" From = "2" />
+            <Split Axis = "a2 + 2" From = "2" />
+            <Split Axis = "a2 + 3" From = "2" />
+            <Split Axis = "a2 + 4" From = "2" />
+
+            <Hide Axis = "a2    " Layer = "2" />
+            <Hide Axis = "a2 + 1" Layer = "2" />
+            <Hide Axis = "a2 + 2" Layer = "2" />
+            <Hide Axis = "a2 + 3" Layer = "2" />
+            <Hide Axis = "a2 + 4" Layer = "2" />
+            <InvertVisibility/>
+
+            <ExecMacro MacroName = "Turn" id = "a2" Repeat = "5" />
+            <Split Axis = "a1" From = "1"/>
+            <Undo Repeat = "11"/>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = " 6" />
+        <ExecMacro MacroName = "Split" a1 = "0" a2 = "11" />
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = "16" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "21" />
+        <ExecMacro MacroName = "Split" a1 = "4" a2 = "26" />
+        <ExecMacro MacroName = "Split" a1 = "5" a2 = "31" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

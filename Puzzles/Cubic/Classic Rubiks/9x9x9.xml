@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rubik's cube 9x9x9</Name>
+        <Menu>Cubic\Classic Rubiks\9x9x9</Menu>
+        <Inventor>Panagiotis Verdes</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-05-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6213</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        N := 9;
+        WD := 2 * W / N;
+        D[0] := -W + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <!-- at first cut central big gray cube to save time and memory -->
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "0" From = "N-1" />
+        <Split Axis = "1" From = "N-1" />
+        <Split Axis = "2" From = "N-1" />
+        <RemoveContaining Vector = "0; 0; 0" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

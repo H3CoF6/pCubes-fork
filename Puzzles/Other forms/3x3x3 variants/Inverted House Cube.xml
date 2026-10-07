@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Inverted House Cube</Name>
+        <Menu>Other forms\3x3x3 variants\Inverted House Cube</Menu>
+        <Inventor>Nathan Wilson</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-07-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8217</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.47;
+        D := W / 2 / sqrt(2);
+
+        WX := W * 5 / 4;
+        WY := W;
+        WZ := 3 * D;
+        DWX :=-W / 4;
+
+        Colors[3] := Colors[2];
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 1; 0" />
+        <Axis NormVector = "1;-1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "-D;-D; 0" />
+        <Cut Color = "Colors[0]" ><Plane NormVector = "1; 1; 0" NormDistance = "-3*D" /> </Cut>
+        <Cut Color = "Colors[0]" ><Plane NormVector = "1;-1; 0" NormDistance = "-3*D" /> </Cut>
+        <InvertVisibility/>
+        <Cut Color = "Colors[0]" ><Plane NormVector = "1; 0; 0" NormDistance = "-W" /> </Cut>
+        <ShowAll/>
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0; 1; 0" Angle = "Pi / 2" />
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi / 2" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

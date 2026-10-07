@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star Pentultimate Ball</Name>
+        <Menu>Other forms\Sphere\Megaminx axes\Star Pentultimate Ball</Menu>
+        <Inventor>Pawel Bodytko</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-08-26</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=418926#p418926</Link>
+    </Interface>
+
+    <Script>
+        Color1 := '222222';
+        Color2 := 'EFCC71';
+
+        phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        K := 0.6;
+        DCut :=  K * 0.87;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "   0;  -1; phi" />
+        <Axis NormVector = "   0;  -1;-phi" />
+        <Axis NormVector = "-phi;   0;  -1" />
+        <Axis NormVector = " phi;   0;  -1" />
+        <Axis NormVector = "   1;-phi;   0" />
+        <Axis NormVector = "   1; phi;   0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddMonoSphere" >
+            <Script>
+                for i := 0 to 11 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        </Macro>
+
+        <Macro Name = "AddSolvedState" >
+            <RemoveAllVisible/>
+            <ExecMacro MacroName = "AddMonoSphere" Color = "Color1" />
+            <SplitByAxes/>
+            <Hide> <Plane NormVector = "-ax;-ay;-az" NormDistance = "DCut" /> </Hide>
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = " ax; ay; az" NormDistance = "0" /> </Cut>
+            <HideAll/>
+
+            <ExecMacro MacroName = "AddMonoSphere" Color = "Color2" />
+            <SplitByAxes/>
+            <Cut> <Plane NormVector = "-ax;-ay;-az" NormDistance = "0" /> </Cut>
+            <Hide> <Plane NormVector = "-ax;-ay;-az" NormDistance = "DCut" /> </Hide>
+            <RemoveAllVisible/>
+            <ShowAll/>
+            <SaveSolvedState/>
+        </Macro>
+        <ExecMacro MacroName = "AddSolvedState" ax = "   0" ay = "  -1" az = " phi" />
+        <ExecMacro MacroName = "AddSolvedState" ax = "   1" ay = " phi" az = "   0" />
+        <ExecMacro MacroName = "AddSolvedState" ax = "-phi" ay = "   0" az = "  -1" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cuboid 2x2x10</Name>
+        <Menu>Cubic\Cuboids\10\2x2x10</Menu>
+        <Inventor>Matt Bahner</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-04-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4947</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+
+        X := 2;
+        Y := 2;
+        Z := 10;
+        Oversize := 0;
+
+        include 'Puzzles\Cubic\Cuboids\Cuboid Calculation.inc';
+    </Script>
+
+    <Axes>
+        <Axis TurningAngles = "Ax" NormVector = " 1; 0; 0" PlaneDistances = "DX" />
+        <Axis TurningAngles = "Ay" NormVector = " 0; 1; 0" PlaneDistances = "DY" />
+        <Axis TurningAngles = "Az" NormVector = " 0; 0; 1" PlaneDistances = "DZ" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Puzzles\Cubic\Cuboids\Cuboid Splitted.xml" />
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "WD*2" WY = "W" WZ = "WD*2" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "WD*2" WZ = "WD*2" />
+        <Split Axis = "0" From = "Z / 2" />
+        <Split Axis = "1" From = "Z / 2" />
+        <Split Axis = "2" From = "Z / 2" />
+        <InvertVisibility/>
+    </Figure>
+</xml>

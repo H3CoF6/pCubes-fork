@@ -1,0 +1,285 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Meteor Madness Crazy</Name>
+        <Menu>Other forms\Comet\Meteor Madness Crazy</Menu>
+        <Inventor>Tom Koster</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-08-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6580</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '0000A0';
+        clOrange  := 'FF6000';
+        clRed     := 'FF0000';
+        clGreen   := '008000';
+        clViolett := '800080';
+
+        k := 0.016;
+
+        s3 := sqrt(3);
+
+        pZ0 := k * 44;
+        pX1 := k * 33;
+        pY1 := k * 11 * s3;
+        pZ1 := k * 22;
+        pY2 := k * 22 * s3;
+        pX3 := k * 24;
+        pY3 := k * 16 * s3;
+        pZ3 := k * 12;
+        pX4 := k * 36;
+        pY4 := k *  4 * s3;
+        pY5 := k * 20 * s3;
+
+        nX1 := k * 27;
+        nY1 := k *  9 * s3;
+        nZ1 := k *  2;
+        nY2 := k * 18 * s3;
+        nX3 := k * 26;
+        nY3 := k * 10 * s3;
+        nX4 := k * 28;
+        nY4 := k *  8 * s3;
+
+        D := -k * 20 * s3 / sqrt(7);
+
+        ax1 := s3 / 3;
+        ax2 := 2 * s3 / 3;
+
+        A1 := ArcCos(0.125);
+        A2 := ArcCos(-0.75);
+
+        RC := k * 18;
+        D2 := - pZ0 * sqrt(3 / 7); //-0.461;
+
+        Delta := 0.001;
+        N  := pZ0 * 3 / 7; // 0.301551;
+        L  := N + delta;
+
+        N1 := N * 5/4;
+        L1 := L * 5/4;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1; 0; A1;A2" PlaneDistances = "D;D2-2" FixedLayers = "0;2" >
+        <Axis NormVector = "-1;  ax1; -1" />
+    </Axes>
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1; 0; A1;A2" PlaneDistances = "D;D2" FixedLayers = "0;2" >
+        <Axis NormVector = " 1;  ax1; -1" />
+        <Axis NormVector = " 0; -ax2; -1" />
+        <Axis NormVector = "-1;  ax1;  1" />
+        <Axis NormVector = " 1;  ax1;  1" />
+        <Axis NormVector = " 0; -ax2;  1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;    0;  pZ0" />
+
+                <Add Vector = " pX1;  pY1;  pZ1" />
+                <Add Vector = "   0; -pY2;  pZ1" />
+                <Add Vector = "-pX1;  pY1;  pZ1" />
+
+                <Add Vector = " pX3;  pY3;  pZ3" />
+                <Add Vector = " pX4;  pY4;  pZ3" />
+                <Add Vector = " pZ3; -pY5;  pZ3" />
+                <Add Vector = "-pZ3; -pY5;  pZ3" />
+                <Add Vector = "-pX4;  pY4;  pZ3" />
+                <Add Vector = "-pX3;  pY3;  pZ3" />
+
+                <Add Vector = " pZ1;  pY2;    0" />
+                <Add Vector = " pZ0;    0;    0" />
+                <Add Vector = " pZ1; -pY2;    0" />
+                <Add Vector = "-pZ1; -pY2;    0" />
+                <Add Vector = "-pZ0;    0;    0" />
+                <Add Vector = "-pZ1;  pY2;    0" />
+
+                <Add Vector = " pX3;  pY3; -pZ3" />
+                <Add Vector = " pX4;  pY4; -pZ3" />
+                <Add Vector = " pZ3; -pY5; -pZ3" />
+                <Add Vector = "-pZ3; -pY5; -pZ3" />
+                <Add Vector = "-pX4;  pY4; -pZ3" />
+                <Add Vector = "-pX3;  pY3; -pZ3" />
+
+                <Add Vector = " pX1;  pY1; -pZ1" />
+                <Add Vector = "   0; -pY2; -pZ1" />
+                <Add Vector = "-pX1;  pY1; -pZ1" />
+
+                <Add Vector = "   0;    0; -pZ0" />
+
+                <Add Vector = " nX1;  nY1;  nZ1" />
+                <Add Vector = "   0; -nY2;  nZ1" />
+                <Add Vector = "-nX1;  nY1;  nZ1" />
+                <Add Vector = " nX3;  nY3;    0" />
+                <Add Vector = " nX4;  nY4;    0" />
+                <Add Vector = " nZ1; -nY2;    0" />
+                <Add Vector = "-nZ1; -nY2;    0" />
+                <Add Vector = "-nX4;  nY4;    0" />
+                <Add Vector = "-nX3;  nY3;    0" />
+                <Add Vector = " nX1;  nY1; -nZ1" />
+                <Add Vector = "   0; -nY2; -nZ1" />
+                <Add Vector = "-nX1;  nY1; -nZ1" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clOrange" VertexIndexes = "0;2;6;12;11;5;1" />
+                <Face Color = "clYellow" VertexIndexes = "0;3;8;14;13;7;2" />
+                <Face Color = "clRed   " VertexIndexes = "0;1;4;10;15;9;3" />
+
+                <Face Color = "clViolett" VertexIndexes = "11;12;18;23;25;22;17" />
+                <Face Color = "clGreen  " VertexIndexes = "13;14;20;24;25;23;19" />
+                <Face Color = "clBlue   " VertexIndexes = "15;10;16;22;25;24;21" />
+
+                <Face VertexIndexes = "26;30;35;29" />
+                <Face VertexIndexes = "27;32;36;31" />
+                <Face VertexIndexes = "28;34;37;33" />
+                <Face VertexIndexes = "1;5;26;4" />
+                <Face VertexIndexes = "2;7;27;6" />
+                <Face VertexIndexes = "3;9;28;8" />
+                <Face VertexIndexes = "4;29;16;10" />
+                <Face VertexIndexes = "5;11;17;30" />
+                <Face VertexIndexes = "6;31;18;12" />
+                <Face VertexIndexes = "7;13;19;32" />
+                <Face VertexIndexes = "8;33;20;14" />
+                <Face VertexIndexes = "9;15;21;34" />
+                <Face VertexIndexes = "35;17;22;16" />
+                <Face VertexIndexes = "36;19;23;18" />
+                <Face VertexIndexes = "37;21;24;20" />
+                <Face VertexIndexes = "4;26;29" />
+                <Face VertexIndexes = "5;30;26" />
+                <Face VertexIndexes = "6;27;31" />
+                <Face VertexIndexes = "7;32;27" />
+                <Face VertexIndexes = "8;28;33" />
+                <Face VertexIndexes = "9;34;28" />
+                <Face VertexIndexes = "16;29;35" />
+                <Face VertexIndexes = "17;35;30" />
+                <Face VertexIndexes = "18;31;36" />
+                <Face VertexIndexes = "19;36;32" />
+                <Face VertexIndexes = "20;33;37" />
+                <Face VertexIndexes = "21;37;34" />
+            </Faces>
+        </Part>
+<!--
+        <Circle Radius = "RC" Color =  "clOrange " Center = " L; -ax1*L;  L" />
+        <Circle Radius = "RC" Color =  "clViolett" Center = " L; -ax1*L; -L" />
+        <Circle Radius = "RC" Color =  "clYellow " Center = "-L; -ax1*L;  L" />
+        <Circle Radius = "RC" Color =  "clGreen  " Center = "-L; -ax1*L; -L" />
+        <Circle Radius = "RC" Color =  "clRed    " Center = " 0;  ax2*L;  L" />
+        <Circle Radius = "RC" Color =  "clBlue   " Center = " 0;  ax2*L; -L" />
+-->
+
+        <Cylinder Radius = "RC" Color = "clOrange" >
+            <Base X = " N" Y = " -ax1*N" Z = " N" />
+            <Top  X = " L" Y = " -ax1*L" Z = " L" Color = "clOrange" />
+        </Cylinder>
+        <Cylinder Radius = "RC" Color = "clViolett" >
+            <Base X = " N" Y = " -ax1*N" Z = "-N" />
+            <Top  X = " L" Y = " -ax1*L" Z = "-L" Color = "clViolett" />
+        </Cylinder>
+        <Cylinder Radius = "RC" Color = "clYellow" >
+            <Base X = "-N" Y = " -ax1*N" Z = " N" />
+            <Top  X = "-L" Y = " -ax1*L" Z = " L" Color = "clYellow" />
+        </Cylinder>
+        <Cylinder Radius = "RC" Color = "clGreen" >
+            <Base X = "-N" Y = " -ax1*N" Z = "-N" />
+            <Top  X = "-L" Y = " -ax1*L" Z = "-L" Color = "clGreen" />
+        </Cylinder>
+        <Cylinder Radius = "RC" Color = "clRed" >
+            <Base X = " 0" Y = "  ax2*N" Z = " N" />
+            <Top  X = " 0" Y = "  ax2*L" Z = " L" Color = "clRed" />
+        </Cylinder>
+        <Cylinder Radius = "RC" Color = "clBlue" >
+            <Base X = " 0" Y = "  ax2*N" Z = "-N" />
+            <Top  X = " 0" Y = "  ax2*L" Z = "-L" Color = "clBlue" />
+        </Cylinder>
+
+        <SplitByAxes/>
+
+        <Hide Axis = "0" Layer = "2" />
+        <Hide Axis = "1" Layer = "2" />
+        <Split><Plane NormVector = " 0;  ax2;  0.4" NormDistance = "D" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "1" Layer = "2" />
+        <Hide Axis = "2" Layer = "2" />
+        <Split><Plane NormVector = " 1; -ax1;  0.4" NormDistance = "D" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "2" Layer = "2" />
+        <Hide Axis = "0" Layer = "2" />
+        <Split><Plane NormVector = "-1; -ax1;  0.4" NormDistance = "D" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "3" Layer = "2" />
+        <Hide Axis = "4" Layer = "2" />
+        <Split><Plane NormVector = " 0;  ax2; -0.4" NormDistance = "D" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "4" Layer = "2" />
+        <Hide Axis = "5" Layer = "2" />
+        <Split><Plane NormVector = " 1; -ax1; -0.4" NormDistance = "D" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "5" Layer = "2" />
+        <Hide Axis = "3" Layer = "2" />
+        <Split><Plane NormVector = "-1; -ax1; -0.4" NormDistance = "D" /></Split>
+        <ShowAll/>
+
+
+        <Hide Axis = "0" Layer = "2" />
+        <Hide Axis = "3" Layer = "2" />
+        <Split><Plane NormVector = "-1; -2 * ax1; 0" NormDistance = "D" /></Split>
+        <Split><Plane NormVector = " 1;  5 * ax1; 0" NormDistance = "D" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "1" Layer = "2" />
+        <Hide Axis = "4" Layer = "2" />
+        <Split><Plane NormVector = " 1; -2 * ax1; 0" NormDistance = "D" /></Split>
+        <Split><Plane NormVector = "-1;  5 * ax1; 0" NormDistance = "D" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "2" Layer = "2" />
+        <Hide Axis = "5" Layer = "2" />
+        <Split><Plane NormVector = "-3; -ax1; 0" NormDistance = "D" /></Split>
+        <Split><Plane NormVector = " 3; -ax1; 0" NormDistance = "D" /></Split>
+        <ShowAll/>
+
+        <Macro Name = "AddGraySegment">
+            <Hide Axis = "0" From = "0" To = "2" />
+            <Cylinder Radius = "RC" >
+                <Base X = " 0" Y = " -ax2*N1" Z = "-0.4*N1" />
+                <Top  X = " 0" Y = " -ax2*L1" Z = "-0.4*L1" />
+            </Cylinder>
+            <Cut><Plane NormVector = "1;  -ax1; 1" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = "-1; -ax1; 1" NormDistance = "-D" /></Cut>
+            <ShowAll/>
+        </Macro>
+        <Macro Name = "Add4GraySegments">
+            <ExecMacro MacroName = "AddGraySegment" />
+            <Turn NormVector = "0; -1; 0" Angle = "Pi / 2" />
+            <ExecMacro MacroName = "AddGraySegment" />
+            <Turn NormVector = "0; -1; 0" Angle = "Pi / 2" />
+            <ExecMacro MacroName = "AddGraySegment" />
+            <Turn NormVector = "0; -1; 0" Angle = "Pi / 2" />
+            <ExecMacro MacroName = "AddGraySegment" />
+            <Turn NormVector = "0; -1; 0" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "Add4GraySegments" />
+        <Turn NormVector = "0; 0; 1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "Add4GraySegments" />
+        <Turn NormVector = "0; 0; 1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "Add4GraySegments" />
+        <Turn NormVector = "0; 0; 1" Angle = "2 * Pi / 3" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Circle" File = "Puzzles\Other forms\Comet\Circle.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Circle = 47,1,0, 56,1,0, 65,1,6, 74,1,0, 83,1,0
+    </SetTextures>
+</xml>

@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Slide Rule Duel (Pie 6, cylinder)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Pie 6 (cylinder)</Menu>
+        <Menu>Other forms\Cylinder\Slide Rule Duel (Pie 6)</Menu>
+        <Inventor>Douglas A. Engel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4557</Link>
+    </Interface>
+
+    <Script>
+        clBrown  := '88653F';
+        clRed    := 'FF0000';
+        clGray   := 'AAAAAA';
+        clGreen  := '007700';
+        clWhite  := 'FFFFFF';
+        clBlack  := '333333';
+        clYellow := 'FFAE00';
+
+
+        R := 0.6;
+        H := R / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/4" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddEighth" >
+            <Cylinder Radius = "R" Color = "Color" Base = "0;0;0" Top = "0;0;H" TopColor = "Color" />
+            <Cut> <Plane NormVector = " 0;-1; 0" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 0; 0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0; 0; 1" Angle = "-Pi / 2" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddEighth" Color = "clGreen" />
+        <ExecMacro MacroName = "AddEighth" Color = "clWhite" />
+        <ExecMacro MacroName = "AddEighth" Color = "clGray" />
+        <ExecMacro MacroName = "AddEighth" Color = "clRed" />
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+        <Cylinder Radius = "R" Color = "clBrown" Base = "0;0;0" Top = "0;0;H" TopColor = "clBrown" />
+        <Cut> <Plane NormVector = " 0;-1; 0" /> </Cut>
+        <HideAll/>
+        <Turn NormVector = "0; 0; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddEighth" Color = "clYellow" />
+        <ExecMacro MacroName = "AddEighth" Color = "clBlack" />
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi" />
+
+        <ShowAll/>
+        <HideContaining Vector = " 0;-R;-H" />
+        <Split> <Plane NormVector = "1; 1; 0" /> </Split>
+        <Split> <Plane NormVector = "1;-1; 0" /> </Split>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

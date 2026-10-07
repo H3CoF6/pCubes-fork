@@ -1,0 +1,109 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Deep Trap Unbandaged</Name>
+        <Menu>Other forms\Trapezohedron\Face Turning\Deep Trap Unbandaged</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-01-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12392</Link>
+    </Interface>
+
+    <Script>
+        clYellow    := 'FFFF00';
+        clBlue      := '0000A0';
+        clOrange    := 'FF6000';
+        clRed       := 'FF0000';
+        clGreen     := '008000';
+        clWhite     := 'FFFFFF';
+        clViolett   := '800080';
+        clLightBlue := '2868FF';
+
+        R := 0.55;
+        s4 := 2^0.25;
+        H := R * (sqrt(2) + 1) / 2 * s4;
+        z := R * (sqrt(2) - 1) / 2 * s4;
+        az := R * s4 / 2;
+
+        for i := 0 to 7 do begin
+            x[i] := R * cos(Pi / 4 * (i + 0.5));
+            y[i] := R * sin(Pi / 4 * (i + 0.5));
+        end;
+
+        A1 := ArcCos((sqrt(2) - 1) /2);
+        A2 := 2 * A1;
+        A3 := 2*Pi - 3*A1; // := ArcCos(sqrt(2) - 2);
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "0" >
+        <Axis NormVector = " x[0]; y[0]; az" />
+        <Axis NormVector = " x[1]; y[1];-az" />
+        <Axis NormVector = " x[2]; y[2]; az" />
+        <Axis NormVector = " x[3]; y[3];-az" />
+        <Axis NormVector = " x[4]; y[4]; az" />
+        <Axis NormVector = " x[5]; y[5];-az" />
+        <Axis NormVector = " x[6]; y[6]; az" />
+        <Axis NormVector = " x[7]; y[7];-az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;    0;  H" />
+
+                <Add Vector = "x[0]; y[0]; -z" />
+                <Add Vector = "x[1]; y[1];  z" />
+                <Add Vector = "x[2]; y[2]; -z" />
+                <Add Vector = "x[3]; y[3];  z" />
+                <Add Vector = "x[4]; y[4]; -z" />
+                <Add Vector = "x[5]; y[5];  z" />
+                <Add Vector = "x[6]; y[6]; -z" />
+                <Add Vector = "x[7]; y[7];  z" />
+
+                <Add Vector = "   0;    0; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue     " VertexIndexes = "0;6;7;8" />
+                <Face Color = "clGreen    " VertexIndexes = "0;4;5;6" />
+                <Face Color = "clRed      " VertexIndexes = "0;2;3;4" />
+                <Face Color = "clOrange   " VertexIndexes = "0;8;1;2" />
+
+                <Face Color = "clYellow   " VertexIndexes = "9;1;8;7" />
+                <Face Color = "clWhite    " VertexIndexes = "9;7;6;5" />
+                <Face Color = "clViolett  " VertexIndexes = "9;5;4;3" />
+                <Face Color = "clLightBlue" VertexIndexes = "9;3;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split">
+            <Turn  Axis = "Ax1" Layer = "1" Angle = " An" />
+			<Turn  Axis = "Ax2" Layer = "1" Angle = "-An" />
+			<Split Axis = "Ax3" From  = "1" />
+            <Undo  Repeat = "2" />
+        </Macro>
+		
+		<ExecMacro MacroName = "Split" Ax1 = "4" Ax2 = "5" Ax3 = "7" An = " A1" />
+		<ExecMacro MacroName = "Split" Ax1 = "6" Ax2 = "7" Ax3 = "1" />
+		<ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" Ax3 = "3" />
+		<ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "3" Ax3 = "5" />
+		
+		<ExecMacro MacroName = "Split" Ax1 = "5" Ax2 = "4" Ax3 = "2" />
+		<ExecMacro MacroName = "Split" Ax1 = "3" Ax2 = "2" Ax3 = "0" />
+		<ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "0" Ax3 = "6" />
+		<ExecMacro MacroName = "Split" Ax1 = "7" Ax2 = "6" Ax3 = "4" />
+		
+		<ExecMacro MacroName = "Split" Ax1 = "4" Ax2 = "3" Ax3 = "1" An = "-A1" />
+		<ExecMacro MacroName = "Split" Ax1 = "6" Ax2 = "5" Ax3 = "3" />
+		<ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "7" Ax3 = "5" />
+		<ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "1" Ax3 = "7" />
+		
+		<ExecMacro MacroName = "Split" Ax1 = "5" Ax2 = "6" Ax3 = "0" />
+		<ExecMacro MacroName = "Split" Ax1 = "3" Ax2 = "4" Ax3 = "6" />
+		<ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" Ax3 = "4" />
+		<ExecMacro MacroName = "Split" Ax1 = "7" Ax2 = "0" Ax3 = "2" />
+    </Figure>
+</xml>

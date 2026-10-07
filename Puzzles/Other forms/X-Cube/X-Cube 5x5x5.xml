@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>X-Cube 5x5x5</Name>
+        <Menu>Other forms\X-Cube\X-Cube 5x5x5</Menu>
+        <Inventor>Michael Womack</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-12-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5505</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        Colors[ 6] := '00FFFF'; // clCyan
+        Colors[ 7] := '008080'; // clTeal
+        Colors[ 8] := 'FF00FF'; // clFuchsia
+        Colors[ 9] := '00FF00'; // clLime
+        Colors[10] := 'FF69B4'; // clPink
+        Colors[11] := '004000'; // clDarkGreen
+        Colors[12] := '808000'; // clOlive
+        Colors[13] := '800000'; // clBrown
+        Colors[14] := 'FF700A';
+        Colors[15] := '4D1340';
+        Colors[16] := '9E0000';
+        Colors[17] := '7F7040';
+
+        W := 0.5;
+        D := W * 0.15;
+        D3 := D * 3;
+        DCut2 := (W + D) / sqrt(2);
+        Nx3 := (D - W) / (D3 - D);
+        DCut3 := (D3 * Nx3 + 2 * W) / sqrt(Nx3^2 + 2);
+    </Script>
+
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D3;-D; D; D3" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Cut1" >
+            <HideContaining Vector = " 0;-D3; D3"/>
+            <InvertVisibility/>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0; 1;-1" NormDistance = "-DCut2" /></Cut>
+            <ShowAll/>
+            <HideContaining Vector = " D*1.1;-D3; D3"/>
+            <InvertVisibility/>
+            <Cut Color = "Colors[c]" ><Plane NormVector = "-Nx3; 1;-1" NormDistance = "-DCut3" /></Cut>
+            <ShowAll/>
+            <HideContaining Vector = "-D*1.1;-D3; D3"/>
+            <InvertVisibility/>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " Nx3; 1;-1" NormDistance = "-DCut3" /></Cut>
+            <ShowAll/>
+            <Script> Inc(c); </Script>
+            <Turn NormVector = " 1; 0; 0" Angle = "Pi/2" />
+        </Macro>
+        <Macro Name = "Cut4" >
+            <ExecMacro MacroName = "Cut1" Repeat = "4" />
+            <Turn NormVector = " 1; 1; 1" Angle = "2 * Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Cut4" c = "6" Repeat = "3" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

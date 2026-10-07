@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>X-Skewb</Name>
+        <Menu>Other cubes\Morph\X-Skewb</Menu>
+        <Inventor>Lawrence Cuthbert</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-12-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3277</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        H := sqrt(2) / 3;
+        D := H / 2 / sqrt(3);
+
+        WX := W;
+        WY := W;
+        WZ := H;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi / 4" />
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "0" From = "1" Color1 = "Colors[0]" />
+        <Split Axis = "0" From = "2" Color2 = "Colors[1]" />
+        <Split Axis = "1" From = "1" Color1 = "Colors[1]" />
+        <Split Axis = "1" From = "2" Color2 = "Colors[0]" />
+        <Split Axis = "2" From = "1" Color1 = "Colors[2]" />
+        <Split Axis = "2" From = "2" Color2 = "Colors[3]" />
+        <Split Axis = "3" From = "1" Color1 = "Colors[3]" />
+        <Split Axis = "3" From = "2" Color2 = "Colors[2]" />
+
+        <HideContaining Vector = " W * 0.9; 0; H" />
+        <HideContaining Vector = " W * 0.9; 0;-H" />
+        <HideContaining Vector = "-W * 0.9; 0; H" />
+        <HideContaining Vector = "-W * 0.9; 0;-H" />
+        <HideContaining Vector = " 0;-W * 0.9; H" />
+        <HideContaining Vector = " 0;-W * 0.9;-H" />
+        <HideContaining Vector = " 0; W * 0.9; H" />
+        <HideContaining Vector = " 0; W * 0.9;-H" />
+
+        <RemoveAllVisible/>
+	
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " W; 0; H" />
+        <RemoveContaining Vector = " 0; W; H" />
+        <RemoveContaining Vector = "-W; 0; H" />
+        <RemoveContaining Vector = " 0;-W; H" />
+        <RemoveContaining Vector = " W; 0;-H" />
+        <RemoveContaining Vector = " 0; W;-H" />
+        <RemoveContaining Vector = "-W; 0;-H" />
+        <RemoveContaining Vector = " 0;-W;-H" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

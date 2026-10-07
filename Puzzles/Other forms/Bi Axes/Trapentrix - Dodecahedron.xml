@@ -1,0 +1,38 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Trapentrix - Dodecahedron</Name>
+        <Menu>Other forms\Bi Axes\Trapentrix - Dodecahedron</Menu>
+        <Menu>Other forms\Dodecahedron\Vertex Turning\BiAxes Trapentrix</Menu>
+        <Programmer>knightcrawler</Programmer>
+        <Added>2016-09-18</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R / 3 / sqrt(5);
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "vx[11]; vy[11]; vz[11]" />
+        <Axis NormVector = "vx[13]; vy[13]; vz[13]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Turn">
+            <Turn Axis = "0" Angle = "Pi * 2 / 3" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "Pi * 4 / 3" Layer = "1" /> <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Turn" Repeat = "9" />
+
+        <Undo Repeat = "18" />
+
+    </Figure>
+</xml>

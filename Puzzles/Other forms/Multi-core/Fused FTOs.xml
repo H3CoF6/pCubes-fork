@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fused FTOs</Name>
+        <Menu>Other forms\Multi-core\Fused FTOs</Menu>
+        <Inventor>Jay Matthews</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6326</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+        D := W / 3;
+    </Script>
+ 
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "W / 3 / sqrt(3)" >
+        <Axis NormVector = "-1;-1; 1" BaseVector = "-D; 0; 0" />
+        <Axis NormVector = "-1;-1;-1" BaseVector = "-D; 0; 0" />
+        <Axis NormVector = "-1; 1; 1" BaseVector = "-D; 0; 0" />
+        <Axis NormVector = "-1; 1;-1" BaseVector = "-D; 0; 0" />
+
+        <Axis NormVector = " 1;-1; 1" BaseVector = " D; 0; 0" />
+        <Axis NormVector = " 1;-1;-1" BaseVector = " D; 0; 0" />
+        <Axis NormVector = " 1; 1; 1" BaseVector = " D; 0; 0" />
+        <Axis NormVector = " 1; 1;-1" BaseVector = " D; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = "-D; 0; 0" />
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <Transfer Vector = " D; 0; 0" />
+        <Cut><Plane NormVector = " 1; 0; 0" /></Cut>
+        <HideAll/>
+
+        <Transfer Vector = " D; 0; 0" />
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <Transfer Vector = "-D; 0; 0" />
+        <Cut><Plane NormVector = "-1; 0; 0" /></Cut>
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Split><Plane NormVector = "-1;-1; 1" /></Split>
+        <Split><Plane NormVector = "-1;-1;-1" /></Split>
+        <Split><Plane NormVector = "-1; 1; 1" /></Split>
+        <Split><Plane NormVector = "-1; 1;-1" /></Split>
+
+    </Figure>
+</xml>

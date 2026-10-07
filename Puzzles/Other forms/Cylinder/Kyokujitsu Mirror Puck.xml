@@ -1,0 +1,101 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Kyokujitsu Mirror Puck</Name>
+        <Menu>Other forms\Cylinder\Kyokujitsu Mirror Puck</Menu>
+        <Inventor>Tony Ramírez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8739</Link>
+    </Interface>
+
+    <Script>
+        Color1 := 'CCCCCC'; // White
+        Color2 := 'D83333'; // Red
+
+        R := 0.6;
+        N := 10;
+
+        R1 := R * 0.6;
+        R2 := R * 0.3;
+        H := R * 0.25;
+        H1 := H * 1.002;
+        Angle := 2 * Pi / N;
+
+        dx := R * 0.17;
+        dy := R * 0.09;
+    </Script>
+
+    <Axes TurningAngles = "0; Angle; 0" PlaneDistances = "-H; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Radius = "R" Color = "Color2" >
+           <Base X = "dx" Y = "dy" Z = " H" Color = "Color2" />
+           <Top  X = "dx" Y = "dy" Z = "-H" Color = "Color2" />
+        </Cylinder>
+
+        <Macro Name = "Split">
+            <Split Color1 = "Color" Color2 = "Color" Axis = "1" From = "1" />
+            <Turn Axis = "0" Angle = "Angle" Layer = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Color = "Color2" Repeat = "5" />
+        <Undo Repeat = "5" />
+
+        <Macro Name = "Remove">
+            <RemoveContaining Vector = "R1; 0; 0" />
+            <Turn Axis = "0" Angle = "Angle * 2" Layer = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Remove" Repeat = "5" />
+        <Undo Repeat = "5" />
+
+        <HideAll/>
+
+        <Cylinder Radius = "R" Color = "Color1" >
+           <Base X = "dx" Y = "dy" Z = " H" Color = "Color1" />
+           <Top  X = "dx" Y = "dy" Z = "-H" Color = "Color1" />
+        </Cylinder>
+
+        <Macro Name = "Split">
+            <Split Color1 = "Color" Color2 = "Color" Axis = "1" From = "1" />
+            <Turn Axis = "0" Angle = "Angle" Layer = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Color = "Color1" Repeat = "5" />
+        <Undo Repeat = "5" />
+
+        <Turn Axis = "0" Angle = "Angle" Layer = "1" />
+        <Macro Name = "Remove">
+            <RemoveContaining Vector = "R1; 0; 0" />
+            <Turn Axis = "0" Angle = "Angle * 2" Layer = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Remove" Repeat = "5" />
+        <Undo Repeat = "6" />
+        <ShowAll/>
+
+        <Circle Radius = "R1" Color = "Color2" Center = " 0; 0; H1" />
+        <Circle Radius = "R1" Color = "Color2" Center = " 0; 0;-H1" />
+
+        <Split Axis = "1" From = "1" />
+
+        <Macro Name = "Save">
+            <SaveSolvedState/>
+            <Turn Axis = "0" Layer = "1" Angle = "Angle" />
+        </Macro>
+        <ExecMacro MacroName = "Save" Repeat = "10" />
+
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "1" Layer = "0" Angle = "Pi" />
+        <ExecMacro MacroName = "Save" Repeat = "10" />
+        <Undo Repeat = "23" />
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

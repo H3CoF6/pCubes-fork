@@ -1,0 +1,117 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bagua Illusion</Name>
+        <Aliases>Dayan Bagua Cube Black and White Fusion I</Aliases>
+        <Menu>Other cubes\OctoCube\Bagua Illusion</Menu>
+        <Inventor>Fabio Bini Graciose</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-07-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8727</Link>
+    </Interface>
+
+    <Script>
+        clBlack := '444444';
+        clWhite := 'FFFFFF';
+
+        W := 0.5;
+        D := 0.45 * W;
+        LC := 0.9 * W;
+        LE := (LC + D) / sqrt(2);
+        W0 := W;
+
+        Coords[0] :=-W;
+        Coords[1] := 0;
+        Coords[2] := W;
+
+        OddCubes := 0;
+        for i := 0 to 2 do
+            for j := 0 to 2 do
+                for k := 0 to 2 do
+                    if (i + j + k) mod 2 = 0 then begin
+                        OddX[OddCubes] := Coords[i];
+                        OddY[OddCubes] := Coords[j];
+                        OddZ[OddCubes] := Coords[k];
+                        Inc(OddCubes);
+                    end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" W = "W * 1.1" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "CutCenters" >
+            <HideContaining Vector = "Cx[Id]; Cy[Id]; Cz[Id]" />
+            <InvertVisibility />
+            <Cut> <Plane NormVector = "Cx[Id]; Cy[Id]; Cz[Id]" NormDistance = "LC" /> </Cut>
+            <ShowAll/>
+            <Script> Inc(Id); </Script>
+        </Macro>
+
+        <Macro Name = "CutEdges" >
+            <HideContaining Vector = "Ex[Id]; Ey[Id]; Ez[Id]" />
+            <InvertVisibility />
+            <Cut> <Plane NormVector = "Ex[Id]; Ey[Id]; Ez[Id]" NormDistance = "LE" /> </Cut>
+            <ShowAll/>
+            <Script> Inc(Id); </Script>
+        </Macro>
+
+        // cut core to avoid creation of small parts
+        <ExecMacro MacroName = "CutCenters" Id = "0" Repeat = "6" />
+        <ExecMacro MacroName = "CutEdges" Id = "0" Repeat = "12" />
+
+        <HideContaining Vector = "OddX; OddY; OddZ" />
+
+        <Cut Color = "clBlack" > <Plane NormVector = " 1; 0; 0" NormDistance = "-W0" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W0" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W0" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W0" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W0" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W0" /> </Cut>
+        <ShowAll/>
+
+        <Cut Color = "clWhite" > <Plane NormVector = " 1; 0; 0" NormDistance = "-W0" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W0" /> </Cut>
+        <Cut Color = "clBlack" > <Plane NormVector = " 0; 1; 0" NormDistance = "-W0" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 0;-1; 0" NormDistance = "-W0" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W0" /> </Cut>
+        <Cut Color = "clWhite" > <Plane NormVector = " 0; 0;-1" NormDistance = "-W0" /> </Cut>
+        <ShowAll/>
+
+        <Macro Name = "Split" >
+            <Hide Axis = "Ax1" Layers = "0;2" />
+            <Turn Axis = "Ax2" Layers = "0;2" Angle = "Pi / 4" />
+            <SplitByAxes/>
+            <Undo/>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" />
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "1" />
+
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Bagua" File = "Puzzles\Other cubes\OctoCube\Bagua.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Bagua = 22,5,3, 123,5,7, 56,5,3, 89,5,1, 70,5,5, 75,5,1
+    </SetTextures>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

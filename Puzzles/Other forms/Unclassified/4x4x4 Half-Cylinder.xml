@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4x4x4 Half-Cylinder</Name>
+        <Menu>Other forms\Unclassified\4x4x4 Half-Cylinder</Menu>
+        <Inventor>Manuel Garcéa Rubikonde</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-12-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9362</Link>
+    </Interface>
+
+    <Script>
+        Color0 := '0000C8'; // Blue
+        Color1 := '009600'; // Green
+        Color2 := 'FFFF00'; // Yellow
+        Color3 := 'FFFFFF'; // White
+
+        R := 0.6;
+        D := R / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Radius = "R" Color = "Color0" Base = " 0; 0;-R" BaseColor = "Color2" Top = "0;0;R" TopColor = "Color3" />
+        <Cut Axis = "0" To   = "2" />
+        <Cut Axis = "1" To   = "2" />
+        <HideAll/>
+        <Cylinder Radius = "R" Color = "Color1" Base = " 0; 0;-R" BaseColor = "Color2" Top = "0;0;R" TopColor = "Color3" />
+        <Cut Axis = "0" To   = "2" />
+        <Cut Axis = "1" From = "2" />
+        <HideAll/>
+        <Cylinder Radius = "R" Color = "Color2" Base = " 0;-R; 0" BaseColor = "Color0" Top = "0;R;0" TopColor = "Color1" />
+        <Cut Axis = "0" From = "2" />
+        <Cut Axis = "2" To   = "2" />
+        <HideAll/>
+        <Cylinder Radius = "R" Color = "Color3" Base = " 0;-R; 0" BaseColor = "Color0" Top = "0;R;0" TopColor = "Color1" />
+        <Cut Axis = "0" From = "2" />
+        <Cut Axis = "2" From = "2" />
+        <ShowAll/>  
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+
+		<Turn Axis = "0" Layers = "2-3" Angle = " Pi/2" />
+		<Turn Axis = "1" Layers = "0-1" Angle = " Pi  " />
+		<Turn Axis = "0" Layers = "0-1" Angle = " Pi  " />
+		<Turn Axis = "1" Layers = "2-3" Angle = "-Pi/2" />
+        <SaveSolvedState/>
+
+        <Undo Repeat = "4" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

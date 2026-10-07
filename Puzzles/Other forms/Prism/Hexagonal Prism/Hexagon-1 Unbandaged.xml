@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagon-1 Unbandaged</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Hexagon-1 Unbandaged</Menu>
+        <Inventor>Alexander Sosnovsky</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9520</Link>
+    </Interface>
+
+    <Script>
+        R := 0.6;
+        H := R * 0.7;
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 3 * i);
+            y[i] := R * sin(Pi / 3 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 9" PlaneDistances = "-H/3; H/3" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "-Pi/18" />
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+            <Faces>
+                <Face Color = "FFFF00" VertexIndexes = " 1; 0; 6; 7" />
+                <Face Color = "FF64FF" VertexIndexes = " 2; 1; 7; 8" />
+                <Face Color = "FF6000" VertexIndexes = " 3; 2; 8; 9" />
+                <Face Color = "00FF00" VertexIndexes = " 4; 3; 9;10" />
+                <Face Color = "0064FF" VertexIndexes = " 5; 4;10;11" />
+                <Face Color = "FF0000" VertexIndexes = " 0; 5;11; 6" />
+
+                <Face Color = "646464" VertexIndexes = "11;10; 9; 8; 7; 6" />
+                <Face Color = "C8C8C8" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+
+        <Turn  Axis = "0" Layer = "1" Angle = " Pi / 9" />
+        <SplitByAxes/>
+        <Undo/>
+    </Figure>
+</xml>

@@ -1,0 +1,194 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pleione 65 (AC)</Name>
+        <Menu>Other forms\2d\Pleione\Pleione 65 (AC)</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-04</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?t=38366</Link>
+    </Interface>
+
+    <Script>
+        clBlack := '202020';
+        clPink  := 'FF69B4';
+
+        K  := 0.75;
+        s3 := sqrt(3);
+        s5 := sqrt(5);
+
+        C0 := K * (s5 - 1) / 4;
+        C1 := K * 3 * (9 + s5) / 76;
+        C2 := K * 3 * (7 + 5 * s5) / 76;
+        C3 := K * (1 + s5) / 4;
+        C4 := K * 1 / 2;
+
+        D := K * s3 / 38 * (8 + 3 * s5);
+        E := K * sqrt(5 * (5 + 2 * s5)) / 10;
+        F := K * 3 / 218 * sqrt(1609 + 2942 / s5);
+        G := (C0+C3)/s3;
+
+        a1 := arccos(C2/sqrt(C2^2+C1^2));
+        a2 := arccos(((C2 + C1) * C4/sqrt(C2^2+C1^2)/s3/C4));
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "F" FixedLayers = "0">
+        <Axis NormVector = " 0;-C2; C1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = " C4;-C4; C4" />
+    </Axes>
+
+    <Figure>
+        <!-- code of Catalan Solids - Pentakis Dodecahedron -->
+        <Macro Name = "Part">
+            <Part>
+                <Vertices>
+                    <Add Vector = "  0; C0; C3" />
+                    <Add Vector = "  0; C0;-C3" />
+                    <Add Vector = "  0;-C0; C3" />
+                    <Add Vector = "  0;-C0;-C3" />
+                    <Add Vector = " C3;  0; C0" />
+                    <Add Vector = " C3;  0;-C0" />
+                    <Add Vector = "-C3;  0; C0" />
+                    <Add Vector = "-C3;  0;-C0" />
+                    <Add Vector = " C0; C3;  0" />
+                    <Add Vector = " C0;-C3;  0" />
+                    <Add Vector = "-C0; C3;  0" />
+                    <Add Vector = "-C0;-C3;  0" />
+                    <Add Vector = " C1;  0; C2" />
+                    <Add Vector = " C1;  0;-C2" />
+                    <Add Vector = "-C1;  0; C2" />
+                    <Add Vector = "-C1;  0;-C2" />
+                    <Add Vector = " C2; C1;  0" />
+                    <Add Vector = " C2;-C1;  0" />
+                    <Add Vector = "-C2; C1;  0" />
+                    <Add Vector = "-C2;-C1;  0" />
+                    <Add Vector = "  0; C2; C1" />
+                    <Add Vector = "  0; C2;-C1" />
+                    <Add Vector = "  0;-C2; C1" />
+                    <Add Vector = "  0;-C2;-C1" />
+                    <Add Vector = " C4; C4; C4" />
+                    <Add Vector = " C4; C4;-C4" />
+                    <Add Vector = " C4;-C4; C4" />
+                    <Add Vector = " C4;-C4;-C4" />
+                    <Add Vector = "-C4; C4; C4" />
+                    <Add Vector = "-C4; C4;-C4" />
+                    <Add Vector = "-C4;-C4; C4" />
+                    <Add Vector = "-C4;-C4;-C4" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "12; 0; 2" />
+                    <Face Color = "Color" VertexIndexes = "12; 2;26" />
+                    <Face Color = "Color" VertexIndexes = "12;26; 4" />
+                    <Face Color = "Color" VertexIndexes = "12; 4;24" />
+                    <Face Color = "Color" VertexIndexes = "12;24; 0" />
+                    <Face Color = "Color" VertexIndexes = "15; 1; 3" />
+                    <Face Color = "Color" VertexIndexes = "15; 3;31" />
+                    <Face Color = "Color" VertexIndexes = "15;31; 7" />
+                    <Face Color = "Color" VertexIndexes = "15; 7;29" />
+                    <Face Color = "Color" VertexIndexes = "15;29; 1" />
+
+                    <Face Color = "Color" VertexIndexes = "13; 3; 1" />
+                    <Face Color = "Color" VertexIndexes = "13; 1;25" />
+                    <Face Color = "Color" VertexIndexes = "13;25; 5" />
+                    <Face Color = "Color" VertexIndexes = "13; 5;27" />
+                    <Face Color = "Color" VertexIndexes = "13;27; 3" />
+                    <Face Color = "Color" VertexIndexes = "14; 2; 0" />
+                    <Face Color = "Color" VertexIndexes = "14; 0;28" />
+                    <Face Color = "Color" VertexIndexes = "14;28; 6" />
+                    <Face Color = "Color" VertexIndexes = "14; 6;30" />
+                    <Face Color = "Color" VertexIndexes = "14;30; 2" />
+
+                    <Face Color = "Color" VertexIndexes = "16; 4; 5" />
+                    <Face Color = "Color" VertexIndexes = "16; 5;25" />
+                    <Face Color = "Color" VertexIndexes = "16;25; 8" />
+                    <Face Color = "Color" VertexIndexes = "16; 8;24" />
+                    <Face Color = "Color" VertexIndexes = "16;24; 4" />
+                    <Face Color = "Color" VertexIndexes = "19; 6; 7" />
+                    <Face Color = "Color" VertexIndexes = "19; 7;31" />
+                    <Face Color = "Color" VertexIndexes = "19;31;11" />
+                    <Face Color = "Color" VertexIndexes = "19;11;30" />
+                    <Face Color = "Color" VertexIndexes = "19;30; 6" />
+
+                    <Face Color = "Color" VertexIndexes = "17; 5; 4" />
+                    <Face Color = "Color" VertexIndexes = "17; 4;26" />
+                    <Face Color = "Color" VertexIndexes = "17;26; 9" />
+                    <Face Color = "Color" VertexIndexes = "17; 9;27" />
+                    <Face Color = "Color" VertexIndexes = "17;27; 5" />
+                    <Face Color = "Color" VertexIndexes = "18; 7; 6" />
+                    <Face Color = "Color" VertexIndexes = "18; 6;28" />
+                    <Face Color = "Color" VertexIndexes = "18;28;10" />
+                    <Face Color = "Color" VertexIndexes = "18;10;29" />
+                    <Face Color = "Color" VertexIndexes = "18;29; 7" />
+
+                    <Face Color = "Color" VertexIndexes = "20; 8;10" />
+                    <Face Color = "Color" VertexIndexes = "20;10;28" />
+                    <Face Color = "Color" VertexIndexes = "20;28; 0" />
+                    <Face Color = "Color" VertexIndexes = "20; 0;24" />
+                    <Face Color = "Color" VertexIndexes = "20;24; 8" />
+                    <Face Color = "Color" VertexIndexes = "23; 9;11" />
+                    <Face Color = "Color" VertexIndexes = "23;11;31" />
+                    <Face Color = "Color" VertexIndexes = "23;31; 3" />
+                    <Face Color = "Color" VertexIndexes = "23; 3;27" />
+                    <Face Color = "Color" VertexIndexes = "23;27; 9" />
+
+                    <Face Color = "Color" VertexIndexes = "21;10; 8" />
+                    <Face Color = "Color" VertexIndexes = "21; 8;25" />
+                    <Face Color = "Color" VertexIndexes = "21;25; 1" />
+                    <Face Color = "Color" VertexIndexes = "21; 1;29" />
+                    <Face Color = "Color" VertexIndexes = "21;29;10" />
+                    <Face Color = "Color" VertexIndexes = "22;11; 9" />
+                    <Face Color = "Color" VertexIndexes = "22; 9;26" />
+                    <Face Color = "Color" VertexIndexes = "22;26; 2" />
+                    <Face Color = "Color" VertexIndexes = "22; 2;30" />
+                    <Face Color = "Color" VertexIndexes = "22;30;11" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "Split">
+            <SplitByAxes/>
+            <Turn Axis = "0" Layer = "1" Angle = "2*Pi/5" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi/3" />
+        </Macro>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clPink" />
+        <Cut Axis = "1" From = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Color = "clBlack"    > <Plane NormVector = "  0; -C2;  C1" NormDistance = " E" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "Part" Color = "clBlack" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut                  > <Plane NormVector = "  0;  C2; -C1" NormDistance = "-E" /> </Cut>
+        <Cut Color = "clBlack"> <Plane NormVector = " C4; -C4;  C4" NormDistance = " G" /> </Cut>
+        <ShowAll/>
+        <ExecMacro MacroName = "Split" Repeat = "15" />
+        <Undo Repeat = "30"/>
+        <SaveSolvedState/>
+
+        <Turn NormVector = " 0; -C2; C1" Angle = " 2*Pi/5" />
+        <Turn NormVector = " 1; 0; 0" Angle = "a1" />
+        <Turn NormVector = " 1; 0; 0" Angle = "a2/2" />
+        <Turn NormVector = " 0; 1; 0" Angle = "-Pi/2" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

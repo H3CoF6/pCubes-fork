@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bram Weirdlings - Corner face180 3 (c12, f13) - Modular Cube</Name>
+        <Menu>Other cubes\Bram Weirdlings\Corner face\3 (c12, f13) - Modular Cube</Menu>
+        <Inventor>William Kretschmer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-08-07</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=32144</Link>
+    </Interface>
+
+    <Script>
+        // Face
+        W := 0.5;
+        F13 := W / 3;
+
+        // Angle
+        aF := Pi;
+        aC := 2*Pi/3;
+    </Script>
+
+    <Axes TurningAngles = "aC" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; -1; 1" />
+    </Axes>
+    <Axes TurningAngles = "aF" PlaneDistances = "F13" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "TurnAndSplit">
+            <Turn Axis = "0" Angle = "aC" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Angle = "aF" Layer = "1" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "TurnAndSplit" Repeat = "6" />
+
+        <Macro Name = "Undo">
+            <Turn Axis = "1" Angle = "-aF" Layer = "1" />
+            <Turn Axis = "0" Angle = "-aC" Layer = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Undo" Repeat = "6" />
+
+    </Figure>
+</xml>

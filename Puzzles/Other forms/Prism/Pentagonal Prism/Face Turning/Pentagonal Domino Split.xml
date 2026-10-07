@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentagonal Domino Split</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Face Turning\Pentagonal Domino Split</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2015-05-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1892</Link>
+    </Interface>
+
+    <Script>
+        D := 0.6;
+        H := 0.6;
+        for i := 0 to 4 do begin
+            x[i] := D * cos(2 * Pi / 5 * i);
+            y[i] := D * sin(2 * Pi / 5 * i);
+        end;
+        Da := D * 0.4;
+        for i := 0 to 4 do begin
+            ax[i] := D * cos(2 * Pi / 5 * i);
+            ay[i] := D * sin(2 * Pi / 5 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-Da" FixedLayers = "1" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "ax[0]; ay[0]; 0" />
+        <Axis NormVector = "ax[1]; ay[1]; 0" />
+        <Axis NormVector = "ax[2]; ay[2]; 0" />
+        <Axis NormVector = "ax[3]; ay[3]; 0" />
+        <Axis NormVector = "ax[4]; ay[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+              <Vertices>
+                  <Add Vector = "x[0]; y[0]; H / 2" />
+                  <Add Vector = "x[1]; y[1]; H / 2" />
+                  <Add Vector = "x[2]; y[2]; H / 2" />
+                  <Add Vector = "x[3]; y[3]; H / 2" />
+                  <Add Vector = "x[4]; y[4]; H / 2" />
+                  <Add Vector = "x[0]; y[0]; -H / 2" />
+                  <Add Vector = "x[1]; y[1]; -H / 2" />
+                  <Add Vector = "x[2]; y[2]; -H / 2" />
+                  <Add Vector = "x[3]; y[3]; -H / 2" />
+                  <Add Vector = "x[4]; y[4]; -H / 2" />
+            </Vertices>
+            <Faces>
+                <Face Color = "FFFF00" VertexIndexes = "1;0;5;6" />
+                <Face Color = "FF64FF" VertexIndexes = "2;1;6;7" />
+                <Face Color = "FF6000" VertexIndexes = "3;2;7;8" />
+                <Face Color = "00FF00" VertexIndexes = "4;3;8;9" />
+                <Face Color = "FF0000" VertexIndexes = "0;4;9;5" />
+                <Face Color = "646464" VertexIndexes = "9;8;7;6;5" />
+                <Face Color = "C8C8C8" VertexIndexes = "0;1;2;3;4" />
+            </Faces>
+        </Part>
+        
+        <SplitByAxes/>
+
+           <Turn Axis = "0" Angle = "Pi / 2" Layer = "0" />
+           <Split Axis = "5" From = "1" />
+           <Turn Axis = "0" Angle = "-Pi / 2" Layer = "0" />
+
+           <Turn Axis = "1" Angle = "Pi / 2" Layer = "0" />
+           <Split Axis = "5" From = "1" />
+           <Turn Axis = "1" Angle = "-Pi / 2" Layer = "0" />
+
+           <Turn Axis = "2" Angle = "Pi / 2" Layer = "0" />
+           <Split Axis = "5" From = "1" />
+           <Turn Axis = "2" Angle = "-Pi / 2" Layer = "0" />
+
+           <Turn Axis = "3" Angle = "Pi / 2" Layer = "0" />
+           <Split Axis = "5" From = "1" />
+           <Turn Axis = "3" Angle = "-Pi / 2" Layer = "0" />
+
+           <Turn Axis = "4" Angle = "Pi / 2" Layer = "0" />
+           <Split Axis = "5" From = "1" />
+           <Turn Axis = "4" Angle = "-Pi / 2" Layer = "0" />
+    </Figure>
+</xml>

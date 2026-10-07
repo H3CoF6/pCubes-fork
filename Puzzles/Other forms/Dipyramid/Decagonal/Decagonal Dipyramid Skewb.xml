@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Decagonal Dipyramid Skewb</Name>
+        <Menu>Other forms\Dipyramid\Decagonal\Decagonal Dipyramid Skewb</Menu>
+        <Menu>Other forms\Skewb variants\Dipyramid\Decagonal Dipyramid Skewb</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3942</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '0000A0'; // Blue
+        Colors[ 1] := '008000'; // Green
+        Colors[ 2] := 'FF0000'; // Red
+        Colors[ 3] := 'FF6000'; // Orange
+        Colors[ 4] := 'FFFF00'; // Yellow
+        Colors[ 5] := 'FFFFFF'; // White
+        Colors[ 6] := 'AABB20'; // Golden
+        Colors[ 7] := '800080'; // Purple
+        Colors[ 8] := '7FFF00'; // Lime
+        Colors[ 9] := '008080'; // Teal
+        Colors[10] := '2828FF'; // LightBlue
+        Colors[11] := '00FF00'; // LightGreen
+        Colors[12] := '800000'; // Brown
+        Colors[13] := '8000CF'; // Violett
+        Colors[14] := 'FF0080'; // LightViolett
+        Colors[15] := '00DCB4'; // Cyan
+        Colors[16] := 'FF69B4'; // Pink
+        Colors[17] := '808000'; // Olive
+        Colors[18] := 'F0E68C'; // Khaki
+        Colors[19] := '00BFFF'; // DeepSky
+
+        R := 0.4;
+        H := R * 1.7;
+        N := 10;
+
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "1;0;0" Angle = "Pi/4 + ArcTan(2 - sqrt(5))" />
+
+        <Macro Name = "AddUpFace" >
+            <Face Color = "Colors[i]" VertexIndexes = "N; i; (i + 1) mod N" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "AddDownFace" >
+            <Face Color = "Colors[i]" VertexIndexes = "N + 1; (i + 1) mod N; i mod N" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " x; y; 0" />
+            <Vertices Vectors = " 0; 0; H" />
+            <Vertices Vectors = " 0; 0;-H" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddUpFace" i = "0" Repeat = "N" />
+                <ExecMacro MacroName = "AddDownFace" Repeat = "N" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

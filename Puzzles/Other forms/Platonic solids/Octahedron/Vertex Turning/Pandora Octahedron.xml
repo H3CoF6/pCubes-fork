@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pandora Octahedron</Name>
+        <Menu>Other forms\Octahedron\Vertex Turning\Pandora Octahedron</Menu>
+        <Menu>Other forms\3x3x3 variants\Platonic\Pandora Octahedron</Menu>
+        <Inventor>Justin Eplett</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-11-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7233</Link>
+    </Interface>
+
+    <Script>
+        W := 0.75;
+        D := W / 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+
+        <Macro Name = "Cut" >
+            <Cut InvisibleEdges = "-1"><Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "-2 * D" /></Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "6" />
+
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 7 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <RemoveContaining Vector = "Vx;Vy;Vz" />
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+
+        <Macro Name = "Hide" >
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" ><Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "-2 * D" /></Split>
+            <Hide><Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "-2 * D" /></Hide>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" i = "0" Repeat = "6" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+</xml>

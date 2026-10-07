@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Quarter Cube</Name>
+        <Menu>Cubic\Constrained\Quarter Cube</Menu>
+        <Inventor>Katsuhiko Okamoto</Inventor>
+        <Programmer>Andrea</Programmer>
+        <Added>2014-03-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3515</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+
+        // small squares
+        Sq := W * 0.025;
+        DS := W * 0.2;
+        WS := W * 1.008;
+    </Script>
+ 
+    <Axes TurningAngles = "0; Pi/2; 0; Pi/2; 0" PlaneDistances = "-W;-D; D; W" >
+        <Axis NormVector = "1; 0; 0" MinAngles = "0; 0; 0; -Pi/2; 0" MaxAngles = "0; Pi/2; 0; 0; 0" />
+        <Axis NormVector = "0; 1; 0" MinAngles = "0; 0; 0; -Pi/2; 0" MaxAngles = "0; Pi/2; 0; 0; 0" />
+        <Axis NormVector = "0; 0; 1" MinAngles = "0; 0; 0; -Pi/2; 0" MaxAngles = "0; Pi/2; 0; 0; 0" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "AddSSq" >
+           <Part>
+               <Vertices>
+                   <Add Vector = "WS;-sq; DS + sq" />
+                   <Add Vector = "WS;-sq; DS - sq" />
+                   <Add Vector = "WS; sq; DS - sq" />
+                   <Add Vector = "WS; sq; DS + sq" />
+               </Vertices>
+               <Faces>
+                   <Face Color = "Color" VertexIndexes = "0;1;2;3" />
+               </Faces>
+           </Part>
+           <Turn NormVector = "1;0;0" Angle = "Pi" />
+        </Macro>
+
+        <Macro Name = "AddSideSq" >
+            <Turn NormVector = "0;0;1" Angle = "-X * Pi/2" />
+            <Turn NormVector = "0;1;0" Angle = " Y * Pi/2" />
+            <ExecMacro MacroName = "AddSq" Repeat = "2" />
+            <Turn NormVector = "0;1;0" Angle = "-Y * Pi/2" />
+            <Turn NormVector = "0;0;1" Angle = " X * Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "AddSideSq" Color = "clRed"    X = "2" Y = "0" />
+        <ExecMacro MacroName = "AddSideSq" Color = "clOrange" X = "0" Y = "0" />
+        <ExecMacro MacroName = "AddSideSq" Color = "clBlue"   X = "3" Y = "0" />
+        <ExecMacro MacroName = "AddSideSq" Color = "clGreen"  X = "1" Y = "0" />
+        <ExecMacro MacroName = "AddSideSq" Color = "clYellow" X = "1" Y = "3" />
+        <ExecMacro MacroName = "AddSideSq" Color = "clWhite"  X = "1" Y = "1" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Quarter" File = "Quarter Center.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Quarter = 4,0,1, 10,0,1, 12,0,1, 13,0,1, 15,0,1, 21,0,1
+    </SetTextures>
+</xml>

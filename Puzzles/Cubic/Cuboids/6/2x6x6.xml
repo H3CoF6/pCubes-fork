@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cuboid 2x6x6</Name>
+        <Menu>Cubic\Cuboids\6\2x6x6</Menu>
+        <Inventor>Traiphum Prungtaengkit</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7955</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3242</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        X := 6;
+        Y := 6;
+        Z := 2;
+        Add := 1.2;
+
+        N := Max(Max(x, y), z);
+        WD := W / (N / 2 + Add);
+        for i := 0 to N - 2 do
+            D[i] := WD * i - WD * (N / 2 - 1);
+
+        WX := WD * (X / 2 + Add);
+        WY := WD * (Y / 2 + Add);
+        WZ := WD * (Z / 2 + Add);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Cx[c];Cy[c];Cz[c]" NormDistance = "WD * (-L / 2 + i)" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" c = "0" i = "1" L = "X" />
+        <ExecMacro MacroName = "Split" c = "1" i = "1" L = "X" />
+        <ExecMacro MacroName = "Split" c = "2" i = "1" L = "Y" />
+        <ExecMacro MacroName = "Split" c = "3" i = "1" L = "Y" />
+        <ExecMacro MacroName = "Split" c = "4" i = "1" L = "Z" />
+        <ExecMacro MacroName = "Split" c = "5" i = "1" L = "Z" />
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <ExecMacro MacroName = "Split" c = "4" i = "1" L = "N" />
+        <ExecMacro MacroName = "Split" c = "5" i = "1" L = "N" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <ExecMacro MacroName = "Split" c = "1" L = "X" i = "2" Repeat = "X - 3" />
+        <ExecMacro MacroName = "Split" c = "3" L = "Y" i = "2" Repeat = "Y - 3" />
+        <ExecMacro MacroName = "Split" c = "5" L = "Z" i = "2" Repeat = "Z - 3" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "0" Layer = "Random(N)" Angle = "Pi" />
+            <Turn Axis = "1" Layer = "Random(N)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(N)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script>N := 6;</Script>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

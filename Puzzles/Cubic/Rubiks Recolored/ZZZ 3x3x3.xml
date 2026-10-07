@@ -1,0 +1,153 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>ZZZ 3x3x3</Name>
+        <Menu>Cubic\Rubiks Recolored\ZZZ 3x3x3</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-07-30</Added>
+        <Link>http://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9055</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0080'; // pink
+        Colors[1] := 'F80000'; // red
+        Colors[2] := 'F67F05'; // orange
+        Colors[3] := 'FFFF00'; // yellow
+        Colors[4] := '005600'; // green
+        Colors[5] := '000078'; // blue
+
+        sColors[ 0] := '         1 4 1                 ';
+        sColors[ 1] := '        5 3 5 3                ';
+        sColors[ 2] := '         4 1 4                 ';
+        sColors[ 3] := '        3 5 3 5                ';
+        sColors[ 4] := '         1 4 1                 ';
+        sColors[ 5] := '        5 3 5 3                ';
+        sColors[ 6] := '         4 1 4                 ';
+        sColors[ 7] := ' 5 3 5   4 1 4   3 5 3   1 4 1 ';
+        sColors[ 8] := '2 0 2 0 0 2 0 2 2 0 2 0 0 2 0 2';
+        sColors[ 9] := ' 3 5 3   1 4 1   5 3 5   4 1 4 ';
+        sColors[10] := '0 2 0 2 2 0 2 0 0 2 0 2 2 0 2 0';
+        sColors[11] := ' 5 3 5   4 1 4   3 5 3   1 4 1 ';
+        sColors[12] := '2 0 2 0 0 2 0 2 2 0 2 0 0 2 0 2';
+        sColors[13] := ' 3 5 3   1 4 1   5 3 5   4 1 4 ';
+        sColors[14] := '         1 4 1                 ';
+        sColors[15] := '        3 5 3 5                ';
+        sColors[16] := '         4 1 4                 ';
+        sColors[17] := '        5 3 5 3                ';
+        sColors[18] := '         1 4 1                 ';
+        sColors[19] := '        3 5 3 5                ';
+        sColors[20] := '         4 1 4                 ';
+
+        W := 0.5;
+        D := W / 3;
+
+        N := 30;
+        step := W * 2 / N; // minimal step in coordinates
+        cv := 0; // Vertex Count
+
+        function GetId(xc, yc);
+        begin
+            xc := xc + i * 10;
+            yc := yc + j * 10;
+            xi := x + dx1 * xc + dx2 * yc;
+            yi := y + dy1 * xc + dy2 * yc;
+            zi := z + dz1 * xc + dz2 * yc;
+            if VarExists('Idx[' + IntToStr(xi) + ',' + IntToStr(yi) + ',' + IntToStr(zi) + ']') then
+                Result := Idx[xi, yi, zi]
+            else begin
+                Vx[cv] := xi * step - W;
+                Vy[cv] := yi * step - W;
+                Vz[cv] := zi * step - W;
+                Result := IntToStr(cv) + ';';
+                Idx[xi, yi, zi] := Result;
+                Inc(cv);
+            end;
+        end;
+
+        function GetColor(x3, y3);
+        begin
+            char := copy(sColors[sy + y3 + 2 * j], sx + x3 + 2 * i, 1);
+            Result := Colors[StrToInt(char)];
+        end;
+
+        procedure Polygon(ids, ies);
+        begin
+            S[cf] := ids;
+            Cl[cf] := BrushColor;
+            IE[cf] := ies;
+            Inc(cf);
+        end;
+
+        procedure MakeSide(x, y, z, dx1, dy1, dz1, dx2, dy2, dz2, sx, sy);
+        // x, y, z - left-top point of side
+        // dx1, dy1, dz1 - 1st counting vector
+        // dx2, dy2, dz2 - 2nd counting vector
+        // sx, sy - left-top letter in sColors
+        begin
+            for i := 0 to 2 do
+                for j := 0 to 2 do begin
+                    Id_00_00 := GetId( 0, 0);
+                    Id_00_10 := GetId( 0,10);
+                    Id_02_06 := GetId( 2, 6);
+                    Id_04_02 := GetId( 4, 2);
+                    Id_05_05 := GetId( 5, 5);
+                    Id_06_08 := GetId( 6, 8);
+                    Id_08_04 := GetId( 8, 4);
+                    Id_10_00 := GetId(10, 0);
+                    Id_10_10 := GetId(10,10);
+
+                    BrushColor := GetColor(0,1);
+                    Polygon( Id_00_10 + Id_02_06 + Id_00_00, 3);
+                    Polygon( Id_00_10 + Id_06_08 + Id_05_05 + Id_02_06, 15);
+
+                    BrushColor := GetColor(1,2);
+                    Polygon( Id_10_10 + Id_06_08 + Id_00_10, 3);
+                    Polygon( Id_10_10 + Id_08_04 + Id_05_05 + Id_06_08, 15);
+
+                    BrushColor := GetColor(2,1);
+                    Polygon( Id_10_00 + Id_08_04 + Id_10_10, 3);
+                    Polygon( Id_10_00 + Id_04_02 + Id_05_05 + Id_08_04, 15);
+
+                    BrushColor := GetColor(1,0);
+                    Polygon( Id_00_00 + Id_04_02 + Id_10_00, 3);
+                    Polygon( Id_00_00 + Id_02_06 + Id_05_05 + Id_04_02, 15);
+                end;
+        end;
+
+        cf := 0;
+        MakeSide( 0, N, N,  1, 0, 0,  0,-1, 0,  9, 0); // up
+        MakeSide( 0, 0, N,  1, 0, 0,  0, 0,-1,  9, 7); // face
+        MakeSide( 0, N, N,  0,-1, 0,  0, 0,-1,  1, 7); // left
+        MakeSide( N, 0, N,  0, 1, 0,  0, 0,-1, 17, 7); // right
+        MakeSide( N, N, N, -1, 0, 0,  0, 0,-1, 25, 7); // back
+        MakeSide( 0, 0, 0,  1, 0, 0,  0, 1, 0,  9,14); // bottom
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Cl[i]" VertexIndexes = "S[i]" InvisibleEdges = "IE[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "cf" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "AdjoiningFacesHaveSameColors" />
+</xml>

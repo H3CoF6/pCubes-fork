@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bagua (Sphere)</Name>
+        <Menu>uot\Bagua (Sphere)</Menu>
+        <Inventor></Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2018-03-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5700</Link>
+    </Interface>
+
+    <Script>
+        // based on code for Bagua Cube
+
+        K := 0.6;
+
+        Width := 0.5;
+        D := 0.46 * Width;
+        LC := 0.9 * Width;
+        LE := (LC + D) / sqrt(2);
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" FixedLayers ="1">
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "CutCenters" >
+            <HideContaining Vector = "Cx[Id]; Cy[Id]; Cz[Id]" />
+            <InvertVisibility />
+            <Cut> <Plane NormVector = "Cx[Id]; Cy[Id]; Cz[Id]" NormDistance = "LC" /> </Cut>
+            <ShowAll/>
+            <Script> Inc(Id); </Script>
+        </Macro>
+
+        <Macro Name = "CutEdges" >
+            <HideContaining Vector = "Ex[Id]; Ey[Id]; Ez[Id]" />
+            <InvertVisibility />
+            <Cut> <Plane NormVector = "Ex[Id]; Ey[Id]; Ez[Id]" NormDistance = "LE" /> </Cut>
+            <ShowAll/>
+            <Script> Inc(Id); </Script>
+        </Macro>
+
+        // cut core to avoid creation of small parts
+        <ExecMacro MacroName = "CutCenters" Id = "0" Repeat = "6" />
+        <ExecMacro MacroName = "CutEdges" Id = "0" Repeat = "12" />
+
+        <Macro Name = "Split" >
+            <Hide Axis = "Ax1" Layer = "0" />
+            <Hide Axis = "Ax1" Layer = "2" />
+            <Turn Axis = "Ax2" Angle = "Pi / 4" Layer = "0" />
+            <Turn Axis = "Ax2" Angle = "Pi / 4" Layer = "2" />
+            <SplitByAxes/>
+            <Undo/>
+            <Undo/>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" />
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "1" />
+
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+</xml>

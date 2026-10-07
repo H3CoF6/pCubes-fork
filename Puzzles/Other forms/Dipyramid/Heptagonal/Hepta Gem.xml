@@ -1,0 +1,124 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hepta Gem</Name>
+        <Menu>Other forms\Dipyramid\Heptagonal\Hepta Gem</Menu>
+        <Inventor>Wong Chong Wen</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-01-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6034</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF0000'; // Red   
+        Colors[ 1] := '0000FF'; // Blue  
+        Colors[ 2] := '008000'; // Green 
+        Colors[ 3] := 'FF6000'; // Orange
+        Colors[ 4] := '800080'; // Purple
+        Colors[ 5] := 'F0F0F0'; // White 
+        Colors[ 6] := 'FFFF00'; // Yellow
+        Colors[ 7] := '808080'; // Gray  
+        Colors[ 8] := 'FF69B4'; // Pink  
+        Colors[ 9] := 'FF7F50'; // Coral 
+        Colors[10] := '00FF00'; // Lime  
+        Colors[11] := '00FFFF'; // Cyan  
+        Colors[12] := '800000'; // Brown 
+        Colors[13] := 'DDBB20'; // Golden
+
+        R := 0.64;
+        H := R * 0.8;
+        R2 := R * (1 - H / R * tan(Pi/7));
+        D := (-R2 * cos(2*Pi/7 * 3) * cos(2*Pi/7 * 6) +  H * sin(Pi/7)) / sqrt(1 + sin(Pi/7)^2); // 0.4
+
+        for i := 0 to 6 do begin
+            ax[i] := sin(2*Pi / 7 * i);
+            ay[i] := cos(2*Pi / 7 * i);
+            x[i]  := -R  * ax[i];
+            y[i]  := -R  * ay[i];
+            xh[i] := -R2 * ax[i];
+            yh[i] := -R2 * ay[i];
+        end;
+        az := sin(pi/7);
+
+        A1 := arccos(-sin(Pi/7)^2);
+        A2 := 2 * (Pi - A1); // = Arccos(2 * sin(Pi/7)^4 - 1);
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" NormVectors = " ax; ay; az" PlaneDistances = "D" />
+    <Axes TurningAngles = "0; 2 * Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" NormVectors = " ax; ay;-az" PlaneDistances = "D" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " 0;  0; H" />
+            <Vertices Vectors = "xh; yh; H" />
+            <Vertices Vectors = " x;  y; 0" />
+            <Vertices Vectors = "xh; yh;-H" />
+            <Vertices Vectors = " 0;  0;-H" />
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = "0;7;6" InvisibleEdges = "5" />
+                <Face Color = "Colors[ 1]" VertexIndexes = "0;6;5" InvisibleEdges = "5" />
+                <Face Color = "Colors[ 2]" VertexIndexes = "0;5;4" InvisibleEdges = "5" />
+                <Face Color = "Colors[ 3]" VertexIndexes = "0;4;3" InvisibleEdges = "5" />
+                <Face Color = "Colors[ 4]" VertexIndexes = "0;3;2" InvisibleEdges = "5" />
+                <Face Color = "Colors[ 5]" VertexIndexes = "0;2;1" InvisibleEdges = "5" />
+                <Face Color = "Colors[ 6]" VertexIndexes = "0;1;7" InvisibleEdges = "5" />
+
+                <Face Color = "Colors[ 0]" VertexIndexes = "6;7;14;13" />
+                <Face Color = "Colors[ 1]" VertexIndexes = "5;6;13;12" />
+                <Face Color = "Colors[ 2]" VertexIndexes = "4;5;12;11" />
+                <Face Color = "Colors[ 3]" VertexIndexes = "3;4;11;10" />
+                <Face Color = "Colors[ 4]" VertexIndexes = "2;3;10; 9" />
+                <Face Color = "Colors[ 5]" VertexIndexes = "1;2; 9; 8" />
+                <Face Color = "Colors[ 6]" VertexIndexes = "7;1; 8;14" />
+
+                <Face Color = "Colors[ 7]" VertexIndexes = "16;15; 8; 9" />
+                <Face Color = "Colors[ 8]" VertexIndexes = "17;16; 9;10" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "18;17;10;11" />
+                <Face Color = "Colors[10]" VertexIndexes = "19;18;11;12" />
+                <Face Color = "Colors[11]" VertexIndexes = "20;19;12;13" />
+                <Face Color = "Colors[12]" VertexIndexes = "21;20;13;14" />
+                <Face Color = "Colors[13]" VertexIndexes = "15;21;14; 8" />
+
+                <Face Color = "Colors[ 7]" VertexIndexes = "22;15;16" InvisibleEdges = "5" />
+                <Face Color = "Colors[ 8]" VertexIndexes = "22;16;17" InvisibleEdges = "5" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "22;17;18" InvisibleEdges = "5" />
+                <Face Color = "Colors[10]" VertexIndexes = "22;18;19" InvisibleEdges = "5" />
+                <Face Color = "Colors[11]" VertexIndexes = "22;19;20" InvisibleEdges = "5" />
+                <Face Color = "Colors[12]" VertexIndexes = "22;20;21" InvisibleEdges = "5" />
+                <Face Color = "Colors[13]" VertexIndexes = "22;21;15" InvisibleEdges = "5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Axs1" Layer = "1" Angle = " A1" />
+            <Turn  Axis = "Axs2" Layer = "1" Angle = "-A1" />
+            <Split Axis = "Axs1" From  = "1" />
+            <Turn  Axis = "Axs2" Layer = "1" Angle = " A1" />
+            <Turn  Axis = "Axs1" Layer = "1" Angle = "-2*A1" />
+            <Turn  Axis = "Axs2" Layer = "1" Angle = " A1" />
+            <Split Axis = "Axs1" From  = "1" />
+            <Turn  Axis = "Axs2" Layer = "1" Angle = "-A1" />
+            <Turn  Axis = "Axs1" Layer = "1" Angle = " A1" />
+        </Macro>
+
+        <Macro Name = "Split2" >
+            <ExecMacro MacroName = "Split" Axs1 = "Ax1" Axs2 = "Ax2"/>
+            <ExecMacro MacroName = "Split" Axs1 = "Ax2" Axs2 = "Ax1"/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split2" Ax1 = " 0" Ax2 = " 7" />
+        <ExecMacro MacroName = "Split2" Ax1 = " 1" Ax2 = " 8" />
+        <ExecMacro MacroName = "Split2" Ax1 = " 2" Ax2 = " 9" />
+        <ExecMacro MacroName = "Split2" Ax1 = " 3" Ax2 = "10" />
+        <ExecMacro MacroName = "Split2" Ax1 = " 4" Ax2 = "11" />
+        <ExecMacro MacroName = "Split2" Ax1 = " 5" Ax2 = "12" />
+        <ExecMacro MacroName = "Split2" Ax1 = " 6" Ax2 = "13" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

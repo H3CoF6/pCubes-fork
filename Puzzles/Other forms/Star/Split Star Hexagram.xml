@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Split Star Hexagram</Name>
+        <Menu>Other forms\Star\Star Hexagram Split</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-23</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := '00AA00'; // Green 
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := 'AA00DD'; // Purple
+        Colors[4] := 'FF55DD'; // Pink  
+        Colors[5] := '0033EE'; // Blue  
+        Colors[6] := 'FF7700'; // Orange
+        Colors[7] := '00DDDD'; // Cyan  
+
+        R := 0.7;
+
+        H := R / 3;
+        R1 := R * 0.5;
+
+        sAngle := Pi * 2 / 6;
+        for i := 0 to 5 do begin
+            x[i]  := R  * sin(sAngle * i);
+            y[i]  := R  * cos(sAngle * i);
+            xi[i] := R1 * sin(sAngle * (i + 0.5));
+            yi[i] := R1 * cos(sAngle * (i + 0.5));
+        end;
+
+        D := R1 * sin(Pi / 6);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D" NormVectors = "xi; yi; 0" />
+
+    <Axes TurningAngles = "2*Pi/6" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "  x;  y; H" />
+            <Vertices Vectors = "  x;  y;-H" />
+            <Vertices Vectors = " xi; yi; H" />
+            <Vertices Vectors = " xi; yi;-H" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "17; 5;16; 4;15; 3;14; 2;13; 1;12; 0" />
+                <Face Color = "Colors[1]" VertexIndexes = " 6;18; 7;19; 8;20; 9;21;10;22;11;23" />
+                <Face Color = "Colors[2]" VertexIndexes = " 6; 0;12;18" />
+                <Face Color = "Colors[2]" VertexIndexes = " 1; 7;18;12" />
+                <Face Color = "Colors[3]" VertexIndexes = " 2; 8;19;13" />
+                <Face Color = "Colors[3]" VertexIndexes = " 7; 1;13;19" />
+                <Face Color = "Colors[4]" VertexIndexes = "10; 4;16;22" />
+                <Face Color = "Colors[4]" VertexIndexes = " 5;11;22;16" />
+                <Face Color = "Colors[5]" VertexIndexes = " 0; 6;23;17" />
+                <Face Color = "Colors[5]" VertexIndexes = "11; 5;17;23" />
+                <Face Color = "Colors[6]" VertexIndexes = " 9; 3;15;21" />
+                <Face Color = "Colors[6]" VertexIndexes = " 4;10;21;15" />
+                <Face Color = "Colors[7]" VertexIndexes = " 3; 9;20;14" />
+                <Face Color = "Colors[7]" VertexIndexes = " 8; 2;14;20" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/2" />
+        <Turn Axis = "4" Layer = "1" Angle = "Pi/2" />
+        <Split Axis = "6" From = "1" />
+        <Undo Repeat = "3" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/2" />
+        <Turn Axis = "3" Layer = "1" Angle = "Pi/2" />
+        <Turn Axis = "5" Layer = "1" Angle = "Pi/2" />
+        <Split Axis = "6" From = "1" />
+        <Undo Repeat = "3" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

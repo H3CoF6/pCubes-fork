@@ -1,0 +1,94 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cuboid illusion (1x1x3)</Name>
+        <Menu>Cubic\Cubillusion\Cuboid illusion (1x1x3)</Menu>
+        <Inventor>Doctor Who</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-05-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5488</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        W := 0.5;
+        D := W * 2 / 7;
+        WX := D / 2 + 0.001;
+        WY := D / 2 + 0.001;
+        WZ := D / 2;
+        AZ := D * 0.0;
+
+        procedure ParseCubie();
+        begin
+            DWX := -WX + x * WX * 2;
+            DWY := -WY + y * WY * 2;
+            DWZ := -1.5*D + z * D - AZ;
+
+            Divider := 100000;
+            for i := 0 to 5 do begin
+                C := SColors div Divider;
+                Case c of
+                    0: Colors[i] := clRed;
+                    1: Colors[i] := clOrange;
+                    2: Colors[i] := clBlue;
+                    3: Colors[i] := clGreen;
+                    4: Colors[i] := clYellow;
+                    5: Colors[i] := clWhite;
+                    else Colors[i] := -1;
+                end;
+                SColors := SColors mod Divider;
+                Divider := Divider div 10;
+            end;
+        end;
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" BaseVector = "0; 0;-AZ" />
+        <Axis NormVector = "0; 1; 0" BaseVector = "0; 0;-AZ" />
+        <Axis NormVector = "0; 0; 1" BaseVector = "0; 0;-AZ" />
+    </Axes>
+ 
+    <Figure>
+        <Macro Name = "AddCubie" >
+            <Script> ParseCubie; </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "0" z = "0" SColors = "099949" />
+        <ExecMacro MacroName = "AddCubie" x = "1" y = "0" z = "0" SColors = "999949" />
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "1" z = "0" SColors = "099349" />
+        <ExecMacro MacroName = "AddCubie" x = "1" y = "1" z = "0" SColors = "999349" />
+
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "0" z = "1" SColors = "099999" />
+        <ExecMacro MacroName = "AddCubie" x = "1" y = "0" z = "1" SColors = "912999" />
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "1" z = "1" SColors = "099399" />
+        <ExecMacro MacroName = "AddCubie" x = "1" y = "1" z = "1" SColors = "999399" />
+
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "0" z = "2" SColors = "099999" />
+        <ExecMacro MacroName = "AddCubie" x = "1" y = "0" z = "2" SColors = "912999" />
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "1" z = "2" SColors = "099399" />
+        <ExecMacro MacroName = "AddCubie" x = "1" y = "1" z = "2" SColors = "999399" />
+
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "0" z = "3" SColors = "099999" />
+        <ExecMacro MacroName = "AddCubie" x = "1" y = "0" z = "3" SColors = "912995" />
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "1" z = "3" SColors = "099399" />
+        <ExecMacro MacroName = "AddCubie" x = "1" y = "1" z = "3" SColors = "999399" />
+
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "0" z = "4" SColors = "009999" />
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "1" z = "4" SColors = "099399" />
+        <ExecMacro MacroName = "AddCubie" x = "1" y = "1" z = "4" SColors = "993399" />
+
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "0" z = "5" SColors = "009999" />
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "1" z = "5" SColors = "099399" />
+        <ExecMacro MacroName = "AddCubie" x = "1" y = "1" z = "5" SColors = "993399" />
+
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "0" z = "6" SColors = "009999" />
+        <ExecMacro MacroName = "AddCubie" x = "0" y = "1" z = "6" SColors = "099399" />
+        <ExecMacro MacroName = "AddCubie" x = "1" y = "1" z = "6" SColors = "993399" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

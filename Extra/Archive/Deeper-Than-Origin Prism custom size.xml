@@ -1,0 +1,113 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Deeper-Than-Origin Prism custom size</Name>
+        <Menu>Other forms\Prism\Deeper-Than-Origin Prism Any size</Menu>
+        <Inventor>multiple / not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-24</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clTop      := 'FFFFFF'; // clWhite;
+        clBottom   := 'AFAFAF';
+        Colors[ 0] := 'FF0000'; // clRed;
+        Colors[ 1] := 'FF6000'; // clOrange;
+        Colors[ 2] := 'FFFF00'; // clYellow;
+        Colors[ 3] := '008000'; // clGreen;
+        Colors[ 4] := '2828FF'; // clLightBlue;
+        Colors[ 5] := '0000A0'; // clBlue;
+        Colors[ 6] := '800080'; // clViolett;
+        Colors[ 7] := 'FF0080'; // clLightViolett;
+        Colors[ 8] := '00FF00'; // clLightGreen;
+        Colors[ 9] := '800000'; // clBrown;
+
+        Order := 5;
+
+        RequestNumbers('Input prism order', 'Order:', Order);
+
+        Order := Min(Max(Order, 3), 10);
+
+        R := 0.5;
+
+        RCut := R * cos(Pi/Order);
+
+        ColumnsOnSide := 3;
+        SideLength := 2 * R * sin(Pi/Order);
+        dW := SideLength / ColumnsOnSide * sin(2 * Pi/Order);
+
+        H := Min(SideLength / ColumnsOnSide * 3 / 2, R);
+
+        if Order mod 2 = 1 then begin
+            NAxes := Order;
+            for i := 0 to NAxes - 1 do begin
+                Ax[i] := sin(2*Pi/Order * i);
+                Ay[i] := cos(2*Pi/Order * i);
+                Az[i] := 0;
+            end;
+            NSplits := 1;
+            Fixed := 0;
+        end else begin
+            NAxes := Order div 2;
+            for i := 0 to NAxes - 1 do begin
+                Bx[i] := sin(2*Pi/Order * i);
+                By[i] := cos(2*Pi/Order * i);
+                Bz[i] := 0;
+            end;
+            NSplits := 1 * 2;
+
+            WArray[1] := -(RCut - dW);
+            Fixed := 1;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / Order" PlaneDistances = "H/3" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "RCut - dW" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-R; -R; -H" />
+                <Add Vector = "-R; -R;  H" />
+                <Add Vector = "-R;  R; -H" />
+                <Add Vector = "-R;  R;  H" />
+                <Add Vector = " R; -R; -H" />
+                <Add Vector = " R; -R;  H" />
+                <Add Vector = " R;  R; -H" />
+                <Add Vector = " R;  R;  H" />
+            </Vertices>
+
+            <Faces>
+                <Face                    VertexIndexes = "1;0;4;5" />
+                <Face                    VertexIndexes = "2;3;7;6" />
+                <Face                    VertexIndexes = "0;1;3;2" />
+                <Face                    VertexIndexes = "5;4;6;7" />
+                <Face Color = "clBottom" VertexIndexes = "0;2;6;4" />
+                <Face Color = "clTop   " VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "MakeSide" >
+            <Cut Color = "Colors[i]" > <Plane NormDistance = "-RCut" NormVector = "-sin(2*Pi*i/Order); -cos(2*Pi*i/Order); 0" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "MakeSide" Repeat = "Order" i = "0" />
+
+        <SplitByAxes/>
+        <Macro Name = "Split" >
+            <Turn  Axis = "0" Layer = "1" Angle = "2 * Pi / Order" />
+            <Split Axis = "1" From  = "1" />
+            <Turn  Axis = "1" Layer = "1" Angle = "Pi" />
+            <Split Axis = "0" From  = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "2 * Order - 2" />
+        <Undo Repeat = "4 * Order - 4" />
+    </Figure>
+</xml>

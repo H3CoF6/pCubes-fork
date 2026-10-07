@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentagonal Pyramid Skewb</Name>
+        <Menu>Other forms\Pyramid\Pentagonal Pyramid\Pentagonal Pyramid Skewb</Menu>
+        <Menu>Other forms\Skewb variants\Pentagonal Pyramid Skewb</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1591</Link>
+    </Interface>
+
+    <Script>
+        R := 0.4;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        dal := ArcTan(2) / 2;
+        sdal := sin(dal);
+        cdal := cos(dal);
+
+        DCut := RSin;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; cdal + sdal; cdal - sdal" />
+        <Axis NormVector = "-1; cdal + sdal; cdal - sdal" />
+        <Axis NormVector = "-1;-cdal + sdal; sdal + cdal" />
+        <Axis NormVector = " 1;-cdal + sdal; sdal + cdal" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <SplitByAxes/>
+        <Cut Color = "Colors[ 3]" > <Plane NormVector = "-cx[ 1]; -cy[ 1]; -cz[ 1]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[ 0]" > <Plane NormVector = "-cx[ 2]; -cy[ 2]; -cz[ 2]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[ 9]" > <Plane NormVector = "-cx[ 3]; -cy[ 3]; -cz[ 3]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[11]" > <Plane NormVector = "-cx[ 4]; -cy[ 4]; -cz[ 4]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[ 6]" > <Plane NormVector = "-cx[ 5]; -cy[ 5]; -cz[ 5]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[ 4]" > <Plane NormVector = "-cx[11]; -cy[11]; -cz[11]" NormDistance = "-DCut" /> </Cut>
+    </Figure>
+</xml>

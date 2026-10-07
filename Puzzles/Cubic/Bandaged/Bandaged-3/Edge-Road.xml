@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Edge-Road</Name>
+        <Menu>Cubic\Bandaged\Cube 3x3x3\Edge-Road</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-07-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6324</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        WX := W * 0.1;
+        WY := WX;
+        WZ := WX;
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <HideAll/>
+
+        <Macro Name = "AddInvisibleCubie" >
+            <Script> DWX := x * D; DWY := y * D; DWZ := z * D; </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddInvisibleCubie" x = " 0" y = "-1" z = "-2" />
+        <ExecMacro MacroName = "AddInvisibleCubie" x = "-2" y = "-1" z = " 0" />
+        <ExecMacro MacroName = "AddInvisibleCubie" x = " 2" y = "-1" z = " 0" />
+        <ExecMacro MacroName = "AddInvisibleCubie" x = " 0" y = "-1" z = " 2" />
+
+        <InvertVisibility/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Lock" File = "Textures\Lock.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Lock =  1,1,1, 9,0,1, 11,0,0, 18,1,1
+    </SetTextures>
+</xml>

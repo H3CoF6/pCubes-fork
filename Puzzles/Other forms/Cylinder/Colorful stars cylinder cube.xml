@@ -1,0 +1,88 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Colorful stars cylinder cube</Name>
+        <Menu>Other forms\Cylinder\Colorful stars cylinder cube</Menu>
+        <Inventor>YJ</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8051</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'DD0000'; // Red
+        Colors[1] := 'FF800A'; // Orange
+        Colors[2] := '009900'; // Green
+        Colors[3] := '0000DD'; // Blue
+        Colors[4] := '800080'; // Violett
+        Colors[5] := 'FFFF00'; // Yellow
+        Colors[6] := 'FFFFFF'; // White
+
+        R := 0.6;
+        H := 0.5;
+        sAngle := 2*Pi/5;
+
+        for i := 0 to 4 do begin
+            ax[i] := R * cos(2*Pi/5 * i);
+            ay[i] := R * sin(2*Pi/5 * i);
+        end;
+
+        D := R * cos(2*Pi/5);
+
+        N := 60;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = " 0; Pi" PlaneDistances = "D" NormVectors = " ax; ay; 0" />
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "-H/3; H/3" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "ie" />
+        </Macro>
+
+        <Macro Name = "AddColor" >
+            <ExecMacro MacroName = "AddFace" Color = "Colors[c]" ie = " 2" />
+            <ExecMacro MacroName = "AddFace" Color = "Colors[c]" ie = "10" Repeat = "N div 5 - 2" />
+            <ExecMacro MacroName = "AddFace" Color = "Colors[c]" ie = " 8" />
+            <Script>Inc(c);</Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddColor" i = "0" c = "0" Repeat = "5" />
+                <Face Color = "Colors[c]" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                <Face Color = "Colors[c]" VertexIndexes = "FromTo(0, N - 1)" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

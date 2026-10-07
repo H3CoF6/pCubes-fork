@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Chopasaurus + Gigaminx</Name>
+        <Class>TChopasaurus</Class>
+        <Menu>Grigr\Chopasaurus + Gigaminx</Menu>
+        <Inventor></Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2016-11-21</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        dAngle := (Arctan(2) + Arcsin(2/3)) / 2;
+        dAngle2 := (Arctan(2) - Arcsin(2/3)) / 2;
+        Rsin := R * sin(dAngle);
+        Rcos := R * cos(dAngle);
+        R2sin := R * sin(dAngle2);
+        R2cos := R * cos(dAngle2);
+        sAngle := PI * 2 / 5;
+
+        for i := 0 to 4 do begin
+            x[i] := Rcos * sin(sAngle * (i - 0.5));
+            y[i] := Rcos * cos(sAngle * (i - 0.5));
+            z[i] := Rsin;
+        end;
+        for i := 5 to 9 do begin
+            x[i] := R2cos * sin(sAngle * (i - 0.5));
+            y[i] := R2cos * cos(sAngle * (i - 0.5));
+            z[i] := R2sin;
+        end;
+
+        mAngle := ArcTan(0.5);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+        for i := 1 to 5 do begin
+            mx[i] := sin(sAngle * (i - 1)) * Ac;
+            my[i] := cos(sAngle * (i - 1)) * Ac;
+        end;
+
+        D := (Rsin + R2sin) / 2;
+        D1 := (3 * Rsin + 1 * R2sin) / 4;
+        D2 := (2 * Rsin + 2 * R2sin) / 4;
+    </Script>
+
+    <!-- dummy angle -->
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "x[0]; y[0]; z[0]" />
+        <Axis NormVector = "x[1]; y[1]; z[1]" />
+        <Axis NormVector = "x[2]; y[2]; z[2]" />
+        <Axis NormVector = "x[3]; y[3]; z[3]" />
+        <Axis NormVector = "x[4]; y[4]; z[4]" />
+        <Axis NormVector = "x[5]; y[5]; z[5]" />
+        <Axis NormVector = "x[6]; y[6]; z[6]" />
+        <Axis NormVector = "x[7]; y[7]; z[7]" />
+        <Axis NormVector = "x[8]; y[8]; z[8]" />
+        <Axis NormVector = "x[9]; y[9]; z[9]" />
+    </Axes>
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = "   0;    0;  1" />
+        <Axis NormVector = "mx[1]; my[1]; As" />
+        <Axis NormVector = "mx[2]; my[2]; As" />
+        <Axis NormVector = "mx[3]; my[3]; As" />
+        <Axis NormVector = "mx[4]; my[4]; As" />
+        <Axis NormVector = "mx[5]; my[5]; As" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

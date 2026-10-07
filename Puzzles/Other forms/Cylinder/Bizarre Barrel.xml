@@ -1,0 +1,105 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bizarre Barrel</Name>
+        <Menu>Other forms\Cylinder\Bizarre Barrel</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-03-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2014</Link>
+    </Interface>
+
+    <Script>
+        clRed       := 'C80000';
+        clGreen     := '009600';
+        clBlue      := '0000C8';
+        clOrange    := 'FF800A';
+        clLightBlue := '2828FF';
+        clViolett   := '800080';
+        clYellow    := 'FFFF00';
+        clWhite     := 'FFFFFF';
+
+        R := 0.6;
+        H := 0.5;
+        H2 := H + 0.002;
+
+        D := R / 3;
+
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 3 * (i + 0.7));
+            y[i] := R * sin(Pi / 3 * (i + 0.7));
+        end;
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+
+        Da := R * 0.7;
+        DC := Da / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "4 * Pi / 9" PlaneDistances = "Da" FixedLayers = "0" >
+        <Axis NormVector = "Ax[0]; Ay[0]; 0" />
+        <Axis NormVector = "Ax[1]; Ay[1]; 0" />
+        <Axis NormVector = "Ax[2]; Ay[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-H/3; H/3" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddBody" >
+            <HideAll/>
+            <Cylinder Radius = "R" Color = "Color" >
+                <Base X = "0" Y = "0" Z = "-H" Color = "clWhite " />
+                <Top  X = "0" Y = "0" Z = " H" Color = "clYellow" />
+            </Cylinder>
+            <Cut Color = "Color"> <Plane NormVector = "-1; 0; 0" NormDistance = "DC" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = "2*Pi/3"/>
+        </Macro>
+        <ExecMacro MacroName = "AddBody" Color = "clViolett"   />
+        <ExecMacro MacroName = "AddBody" Color = "clLightBlue" />
+        <ExecMacro MacroName = "AddBody" Color = "clOrange"    />
+        <ShowAll/>
+
+        <Circle Radius = "R" Color = "clYellow" > <Center X =  "0" Y =  "0" Z = " H2" /> </Circle>
+        <Circle Radius = "R" Color = "clWhite " > <Center X =  "0" Y =  "0" Z = "-H2" /> </Circle>
+
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+
+        <Macro Name = "AddSide" >
+            <HideAll/>
+            <Cylinder Radius = "R" Color = "Color" >
+                <Base X = "0" Y = "0" Z = "-H" Color = "clWhite " />
+                <Top  X = "0" Y = "0" Z = " H" Color = "clYellow" />
+            </Cylinder>
+            <Cut Color = "Color"> <Plane NormVector = " 1; 0; 0" NormDistance = "Da" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = "2*Pi/3"/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSide" Color = "clGreen" />
+        <ExecMacro MacroName = "AddSide" Color = "clBlue " />
+        <ExecMacro MacroName = "AddSide" Color = "clRed  " />
+        <ShowAll/>
+
+        <Turn  Axis = "0" Angle = "4 * Pi / 9" Layer = "1" />
+        <Turn  Axis = "1" Angle = "4 * Pi / 9" Layer = "1" />
+        <Turn  Axis = "2" Angle = "4 * Pi / 9" Layer = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "3" From = "2" />
+        <Turn  Axis = "0" Angle = "-8 * Pi / 9" Layer = "1" />
+        <Turn  Axis = "1" Angle = "-8 * Pi / 9" Layer = "1" />
+        <Turn  Axis = "2" Angle = "-8 * Pi / 9" Layer = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "3" From = "2" />
+        <Turn  Axis = "0" Angle = "4 * Pi / 9" Layer = "1" />
+        <Turn  Axis = "1" Angle = "4 * Pi / 9" Layer = "1" />
+        <Turn  Axis = "2" Angle = "4 * Pi / 9" Layer = "1" />
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameDirection" />
+</xml>

@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>EsaMirror</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Mixed\EsaMirror</Menu>
+        <Menu>Other forms\3x3x3 variants\Prism\EsaMirror</Menu>
+        <Inventor>Ivano Bellio</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2198</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'E0C07D';
+
+        R := 0.5;
+        H := R * 0.8;
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 3 * (i + 0.5));
+            y[i] := R * sin(Pi / 3 * (i + 0.5));
+        end;
+        D := R / 4;
+
+        DX := R * 0.25;
+        DY := R * 0.1;
+        DZ := H - R * sqrt(3) / 2 + DX;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " DX; DY; DZ" />
+        <Part>
+            <Vertices Vectors = " x; y; H" />
+            <Vertices Vectors = " x; y;-H" />
+            <Faces>
+                <Face Color = "MirrorColor" VertexIndexes = " 1; 0; 6; 7" />
+                <Face Color = "MirrorColor" VertexIndexes = " 2; 1; 7; 8" />
+                <Face Color = "MirrorColor" VertexIndexes = " 3; 2; 8; 9" />
+                <Face Color = "MirrorColor" VertexIndexes = " 4; 3; 9;10" />
+                <Face Color = "MirrorColor" VertexIndexes = " 5; 4;10;11" />
+                <Face Color = "MirrorColor" VertexIndexes = " 0; 5;11; 6" />
+                <Face Color = "MirrorColor" VertexIndexes = "11;10; 9; 8; 7; 6" />
+                <Face Color = "MirrorColor" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+            </Faces>
+        </Part>
+        <Transfer Vector = "-DX;-DY;-DZ" />
+        
+        <SplitByAxes/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 8" />
+</xml>

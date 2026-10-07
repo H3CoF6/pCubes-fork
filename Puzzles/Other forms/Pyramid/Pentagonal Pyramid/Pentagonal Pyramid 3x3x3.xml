@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentagonal Pyramid 3x3x3</Name>
+        <Menu>Other forms\Pyramid\Pentagonal Pyramid\Pentagonal Pyramid 3x3x3</Menu>
+        <Menu>Other forms\3x3x3 variants\Pentagonal Pyramid 3x3x3</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3086</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := 'FF6000'; // Orange
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := '008000'; // Green
+        Colors[4] := '0000A0'; // Blue
+        Colors[5] := 'FF0080'; // LightViolett
+
+        R := 0.5;
+        D := R * 0.2;
+        H1 := R;
+        H2 := -R * 0.5;
+
+        for i := 0 to 4 do begin
+            x[i] := R * cos(2 * Pi / 5 * i);
+            y[i] := R * sin(2 * Pi / 5 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;1;0" Angle = "-0.58" />
+
+        <Part>
+            <Vertices Vectors = "x; y; H2">
+                <Add  Vector  = "0; 0; H1" />
+            </Vertices>
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "5;0;1" />
+                <Face Color = "Colors[1]" VertexIndexes = "5;1;2" />
+                <Face Color = "Colors[2]" VertexIndexes = "5;2;3" />
+                <Face Color = "Colors[3]" VertexIndexes = "5;3;4" />
+                <Face Color = "Colors[4]" VertexIndexes = "5;4;0" />
+                <Face Color = "Colors[5]" VertexIndexes = "4;3;2;1;0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bandage 3 Bump Cube</Name>
+        <Menu>Cubic\Bump\Bandaged\Bandage 3 Bump Cube</Menu>
+        <Menu>Cubic\Bandaged\Cube 3x3x3\Bandaged 3 Bump Cube</Menu>
+        <Inventor>Joachim Solborg</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-06-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8802</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'E0C07D';
+        BorderColor := '5500CD';
+
+        W := 0.5;
+        D := W / 3;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+        DWX := W * 0.33;
+        DWY := W * 0.2;
+        DWZ :=-W * 0.07;
+
+        procedure SetColor(Color);
+        begin
+            for i := 0 to 5 do
+                Colors[i] := Color;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script> SetColor(MirrorColor); </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "2" />
+
+        <HideContaining Vector = "-D; 0; 0" />
+        <HideContaining Vector = " 0;-D; 0" />
+        <HideContaining Vector = " 0; 0; D" />
+        <HideContaining Vector = "-D*1.1;-D*1.1; D*1.1" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SplitByAxes/>
+        <HideAll/>
+
+        <Script> SetColor(BorderColor); </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "2" />
+
+        <RemoveContaining Vector = "-D; 0; 0" />
+        <RemoveContaining Vector = " 0;-D; 0" />
+        <RemoveContaining Vector = " 0; 0; D" />
+        <RemoveContaining Vector = "-D*1.1;-D*1.1; D*1.1" />
+        <HideAll/>
+
+        <ShowAll/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

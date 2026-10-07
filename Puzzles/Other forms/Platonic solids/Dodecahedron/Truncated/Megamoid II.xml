@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megamoid II</Name>
+        <Menu>Other forms\Dodecahedron\Truncated\Megamoid II</Menu>
+        <Inventor>Nathan Hard</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-10-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5174</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2;
+        DCut := D + 0.002;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle; 0" PlaneDistances = "-D" >
+        <Axis NormVector = "Cx[11]; Cy[11]; Cz[11]" />
+        <Axis NormVector = "Cx[ 2]; Cy[ 2]; Cz[ 2]" />
+        <Axis NormVector = "Cx[ 4]; Cy[ 4]; Cz[ 4]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Cut Color = "clLightViolett" > <Plane NormVector = "-Cx[ 2]; -Cy[ 2]; -Cz[ 2]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clRed         " > <Plane NormVector = "-Cx[ 4]; -Cy[ 4]; -Cz[ 4]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clWhite       " > <Plane NormVector = "-Cx[11]; -Cy[11]; -Cz[11]" NormDistance = "-DCut" /> </Cut>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

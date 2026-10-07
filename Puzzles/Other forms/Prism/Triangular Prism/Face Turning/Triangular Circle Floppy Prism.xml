@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triangular Circle Floppy Prism</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Face Turning\Triangular Circle Floppy Prism</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-05-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7411</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'FFFF00';
+        clBlue   := '0000A0';
+        clRed    := 'FF0000';
+        clGreen  := '008000';
+        clWhite  := 'FFFFFF';
+
+        R  := 0.7;
+        H  := R * 0.25;
+        RC := R * 0.4;
+        D  :=-R * 0.1;
+        Delta := 0.001;
+
+        sAngle := Pi * 2 / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D" FixedLaye1rs = "1" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; sAngle; 0" PlaneDistances = "-H; H" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clWhite " VertexIndexes = "0;1;2" />
+                <Face Color = "clYellow" VertexIndexes = "4;3;5" />
+                <Face Color = "clGreen " VertexIndexes = "0;3;4;1" />
+                <Face Color = "clBlue  " VertexIndexes = "1;4;5;2" />
+                <Face Color = "clRed   " VertexIndexes = "2;5;3;0" />
+            </Faces>
+        </Part>
+
+        <Circle Radius = "RC" Color = "clYellow" Center =  "0; 0;  H + delta" />
+        <Circle Radius = "RC" Color = "clWhite"  Center =  "0; 0; -H - delta" />
+
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

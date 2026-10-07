@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mirror Illusion 4x4x4 Inside</Name>
+        <Menu>Cubic\Bump\Mirror Illusion 4x4x4 Inside</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9247</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'EEFF00';
+        MirrorColor2 := '00FF00';
+
+        W := 0.5;
+        D := W / 2;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+
+        DWX := 1 / 6;
+        DWY := -1 / 10;
+        DWZ := 1 / 30;
+
+        DX := W * 0.9;
+        DY := W * 0.8;
+        DZ := W * 0.7;
+
+        procedure SetColor(Color);
+        begin
+            for i := 0 to 5 do
+                Colors[i] := Color;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0;-1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Cube" >
+            <Script> SetColor(Color); </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "2" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "3" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "1" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "1" From = "2" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "1" From = "3" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "2" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "2" From = "2" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "2" From = "3" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cube" Color = "MirrorColor" />
+        <Hide Axis = "0" Layer = "0" />
+        <Hide Axis = "1" Layer = "0" />
+        <Hide Axis = "2" Layer = "0" />
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Cube" Color = "MirrorColor2" />
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "2" From = "1" />
+        <Cut Color = "MirrorColor2" > <Plane NormVector = "-1; 0; 0" NormDistance = "-DX" /> </Cut>
+        <Cut Color = "MirrorColor2" > <Plane NormVector = " 0; 1; 0" NormDistance = "-DY" /> </Cut>
+        <Cut Color = "MirrorColor2" > <Plane NormVector = " 0; 0;-1" NormDistance = "-DZ" /> </Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

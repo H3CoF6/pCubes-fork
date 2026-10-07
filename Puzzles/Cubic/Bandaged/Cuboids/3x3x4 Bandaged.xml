@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x3x4 Bandaged</Name>
+        <Menu>Cubic\Bandaged\Cuboids\3x3x4 Bandaged</Menu>
+        <Inventor>Dahmon Bicheno</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-06-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6148</Link>
+    </Interface>
+
+    <Script>
+        W := 0.45;
+
+        D1 := W / 3;
+        D2 := D1 * 2;
+
+        WX := W;
+        WY := W;
+        WZ := W / 3 * 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2; 0; D2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "2" From  = "2" />
+        <Split Axis = "0" From  = "2" />
+        <Hide  Axis = "0" Layer = "2" />
+        <Split Axis = "1" From  = "2" />
+        <ShowAll/>
+
+        <Hide  Axis = "0" From  = "0" To = "1" />
+        <Split Axis = "1" From  = "1" />
+        <ShowAll/>
+
+        <HideContaining Vector = "-W;-W; WZ" />
+        <HideContaining Vector = " W; W; WZ" />
+        <SplitByAxes/>
+        <ShowAll/>
+    </Figure>
+</xml>

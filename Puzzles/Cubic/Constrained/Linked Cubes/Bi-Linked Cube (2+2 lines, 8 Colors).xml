@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bi-Linked Cube (2+2 lines, 8 Colors)</Name>
+        <Menu>Cubic\Constrained\Linked Cubes\Bi-Linked Cube (2+2 lines, 8 Colors)</Menu>
+        <Class>TTenon</Class>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2026-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7658</Link>
+    </Interface>
+ 
+    <Script>
+        clBlack := '202020';
+        clViolett := '800080';
+        clPink    := 'FF80FF';
+
+        W := 0.5;
+        D := W * 0.39;
+        D2 := (W - D) / 2; // size of small cubies
+        WD := (W + D) / 2; // center of cubies
+    </Script>
+
+    <Axes TurningAngles = " Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "_Macro_For_LinkedCube.xml" />
+
+        // Make Colored cube with gaps and with some black parts (Side^Place, ...)
+        <ExecMacro MacroName = "MakeCube" BlackParts = "'06,07,08,11,12,20,21,22,36,37'" />
+
+        // Make Stickers (Side^Place^Rotate, ...)
+        <Script> StickerColor := clViolett; </Script>
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfile1" SX = "D2" SY = "D2" Places = "'100,120,200,220,560,521'" />
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfile2" SX = "D2" SY = "D2" Places = "'022,301,581'" />
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfileE" SX = "D"  SY = "D2" Places = "'110,210,570,551'" />
+
+        <Script> StickerColor := clPink; </Script>
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfile1" SX = "D2" SY = "D2" Places = "'060,080,360,380,401,480'" />
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfile2" SX = "D2" SY = "D2" Places = "'183,260,462'" />
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfileE" SX = "D"  SY = "D2" Places = "'070,370,431,470'" />
+
+        // Tenons  (Side^Place^Layer, ...)
+        <ExecMacro MacroName = "AddTenons"  Places = "'021,101,221,301,061,181,261,381'" />
+        <ExecMacro MacroName = "AddGrooves" Places = "'002,012,022,062,102,162,172,182'" />
+        <ExecMacro MacroName = "AddGrooves" Places = "'222,262,272,282,302,312,322,382'" />
+        <ExecMacro MacroName = "AddGrooves" Places = "'402,412,422,452,482,502,512,522,532,562'" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

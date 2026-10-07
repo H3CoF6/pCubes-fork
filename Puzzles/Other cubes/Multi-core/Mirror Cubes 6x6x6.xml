@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mirror Cubes 6x6x6</Name>
+        <Menu>Other cubes\Multi-core\Mirror Cubes 6x6x6</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2632</Link>
+    </Interface>
+
+    <Script>
+        W := 0.3;
+        D := W / 3;
+        D2 := D * 2;
+        T := W * 5 / 6 * 0.91;
+        DCut := W * 5 / 6 * sqrt(3) * 0.91;
+
+        CutV := W * sqrt(3) * 0.86;
+        CutE := W * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0; D; D2" FixedLayers = "0" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-T;-T;-T" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "-T;-T;-T" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = "-T;-T;-T" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0; D; D2" FixedLayers = "0" >
+        <Axis NormVector = "-1; 2; 2" BaseVector = " T; T; T" />
+        <Axis NormVector = " 2;-1; 2" BaseVector = " T; T; T" />
+        <Axis NormVector = " 2; 2;-1" BaseVector = " T; T; T" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Transfer Vector = " T; T; T" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = "-D2" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "-D2" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = "-D2" /></Split>
+        <Cut><Plane NormVector = "-1;-1;-1" NormDistance = "-DCut" /></Cut>
+        <HideAll/>
+        <Transfer Vector = "-T*2;-T*2;-T*2" />
+        <Turn NormVector = "-1;-1;-1" Angle = "Pi" />
+
+        <Script>
+            Colors[0] := 'FF810A';
+            Colors[1] := 'C80001';
+            Colors[2] := '009601';
+            Colors[3] := '0001C8';
+            Colors[4] := 'FFFFFE';
+            Colors[5] := 'FFFF01';
+        </Script>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = "-1; 0; 0" NormDistance = " D2" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = " D2" /></Split>
+        <Split><Plane NormVector = " 0; 0;-1" NormDistance = " D2" /></Split>
+        <Cut><Plane NormVector = " 1; 1; 1" NormDistance = "-DCut" /></Cut>
+
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+
+        <ShowAll/>
+        <Turn NormVector = "-1;-1;-1" Angle = "Pi" />
+        <Transfer Vector = " T; T; T" />
+    </Figure>
+</xml>

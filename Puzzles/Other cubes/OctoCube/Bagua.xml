@@ -1,0 +1,78 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bagua</Name>
+        <Menu>Other cubes\OctoCube\Bagua</Menu>
+        <Inventor>Dayan</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-09-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5700</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := 0.45 * W;
+        LC := 0.9 * W;
+        LE := (LC + D) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "CutCenters" >
+            <HideContaining Vector = "Cx[Id]; Cy[Id]; Cz[Id]" />
+            <InvertVisibility />
+            <Cut> <Plane NormVector = "Cx[Id]; Cy[Id]; Cz[Id]" NormDistance = "LC" /> </Cut>
+            <ShowAll/>
+            <Script> Inc(Id); </Script>
+        </Macro>
+
+        <Macro Name = "CutEdges" >
+            <HideContaining Vector = "Ex[Id]; Ey[Id]; Ez[Id]" />
+            <InvertVisibility />
+            <Cut> <Plane NormVector = "Ex[Id]; Ey[Id]; Ez[Id]" NormDistance = "LE" /> </Cut>
+            <ShowAll/>
+            <Script> Inc(Id); </Script>
+        </Macro>
+
+        // cut core to avoid creation of small parts
+        <ExecMacro MacroName = "CutCenters" Id = "0" Repeat = "6" />
+        <ExecMacro MacroName = "CutEdges" Id = "0" Repeat = "12" />
+
+        <Macro Name = "Split" >
+            <Hide Axis = "Ax1" Layers = "0;2" />
+            <Turn Axis = "Ax2" Layers = "0;2" Angle = "Pi / 4" />
+            <SplitByAxes/>
+            <Undo/>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" />
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "1" />
+
+        <RemoveGrayParts/>
+
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Bagua" File = "Puzzles\Other cubes\OctoCube\Bagua.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Bagua = 22,0,3, 56,0,7, 70,0,3, 75,0,1, 89,0,5, 123,0,1
+    </SetTextures>
+
+</xml>

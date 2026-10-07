@@ -1,0 +1,164 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bermuda Minx - Jupiter</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bandaged\Bermuda minx\Jupiter</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2014-05-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4508</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := '5500CD'; // Violett
+        Colors[ 2] := 'EDFF11'; // Yellow
+        Colors[ 3] := '0000FF'; // Blue
+        Colors[ 4] := 'FF0000'; // Red
+        Colors[ 5] := '1D9F00'; // DarkGreen
+        Colors[ 6] := 'CA75FF'; // LightViolett
+        Colors[ 7] := 'F7FF88'; // LightYellow
+        Colors[ 8] := '71FFD9'; // Magenta
+        Colors[ 9] := 'FF5C00'; // Orange
+        Colors[10] := '87FF4A'; // LightGreen
+        Colors[11] := '45575E'; // Gray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * 0.627;
+        p5 := Pi/5;
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', sSplits);
+          if p = 0 then begin
+            substr := sSplits;
+            sSplits := '';
+          end else begin
+            substr := copy(sSplits, 1, p-1);
+            Delete(sSplits, 1, p);
+          end;
+          Result := StrToInt(Trim(substr));
+        end;
+
+        procedure GetSplits();
+        begin
+          pCount := 0;
+          while Length(sSplits) > 0 do begin
+            Splits[pCount] := GetInt;
+            Inc(pCount);
+          end;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "p5; 0; p5" PlaneDistances = "-D; D">
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "vx; vy; vz" />
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = "4;3;2;1;0" />
+
+                <Face Color = "Colors[ 1]" VertexIndexes = "0;1;6;10;5" />
+                <Face Color = "Colors[ 2]" VertexIndexes = "1;2;7;11;6" />
+                <Face Color = "Colors[ 3]" VertexIndexes = "2;3;8;12;7" />
+                <Face Color = "Colors[ 4]" VertexIndexes = "3;4;9;13;8" />
+                <Face Color = "Colors[ 5]" VertexIndexes = "4;0;5;14;9" />
+
+                <Face Color = "Colors[ 6]" VertexIndexes = "18;17;12;8;13" />
+                <Face Color = "Colors[ 7]" VertexIndexes = "19;18;13;9;14" />
+                <Face Color = "Colors[ 8]" VertexIndexes = "15;19;14;5;10" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "16;15;10;6;11" />
+                <Face Color = "Colors[10]" VertexIndexes = "17;16;11;7;12" />
+
+                <Face Color = "Colors[11]" VertexIndexes = "15;16;17;18;19" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "SplitCenter" >
+            <HideContaining Vector   = "Cx[c1]; Cy[c1]; Cz[c1]" />
+            <InvertVisibility/>
+            <Split><Plane NormVector = "Cx[c1]; Cy[c1]; Cz[c1]" NormDistance = "D" /></Split>
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "SplitPart" >
+            <Script>a := Splits[i]; Inc(i);</Script>
+            <HideContaining Vector   = "Cx[c1]; Cy[c1]; Cz[c1]" />
+            <InvertVisibility/>
+            <Turn NormVector         = "Cx[c1]; Cy[c1]; Cz[c1]" Angle = "p5 * a" />
+            <Split><Plane NormVector = "Cx[c2]; Cy[c2]; Cz[c2]" NormDistance = "D" /></Split>
+            <HideContaining Vector   = "Cx[c1]; Cy[c1]; Cz[c1]" />
+            <Turn NormVector         = "Cx[c1]; Cy[c1]; Cz[c1]" Angle = "2*p5" />
+            <Split><Plane NormVector = "Cx[c2]; Cy[c2]; Cz[c2]" NormDistance = "D" /></Split>
+            <Turn NormVector         = "Cx[c1]; Cy[c1]; Cz[c1]" Angle = "-4*p5" />
+            <Split><Plane NormVector = "Cx[c2]; Cy[c2]; Cz[c2]" NormDistance = "D" /></Split>
+            <Turn NormVector         = "Cx[c1]; Cy[c1]; Cz[c1]" Angle = "p5 * (2 - a)" />
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "SplitSide" >
+            <Script>GetSplits;</Script>
+            <ExecMacro MacroName = "SplitCenter" />
+            <ExecMacro MacroName = "SplitPart" Repeat = "pCount" i = "0" />
+        </Macro>
+
+        // 11 - Gray
+        <Script>sSplits := '1,3,5,7,9';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "11" c2 = "10" />
+
+        //  4 - Red
+        <Script>sSplits := '1,3,5,7,9';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "4" c2 = "0" />
+
+        //  7 - LightYellow
+        <Script>sSplits := '3,8';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "7" c2 = "11" />
+
+        //  6 - LightViolett
+        <Script>sSplits := '6,8';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "6" c2 = "11" />
+
+        //  8 - Magenta
+        <Script>sSplits := '3,5';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "8" c2 = "11" />
+
+        //  5 - DarkGreen
+        <Script>sSplits := '0,8';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "5" c2 = "0" />
+
+        //  1 - Violett
+        <Script>sSplits := '6,9';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "1" c2 = "0" />
+
+        //  0 - White
+        <Script>sSplits := '4,6';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "0" c2 = "1" />
+
+        // 10 - LightGreen
+        <Script>sSplits := '5,7';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "10" c2 = "11" />
+
+        //  2 - Yellow
+        <Script>sSplits := '4,8';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "2" c2 = "0" />
+
+        //  3 - Blue
+        <Script>sSplits := '';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "3" c2 = "0" />
+
+        //  9 - Orange
+        <Script>sSplits := '';</Script>
+        <ExecMacro MacroName = "SplitSide" c1 = "9" c2 = "11" />
+    </Figure>
+</xml>

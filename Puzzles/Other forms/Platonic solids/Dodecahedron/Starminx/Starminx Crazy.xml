@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Starminx Crazy</Name>
+        <Menu>Other forms\Dodecahedron\Starminx\Starminx Crazy</Menu>
+        <Menu>Other forms\Dodecahedron\Face Turning\Crazy\Starminx Crazy</Menu>
+        <Inventor>Michael Sun</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9579</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        D := R * 0.3;
+
+        RC := R * 0.4;
+        L := 1.004;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; 0" PlaneDistances = "D;RSin" NormVectors = "Cx; Cy; Cz" FixedLayers = "0" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <SplitByAxes/>
+        <HideContaining Vectors = "Vx; Vy; Vz" />
+        <HideContaining Vectors = "Ex; Ey; Ez" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <RemoveGrayParts/>
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = "Cx[i] * L; Cy[i] * L; Cz[i] * L" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "12" i = "0" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

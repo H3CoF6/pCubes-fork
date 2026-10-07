@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Square-1 Super</Name>
+        <Menu>Other cubes\Square-1\Crazy Square-1 Super</Menu>
+        <Inventor>Zijian Wang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8471</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36409</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00AA00'; // clGreen
+        Colors[1] := '0011EE'; // clBlue
+        Colors[2] := 'EE0000'; // clRed
+        Colors[3] := 'FF6600'; // clOrange
+        Colors[4] := 'FFFF00'; // clYellow
+        Colors[5] := 'FFFFFF'; // clWhite
+
+        W := 0.5;
+        D := W / 3;
+
+        R1 := W * 0.76;
+        R2 := W * 0.60;
+
+        Delta := 1.002;
+        W1 := W * Delta;
+        W2 := W1 * Delta;
+        W3 := W2 * Delta;
+
+        S15 := sin (Pi / 12); // 15 degrees
+        C15 := cos (Pi / 12);
+    </Script>
+
+    <Axes TurningAngles = "Pi/6" PlaneDistances = "-W;-D; D; W" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "C15; S15; 0" />
+    </Axes>
+
+    <Figure>
+        <!-- First circles -->
+        <Macro Name = "AddQuarter" >
+            <Cylinder Radius = "R1" Color = "Colors[cl]" Base = "0; 0; W" Top = "0; 0; W1" > <Top Color = "Colors[cl]" /> </Cylinder>
+            <Cylinder Radius = "R1" Color = "Colors[cl]" Base = "0; 0;-W" Top = "0; 0;-W1" > <Top Color = "Colors[cl]" /> </Cylinder>
+
+            <Cut> <Plane NormVector = " 1; 1; 0" /> </Cut>
+            <Cut> <Plane NormVector = "-1; 1; 0" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+            <HideAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddQuarter" cl = "3" />
+        <ExecMacro MacroName = "AddQuarter" cl = "1" />
+        <ExecMacro MacroName = "AddQuarter" cl = "2" />
+        <ExecMacro MacroName = "AddQuarter" cl = "0" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <!-- Second circles -->
+        <Circle Radius = "R2" Color = "Colors[4]" Center = "  0;  0;-W2" />
+        <Circle Radius = "R2" Color = "Colors[5]" Center = "  0;  0; W2" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+
+        <Hide Axis = "0" Layer = "2" />
+        <Split> <Plane NormVector = " S15; C15; 0" NormDistance = "0" /> </Split>
+        <Split> <Plane NormVector = " S15;-C15; 0" NormDistance = "0" /> </Split>
+        <Split> <Plane NormVector = " C15; S15; 0" NormDistance = "0" /> </Split>
+        <Split> <Plane NormVector = " C15;-S15; 0" NormDistance = "0" /> </Split>
+        <ShowAll/>
+        <Split Axis = "1" From = "1" />
+        <Connect Axis = "0" Layers = "0;1" />
+        <Connect Axis = "0" Layers = "2;4" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

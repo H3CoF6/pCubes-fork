@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Enclosed Square-1</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other forms\Square-1\Enclosed Square-1</Menu>
+        <Inventor>Jay Hensley</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-01-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7685</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 6] := '00CCCC';
+        Colors[ 7] := '8800FF';
+        Colors[ 8] := '555500';
+        Colors[ 9] := 'FFBB00';
+        Colors[10] := '44AA00';
+        Colors[11] := 'FF88FF';
+
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        W := 0.5;
+
+        A0 := 15 * Pi/180; // 15 degrees
+        S15 := sin(A0); // 15 degrees
+        C15 := cos(A0);
+
+        D := W * S15 / C15;
+        DCut := (D + W) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "cos(A0); sin(A0); 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Cut Color = "Colors[ 6]" ><Plane NormVector = " 1;-1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[ 7]" ><Plane NormVector = "-1; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[ 8]" ><Plane NormVector = " 0; 1;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[ 9]" ><Plane NormVector = " 0;-1; 1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[10]" ><Plane NormVector = " 1; 0;-1" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[11]" ><Plane NormVector = "-1; 0; 1" NormDistance = "-DCut" /></Cut>
+
+        <RemoveGrayParts/>
+
+        <Hide Axis = "0" Layer = "1" />
+
+        <Macro Name = "Split">
+            <Script>A := degrees * Pi / 180; </Script>
+            <Split><Plane NormVector = "sin(A); cos(A); 0" /></Split>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Degrees = " 15" />
+        <ExecMacro MacroName = "Split" Degrees = "105" />
+        <ExecMacro MacroName = "Split" Degrees = "165" />
+        <ShowAll/>
+    </Figure>
+</xml>

@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentaemperor Hexadecagonal Prism</Name>
+        <Menu>Other forms\Prism\Octagonal Prism\Pentaemperor Hexadecagonal Prism</Menu>
+        <Inventor>Ilya Toporgilka</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-04-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9803</Link>
+    </Interface>
+ 
+    <Script>
+        Colors[ 6] := '000080'; // Navy
+        Colors[ 7] := '00FFFF'; // Cyan
+        Colors[ 8] := 'FF00FF'; // Fuchsia
+        Colors[ 9] := '008080'; // Teal
+        Colors[10] := 'FF7F50'; // Coral
+        Colors[11] := 'FF0000'; // Red
+        Colors[12] := '800000'; // Brown
+        Colors[13] := '0000FF'; // Blue
+        Colors[14] := 'FF6000'; // Orange
+        Colors[15] := 'DDBB20'; // Golden
+        Colors[16] := '00FF00'; // Lime
+        Colors[17] := '008000'; // Green
+        Colors[18] := '808000'; // Olive
+        Colors[19] := 'FF69B4'; // Pink
+        Colors[20] := 'DA70D6'; // Orchid
+        Colors[21] := '800080'; // Purple
+
+        W := 0.5;
+
+        WD := 2*W / 6;
+
+        RCut := WD * sqrt(2) * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-WD; 0; WD" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W * 1.1" WY = "W * 1.1" WZ = "WD * 2" />
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = " 0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = " 0" /></Split>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = " WD * 2" /></Split>
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-WD * 2" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = " WD * 2" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-WD * 2" /></Split>
+
+
+        <Macro Name = "CutSide" >
+            <Hide><Plane NormVector = " 1; 0; 0" NormDistance = "-WD * 2" /></Hide>
+            <Cut Color = "Colors[c  ]"><Plane NormVector = " 1; 1; 0" NormDistance = "-RCut" /></Cut>
+            <Hide><Plane NormVector = "-1; 0; 0" NormDistance = "0" /></Hide>
+            <Cut Color = "Colors[c+1]"><Plane NormVector = " 0; 1; 0" NormDistance = "-W" /></Cut>
+            <ShowAll/>
+            <Cut Color = "Colors[c+2]"><Plane NormVector = " 0; 1; 0" NormDistance = "-W" /></Cut>
+            <Hide><Plane NormVector = "-1; 0; 0" NormDistance = "-WD * 2" /></Hide>
+            <Cut Color = "Colors[c+3]"><Plane NormVector = "-1; 1; 0" NormDistance = "-RCut" /></Cut>
+            <ShowAll/>
+            <RemoveContaining Vector = " W;-W; 0" />
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+            <Script>c := c  + 4;</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutSide" c = "6" Repeat = "4" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " WD; 0; 0" />
+        <RemoveContaining Vector = "-WD; 0; 0" />
+        <RemoveContaining Vector = " 0; WD; 0" />
+        <RemoveContaining Vector = " 0; WD; 0" />
+    </Figure>
+</xml>

@@ -1,0 +1,148 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cheesy Craze</Name>
+        <Menu>Other forms\Cylinder\Cheesy Craze</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2019-11-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7660</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        Colors[0] := 'BBBBBB'; // clGray
+        Colors[1] := '222222'; // clBlack
+        Colors[2] := 'FFEE30'; // clYellow
+        Colors[3] := 'C80000'; // clRed
+        Colors[4] := '009600'; // clGreen
+        Colors[5] := 'FF800A'; // clOrange
+        Colors[6] := '800080'; // clViolett
+        Colors[7] := 'FFFFFF'; // clWhite
+        Colors[8] := '0000C8'; // clBlue
+        R := 0.6;
+        Rs := R * 0.8;
+        R2 := R * 0.6;
+        R2s := R * 0.4;
+        delta := 1.001;
+
+        H := R / 2;
+        Hs := H * delta;
+
+        N := 8;
+
+        Angle := -Pi / 6;
+        for i := 0 to N do begin
+            x[i] :=  R * sin(Angle);
+            y[i] := -R * cos(Angle);
+
+            xs[i] :=  Rs * sin(Angle);
+            ys[i] := -Rs * cos(Angle);
+
+            x2[i] :=  R2 * sin(Angle);
+            y2[i] := -R2 * cos(Angle);
+
+            x2s[i] :=  R2s * sin(Angle);
+            y2s[i] := -R2s * cos(Angle);
+
+            Angle := Angle + Pi/3 / N;
+        end;
+
+        for i := 0 to 2 do begin
+            ax[i] := R * cos(Pi / 3 * i + Pi / 2);
+            ay[i] := R * sin(Pi / 3 * i + Pi / 2);
+            az[i] := 0;
+        end;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" NormVectors = "ax; ay; az" TurnAxesWithPartNo = "20" />
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "-H; 0; H" NormVectors = "0; 0; 1" TurnAxesWithPartNo = "20" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+
+        <Macro Name = "AddSegment" >
+            <Part>
+                <Vertices Vectors = " x; y; H" />
+                <Vertices Vectors = " 0; 0; H" />
+                <Vertices Vectors = " x; y;-H" />
+                <Vertices Vectors = " 0; 0;-H" />
+                <Vertices Vectors = " xs; ys; H" />
+                <Vertices Vectors = " xs; ys;-H" />
+                <Faces>
+                    <Face Color = "Colors[0]" VertexIndexes = " 1; 0; 10; 11" InvisibleEdges = "8"  />
+                    <Face Color = "Colors[0]" VertexIndexes = " 2; 1; 11; 12" InvisibleEdges = "10" />
+                    <Face Color = "Colors[0]" VertexIndexes = " 3; 2; 12; 13" InvisibleEdges = "10" />
+                    <Face Color = "Colors[0]" VertexIndexes = " 4; 3; 13; 14" InvisibleEdges = "10" />
+                    <Face Color = "Colors[0]" VertexIndexes = " 5; 4; 14; 15" InvisibleEdges = "10" />
+                    <Face Color = "Colors[0]" VertexIndexes = " 6; 5; 15; 16" InvisibleEdges = "10" />
+                    <Face Color = "Colors[0]" VertexIndexes = " 7; 6; 16; 17" InvisibleEdges = "10" />
+                    <Face Color = "Colors[0]" VertexIndexes = " 8; 7; 17; 18" InvisibleEdges = "2"  />
+                    <Face                     VertexIndexes = " 10; 0; 9; 19" />
+                    <Face                     VertexIndexes = " 8; 18; 19; 9" />
+
+                    <Face Color = "Colors[1]" VertexIndexes = "9;20;21;22;23;24;25;26;27;28" /> // black
+                    <Face Color = "Colors[c1]" VertexIndexes = "28;27;26;25;24;4;5;6;7;8" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "24;23;22;21;20;0;1;2;3;4" />
+                    <Face Color = "Colors[2]" VertexIndexes = "19;37;36;35;34;33;32;31;30;29" />
+                    <Face Color = "Colors[c1]" VertexIndexes = "18;17;16;15;14;33;34;35;36;37" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "14;13;12;11;10;29;30;31;32;33" />
+                </Faces>
+            </Part>
+
+            <Part>
+                <Vertices Vectors = " x2;  y2; HS" />
+                <Vertices Vectors = "  0;   0; HS" />
+                <Vertices Vectors = "x2s; y2s; HS" />
+                <Faces>
+                    <Face Color = "Colors[1]" VertexIndexes = "9;10;11;12;13;14;15;16;17;18" />
+                    <Face Color = "Colors[c1]" VertexIndexes = "18;17;16;15;14;4;5;6;7;8" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "14;13;12;11;10;0;1;2;3;4" />
+                </Faces>
+            </Part>
+
+            <Part>
+                <Vertices Vectors = " x2;  y2; -HS" />
+                <Vertices Vectors = "  0;   0; -HS" />
+                <Vertices Vectors = "x2s; y2s; -HS" />
+                <Faces>
+                    <Face Color = "Colors[2]" VertexIndexes = "9;18;17;16;15;14;13;12;11;10" />
+                    <Face Color = "Colors[c1]" VertexIndexes = "14;15;16;17;18;8;7;6;5;4" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "10;11;12;13;14;4;3;2;1;0" />
+                </Faces>
+            </Part>
+
+            <Turn NormVector = "0;0;1" Angle = "Pi / 3" />
+
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" c1 = "3" c2 = "4" />
+        <ExecMacro MacroName = "AddSegment" c1 = "4" c2 = "5" />
+        <ExecMacro MacroName = "AddSegment" c1 = "5" c2 = "6" />
+        <ExecMacro MacroName = "AddSegment" c1 = "6" c2 = "7" />
+        <ExecMacro MacroName = "AddSegment" c1 = "7" c2 = "8" />
+        <ExecMacro MacroName = "AddSegment" c1 = "8" c2 = "3" />
+
+        <Split Axis = "3" From = "2" />
+
+        <SaveSolvedState/>
+
+        <Connect Axis = "3" Layers = "0;1;3" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+</xml>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Floppy Pentagonal Super Squared</Name>
+        <Menu>Other cubes\Unclassified\Floppy Pentagonal Super</Menu>
+        <Inventor>Beni Issler</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-01-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6650</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+
+        W := 0.5;
+        D := W * 0.6;
+        H := D * tan(Pi/5);
+
+        sAngle := Pi * 2 / 5;
+        for i := 0 to 4 do begin
+            ax[i] := sin(sAngle * i + Pi/4);
+            ay[i] := cos(sAngle * i + Pi/4);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2" NormVectors = " ax; ay; 0" PlaneDistances = "D" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "H" />
+        <SplitByAxes/>
+
+        <Macro Name = "Cut" >
+            <Hide Axis = "Ax0" Layer = "0" />
+            <Hide Axis = "Ax2" Layer = "1" />
+            <Turn Axis = "Ax0" Layer = "1" Angle = "Pi/2" />
+            <Cut Color = "clWhite" Axis = "Ax1" To = "1" />
+            <Cut Color = "clYellow" Axis = "Ax2" To = "1" />
+
+            <Undo/>
+            <ShowAll/>
+            <Hide Axis = "Ax0" Layer = "0" />
+            <Hide Axis = "Ax1" Layer = "0" />
+            <Turn Axis = "Ax1" Layer = "1" Angle = "Pi/2" />
+            <Cut Color = "clYellow" InvisibleEdges = "4" Axis = "Ax0" To = "1" />
+            <Turn Axis = "Ax1" Layer = "1" Angle = "Pi" />
+            <Cut Color = "clWhite" InvisibleEdges = "2" Axis = "Ax0" To = "1" />
+            <Undo Repeat = "2" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Ax0 = "0" Ax1 = "1" Ax2 = "4" />
+        <ExecMacro MacroName = "Cut" Ax0 = "1" Ax1 = "2" Ax2 = "0" />
+        <ExecMacro MacroName = "Cut" Ax0 = "2" Ax1 = "3" Ax2 = "1" />
+        <ExecMacro MacroName = "Cut" Ax0 = "3" Ax1 = "4" Ax2 = "2" />
+        <ExecMacro MacroName = "Cut" Ax0 = "4" Ax1 = "0" Ax2 = "3" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

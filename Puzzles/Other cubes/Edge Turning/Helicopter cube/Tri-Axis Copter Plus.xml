@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tri-Axis Copter Plus</Name>
+        <Menu>Other cubes\Edge Turning\Helicopter cube\Tri-Axis Copter Plus</Menu>
+        <Inventor>Isaiah Tucker (TwistyTurtle)</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1687</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        D := W / sqrt(2) * 1.13;
+
+        JumAngle := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "JumAngle" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut> <Plane NormVector = "-1;-1; 1" NormDistance = "-W/4" /> </Cut>
+
+        <SplitByAxes/>
+
+        <Turn  Axis = "0" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo/>
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo/>
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax1" Layer = "1" Angle = " JumAngle" />
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "-JumAngle" />
+            <Split Axis = "Ax1" From  = "1" />
+            <Turn  Axis = "Ax2" Layer = "1" Angle = " JumAngle" />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "-JumAngle" />
+        </Macro>
+
+        <Macro Name = "Split2" >
+            <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" />
+            <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "2" />
+            <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" />
+            <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "0" />
+            <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" />
+            <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split2" />
+        <Turn  Axis = "0" Layer = "1" Angle = "Pi" />
+        <ExecMacro MacroName = "Split2" />
+        <Turn  Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi" />
+        <ExecMacro MacroName = "Split2" />
+        <Turn  Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi" />
+        <ExecMacro MacroName = "Split2" />
+        <Turn  Axis = "2" Layer = "1" Angle = "Pi" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+    </Figure>
+</xml>

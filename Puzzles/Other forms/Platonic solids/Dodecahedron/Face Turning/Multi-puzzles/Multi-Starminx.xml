@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Multi-Starminx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Multi-puzzles\Multi-Starminx</Menu>
+        <Menu>Other forms\Multi-puzzles\Multi-Starminx</Menu>
+        <Inventor>Grant Andersen</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8566</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // clWhite
+        Colors[ 1] := 'FFFF00'; // clYellow
+        Colors[ 2] := '0000CC'; // clBlue
+        Colors[ 3] := 'FF0000'; // clRed
+        Colors[ 4] := '00AA00'; // clGreen
+        Colors[ 5] := '800080'; // clViolett
+        Colors[ 6] := 'FFFFAA'; // clCream
+        Colors[ 7] := '0066CC'; // clLightBlue
+        Colors[ 8] := 'FF6000'; // clOrange
+        Colors[ 9] := '00FF00'; // clLightGreen
+        Colors[10] := 'FF88CC'; // clLightViolett
+        Colors[11] := '666666'; // clGray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R2sin;
+        DC := R * sqrt(5) / 3;
+        DH := DC * 0.97; // Size of hole
+
+        R2 := R * (5 - 2 * sqrt(5)); // small dodecahedron
+    </Script>
+
+    <Axes TurningAngles = "sAngle;0;sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "HideCenter" >
+            <HideContaining Vector = " Cx[i]; Cy[i]; Cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenter" Repeat = "12" i = "0" />
+
+        <InvertVisibility/>
+
+        <Macro Name = "SplitC" >
+            <Split> <Plane NormDistance = "DH" NormVector = " Vx[i]; Vy[i]; Vz[i]" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitC" Repeat = "20" i = "0" />
+
+        <Macro Name = "RemoveCenters" >
+            <RemoveContaining Vector = "Cx[Id]; Cy[Id]; Cz[Id]" />
+            <Script> Inc(Id); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" Id = "0" Repeat = "12" />
+        <ShowAll/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "SplitI" >
+            <Split> <Plane NormDistance = "DC" NormVector = " Vx[i]; Vy[i]; Vz[i]" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitI" Repeat = "20" i = "0" />
+        <RemoveGrayParts/>
+
+        <!-- small dodecahedron -->
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" R = "R2" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

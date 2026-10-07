@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Octahedron 4x4x4</Name>
+        <Menu>Other forms\Octahedron\Fisher Octahedron 4x4x4</Menu>
+        <Inventor>Raphaël Mouflin</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-10-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11922</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Octahedron_Standard_Colors.inc';
+
+        W := 0.75;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+
+        D := W / 3;
+
+        Pillow := 1.15;
+
+        for i := 0 to 7 do begin
+            CPx[i] := Cx[i] * Pillow;
+            CPy[i] := Cy[i] * Pillow;
+            CPz[i] := Cz[i] * Pillow;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 1; 1; 1" Angle = "Pi / 3" />
+        <Macro Name = "Side" >
+            <Face Color = "Colors[c]" VertexIndexes = "i1;i2;i0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = "i2;i3;i0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c]" VertexIndexes = "i3;i1;i0" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "CPx; CPy; CPz" />
+
+            <Faces>
+                <ExecMacro MacroName = "Side" c = "0" i0 = " 6" i1 = "0" i2 = "2" i3 = "5" />
+                <ExecMacro MacroName = "Side" c = "1" i0 = " 7" i1 = "5" i2 = "2" i3 = "1" />
+                <ExecMacro MacroName = "Side" c = "2" i0 = " 8" i1 = "5" i2 = "1" i3 = "3" />
+                <ExecMacro MacroName = "Side" c = "3" i0 = " 9" i1 = "5" i2 = "3" i3 = "0" />
+                <ExecMacro MacroName = "Side" c = "4" i0 = "10" i1 = "4" i2 = "2" i3 = "0" />
+                <ExecMacro MacroName = "Side" c = "5" i0 = "11" i1 = "4" i2 = "1" i3 = "2" />
+                <ExecMacro MacroName = "Side" c = "6" i0 = "12" i1 = "4" i2 = "3" i3 = "1" />
+                <ExecMacro MacroName = "Side" c = "7" i0 = "13" i1 = "4" i2 = "0" i3 = "3" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,187 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Equator Sphere 38</Name>
+        <Menu>Other forms\Sphere\Slide\Equator Sphere 38</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2018-11-01</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Octahedron_Standard_Colors.inc';
+
+        K := 0.6;
+        D := K * 0.25;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/6; 0" PlaneDistances = "-D;D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <HideAll/>
+            <Script>Color := Colors[cl];</Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = "1;0;0" /> </Cut>
+            <Cut> <Plane NormVector = "0;1;0" /> </Cut>
+            <Cut> <Plane NormVector = "0;0;1" /> </Cut>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSegment" cl = "1" />
+        <ExecMacro MacroName = "AddSegment" cl = "5" />
+        <ExecMacro MacroName = "AddSegment" cl = "4" />
+        <ExecMacro MacroName = "AddSegment" cl = "0" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi  " />
+        <ExecMacro MacroName = "AddSegment" cl = "6" />
+        <ExecMacro MacroName = "AddSegment" cl = "2" />
+        <ExecMacro MacroName = "AddSegment" cl = "3" />
+        <ExecMacro MacroName = "AddSegment" cl = "7" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi  " />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Macro Name = "RemoveMiddleLayer" >
+            <Hide Axis = "ax" Layer = "2" />
+            <Cut  Axis = "ax" To = "1" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "RemoveMiddleLayer" ax = "0" />
+        <ExecMacro MacroName = "RemoveMiddleLayer" ax = "1" />
+        <ExecMacro MacroName = "RemoveMiddleLayer" ax = "2" />
+
+        <Macro Name = "AddPiece" >
+            <Script>
+                c0 := c mod 10;
+                c1 := c div 10 mod 10;
+                c2 := c div 100 mod 10;
+                c3 := c div 1000;
+                Inc(i);
+            </Script>
+
+            <Part>
+                <Vertices>
+                    <Add Vector = " 0   ;-0.603; 0   " />
+                    <Add Vector = " 0   ;-0.591; 0.12" />
+                    <Add Vector = " 0   ;-0.591;-0.12" />
+                    <Add Vector = " 0.12;-0.591; 0   " />
+                    <Add Vector = "-0.12;-0.591; 0   " />
+                    <Add Vector = " 0.12;-0.579; 0.12" />
+                    <Add Vector = " 0.12;-0.579;-0.12" />
+                    <Add Vector = "-0.12;-0.579; 0.12" />
+                    <Add Vector = "-0.12;-0.579;-0.12" />
+                    <Add Vector = "-0.15;-0.570;-0.12" />
+                    <Add Vector = "-0.15;-0.582; 0   " />
+                    <Add Vector = "-0.15;-0.570; 0.12" />
+                    <Add Vector = " 0.15;-0.582; 0   " />
+                    <Add Vector = " 0.15;-0.570;-0.12" />
+                    <Add Vector = " 0.15;-0.570; 0.12" />
+                    <Add Vector = " 0.15;-0.561;-0.15" />
+                    <Add Vector = "-0.15;-0.561;-0.15" />
+                    <Add Vector = " 0   ;-0.582;-0.15" />
+                    <Add Vector = "-0.12;-0.570;-0.15" />
+                    <Add Vector = " 0.12;-0.570;-0.15" />
+                    <Add Vector = " 0.15;-0.561; 0.15" />
+                    <Add Vector = "-0.15;-0.561; 0.15" />
+                    <Add Vector = "-0.12;-0.570; 0.15" />
+                    <Add Vector = " 0   ;-0.582; 0.15" />
+                    <Add Vector = " 0.12;-0.570; 0.15 " />
+                    <Add Vector = " 0   ;-0.3 - 0.001*i; 0 " />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[c2]" VertexIndexes = "24; 5;14;20" InvisibleEdges = " 3" />
+                    <Face Color = "Colors[c0]" VertexIndexes = "15;13; 6;19" InvisibleEdges = " 6" />
+                    <Face Color = "Colors[c3]" VertexIndexes = "21;11; 7;22" InvisibleEdges = " 6" />
+                    <Face Color = "Colors[c1]" VertexIndexes = "18; 8; 9;16" InvisibleEdges = " 3" />
+                    <Face Color = "Colors[c3]" VertexIndexes = " 0; 1; 7; 4" InvisibleEdges = "15" />
+                    <Face Color = "Colors[c1]" VertexIndexes = " 0; 4; 8; 2" InvisibleEdges = "15" />
+                    <Face Color = "Colors[c0]" VertexIndexes = " 0; 2; 6; 3" InvisibleEdges = "15" />
+                    <Face Color = "Colors[c2]" VertexIndexes = " 0; 3; 5; 1" InvisibleEdges = "15" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "23; 1; 5;24" InvisibleEdges = " 7" />
+                    <Face Color = "Colors[c0]" VertexIndexes = "19; 6; 2;17" InvisibleEdges = " 7" />
+                    <Face Color = "Colors[c3]" VertexIndexes = "22; 7; 1;23" InvisibleEdges = " 7" />
+                    <Face Color = "Colors[c1]" VertexIndexes = "17; 2; 8;18" InvisibleEdges = " 7" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "14; 5; 3;12" InvisibleEdges = " 7" />
+                    <Face Color = "Colors[c0]" VertexIndexes = "12; 3; 6;13" InvisibleEdges = " 7" />
+                    <Face Color = "Colors[c3]" VertexIndexes = "10; 4; 7;11" InvisibleEdges = " 7" />
+                    <Face Color = "Colors[c1]" VertexIndexes = " 9; 8; 4;10" InvisibleEdges = " 7" />
+                    <Face VertexIndexes = "16; 9;10;11;21" />
+                    <Face VertexIndexes = "20;14;12;13;15" />
+                    <Face VertexIndexes = "19;17;18;16;15" />
+                    <Face VertexIndexes = "20;21;22;23;24" />
+                    <Face Color = 'AAAAAA' VertexIndexes = "21;25;16" />
+                    <Face Color = 'AAAAAA' VertexIndexes = "15;25;20" />
+                    <Face Color = 'AAAAAA' VertexIndexes = "20;25;21" />
+                    <Face Color = 'AAAAAA' VertexIndexes = "16;25;15" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "MoveAndAdd" >
+            <Turn NormVector = "0; 0; 1" Angle = "-Pi/6*x" />
+            <Turn NormVector = "1; 0; 0" Angle = " Pi/6*y" />
+            <ExecMacro MacroName = "AddPiece" />
+            <Turn NormVector = "1; 0; 0" Angle = "-Pi/6*y" />
+            <Turn NormVector = "0; 0; 1" Angle = " Pi/6*x" />
+        </Macro>
+
+        <ExecMacro MacroName = "MoveAndAdd" x = " 0" y = " 0" c = "4576" i = "0" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 1" y = " 0" c = "5566" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 2" y = " 0" c = "5566" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 3" y = " 0" c = "5162" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 4" y = " 0" c = "1122" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 5" y = " 0" c = "1122" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 6" y = " 0" c = "1023" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 7" y = " 0" c = "0033" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 8" y = " 0" c = "0033" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 9" y = " 0" c = "0437" />
+        <ExecMacro MacroName = "MoveAndAdd" x = "10" y = " 0" c = "4477" />
+        <ExecMacro MacroName = "MoveAndAdd" x = "11" y = " 0" c = "4477" />
+
+        <ExecMacro MacroName = "MoveAndAdd" x = " 0" y = " 1" c = "4545" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 0" y = " 2" c = "4545" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 0" y = " 3" c = "0145" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 0" y = " 4" c = "0101" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 0" y = " 5" c = "0101" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 0" y = " 7" c = "3232" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 0" y = " 8" c = "3232" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 0" y = " 9" c = "7632" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 0" y = "10" c = "7676" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 0" y = "11" c = "7676" />
+
+        <ExecMacro MacroName = "MoveAndAdd" x = " 3" y = " 1" c = "5151" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 3" y = " 2" c = "5151" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 3" y = " 4" c = "4040" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 3" y = " 5" c = "4040" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 3" y = " 7" c = "7373" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 3" y = " 8" c = "7373" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 3" y = "10" c = "6262" />
+        <ExecMacro MacroName = "MoveAndAdd" x = " 3" y = "11" c = "6262" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Arrow4" File = "Textures\Arrow4.vec" />
+        <Texture Name = "Arrow3" File = "Textures\Arrow3.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Arrow3 = 0,6,2, 0,7,2, 0,8,2, 1,6,2, 1,7,2, 1,8,2, 2,6,2, 2,7,2, 2,8,2, 3,6,2, 3,7,2, 3,8,2, 4,6,2, 4,7,2, 4,8,2, 5,6,2, 5,7,2, 5,8,2, 6,6,2, 6,7,2, 6,8,2, 7,6,2, 7,7,2, 7,8,2
+        Arrow4 = 8,4,2, 8,5,2, 8,6,2, 8,7,2, 9,4,2, 9,5,2, 10,6,2, 10,7,2, 11,4,2, 11,5,2, 11,6,2, 11,7,2, 12,4,2, 12,5,2, 13,6,2, 13,7,2, 14,4,2, 14,5,2, 14,6,2, 14,7,2, 15,4,2, 15,5,2
+        Arrow4 = 16,6,2, 16,7,2, 17,4,2, 17,5,2, 17,6,2, 17,7,2, 18,4,2, 18,5,2, 19,6,2, 19,7,2, 20,5,2, 20,6,2, 21,7,2, 21,4,2, 22,4,2, 22,5,2, 22,6,2, 22,7,2, 23,5,2, 23,6,2, 24,7,2
+        Arrow4 = 24,4,2, 25,5,2, 25,6,2, 26,7,2, 26,4,2, 27,4,2, 27,5,2, 27,6,2, 27,7,2, 28,5,2, 28,6,2, 29,7,2, 29,4,2, 30,5,2, 30,6,2, 31,7,2, 31,4,2, 32,5,2, 32,6,2, 33,7,2, 33,4,2
+        Arrow4 = 34,5,2, 34,6,2, 35,7,2, 35,4,2, 36,5,2, 36,6,2, 37,7,2, 37,4,2
+    </SetTextures>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

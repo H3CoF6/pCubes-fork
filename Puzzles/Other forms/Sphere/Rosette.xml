@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rosette</Name>
+        <Menu>Other forms\Sphere\Rosette</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2018-08-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6166</Link>
+    </Interface>
+
+    <Script>
+        K  := 0.6;
+        C0 := 1 + sqrt(2);
+        C1 := 1;
+
+        D := K * 0.682109231055704; // C29*c0/sqrt(2*c0^2/2+1)
+
+        A1 := ArcCos(( 4 + 13 * sqrt(2)) / 28);
+        A2 := ArcCos((-1 + 2  * sqrt(2)) / 4 );
+        A3 := ArcCos((-2 -      sqrt(2)) / 4 );
+        A4 := ArcCos(( 8 - 9  * sqrt(2)) / 28);
+        A5 := ArcCos((-4 +      sqrt(2)) / 7 );
+    </Script>
+
+                <Add Vector = "   0;    0;  C29" />
+        <Axis NormVector = " C0; C1; C0" />
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1;-A2;-A3;-A4;-A5; 0; A1; A2; A3; A4; A5" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " C0; C1; C0" />
+        <Axis NormVector = " C0; C1;-C0" />
+        <Axis NormVector = " C0;-C1; C0" />
+        <Axis NormVector = " C0;-C1;-C0" />
+        <Axis NormVector = " C0; C0; C1" />
+        <Axis NormVector = " C0; C0;-C1" />
+        <Axis NormVector = " C0;-C0; C1" />
+        <Axis NormVector = " C0;-C0;-C1" />
+        <Axis NormVector = " C1; C0; C0" />
+        <Axis NormVector = " C1; C0;-C0" />
+        <Axis NormVector = " C1;-C0; C0" />
+        <Axis NormVector = " C1;-C0;-C0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "a" Layer = "0" Angle = " J1" />
+            <Turn Axis = "a" Layer = "2" Angle = " J1" />
+            <Turn Axis = "b" Layer = "0" Angle = " J2" />
+            <Turn Axis = "b" Layer = "2" Angle = " J2" />
+            <Turn Axis = "a" Layer = "0" Angle = "-J1" />
+            <Turn Axis = "a" Layer = "2" Angle = "-J1" />
+            <Turn Axis = "b" Layer = "0" Angle = "-J2" />
+            <Turn Axis = "b" Layer = "2" Angle = "-J2" />
+            <SplitByAxes/>
+            <Undo Repeat = "8"/>
+        </Macro>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <ExecMacro MacroName = "Unbandage" a = "0 " b = "3 " J1 = "-A2" J2 = "-A2"/>
+        <ExecMacro MacroName = "Unbandage" a = "1 " b = "2 " J1 = " A2" J2 = " A2"/>
+        <ExecMacro MacroName = "Unbandage" a = "0 " b = "1 " J1 = " A2" J2 = "-A2"/>
+        <ExecMacro MacroName = "Unbandage" a = "2 " b = "3 " J1 = "-A2" J2 = " A2"/>
+        <ExecMacro MacroName = "Unbandage" a = "4 " b = "7 " J1 = " A2" J2 = " A2"/>
+        <ExecMacro MacroName = "Unbandage" a = "5 " b = "6 " J1 = "-A2" J2 = "-A2"/>
+        <ExecMacro MacroName = "Unbandage" a = "4 " b = "6 " J1 = "-A2" J2 = " A2"/>
+        <ExecMacro MacroName = "Unbandage" a = "5 " b = "7 " J1 = " A2" J2 = "-A2"/>
+        <ExecMacro MacroName = "Unbandage" a = "8 " b = "9 " J1 = "-A2" J2 = " A2"/>
+        <ExecMacro MacroName = "Unbandage" a = "10" b = "11" J1 = " A2" J2 = "-A2"/>
+        <ExecMacro MacroName = "Unbandage" a = "8 " b = "10" J1 = " A2" J2 = "-A2"/>
+        <ExecMacro MacroName = "Unbandage" a = "9 " b = "11" J1 = "-A2" J2 = " A2"/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

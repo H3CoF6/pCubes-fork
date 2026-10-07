@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Snail 1 Mirror Cube</Name>
+        <Menu>Other forms\Square-1\Snail 1 Mirror Cube</Menu>
+        <Inventor>Manish Rathod</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-01-22</Added>
+        <Link>https://www.twistypuzzles.com/forum/viewtopic.php?p=427012</Link>
+    </Interface>
+
+    <Script>
+        Color := 'FFFFFF';
+
+        H := 0.5;
+        R1 := H / 1.4;
+        R2 := R1 * 2;
+        D := H / 4;
+
+        N := 60;
+        for i := 0 to N do begin
+            x[i] := (R1 + (R2 - R1) * i / N) * cos(2*Pi / N * i);
+            y[i] := (R1 + (R2 - R1) * i / N) * sin(2*Pi / N * i);
+        end;
+
+        inc(N);
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "Color" VertexIndexes = "FromTo( 0, N - 1)" />
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                <Face Color = "Color" VertexIndexes = "FromTo( 2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi / 2" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

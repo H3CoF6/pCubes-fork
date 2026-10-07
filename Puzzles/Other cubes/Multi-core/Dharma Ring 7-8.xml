@@ -1,0 +1,109 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dharma Ring 7/8</Name>
+        <Menu>Other cubes\Multi-Core\Dharma Ring 7/8</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7213</Link>
+    </Interface>
+
+    <Script>
+        Color[0] := 'FF800A'; // Orange
+        Color[1] := 'C80000'; // Red
+        Color[2] := 'AA00DD'; // Violett
+        Color[3] := '0033EE'; // Blue
+        Color[4] := '00CCCC'; // Cyan
+        Color[5] := '00AA00'; // Green
+        Color[6] := '222222'; // Black
+        Color[7] := 'FFEE00'; // Yellow
+        Color[8] := 'FFFFFF'; // White
+
+        W := 0.15;
+
+        D1 := W / 2;
+        D2 := (W + D1) / sqrt(2);
+        
+        sAngle := 2 * Pi / 7;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+        DWY := -W * 4.25;
+
+        Colors[4] := Color[7];
+        Colors[5] := Color[8];
+
+        for i := 0 to 6 do begin
+            px[i] := sin(sAngle * i);
+            py[i] := cos(sAngle * i);
+            Qx[i] := DWy * px[i];
+            Qy[i] := DWy * py[i];
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2; 0" PlaneDistances = "-D1; 0; D1" >
+        <Axis NormVector = "-py[0]; px[0]; 0" BaseVector = "Qx[0]; Qy[0]; 0" />
+        <Axis NormVector = "-py[1]; px[1]; 0" BaseVector = "Qx[1]; Qy[1]; 0" />
+        <Axis NormVector = "-py[2]; px[2]; 0" BaseVector = "Qx[2]; Qy[2]; 0" />
+        <Axis NormVector = "-py[3]; px[3]; 0" BaseVector = "Qx[3]; Qy[3]; 0" />
+        <Axis NormVector = "-py[4]; px[4]; 0" BaseVector = "Qx[4]; Qy[4]; 0" />
+        <Axis NormVector = "-py[5]; px[5]; 0" BaseVector = "Qx[5]; Qy[5]; 0" />
+        <Axis NormVector = "-py[6]; px[6]; 0" BaseVector = "Qx[6]; Qy[6]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi"  PlaneDistances = "D2" >
+        <Axis NormVector = "-px[0];-py[0]; 1" BaseVector = " Qx[0]; Qy[0]; 0" />
+        <Axis NormVector = "-px[1];-py[1]; 1" BaseVector = " Qx[1]; Qy[1]; 0" />
+        <Axis NormVector = "-px[2];-py[2]; 1" BaseVector = " Qx[2]; Qy[2]; 0" />
+        <Axis NormVector = "-px[3];-py[3]; 1" BaseVector = " Qx[3]; Qy[3]; 0" />
+        <Axis NormVector = "-px[4];-py[4]; 1" BaseVector = " Qx[4]; Qy[4]; 0" />
+        <Axis NormVector = "-px[5];-py[5]; 1" BaseVector = " Qx[5]; Qy[5]; 0" />
+        <Axis NormVector = "-px[6];-py[6]; 1" BaseVector = " Qx[6]; Qy[6]; 0" />
+
+        <Axis NormVector = "-px[0];-py[0];-1" BaseVector = " Qx[0]; Qy[0]; 0" />
+        <Axis NormVector = "-px[1];-py[1];-1" BaseVector = " Qx[1]; Qy[1]; 0" />
+        <Axis NormVector = "-px[2];-py[2];-1" BaseVector = " Qx[2]; Qy[2]; 0" />
+        <Axis NormVector = "-px[3];-py[3];-1" BaseVector = " Qx[3]; Qy[3]; 0" />
+        <Axis NormVector = "-px[4];-py[4];-1" BaseVector = " Qx[4]; Qy[4]; 0" />
+        <Axis NormVector = "-px[5];-py[5];-1" BaseVector = " Qx[5]; Qy[5]; 0" />
+        <Axis NormVector = "-px[6];-py[6];-1" BaseVector = " Qx[6]; Qy[6]; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddPart">
+            <Script>
+                for i := 0 to 3 do
+                    Colors[i] := Color[c];
+                Inc(c);
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Turn NormVector = "0; 0; 1" Angle = "2 * Pi / 7" />
+        </Macro>
+        <ExecMacro MacroName = "AddPart" c = "0" Repeat = "7" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Turn" >
+            <Turn Axis = "Ax" Layers = "1;2" Angle = "Pi/2" />
+            <Script> Inc(Ax); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Turn" Ax = "0" Repeat = "7" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Turn" Ax = "0" Repeat = "7" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Turn" Ax = "0" Repeat = "7" />
+        <SplitByAxes/>
+        <Undo Repeat = "21" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

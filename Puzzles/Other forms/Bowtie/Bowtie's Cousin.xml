@@ -1,0 +1,159 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bowtie's Cousin</Name>
+        <Menu>Other forms\Bowtie\Bowtie's Cousin</Menu>
+        <Menu>Other forms\Skewb variants\Bowtie's Cousin</Menu>
+        <Inventor>Thomas de Bruin</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-07-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1698</Link>
+    </Interface>
+
+    <Script>
+        clBlue1   := '000078';
+        clBlue2   := '0000D8';
+        clBlue3   := '0000A8';
+        clGreen1  := '00C600';
+        clGreen2  := '006600';
+        clGreen3  := '009600';
+        clRed1    := 'C80000';
+        clRed2    := '680000';
+        clRed3    := '980000';
+        clOrange1 := 'FF8000';
+        clOrange2 := '9F5000';
+        clOrange3 := 'CF6800';
+        clYellow1 := '9F9F00';
+        clYellow2 := 'FFFF00';
+        clYellow3 := 'CFCF00';
+        clWhite1  := 'FFFFFF';
+        clWhite2  := '9F9F9F';
+        clWhite3  := 'CFCFCF';
+
+        dal := ArcTan(2) / 2;
+        sdal := sin(dal);
+        cdal := cos(dal);
+
+        R := 0.7;
+        dAngle := (Arctan(2) + Arcsin(2/3)) / 2;
+        dAngle2 := (Arctan(2) - Arcsin(2/3)) / 2;
+        Rsin := R * sin(dAngle);
+        Rcos := R * cos(dAngle);
+        R2sin := R * sin(dAngle2);
+        R2cos := R * cos(dAngle2);
+        sAngle := PI * 2 / 5;
+
+        for i := 0 to 4 do begin
+            x[i] := Rcos * sin(sAngle * (i - 0.5));
+            y[i] := Rcos * cos(sAngle * (i - 0.5));
+            z[i] := Rsin;
+        end;
+
+        for i := 5 to 9 do begin
+            x[i] := R2cos * sin(sAngle * (i - 0.5));
+            y[i] := R2cos * cos(sAngle * (i - 0.5));
+            z[i] := R2sin;
+        end;
+
+        for i := 10 to 14 do begin
+            x[i] := R2cos * sin(sAngle * i);
+            y[i] := R2cos * cos(sAngle * i);
+            z[i] := -R2sin;
+        end;
+
+        for i := 15 to 19 do begin
+            x[i] := Rcos * sin(sAngle * i);
+            y[i] := Rcos * cos(sAngle * i);
+            z[i] := -Rsin;
+        end;
+
+        DCut := R * sqrt(3) * (Sqrt(5) + 3) / 12;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " x[3];  y[3]; z[3]" />
+        <Axis NormVector = " x[6];  y[6]; z[6]" />
+        <Axis NormVector = " x[7];  y[7]; z[7]" />
+        <Axis NormVector = " x[0];  y[0]; z[0]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[ 0]; y[ 0]; z[ 0]" />
+                <Add Vector = "x[ 1]; y[ 1]; z[ 1]" />
+                <Add Vector = "x[ 2]; y[ 2]; z[ 2]" />
+                <Add Vector = "x[ 3]; y[ 3]; z[ 3]" />
+                <Add Vector = "x[ 4]; y[ 4]; z[ 4]" />
+                <Add Vector = "x[ 5]; y[ 5]; z[ 5]" />
+                <Add Vector = "x[ 6]; y[ 6]; z[ 6]" />
+                <Add Vector = "x[ 7]; y[ 7]; z[ 7]" />
+                <Add Vector = "x[ 8]; y[ 8]; z[ 8]" />
+                <Add Vector = "x[ 9]; y[ 9]; z[ 9]" />
+                <Add Vector = "x[10]; y[10]; z[10]" />
+                <Add Vector = "x[11]; y[11]; z[11]" />
+                <Add Vector = "x[12]; y[12]; z[12]" />
+                <Add Vector = "x[13]; y[13]; z[13]" />
+                <Add Vector = "x[14]; y[14]; z[14]" />
+                <Add Vector = "x[15]; y[15]; z[15]" />
+                <Add Vector = "x[16]; y[16]; z[16]" />
+                <Add Vector = "x[17]; y[17]; z[17]" />
+                <Add Vector = "x[18]; y[18]; z[18]" />
+                <Add Vector = "x[19]; y[19]; z[19]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite1" VertexIndexes = "4;3;2;1;0" />
+
+                <Face Color = "clGreen1" VertexIndexes = "1;2;7;11;6" />
+                <Face Color = "clOrange1" VertexIndexes = "2;3;8;12;7" />
+                <Face Color = "clOrange2" VertexIndexes = "3;4;9;13;8" />
+                <Face Color = "clBlue1" VertexIndexes = "4;0;5;14;9" />
+                <Face Color = "clWhite2" VertexIndexes = "0;1;6;10;5" />
+
+                <Face Color = "clGreen2" VertexIndexes = "17;16;11;7;12" />
+                <Face Color = "clYellow1" VertexIndexes = "18;17;12;8;13" />
+                <Face Color = "clBlue2" VertexIndexes = "19;18;13;9;14" />
+                <Face Color = "clRed1" VertexIndexes = "15;19;14;5;10" />
+                <Face Color = "clRed2" VertexIndexes = "16;15;10;6;11" />
+
+                <Face Color = "clYellow2" VertexIndexes = "15;16;17;18;19" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <Cut Color = "clYellow3" >
+           <Plane NormVector = " x[ 0] + x[ 1];  y[ 0] + y[ 1];  z[ 0] + z[ 1]" >
+               <NormDistance> -DCut </NormDistance>
+           </Plane>
+       </Cut>
+       <Cut Color = "clWhite3" >
+           <Plane NormVector = "-x[ 0] - x[ 1]; -y[ 0] - y[ 1]; -z[ 0] - z[ 1]" >
+               <NormDistance> -DCut </NormDistance>
+           </Plane>
+       </Cut>
+       <Cut Color = "clRed3" >
+           <Plane NormVector = " x[ 3] + x[ 8];  y[ 3] + y[ 8];  z[ 3] + z[ 8]" >
+               <NormDistance> -DCut </NormDistance>
+           </Plane>
+       </Cut>
+       <Cut Color = "clOrange3" >
+           <Plane NormVector = "-x[ 3] - x[ 8]; -y[ 3] - y[ 8]; -z[ 3] - z[ 8]" >
+               <NormDistance> -DCut </NormDistance>
+           </Plane>
+       </Cut>
+       <Cut Color = "clGreen3" >
+           <Plane NormVector = " x[14] + x[ 9];  y[14] + y[ 9];  z[14] + z[ 9]" >
+               <NormDistance> -DCut </NormDistance>
+           </Plane>
+       </Cut>
+       <Cut Color = "clBlue3" >
+           <Plane NormVector = "-x[14] - x[ 9]; -y[14] - y[ 9]; -z[14] - z[ 9]" >
+               <NormDistance> -DCut </NormDistance>
+           </Plane>
+       </Cut>
+
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

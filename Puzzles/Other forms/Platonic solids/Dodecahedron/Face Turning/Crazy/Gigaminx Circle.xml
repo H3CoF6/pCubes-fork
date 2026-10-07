@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Gigaminx Circle</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Crazy\Gigaminx Circle</Menu>
+        <Inventor>Anthone Poole</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-15</Added>
+        <Link>http://chewiescustomstickers.com/circle-gigaminx.html</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        RC := R * 0.27;
+
+        L := 1.004;
+
+        D1 := RSin;
+        D2 := (2 * Rsin + 2 * R2sin) / 4;
+        D3 := (3 * Rsin + 1 * R2sin) / 4;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D1; D2; D3" NormVectors = "Cx; Cy; Cz" FixedLayers = "0" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = "Cx[i] * L; Cy[i] * L; Cz[i] * L" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "12" i = "0" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Connect Layers = "1;3" />
+    </Figure>
+</xml>

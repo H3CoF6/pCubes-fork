@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x4x5</Name>
+        <Menu>Cubic\Bandaged\Cube 5x5x5\3x4x5</Menu>
+        <Inventor>Ting Huang</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2014-05-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2698</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 5;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('221=000,300,001,301,002,302,003,303,004,304');
+        ParseTxt('211=020,320,030,330,040,340');
+        ParseTxt('211=041,341,042,342,043,343');
+        ParseTxt('211=024,324,034,334,044,344');
+        ParseTxt('121=200,204');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Script>L := Random(2) + 2;</Script>
+            <Turn Axis = "1" Layer = "Random(3) + 2" Angle = " Pi"/>
+            <Turn Axis = "1" Layer = "Random(3) + 2" Angle = " Pi"/>
+
+            <Turn Axis = "0" From = "0" To = "1" Angle = " Pi/2"/>
+            <Turn Axis = "1" From = "L" To = "L" Angle = " Pi"/>
+            <Turn Axis = "0" From = "0" To = "1" Angle = "-Pi/2"/>
+            <Turn Axis = "1" From = "4" To = "4" Angle = " Pi"/>
+            <Turn Axis = "0" From = "0" To = "1" Angle = " Pi/2"/>
+            <Turn Axis = "1" From = "L" To = "L" Angle = " Pi"/>
+            <Turn Axis = "0" From = "0" To = "1" Angle = "-Pi/2"/>
+
+            <Turn Axis = "1" Layer = "Random(3) + 2" Angle = " Pi"/>
+            <Turn Axis = "1" Layer = "Random(3) + 2" Angle = " Pi"/>
+
+            <Turn Axis = "0" From = "4" To = "4" Angle = " Pi/2"/>
+            <Turn Axis = "1" From = "L" To = "L" Angle = " Pi"/>
+            <Turn Axis = "0" From = "3" To = "4" Angle = "-Pi/2"/>
+            <Turn Axis = "1" From = "4" To = "4" Angle = " Pi"/>
+            <Turn Axis = "0" From = "3" To = "4" Angle = " Pi/2"/>
+            <Turn Axis = "1" From = "L" To = "L" Angle = " Pi"/>
+            <Turn Axis = "0" From = "3" To = "4" Angle = "-Pi/2"/>
+        </Macro>
+        <Macro Name = "Sc2" >
+            <Turn Axis = "0" From = "3" To = "4" Angle = "Pi"/>
+            <Turn Axis = "2" From = "3" To = "4" Angle = "-Pi/2"/>
+            <Turn Axis = "0" From = "3" To = "4" Angle = "Pi"/>
+            <Turn Axis = "2" From = "3" To = "4" Angle = "Pi/2"/>
+            <Turn Axis = "0" From = "3" To = "4" Angle = "Pi"/>
+            <Turn Axis = "2" From = "3" To = "4" Angle = "-Pi/2"/>
+            <Turn Axis = "0" From = "3" To = "4" Angle = "Pi"/>
+            <Turn Axis = "2" From = "3" To = "4" Angle = "Pi/2"/>
+            <Turn Axis = "0" From = "3" To = "4" Angle = "Pi"/>
+
+            <Turn Axis = "2" Layer = "0" Angle = "Pi/2 * Random(4)"/>
+            <Turn Axis = "2" Layer = "1" Angle = "Pi/2 * Random(4)"/>
+            <Turn Axis = "2" Layer = "2" Angle = "Pi/2 * Random(4)"/>
+            <Turn Axis = "2" Layer = "3" Angle = "Pi * Random(2)"/>
+            <Turn Axis = "2" Layer = "4" Angle = "Pi * Random(2)"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(5)" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc1" Repeat = "25" />
+
+            <Turn Axis = "2" Layer = "3" Angle = "Pi"/>
+            <Turn Axis = "2" Layer = "4" Angle = "Pi"/>
+            <Turn Axis = "1" Layer = "3" Angle = "Pi"/>
+
+            <ExecMacro MacroName = "Sc2" Repeat = "25" />
+
+            <ExecMacro MacroName = "RandomTurns" Repeat = "50" />
+        </Macro>
+    </Macros>
+</xml>

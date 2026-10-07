@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jing's Pyraminx Bump</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Tetrahedron\Jing's Pyraminx Bump</Menu>
+        <Menu>Other forms\Skewb variants\Tetrahedron\Jing's Pyraminx Bump</Menu>
+        <Inventor>Floyd Newberry</Inventor>
+        <Programmer>Boris</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5200</Link>
+        <Added>2016-11-26</Added>
+    </Interface>
+
+    <Script>
+        Color := 'E0C07D';
+
+        D1 := sqrt(3) / 6 - 0.05;
+        D2 := sqrt(3) / 6;
+        D3 := sqrt(3) / 6 + 0.05;
+        D4 := sqrt(3) / 6 + 0.10;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "1; -1; 1" />
+                <Add Vector = "-1; 1; 1" />
+                <Add Vector = "1; 1; -1" />
+                <Add Vector = "-1; -1; -1" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = "0;1;3" />
+                <Face VertexIndexes = "1;2;3" />
+                <Face VertexIndexes = "0;3;2" />
+                <Face VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "Color" > <Plane NormVector = " 1;  1; -1" NormDistance = "-D1" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = "-1; -1; -1" NormDistance = "-D2" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = "-1;  1;  1" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "Color" > <Plane NormVector = " 1; -1;  1" NormDistance = "-D4" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 4" />
+</xml>

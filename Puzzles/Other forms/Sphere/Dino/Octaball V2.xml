@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octaball V2</Name>
+        <Menu>Other forms\Sphere\Dino\Octaball V2</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-05</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=4&amp;t=36001</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF44CC';  // Pink
+        Colors[ 1] := 'AA00DD';  // Purple
+        Colors[ 2] := '66FFFF';  // Cyan
+        Colors[ 3] := '55DDFF';  // LightBlue
+        Colors[ 4] := 'CCCCCC';  // Gray
+        Colors[ 5] := '00FF00';  // Green
+        Colors[ 6] := 'FF8800';  // Orange
+        Colors[ 7] := '0011FF';  // Blue
+        Colors[ 8] := '00AA00';  // Green
+        Colors[ 9] := 'FFFFFF';  // White
+        Colors[10] := 'FFFF00';  // Yellow
+        Colors[11] := 'BB0000';  // DarkRed
+        Colors[12] := 'FF0000';  // Red
+        Colors[13] := 'FF99DD';  // LightViolett
+
+        K := 0.6;
+
+        W := K * 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := K * 0.333526099730881 // C15/K/sqrt(3)
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <Macro Name = "SplitZero">
+            <Split><Plane NormVector = " 1; 1; 1" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = "-1;-1; 1" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = "-1; 1;-1" NormDistance = "0" /></Split>
+            <Split><Plane NormVector = " 1;-1;-1" NormDistance = "0" /></Split>
+        </Macro>
+        <ExecMacro MacroName = "SplitZero" />
+
+        <Macro Name = "RemoveCorners">
+            <RemoveContaining Vector = "Vx[id]; Vy[id]; Vz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCorners" id = "0" Repeat = "8" />
+
+        <HideAll/>
+        <Macro Name = "AddSegment" >
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[c]" />
+            <ExecMacro MacroName = "SplitZero" />
+            <HideContaining Vector = "Vx[v]; Vy[v]; Vz[v]" />
+            <RemoveAllVisible/>
+            <Script>Inc(c);Inc(v)</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" c = "6" v = "0" Repeat = "8" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

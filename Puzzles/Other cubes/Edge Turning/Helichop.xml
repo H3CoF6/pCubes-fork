@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Helichop</Name>
+        <Menu>Other cubes\Edge Turning\Helichop</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-04-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1815</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        D := W / sqrt(2);
+    </Script>
+ 
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 0;  1; 1" />
+        <Axis NormVector = " 1;  0; 1" />
+        <Axis NormVector = " 0; -1; 1" />
+        <Axis NormVector = "-1;  0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+ 
+        <Cut Color = "404040" >
+            <Plane>
+                <NormVector X = "0" Y = "0" Z = "1" />
+                <NormDistance> 0 </NormDistance>
+            </Plane>
+        </Cut>
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Angle = "Pi" Layer = "1" />
+        <Turn Axis = "2" Angle = "Pi" Layer = "1" />
+           <Split Axis = "1" From = "1" />
+           <Split Axis = "3 " From = "1" />
+        <Turn Axis = "0" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "2" Angle = "-Pi" Layer = "1" />
+
+        <Turn Axis = "1" Angle = "Pi" Layer = "1" />
+        <Turn Axis = "3" Angle = "Pi" Layer = "1" />
+           <Split Axis = "0" From = "1" />
+           <Split Axis = "2 " From = "1" />
+        <Turn Axis = "1" Angle = "-Pi" Layer = "1" />
+        <Turn Axis = "3" Angle = "-Pi" Layer = "1" />
+
+    </Figure>
+
+    <Macros>
+        <Macro Name = "RandomTurns180" >
+            <Turn Axis = "Random(4)" Layer = "1" Angle = "Pi"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(4)" Layer = "1" Angle = "Pi/6 * Random(12)"/>
+        </Macro>
+        <Macro Name = "Scramble180" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns180" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble180" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+</xml>

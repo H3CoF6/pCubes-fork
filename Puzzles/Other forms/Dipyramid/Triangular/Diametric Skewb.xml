@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Diametric Skewb</Name>
+        <Menu>Other forms\Dipyramid\Triangular\Diametric Skewb</Menu>
+        <Menu>Other forms\Skewb variants\Dipyramid\Diametric Skewb</Menu>
+        <Inventor>Tom Koster</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6982</Link>
+    </Interface>
+
+    <Script>
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clRed    := 'FF0000';
+        clOrange := 'FF6000';
+        clGreen  := '008000';
+        clPink   := 'FF69B4';
+
+        R  := 1.05;
+        C0 := R / 2;
+        C1 := R;
+        C2 := R * sqrt(3) / 2;
+        H  := R / sqrt(2) / 9;
+
+        az := sqrt(2) / 4;
+
+        RCut1 := R * 0.46;
+        RCut2 := R * 0.89;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "         0;    0;  1" />
+        <Axis NormVector = "         0;    1; az" />
+        <Axis NormVector = " sqrt(3)/2; -1/2; az" />
+        <Axis NormVector = "-sqrt(3)/2; -1/2; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " C2; -C0;  0" />
+                <Add Vector = "-C2; -C0;  0" />
+                <Add Vector = "  0;  C1;  0" />
+
+                <Add Vector = "  0;   0;  H*3" />
+                <Add Vector = "  0;   0; -H*3" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 0; 3; 1" />
+                <Face Color = "clBlue  " VertexIndexes = " 1; 3; 2" />
+                <Face Color = "clGreen " VertexIndexes = " 2; 3; 0" />
+                <Face Color = "clOrange" VertexIndexes = " 1; 4; 0" />
+                <Face Color = "clPink  " VertexIndexes = " 2; 4; 1" />
+                <Face Color = "clCyan  " VertexIndexes = " 0; 4; 2" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <!-- cut corners for better control -->
+        <Cut> <Plane NormVector = " C2; -C0;  H" NormDistance = "-RCut1" /> </Cut>
+        <Cut> <Plane NormVector = "-C2; -C0;  H" NormDistance = "-RCut1" /> </Cut>
+        <Cut> <Plane NormVector = "  0;  C1;  H" NormDistance = "-RCut1" /> </Cut>
+        <Cut> <Plane NormVector = " C2;  C0; -H" NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = "-C2;  C0; -H" NormDistance = "-RCut2" /> </Cut>
+        <Cut> <Plane NormVector = "  0; -C1; -H" NormDistance = "-RCut2" /> </Cut>
+    </Figure>
+</xml>

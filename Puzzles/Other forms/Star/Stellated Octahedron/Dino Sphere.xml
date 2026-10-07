@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Sphere</Name>
+        <Menu>Other forms\Star\Stellated Octahedron\Dino Sphere</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9210</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        K := W * 0.99;
+
+        D := W / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector =  "1; 1; 1" />
+        <Axis NormVector =  "1;-1;-1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <SplitByAxes/>
+        <Hide Axis = "0" Layer = "0" />
+        <Hide Axis = "1" Layer = "0" />
+        <Hide Axis = "2" Layer = "0" />
+        <Hide Axis = "3" Layer = "0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <Hide Axis = "0" Layer = "2" />
+        <Hide Axis = "1" Layer = "2" />
+        <Hide Axis = "2" Layer = "2" />
+        <Hide Axis = "3" Layer = "2" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Part>
+            <Vertices>
+                 <Add Vector = "-W;-W;-W" />
+                 <Add Vector = " W;-W; W" />
+                 <Add Vector = "-W; W; W" />
+                 <Add Vector = " W; W;-W" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = "1;2;0" />
+                <Face VertexIndexes = "2;3;0" />
+                <Face VertexIndexes = "3;1;0" />
+                <Face VertexIndexes = "3;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0; 0; 0" />
+
+        <Part>
+            <Vertices>
+                <Add Vector = "-W;-W; W" />
+                <Add Vector = "-W; W;-W" />
+                <Add Vector = " W;-W;-W" />
+                <Add Vector = " W; W; W" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = "1;2;0" />
+                <Face VertexIndexes = "2;3;0" />
+                <Face VertexIndexes = "3;1;0" />
+                <Face VertexIndexes = "3;2;1" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

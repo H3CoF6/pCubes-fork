@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3x4x5 Cube (Bandaged 6x6x6)</Name>
+        <Menu>Cubic\Bandaged\Cube 6x6x6\3x4x5 Cube</Menu>
+        <Inventor>Manish Rathod</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-12-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11508</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 6;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('221=000,200,400,020,220,420,040,240,440');
+        ParseTxt('221=001,401,041,441');
+        ParseTxt('211=201,251');
+        ParseTxt('121=021,521');
+        ParseTxt('222=002,402,042,442');
+        ParseTxt('212=202,252');
+        ParseTxt('122=022,522');
+        ParseTxt('221=004,404,044,444');
+        ParseTxt('211=204,254');
+        ParseTxt('121=024,524');
+        ParseTxt('221=005,205,405,025,225,425,045,245,445');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+        <Split Axis = "1" From = "3" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(N)" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "Sc2" >
+            <Turn Axis = "2" Layers = "0-5" Angle = " Pi * Random(2)" />
+            <Script>ax := Random(2) + 2;</Script>
+            <Turn Axis = "1" Layer = "ax" Angle = " Pi/2" />
+            <Turn Axis = "2" Layer = "2" Angle = " Pi/2" />
+            <Turn Axis = "1" Layer = "Random(2) * 5" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "2" Angle = "-Pi/2" />
+            <Turn Axis = "1" Layer = "ax" Angle = "-Pi/2" />
+        </Macro>
+        <Macro Name = "Sc3" >
+            <Turn Axis = "Random(2)" Layer = "Random(N)" Angle = "Pi" />
+            <Turn Axis = "2" Layer = "Random(N)" Angle = "Pi/2" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "2*Pi * Random" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <Script> N := 6; </Script>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "Sc2" Repeat = "10" />
+            <ExecMacro MacroName = "Sc3" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

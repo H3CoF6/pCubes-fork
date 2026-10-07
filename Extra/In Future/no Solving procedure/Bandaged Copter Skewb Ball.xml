@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Bandaged Copter Skewb Ball</Name>
+        <Menu>grigr\Bandaged Copter Skewb Ball</Menu>
+        <Inventor>Justin Costa</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2019-03-20</Added>
+        <Link>https://www.instagram.com/illatsion_cubing/</Link>
+    </Interface>
+
+    <Script>
+        Colors[0]  := '202020'; // Black
+        Colors[1]  := 'FF0000'; // Red
+        Colors[2]  := '008000'; // Green
+        Colors[3]  := 'FFFF00'; // Yellow
+        Colors[4]  := 'FF6000'; // Orange
+        Colors[5]  := '0000A0'; // Blue
+        Colors[6]  := 'F0F0F0'; // White
+        Colors[7]  := '800080'; // Violett
+        Colors[8]  := 'FF0080'; // LightViolett
+        Colors[9]  := 'AABB20'; // Golden
+        Colors[10] := '800080'; // Purple
+        Colors[11] := '00FF00'; // Lime
+        Colors[12] := 'F0E68C'; // Khaki
+
+        NN:= 6;
+        K := 0.4;
+        nAngle := 2*Pi/NN;
+
+        for i := -2 to NN+3 do begin
+            x[i] := K * cos(nAngle * i);
+            y[i] := K * sin(nAngle * i);
+        end;
+
+        D:= K* 0.716;
+
+        A1 := Arccos(1/3);
+        A2 := 2 * Arccos(1/3);
+        A3 := Pi - A1;
+        A4 := Pi - A2;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles="-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4; Pi" PlaneDistances = "-D; 0; D" FixedLayers = "1;2" >
+        <Axis NormVector = " x[0]; y[0]; 0" />
+        <Axis NormVector = " x[1]; y[1]; 0" />
+        <Axis NormVector = " x[2]; y[2]; 0" />
+    </Axes>
+    <Axes TurningAngles = "2*Pi/NN" PlaneDistances = "0">
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSphere" >
+            <Turn NormVector = "0;0;1" Angle = " Pi/4" />
+            <Turn NormVector = "1;1;0" Angle = " Arctan(sqrt(2))" />
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <LoadFrom1 File = "Figures\CubeMono.xml" Width = "0.4" Color = "'FFFFFF'" />
+            <Turn NormVector = "1;1;0" Angle = "-Arctan(sqrt(2))" />
+            <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSphere" Color = "Colors[0]" />
+
+        <Macro Name = "RemoveSector" >
+            <Cut> <Plane NormVector = " x[i]; y[i]; 0" NormDistance = "-D" /> </Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveSector" i = "0" Repeat = "NN" />
+        <Hide Axis = "0" From = "0" To = "NN" />
+
+        <Macro Name = "AddSector" >
+            <ExecMacro MacroName = "AddSphere" Color = "Colors[i]" />
+            <Cut> <Plane NormVector = " x[i]  ; y[i]  ; 0" NormDistance = "D" /> </Cut>
+            <Cut> <Plane NormVector = "-x[i-2];-y[i-2]; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = "-x[i+2];-y[i+2]; 0" NormDistance = "0" /> </Cut>
+            <Hide Axis = "0" From = "0" To = "NN" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "1" Repeat = "6" />
+
+        <ShowAll/>
+
+        <Macro Name = "Split" >
+            <Split Axis = "0" From = "1"/>
+            <Split Axis = "0" From = "3"/>
+            <Split Axis = "1" From = "1"/>
+            <Split Axis = "1" From = "3"/>
+            <Split Axis = "2" From = "1"/>
+            <Split Axis = "2" From = "3"/>
+            <Split Axis = "3" From = "1"/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split"/>
+        ///////////////////// ///////////////////// /////////////////////
+        <Turn  Axis = "0" Layer = "0" Angle = " A1" />
+        <Turn  Axis = "0" Layer = "3" Angle = " A1" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat = "2"/>
+        <Turn  Axis = "1" Layer = "0" Angle = "-A1" />
+        <Turn  Axis = "1" Layer = "3" Angle = "-A1" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat = "2"/>
+        <Turn  Axis = "2" Layer = "0" Angle = " A1" />
+        <Turn  Axis = "2" Layer = "3" Angle = " A1" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat = "2"/>
+
+        ///////////////////// ///////////////////// /////////////////////
+        <Hide Axis = "0" From = "0" To = "2" />
+        <Turn  Axis = "2" Layer = "0" Angle = "-A1" />
+        <Turn  Axis = "1" Layer = "3" Angle = "-A3" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat="2"/>
+
+        <Turn  Axis = "0" Layer = "3" Angle = "A1" />
+        <Turn  Axis = "2" Layer = "0" Angle = "A1" />
+        <Turn  Axis = "1" Layer = "3" Angle = "A3" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat="3"/>
+        <ShowAll/>
+
+        <Hide Axis = "2" From = "0" To = "2" />
+        <Turn  Axis = "1" Layer = "3" Angle = "-A3" />
+        <Turn  Axis = "0" Layer = "0" Angle = "-A1" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat="2"/>
+
+        <Turn  Axis = "2" Layer = "3" Angle = "-A3" />
+        <Turn  Axis = "1" Layer = "3" Angle = "A3" />
+        <Turn  Axis = "0" Layer = "0" Angle = "A1" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat="3"/>
+        <ShowAll/>
+
+        <Hide Axis = "1" From = "1" To = "3" />
+        <Turn  Axis = "0" Layer = "0" Angle = "A3" />
+        <Turn  Axis = "2" Layer = "0" Angle = "-A1" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat="2"/>
+
+        <Turn  Axis = "1" Layer = "0" Angle = "A3" />
+        <Turn  Axis = "0" Layer = "0" Angle = "-A3" />
+        <Turn  Axis = "2" Layer = "0" Angle = "A1" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat="3"/>
+        <ShowAll/>
+
+        <Hide Axis = "1" From = "0" To = "2" />
+        <Turn  Axis = "1" Layer = "3" Angle = "-A1" />
+        <Turn  Axis = "0" Layer = "3" Angle = "A1" />
+        <Turn  Axis = "2" Layer = "3" Angle = "-A3" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat="3"/>
+        <ShowAll/>
+
+        <Hide Axis = "2" From = "1" To = "3" />
+        <Turn  Axis = "2" Layer = "0" Angle = "A1" />
+        <Turn  Axis = "0" Layer = "3" Angle = "A1" />
+        <Turn  Axis = "1" Layer = "0" Angle = "A3" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat="3"/>
+        <ShowAll/>
+
+        <Hide Axis = "0" From = "1" To = "3" />
+        <Turn  Axis = "0" Layer = "0" Angle = "A1" />
+        <Turn  Axis = "2" Layer = "3" Angle = "A1" />
+        <Turn  Axis = "1" Layer = "0" Angle = "A3" />
+        <ExecMacro MacroName = "Split"/>
+        <Undo Repeat="3"/>
+        <ShowAll/>
+
+<!--        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />-->
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pocket Cube (Hexagonal)</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Pocket Cube (Hexagonal)</Menu>
+        <Inventor>Silvestre Cruz Quiroz</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11041</Link>
+    </Interface>
+
+    <Script>
+        clRed   := 'FF0000';
+        clWhite := 'FFFFFF';
+
+        R := 0.4;
+        T := R * sqrt(3) / 2; // top
+        B :=-R * (sqrt(32) - sqrt(3)) / 2; // bottom
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 3 * i);
+            y[i] := R * sin(Pi / 3 * i);
+        end;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+        az := 1 / sqrt(2);
+
+        D1 := (R * sqrt(2) - T) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D1; D1" NormVectors = " ax; ay; az" TurnAxesWithLayer = "1" />
+
+    <Figure>
+        <Macro Name = "Prism" >
+            <Part>
+                <Vertices Vectors = "x; y; T" />
+                <Vertices Vectors = "x; y; B" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = " 1; 0; 6; 7" />
+                    <Face Color = "Color" VertexIndexes = " 2; 1; 7; 8" />
+                    <Face Color = "Color" VertexIndexes = " 3; 2; 8; 9" />
+                    <Face Color = "Color" VertexIndexes = " 4; 3; 9;10" />
+                    <Face Color = "Color" VertexIndexes = " 5; 4;10;11" />
+                    <Face Color = "Color" VertexIndexes = " 0; 5;11; 6" />
+
+                    <Face Color = "Color" VertexIndexes = "11;10; 9; 8; 7; 6" />
+                    <Face Color = "Color" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "Prism" Color = "clWhite" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+
+        <HideContaining Vector = "x[1];y[1];T" />
+        <HideContaining Vector = "x[3];y[3];T" />
+        <HideContaining Vector = "x[5];y[5];T" />
+
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Prism" Color = "clRed" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+
+        <RemoveContaining Vector = "x[1];y[1];T" />
+        <RemoveContaining Vector = "x[3];y[3];T" />
+        <RemoveContaining Vector = "x[5];y[5];T" />
+
+        <ShowAll/>
+
+        <HideContaining Vector = "0;0;T" />
+        <InvertVisibility/>
+        <SplitByAxes/>
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

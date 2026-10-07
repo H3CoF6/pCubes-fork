@@ -1,0 +1,159 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super Menger Bump 9x9x9</Name>
+        <Menu>Cubic\Rubiks Recolored\Super Menger Bump 9x9x9</Menu>
+        <Inventor>Tim Fitzrandolph</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7138</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        N := 11;
+        D := W / N;
+        WX := D;
+        WY := D;
+        WZ := D;
+
+        for i := 0 to N - 4 do
+            DA[i] := 2 * D * i - D * (N - 4);
+
+
+        S[ 0] := '           |   00 00   |   11 11   | 011111110 | 011   110 |   1   1   | 011   110 | 011111110 |   11 11   |   00 00   |           ';
+        S[ 1] := '   00 00   |           |           |0         0|0         0|           |0         0|0         0|           |           |   00 00   ';
+        S[ 2] := '   11 11   |           |           |1         1|1         1|           |1         1|1         1|           |           |   11 11   ';
+        S[ 3] := ' 011111110 |0         0|1         1|1         1|1         1|1         1|1         1|1         1|1         1|0         0| 011111110 ';
+        S[ 4] := ' 011   110 |0         0|1         1|1         1|           |           |           |1         1|1         1|0         0| 011   110 ';
+        S[ 5] := '   1   1   |           |           |1         1|           |           |           |1         1|           |           |   1   1   ';
+        S[ 6] := ' 011   110 |0         0|1         1|1         1|           |           |           |1         1|1         1|0         0| 011   110 ';
+        S[ 7] := ' 011111110 |0         0|1         1|1         1|1         1|1         1|1         1|1         1|1         1|0         0| 011111110 ';
+        S[ 8] := '   11 11   |           |           |1         1|1         1|           |1         1|1         1|           |           |   11 11   ';
+        S[ 9] := '   00 00   |           |           |0         0|0         0|           |0         0|0         0|           |           |   00 00   ';
+        S[10] := '           |   00 00   |   11 11   | 011111110 | 011   110 |   1   1   | 011   110 | 011111110 |   11 11   |   00 00   |           ';
+
+        function GetType(x1, y1, z1);
+        begin
+            if (x1 &lt; 0) or (y1 &lt; 0) or (z1 &lt; 0) or (x1 &gt;= N) or (y1 &gt;= N) or (z1 &gt;= N) then
+                Result := ' '
+            else
+                Result := copy(S[N-1-z1], (N + 1) * y1 + x1 + 1, 1);
+        end;
+
+        procedure CalcCubie(No);
+        begin
+            x := No mod N;
+            y := No div N mod N;
+            z := No div N div N;
+            for i := 0 to 5 do
+                Colors[i] := -1;
+            CType := GetType(x,y,z);
+            if CType = '1' then begin
+                if GetType(x-1,y,z) = ' ' then Colors[0] := clRed;
+                if GetType(x+1,y,z) = ' ' then Colors[1] := clOrange;
+                if GetType(x,y-1,z) = ' ' then Colors[2] := clBlue;
+                if GetType(x,y+1,z) = ' ' then Colors[3] := clGreen;
+                if GetType(x,y,z-1) = ' ' then Colors[4] := clYellow;
+                if GetType(x,y,z+1) = ' ' then Colors[5] := clWhite;
+            end;
+            if CType = '1' then begin 
+                DWX := D * (2 * x - N + 1);
+                DWY := D * (2 * y - N + 1);
+                DWZ := D * (2 * z - N + 1);
+                CCount := 1;
+            end else
+                CCount := 0;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "DA" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Color2 = "Colors[1]" Axis = "0" From = "1" />
+        <Split Color1 = "Colors[0]" Axis = "0" From = "8" />
+        <Split Color2 = "Colors[3]" Axis = "1" From = "1" />
+        <Split Color1 = "Colors[2]" Axis = "1" From = "8" />
+        <Split Color2 = "Colors[5]" Axis = "2" From = "1" />
+        <Split Color1 = "Colors[4]" Axis = "2" From = "8" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Macro Name = "Remove1" >
+            <RemoveContaining Vector = " W; D*3; W" />
+            <RemoveContaining Vector = " W;-D*3; W" />
+            <RemoveContaining Vector = "-W; D*3; W" />
+            <RemoveContaining Vector = "-W;-D*3; W" />
+            <RemoveContaining Vector = "-W; D*3;-W" />
+            <RemoveContaining Vector = "-W;-D*3;-W" />
+            <RemoveContaining Vector = " W; D*3;-W" />
+            <RemoveContaining Vector = " W;-D*3;-W" />
+            <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Remove1" Repeat = "3" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "8" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "8" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "8" />
+
+        <RemoveContaining Vector = "0;0;0" />
+        <HideContaining Vector = "Cx;Cy;Cz" />
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <SplitByAxes/>
+
+        <Macro Name = "Remove2" >
+            <RemoveContaining Vector = " W;-D*6; W" />
+            <RemoveContaining Vector = " W;   0; W" />
+            <RemoveContaining Vector = " W; D*6; W" />
+            <RemoveContaining Vector = "-W;-D*6; W" />
+            <RemoveContaining Vector = "-W;   0; W" />
+            <RemoveContaining Vector = "-W; D*6; W" />
+            <RemoveContaining Vector = "-W;-D*6;-W" />
+            <RemoveContaining Vector = "-W;   0;-W" />
+            <RemoveContaining Vector = "-W; D*6;-W" />
+            <RemoveContaining Vector = " W;-D*6;-W" />
+            <RemoveContaining Vector = " W;   0;-W" />
+            <RemoveContaining Vector = " W; D*6;-W" />
+            <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Remove2" Repeat = "3" />
+        <ShowAll/>
+
+        <HideContaining Vector = "Cx;Cy;Cz" />
+        <InvertVisibility/>
+        <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-D*9" /></Cut>
+        <Cut><Plane NormVector = " 1; 0; 0" NormDistance = "-D*9" /></Cut>
+        <Cut><Plane NormVector = " 0;-1; 0" NormDistance = "-D*9" /></Cut>
+        <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "-D*9" /></Cut>
+        <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "-D*9" /></Cut>
+        <Cut><Plane NormVector = " 0; 0; 1" NormDistance = "-D*9" /></Cut>
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Macro Name = "AddCubie">
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <Macro Name = "AddCubies">
+            <Script> CalcCubie(No); Inc(No); </Script>
+            <ExecMacro MacroName = "AddCubie" Repeat = "CCount" /> // if CCount = 1 then draw cubie
+        </Macro>
+
+        <ExecMacro MacroName = "AddCubies" No = "0" Repeat = "N*N*N" />
+    </Figure>
+</xml>

@@ -1,0 +1,121 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Kremlin Star</Name>
+        <Menu>Other forms\Star\Kremlin Star</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2020-02-07</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clCoral       := 'FF7F50';  
+        clRed         := 'FF0000';  
+        clCrimson     := 'DC143C';  
+        clIndian      := 'CD5C5C';  
+        clBrown       := '800000';  
+        clPink        := 'FF69B4';
+        clFuchsia     := 'FF00FF';
+        clPale        := 'D07090';
+        clOrchid      := 'DA70D6';
+        clPurple      := '800080';
+
+        clCyan        := '00FFFF';
+        clDeepSky     := '00BFFF';
+        clTeal        := '008080';
+        clBlue        := '0000FF';
+        clNavy        := '000080';
+        clGreenYellow := 'ADFF2F';  
+        clLime        := '00FF00';  
+        clSea         := '3cb371';  
+        clGreen       := '008000';  
+        clDarkGreen   := '006400';  
+
+        R := 0.7;
+
+        W := R * sqrt((5 - 2 * sqrt(5)) / 5);
+        G := W * (5 - sqrt(5)) / 4;
+        N := (3 - sqrt(5)) / 2;
+
+        sAngle := PI * 2 / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+            xx[i] := -x[i] * N;
+            yy[i] := -y[i] * N;
+        end;
+
+        D := R * (sqrt(5) - 1) / 4;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi;Pi/2" PlaneDistances = "D; D/2" >
+        <Axis NormVector = "x[0]; 0; y[0]" />
+        <Axis NormVector = "x[1]; 0; y[1]" />
+        <Axis NormVector = "x[2]; 0; y[2]" />
+        <Axis NormVector = "x[3]; 0; y[3]" />
+        <Axis NormVector = "x[4]; 0; y[4]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "    0;  W;     0" />
+                <Add Vector = "xx[0];  G; yy[0]" />
+                <Add Vector = "xx[1];  G; yy[1]" />
+                <Add Vector = "xx[2];  G; yy[2]" />
+                <Add Vector = "xx[3];  G; yy[3]" />
+                <Add Vector = "xx[4];  G; yy[4]" />
+                                               
+                <Add Vector = " x[0];  0;  y[0]" />
+                <Add Vector = " x[1];  0;  y[1]" />
+                <Add Vector = " x[2];  0;  y[2]" />
+                <Add Vector = " x[3];  0;  y[3]" />
+                <Add Vector = " x[4];  0;  y[4]" />
+                                        
+                <Add Vector = "xx[0]; -G; yy[0]" />
+                <Add Vector = "xx[1]; -G; yy[1]" />
+                <Add Vector = "xx[2]; -G; yy[2]" />
+                <Add Vector = "xx[3]; -G; yy[3]" />
+                <Add Vector = "xx[4]; -G; yy[4]" />
+                <Add Vector = "    0; -W;     0" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clPink       " VertexIndexes = " 0; 1; 9; 2" /> 
+                <Face Color = "clFuchsia    " VertexIndexes = " 0; 2;10; 3" /> 
+                <Face Color = "clPale       " VertexIndexes = " 0; 3; 6; 4" /> 
+                <Face Color = "clOrchid     " VertexIndexes = " 0; 4; 7; 5" /> 
+                <Face Color = "clPurple     " VertexIndexes = " 0; 5; 8; 1" /> 
+
+                <Face Color = "clCyan       " VertexIndexes = "12; 2; 9" />
+                <Face Color = "clDeepSky    " VertexIndexes = "13; 3;10" />
+                <Face Color = "clTeal       " VertexIndexes = "14; 4; 6" />
+                <Face Color = "clBlue       " VertexIndexes = "15; 5; 7" />
+                <Face Color = "clNavy       " VertexIndexes = "11; 1; 8" />
+                <Face Color = "clGreenYellow" VertexIndexes = " 1;11; 9" />
+                <Face Color = "clLime       " VertexIndexes = " 2;12;10" />
+                <Face Color = "clSea        " VertexIndexes = " 3;13; 6" />
+                <Face Color = "clGreen      " VertexIndexes = " 4;14; 7" />
+                <Face Color = "clDarkGreen  " VertexIndexes = " 5;15; 8" />
+
+                <Face Color = "clCoral      " VertexIndexes = "16;12; 9;11" />
+                <Face Color = "clRed        " VertexIndexes = "16;13;10;12" />
+                <Face Color = "clCrimson    " VertexIndexes = "16;14; 6;13" />
+                <Face Color = "clIndian     " VertexIndexes = "16;15; 7;14" />
+                <Face Color = "clBrown      " VertexIndexes = "16;11; 8;15" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "2" Angle = "Pi / 2" />
+        <Turn Axis = "1" Layer = "2" Angle = "Pi / 2" />
+        <Turn Axis = "2" Layer = "2" Angle = "Pi / 2" />
+        <Turn Axis = "3" Layer = "2" Angle = "Pi / 2" />
+        <Turn Axis = "4" Layer = "2" Angle = "Pi / 2" />
+        <SplitByAxes/>
+        <Undo Repeat = "5" />
+    </Figure>
+</xml>

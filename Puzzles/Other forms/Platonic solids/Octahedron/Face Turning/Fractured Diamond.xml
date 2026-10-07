@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fractured Diamond</Name>
+        <Menu>Other forms\Octahedron\Face Turning\Fractured Diamond</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8812</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36780</Link>
+    </Interface>
+
+    <Script>
+        Colors[3] := '00CC00'; // Green
+        Colors[5] := '0077FF'; // Blue
+        Colors[2] := 'EE0000'; // Red
+        Colors[4] := 'FF7700'; // Orange
+        Colors[1] := 'AA00EE'; // Violett
+        Colors[6] := 'FFFFFF'; // White
+        Colors[0] := 'FFEE00'; // Yellow
+        Colors[7] := 'EE44FF'; // Rose
+
+        W := 0.75;
+
+        D := W * 0.075;
+        A := 2*Pi / 9;
+        DCut := W * 0.8;
+    </Script>
+
+    <Axes TurningAngles = "A" PlaneDistances = "-D; D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+
+        // split and unbandage
+        <Macro Name = "SplitI" >
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+            <Turn Axis = "i" Layer = "1" Angle = " A" />
+            <Script> i := (i + 1) mod 4; </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitI" i = "0" Repeat = "20" />
+        <Undo Repeat = "20" />
+    </Figure>
+</xml>

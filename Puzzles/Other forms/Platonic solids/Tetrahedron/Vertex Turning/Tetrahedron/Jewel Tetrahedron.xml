@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Jewel Tetrahedron</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Tetrahedron\Jewel tetrahedron</Menu>
+        <Menu>Other forms\Skewb variants\Tetrahedron\Jewel Tetrahedron</Menu>
+        <Inventor>Tom van der Zanden</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6745</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Tetrahedron_Coordinates.inc';
+        include 'Figures\Scripts\Tetrahedron_Standard_Colors.inc';
+
+        R := W / sqrt(3);
+    </Script>
+
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <SplitByAxes/>
+        <HideContaining Vector = " 1; 0; 0" />
+        <HideContaining Vector = "-1; 0; 0" />
+        <HideContaining Vector = " 0; 1; 0" />
+        <HideContaining Vector = " 0;-1; 0" />
+        <HideContaining Vector = " 0; 0; 1" />
+        <HideContaining Vector = " 0; 0;-1" />
+        <Cut> <Plane NormVector = " 1; 1;-1" NormDistance = "-R" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1;-1" NormDistance = "-R" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1; 1" NormDistance = "-R" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 1" NormDistance = "-R" /> </Cut>
+        <ShowAll/>
+        <Cut Color = "Colors[2]"> <Plane NormVector = " 1; 1;-1" NormDistance = "-R" /> </Cut>
+        <Cut Color = "Colors[3]"> <Plane NormVector = "-1;-1;-1" NormDistance = "-R" /> </Cut>
+        <Cut Color = "Colors[1]"> <Plane NormVector = "-1; 1; 1" NormDistance = "-R" /> </Cut>
+        <Cut Color = "Colors[0]"> <Plane NormVector = " 1;-1; 1" NormDistance = "-R" /> </Cut>
+    </Figure>
+</xml>

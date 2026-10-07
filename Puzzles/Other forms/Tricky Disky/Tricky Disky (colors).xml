@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tricky Disky (colors)</Name>
+        <Menu>Other forms\Tricky Disky\Tricky Disky (colors)</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=480</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=481</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=998</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := '333333'; // Black
+        Colors[2] := '00CC00'; // Green
+        Colors[3] := 'FF7700'; // Orange
+        Colors[4] := 'CC00CC'; // Purple
+        Colors[5] := 'AAAAAA'; // Gray
+        Colors[6] := 'FFFF00'; // Yellow
+        Colors[7] := '0055EE'; // Blue
+
+        clBody := 'EEEEEE'; // White
+
+        Color := clBody;
+        clMarks := clBody;
+
+        K := 0.5;
+        H := K * 0.46;
+
+        D := K * 0.967;
+        D1 := D * 1.4;
+        D2 := D * 1.003;
+        RC := K * 0.27;
+        R1 := K * 0.04;
+        X1 := K * 0.05;
+        Y1 := D1 * 1.002;
+        Y2 := D2 * 1.004;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; 0; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+
+        <Cut Color = "clBody"> <Plane NormVector = " 0; 0; 1" NormDistance = "-H" /></Cut>
+        <Cut Color = "clBody"> <Plane NormVector = " 0; 0;-1" NormDistance = "-H" /></Cut>
+
+        <Cut> <Plane NormVector = "-1;-1; 0" NormDistance = "-D" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-D" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 0" NormDistance = "-D" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-D" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 1; 0" NormDistance = "-D" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-D" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 1; 0" NormDistance = "-D" /> </Cut>
+        <Cut> <Plane NormVector = "-2; 0; 0" NormDistance = "-D" /> </Cut>
+
+        <Split Axis = "0" From = "1" />
+
+        <Macro Name = "AddCylinder" >
+            <HideAll/>
+            <Cylinder Radius = "RC" Color = "Color" >
+                <Base X = "0" Y = "-D" Z = "0" />
+                <Top  X = "0" Y = "-Height" Z = "0" Color = "Color" />
+            </Cylinder>
+        </Macro>
+
+        <Macro Name = "AddSegment" >
+            <HideContaining Vector = " 0; 0; H" />
+            <InvertVisibility/>
+
+            <ExecMacro MacroName = "AddCylinder" Color = "Colors[cl]" Height = "D1" />
+            <Cut> <Plane NormVector = " 1; 0; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+
+            <Turn NormVector = "0;0;1" Angle = "-Pi / 4" />
+            <ExecMacro MacroName = "AddCylinder" Color = "Colors[cl]" Height = "D2" />
+            <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+            <Split> <Plane NormVector = " 1; 0; 0" /> </Split>
+
+            <Turn NormVector = "0;0;1" Angle = "-Pi / 4" />
+            <ExecMacro MacroName = "AddCylinder" Color = "Colors[cl]" Height = "D1" />
+            <Cut> <Plane NormVector = "-1; 0; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+
+            <ShowAll/>
+            <Script>Inc(cl);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSegment" cl = "0" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSegment" Repeat = "4" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

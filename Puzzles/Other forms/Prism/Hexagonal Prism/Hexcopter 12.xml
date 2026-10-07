@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexcopter 12</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Hexcopter 12</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-07-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5424</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+        clCyan   := '00FFFF';
+
+        R := 0.6;
+        H := R * 0.65;
+        D := R * 0.7;
+
+        for i := 0 to 5 do begin
+            x[i] := R * sin(Pi / 3 * i);
+            y[i] := R * cos(Pi / 3 * i);
+        end;
+        az := R / 2;
+
+        A1 := ArcCos(-1/4);
+        A2 := ArcCos(-7/8); // 2*(Pi-A1)
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1;0;A1;A2" PlaneDistances = "-D;D" FixedLayers = "1">
+        <Axis NormVector = " y[0]; x[0]; az" />
+        <Axis NormVector = " y[1]; x[1]; az" />
+        <Axis NormVector = " y[2]; x[2]; az" />
+        <Axis NormVector = " y[3]; x[3]; az" />
+        <Axis NormVector = " y[4]; x[4]; az" />
+        <Axis NormVector = " y[5]; x[5]; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[3]; y[3]; -H" />
+                <Add Vector = "x[4]; y[4]; -H" />
+                <Add Vector = "x[5]; y[5]; -H" />
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+                <Add Vector = "x[3]; y[3];  H" />
+                <Add Vector = "x[4]; y[4];  H" />
+                <Add Vector = "x[5]; y[5];  H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "clBlue  " VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "clOrange" VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "clPurple" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "clCyan  " VertexIndexes = "11; 6; 0; 5" />
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                <Face Color = "clWhite " VertexIndexes = "11;10; 9; 8; 7; 6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " x[0]; y[0]; 0" />
+        <RemoveContaining Vector = " x[1]; y[1]; 0" />
+        <RemoveContaining Vector = " x[2]; y[2]; 0" />
+        <RemoveContaining Vector = " x[3]; y[3]; 0" />
+        <RemoveContaining Vector = " x[4]; y[4]; 0" />
+        <RemoveContaining Vector = " x[5]; y[5]; 0" />
+
+        <RemoveContaining Vector = " x[1]; y[1]-0.05; 0.05" />
+        <RemoveContaining Vector = " x[1]; y[1]-0.05;-0.05" />
+        <RemoveContaining Vector = " x[1]-0.05; y[1]+0.01; 0.05" />
+        <RemoveContaining Vector = " x[1]-0.05; y[1]+0.01;-0.05" />
+
+        <RemoveContaining Vector = " x[2]; y[2]+0.05; 0.05" />
+        <RemoveContaining Vector = " x[2]; y[2]+0.05;-0.05" />
+        <RemoveContaining Vector = " x[2]-0.05; y[2]-0.01; 0.05" />
+        <RemoveContaining Vector = " x[2]-0.05; y[2]-0.01;-0.05" />
+
+        <RemoveContaining Vector = " x[4]; y[4]+0.05; 0.05" />
+        <RemoveContaining Vector = " x[4]; y[4]+0.05;-0.05" />
+        <RemoveContaining Vector = " x[4]+0.05; y[4]-0.01; 0.05" />
+        <RemoveContaining Vector = " x[4]+0.05; y[4]-0.01;-0.05" />
+
+        <RemoveContaining Vector = " x[5]; y[5]-0.05; 0.05" />
+        <RemoveContaining Vector = " x[5]; y[5]-0.05;-0.05" />
+        <RemoveContaining Vector = " x[5]+0.05; y[5]+0.01; 0.05" />
+        <RemoveContaining Vector = " x[5]+0.05; y[5]+0.01;-0.05" />
+
+        <RemoveContaining Vector = " x[3]-0.02; y[3]+0.02; 0.05" />
+        <RemoveContaining Vector = " x[3]-0.02; y[3]+0.02;-0.05" />
+        <RemoveContaining Vector = " x[3]+0.02; y[3]+0.02; 0.05" />
+        <RemoveContaining Vector = " x[3]+0.02; y[3]+0.02;-0.05" />
+
+        <RemoveContaining Vector = " x[0]-0.02; y[0]-0.02; 0.05" />
+        <RemoveContaining Vector = " x[0]-0.02; y[0]-0.02;-0.05" />
+        <RemoveContaining Vector = " x[0]+0.02; y[0]-0.02; 0.05" />
+        <RemoveContaining Vector = " x[0]+0.02; y[0]-0.02;-0.05" />
+
+    </Figure>
+</xml>

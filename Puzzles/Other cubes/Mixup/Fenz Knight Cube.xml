@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fenz Knight Cube</Name>
+        <Menu>Other cubes\Mixup\Fenz Knight Cube</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-05-15</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?t=39413</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * tan(Pi / 12);
+    </Script>
+
+    <Axes TurningAngles = " Pi/2; Pi/6; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax2" Layer = "1" Angle = " Pi/6" />
+            <SplitByAxes/>
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "-Pi/3" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+            <RemoveGrayParts/>
+
+            <Turn  Axis = "Ax3" Layer = "1" Angle = " Pi/6" />
+            <SplitByAxes/>
+            <Turn  Axis = "Ax3" Layer = "1" Angle = "-Pi/3" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+            <RemoveGrayParts/>
+
+            <Turn  Axis = "Ax1" Layer = "1" Angle = " Pi/6" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Repeat = "3" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <Undo Repeat = "3" />
+
+        <ExecMacro MacroName = "Split" Repeat = "3" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <Undo Repeat = "3" />
+
+        <ExecMacro MacroName = "Split" Repeat = "3" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+        <Undo Repeat = "3" />
+
+        <RemoveContaining Vector = "Ex; Ey; Ez" />
+    </Figure>
+</xml>

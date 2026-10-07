@@ -1,0 +1,88 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Senior Barrel</Name>
+        <Menu>Other forms\Cylinder\Senior Barrel</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-01-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1772</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clGreen  := '008000';
+        clBlue   := '0000FF';
+        clWhite  := 'FFFFFF';
+        clYellow := 'FFFF00';
+
+        sAngle := PI * 2 / 3;
+        for i := 0 to 2 do begin
+            x[i] := sin(sAngle * i);
+            y[i] := cos(sAngle * i);
+        end;
+
+        R := 0.55;
+        H := R * 0.8;
+        H2 := H + 0.001;
+        D1 := R * 0.28;
+        D2 := R * 0.7;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D2" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <InvertVisibility/>
+            <Cylinder Radius = "R" Color = "Color" >
+                <Base X = "0" Y = "0" Z = "-H" Color = "clWhite " />
+                <Top  X = "0" Y = "0" Z = " H" Color = "clYellow" />
+            </Cylinder>
+            <Cut><Plane NormVector = " y[1]; x[1]; 0" /></Cut>
+            <Cut><Plane NormVector = "-y[2];-x[2]; 0" /></Cut>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" Color = "clGreen" />
+        <ExecMacro MacroName = "AddSegment" Color = "clRed  " />
+        <ExecMacro MacroName = "AddSegment" Color = "clBlue " />
+
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <Hide Axis = "2" Layer = "1" />
+        <Hide Axis = "3" Layer = "1" />
+
+        <Split Color2 = "010101" > <Plane NormVector = "x[0]; y[0]; 0" NormDistance = "-D2 / 2" /> </Split>
+        <Split> <Plane NormVector = "x[1]; y[1]; 0" NormDistance = "-D2 / 2" /> </Split>
+        <Split> <Plane NormVector = "x[2]; y[2]; 0" NormDistance = "-D2 / 2" /> </Split>
+        <RemoveContaining Vector = "0; 0; 0" />
+
+        <Circle Radius = "R" Color = "clYellow" > <Center X =  "0" Y =  "0" Z = " H2" /> </Circle>
+        <Circle Radius = "R" Color = "clWhite " > <Center X =  "0" Y =  "0" Z = "-H2" /> </Circle>
+
+        <Cut Axis = "1" To = "1" />
+        <Cut Axis = "2" To = "1" />
+        <Cut Axis = "3" To = "1" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/2" />
+        <Turn Axis = "3" Layer = "1" Angle = " Pi/2" />
+        <SplitByAxes/>
+        <Undo  Repeat = "3" />
+    </Figure>
+</xml>

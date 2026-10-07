@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circle raptor cube 2</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Circle raptor cube 2</Menu>
+        <Inventor>Seth Holiday</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-07-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11306</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0077EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.6;
+        D := W * 0.64;
+
+        RC := W * 0.8;
+        Sc := 1.2;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-W; W" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "0;0;0" />
+        <RemoveGrayParts/>
+
+        <Macro Name = "Hide4" >
+            <HideContaining Vector = "-RC/2; RC/2; W * 1.01" />
+            <HideContaining Vector = "-RC/2;-RC/2; W * 1.01" />
+            <HideContaining Vector = " RC/2;-RC/2; W * 1.01" />
+            <HideContaining Vector = " RC/2; RC/2; W * 1.01" />
+        </Macro>
+        <Macro Name = "HideAll" >
+            <ExecMacro MacroName = "Hide4" />
+            <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+            <ExecMacro MacroName = "Hide4" />
+            <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+            <ExecMacro MacroName = "Hide4" />
+            <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+            <ExecMacro MacroName = "Hide4" />
+            <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+            <ExecMacro MacroName = "Hide4" />
+            <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+            <ExecMacro MacroName = "Hide4" />
+            <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "HideAll" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideAll" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

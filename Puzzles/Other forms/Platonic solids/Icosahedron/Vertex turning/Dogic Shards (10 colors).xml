@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dogic Shards (10 colors)</Name>
+        <Menu>Other forms\Icosahedron\Vertex turning\Dogic Shards (10 colors)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-09-14</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        Color[0] := '00FF00'; // LightGreen
+        Color[1] := '2828FF'; // LightBlue
+        Color[2] := 'FFFF00'; // Yellow
+        Color[3] := '008000'; // Green
+        Color[4] := '800000'; // Brown
+        Color[5] := '800080'; // Violett
+        Color[6] := 'FFFFFF'; // White
+        Color[7] := 'FF0000'; // Red
+        Color[8] := '00DCB4'; // Cyan
+        Color[9] := 'FF0080'; // LightViolett
+
+        D1 := Rsin;
+        D2 := (Rsin + R) / 2;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D1; D2" FixedLayers = "0" NormVectors = "Vx; Vy; Vz" TurnAxesWithPartNo = "13" />
+
+    <Figure>
+
+        <Macro Name = "AddPair" >
+            <Face Color = "Color[c1]" VertexIndexes = "v2;e1;v1" InvisibleEdges = "2" />
+            <Face Color = "Color[c1]" VertexIndexes = "v2;v3;e1" InvisibleEdges = "2" />
+            <Face Color = "Color[c1]" VertexIndexes = "v3;v2;e2" InvisibleEdges = "2" />
+            <Face Color = "Color[c1]" VertexIndexes = "v3;e2;v4" InvisibleEdges = "2" />
+
+            <Face Color = "Color[c2]" VertexIndexes = "v5;v1;e1" InvisibleEdges = "2" />
+            <Face Color = "Color[c2]" VertexIndexes = "v5;e1;v3" InvisibleEdges = "2" />
+            <Face Color = "Color[c2]" VertexIndexes = "v3;e3;v5" InvisibleEdges = "2" />
+            <Face Color = "Color[c2]" VertexIndexes = "v3;v4;e3" InvisibleEdges = "2" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Ex; Ey; Ez" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddPair" c1 = "0" c2 = "1" v1 = " 0" v2 = " 1" v3= "10" v4 = "11" v5 = " 5" e1 = "21" e2 = "36" e3 = "35" />
+                <ExecMacro MacroName = "AddPair" c1 = "2" c2 = "3" v1 = " 0" v2 = " 2" v3= " 6" v4 = "11" v5 = " 1" e1 = "17" e2 = "32" e3 = "36" />
+                <ExecMacro MacroName = "AddPair" c1 = "4" c2 = "5" v1 = " 0" v2 = " 3" v3= " 7" v4 = "11" v5 = " 2" e1 = "18" e2 = "33" e3 = "32" />
+                <ExecMacro MacroName = "AddPair" c1 = "6" c2 = "7" v1 = " 0" v2 = " 4" v3= " 8" v4 = "11" v5 = " 3" e1 = "19" e2 = "34" e3 = "33" />
+                <ExecMacro MacroName = "AddPair" c1 = "8" c2 = "9" v1 = " 0" v2 = " 5" v3= " 9" v4 = "11" v5 = " 4" e1 = "20" e2 = "35" e3 = "34" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <HideContaining Vector = "Ex;Ey;Ez" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

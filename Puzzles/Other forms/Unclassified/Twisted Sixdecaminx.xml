@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+    <Interface>
+        <Name>Twisted Sixdecaminx</Name>
+        <Menu>Other forms\Unclassified\Twisted Sixdecaminx</Menu>
+        <Inventor>Taras Bereznyak</Inventor>
+        <Programmer>Taras Bereznyak</Programmer>
+        <Added>2026-02-03</Added>
+        <Link>https://twistypuzzles.com/forum/viewtopic.php?p=436369</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF';
+        Colors[ 1] := '603000';
+        Colors[ 2] := '8000FF';
+        Colors[ 3] := 'C0C0C0';
+        Colors[ 4] := 'FFFF00';
+        Colors[ 5] := 'FF80FF';
+        Colors[ 6] := 'C0FFC0';
+        Colors[ 7] := 'FF8000';
+        Colors[ 8] := '80C0FF';
+        Colors[ 9] := '0040FF';
+        Colors[10] := '00FFE0';
+        Colors[11] := '00FF00';
+        Colors[12] := 'FFFFE0';
+        Colors[13] := '006060';
+        Colors[14] := 'FF0000';
+        Colors[15] := '00C0C0';
+
+        W := 0.7;
+        D := W * 0.69;
+        DCut := W * 0.8;
+
+        sAngle := 2 * Pi / 7;
+
+        hac := cos(Pi / 7);
+        cxx := hac / (hac + 1);
+
+        pa := sqrt(1 + 2 * cxx);
+        pb := sqrt(1 - 2 * cxx); // = tan(Pi/14)
+
+        ca := (pb + pa) / 2;
+        sa := (pb - pa) / 2;
+
+        procedure AddAxis(X, Y, Z);
+        begin
+            AX[AxisCount] := X;
+            AY[AxisCount] := Y;
+            AZ[AxisCount] := Z;
+            Inc(AxisCount);
+        end;
+
+        procedure RotateAxis(p, v, Angle);
+        begin
+          Xp := AX[p];
+          Yp := AY[p];
+          Zp := AZ[p];
+          Xv := AX[v];
+          Yv := AY[v];
+          Zv := AZ[v];
+
+          ca := Cos(Angle);
+          sa := Sin(Angle);
+          c2 := 1 - Cos(Angle);
+
+          Nx := Xp * (Xv * c2 * Xv + ca) +
+                Yp * (Yv * c2 * Xv - sa * Zv) +
+                Zp * (Zv * c2 * Xv + sa * Yv);
+
+          Ny := Xp * (Xv * c2 * Yv + sa * Zv) +
+                Yp * (Yv * c2 * Yv + ca) +
+                Zp * (Zv * c2 * Yv - sa * Xv);
+
+          Nz := Xp * (Xv * c2 * Zv - sa * Yv) +
+                Yp * (Yv * c2 * Zv + sa * Xv) +
+                Zp * (Zv * c2 * Zv + ca);
+
+          AddAxis( Nx, Ny, Nz);
+        end;
+
+        AxisCount := 0;
+        AddAxis( ca, sa,  0);
+        AddAxis(  0, ca, sa);
+        AddAxis( sa,  0, ca);
+        AddAxis(-ca,-sa,  0);
+        AddAxis(  0,-ca,-sa);
+        AddAxis(-sa,  0,-ca);
+
+        RotateAxis(5, 0, 1 * sAngle); // rotate 5-th axis over 0-th
+        RotateAxis(5, 0, 2 * sAngle);
+        RotateAxis(5, 0, 3 * sAngle);
+        RotateAxis(5, 1, 1 * sAngle);
+        RotateAxis(5, 1, 2 * sAngle);
+        RotateAxis(2, 3, 1 * sAngle);
+        RotateAxis(2, 3, 2 * sAngle);
+        RotateAxis(2, 4, 1 * sAngle);
+        RotateAxis(2, 4, 2 * sAngle);
+        RotateAxis(2, 4, 3 * sAngle);
+    </Script>
+
+
+    <Axes TurningAngles = " 0; sAngle" PlaneDistances = "D" NormVectors = "AX; AY; AZ" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Cut" >
+            <Cut Color = "Colors[c]" > <Plane NormVector = "-AX[c];-AY[c];-AZ[c]" NormDistance = "-DCut" /> </Cut>
+            <Script> Inc(c);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" c = "0" Repeat = "16" />
+    </Figure>
+</xml>

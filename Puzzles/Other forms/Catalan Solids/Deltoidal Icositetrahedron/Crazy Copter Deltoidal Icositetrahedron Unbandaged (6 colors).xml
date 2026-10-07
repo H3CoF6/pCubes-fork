@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Copter Deltoidal Icositetrahedron Unbandaged (6 colors)</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Crazy Copter Unbandaged (6 colors)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-05</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Col[0] := '9900EE'; // Purple
+        Col[1] := 'FFFF00'; // Yellow
+        Col[2] := 'FF8800'; // Orange
+        Col[3] := 'FF0000'; // Red
+        Col[4] := '00DD00'; // Green
+        Col[5] := '0055FF'; // Blue
+
+        for i := 0 to 23 do
+            Colors[ i] := Col[i div 4];
+
+        W  := 0.45;
+
+        D := W;
+
+        JumAngle := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "JumAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split1">
+            <Hide><Plane NormVector = " 1; 0; 1" NormDistance = "D" /></Hide>
+            <Hide><Plane NormVector = " 0;-1; 1" NormDistance = "D" /></Hide>
+            <Turn NormVector = " 1; 0; 1" Angle = "JumAngle" />
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "D" /></Split>
+            <Split><Plane NormVector = " 0;-1; 1" NormDistance = "D" /></Split>
+            <Turn NormVector = " 1; 0; 1" Angle = "-JumAngle" />
+            <ShowAll/>
+            <Turn NormVector = " 1;-1; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <Macro Name = "Split3">
+            <ExecMacro MacroName = "Split1" Repeat = "3" />
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "Split3" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "Split3" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

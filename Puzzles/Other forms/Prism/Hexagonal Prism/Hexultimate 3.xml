@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexultimate 3</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Hexultimate 3</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-10-16</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+        clCyan   := '00FFFF';
+
+        R := 0.55;
+        H := R;
+
+        for i := 0 to 5 do begin
+            x[i] := R * sin(Pi/3 * i);
+            y[i] := R * cos(Pi/3 * i);
+        end;
+
+        az := R * R / H / 2;
+
+        A1 := ArcCos(-7/8);
+        A2 := ArcCos(-1/4);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1;0;A1;A2" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis  NormVector = "x[0]; y[0]; az" />
+        <Axis  NormVector = "x[1]; y[1]; az" />
+        <Axis  NormVector = "x[2]; y[2]; az" />
+        <Axis  NormVector = "x[3]; y[3]; az" />
+        <Axis  NormVector = "x[4]; y[4]; az" />
+        <Axis  NormVector = "x[5]; y[5]; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[3]; y[3]; -H" />
+                <Add Vector = "x[4]; y[4]; -H" />
+                <Add Vector = "x[5]; y[5]; -H" />
+                <Add Vector = "x[0]; y[0];  H" />
+                <Add Vector = "x[1]; y[1];  H" />
+                <Add Vector = "x[2]; y[2];  H" />
+                <Add Vector = "x[3]; y[3];  H" />
+                <Add Vector = "x[4]; y[4];  H" />
+                <Add Vector = "x[5]; y[5];  H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clCyan  " VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "clOrange" VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "clBlue  " VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "clRed   " VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "clPurple" VertexIndexes = "11; 6; 0; 5" />
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                <Face Color = "clWhite " VertexIndexes = "11;10; 9; 8; 7; 6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

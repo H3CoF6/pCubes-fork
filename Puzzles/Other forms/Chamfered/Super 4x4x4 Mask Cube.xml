@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super 4x4x4 Mask Cube</Name>
+        <Menu>Other forms\Chamfered\Super 4x4x4 Mask Cube</Menu>
+        <Inventor>Runchuan Lan</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3983</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '8800DD'; // Violett
+        Colors[ 1] := '00FF00'; // LightGreen
+        Colors[ 2] := 'FFFF00'; // Yellow
+        Colors[ 3] := '0000A0'; // Blue
+        Colors[ 4] := 'FF0000'; // Red
+        Colors[ 5] := '800000'; // Brown
+        Colors[ 6] := '008000'; // Green
+        Colors[ 7] := 'FF0080'; // Violett
+        Colors[ 8] := '3868BF'; // LightBlue
+        Colors[ 9] := 'FF6000'; // Orange
+        Colors[10] := '00DCB4'; // Cyan
+        Colors[11] := 'FFFFFF'; // White
+
+        CentersColor := 'E0C07D';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W / 2;
+        DCut := (D + W) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "CentersColor" />
+        <Macro Name = "Cut" >
+            <Cut Color = "Colors[i]" ><Plane NormVector = "Ex[i];Ey[i];Ez[i]" NormDistance = "-DCut" /></Cut>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "12" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

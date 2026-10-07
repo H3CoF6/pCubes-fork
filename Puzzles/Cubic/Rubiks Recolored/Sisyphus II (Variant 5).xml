@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sisyphus II (Variant 5)</Name>
+        <Menu>Cubic\Rubiks Recolored\Sisyphus II (Variant 5)</Menu>
+        <Inventor>Toni Obermaie</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=30</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clYellow := 'FFFF00';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSide" >
+            <Face Color = "clBlue"   VertexIndexes = "V1; C; V0" InvisibleEdges = "3" />
+            <Face Color = "clBlue"   VertexIndexes = "V3; C; V2" InvisibleEdges = "3" />
+            <Face Color = "clYellow" VertexIndexes = "V0; C; V3" InvisibleEdges = "3" />
+            <Face Color = "clYellow" VertexIndexes = "V2; C; V1" InvisibleEdges = "3" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Cx[0]; Cy[0]; Cz[0]" />
+            <Vertices Vectors = "Cx[1]; Cy[1]; Cz[1]" />
+            <Vertices Vectors = "Cx[2]; Cy[2]; Cz[2]" />
+            <Vertices Vectors = "Cx[3]; Cy[3]; Cz[3]" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddSide" C = " 8" V0 = "1" V1 = "3" V2 = "2" V3 = "0" />
+                <ExecMacro MacroName = "AddSide" C = " 9" V0 = "4" V1 = "6" V2 = "7" V3 = "5" />
+                <ExecMacro MacroName = "AddSide" C = "10" V0 = "0" V1 = "4" V2 = "5" V3 = "1" />
+                <ExecMacro MacroName = "AddSide" C = "11" V0 = "3" V1 = "7" V2 = "6" V3 = "2" />
+                <Face Color = "clBlue" VertexIndexes = "5;7;3;1" />
+                <Face Color = "clBlue" VertexIndexes = "0;2;6;4" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Latch Mirror</Name>
+        <Menu>Cubic\Latch Cube\Latch Mirror</Menu>
+        <Menu>Cubic\Bump\Latch Mirror</Menu>
+        <Class>TLatch</Class>
+        <Inventor>Roberto Cazares</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9225</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'C0C0C0';
+        W := 0.5;
+        D := W * 0.27;
+        W2 := D * 3;
+
+        DX := -W * 0.05;
+        DY :=  W * 0.10;
+        DZ := -W * 0.15;
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <Transfer Vector = "-DX;-DY;-DZ" />
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "MirrorColor" />
+        <SplitByAxes/>
+        <Transfer Vector = " DX; DY; DZ" />
+
+        <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" ><Plane NormVector = " 1; 0; 0" NormDistance = "W2" /></Split>
+        <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" ><Plane NormVector = "-1; 0; 0" NormDistance = "W2" /></Split>
+        <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" ><Plane NormVector = " 0; 1; 0" NormDistance = "W2" /></Split>
+        <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" ><Plane NormVector = " 0;-1; 0" NormDistance = "W2" /></Split>
+        <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" ><Plane NormVector = " 0; 0; 1" NormDistance = "W2" /></Split>
+        <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" ><Plane NormVector = " 0; 0;-1" NormDistance = "W2" /></Split>
+
+        <RemoveContaining Vector = "0;0;0" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Textures>
+        <Texture Name = "BlackEdge"               File = "Puzzles\Cubic\Latch Cube\BlackEdge.vec"      />
+        <Texture Name = "BlackCorner"             File = "Puzzles\Cubic\Latch Cube\BlackCorner.vec"    />
+        <Texture Name = "BlackArrowEdge Lock CW"  File = "Puzzles\Cubic\Latch Cube\BlackArrowEdge1.vec" />
+        <Texture Name = "BlackArrowEdge        "  File = "Puzzles\Cubic\Latch Cube\BlackArrowEdge.vec" />
+        <Texture Name = "WhiteEdge"               File = "Puzzles\Cubic\Latch Cube\WhiteEdge.vec"      />
+        <Texture Name = "WhiteCorner"             File = "Puzzles\Cubic\Latch Cube\WhiteCorner.vec"    />
+        <Texture Name = "WhiteArrowEdge Lock CCW" File = "Puzzles\Cubic\Latch Cube\WhiteArrowEdge1.vec" />
+        <Texture Name = "WhiteArrowEdge         " File = "Puzzles\Cubic\Latch Cube\WhiteArrowEdge.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+
+        WhiteArrowEdge          = 83,0,2, 09,0,3, 102,0,3,  96,0,3,  51,0,3, 65,0,3
+        WhiteArrowEdge Lock CCW = 82,5,3, 08,5,3, 100,4,3,  94,4,3,  50,5,0, 64,5,2
+        WhiteCorner             = 88,0,2, 14,0,3,   2,0,2,  76,0,2, 120,0,2, 90,0,3, 78,0,2, 108,0,2, 75,0,2, 1,0,2, 31,0,2, 105,0,2
+        WhiteEdge               = 58,0,3, 52,0,3,  84,0,3, 114,0,2,  21,0,2, 95,0,3
+
+        BlackArrowEdge         = 71,0,3, 57,0,3, 28,0,3, 22,0,3, 113,0,3, 39,0,2
+        BlackArrowEdge Lock CW = 70,5,0, 56,5,2, 26,4,3, 20,4,3, 112,5,3, 38,5,3
+        BlackCorner            = 44,0,2, 118,0,2, 106,0,2, 32,0,3, 16,0,2, 46,0,2, 34,0,2, 4,0,3, 13,0,2, 87,0,2, 117,0,2, 43,0,2
+        BlackEdge              = 72,0,3, 66,0,3, 40,0,3, 10,0,2, 101,0,2, 27,0,3
+    </SetTextures>
+</xml>

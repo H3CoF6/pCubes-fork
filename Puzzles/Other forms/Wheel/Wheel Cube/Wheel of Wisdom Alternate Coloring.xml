@@ -1,0 +1,279 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+   <Interface>
+        <Name>Wheel Of Wisdom Alternate Coloring</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Wheel Of Wisdom AC</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2018-02-26</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Width := 0.8;
+        CylinderWidth := Width / 6;
+
+        c1 := '0000C8'; // clBlue
+        c2 := '009600'; // clGreen
+        c3 := 'C80000'; // clRed
+        c4 := 'FF800A'; // clOrange
+        c5 := 'FFFF00'; // clYellow
+        c6 := 'FFFFFF'; // clWhite
+
+        B := Width / 4;
+        C := Width / 2;
+        D := Width * 0.7305;
+        E := 0.0003;
+
+        D1 := Width * cos(3 * Pi / 8) / 2;
+        D2 := Width / 2;
+        D3 := D2 + CylinderWidth;
+        R := D2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/4; Pi/2; Pi/2; Pi/2; Pi/4" PlaneDistances = "-D2; -D1; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-C;-C;-C" />
+                <Add Vector = "-C;-C; C" />
+                <Add Vector = "-C; C;-C" />
+                <Add Vector = "-C; C; C" />
+                <Add Vector = " C;-C;-C" />
+                <Add Vector = " C;-C; C" />
+                <Add Vector = " C; C;-C" />
+                <Add Vector = " C; C; C" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = "0;1;3;2" />
+                <Face VertexIndexes = "5;4;6;7" />
+                <Face VertexIndexes = "1;0;4;5" />
+                <Face VertexIndexes = "2;3;7;6" />
+                <Face VertexIndexes = "0;2;6;4" />
+                <Face VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Cut Color="c1" > <Plane NormDistance = "-D" NormVector = " C; B; C" /> </Cut>
+        <Cut Color="c1" > <Plane NormDistance = "-D" NormVector = "-C; B; C" /> </Cut>
+        <Cut Color="c1" > <Plane NormDistance = "-D" NormVector = " C; B;-C" /> </Cut>
+        <Cut Color="c1" > <Plane NormDistance = "-D" NormVector = "-C; B;-C" /> </Cut>
+        <Cut Color="c2" > <Plane NormDistance = "-D" NormVector = " C;-B; C" /> </Cut>
+        <Cut Color="c2" > <Plane NormDistance = "-D" NormVector = "-C;-B; C" /> </Cut>
+        <Cut Color="c2" > <Plane NormDistance = "-D" NormVector = " C;-B;-C" /> </Cut>
+        <Cut Color="c2" > <Plane NormDistance = "-D" NormVector = "-C;-B;-C" /> </Cut>
+
+        <Cut Color="c3" > <Plane NormDistance = "-D" NormVector = " B; C; C" /> </Cut>
+        <Cut Color="c3" > <Plane NormDistance = "-D" NormVector = " B; C;-C" /> </Cut>
+        <Cut Color="c3" > <Plane NormDistance = "-D" NormVector = " B;-C; C" /> </Cut>
+        <Cut Color="c3" > <Plane NormDistance = "-D" NormVector = " B;-C;-C" /> </Cut>
+        <Cut Color="c4" > <Plane NormDistance = "-D" NormVector = "-B; C; C" /> </Cut>
+        <Cut Color="c4" > <Plane NormDistance = "-D" NormVector = "-B; C;-C" /> </Cut>
+        <Cut Color="c4" > <Plane NormDistance = "-D" NormVector = "-B;-C; C" /> </Cut>
+        <Cut Color="c4" > <Plane NormDistance = "-D" NormVector = "-B;-C;-C" /> </Cut>
+
+        <Cut Color="c5" > <Plane NormDistance = "-D" NormVector = " C; C; B" /> </Cut>
+        <Cut Color="c5" > <Plane NormDistance = "-D" NormVector = " C;-C; B" /> </Cut>
+        <Cut Color="c5" > <Plane NormDistance = "-D" NormVector = "-C; C; B" /> </Cut>
+        <Cut Color="c5" > <Plane NormDistance = "-D" NormVector = "-C;-C; B" /> </Cut>
+        <Cut Color="c6" > <Plane NormDistance = "-D" NormVector = " C; C;-B" /> </Cut>
+        <Cut Color="c6" > <Plane NormDistance = "-D" NormVector = " C;-C;-B" /> </Cut>
+        <Cut Color="c6" > <Plane NormDistance = "-D" NormVector = "-C; C;-B" /> </Cut>
+        <Cut Color="c6" > <Plane NormDistance = "-D" NormVector = "-C;-C;-B" /> </Cut>
+
+        <InvertVisibility/>
+
+        <Macro Name = "AddSlice" >
+            <Cylinder Radius = "R" Color = "ca" >
+                <Base X = "x1" Y = "y1" Z = "z1" />
+                <Top  X = "x2" Y = "y2" Z = "z2" />
+            </Cylinder>
+            <Cylinder Radius = "R" Color = "ca" >
+                <Base X = "-x1" Y = "-y1" Z = "-z1" />
+                <Top  X = "-x2" Y = "-y2" Z = "-z2" />
+            </Cylinder>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c1" x1 = "D2" x2 = "D3" y1 = "0" y2 = "0" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0;-C; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; C; C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c1" x1 = "D2" x2 = "D3" y1 = "0" y2 = "0" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0;-C; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; C;-C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c2" x1 = "D2" x2 = "D3" y1 = "0" y2 = "0" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; C; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0;-C;-C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c2" x1 = "D2" x2 = "D3" y1 = "0" y2 = "0" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; C; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0;-C; C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c5" x1 = "D2" x2 = "D3" y1 = "0" y2 = "0" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; 0;-C" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; C; C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+
+        <ExecMacro MacroName = "AddSlice" ca = "c5" x1 = "D2" x2 = "D3" y1 = "0" y2 = "0" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; 0;-C" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0;-C; C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+
+        <ExecMacro MacroName = "AddSlice" ca = "c6" x1 = "D2" x2 = "D3" y1 = "0" y2 = "0" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; 0; C" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; C;-C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+
+        <ExecMacro MacroName = "AddSlice" ca = "c6" x1 = "D2" x2 = "D3" y1 = "0" y2 = "0" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; 0; C" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0;-C;-C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c3" x1 = "0" x2 = "0" y1 = "D2" y2 = "D3" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C; 0; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " C; 0; C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c3" x1 = "0" x2 = "0" y1 = "D2" y2 = "D3" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C; 0; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " C; 0;-C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c4" x1 = "0" x2 = "0" y1 = "D2" y2 = "D3" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " C; 0; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C; 0; C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c4" x1 = "0" x2 = "0" y1 = "D2" y2 = "D3" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " C; 0; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C; 0;-C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c5" x1 = "0" x2 = "0" y1 = "D2" y2 = "D3" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; 0;-C" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " C; 0; C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c5" x1 = "0" x2 = "0" y1 = "D2" y2 = "D3" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; 0;-C" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C; 0; C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c6" x1 = "0" x2 = "0" y1 = "D2" y2 = "D3" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; 0; C" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " C; 0;-C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c6" x1 = "0" x2 = "0" y1 = "D2" y2 = "D3" z1 = "0" z2 = "0"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; 0; C" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C; 0;-C" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c1" x1 = "0" x2 = "0" y1 = "0" y2 = "0" z1 = "D2" z2 = "D3"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0;-C; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C; C; 0" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c1" x1 = "0" x2 = "0" y1 = "0" y2 = "0" z1 = "D2" z2 = "D3"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0;-C; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " C; C; 0" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c2" x1 = "0" x2 = "0" y1 = "0" y2 = "0" z1 = "D2" z2 = "D3"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; C; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C;-C; 0" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c2" x1 = "0" x2 = "0" y1 = "0" y2 = "0" z1 = "D2" z2 = "D3"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " 0; C; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " C;-C; 0" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c3" x1 = "0" x2 = "0" y1 = "0" y2 = "0" z1 = "D2" z2 = "D3"/>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C; 0; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " C; C; 0" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c3" x1 = "0" x2 = "0" y1 = "0" y2 = "0" z1 = "D2" z2 = "D3"/>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C; 0; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = " C;-C; 0" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c4" x1 = "0" x2 = "0" y1 = "0" y2 = "0" z1 = "D2" z2 = "D3"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " C; 0; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C; C; 0" /> </Cut>
+        <ShowAll/>
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "AddSlice" ca = "c4" x1 = "0" x2 = "0" y1 = "0" y2 = "0" z1 = "D2" z2 = "D3"/>
+        <Cut> <Plane NormDistance = "0" NormVector = " C; 0; 0" /> </Cut>
+        <Cut> <Plane NormDistance = "0" NormVector = "-C;-C; 0" /> </Cut>
+        <ShowAll/>
+
+        <Circle Radius = "R" Color = "c1" Center = "0;-D3-E;0" />
+        <Circle Radius = "R" Color = "c2" Center = "0; D3+E;0" />
+        <Circle Radius = "R" Color = "c3" Center = "-D3-E;0;0" />
+        <Circle Radius = "R" Color = "c4" Center = " D3+E;0;0" />
+        <Circle Radius = "R" Color = "c5" Center = "0;0;-D3-E" />
+        <Circle Radius = "R" Color = "c6" Center = "0;0; D3+E" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Angle = "Pi/4" Layer = "0" />
+        <Turn Axis = "0" Angle = "Pi/4" Layer = "4" />
+        <Turn Axis = "1" Angle = "Pi/4" Layer = "0" />
+        <Turn Axis = "1" Angle = "Pi/4" Layer = "4" />
+        <Turn Axis = "2" Angle = "Pi/4" Layer = "0" />
+        <Turn Axis = "2" Angle = "Pi/4" Layer = "4" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "-Pi/4" Layer = "0" />
+        <Turn Axis = "0" Angle = "-Pi/4" Layer = "4" />
+        <Turn Axis = "1" Angle = "-Pi/4" Layer = "0" />
+        <Turn Axis = "1" Angle = "-Pi/4" Layer = "4" />
+        <Turn Axis = "2" Angle = "-Pi/4" Layer = "0" />
+        <Turn Axis = "2" Angle = "-Pi/4" Layer = "4" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

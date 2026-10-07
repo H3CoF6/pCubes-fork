@@ -1,0 +1,124 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hyper Crystallite</Name>
+        <Menu>Other forms\Unclassified\Hyper Crystallite</Menu>
+        <Inventor>Raphaël Mouflin</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7969</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF6600'; // Orange
+        Colors[ 1] := 'FF2299'; // Fuchsia
+        Colors[ 2] := 'FFAADD'; // Rose
+        Colors[ 3] := 'FFEE00'; // Yellow
+        Colors[ 4] := '00EE00'; // LightGreen
+        Colors[ 5] := 'EE0000'; // Red
+        Colors[ 6] := 'AA00FF'; // Violett
+        Colors[ 7] := '00AAFF'; // LighterBlue
+        Colors[ 8] := '00AA00'; // Green
+        Colors[ 9] := '0000FF'; // Blue
+        Colors[10] := '0055FF'; // LightBlue
+        Colors[11] := '00CCCC'; // Cyan
+
+        R := 0.7;
+        D := R * 0.5;
+
+        A := 0.4; // pillow
+
+        D1 := (R * 3 - 2 * A * R) / ((2 + A) * sqrt(1 + A^2) / sqrt(2 + A^2) + 5 * (1 - A));
+        D2 := D * 4 - D1 * 3;
+        DCut := D1 * (2 + A) / sqrt(2 + A^2);
+        L := (DCut * sqrt(2 + A^2) - R) / A; // 2L - one dimension of "square". Other is (R - 2 * D1) * sqrt(2) * 5
+        D3 := (2 * D - L / 5) / sqrt(3);
+        D4 := (2 * D + 3 * L / 5) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D1; D1; D2" FixedLayers = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi / 3" PlaneDistances = "-D4;-D3; D3; D4" FixedLayers = "2" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " 0; 0; R" />
+                <Add Vector = " D; D; D" />
+                <Add Vector = " D;-D; D" />
+                <Add Vector = "-D;-D; D" />
+                <Add Vector = "-D; D; D" />
+                <Add Vector = " R; 0; 0" />
+                <Add Vector = " 0;-R; 0" />
+                <Add Vector = "-R; 0; 0" />
+                <Add Vector = " 0; R; 0" />
+                <Add Vector = " D; D;-D" />
+                <Add Vector = " D;-D;-D" />
+                <Add Vector = "-D;-D;-D" />
+                <Add Vector = "-D; D;-D" />
+                <Add Vector = " 0; 0;-R" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = " 0; 2; 5; 1" />
+                <Face Color = "Colors[ 1]" VertexIndexes = " 0; 3; 6; 2" />
+                <Face Color = "Colors[ 2]" VertexIndexes = " 0; 4; 7; 3" />
+                <Face Color = "Colors[ 3]" VertexIndexes = " 0; 1; 8; 4" />
+
+                <Face Color = "Colors[ 4]" VertexIndexes = " 1; 5; 9; 8" />
+                <Face Color = "Colors[ 5]" VertexIndexes = " 2; 6;10; 5" />
+                <Face Color = "Colors[ 6]" VertexIndexes = " 3; 7;11; 6" />
+                <Face Color = "Colors[ 7]" VertexIndexes = " 4; 8;12; 7" />
+
+                <Face Color = "Colors[ 8]" VertexIndexes = "13; 9; 5;10" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "13;10; 6;11" />
+                <Face Color = "Colors[10]" VertexIndexes = "13;11; 7;12" />
+                <Face Color = "Colors[11]" VertexIndexes = "13;12; 8; 9" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "CutSide" >
+            <Cut Color = "Colors[cl]" ><Plane NormVector = "-A; 0;-1" NormDistance = "-DCut" /></Cut>
+            <Cut Color = "Colors[cl]" ><Plane NormVector = "-1; 0;-A" NormDistance = "-DCut" /></Cut>
+            <Cut Color = "Colors[cl]" ><Plane NormVector = "-1;-A;-1" NormDistance = "-DCut" /></Cut>
+            <Cut Color = "Colors[cl]" ><Plane NormVector = "-1; A;-1" NormDistance = "-DCut" /></Cut>
+            <Turn NormVector = "1;1;1" Angle = "2*Pi / 3" />
+        </Macro>
+
+        <ExecMacro MacroName = "CutSide" cl = " 0" />
+        <ExecMacro MacroName = "CutSide" cl = " 3" />
+        <ExecMacro MacroName = "CutSide" cl = " 4" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+
+        <ExecMacro MacroName = "CutSide" cl = " 2" />
+        <ExecMacro MacroName = "CutSide" cl = " 1" />
+        <ExecMacro MacroName = "CutSide" cl = " 6" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <ExecMacro MacroName = "CutSide" cl = "10" />
+        <ExecMacro MacroName = "CutSide" cl = "11" />
+        <ExecMacro MacroName = "CutSide" cl = " 7" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+
+        <ExecMacro MacroName = "CutSide" cl = " 8" />
+        <ExecMacro MacroName = "CutSide" cl = " 9" />
+        <ExecMacro MacroName = "CutSide" cl = " 5" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octagram</Name>
+        <Menu>Other forms\Prism\Octagonal Prism\Octagram</Menu>
+        <Inventor>Eli Fox</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-07-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8148</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=402371</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red
+        Colors[1] := 'FF800A'; // Orange
+        Colors[2] := '0000C8'; // Blue
+        Colors[3] := '009600'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+        Colors[6] := '00DCB4'; // Cyan
+        Colors[7] := '800080'; // Violett
+        Colors[8] := 'FF0080'; // LightViolett
+        Colors[9] := '2828FF'; // LightBlue
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        D := W * (sqrt(2) - 1) / 2;
+        H := D * 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-2*D; 2*D" >
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "1; 1; 0" />
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "1;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/4" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Cut Color = "Colors[6]" ><Plane NormVector = " 1; 1; 0" NormDistance = "-w" /></Cut>
+        <Cut Color = "Colors[7]" ><Plane NormVector = " 1;-1; 0" NormDistance = "-w" /></Cut>
+        <Cut Color = "Colors[8]" ><Plane NormVector = "-1; 1; 0" NormDistance = "-w" /></Cut>
+        <Cut Color = "Colors[9]" ><Plane NormVector = "-1;-1; 0" NormDistance = "-w" /></Cut>
+        <Cut Color = "Colors[4]" ><Plane NormVector = " 0; 0; 1" NormDistance = "-H" /></Cut>
+        <Cut Color = "Colors[5]" ><Plane NormVector = " 0; 0;-1" NormDistance = "-H" /></Cut>
+    </Figure>
+</xml>

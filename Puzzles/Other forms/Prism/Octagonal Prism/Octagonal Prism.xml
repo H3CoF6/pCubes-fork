@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octagonal prism 3x3x3</Name>
+        <Menu>Other forms\Prism\Octagonal Prism\Octagonal prism 3x3x3</Menu>
+        <Menu>Other forms\3x3x3 variants\Prism\Octagonal prism</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=457</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=843</Link>
+    </Interface>
+ 
+    <Script>
+
+        clLightViolett := 'FF0080';
+        clViolett      := '800080';
+        clLightBlue    := '2828FF';
+        clCyan         := '00DCB4';
+
+        Colors[6] := clCyan;
+        Colors[7] := clViolett;
+        Colors[8] := clLightViolett;
+        Colors[9] := clLightBlue;
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        D := W / 3;
+        DCut := W * 2 * sqrt(2) / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Cut Color = "Colors[6]" ><Plane NormVector = " 1; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[7]" ><Plane NormVector = " 1;-1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[8]" ><Plane NormVector = "-1; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[9]" ><Plane NormVector = "-1;-1; 0" NormDistance = "-DCut" /></Cut>
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

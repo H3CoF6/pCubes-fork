@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star Cube IV</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Star Cube IV</Menu>
+        <Programmer>Skallos</Programmer>
+        <Inventor>not invented</Inventor>
+        <Added>2017-11-04</Added>
+    </Interface>
+
+    <Script>
+        W := 0.425;
+        RC := W * 0.9;
+        Sc := 1.3;
+        D := W * sqrt(3) / 6;
+        sAngle := 2 * Pi / 5;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/10; 0; Pi/10" PlaneDistances = "-W; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "AddCircle" >
+            <HideAll/>
+
+            <Cylinder Radius = "RC" Color = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+        <ShowAll/>
+
+        <Macro Name = "Split" >
+            <Split Axis = "0" From  = "1" />
+            <Split Axis = "0" From  = "2" />
+            <Turn  Axis = "4" Layer = "0" Angle = "2 * Pi / 5" />
+            <Turn  Axis = "4" Layer = "2" Angle = "2 * Pi / 5" />
+            <Turn  Axis = "5" Layer = "0" Angle = "2 * Pi / 5" />
+            <Turn  Axis = "5" Layer = "2" Angle = "2 * Pi / 5" />
+            <Turn  Axis = "6" Layer = "0" Angle = "2 * Pi / 5" />
+            <Turn  Axis = "6" Layer = "2" Angle = "2 * Pi / 5" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "5" />
+    </Figure>
+
+    <Macros>
+        <Macro Name = "TurnVertex" >
+            <Turn Axis = "4" Layer = "0" Angle = " Pi/2 * i0 + Random(5) * 2 * Pi / 5"/>
+            <Turn Axis = "4" Layer = "2" Angle = "-Pi/2 * i1 + Random(5) * 2 * Pi / 5"/>
+            <Turn Axis = "5" Layer = "0" Angle = " Pi/2 * i2 + Random(5) * 2 * Pi / 5"/>
+            <Turn Axis = "5" Layer = "2" Angle = "-Pi/2 * i3 + Random(5) * 2 * Pi / 5"/>
+            <Turn Axis = "6" Layer = "0" Angle = " Pi/2 * i4 + Random(5) * 2 * Pi / 5"/>
+            <Turn Axis = "6" Layer = "2" Angle = "-Pi/2 * i5 + Random(5) * 2 * Pi / 5"/>
+            <Turn Axis = "Ax" Layer = "L" Angle = "2*Pi/3 * (Random(2) + 1)"/>
+            <Turn Axis = "6" Layer = "2" Angle = " Pi/2 * i5"/>
+            <Turn Axis = "6" Layer = "0" Angle = "-Pi/2 * i4"/>
+            <Turn Axis = "5" Layer = "2" Angle = " Pi/2 * i3"/>
+            <Turn Axis = "5" Layer = "0" Angle = "-Pi/2 * i2"/>
+            <Turn Axis = "4" Layer = "2" Angle = " Pi/2 * i1"/>
+            <Turn Axis = "4" Layer = "0" Angle = "-Pi/2 * i0"/>
+        </Macro>
+
+        <Macro Name = "AllVertices" >
+            <ExecMacro MacroName = "TurnVertex" Ax = "0" L = "2" i0 = "0" i1 = "0" i2 = "0" i3 = "0" i4 = "0" i5 = "0" />
+            <ExecMacro MacroName = "TurnVertex" Ax = "1" L = "2" i0 = "0" i1 = "3" i2 = "2" i3 = "0" i4 = "0" i5 = "1" />
+            <ExecMacro MacroName = "TurnVertex" Ax = "2" L = "2" i0 = "3" i1 = "0" i2 = "1" i3 = "0" i4 = "0" i5 = "2" />
+            <ExecMacro MacroName = "TurnVertex" Ax = "3" L = "2" i0 = "2" i1 = "0" i2 = "0" i3 = "1" i4 = "0" i5 = "3" />
+            <ExecMacro MacroName = "TurnVertex" Ax = "0" L = "0" i0 = "0" i1 = "0" i2 = "0" i3 = "0" i4 = "0" i5 = "0" />
+            <ExecMacro MacroName = "TurnVertex" Ax = "1" L = "0" i0 = "1" i1 = "0" i2 = "0" i3 = "2" i4 = "3" i5 = "0" />
+            <ExecMacro MacroName = "TurnVertex" Ax = "2" L = "0" i0 = "0" i1 = "1" i2 = "0" i3 = "3" i4 = "2" i5 = "0" />
+            <ExecMacro MacroName = "TurnVertex" Ax = "3" L = "0" i0 = "0" i1 = "2" i2 = "3" i3 = "0" i4 = "1" i5 = "0" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" Description = "Replacing of standard scrambling" Sequence = "" >
+            <ExecMacro MacroName = "AllVertices" Repeat = "10" />
+        </Macro>
+    </Macros>
+</xml>

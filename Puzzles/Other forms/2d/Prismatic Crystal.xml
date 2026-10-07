@@ -1,0 +1,161 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Prismatic Crystal</Name>
+        <Menu>Other forms\2d\Prismatic Crystal</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-01-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12367</Link>
+    </Interface>
+
+    <Script>
+        Colors[1] := 'E00000';
+        Colors[2] := 'F67B00';
+        Colors[3] := 'FFFF00';
+        Colors[4] := '99FF00';
+        Colors[5] := '44C0FF';
+        Colors[6] := '0040D0';
+        Colors[7] := '8070E0';
+        Colors[8] := 'FFA0E0';
+
+        ColorSide := 'AAAAAA';
+        ColorFace := '333333';
+        ColorBack := '333333';
+
+        K := 0.6;
+        D1 := K * 0.84;
+        D2 := K * 0.75;
+        D3 := D1 - K * 0.2;
+        D4 := D2 - K * 0.2;
+        R1 := 0.2;
+        R2 := 0.4;
+        H := D1 * sqrt(2);
+
+        N := 40;
+        for i := 0 to N - 1 do begin
+            A := 2*Pi / N * i;
+            sa := sin(A);
+            ca := cos(A);
+            x1[i] := R1 * ca;
+            y1[i] := R1 * sa;
+            x2[i] := R2 * ca;
+            y2[i] := R2 * sa;
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi  " PlaneDistances = "D1" NormVectors = " 1;-1; 0" />
+    <Axes TurningAngles = "0; Pi/4" PlaneDistances = "D2" NormVectors = " 0;-1; 0" />
+
+    <Figure>
+        <!-- Spheres -->
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "ColorFace" />
+        <Cut  Axis = "0" From  = "1" />
+        <Cut  Axis = "1" To    = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Cut  Axis = "1" To    = "1" />
+
+        <Macro Name = "AddBlackSphere" >
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "ColorBack" />
+            <Cut Axis = "0" To = "1" />
+            <Cut Axis = "1" To = "1" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddBlackSphere" />
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 1;-1; 0" NormDistance = " D3" /> </Cut>
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 0;-1; 0" NormDistance = " D4" /> </Cut>
+
+        <ExecMacro MacroName = "AddBlackSphere" />
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = "-1; 1; 0" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "ColorBack"                > <Plane NormVector = " 0;-1; 0" NormDistance = " D4" /> </Cut>
+
+        <ExecMacro MacroName = "AddBlackSphere" />
+        <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 0; 1; 0" NormDistance = "-D4" /> </Cut>
+        <Cut Color = "ColorBack"                > <Plane NormVector = " 1;-1; 0" NormDistance = " D3" /> </Cut>
+        <ShowAll/>
+
+        <!-- Cones -->
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "cl" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "TruncatedCone" >
+            <HideAll/>
+            <Part>
+                <Vertices Vectors = " x1; -H; y1;" />
+                <Vertices Vectors = " x2;-D2; y2;" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                    <Face              VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "CreateFragment" >
+            <ExecMacro MacroName = "TruncatedCone" cl = "Colors[j]" />
+            <Cut  Axis = "0" From = "1" />
+            <Turn Axis = "1" Layer = "1" Angle = "Angle" />
+            <Cut  Axis = "0" To = "1" />
+            <Script>inc(j);</Script>
+        </Macro>
+
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi/4" />
+            <Split Axis = "0" From = "1" />
+        </Macro>
+
+        <ExecMacro MacroName = "TruncatedCone" cl = "ColorSide" />
+        <Cut  Axis = "0" From = "1" />
+        <ExecMacro MacroName = "Unbandage" Repeat = "8" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+
+        <!-- variant 1 -->
+
+        <ExecMacro MacroName = "CreateFragment" j = "1" Angle = " Pi/4" Repeat = "8" />
+        <ShowAll/>
+        <ExecMacro MacroName = "Unbandage" Repeat = "8" />
+        <Turn Axis = "1" Layer = "1" Angle = "-3*Pi/4" />
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+
+        <!-- variant 2 -->
+
+        <Cut Axis = "1" To = "1" />
+        <ExecMacro MacroName = "CreateFragment" j = "1" Angle = "-Pi/4" Repeat = "8" />
+        <ShowAll/>
+        <ExecMacro MacroName = "Unbandage" Repeat = "8" />
+        <Turn Axis = "1" Layer = "1" Angle = " 3*Pi/4" />
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-45 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

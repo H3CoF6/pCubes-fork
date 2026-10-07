@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Corner-Turning Snub Cube Plus</Name>
+        <Menu>Other forms\Archimedean Solids\Snub Cube\Corner-Turning Snub Cube Plus</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-24</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        W  := 0.55;
+        include 'Figures\Scripts\Snub_Cube_Coordinates.inc';
+        D := C2^2 / sqrt(C0^2 + C1^2 + C2^2);
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          tx := y1 * z2 - y2 * z1;
+          ty := z1 * x2 - z2 * x1;
+          tz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((tx*wx + ty*wy + tz*wz) / (tx^2 + ty^2 + tz^2));
+        end;
+
+        A1 := Angle( C2,-C0, C1,  C2, C1, C0,  C2,-C1,-C0);
+        A2 := Angle( C2,-C0, C1,  C2, C1, C0,  C1, C0, C2);
+        A3 := A2*2;
+        A4 := A2*3;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Vx;Vy;Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Snub_Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "A1" />
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "A2" />
+            <Split Axis = "Ax1" From  = "1" />
+            <Undo Repeat = "2" />
+        </Macro>
+
+        <Macro Name = "Split4" >
+            <ExecMacro MacroName = "Split" Ax1 = "Axx1" Ax2 = "Axx2" />
+            <ExecMacro MacroName = "Split" Ax1 = "Axx2" Ax2 = "Axx3" />
+            <ExecMacro MacroName = "Split" Ax1 = "Axx3" Ax2 = "Axx4" />
+            <ExecMacro MacroName = "Split" Ax1 = "Axx4" Ax2 = "Axx1" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split4" Axx1 = " 0" Axx2 = "12" Axx3 = " 2" Axx4 = "14" />
+        <ExecMacro MacroName = "Split4" Axx1 = " 1" Axx2 = "13" Axx3 = " 3" Axx4 = "15" />
+        <ExecMacro MacroName = "Split4" Axx1 = " 4" Axx2 = "17" Axx3 = " 5" Axx4 = "16" />
+        <ExecMacro MacroName = "Split4" Axx1 = " 6" Axx2 = "19" Axx3 = " 7" Axx4 = "18" />
+        <ExecMacro MacroName = "Split4" Axx1 = " 8" Axx2 = "22" Axx3 = "11" Axx4 = "21" />
+        <ExecMacro MacroName = "Split4" Axx1 = " 9" Axx2 = "23" Axx3 = "10" Axx4 = "20" />
+    </Figure>
+</xml>

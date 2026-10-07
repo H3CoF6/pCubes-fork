@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>AI MC 4x4x4</Name>
+        <Menu>Cubic\Bandaged\Cube 4x4x4\AI MC</Menu>
+        <Inventor>JASON</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2015-03-22</Added>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        clDarkBlue   := '000098';
+        clDarkGreen  := '007600';
+        clDarkRed    := '980000';
+        clDarkOrange := 'BF600A';
+        clDarkYellow := 'BFBF00';
+        clDarkWhite  := 'BFBFBF';
+
+        W := 0.5;
+        D := W / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-W;-W;-W" />
+                <Add Vector = " W;-W;-W" />
+                <Add Vector = "-W; W;-W" />
+                <Add Vector = " W; W;-W" />
+                <Add Vector = "-W;-W; W" />
+                <Add Vector = " W;-W; W" />
+                <Add Vector = "-W; W; W" />
+                <Add Vector = " W; W; W" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue"       VertexIndexes = "0;5;4" />
+                <Face Color = "clDarkBlue"   VertexIndexes = "0;1;5" />
+                <Face Color = "clGreen"      VertexIndexes = "3;6;7" />
+                <Face Color = "clDarkGreen"  VertexIndexes = "3;2;6" />
+                <Face Color = "clRed"        VertexIndexes = "0;4;6" />
+                <Face Color = "clDarkRed"    VertexIndexes = "0;6;2" />
+                <Face Color = "clOrange"     VertexIndexes = "3;7;5" />
+                <Face Color = "clDarkOrange" VertexIndexes = "1;3;5" />
+                <Face Color = "clYellow"     VertexIndexes = "0;2;3" />
+                <Face Color = "clDarkYellow" VertexIndexes = "0;3;1" />
+                <Face Color = "clWhite"      VertexIndexes = "6;5;7" />
+                <Face Color = "clDarkWhite"  VertexIndexes = "4;5;6" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+        <HideContaining Vector = " W; W; W" />
+        <HideContaining Vector = " W;-W;-W" />
+        <HideContaining Vector = "-W; W;-W" />
+        <HideContaining Vector = "-W;-W; W" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,190 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Compound Fracture</Name>
+        <Menu>Other forms\Dipyramid\Hexagonal\Compound Fracture</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-05-09</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1926</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clOrange       := 'FF6000';
+        clBrown        := '800000';
+        clLightViolett := 'FF0080';
+        clRed          := 'FF0000';
+
+        clBlue         := '0000A0';
+        clViolett      := '800080';
+        clGreen        := '008000';
+        clLightBlue    := '2828FF';
+        clLightGreen   := '00FF00';
+
+        clBlack1       := '202020';
+        clBlack2       := '202021';
+
+        R := 0.6;
+
+        s2 := sqrt(2) - 1;
+        A := arccos(s2);
+        H := R / sqrt(s2);
+        D := R * s2;
+
+        for i := 0 to 5 do begin
+          x[i] := R * cos(i * A + Pi);
+          y[i] := R * sin(i * A + Pi);
+        end;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi/4"  PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+        <Axis NormVector = "x[3]; y[3]; 0" />
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;    0;  H" />
+                <Add Vector = "x[0]; y[0];  0" />
+                <Add Vector = "x[1]; y[1];  0" />
+                <Add Vector = "x[2]; y[2];  0" />
+                <Add Vector = "x[3]; y[3];  0" />
+                <Add Vector = "x[4]; y[4];  0" />
+                <Add Vector = "x[5]; y[5];  0" />
+                <Add Vector = "   0;    0; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clRed         " VertexIndexes = " 0; 1; 2" />
+                <Face Color = "clLightViolett" VertexIndexes = " 0; 2; 3" />
+                <Face Color = "clBrown       " VertexIndexes = " 0; 3; 4" />
+                <Face Color = "clOrange      " VertexIndexes = " 0; 4; 5" />
+                <Face Color = "clYellow      " VertexIndexes = " 0; 5; 6" />
+
+                <Face Color = "clBlack1      " VertexIndexes = " 0; 6; 1" />
+                <Face Color = "clBlack2      " VertexIndexes = " 7; 1; 6" />
+
+                <Face Color = "clBlue        " VertexIndexes = " 7; 2; 1" />
+                <Face Color = "clViolett     " VertexIndexes = " 7; 3; 2" />
+                <Face Color = "clLightBlue   " VertexIndexes = " 7; 4; 3" />
+                <Face Color = "clGreen       " VertexIndexes = " 7; 5; 4" />
+                <Face Color = "clLightGreen  " VertexIndexes = " 7; 6; 5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Hide  Axis = "0" Layer = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "-3*Pi/4" />
+        <ShowAll/>
+
+        <Hide  Axis = "1" Layer = "1" />
+        <Turn  Axis = "2" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "1" From  = "1"/>
+        <Split Axis = "3" From  = "1"/>
+        <Turn  Axis = "2" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "1" From  = "1"/>
+        <Split Axis = "3" From  = "1"/>
+        <Turn  Axis = "2" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "1" From  = "1"/>
+        <Split Axis = "3" From  = "1"/>
+        <Turn  Axis = "2" Layer = "1" Angle = "-3*Pi/4" />
+        <ShowAll/>
+
+        <Turn  Axis = "3" Layer = "1" Angle = " 3*Pi/4" />
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "2" Layer = "1" Angle = "   Pi  " />
+
+        <Hide  Axis = "0" Layer = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "-3*Pi/4" />
+        <ShowAll/>
+
+        <Turn  Axis = "2" Layer = "1" Angle = "   Pi  " />
+        <Turn  Axis = "3" Layer = "1" Angle = "   Pi/2" />
+        <Split Axis = "2" From  = "1"/>
+
+        <Turn  Axis = "2" Layer = "1" Angle = "   Pi  " />
+        <Hide  Axis = "0" Layer = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "-3*Pi/4" />
+        <ShowAll/>
+
+        <Turn  Axis = "2" Layer = "1" Angle = "   Pi  " />
+        <Turn  Axis = "3" Layer = "1" Angle = " 3*Pi/4" />
+
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi  " />
+        <Hide  Axis = "2" Layer = "0" />
+        <Turn  Axis = "2" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "1" From  = "1"/>
+        <Split Axis = "3" From  = "1"/>
+        <Turn  Axis = "2" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "1" From  = "1"/>
+        <Split Axis = "3" From  = "1"/>
+        <Turn  Axis = "2" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "1" From  = "1"/>
+        <Split Axis = "3" From  = "1"/>
+        <Turn  Axis = "2" Layer = "1" Angle = "-3*Pi/4" />
+        <ShowAll/>
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi  " />
+
+        <Turn  Axis = "0" Layer = "1" Angle = "   Pi  " />
+        <Split Axis = "1" From  = "1"/>
+        <Turn  Axis = "0" Layer = "1" Angle = " 3*Pi/4" />
+        <Split Axis = "1" From  = "1"/>
+        <Turn  Axis = "0" Layer = "1" Angle = "   Pi/2" />
+        <Split Axis = "1" From  = "1"/>
+
+        <Turn  Axis = "0" Layer = "1" Angle = " 3*Pi/4" />
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi  " />
+
+        <Hide  Axis = "0" Layer = "1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi/4" />
+        <Split Axis = "0" From  = "1"/>
+        <Split Axis = "2" From  = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "-3*Pi/4" />
+        <ShowAll/>
+
+        <Turn  Axis = "1" Layer = "1" Angle = "   Pi  " />
+        <Turn  Axis = "0" Layer = "1" Angle = "   Pi  " />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

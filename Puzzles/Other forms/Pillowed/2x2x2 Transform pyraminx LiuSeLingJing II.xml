@@ -1,0 +1,121 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2x2 Transform pyraminx LiuSeLingJing II</Name>
+        <Menu>Other forms\Pillowed\2x2x2 Transform pyraminx LiuSeLingJing II</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-25</Added>
+        <Link>https://www.hknowstore.com/locale/en-US/item.aspx?corpname=nowstore&amp;itemid=bd4ed669-a29a-45c8-9d51-253acf9a3121</Link>
+        <Link>http://www.ziicube.com/fs-Lim-222-Circle-Series</Link>
+    </Interface>
+
+    <Script>
+        K := 0.5;
+        Colors[0] := -1;
+        Colors[1] := 'FFFF00';
+        Colors[2] := 'FF7700';
+        Colors[3] := '00BB00';
+        Colors[4] := 'FFFFFF';
+        Colors[5] := '0055EE';
+        Colors[6] := 'EE0000';
+
+        D := K * 1.45607124601745 / sqrt(3); // C37 / sqrt(3)
+
+        DCut := K * 1.14;
+        f := K * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+    <Axes TurningAngles = "2 * Pi / 3; 0; 2 * Pi / 3" PlaneDistances = "D; -D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <!-- make Figure -->
+
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = "1;0;0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = "0;1;0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = "0;0;1" NormDistance = "0" /></Split>
+
+        <RemoveContaining Vector = "-f;-f;-f" />
+        <RemoveContaining Vector = " f;-f; f" />
+        <RemoveContaining Vector = "-f;-f; f" />
+        <RemoveContaining Vector = "-f; f; f" />
+
+        <Turn NormVector = "0;-1;-1" Angle = "Pi" />
+
+        <InvertVisibility/>
+        <Script>
+            Colors[1] := Colors[4];
+            Colors[2] := Colors[5];
+            Colors[3] := Colors[6];
+        </Script>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = "1;0;0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = "0;1;0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = "0;0;1" NormDistance = "0" /></Split>
+
+        <RemoveContaining Vector = "-f;-f;-f" />
+        <RemoveContaining Vector = " f;-f; f" />
+        <RemoveContaining Vector = "-f;-f; f" />
+        <RemoveContaining Vector = "-f; f; f" />
+
+        <ShowAll/>
+        <Turn NormVector = "0;-1;-1" Angle = "-Pi" />
+
+        <!-- split -->
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+
+        <Macro Name = "Split" >
+            <HideContaining Vector = " f;-f; f" />
+            <InvertVisibility/>
+            <Split><Plane NormVector = "-1;-1; 1" NormDistance = " D" /></Split>
+            <Split><Plane NormVector = " 1; 1; 1" NormDistance = " D" /></Split>
+            <Split><Plane NormVector = " 1;-1;-1" NormDistance = " D" /></Split>
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "-Pi/2" /> 
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "3" />
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/2" /> 
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" /> 
+        <ExecMacro MacroName = "Split" Repeat = "3" />
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/2" /> 
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "3" From = "2" />
+
+        <!-- cut -->
+
+        <HideContaining Vector = "-f;-f; f" />
+        <HideContaining Vector = " f; f;-f" />
+        <InvertVisibility/>
+        <Cut><Plane NormVector = "-1;-1;-2" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 2;-1; 1" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = "-1; 2; 1" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 1; 1; 2" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = "-2; 1;-1" NormDistance = "-DCut" /></Cut>
+        <Cut><Plane NormVector = " 1;-2;-1" NormDistance = "-DCut" /></Cut>
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

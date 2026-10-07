@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bubbloid 123</Name>
+        <Menu>Other cubes\Vertex Turning\Bubbloid 123</Menu>
+        <Inventor>Carl N. Hoff</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2020-01-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4913</Link>
+    </Interface>
+
+    <Script>
+        W  := 0.42;
+        WX := W;
+        WY := W * 6 / 5;
+        WZ := W * 7 / 5;
+        AY := W / 5;
+        AZ := W * 2 / 5;
+        D  := W * 7 / 5 / sqrt(3);
+        Angle := 2 * Pi / 3;
+    </Script>
+
+    <Axes TurningAngles = "Angle" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1; 1; 1" BaseVector = "0; AY; AZ" />
+        <Axis NormVector = "-1; 1; 1" BaseVector = "0; AY; AZ" />
+        <Axis NormVector = " 1;-1; 1" BaseVector = "0;-AY; AZ" />
+        <Axis NormVector = "-1;-1; 1" BaseVector = "0;-AY; AZ" />
+        <Axis NormVector = " 1; 1;-1" BaseVector = "0; AY;-AZ" />
+        <Axis NormVector = "-1; 1;-1" BaseVector = "0; AY;-AZ" />
+        <Axis NormVector = " 1;-1;-1" BaseVector = "0;-AY;-AZ" />
+        <Axis NormVector = "-1;-1;-1" BaseVector = "0;-AY;-AZ" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Turn">
+            <Turn Axis = "a" Angle = "theta" Layer = "1" />
+            <Turn Axis = "b" Angle = "theta" Layer = "1" />
+            <Turn Axis = "c" Angle = "theta" Layer = "1" />
+            <Turn Axis = "d" Angle = "theta" Layer = "1" />
+        </Macro>
+
+        <Macro Name = "Cut">
+            <SplitByAxes/>
+            <ExecMacro MacroName = "Turn" theta = "Angle" />
+        </Macro>
+
+        <ExecMacro MacroName = "Cut"  a = "0" b = "3" c = "5" d = "6" Repeat = "3"/>
+        <Undo Repeat = "12" />
+
+        <ExecMacro MacroName = "Cut"  a = "1" b = "2" c = "4" d = "7" Repeat = "3"/>
+        <Undo Repeat = "12" />
+
+        <ExecMacro MacroName = "Turn" a = "1" b = "2" c = "4" d = "7" theta = "Angle" />
+        <ExecMacro MacroName = "Cut"  a = "0" b = "3" c = "5" d = "6" Repeat = "3"/>
+        <Undo Repeat = "16" />
+
+        <ExecMacro MacroName = "Turn" a = "1" b = "2" c = "4" d = "7" theta = "-Angle" />
+        <ExecMacro MacroName = "Cut"  a = "0" b = "3" c = "5" d = "6" Repeat = "3"/>
+        <Undo Repeat = "16" />
+
+        <ExecMacro MacroName = "Turn" a = "0" b = "3" c = "5" d = "6" theta = "Angle" />
+        <ExecMacro MacroName = "Cut"  a = "1" b = "2" c = "4" d = "7" Repeat = "3"/>
+        <Undo Repeat = "16" />
+
+        <ExecMacro MacroName = "Turn" a = "0" b = "3" c = "5" d = "6" theta = "-Angle" />
+        <ExecMacro MacroName = "Cut"  a = "1" b = "2" c = "4" d = "7" Repeat = "3"/>
+        <Undo Repeat = "16" />
+    </Figure>
+</xml>

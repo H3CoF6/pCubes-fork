@@ -1,0 +1,112 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>8 Birdies Bandaged Snub Cube (AC)</Name>
+        <Menu>Other forms\Archimedean Solids\Snub Cube\8 Birdies Bandaged Snub Cube (AC)</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-08-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11246</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'F0F0F0';
+        clBlack  := '414141';
+        clBlue   := '33BBFF';
+        clYellow := 'E0E930';
+
+        W  := 0.55;
+        include 'Figures\Scripts\Snub_Cube_Coordinates.inc';
+
+        W0 := W;
+        W1 := W * 0.95;
+        D := C2^2 / sqrt(C0^2 + C1^2 + C2^2);
+
+        C6 := (C0 + C1) / 2;
+        C7 := (C1 + C2) / 2;
+        C8 := (C2 + C0) / 2;
+        S0 := C0 * 0.95;
+        S1 := C1 * 0.95;
+        S2 := C2 * 0.95;
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          tx := y1 * z2 - y2 * z1;
+          ty := z1 * x2 - z2 * x1;
+          tz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((tx*wx + ty*wy + tz*wz) / (tx^2 + ty^2 + tz^2));
+        end;
+
+        A1 := Angle( C2,-C0, C1,  C2, C1, C0,  C2,-C1,-C0);
+        A2 := Angle( C2,-C0, C1,  C2, C1, C0,  C1, C0, C2);
+        A3 := A2*2;
+        A4 := A2*3;
+
+        procedure SetColor(Color);
+        begin
+            for i := 0 to 37 do
+                Colors[i] := Color;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Vx;Vy;Vz" />
+
+    <Figure>
+        <Macro Name = "Split" >
+            <Split Color1 = "Color" Color2 = "Color" Axis = "i" From = "1" />
+            <Script>inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "RemoveCenter" >
+            <RemoveContaining Vector = " Cx[i]; Cy[i]; Cz[i]" />
+            <Script>inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "AddColor" >
+            <Script> SetColor(Color); </Script>
+            <LoadFrom File = "Figures\Snub_Cube.xml" W = "W0" />
+            <ExecMacro MacroName = "Split" i = "0" Repeat = "24"/>
+            <ExecMacro MacroName = "RemoveCenter" i = "6" Repeat = "32" />
+
+            <HideContaining Vector = "Vx[12];Vy[12];Vz[12]" />
+            <HideContaining Vector = "Vx[20];Vy[20];Vz[20]" />
+            <HideContaining Vector = "Vx[16];Vy[16];Vz[16]" />
+            <HideContaining Vector = " C8;-C7;-C6" /> // E[ 5, 9]
+            <HideContaining Vector = " C7; C6; C8" /> // E[ 0, 4]
+            <HideContaining Vector = "-C6;-C8; C7" /> // E[10, 2]
+            <HideContaining Vector = " S2;-S1;-S0" /> // V[ 5] * 0.95
+            <HideContaining Vector = " S1; S0; S2" /> // V[ 0] * 0.95
+            <HideContaining Vector = "-S0;-S2; S1" /> // V[10] * 0.95
+            <RemoveAllVisible/>-->
+
+            <LoadFrom File = "Figures\Snub_Cube.xml" W = "W1" />
+            <ExecMacro MacroName = "Split" i = "0" Repeat = "24"/>
+            <HideContaining Vector = "Cx[ 8];Cy[ 8];Cz[ 8]" />
+            <HideContaining Vector = "Cx[10];Cy[10];Cz[10]" />
+            <HideContaining Vector = "Cx[15];Cy[15];Cz[15]" />
+            <HideContaining Vector = "Cx[18];Cy[18];Cz[18]" />
+            <HideContaining Vector = "Cx[22];Cy[22];Cz[22]" />
+            <HideContaining Vector = "Cx[26];Cy[26];Cz[26]" />
+            <HideContaining Vector = "Cx[33];Cy[33];Cz[33]" />
+            <HideContaining Vector = "Cx[34];Cy[34];Cz[34]" />
+            <RemoveAllVisible/>
+
+            <Turn NormVector = "0;0;1" Angle = "Pi" />
+        </Macro>
+        <ExecMacro MacroName = "AddColor" Color = "clBlack" />
+        <ExecMacro MacroName = "AddColor" Color = "clBlue" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddColor" Color = "clYellow" />
+        <ExecMacro MacroName = "AddColor" Color = "clWhite" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

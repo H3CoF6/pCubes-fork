@@ -1,0 +1,159 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Slide 11 Disk</Name>
+        <Menu>Other forms\2d\Marble\Slide 11 Disk</Menu>
+        <Inventor>Hans van der Zon</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4491</Link>
+    </Interface>
+
+    <Script>
+        Colors[0]  := 'BB0000'; // clRed
+        Colors[1]  := 'EECC00'; // clYellow
+        Colors[2]  := '008800'; // clGreen
+        InnerColor := '888888'; // clGray
+        Color      := '202020'; // clBlack
+
+        K := 0.6;
+
+        D1 := K * 0.87;
+        D2 := K * 0.9625;
+        D3 := -K * 0.1525;
+        D4 :=  K * 0.0475;
+
+        Ax := Pi / 10;
+        Ay := 2*Pi / 11;
+
+        R := K * 0.992;
+        RC1 := R * 0.99;
+        RC := R * 0.096;
+        for i := 0 to 15 do begin
+            Rx[i] :=  Rc * sin((i) * 2 * Pi / 16);
+            Rz[i] := -Rc * cos((i) * 2 * Pi / 16);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Ay; 0; Ay; 0" PlaneDistances = "-D1; -D2" >
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Ax; 0" PlaneDistances = "D3; D4" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "0; 0; 0" MaxAngles = "0; Ax; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+
+        <SplitByAxes/>
+
+        <Hide Axis = "0" Layer = "0" />
+        <Cut Axis = "0" From = "2" />
+        <ShowAll/>
+
+        <Hide Axis = "1" From = "2" />
+        <Hide Axis = "1" From = "0" To = "0" />
+        <Cut Axis = "0" From = "2" />
+        <Turn Axis = "1" Layer = "1" Angle = "pi/10" />
+        <Cut Axis = "0" From = "2" />
+        <ShowAll/>
+
+        <Macro Name = "AddMarble" >
+            <Turn NormVector = "0;1;0" Angle = "-Ay * y" />
+            <Turn NormVector = "1;0;0" Angle = " Pi/8" />
+            <Part>
+                <Vertices Vectors = "Rx; -R; Rz" >
+                    <Add Vector = "0; -RC1 + 0.0001 * i; 0" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[cl]" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15" />
+                    <Face Color = "InnerColor" VertexIndexes = " 1; 0;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 2; 1;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 3; 2;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 4; 3;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 5; 4;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 6; 5;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 7; 6;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 8; 7;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 9; 8;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "10; 9;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "11;10;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "12;11;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "13;12;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "14;13;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "15;14;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 0;15;16" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "1;0;0" Angle = "-Pi/8" />
+            <Turn NormVector = "0;1;0" Angle = " Ay * y" />
+            <Script>Inc(i);Inc(y);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddMarble" cl = "0" i = "1" y = "0" Repeat = "11" />
+
+        <Turn Axis = "1" Layer = "1" Angle = "-Ax" />
+        <ExecMacro MacroName = "AddMarble" cl = "1" i = "0" y = "3" />
+        <ExecMacro MacroName = "AddMarble" cl = "2" i = "0" y = "8" />
+        <Turn Axis = "1" Layer = "1" Angle = " Ax" />
+
+        <Macro Name = "SolvedStates">
+            <Turn Axis = "0" Layer = "1" Angle = "Ay" />
+            <SaveSolvedState/>
+        </Macro>
+        <ExecMacro MacroName = "SolvedStates" Repeat = "11" />
+
+        <Hide Axis = "1" Layer = "0" />
+        <Hide Axis = "1" Layer = "2" />
+        <Cut Axis = "0" From = "2" />
+        <Turn Axis = "1" Layer = "1" Angle = "-Ax" />
+        <Cut Axis = "0" From = "2" />
+        <ExecMacro MacroName = "AddMarble" cl = "0" i = "3" y = "3" />
+        <ExecMacro MacroName = "AddMarble" cl = "0" i = "8" y = "8" />
+        <Turn Axis = "1" Layer = "1" Angle = "Ax" />
+        <ExecMacro MacroName = "AddMarble" cl = "1" i = "0" y = "3" />
+        <ExecMacro MacroName = "AddMarble" cl = "2" i = "0" y = "8" />
+        <Turn Axis = "1" Layer = "1" Angle = "-Ax" />
+
+        <ShowAll/>
+        <ExecMacro MacroName = "SolvedStates" Repeat = "11" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\2D + rotation\Vec\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\2D + rotation\Vec\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\2D + rotation\Vec\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\2D + rotation\Vec\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\2D + rotation\Vec\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\2D + rotation\Vec\tm_06.vec" />
+        <Texture Name = "tm_07" File = "Puzzles\Other forms\2D + rotation\Vec\tm_07.vec" />
+        <Texture Name = "tm_08" File = "Puzzles\Other forms\2D + rotation\Vec\tm_08.vec" />
+        <Texture Name = "tm_09" File = "Puzzles\Other forms\2D + rotation\Vec\tm_09.vec" />
+        <Texture Name = "tm_10" File = "Puzzles\Other forms\2D + rotation\Vec\tm_10.vec" />
+        <Texture Name = "tm_11" File = "Puzzles\Other forms\2D + rotation\Vec\tm_11.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 =  5,0,0
+        tm_02 =  6,0,0
+        tm_03 =  7,0,0
+        tm_04 = 14,0,0
+        tm_05 =  8,0,0
+        tm_06 =  9,0,0
+        tm_07 = 10,0,0
+        tm_08 = 11,0,0
+        tm_09 = 15,0,0
+        tm_10 = 12,0,0
+        tm_11 = 13,0,0
+    </SetTextures>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

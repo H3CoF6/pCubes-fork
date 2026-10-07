@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Royal Morphegg (Random Color)</Name>
+        <Menu>Other forms\Egg\Royal Morphegg (Random Color)</Menu>
+        <Menu>Other forms\3x3x3 variants\Egg\Royal Morphegg (Random Color)</Menu>
+        <Inventor>Adam G. Cowan</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-03-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1961</Link>
+        <Link>https://www.hknowstore.com/locale/en-US/item.aspx?corpname=nowstore&amp;itemid=f1983b41-77eb-4200-9337-4264df30847b</Link>
+        <Link>https://www.hknowstore.com/locale/en-US/item.aspx?corpname=nowstore&amp;itemid=6151c678-4965-4ea9-a229-4d7446b5bb71</Link>
+        <Link>https://www.hknowstore.com/locale/en-US/categoryofcorp.aspx?corpname=nowstore&amp;search=morphegg</Link>
+    </Interface>
+
+    <Script>
+        Colors[0,0] := 'AA0000'; //clRed
+        Colors[0,1] := 'FFFF00'; //clYellow
+        Colors[0,2] := '0000A0'; //clBlue
+
+        Colors[1,0] := '800080'; //clViolett
+        Colors[1,1] := 'FFFF66'; //clLemon
+        Colors[1,2] := '008000'; //clGreen
+
+        C := Random(2);
+
+        K := 0.7;
+        D := K * 0.2;
+
+        sColors[2] := '210 110 000';
+        sColors[1] := '211 131 110';
+        sColors[0] := '222 211 210';
+
+        procedure TestColor(No);
+        begin
+            ix := No mod 3;
+            iy := No div 3 mod 3;
+            iz := No div 9;
+            substr := copy(sColors[iz], iy * 4 + ix + 1, 1);
+            if HexToInt(substr) = ColorIndex then
+                DD := 10 // any big
+            else
+                DD := D * 1.01;
+        end;
+
+        AT2 := ArcTan(sqrt(2));
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "RemovePart" >
+            <Script>TestColor(i); Inc(i);</Script>
+            <RemoveContaining Vector = "(ix - 1) * DD; (iy - 1) * DD; (iz - 1) * DD" />
+        </Macro>
+
+        <Macro Name = "ColorEgg" >
+            <Turn NormVector = "-1;1;0" Angle = "-AT2" />
+            <LoadFrom File = "Puzzles\Other forms\Egg\_Macro_For_Egg.xml" Color = "Colors[C,ColorIndex]" Nx = "24" />
+            <SplitByAxes/>
+            <Turn NormVector = "-1;1;0" Angle = " AT2" />
+            <ExecMacro MacroName = "RemovePart" i = "0" Repeat = "27" />
+            <HideAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "ColorEgg" ColorIndex = "0" />
+        <ExecMacro MacroName = "ColorEgg" ColorIndex = "1" />
+        <ExecMacro MacroName = "ColorEgg" ColorIndex = "2" />
+        <Turn NormVector = "-1; 1; 0" Angle = "-AT2" />
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/4" />
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

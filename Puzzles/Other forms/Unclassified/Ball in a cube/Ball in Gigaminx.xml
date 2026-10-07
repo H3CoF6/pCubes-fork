@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Ball in Gigaminx</Name>
+        <Menu>Other forms\Unclassified\Ball in a cube\Ball in Gigaminx</Menu>
+        <Inventor>Javier Alla La</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-09-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9067</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        R := 0.5;
+        include 'Figures\Scripts\Dodecahedron_Sq_Coordinates.inc';
+
+        K := R * 0.79;
+
+        D0 := R * 0.63;
+        D1 := R * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; sAngle" PlaneDistances = "D0; D1" NormVectors = "Cx;Cy;Cz" />
+
+    <Figure>
+        // Dodecahedron
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = " 0; 1;14; 8;12" />
+                <Face Color = "Colors[ 1]" VertexIndexes = " 4;12; 8; 9;13" />
+                <Face Color = "Colors[ 2]" VertexIndexes = " 7;15; 9; 8;14" />
+                <Face Color = "Colors[ 3]" VertexIndexes = " 1;18; 6; 7;14" />
+                <Face Color = "Colors[ 4]" VertexIndexes = " 1; 0;16;11;18" />
+                <Face Color = "Colors[ 5]" VertexIndexes = " 0;12; 4; 5;16" />
+                <Face Color = "Colors[ 6]" VertexIndexes = " 6;18;11;10;19" />
+                <Face Color = "Colors[ 7]" VertexIndexes = " 5;17;10;11;16" />
+                <Face Color = "Colors[ 8]" VertexIndexes = " 3;17; 5; 4;13" />
+                <Face Color = "Colors[ 9]" VertexIndexes = " 2; 3;13; 9;15" />
+                <Face Color = "Colors[10]" VertexIndexes = " 2;15; 7; 6;19" />
+                <Face Color = "Colors[11]" VertexIndexes = " 3; 2;19;10;17" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "CutAxis1" >
+            <Split Axis = "ax" From = "2" />
+            <Script> Inc(ax); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutAxis1" ax = "0" Repeat = "12" />
+
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "RemoveCenter" >
+            <RemoveContaining Vector = "Cx[i];Cy[i];Cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenter" i = "0" Repeat = "12" />
+
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <ExecMacro1 MacroName = "CutAxis1" ax = "0" Repeat = "12" />
+
+        <Macro Name = "CutAxis1c" >
+            <Split Color1 = "Colors[ax]" ><Plane NormVector = "-Cx[ax];-Cy[ax];-Cz[ax]" NormDistance = "D0" /></Split>
+            <Script> Inc(ax); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutAxis1c" ax = "0" Repeat = "12" />
+
+        <Macro Name = "HideCenter" >
+            <HideContaining Vector = "Cx[i];Cy[i];Cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenter" i = "0" Repeat = "12" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

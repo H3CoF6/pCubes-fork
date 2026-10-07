@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Real 6x6x6</Name>
+        <Menu>Cubic\Unclassified\Real 6x6x6</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2019-11-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5289</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        W1 := W;
+        D1 := W / 3;
+        D2 := W * 2 / 3;
+
+        HX := W * 0.05;
+        WX1 := (D1 + D2) / 2;
+        WX2 := D1 / 2;
+        WX3 := D1 + (D2 - D1) * 3 / 4;
+        WX4 := D1 * 2/3;
+        WX5 := D1 * 5/6;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D1; 0; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "5" />
+
+        <RemoveGrayParts/>
+
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+
+        <Script> WE := WX1; DCut1 := W1 - HX; DCut2 := W1; </Script>
+        <LoadFrom File = "Puzzles\Cubic\Classic Rubiks\_Macro_For_Super.xml" />
+
+        <Script> include 'Figures\Scripts\Cube_Coordinates.inc'; </Script>
+        <SplitByAxes/>
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+
+        <Script> WE := WX2; DCut1 := W1 - HX; DCut2 := W1; </Script>
+        <LoadFrom File = "Puzzles\Cubic\Classic Rubiks\_Macro_For_Super.xml" />
+
+        <Script> W := WX3; </Script>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+
+        <Script> WE := WX4; DCut1 := WX3 - HX; DCut2 := WX3; </Script>
+        <LoadFrom File = "Puzzles\Cubic\Classic Rubiks\_Macro_For_Super.xml" />
+
+        <Script> W := WX5; </Script>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

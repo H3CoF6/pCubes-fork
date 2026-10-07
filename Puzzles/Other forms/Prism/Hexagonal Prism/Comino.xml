@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Comino</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Comino</Menu>
+        <Menu>Other forms\Square-1\Comino</Menu>
+        <Inventor>Luke Borg</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2025-07-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12800</Link>
+    </Interface>
+
+    <Script>
+        R := 0.53;
+        H := R;
+        D := H / 3;
+        for i := 0 to 5 do begin
+            x[i] := R * sin(Pi / 3 * i);
+            y[i] :=-R * cos(Pi / 3 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x; y; H" />
+            <Vertices Vectors = " x; y;-H" />
+            <Faces>
+                <Face Color = "FFFF00" VertexIndexes = " 1; 0; 6; 7" />
+                <Face Color = "FF64FF" VertexIndexes = " 2; 1; 7; 8" />
+                <Face Color = "FF6000" VertexIndexes = " 3; 2; 8; 9" />
+                <Face Color = "00FF00" VertexIndexes = " 4; 3; 9;10" />
+                <Face Color = "0064FF" VertexIndexes = " 5; 4;10;11" />
+                <Face Color = "FF0000" VertexIndexes = " 0; 5;11; 6" />
+
+                <Face Color = "646464" VertexIndexes = "11;10; 9; 8; 7; 6" />
+                <Face Color = "C8C8C8" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 4" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 4" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 4" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+    </Figure>
+</xml>

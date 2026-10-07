@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+Bad-controlled: corners are not turned
+
+    <Interface>
+        <Name>Icosmominx</Name>
+        <Menu>Grigr\Icosmominx</Menu>
+        <Inventor>Michael Sun</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-01-23</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=359830</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        mAngle := ArcTan(0.5);
+        Rsin := R * sin(mAngle);
+        Rcos := R * cos(mAngle);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+        sAngle := PI * 2 / 5;
+        for i := 1 to 5 do begin
+            x[i] := sin(sAngle * (i - 1)) * Ac;
+            y[i] := cos(sAngle * (i - 1)) * Ac;
+        end;
+
+        D1 := (Rsin + 2 * R) / 3;
+        D2 := (2 * Rsin + R) / 3;
+        D3 := Rsin / 3;                
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D1; -D2; -D3; D3; D2; D1" FixedLayers = "3" >
+        <Axis NormVector = "   0;    0;  1" />
+        <Axis NormVector = "x[1]; y[1]; As" />
+        <Axis NormVector = "x[2]; y[2]; As" />
+        <Axis NormVector = "x[3]; y[3]; As" />
+        <Axis NormVector = "x[4]; y[4]; As" />
+        <Axis NormVector = "x[5]; y[5]; As" />
+    </Axes>
+
+   <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+   </Figure>
+
+   <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

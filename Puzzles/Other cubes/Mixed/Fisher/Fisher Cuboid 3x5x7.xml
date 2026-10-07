@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Cuboid 3x5x7</Name>
+        <Menu>Other cubes\Mixed\Fisher\Fisher Cuboid 3x5x7</Menu>
+        <Inventor>Casey Weaver</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7544</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        X := 5;
+        Y := 7;
+        Z := 3;
+
+        Add := 1.1;
+
+        N := Max(Max(x, y), z);
+        WD := W / (N / 2 + Add);
+
+        for i := 0 to N - 2 do
+            D[i] := WD * i - WD * (N / 2 - 1);
+
+        WX := WD * (Y / 2 + Add);
+        WY := WD * (Y / 2 + Add);
+        WZ := WD * (Z / 2 + Add);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0; 0; 1" Angle = "Pi/4" />
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "6" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+
+        <Hide Axis = "0" Layers = "0;6" />
+        <Hide Axis = "1" Layers = "0;6" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "6" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <Hide Axis = "1" Layers = "0;6" />
+        <Hide Axis = "2" Layers = "0;6" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "6" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "1" From = "5" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script>N := 7;</Script>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

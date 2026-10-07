@@ -1,0 +1,243 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fenzy D (86deg axis)</Name>
+        <Menu>Other forms\Unclassified\Fenzy D (86deg axis)</Menu>
+        <Inventor></Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2020-08-13</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=387700#p387700</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'FAFAFA';
+        clYellow := 'F0E400';
+        clBlue   := '1010D0';
+        clRed    := 'C80000';
+        clOrange := 'F07000';
+        clGreen  := '008000';
+
+        clCyan   := '20D0C0';
+        clPink   := 'E860C0';
+        clLGreen := '30E020';
+        clViolet := '602090';
+        clSilver := 'A0A0A0';
+
+        K  := 0.45;
+
+        // angle between axes = 86degs
+        N1 :=  0.78750387353793365293;
+        N2 :=  0.61630970231106227533;
+        N3 :=  0.57091036376371396439;
+        N4 := -0.54242391852169793179;
+
+        C1 :=  K * 1.62256085901318900110;
+        C2 :=  K * 0.73615247289103711048;
+        C3 :=  K * 1.27505348516474687668;
+        C4 :=  K * 0.68192513359404878555;
+        C5 :=  K * 1.41192522499767709482;
+        C6 :=  K * 0.41731164899822221856;
+        C7 :=  K * 0.97708746577612732937;
+        C8 := -K * 1.24019323711628075418;
+        C9 :=  K * 0.37406491420052164643;
+        C10 :=  K * 1.56258258183242076734;
+        C11 :=  K * 0.22608594852334417053;
+        C12 :=  K * 0.54903018881382301544;
+        C13 :=  K * 1.29766192824124226072;
+        C14 :=  K * 0.53735709817992773611;
+        C15 := -K * 0.89432492620515598928;
+        C16 :=  K * 1.08882668712879343324;
+        C17 :=  K * 1.44516984663000507153;
+        C18 :=  K * 0.36797326698102989327;
+        C19 := -K * 0.22403809582030673061;
+        C20 :=  K * 0.79423728881846247133;
+        C21 := -K * 1.26218356029207689634;
+        C22 :=  K * 0.84929310097390356928;
+        C23 :=  K * 1.12430505507795879762;
+        C24 :=  K * 0.53735709817992773611;
+        C25 := -K * 0.15870362619123762161;
+        C26 := -K * 1.40006206550619499505;
+        C27 :=  K * 0.66217081689668947425;
+        C28 :=  K * 1.14691349815445418167;
+        C29 :=  K * 0.39278906276580668667;
+        C30 :=  K * 1.27002993817578340120;
+        C31 :=  K * 0.37537277356746589943;
+        C32 :=  K * 0.66644292401623871125;
+        C33 := -K * 1.14629537825375493978;
+        C34 :=  K * 0.38733027979971282029;
+        C35 :=  K * 1.27270129927214827777;
+        C36 :=  K * 0.37198208022459751729;
+
+        Vx[ 0,0] :=   0; Vy[ 0,0] :=   0; Vz[ 0] :=  C1;
+        Vx[ 1,0] :=   0; Vy[ 1,0] :=   0; Vz[ 1] := -C1;
+        Vx[ 2,0] :=  C2; Vy[ 2,0] :=  C3; Vz[ 2] :=  C4;
+        Vx[ 3,0] :=  C5; Vy[ 3,0] :=  C6; Vz[ 3] := -C4;
+        Vx[ 4,0] :=  C7; Vy[ 4,0] :=  C8; Vz[ 4] :=  C9;
+        Vx[ 5,0] := C10; Vy[ 5,0] := C11; Vz[ 5] := -C9;
+        Vx[ 6,0] := C12; Vy[ 6,0] := C13; Vz[ 6] := C14;
+        Vx[ 7,0] := C15; Vy[ 7,0] := C16; Vz[ 7] :=-C14;
+        Vx[ 8,0] := C17; Vy[ 8,0] := C18; Vz[ 8] := C19;
+        Vx[ 9,0] := C20; Vy[ 9,0] := C21; Vz[ 9] :=-C19;
+        Vx[10,0] := C22; Vy[10,0] := C23; Vz[10] := C24;
+        Vx[11,0] := C25; Vy[11,0] := C26; Vz[11] :=-C24;
+        Vx[12,0] := C27; Vy[12,0] := C28; Vz[12] := C29;
+        Vx[13,0] := C30; Vy[13,0] := C31; Vz[13] :=-C29;
+        Vx[14,0] := C32; Vy[14,0] := C33; Vz[14] := C34;
+        Vx[15,0] := C35; Vy[15,0] := C36; Vz[15] :=-C34;
+
+        cos1 := cos(Pi*2/3);
+        sin1 := sin(Pi*2/3);
+        cos2 := cos(Pi*4/3);
+        sin2 := sin(Pi*4/3);
+
+        for i := 0 to 15 do begin
+            Vx[i,1] := Vx[i,0] * cos1 - Vy[i,0] * sin1;
+            Vy[i,1] := Vx[i,0] * sin1 + Vy[i,0] * cos1;
+            Vx[i,2] := Vx[i,0] * cos2 - Vy[i,0] * sin2;
+            Vy[i,2] := Vx[i,0] * sin2 + Vy[i,0] * cos2;
+        end;
+
+        D  := K * 0.76354179359415624268;
+
+        A1 := arctan(15.30294839036799782998); // 86.26121507645540148373 degs
+        A2 := Pi-arctan(4.03169449292322474606); // 103.9302130979232371562 degs
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2-A1; -A2; -A1; 0; A1; A2; A2+A1" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "N1;      0;        N2" />
+        <Axis NormVector = "N1*cos1; N1*sin1;  N2" />
+        <Axis NormVector = "N1*cos2; N1*sin2;  N2" />
+        <Axis NormVector = "N3;      N4;      -N2" />
+        <Axis NormVector = "N3*cos1+N4*sin1; -N3*sin1+N4*cos1; -N2" />
+        <Axis NormVector = "N3*cos2+N4*sin2; -N3*sin2+N4*cos2; -N2" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "Vx[ 0,0]; Vy[ 0,0]; Vz[ 0]" />
+                <Add Vector = "Vx[ 1,0]; Vy[ 1,0]; Vz[ 1]" />
+
+                <Add Vector = "Vx[ 2,0]; Vy[ 2,0]; Vz[ 2]" />
+                <Add Vector = "Vx[ 2,1]; Vy[ 2,1]; Vz[ 2]" />
+                <Add Vector = "Vx[ 2,2]; Vy[ 2,2]; Vz[ 2]" />
+                <Add Vector = "Vx[ 3,0]; Vy[ 3,0]; Vz[ 3]" />
+                <Add Vector = "Vx[ 3,1]; Vy[ 3,1]; Vz[ 3]" />
+                <Add Vector = "Vx[ 3,2]; Vy[ 3,2]; Vz[ 3]" />
+                <Add Vector = "Vx[ 4,0]; Vy[ 4,0]; Vz[ 4]" />
+                <Add Vector = "Vx[ 4,1]; Vy[ 4,1]; Vz[ 4]" />
+                <Add Vector = "Vx[ 4,2]; Vy[ 4,2]; Vz[ 4]" />
+                <Add Vector = "Vx[ 5,0]; Vy[ 5,0]; Vz[ 5]" />
+                <Add Vector = "Vx[ 5,1]; Vy[ 5,1]; Vz[ 5]" />
+                <Add Vector = "Vx[ 5,2]; Vy[ 5,2]; Vz[ 5]" />
+                <Add Vector = "Vx[ 6,0]; Vy[ 6,0]; Vz[ 6]" />
+                <Add Vector = "Vx[ 6,1]; Vy[ 6,1]; Vz[ 6]" />
+                <Add Vector = "Vx[ 6,2]; Vy[ 6,2]; Vz[ 6]" />
+                <Add Vector = "Vx[ 7,0]; Vy[ 7,0]; Vz[ 7]" />
+                <Add Vector = "Vx[ 7,1]; Vy[ 7,1]; Vz[ 7]" />
+                <Add Vector = "Vx[ 7,2]; Vy[ 7,2]; Vz[ 7]" />
+                <Add Vector = "Vx[ 8,0]; Vy[ 8,0]; Vz[ 8]" />
+                <Add Vector = "Vx[ 8,1]; Vy[ 8,1]; Vz[ 8]" />
+                <Add Vector = "Vx[ 8,2]; Vy[ 8,2]; Vz[ 8]" />
+                <Add Vector = "Vx[ 9,0]; Vy[ 9,0]; Vz[ 9]" />
+                <Add Vector = "Vx[ 9,1]; Vy[ 9,1]; Vz[ 9]" />
+                <Add Vector = "Vx[ 9,2]; Vy[ 9,2]; Vz[ 9]" />
+                <Add Vector = "Vx[10,0]; Vy[10,0]; Vz[10]" />
+                <Add Vector = "Vx[10,1]; Vy[10,1]; Vz[10]" />
+                <Add Vector = "Vx[10,2]; Vy[10,2]; Vz[10]" />
+                <Add Vector = "Vx[11,0]; Vy[11,0]; Vz[11]" />
+                <Add Vector = "Vx[11,1]; Vy[11,1]; Vz[11]" />
+                <Add Vector = "Vx[11,2]; Vy[11,2]; Vz[11]" />
+                <Add Vector = "Vx[12,0]; Vy[12,0]; Vz[12]" />
+                <Add Vector = "Vx[12,1]; Vy[12,1]; Vz[12]" />
+                <Add Vector = "Vx[12,2]; Vy[12,2]; Vz[12]" />
+                <Add Vector = "Vx[13,0]; Vy[13,0]; Vz[13]" />
+                <Add Vector = "Vx[13,1]; Vy[13,1]; Vz[13]" />
+                <Add Vector = "Vx[13,2]; Vy[13,2]; Vz[13]" />
+                <Add Vector = "Vx[14,0]; Vy[14,0]; Vz[14]" />
+                <Add Vector = "Vx[14,1]; Vy[14,1]; Vz[14]" />
+                <Add Vector = "Vx[14,2]; Vy[14,2]; Vz[14]" />
+                <Add Vector = "Vx[15,0]; Vy[15,0]; Vz[15]" />
+                <Add Vector = "Vx[15,1]; Vy[15,1]; Vz[15]" />
+                <Add Vector = "Vx[15,2]; Vy[15,2]; Vz[15]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite"  VertexIndexes = " 3; 0; 2;14; 9;12;21;27" />
+                <Face Color = "clRed"    VertexIndexes = " 4; 0; 3;15;10;13;22;28" />
+                <Face Color = "clBlue"   VertexIndexes = " 2; 0; 4;16; 8;11;20;26" />
+                <Face Color = "clYellow" VertexIndexes = " 7; 1; 5;19;11; 8;23;29" />
+                <Face Color = "clGreen"  VertexIndexes = " 6; 1; 7;18;13;10;25;31" />
+                <Face Color = "clOrange" VertexIndexes = " 5; 1; 6;17;12; 9;24;30" />
+
+                <Face Color = "clViolet" VertexIndexes = " 2;26;32;14" />
+                <Face Color = "clViolet" VertexIndexes = " 5;30;35;19" />
+                <Face Color = "clViolet" VertexIndexes = " 9;14;39;24" />
+                <Face Color = "clViolet" VertexIndexes = "11;19;41;20" />
+                <Face Color = "clViolet" VertexIndexes = "14;32;39" />
+                <Face Color = "clViolet" VertexIndexes = "19;35;41" />
+                <Face Color = "clViolet" VertexIndexes = "20;41;32;26" />
+                <Face Color = "clViolet" VertexIndexes = "24;39;35;30" />
+                <Face Color = "clViolet" VertexIndexes = "41;35;39;32" />
+
+                <Face Color = "clPink"   VertexIndexes = " 3;27;33;15" />
+                <Face Color = "clPink"   VertexIndexes = " 6;31;36;17" />
+                <Face Color = "clPink"   VertexIndexes = "10;15;40;25" />
+                <Face Color = "clPink"   VertexIndexes = "12;17;42;21" />
+                <Face Color = "clPink"   VertexIndexes = "15;33;40" />
+                <Face Color = "clPink"   VertexIndexes = "17;36;42" />
+                <Face Color = "clPink"   VertexIndexes = "21;42;33;27" />
+                <Face Color = "clPink"   VertexIndexes = "25;40;36;31" />
+                <Face Color = "clPink"   VertexIndexes = "42;36;40;33" />
+
+                <Face Color = "clCyan"   VertexIndexes = " 4;28;34;16" />
+                <Face Color = "clCyan"   VertexIndexes = " 7;29;37;18" />
+                <Face Color = "clCyan"   VertexIndexes = " 8;16;38;23" />
+                <Face Color = "clCyan"   VertexIndexes = "13;18;43;22" />
+                <Face Color = "clCyan"   VertexIndexes = "16;34;38" />
+                <Face Color = "clCyan"   VertexIndexes = "18;37;43" />
+                <Face Color = "clCyan"   VertexIndexes = "22;43;34;28" />
+                <Face Color = "clCyan"   VertexIndexes = "23;38;37;29" />
+                <Face Color = "clCyan"   VertexIndexes = "43;37;38;34" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split1" >
+            <Hide  Axis = "ax2" Layer = "0" />
+            <Turn  Axis = "ax1" Layer = "1" Angle = "-A1" />
+            <Split Axis = "ax2" From = "1" />
+            <Undo Repeat = "1" />
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split1" ax1 = " 0" ax2 = " 2" />
+        <ExecMacro MacroName = "Split1" ax1 = " 1" ax2 = " 0" />
+        <ExecMacro MacroName = "Split1" ax1 = " 2" ax2 = " 1" />
+        <ExecMacro MacroName = "Split1" ax1 = " 3" ax2 = " 5" />
+        <ExecMacro MacroName = "Split1" ax1 = " 4" ax2 = " 3" />
+        <ExecMacro MacroName = "Split1" ax1 = " 5" ax2 = " 4" />
+
+        <Macro Name = "Split2" >
+            <Turn  Axis = "ax1" Layer = "1" Angle = "-A2" />
+            <Hide  Axis = "ax2" Layer = "0" />
+            <Turn  Axis = "ax1" Layer = "1" Angle = "-A1" />
+            <Split Axis = "ax2" From = "1" />
+            <Undo Repeat = "2" />
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split2" ax1 = " 0" ax2 = " 2" />
+        <ExecMacro MacroName = "Split2" ax1 = " 1" ax2 = " 0" />
+        <ExecMacro MacroName = "Split2" ax1 = " 2" ax2 = " 1" />
+        <ExecMacro MacroName = "Split2" ax1 = " 3" ax2 = " 5" />
+        <ExecMacro MacroName = "Split2" ax1 = " 4" ax2 = " 3" />
+        <ExecMacro MacroName = "Split2" ax1 = " 5" ax2 = " 4" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mirror Cubes 2x2x2</Name>
+        <Menu>Other cubes\Multi-core\Mirror Cubes 2x2x2</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2517</Link>
+    </Interface>
+
+    <Script>
+        W := 0.3;
+        T := W * 5 / 6;
+        DCut := T * sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "0;Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-T;-T;-T" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "-T;-T;-T" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = "-T;-T;-T" />
+    </Axes>
+
+    <Axes TurningAngles = "0;Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = "-1; 2; 2" BaseVector = " T; T; T" />
+        <Axis NormVector = " 2;-1; 2" BaseVector = " T; T; T" />
+        <Axis NormVector = " 2; 2;-1" BaseVector = " T; T; T" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " T; T; T" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <Cut><Plane NormVector = "-1;-1;-1" NormDistance = "-DCut" /></Cut>
+        <HideAll/>
+        <Transfer Vector = "-T*2;-T*2;-T*2" />
+        <Turn NormVector = "-1;-1;-1" Angle = "Pi" />
+
+        <Script>
+            Colors[0] := 'FF810A';
+            Colors[1] := 'C80001';
+            Colors[2] := '009601';
+            Colors[3] := '0001C8';
+            Colors[4] := 'FFFFFE';
+            Colors[5] := 'FFFF01';
+        </Script>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <Cut><Plane NormVector = " 1; 1; 1" NormDistance = "-DCut" /></Cut>
+        <ShowAll/>
+        <Turn NormVector = "-1;-1;-1" Angle = "Pi" />
+        <Transfer Vector = " T; T; T" />
+    </Figure>
+</xml>

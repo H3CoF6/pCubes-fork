@@ -1,0 +1,151 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Moonshine</Name>
+        <Alias>Weird Disk 2x5</Alias>
+        <Alias>Moonspinner</Alias>
+        <Menu>Other forms\2d\Moonshine</Menu>
+        <Menu>Other forms\Sphere\Moonshine</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7022</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clGreen  := '009600';
+        clBlue   := '0000C8';
+        clBrown  := '754634';
+        clBlack  := '333333';
+
+        phi := (Sqrt(5) - 1) / 2;
+
+        K := 0.6;
+
+        C9  := K * 0.1876476951941;
+        C17 := K * 0.3099032609546;
+        C27 := K * 0.4504848759586;
+        C32 := K * 0.5014340094489;
+        C57 := K * 0.8587928937980;
+
+        D1 := C57 * phi / sqrt(2 - phi);
+        D2 := C27 + ((C57-C27) * phi - C9) / (phi + (C17-C9) / (C32-C27));
+
+        A1 := 2*Pi/5;
+        A2 := A1 * 2;
+        A3 := A1 * 3;
+    </Script>
+
+    <Axes TurningAngles = "A1" PlaneDistances = "D1" TurnAxesWithLayer = "1" FixedLayers = "0" >
+        <Axis NormVector = " 0;-1; phi" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D2" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSphere" >
+            <Script>
+                for i := 0 to 11 do
+                    Colors[i] := Color;
+            </Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlue" />
+        <SplitByAxes/>
+        <Cut  Axis = "0" To = "1" />
+        <Cut  Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A1"/>
+        <SplitByAxes/>
+        <Hide Axis = "1" Layer = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A1"/>
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+        <Turn Axis = "0" Layer = "1" Angle = "A1"/>
+        <Cut  Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A2"/>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBrown" />
+        <SplitByAxes/>
+        <Cut  Axis = "0" To = "1" />
+        <Cut  Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A3"/>
+        <SplitByAxes/>
+        <Cut  Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A1"/>
+        <Cut  Axis = "1" From = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A1"/>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clRed" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "A3"/>
+        <Cut  Axis = "1" From = "1" />
+        <Cut  Axis = "0" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A2"/>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clOrange" />
+        <SplitByAxes/>
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" To   = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clYellow" />
+        <SplitByAxes/>
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "1" From = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clGreen" />
+        <SplitByAxes/>
+        <Cut Axis = "0" From = "1" />
+        <Cut Axis = "1" From = "1" />
+        <ShowAll/>
+
+        <Macro Name = "Unbandage">
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "  Pi  "/>
+            <SplitByAxes/>
+            <Turn Axis = "0" Layer = "1" Angle = "A1"/>
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" Repeat = "12" />
+        <Undo Repeat = "24" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi"/>
+        <RemoveGrayParts/>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "clBlack" />
+        <Cut  Axis = "0" To = "1" />
+        <Cut  Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A1"/>
+        <Cut  Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A1"/>
+        <Cut  Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A1"/>
+        <Cut  Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A1"/>
+        <Cut  Axis = "1" To = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "A1"/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        // turn puzzle to user
+        <Turn NormVector = "1;0;0" Angle = "Arctan(phi)" />
+        <Turn NormVector = "0;1;0" Angle = "Pi/2+A1/4" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

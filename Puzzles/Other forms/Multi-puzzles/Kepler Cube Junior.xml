@@ -1,0 +1,129 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Kepler Cube Junior</Name>
+        <Menu>Other forms\Multi-puzzles\Kepler Cube Junior</Menu>
+        <Inventor>Katsuhiko Okamoto</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-08-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3104</Link>
+    </Interface>
+
+    <Script>
+        <!-- Octahedron colors -->
+
+        clCyan    := '00FFFF';
+        clBrown   := '800000';
+        clOlive   := '808000';
+        clLime    := '00FF00';
+        clFuchsia := 'FF00FF';
+        clPink    := 'FF69B4';
+        clCoral   := 'FF7F50';
+        clNavy    := '000080';
+
+        W := 0.5;
+        H := W * 1.35;
+        D := W / 3;
+
+        DCutE  := W * 1.178; // 5 / 3 / sqrt(2)
+        DCutC := (D + DCutE * sqrt(2)) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 0; 1" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = " H;  0;  0" />
+        <RemoveContaining Vector = "-H;  0;  0" />
+        <RemoveContaining Vector = " 0;  H;  0" />
+        <RemoveContaining Vector = " 0; -H;  0" />
+        <RemoveContaining Vector = " 0;  0;  H" />
+        <RemoveContaining Vector = " 0;  0; -H" />
+
+        <!-- cut edges -->
+
+        <Hide Axis = "0" Layer = "0" />
+        <Hide Axis = "0" Layer = "2" />
+        <Split> <Plane NormVector = "-1;  1;  0" NormDistance = "DCutE" /> </Split>
+        <Split> <Plane NormVector = "-1; -1;  0" NormDistance = "DCutE" /> </Split>
+        <Split> <Plane NormVector = " 1; -1;  0" NormDistance = "DCutE" /> </Split>
+        <Split> <Plane NormVector = " 1;  1;  0" NormDistance = "DCutE" /> </Split>
+        <ShowAll/>
+
+        <Hide Axis = "1" Layer = "0" />
+        <Hide Axis = "1" Layer = "2" />
+        <Split> <Plane NormVector = "-1;  0;  1" NormDistance = "DCutE" /> </Split>
+        <Split> <Plane NormVector = "-1;  0; -1" NormDistance = "DCutE" /> </Split>
+        <Split> <Plane NormVector = " 1;  0; -1" NormDistance = "DCutE" /> </Split>
+        <Split> <Plane NormVector = " 1;  0;  1" NormDistance = "DCutE" /> </Split>
+        <ShowAll/>
+
+        <Hide Axis = "2" Layer = "0" />
+        <Hide Axis = "2" Layer = "2" />
+        <Split> <Plane NormVector = " 0; -1;  1" NormDistance = "DCutE" /> </Split>
+        <Split> <Plane NormVector = " 0; -1; -1" NormDistance = "DCutE" /> </Split>
+        <Split> <Plane NormVector = " 0;  1; -1" NormDistance = "DCutE" /> </Split>
+        <Split> <Plane NormVector = " 0;  1;  1" NormDistance = "DCutE" /> </Split>
+        <ShowAll/>
+
+        <!-- cut corners -->
+
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <Hide Axis = "2" Layer = "1" />
+
+        <Split> <Plane NormVector = "-1; -1; -1" NormDistance = "DCutC" /> </Split>
+        <Split> <Plane NormVector = "-1; -1;  1" NormDistance = "DCutC" /> </Split>
+        <Split> <Plane NormVector = "-1;  1; -1" NormDistance = "DCutC" /> </Split>
+        <Split> <Plane NormVector = "-1;  1;  1" NormDistance = "DCutC" /> </Split>
+        <Split> <Plane NormVector = " 1; -1; -1" NormDistance = "DCutC" /> </Split>
+        <Split> <Plane NormVector = " 1; -1;  1" NormDistance = "DCutC" /> </Split>
+        <Split> <Plane NormVector = " 1;  1; -1" NormDistance = "DCutC" /> </Split>
+        <Split> <Plane NormVector = " 1;  1;  1" NormDistance = "DCutC" /> </Split>
+        <ShowAll/>
+
+        <!-- Remove Gray Parts -->
+        <RemoveContaining Vector = " D; D; D" />
+        <RemoveContaining Vector = "-D; D; D" />
+        <RemoveContaining Vector = "-D;-D; D" />
+        <RemoveContaining Vector = " D;-D; D" />
+        <RemoveContaining Vector = " D; D;-D" />
+        <RemoveContaining Vector = "-D; D;-D" />
+        <RemoveContaining Vector = "-D;-D;-D" />
+        <RemoveContaining Vector = " D;-D;-D" />
+
+        <!-- Octahedron -->
+
+        <Part>
+            <Vertices>
+                <Add Vector = "-H;  0;  0" />
+                <Add Vector = " H;  0;  0" />
+                <Add Vector = " 0; -H;  0" />
+                <Add Vector = " 0;  H;  0" />
+                <Add Vector = " 0;  0; -H" />
+                <Add Vector = " 0;  0;  H" />
+            </Vertices>
+    
+            <Faces>
+                <Face Color = "clCyan   " VertexIndexes = "0;2;5" />
+                <Face Color = "clBrown  " VertexIndexes = "5;2;1" />
+                <Face Color = "clOlive  " VertexIndexes = "5;1;3" />
+                <Face Color = "clLime   " VertexIndexes = "5;3;0" />
+                <Face Color = "clFuchsia" VertexIndexes = "4;2;0" />
+                <Face Color = "clPink   " VertexIndexes = "4;1;2" />
+                <Face Color = "clCoral  " VertexIndexes = "4;3;1" />
+                <Face Color = "clNavy   " VertexIndexes = "4;0;3" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

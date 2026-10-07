@@ -1,0 +1,150 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Time Machine 4x4x4</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Time Machine 4x4x4</Menu>
+        <Inventor>Silvestre Cruz Quiroz</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-09-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11351</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        clBlue1   := '0000C9';
+        clGreen1  := '009601';
+        clRed1    := 'C80001';
+        clOrange1 := 'FF800B';
+        clYellow1 := 'FFFF01';
+        clWhite1  := 'FFFFFE';
+
+        W := 0.4;
+
+        RC := W * 0.7;
+        WC := W * 1.3;
+        RC2 := W * 0.3;
+        WC2 := WC * 1.001;
+
+        C := 0.001;
+        DC := (-RC * C + WC) / sqrt(C^2 + 1) * 0.99;
+
+        N := 5;
+        for i := 0 to N do begin
+            x[i] := RC * cos(2*Pi / 12 / N * i);
+            y[i] := RC * sin(2*Pi / 12 / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = " Pi/2; Pi/6; Pi/2; Pi/2; Pi/2; Pi/2; Pi/6; Pi/2" PlaneDistances = "-WC;-W;-RC; 0; RC; W; WC" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Color" VertexIndexes = " i + N + 1; i + N + 2; i + 1; i" InvisibleEdges = "10" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "AddSector" >
+            <Part>
+                <Vertices Vectors = "-W ; x; y" /> 0..N
+                <Vertices Vectors = "-WC; x; y" /> N+1..2*N + 1
+                <Vertices Vectors = "-W ; 0; 0" /> 2*N + 2
+                <Vertices Vectors = "-WC; 0; 0" /> 2*N + 3
+
+                <Faces>
+                    <Face Color = "-1"     VertexIndexes = "2*N + 3; FromTo(2*N+1,N+1)" />
+                    <Face Color = "Color2" VertexIndexes = "2*N + 2; FromTo(0,N)" />
+                    <Face Color = "Color1" VertexIndexes = " N + 1; N + 2; 1; 0" InvisibleEdges = "2" />
+                    <ExecMacro MacroName = "AddFace" Color = "Color1" Repeat = "N - 2" i = "1" />
+                    <Face Color = "Color" VertexIndexes = "2 * N; 2 * N + 1; N; N - 1" InvisibleEdges = "8" />
+                    <Face VertexIndexes = "2*N + 2; 2*N + 3; N + 1; 0" />
+                    <Face VertexIndexes = "2*N + 3; 2*N + 2; N; 2 * N + 1" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "1;0;0" Angle = "-Pi/6" />
+        </Macro>
+
+        <Macro Name = "AddCircle" >
+            <ExecMacro MacroName = "AddSector" Repeat = "12" />
+            <Cut Color = "Color3" > <Plane NormVector = " 1;-C; 0" NormDistance = "-DC" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = " Pi" />
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Color1 = "Colors[0]" Color2 = "Colors[1]" Color3 = "clRed1   " />
+        <ExecMacro MacroName = "AddCircle" Color1 = "Colors[1]" Color2 = "Colors[0]" Color3 = "clOrange1" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "AddCircle" Color1 = "Colors[2]" Color2 = "Colors[3]" Color3 = "clBlue1  " />
+        <ExecMacro MacroName = "AddCircle" Color1 = "Colors[3]" Color2 = "Colors[2]" Color3 = "clGreen1 " />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "AddCircle" Color1 = "Colors[4]" Color2 = "Colors[5]" Color3 = "clYellow1" />
+        <ExecMacro MacroName = "AddCircle" Color1 = "Colors[5]" Color2 = "Colors[4]" Color3 = "clWhite1 " />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+
+        <Macro Name = "AddCircle2" >
+            <Circle Color = "Colors[i]" Radius = "RC2" Center = "-WC2;0;0" />
+            <Turn NormVector = "0;0;1" Angle = " Pi" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle2" i = "0" />
+        <ExecMacro MacroName = "AddCircle2" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "AddCircle2" />
+        <ExecMacro MacroName = "AddCircle2" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "AddCircle2" />
+        <ExecMacro MacroName = "AddCircle2" />
+        <Turn NormVector = "1;1;1" Angle = "-2*Pi/3" />
+
+
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Connect Layers = "0;2" />
+        <Connect Layers = "5;7" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_06.vec" />
+        <Texture Name = "tm_07" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_07.vec" />
+        <Texture Name = "tm_08" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_08.vec" />
+        <Texture Name = "tm_09" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_09.vec" />
+        <Texture Name = "tm_10" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_10.vec" />
+        <Texture Name = "tm_11" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_11.vec" />
+        <Texture Name = "tm_12" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_12.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 =  0,8,2, 12,8,2, 24,8,2, 36,8,2, 48,8,2, 60,8,2
+        tm_02 =  1,8,2, 13,8,2, 25,8,2, 37,8,2, 49,8,2, 61,8,2
+        tm_03 =  2,8,2, 14,8,2, 26,8,2, 38,8,2, 50,8,2, 62,8,2
+        tm_04 =  3,8,2, 15,8,2, 27,8,2, 39,8,2, 51,8,2, 63,8,2
+        tm_05 =  4,8,2, 16,8,2, 28,8,2, 40,8,2, 52,8,2, 64,8,2
+        tm_06 =  5,8,2, 17,8,2, 29,8,2, 41,8,2, 53,8,2, 65,8,2
+        tm_07 =  6,8,2, 18,8,2, 30,8,2, 42,8,2, 54,8,2, 66,8,2
+        tm_08 =  7,8,2, 19,8,2, 31,8,2, 43,8,2, 55,8,2, 67,8,2
+        tm_09 =  8,8,2, 20,8,2, 32,8,2, 44,8,2, 56,8,2, 68,8,2
+        tm_10 =  9,8,2, 21,8,2, 33,8,2, 45,8,2, 57,8,2, 69,8,2
+        tm_11 = 10,8,2, 22,8,2, 34,8,2, 46,8,2, 58,8,2, 70,8,2
+        tm_12 = 11,8,2, 23,8,2, 35,8,2, 47,8,2, 59,8,2, 71,8,2
+    </SetTextures>
+</xml>

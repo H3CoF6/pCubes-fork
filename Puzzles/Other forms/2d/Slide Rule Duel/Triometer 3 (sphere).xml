@@ -1,0 +1,99 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triometer 3 (sphere)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Triometer 3</Menu>
+        <Inventor>Douglas A. Engel</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4557</Link>
+    </Interface>
+
+    <Script>
+        K := 0.6;
+        D := K * 0.6;
+        Angle := ArcCos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-Angle;-Angle/2;0" PlaneDistances = " 0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 1; 1" MinAngles = "-Angle;-Angle" MaxAngles = "0;0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "'0033FF'" />
+        <Cut> <Plane NormVector = " 0;-1;-1" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1; 1" NormDistance = "D" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "'EE0000'" />
+        <Cut> <Plane NormVector = " 0; 1; 1" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = "-1;-1; 1" NormDistance = "D" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "'FFFF00'" />
+        <Cut> <Plane NormVector = " 0; 1; 1" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = " 1;-1; 1" NormDistance = "D" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 1;-1" NormDistance = "-D" /> </Cut>
+        <ShowAll/>
+
+        <Split> <Plane NormVector = " 1;-1; 1" NormDistance = " D" /> </Split>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi * 2 / 3" />
+        <Split> <Plane NormVector = " 1;-1; 1" NormDistance = " D" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 1" NormDistance = " 0" /> </Split>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi * 2 / 3" />
+        <Split> <Plane NormVector = " 1;-1; 1" NormDistance = " D" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 1" NormDistance = " 0" /> </Split>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi * 2 / 3" />
+
+        <Turn Axis = "0" Layer = "0" Angle = "Angle" />
+        <Hide Axis = "0" Layer = "0" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi * 2 / 3" />
+        <Split> <Plane NormVector = "-1;-1; 1" NormDistance = " D" /> </Split>
+        <Split> <Plane NormVector = " 0; 1; 1" NormDistance = " 0" /> </Split>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi * 2 / 3" />
+        <Split> <Plane NormVector = " 0; 1; 1" NormDistance = " 0" /> </Split>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi * 2 / 3" />
+        <ShowAll/>
+        <Turn Axis = "0" Layer = "0" Angle = "-Angle" />
+
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "-1" />
+        <Split> <Plane NormVector = " 0; 1; 1" NormDistance = "0" /> </Split>
+        <Cut> <Plane NormVector = " 1; 1;-1" NormDistance = "-D" /> </Cut>
+        <Hide Axis = "0" Layer = "0" />
+        <Cut> <Plane NormVector = " -1; 1;-1" NormDistance = "-D" /> </Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "0" Layer = "0" Angle = "Angle/2" />
+        <SaveSolvedState/>
+
+        <Turn NormVector = "1;0;0" Angle = " 45 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Macros>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "0" Layer = "0" Angle = "Angle / 2"/>
+            <Turn Axis = "1" Layer = "1" Angle = "2*Pi*Random"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Angle"/>
+            <Turn Axis = "1" Layer = "1" Angle = "2*Pi*Random"/>
+            <Turn Axis = "0" Layer = "0" Angle = "Angle / 2"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script> Angle := ArcCos(1/3); </Script>
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

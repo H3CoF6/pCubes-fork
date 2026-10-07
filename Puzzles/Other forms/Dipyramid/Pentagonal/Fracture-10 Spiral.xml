@@ -1,0 +1,134 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fracture-10 Spiral</Name>
+        <Menu>Other forms\Dipyramid\Pentagonal\Fracture-10 Spiral</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-06-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3221</Link>
+        <Link>https://www.youtube.com/watch?v=ksUkfFV1EdY</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := 'FF0080'; // LightViolett
+        Colors[2] := '800000'; // Brown
+        Colors[3] := 'FF6000'; // Orange
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := '0000A0'; // Blue
+        Colors[6] := '800080'; // Violett
+        Colors[7] := '2828FF'; // LightBlue
+        Colors[8] := '008000'; // Green
+        Colors[9] := '00FF00'; // LightGreen
+
+        R := 0.6;
+        H := R * (5 + sqrt(5)) / 5;
+
+        sAngle := 2 * Pi / 5;
+        H := R * sqrt((5 + 2 * sqrt(5)) / 5);
+        for i := 0 to 4 do begin
+            x[i] := R * cos(sAngle * i);
+            y[i] := R * sin(sAngle * i);
+        end;
+
+        LC := R * (3 - sqrt(5)) / 2;
+        HC := R * 0.224;
+
+        D := x[1];
+    </Script>
+
+    <Axes TurningAngles = "Pi/4" PlaneDistances = "D" FixedLayers = "0" NormVectors = "x; y; 0" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " 0; 0; H" />
+            <Vertices Vectors = " x; y; 0" />
+            <Vertices Vectors = " 0; 0;-H" />
+
+            <Vertices Vectors = " LC * cos(  Pi/5);  LC * sin(  Pi/5); HC" />
+            <Vertices Vectors = " LC * cos(3*Pi/5);  LC * sin(3*Pi/5); HC" />
+            <Vertices Vectors = " LC * cos(  Pi  );  0               ; HC" />
+            <Vertices Vectors = " LC * cos(3*Pi/5); -LC * sin(3*Pi/5); HC" />
+            <Vertices Vectors = " LC * cos(  Pi/5); -LC * sin(  Pi/5); HC" />
+
+            <Vertices Vectors = " LC * cos(  Pi/5);  LC * sin(  Pi/5);-HC" />
+            <Vertices Vectors = " LC * cos(3*Pi/5);  LC * sin(3*Pi/5);-HC" />
+            <Vertices Vectors = " LC * cos(  Pi  );  0               ;-HC" />
+            <Vertices Vectors = " LC * cos(3*Pi/5); -LC * sin(3*Pi/5);-HC" />
+            <Vertices Vectors = " LC * cos(  Pi/5); -LC * sin(  Pi/5);-HC" />
+
+            <Faces>
+<!--
+                <Face1 Color = "Colors[0]" VertexIndexes = " 0; 1; 2" />
+                <Face1 Color = "Colors[1]" VertexIndexes = " 0; 2; 3" />
+                <Face1 Color = "Colors[2]" VertexIndexes = " 0; 3; 4" />
+                <Face1 Color = "Colors[3]" VertexIndexes = " 0; 4; 5" />
+                <Face1 Color = "Colors[4]" VertexIndexes = " 0; 5; 1" />
+                <Face1 Color = "Colors[5]" VertexIndexes = " 6; 2; 1" />
+                <Face1 Color = "Colors[6]" VertexIndexes = " 6; 3; 2" />
+                <Face1 Color = "Colors[7]" VertexIndexes = " 6; 4; 3" />
+                <Face1 Color = "Colors[8]" VertexIndexes = " 6; 5; 4" />
+                <Face1 Color = "Colors[9]" VertexIndexes = " 6; 1; 5" />
+-->
+                <Face Color = "Colors[0]" VertexIndexes = " 0; 1; 7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 1; 2; 7" />
+                <Face Color = "Colors[0]" VertexIndexes = " 2; 0; 7" />
+                <Face Color = "Colors[1]" VertexIndexes = " 0; 2; 8" />
+                <Face Color = "Colors[1]" VertexIndexes = " 2; 3; 8" />
+                <Face Color = "Colors[1]" VertexIndexes = " 3; 0; 8" />
+                <Face Color = "Colors[2]" VertexIndexes = " 0; 3; 9" />
+                <Face Color = "Colors[2]" VertexIndexes = " 3; 4; 9" />
+                <Face Color = "Colors[2]" VertexIndexes = " 4; 0; 9" />
+                <Face Color = "Colors[3]" VertexIndexes = " 0; 4;10" />
+                <Face Color = "Colors[3]" VertexIndexes = " 4; 5;10" />
+                <Face Color = "Colors[3]" VertexIndexes = " 5; 0;10" />
+                <Face Color = "Colors[4]" VertexIndexes = " 0; 5;11" />
+                <Face Color = "Colors[4]" VertexIndexes = " 5; 1;11" />
+                <Face Color = "Colors[4]" VertexIndexes = " 1; 0;11" />
+
+                <Face Color = "Colors[5]" VertexIndexes = " 6; 2;12" />
+                <Face Color = "Colors[5]" VertexIndexes = " 2; 1;12" />
+                <Face Color = "Colors[5]" VertexIndexes = " 1; 6;12" />
+                <Face Color = "Colors[6]" VertexIndexes = " 6; 3;13" />
+                <Face Color = "Colors[6]" VertexIndexes = " 3; 2;13" />
+                <Face Color = "Colors[6]" VertexIndexes = " 2; 6;13" />
+                <Face Color = "Colors[7]" VertexIndexes = " 6; 4;14" />
+                <Face Color = "Colors[7]" VertexIndexes = " 4; 3;14" />
+                <Face Color = "Colors[7]" VertexIndexes = " 3; 6;14" />
+                <Face Color = "Colors[8]" VertexIndexes = " 6; 5;15" />
+                <Face Color = "Colors[8]" VertexIndexes = " 5; 4;15" />
+                <Face Color = "Colors[8]" VertexIndexes = " 4; 6;15" />
+                <Face Color = "Colors[9]" VertexIndexes = " 6; 1;16" />
+                <Face Color = "Colors[9]" VertexIndexes = " 1; 5;16" />
+                <Face Color = "Colors[9]" VertexIndexes = " 5; 6;16" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+
+        <Split><Plane NormVector = "y[0];x[0];0" /></Split>
+        <Split><Plane NormVector = "y[1];x[1];0" /></Split>
+        <Split><Plane NormVector = "y[2];x[2];0" /></Split>
+        <Split><Plane NormVector = "y[3];x[3];0" /></Split>
+        <Split><Plane NormVector = "y[4];x[4];0" /></Split>
+        <ShowAll/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "ax2" Layer = "1" Angle = "Pi / 4" />
+            <Split Axis = "ax1" From = "1" />
+            <Turn Axis = "ax2" Layer = "1" Angle = "-Pi / 2" />
+            <Split Axis = "ax1" From = "1" />
+            <Undo Repeat = "2" />
+        </Macro>
+        <ExecMacro MacroName = "Split" ax1 = "0" ax2 = "1" />
+        <ExecMacro MacroName = "Split" ax1 = "1" ax2 = "2" />
+        <ExecMacro MacroName = "Split" ax1 = "2" ax2 = "3" />
+        <ExecMacro MacroName = "Split" ax1 = "3" ax2 = "4" />
+        <ExecMacro MacroName = "Split" ax1 = "4" ax2 = "0" />
+    </Figure>
+</xml>

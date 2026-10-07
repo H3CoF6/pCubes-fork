@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cube Y</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\Cube Y</Menu>
+        <Inventor>Yuri Polanski</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-09-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5745</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        RCut := sqrt(3) / 2 - 0.05;
+        D := sqrt(3) / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = " 0;  0;  1" />
+        <Axis NormVector = " 0;  1;  0" />
+        <Axis NormVector = " 1;  0;  0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "3" From = "1" Color1 = "1FAF00" />
+        <Split Axis = "4" From = "2" Color2 = "007FFF" />
+        <Split Axis = "5" From = "1" Color1 = "7F00FF" />
+        <Split Axis = "6" From = "2" Color2 = "FFAF00" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+
+<!--        <RemoveCon2taining Vector = "0;0;0" />-->
+        <SplitB1yAxes/>
+
+
+        <!-- cut edges and vertices for better control -->
+        <Cut> <Plane NormVector = " 1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1; -1" NormDistance = "-RCut" /> </Cut>
+    </Figure>
+</xml>

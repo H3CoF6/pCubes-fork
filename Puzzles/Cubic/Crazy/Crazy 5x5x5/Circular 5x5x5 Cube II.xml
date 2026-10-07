@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circular 5x5x5 Cube II</Name>
+        <Menu>Cubic\Crazy\Crazy 5x5x5\Circular 5x5x5 Cube II</Menu>
+        <Inventor>ShengShou</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2024-03-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11487</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 5;
+        RC := D * 2.3;
+        DC := 1.002;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-W;-D*3;-D; D; D*3; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <RemoveContaining Vectors = " Cx; Cy; Cz" />
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = "Cx[i] * DC; Cy[i] * DC; Cz[i] * DC" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+
+        <SplitByAxes/>
+
+        <Connect Layers = "0;3;6" />
+    </Figure>
+</xml>

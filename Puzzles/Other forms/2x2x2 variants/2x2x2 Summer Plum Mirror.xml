@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2x2 Summer Plum Mirror</Name>
+        <Menu>Other forms\2x2x2 variants\2x2x2 Summer Plum Mirror</Menu>
+        <Inventor>Eoin Dowling</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10875</Link>
+    </Interface>
+
+    <Script>
+        clOrange := 'FF7200';
+        clPurple := '6600DB';
+
+        Colors[0] := clPurple;
+        Colors[1] := clPurple;
+        Colors[2] := clPurple;
+        Colors[3] := clPurple;
+        Colors[4] := clOrange;
+        Colors[5] := clOrange;
+
+        R := 0.5;
+        H := R;
+
+        DX := R * 0.2;
+        DY := R * 0.4;
+        Dz := R * 0.3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " DX; DY; DZ" />
+        <Cylinder Radius = "R" Color = "clPurple" Base = " 0; 0;-H" BaseColor = "clOrange" Top = " 0; 0; H" TopColor = "clOrange" />
+        <SplitByAxes/>
+        <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = "1;0;0" NormDistance = "0" /> </Split>
+        <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = "0;1;0" NormDistance = "0" /> </Split>
+        <RemoveContaining Vector = "-DX;DY;DZ" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = "-1;0;0" NormDistance = "0" /> </Cut>
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 0;1;0" NormDistance = "0" /> </Cut>
+        <ShowAll/>
+        <Transfer Vector = "-DX;-DY;-DZ" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

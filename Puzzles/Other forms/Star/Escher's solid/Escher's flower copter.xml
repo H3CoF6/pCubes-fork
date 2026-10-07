@@ -1,0 +1,112 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Escher's flower copter</Name>
+        <Menu>Other forms\Star\Escher's solid\Escher's flower copter</Menu>
+        <Inventor>Seth Holiday</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-07-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11262</Link>
+    </Interface>
+
+    <Script>
+        Color[ 0] := 'FF0000'; // Red
+        Color[ 1] := '008000'; // Green
+        Color[ 2] := '800080'; // Purple
+        Color[ 3] := 'F0F0F0'; // White
+        Color[ 4] := '0000FF'; // Blue
+        Color[ 5] := 'FF6000'; // Orange
+        Color[ 6] := 'FF69B4'; // Pink
+        Color[ 7] := '00FF00'; // Lime
+        Color[ 8] := '000080'; // Navy
+        Color[ 9] := '202020'; // Black
+        Color[10] := '00FFFF'; // Cyan
+        Color[11] := 'FFFF00'; // Yellow
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        R := W * 0.65;
+
+        D := W / sqrt(2);
+        D1 := W / 2;
+        D2 := D1 + W * 0.04; // - circle thickness
+        DC := D2 * sqrt(2);
+        D3 := W / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = " 0; Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "D" NormVectors = " Ex; Ey; Ez" />
+    <Axes TurningAngles = "0; Pi / 3" PlaneDistances = "D3" NormVectors = " Vx; Vy; Vz" />
+
+    <Figure>
+        // Circles
+
+        <Macro Name = "AddCircle">
+            <HideAll/>
+            <Cylinder Radius = "R" Color = "Color[c]" Base = "D1;0;D1" Top = "D2;0;D2" >
+                <Top Color = "Color[c]" />
+            </Cylinder>
+            <Split Color1 = "Color[c]" > <Plane NormVector = " 0;-1; 1" NormDistance = "DC" /></Split>
+            <Split Color1 = "Color[c]" > <Plane NormVector = " 0; 1; 1" NormDistance = "DC" /></Split>
+            <Split Color1 = "Color[c]" > <Plane NormVector = " 1;-1; 0" NormDistance = "DC" /></Split>
+            <Split Color1 = "Color[c]" > <Plane NormVector = " 1; 1; 0" NormDistance = "DC" /></Split>
+            <RemoveContaining Vector = "D2; 0; D2" />
+            <HideContaining Vector = "D1; R; D1" />
+            <HideContaining Vector = "D1;-R; D1" />
+            <Split Color2 = "Color[c]" > <Plane NormVector = " 0;-1; 1" NormDistance = "D" /></Split>
+            <Split Color2 = "Color[c]" > <Plane NormVector = " 0; 1; 1" NormDistance = "D" /></Split>
+            <Split Color2 = "Color[c]" > <Plane NormVector = " 1;-1; 0" NormDistance = "D" /></Split>
+            <Split Color2 = "Color[c]" > <Plane NormVector = " 1; 1; 0" NormDistance = "D" /></Split>
+            <RemoveContaining Vector = "D1; D2 * 2 - D1; D1" />
+            <RemoveContaining Vector = "D1;-D2 * 2 + D1; D1" />
+
+            <Split Color1 = "Color[c]" > <Plane NormVector = " 1; 1; 0" NormDistance = "0" /></Split>
+
+            <Turn NormVector = "0;1;0" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCircle" c = "3" />
+        <ExecMacro MacroName = "AddCircle" c = "2" />
+        <ExecMacro MacroName = "AddCircle" c = "9" />
+        <ExecMacro MacroName = "AddCircle" c = "8" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddCircle" c = "1" />
+        <ExecMacro MacroName = "AddCircle" c = "6 " />
+        <ExecMacro MacroName = "AddCircle" c = "7" />
+        <ExecMacro MacroName = "AddCircle" c = "0" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddCircle" c = "5" />
+        <ExecMacro MacroName = "AddCircle" c = "4" />
+        <ExecMacro MacroName = "AddCircle" c = "11" />
+        <ExecMacro MacroName = "AddCircle" c = "10" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+
+        <HideAll/>
+
+        // Body
+
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "SplitAxes">
+            <Split Color2 = "Color[ i]" Axis = "i" From = "1" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitAxes" i = "0" Repeat = "12" />
+
+        <Macro Name = "HideEdges">
+            <HideContaining Vector = " Ex[i] * 0.9; Ey[i] * 0.9; Ez[i] * 0.9" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideEdges" i = "0" Repeat = "12" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

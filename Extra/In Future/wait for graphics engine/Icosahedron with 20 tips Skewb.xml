@@ -1,0 +1,100 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+// non convex
+
+    <Interface>
+        <Name>Icosahedron with 20 tips Skewb</Name>
+        <Menu>Other forms\Star\Icosahedron with 20 tips Skewb</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2454</Link>
+    </Interface>
+
+    <Script>
+        R := 0.5;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+        include 'Figures\Scripts\Icosahedron_Standard_10_Colors.inc';
+
+        D := Rsin * 0;
+
+        k := 1 + 2 * sqrt(7 - 3 * sqrt(5)); // 2.0803630269509;
+        //k := R * 2.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCenter">
+            <Part>
+                <Vertices>
+                    <Add Vector = "(Vx[v0] + Vx[v1] + Vx[v2]) / 3 * k; (Vy[v0] + Vy[v1] + Vy[v2]) / 3 * k; (Vz[v0] + Vz[v1] + Vz[v2]) / 3 * k" />
+                    <Add Vector = "Vx[v0]; Vy[v0]; Vz[v0]" />
+                    <Add Vector = "Vx[v1]; Vy[v1]; Vz[v1]" />
+                    <Add Vector = "Vx[v2]; Vy[v2]; Vz[v2]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[c0]" VertexIndexes = " 0; 3; 1" />
+                    <Face Color = "Colors[c1]" VertexIndexes = " 0; 1; 2" />
+                    <Face Color = "Colors[c2]" VertexIndexes = " 0; 2; 3" />
+                    <Face                      VertexIndexes = " 3; 2; 1" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "AddCenter" v0 = " 0" v1 = " 1" v2 = " 5" c0 = "7" c1 = "8" c2 = "5" /> 0
+        <ExecMacro MacroName = "AddCenter" v0 = " 0" v1 = " 2" v2 = " 1" c0 = "6" c1 = "1" c2 = "9" /> 1
+        <ExecMacro MacroName = "AddCenter" v0 = " 0" v1 = " 3" v2 = " 2" c0 = "8" c1 = "2" c2 = "0" /> 2
+        <ExecMacro MacroName = "AddCenter" v0 = " 0" v1 = " 4" v2 = " 3" c0 = "1" c1 = "7" c2 = "4" /> 3
+        <ExecMacro MacroName = "AddCenter" v0 = " 0" v1 = " 5" v2 = " 4" c0 = "2" c1 = "6" c2 = "3" /> 4
+        <ExecMacro MacroName = "AddCenter" v0 = " 1" v1 = "10" v2 = " 5" c0 = "6" c1 = "4" c2 = "0" /> 5
+        <ExecMacro MacroName = "AddCenter" v0 = " 2" v1 = " 6" v2 = " 1" c0 = "8" c1 = "3" c2 = "4" /> 6
+        <ExecMacro MacroName = "AddCenter" v0 = " 3" v1 = " 7" v2 = " 2" c0 = "1" c1 = "5" c2 = "3" /> 7
+        <ExecMacro MacroName = "AddCenter" v0 = " 4" v1 = " 8" v2 = " 3" c0 = "2" c1 = "9" c2 = "5" /> 8
+        <ExecMacro MacroName = "AddCenter" v0 = " 5" v1 = " 9" v2 = " 4" c0 = "7" c1 = "0" c2 = "9" /> 9
+        <ExecMacro MacroName = "AddCenter" v0 = "11" v1 = " 7" v2 = " 8" c0 = "8" c1 = "7" c2 = "5" /> 10
+        <ExecMacro MacroName = "AddCenter" v0 = "11" v1 = " 8" v2 = " 9" c0 = "1" c1 = "6" c2 = "9" /> 11
+        <ExecMacro MacroName = "AddCenter" v0 = "11" v1 = " 9" v2 = "10" c0 = "2" c1 = "8" c2 = "0" /> 12
+        <ExecMacro MacroName = "AddCenter" v0 = "11" v1 = "10" v2 = " 6" c0 = "7" c1 = "1" c2 = "4" /> 13
+        <ExecMacro MacroName = "AddCenter" v0 = "11" v1 = " 6" v2 = " 7" c0 = "6" c1 = "2" c2 = "3" /> 14
+        <ExecMacro MacroName = "AddCenter" v0 = " 7" v1 = " 3" v2 = " 8" c0 = "6" c1 = "0" c2 = "4" /> 15
+        <ExecMacro MacroName = "AddCenter" v0 = " 8" v1 = " 4" v2 = " 9" c0 = "8" c1 = "4" c2 = "3" /> 16
+        <ExecMacro MacroName = "AddCenter" v0 = " 9" v1 = " 5" v2 = "10" c0 = "1" c1 = "3" c2 = "5" /> 17
+        <ExecMacro MacroName = "AddCenter" v0 = "10" v1 = " 1" v2 = " 6" c0 = "2" c1 = "5" c2 = "9" /> 18
+        <ExecMacro MacroName = "AddCenter" v0 = " 6" v1 = " 2" v2 = " 7" c0 = "7" c1 = "9" c2 = "0" /> 19
+
+        <HideAll/>
+
+<!--
+        // make gray icosahedron
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <Macro Name = "CutCenters">
+            <Cut> <Plane NormVector = "-Cx[i];-Cy[i];-Cz[i]" NormDistance = "-Rin" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutCenters" i = "0" Repeat = "20" />
+
+<!--        <SplitByAxes/>
+
+        <Macro Name = "RemoveCenters">
+            <RemoveContaining Vector = "Cx[i];Cy[i];Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCenters" i = "0" Repeat = "20" />
+-->
+
+        <ShowAll/>
+
+!--        <SplitByAxes/>-->
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

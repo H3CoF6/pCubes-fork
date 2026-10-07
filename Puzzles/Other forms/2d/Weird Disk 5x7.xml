@@ -1,0 +1,174 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Weird Disk 5x7</Name>
+        <Menu>Other forms\2d\Weird Disk 5x7</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7143</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clYellow := 'FFFF00';
+        clBlack  := '333333';
+
+        K := 1.0;
+        D1 := K * 0.945;
+        D2 := K * 0.955;
+        D3 := K * 0.9995;
+        D4 := D1 - 0.020*K;
+        D5 := D2 - 0.015*K;
+
+        ay := (cos(pi/5)*cos(2*pi/7) + cos(pi/7)*cos(2*pi/5)) / (sin(pi/5)*sin(2*pi/7) + sin(pi/7)*sin(2*pi/5));
+        ax := sin(arccos(ay));
+
+        py := sin(pi/5) * cos(pi/7) + ay * cos(pi/5) * sin(pi/7);
+        px := -ax * cos(pi/5) * sin(pi/7);
+        pz := -ax * sin(pi/5) * sin(pi/7);
+
+        c := K / 0.6 * 0.303;
+        d := K / 0.6 * 0.6;
+
+        bx := c * ax;
+        by := c * (-ay - 1);
+    </Script>
+
+    <Axes TurningAngles = "0;2*Pi/7" PlaneDistances = "D1" >
+        <Axis NormVector = "ax;-ay;0" />
+    </Axes>
+
+    <Axes TurningAngles = "0;2*Pi/5" PlaneDistances = "D2" >
+        <Axis NormVector = "0;-1;0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" W = "K*5" />
+        <SplitByAxes/>
+        <Cut Color = "clYellow" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/7"/>
+        <Cut Color = "clYellow" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/7"/>
+        <Cut Color = "clGreen" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/7"/>
+        <Cut Color = "clGreen" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/7"/>
+        <Cut Color = "clBlue" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/7"/>
+        <Cut Color = "clBlue" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/7"/>
+        <Cut Color = "clOrange" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/7"/>
+        <Turn Axis = "1" Layer = "1" Angle = "2*Pi/5"/>
+        <Cut Color = "clOrange" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        <Turn Axis = "1" Layer = "1" Angle = "2*Pi/5"/>
+        <Cut Color = "clOrange" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        <Turn Axis = "1" Layer = "1" Angle = "2*Pi/5"/>
+        <Cut Color = "clRed" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        <Turn Axis = "1" Layer = "1" Angle = "2*Pi/5"/>
+        <Cut Color = "clRed" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        <Turn Axis = "1" Layer = "1" Angle = "2*Pi/5"/>
+
+        <Hide Axis = "0" Layer = "1" />
+        <Hide Axis = "1" Layer = "1" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "Unbandage">
+            <Turn Axis = "0" Layer = "1" Angle = "2*Pi/7"/>
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "2*Pi/5"/>
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "Unbandage" Repeat = "21" />
+        <Undo Repeat = "42" />
+
+        <RemoveContaining Vector = "bx;by;0" />
+        <Turn Axis = "1" Layer = "1" Angle = "4*Pi/5"/>
+        <RemoveContaining Vector = "bx;by;0" />
+        <Turn Axis = "1" Layer = "1" Angle = "4*Pi/5"/>
+        <RemoveContaining Vector = "bx;by;0" />
+        <Turn Axis = "1" Layer = "1" Angle = "2*Pi/5"/>
+        <Turn Axis = "0" Layer = "1" Angle = "4*Pi/7"/>
+        <RemoveContaining Vector = "bx;by;0" />
+        <Turn Axis = "0" Layer = "1" Angle = "4*Pi/7"/>
+        <RemoveContaining Vector = "bx;by;0" />
+        <Turn Axis = "0" Layer = "1" Angle = "4*Pi/7"/>
+        <RemoveContaining Vector = "bx;by;0" />
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/7"/>
+
+        <RemoveContaining Vector = "d*ax;-d*ay;0" />
+        <RemoveContaining Vector = "0;-K;0" />
+        <HideAll/>
+
+        <Macro Name = "Cut">
+            <Turn NormVector = "tx;ty;0" Angle = "Ang" />
+            <Cut Color = "clBlack" > <Plane NormVector = "px;py;pz" NormDistance = "-D3" /> </Cut>
+        </Macro>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "K*2" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Cut" Repeat = "7" tx = "ax" ty = "-ay" Ang = "2*Pi/7"/>
+        <ExecMacro MacroName = "Cut" Repeat = "5" tx = "0"  ty = "-1"  Ang = "2*Pi/5"/>
+        <ExecMacro MacroName = "Unbandage" Repeat = "10" />
+        <Undo Repeat = "20" />
+
+        <HideContaining Vector = "bx;by;0" />
+        <Turn Axis = "1" Layer = "1" Angle = "4*Pi/5"/>
+        <HideContaining Vector = "bx;by;0" />
+        <Turn Axis = "1" Layer = "1" Angle = "4*Pi/5"/>
+        <HideContaining Vector = "bx;by;0" />
+        <Turn Axis = "1" Layer = "1" Angle = "2*Pi/5"/>
+        <Turn Axis = "0" Layer = "1" Angle = "4*Pi/7"/>
+        <HideContaining Vector = "bx;by;0" />
+        <Turn Axis = "0" Layer = "1" Angle = "4*Pi/7"/>
+        <HideContaining Vector = "bx;by;0" />
+        <Turn Axis = "0" Layer = "1" Angle = "4*Pi/7"/>
+        <HideContaining Vector = "bx;by;0" />
+        <Turn Axis = "0" Layer = "1" Angle = "2*Pi/7"/>
+        <HideContaining Vector = "d*ax;-d*ay;0" />
+        <HideContaining Vector = "0;-K;0" />
+
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = "  0; 1 ;0" NormDistance = "-D5" /> </Cut>
+        <Cut Color = "clBlack"     > <Plane NormVector = " ax;-ay;0" NormDistance = " D4" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "K*2" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Cut" Repeat = "7" tx = "ax" ty = "-ay" Ang = "2*Pi/7"/>
+        <ExecMacro MacroName = "Cut" Repeat = "5" tx = "0"  ty = "-1"  Ang = "2*Pi/5"/>
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " ax;-ay;0" NormDistance = " D4" /> </Cut>
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = "  0;-1 ;0" NormDistance = " D5" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "K*2" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Cut" Repeat = "7" tx = "ax" ty = "-ay" Ang = "2*Pi/7"/>
+        <ExecMacro MacroName = "Cut" Repeat = "5" tx = "0"  ty = "-1"  Ang = "2*Pi/5"/>
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = "-ax; ay;0" NormDistance = "-D4" /> </Cut>
+        <Cut Color = "clBlack"     > <Plane NormVector = "  0;-1 ;0" NormDistance = " D5" /> </Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-ArcCos(ay)/2" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

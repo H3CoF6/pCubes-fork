@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Helicopter Barrel</Name>
+        <Menu>Other forms\Cylinder\Helicopter Barrel</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2018</Link>
+    </Interface>
+
+    <Script>
+        clWhite   := 'FFFFFF';
+        clYellow  := 'FFFF00';
+        clRed     := 'EE0000';
+        clOrange  := 'FF800A';
+        clBlue    := '0033EE';
+        clGreen   := '00AA00';
+        clViolett := '8800AA';
+
+        R := 0.5;
+        H := R;
+        D := R / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Body">
+            <Cylinder Radius = "R" Color = "Color" >
+                <Base X = "0" Y = "0" Z = " H" Color = "clWhite " />
+                <Top  X = "0" Y = "0" Z = "-H" Color = "clYellow" />
+            </Cylinder>
+        </Macro>
+        <ExecMacro MacroName = "Body" Color = "clViolett"  />
+
+        <SplitByAxes/>
+
+        <Hide Axis = "1" Layer = "2" />
+        <Hide Axis = "3" Layer = "2" />
+        <Hide Axis = "0" Layer = "0" />
+        <Hide Axis = "2" Layer = "0" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <Macro Name = "Part">
+            <ExecMacro MacroName = "Body" Color = "cp" />
+            <SplitByAxes/>
+            <Hide Axis = "ax" Layer = "l" />
+            <RemoveAllVisible/>
+        </Macro>
+        <ExecMacro MacroName = "Part" cp = "clRed"    ax = "0" l = "0" />
+        <ExecMacro MacroName = "Part" cp = "clOrange" ax = "2" l = "0" />
+        <ExecMacro MacroName = "Part" cp = "clBlue"   ax = "1" l = "2" />
+        <ExecMacro MacroName = "Part" cp = "clGreen"  ax = "3" l = "2" />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

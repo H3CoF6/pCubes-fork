@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hyper Octagonal Barrel</Name>
+        <Menu>Other forms\Multi-core\Hyper Octagonal Barrel</Menu>
+        <Menu>Other forms\Prism\Octagonal Prism\Hyper Octagonal Barrel</Menu>
+        <Inventor>Fabio Causarano</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3233</Link>
+        <Link>https://youtube.com/watch?v=o2pb2rHK4yo</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=307612</Link>
+    </Interface>
+
+    <Script>
+        Colors[6] := '800080'; // Violett
+        Colors[7] := '2828FF'; // LightBlue
+        Colors[8] := '30BF30'; // Green
+        Colors[9] := 'FF0080'; // LightViolett
+
+        W := 0.5;
+        D := W / 5;
+        D2 := D * 2;
+        D3 := D * 3;
+        D4 := D * 4;
+
+        DCut1 := D * 4 * sqrt(2);
+        DCut2 := D * 3 * sqrt(2);
+
+        WX := W;
+        WY := W;
+        WZ := D3;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" BaseVector = " D2; D2; 0" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = " D2; D2; 0" />
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-D2;-D2; 0" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "-D2;-D2; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <Cut Color = "Colors[6]" ><Plane NormVector = " 1; 1; 0" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[7]" ><Plane NormVector = " 1;-1; 0" NormDistance = "-DCut2" /></Cut>
+        <Cut Color = "Colors[8]" ><Plane NormVector = "-1; 1; 0" NormDistance = "-DCut2" /></Cut>
+        <Cut Color = "Colors[9]" ><Plane NormVector = "-1;-1; 0" NormDistance = "-DCut1" /></Cut>
+
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Split>
+
+        <!-- glue some parts -->
+
+        <HideAll/>
+
+        <Script>
+            WS := D * 0.4;
+            WX := WS;
+            WY := WS;
+            WZ := WS;
+            for i := 0 to 5 do
+                Colors[i] := -2;
+        </Script>
+
+        <Macro Name = "AddGlues" >
+            <LoadFrom File = "Figures\Cuboid.xml" DWZ = "-D2" />
+            <LoadFrom File = "Figures\Cuboid.xml" DWZ = " 0 " />
+            <LoadFrom File = "Figures\Cuboid.xml" DWZ = " D2" />
+        </Macro>
+        <ExecMacro MacroName = "AddGlues" DWX = " D2" DWY = "-D " />
+        <ExecMacro MacroName = "AddGlues" DWX = " D4" DWY = "-D " />
+        <ExecMacro MacroName = "AddGlues" DWX = " D " DWY = "-D4" />
+        <ExecMacro MacroName = "AddGlues" DWX = "-D2" DWY = " D " />
+        <ExecMacro MacroName = "AddGlues" DWX = "-D4" DWY = " D " />
+        <ExecMacro MacroName = "AddGlues" DWX = "-D " DWY = " D4" />
+        <InvertVisibility/>
+    </Figure>
+</xml>

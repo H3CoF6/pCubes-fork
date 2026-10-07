@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Gareza</Name>
+        <Menu>Cubic\Multi-core\Gareza</Menu>
+        <Inventor>Andrey Yerashkevich</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-08-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5036</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 4;
+        D2 := D * 2;
+        D3 := D * 3;
+        A := Pi / 2;
+    </Script>
+ 
+    <Axes TurningAngles = "0; A" PlaneDistances = "D" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-D; D;-D" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = "-D; D;-D" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = "-D; D;-D" />
+
+        <Axis NormVector = " 1; 0; 0" BaseVector = " D;-D; D" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = " D;-D; D" />
+        <Axis NormVector = " 0; 0; 1" BaseVector = " D;-D; D" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+
+        <HideContaining Vector = " 0; 0; 0" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D3" WY = "D3" WZ = "D3" DWX = " D" DWY = "-D" DWZ = " D" />
+        
+        <SplitByAxes/>
+        <ShowAll/>
+
+        <Split><Plane NormVector = "1;0;0"/></Split>
+        <Split><Plane NormVector = "0;1;0"/></Split>
+        <Split><Plane NormVector = "0;0;1"/></Split>
+
+        <RemoveContaining Vector = "0; 0; 0" />
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "D2" />
+    </Figure>
+</xml>

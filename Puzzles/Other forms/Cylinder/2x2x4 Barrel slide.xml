@@ -1,0 +1,148 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2x4 Barrel slide</Name>
+        <Menu>Other forms\Cylinder\2x2x4 Barrel slide</Menu>
+        <Inventor>Carlos Ramírez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-12-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9473</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'FFFFFF';
+        clGreen  := '009600';
+        clYellow := 'FFFF00';
+        clBlue   := '0000C8';
+        clArrow  := '000000';
+
+        Colors[0] := clWhite;
+        Colors[1] := clGreen;
+        Colors[2] := clYellow;
+        Colors[3] := clBlue;
+
+        W := 0.5;
+
+        R := W;
+        H := W;
+        D := H / 2;
+        N := 48;
+        M := N;
+        for i := 0 to M - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', sProfile);
+          if p = 0 then begin
+            substr := sProfile;
+            sProfile := '';
+          end else begin
+            substr := copy(sProfile, 1, p-1);
+            Delete(sProfile, 1, p);
+          end;
+          Result := StrToInt(substr);
+        end;
+
+//Size 85x85
+//Polygon -39,-2, 31,-2, 11,-22, 14,-25, 39,0, 14,25, 11,22, 31,2, -39,2
+        // Arrow
+        sProfile := '-39,-2, 31,-2, 11,-22, 14,-25, 39,0, 14,25, 11,22, 31,2, -39,2';
+        ProfileSize := 85;
+        pCount := 0;
+        while Length(sProfile) > 0 do begin
+          px[pCount] := (GetInt / ProfileSize * R)*0.3;
+          pz[pCount] := (GetInt / ProfileSize * R)*0.3 + D/2;
+          Inc(pCount);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2; Pi / 6; Pi / 6; Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "Pi/4" />
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " x; y; H" /> 0     M - 1
+            <Vertices Vectors = " x; y;-H" /> M     2 * M - 1
+            <Vertices Vectors = " 0; 0; H" /> 2 * M
+            <Vertices Vectors = " 0; 0;-H" /> 2 * M + 1
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "   N/4; 2*M; FromTo(    0,   N/4 - 1)" InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = "   N/2; 2*M; FromTo(  N/4,   N/2 - 1)" InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = " 3*N/4; 2*M; FromTo(  N/2, 3*N/4 - 1)" InvisibleEdges = "3" />
+                <Face Color = "Colors[3]" VertexIndexes = "0; 2*M;      FromTo(3*N/4,   N   - 1)" InvisibleEdges = "3" />
+                <ExecMacro MacroName = "AddFace" i = "0" c = "0" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"         c = "1" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"         c = "2" Repeat = "N/4" />
+                <ExecMacro MacroName = "AddFace"         c = "3" Repeat = "N/4" />
+                <Face Color = "Colors[3]" VertexIndexes = "7*N/4; 2 * M + 1; N; FromTo(2 * N - 1, 7*N/4 + 1)" InvisibleEdges = "3" />
+                <Face Color = "Colors[2]" VertexIndexes = "6*N/4; 2 * M + 1;    FromTo(    7*N/4, 6*N/4 + 1)" InvisibleEdges = "3" />
+                <Face Color = "Colors[1]" VertexIndexes = "5*N/4; 2 * M + 1;    FromTo(    6*N/4, 5*N/4 + 1)" InvisibleEdges = "3" />
+                <Face Color = "Colors[0]" VertexIndexes = "4*N/4; 2 * M + 1;    FromTo(    5*N/4, 4*N/4 + 1)" InvisibleEdges = "3" />
+            </Faces>
+        </Part>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+
+        <Turn Axis = "2" Layers = "1;2" Angle = "Pi/6" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Turn Axis = "2" Layers = "1;2" Angle = "Pi/6" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Undo Repeat = "2"  />
+
+        <Macro Name = "AddArrow" >
+            <Part>
+                <Vertices Vectors = "px; -W*1.01; pz" />
+                <Faces>
+                    <Face Color = "clArrow" VertexIndexes = "FromTo(0,pCount - 1)" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "Pi/6" />
+        </Macro>
+        <Turn NormVector = "0;0;1" Angle = "Pi/12" />
+        <ExecMacro MacroName = "AddArrow" Repeat = "12" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddArrow" Repeat = "12" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <Turn NormVector = "0;0;1" Angle = "-Pi/12" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

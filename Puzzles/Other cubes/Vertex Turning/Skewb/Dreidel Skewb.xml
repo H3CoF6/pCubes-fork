@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dreidel Skewb</Name>
+        <Menu>Other cubes\Vertex Turning\Skewb\Dreidel Skewb</Menu>
+        <Inventor>Eric Vergo</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2534</Link>
+        <Added>2017-08-04</Added>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        W := 0.5;
+
+        E := sqrt(3) / 12;
+
+        RCut := sqrt(3) / 2 - 0.04;
+        RCu2 := sqrt(2) / 2 - 0.01;
+
+        A := 0.5;
+        B := 0.05;
+        C := 0.45;
+        D := 0.25;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-E; E" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = " A; A; 0" />
+        <HideContaining Vector = "-A; A; 0" />
+        <HideContaining Vector = " A;-A; 0" />
+        <HideContaining Vector = "-A;-A; 0" />
+        <HideContaining Vector = " 0; A; A" />
+        <HideContaining Vector = " 0; A;-A" />
+        <HideContaining Vector = " 0;-A; A" />
+        <HideContaining Vector = " 0;-A;-A" />
+        <HideContaining Vector = " A; 0; A" />
+        <HideContaining Vector = "-A; 0; A" />
+        <HideContaining Vector = " A; 0;-A" />
+        <HideContaining Vector = "-A; 0;-A" />
+
+        <Cut Color = "clOrange" > <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clRed   " > <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clWhite " > <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+
+        <ShowAll/>
+
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-W" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-W" /> </Cut>
+
+        <!-- cut edges and vertices for better control -->
+        <Cut> <Plane NormVector = " 1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1; -1" NormDistance = "-RCut" /> </Cut>
+
+        <Cut> <Plane NormVector = " 1;  1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  0;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  0; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  1;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  1; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1; -1" NormDistance = "-RCu2" /> </Cut>
+    </Figure>
+</xml>

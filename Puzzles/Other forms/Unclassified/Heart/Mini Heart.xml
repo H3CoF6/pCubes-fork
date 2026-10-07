@@ -1,0 +1,106 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mini Heart</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Mini Heart</Menu>
+        <Menu>Other forms\2x2x2 variants\Mini Heart</Menu>
+        <Menu>Other forms\Unclassified\Heart\Mini Heart</Menu>
+        <Inventor>Joachim Solborg</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-04-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9113</Link>
+    </Interface>
+
+    <Script>
+        R1 := 0.45;
+        R2 := 0.35;
+        H1 := R1 * sqrt(6) / 2;
+        H2 := R1 * sqrt(10) / 2;
+
+        for i := 0 to 5 do begin
+            A := Pi / 3 * i;
+            x1[i] := R1 * cos(A);
+            y1[i] := R1 * sin(A);
+            x2[i] := R2 * cos(A);
+            y2[i] := R2 * sin(A);
+        end;
+
+        for i := 0 to 2 do begin
+            A := 2 * Pi / 3 * i + Pi / 6;
+            nx[i] := cos(A);
+            ny[i] := sin(A);
+        end;
+        nz := 1 / sqrt(2);
+
+        clPink1 := 'FFCAE6';
+        clPink2 := 'FC4FB9';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" NormVectors = "nx; ny; nz" TurnAxesWithLayer = "1" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x1; y1; H1" />
+            <Vertices Vectors = "x1; y1;-H1" />
+            <Vertices Vectors = "x2; y2; H2" />
+            <Vertices Vectors = "x2; y2;-H2" />
+            <Vertices Vectors = " 0;  0; H2" />
+            <Vertices Vectors = " 0;  0;-H2" />
+            <Faces>
+                <Face Color = "clPink1" VertexIndexes = " 1; 0; 6; 7" />
+                <Face Color = "clPink2" VertexIndexes = " 2; 1; 7; 8" />
+                <Face Color = "clPink1" VertexIndexes = " 3; 2; 8; 9" />
+                <Face Color = "clPink2" VertexIndexes = " 4; 3; 9;10" />
+                <Face Color = "clPink1" VertexIndexes = " 5; 4;10;11" />
+                <Face Color = "clPink2" VertexIndexes = " 0; 5;11; 6" />
+
+                <Face Color = "clPink2" VertexIndexes = "13;12; 0; 1" />
+                <Face Color = "clPink1" VertexIndexes = "14;13; 1; 2" />
+                <Face Color = "clPink2" VertexIndexes = "15;14; 2; 3" />
+                <Face Color = "clPink1" VertexIndexes = "16;15; 3; 4" />
+                <Face Color = "clPink2" VertexIndexes = "17;16; 4; 5" />
+                <Face Color = "clPink1" VertexIndexes = "12;17; 5; 0" />
+
+                <Face Color = "clPink2" VertexIndexes = " 7; 6;18;19" />
+                <Face Color = "clPink1" VertexIndexes = " 8; 7;19;20" />
+                <Face Color = "clPink2" VertexIndexes = " 9; 8;20;21" />
+                <Face Color = "clPink1" VertexIndexes = "10; 9;21;22" />
+                <Face Color = "clPink2" VertexIndexes = "11;10;22;23" />
+                <Face Color = "clPink1" VertexIndexes = " 6;11;23;18" />
+
+                <Face Color = "clPink1" VertexIndexes = "24;16;17" InvisibleEdges = "5"/>
+                <Face Color = "clPink2" VertexIndexes = "24;15;16" InvisibleEdges = "5"/>
+                <Face Color = "clPink1" VertexIndexes = "24;14;15" InvisibleEdges = "5"/>
+                <Face Color = "clPink2" VertexIndexes = "24;13;14" InvisibleEdges = "5"/>
+                <Face Color = "clPink1" VertexIndexes = "24;12;13" InvisibleEdges = "5"/>
+                <Face Color = "clPink2" VertexIndexes = "24;17;12" InvisibleEdges = "5"/>
+
+                <Face Color = "clPink1" VertexIndexes = "23;22;25" InvisibleEdges = "6"/>
+                <Face Color = "clPink2" VertexIndexes = "22;21;25" InvisibleEdges = "6"/>
+                <Face Color = "clPink1" VertexIndexes = "21;20;25" InvisibleEdges = "6"/>
+                <Face Color = "clPink2" VertexIndexes = "20;19;25" InvisibleEdges = "6"/>
+                <Face Color = "clPink1" VertexIndexes = "19;18;25" InvisibleEdges = "6"/>
+                <Face Color = "clPink2" VertexIndexes = "18;23;25" InvisibleEdges = "6"/>
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+        <Turn Angle="Pi" Axis="1" Layer="0"/>
+        <SaveSolvedState/>
+        <Turn Angle="Pi" Axis="1" Layer="0"/>
+        <Turn Angle="Pi" Axis="2" Layer="0"/>
+        <SaveSolvedState/>
+        <Turn Angle="Pi" Axis="2" Layer="0"/>
+        <Turn Angle="Pi" Axis="0" Layer="0"/>
+        <SaveSolvedState/>
+
+        <Turn NormVector = "-1; 0; 0" Angle = "Arctan(sqrt(2))" />
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/4" />
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi/4" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

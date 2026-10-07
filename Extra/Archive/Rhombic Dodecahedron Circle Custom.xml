@@ -1,0 +1,112 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhombic Dodecahedron Circle Custom</Name>
+        <Menu>Other forms\Catalan solids\Rhombic Dodecahedron\Face Turning\Rhombic Dodecahedron Circle Custom</Menu>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Programmer>Skallos</Programmer>
+    </Interface>
+
+    <Script>
+		F1  := 0;
+		F2  := 0;
+		F3  := 0;
+		F4  := 0;
+		F5  := 0;
+		F6  := 0;
+		F7  := 0;
+		F8  := 0;
+		F9  := 0;
+		F10 := 0;
+		F11 := 0;
+		F12 := 0;
+		
+		RequestNumbers('Enter circle type', 'Blue:', 'Red:', 'White:',  F1, F2, F3);
+		RequestNumbers('Enter circle type', 'Lime:', 'Beige:', 'Violet:',  F4, F5, F6);
+		RequestNumbers('Enter circle type', 'Olive:', 'Purple:', 'Yellow:',  F7, F8, F9);
+		RequestNumbers('Enter circle type', 'Green:', 'Navy:', 'Orange:',  F10, F11, F12);
+		
+		F1  := Max(Min(F1 , 1), 0);
+		F2  := Max(Min(F2 , 1), 0);
+		F3  := Max(Min(F3 , 1), 0);
+		F4  := Max(Min(F4 , 1), 0);
+		F5  := Max(Min(F5 , 1), 0);
+		F6  := Max(Min(F6 , 1), 0);
+		F7  := Max(Min(F7 , 1), 0);
+		F8  := Max(Min(F8 , 1), 0);
+		F9  := Max(Min(F9 , 1), 0);
+		F10 := Max(Min(F10, 1), 0);
+		F11 := Max(Min(F11, 1), 0);
+		F12 := Max(Min(F12, 1), 0);
+		
+        R := 0.7;
+        D1 := R * sqrt(2) / 2;
+        D2 := R * sqrt(2) / 3;
+        D3 := R / 2;
+
+        Delta := 0.002;
+        RC := 0.24;
+        L := D3 + delta;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi; 0; Pi; 0" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D1; -D2; D2; D1">
+        <Axis NormVector = "1;  1;  0" />
+        <Axis NormVector = "1; -1;  0" />
+        <Axis NormVector = "1;  0;  1" />
+        <Axis NormVector = "1;  0; -1" />
+        <Axis NormVector = "0;  1;  1" />
+        <Axis NormVector = "0;  1; -1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+
+        <Circle Radius = "RC" Color = "FF0080" > <Center X = " L" Y = " L" Z = " 0" /> </Circle>
+        <Circle Radius = "RC" Color = "BF8040" > <Center X = " L" Y = "-L" Z = " 0" /> </Circle>
+        <Circle Radius = "RC" Color = "808000" > <Center X = "-L" Y = " L" Z = " 0" /> </Circle>
+        <Circle Radius = "RC" Color = "800040" > <Center X = "-L" Y = "-L" Z = " 0" /> </Circle>
+        <Circle Radius = "RC" Color = "FFFFFF" > <Center X = " 0" Y = " L" Z = " L" /> </Circle>
+        <Circle Radius = "RC" Color = "000078" > <Center X = " 0" Y = " L" Z = "-L" /> </Circle>
+        <Circle Radius = "RC" Color = "0000D8" > <Center X = " 0" Y = "-L" Z = " L" /> </Circle>
+        <Circle Radius = "RC" Color = "FFFF00" > <Center X = " 0" Y = "-L" Z = "-L" /> </Circle>
+        <Circle Radius = "RC" Color = "C80000" > <Center X = " L" Y = " 0" Z = " L" /> </Circle>
+        <Circle Radius = "RC" Color = "005600" > <Center X = " L" Y = " 0" Z = "-L" /> </Circle>
+        <Circle Radius = "RC" Color = "00A600" > <Center X = "-L" Y = " 0" Z = " L" /> </Circle>
+        <Circle Radius = "RC" Color = "FF800A" > <Center X = "-L" Y = " 0" Z = "-L" /> </Circle>
+
+        <SplitByAxes/>
+    </Figure>
+	
+	<Textures>
+        <Texture Name = "Star" File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Crazy\Star.vec" />
+    </Textures>
+	
+	<SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        if F1  = 0 then
+		  Star = 63,0,0;
+		if F2  = 0 then
+		  Star = 123,0,0;
+		if F3  = 0 then
+		  Star = 61,0,0;
+		if F4  = 0 then
+		  Star = 117,0,0;
+		if F5  = 0 then
+		  Star = 95,0,0;
+		if F6  = 0 then
+		  Star = 180,0,0;
+		if F7  = 0 then
+		  Star = 178,0,0;
+		if F8  = 0 then
+		  Star = 4,0,0;
+		if F9  = 0 then
+		  Star = 90,0,0;
+		if F10 = 0 then
+		  Star = 164,0,0;
+		if F11 = 0 then
+		  Star = 88,0,0;
+		if F12 = 0 then
+		  Star = 159,0,0;
+    </SetTextures>
+</xml>

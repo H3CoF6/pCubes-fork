@@ -1,0 +1,259 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Puzzler - Kangoeroe</Name>
+        <Menu>Other forms\2d\Puzzler\Puzzler - Kangoeroe</Menu>
+        <Inventor>Douglas A. Engel</Inventor>
+        <Programmer>xchemist + Skallos</Programmer>
+        <Added>2023-02-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4035</Link>
+    </Interface>
+
+    <Script>
+        clRed         := 'FF0000';
+        clYellow      := 'FFFF00';
+        clBlue        := '0000FF';
+
+        clLeftCenter  := clRed;
+        clRightCenter := clBlue;
+
+<!--
+      1     3
+   0     2     4
+
+   5     7     9
+      6     8
+-->
+        clDots[ 0] := clRed;
+        clDots[ 1] := clRed;
+        clDots[ 2] := clRed;
+        clDots[ 3] := clBlue;
+        clDots[ 4] := clBlue;
+        clDots[ 5] := clRed;
+        clDots[ 6] := clRed;
+        clDots[ 7] := clBlue;
+        clDots[ 8] := clBlue;
+        clDots[ 9] := clBlue;
+
+<!--
+    0   1   2   3
+  4       5       6
+    7   8   9   10
+-->
+        Colors[0] := clRed;
+        Colors[1] := clRed;
+        Colors[2] := clBlue;
+        Colors[3] := clBlue;
+        Colors[4] := clRed;
+        Colors[5] := clYellow;
+        Colors[6] := clBlue;
+        Colors[7] := clRed;
+        Colors[8] := clRed;
+        Colors[9] := clBlue;
+        Colors[10] := clBlue;
+
+        <!-- variables -->
+        AxesAngle := 0.3;
+        K := 1.2;  // Scale
+        D := 0.8 * K;
+        RCut := 0.88 * K;
+        RCu2 := 0.5 * K;
+        RCu3 := 0.5 * K;
+        WBase := 0.1 * K;
+
+        DY := 0.6 * K;
+
+        // Rotate p around normalized v
+        procedure RotatePoint(Xp, Yp, Zp, Xv, Yv, Zv, Angle);
+        begin
+            ca := Cos(Angle);
+            sa := Sin(Angle);
+            c2 := 1 - ca;
+
+            px[i] := Xp * (Xv * c2 * Xv + ca) +
+                     Yp * (Yv * c2 * Xv - sa * Zv) +
+                     Zp * (Zv * c2 * Xv + sa * Yv);
+
+            py[i] := Xp * (Xv * c2 * Yv + sa * Zv) +
+                     Yp * (Yv * c2 * Yv + ca) +
+                     Zp * (Zv * c2 * Yv - sa * Xv);
+
+            pz[i] := Xp * (Xv * c2 * Zv - sa * Yv) +
+                     Yp * (Yv * c2 * Zv + sa * Xv) +
+                     Zp * (Zv * c2 * Zv + ca);
+            Inc(i);
+        end;
+
+        cs := cos(AxesAngle);
+        ss := sin(AxesAngle);
+
+        H := D / cs;
+
+        z := (2 * RCut - H * (cs^2 + 1)) / sqrt(3) / ss;
+        Ex := cs * (z * sqrt(3) - H * ss) / 2;
+        Ez := H * sqrt(3) / 2 * ss - z / 2;
+
+        // circle
+        cy := (RCut + Ez * ss / sqrt(3)) / (1 + ss^2 / 3);
+        cz := cy * ss / sqrt(3);
+        RC := sqrt(Ex^2 + (cy - RCut)^2 + (cz - Ez)^2) / 2.1;
+
+        i := 0;
+        RotatePoint(0, -H, -H *  ss / sqrt(3), ss, -cs, 0, Pi/3 * 0);
+        RotatePoint(0, -H, -H *  ss / sqrt(3), ss, -cs, 0, Pi/3 * 1);
+        RotatePoint(0, -H, -H *  ss / sqrt(3), ss, -cs, 0, Pi/3 * 2);
+        RotatePoint(0, -H, -H *  ss / sqrt(3), ss, -cs, 0, Pi/3 * 3);
+        RotatePoint(0, -H, -H *  ss / sqrt(3), ss, -cs, 0, Pi/3 * 4);
+        RotatePoint(0, -H, -H *  ss / sqrt(3), ss, -cs, 0, Pi/3 * 5);
+        RotatePoint(Ex, -RCut,  Ez, ss, -cs, 0, Pi / 3 * 0);
+        RotatePoint(Ex, -RCut, -Ez, ss, -cs, 0, Pi / 3 * 0);
+        RotatePoint(Ex, -RCut,  Ez, ss, -cs, 0, Pi / 3 * 1);
+        RotatePoint(Ex, -RCut, -Ez, ss, -cs, 0, Pi / 3 * 1);
+        RotatePoint(Ex, -RCut,  Ez, ss, -cs, 0, Pi / 3 * 2);
+        RotatePoint(Ex, -RCut, -Ez, ss, -cs, 0, Pi / 3 * 2);
+        RotatePoint(Ex, -RCut,  Ez, ss, -cs, 0, Pi / 3 * 3);
+        RotatePoint(Ex, -RCut, -Ez, ss, -cs, 0, Pi / 3 * 3);
+        RotatePoint(Ex, -RCut,  Ez, ss, -cs, 0, Pi / 3 * 4);
+        RotatePoint(Ex, -RCut, -Ez, ss, -cs, 0, Pi / 3 * 4);
+        RotatePoint(Ex, -RCut,  Ez, ss, -cs, 0, Pi / 3 * 5);
+        RotatePoint(Ex, -RCut, -Ez, ss, -cs, 0, Pi / 3 * 5);
+
+        for i := 0 to 17 do
+            py[i] := py[i] + DY;
+    </Script>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " ss;-cs; 0" BaseVector = "0; DY; 0" />
+        <Axis NormVector = "-ss;-cs; 0" BaseVector = "0; DY; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "2" Color = "-1" />
+        <Cut><Plane NormVector = "0; 1; 0" NormDistance = "-RCu2 + DY" /></Cut>
+        <Cut><Plane NormVector = "0;-1; 0" NormDistance = " RCu2 - WBase - DY" /></Cut>
+        <Cut><Plane NormVector = "0; 0; 1" NormDistance = "-RCu3" /></Cut>
+        <Cut><Plane NormVector = "0; 0;-1" NormDistance = "-RCu3" /></Cut>
+        <Cut><Plane NormVector = " sqrt(3); 0; 1" NormDistance = "-RCu3 * 3 / 2" /></Cut>
+        <Cut><Plane NormVector = " sqrt(3); 0;-1" NormDistance = "-RCu3 * 3 / 2" /></Cut>
+        <Cut><Plane NormVector = "-sqrt(3); 0;-1" NormDistance = "-RCu3 * 3 / 2" /></Cut>
+        <Cut><Plane NormVector = "-sqrt(3); 0; 1" NormDistance = "-RCu3 * 3 / 2" /></Cut>
+
+        <Macro Name = "FormCenter" >
+            <Part>
+                <Vertices Vectors = "px; py; pz" />
+                <Faces>
+                    <Face VertexIndexes = "5;4;3;2;1;0" InvisibleEdges = "63" />
+                    <Face Color = "Color" VertexIndexes = "6;7;8;9;10;11;12;13;14;15;16;17" />
+                    <Face VertexIndexes = " 0; 1; 9; 8" InvisibleEdges = "11" />
+                    <Face VertexIndexes = " 1; 2;11;10" InvisibleEdges = "11" />
+                    <Face VertexIndexes = " 2; 3;13;12" InvisibleEdges = "11" />
+                    <Face VertexIndexes = " 3; 4;15;14" InvisibleEdges = "11" />
+                    <Face VertexIndexes = " 4; 5;17;16" InvisibleEdges = "11" />
+                    <Face VertexIndexes = " 5; 0; 7; 6" InvisibleEdges = "11" />
+                    <Face VertexIndexes = " 0; 8; 7" InvisibleEdges = "5" />
+                    <Face VertexIndexes = " 1;10; 9" InvisibleEdges = "5" />
+                    <Face VertexIndexes = " 2;12;11" InvisibleEdges = "5" />
+                    <Face VertexIndexes = " 3;14;13" InvisibleEdges = "5" />
+                    <Face VertexIndexes = " 4;16;15" InvisibleEdges = "5" />
+                    <Face VertexIndexes = " 5; 6;17" InvisibleEdges = "5" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "FormCenter" Color = "clRightCenter" />
+
+        <Script>
+            for i := 0 to 17 do begin
+                px[i] := -px[i];
+                pz[i] := -pz[i];
+            end;
+        </Script>
+        <ExecMacro MacroName = "FormCenter" Color = "clLeftCenter" />
+
+        <Macro Name = "FormCubie" >
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi / 3 * lr" />
+            <Turn Axis = "0" Layer = "1" Angle = "-Pi / 3 * rr" />
+            <Part>
+                <Vertices>
+                    <Add Vector = "-Ex; -RCut + DY; -Ez" />
+                    <Add Vector = " Ex; -RCut + DY; -Ez" />
+                    <Add Vector = " Ex; -RCut + DY;  Ez" />
+                    <Add Vector = "-Ex; -RCut + DY;  Ez" />
+                    <Add Vector = "0; -H + DY; -H *  ss / sqrt(3)" />
+                    <Add Vector = "0; -H + DY;  H *  ss / sqrt(3)" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "Colors[ci]" VertexIndexes = "0;1;2;3" />
+                    <Face VertexIndexes = "1;0;4" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "3;2;5" InvisibleEdges = "6" />
+                    <Face VertexIndexes = "0;3;5;4" InvisibleEdges = "14" />
+                    <Face VertexIndexes = "2;1;4;5" InvisibleEdges = "14 " />
+                </Faces>
+            </Part>
+            <Turn Axis = "0" Layer = "1" Angle = " Pi / 3 * rr" />
+            <Turn Axis = "1" Layer = "1" Angle = " Pi / 3 * lr" />
+            <Script> Inc(ci); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "FormCubie" lr = "2" rr = "0" ci = "0" />
+        <ExecMacro MacroName = "FormCubie" lr = "1" rr = "0" />
+        <ExecMacro MacroName = "FormCubie" lr = "0" rr = "5" />
+        <ExecMacro MacroName = "FormCubie" lr = "0" rr = "4" />
+        <ExecMacro MacroName = "FormCubie" lr = "3" rr = "0" />
+        <ExecMacro MacroName = "FormCubie" lr = "0" rr = "0" />
+        <ExecMacro MacroName = "FormCubie" lr = "0" rr = "3" />
+        <ExecMacro MacroName = "FormCubie" lr = "4" rr = "0" />
+        <ExecMacro MacroName = "FormCubie" lr = "5" rr = "0" />
+        <ExecMacro MacroName = "FormCubie" lr = "0" rr = "1" />
+        <ExecMacro MacroName = "FormCubie" lr = "0" rr = "2" />
+
+        <Macro Name = "FormCircle" >
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi / 3 * lr" />
+            <Turn Axis = "0" Layer = "1" Angle = "-Pi / 3 * rr" />
+            <Circle Color = "clDots[ci]" Radius = "RC" Center = "0; -cy + DY; cz" Base = "0;DY;0" />
+            <Turn Axis = "0" Layer = "1" Angle = " Pi / 3 * rr" />
+            <Turn Axis = "1" Layer = "1" Angle = " Pi / 3 * lr" />
+            <Script> Inc(ci); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "FormCircle" lr = "2" rr = "0" ci = "0" />
+        <ExecMacro MacroName = "FormCircle" lr = "1" rr = "0" />
+        <ExecMacro MacroName = "FormCircle" lr = "0" rr = "0" />
+        <ExecMacro MacroName = "FormCircle" lr = "0" rr = "5" />
+        <ExecMacro MacroName = "FormCircle" lr = "0" rr = "4" />
+        <ExecMacro MacroName = "FormCircle" lr = "3" rr = "0" />
+        <ExecMacro MacroName = "FormCircle" lr = "4" rr = "0" />
+        <ExecMacro MacroName = "FormCircle" lr = "0" rr = "1" />
+        <ExecMacro MacroName = "FormCircle" lr = "0" rr = "2" />
+        <ExecMacro MacroName = "FormCircle" lr = "0" rr = "3" />
+
+        <SaveSolvedState/>
+
+		<Turn Axis = "1" Layers = "1" Angle = " Pi        " />
+        <Turn Axis = "0" Layers = "1" Angle = " Pi * 2 / 3" />
+        <Turn Axis = "1" Layers = "1" Angle = "-Pi        " />
+        <Turn Axis = "0" Layers = "1" Angle = "-Pi / 3    " />
+        <Turn Axis = "1" Layers = "1" Angle = " Pi / 3    " />
+        <Turn Axis = "0" Layers = "1" Angle = " Pi / 3    " />
+        <Turn Axis = "1" Layers = "1" Angle = "-Pi / 3    " />
+        <Turn Axis = "0" Layers = "1" Angle = "-Pi / 3    " />
+        <Turn Axis = "1" Layers = "1" Angle = " Pi / 3    " />
+        <Turn Axis = "0" Layers = "1" Angle = " Pi / 3    " />
+        <Turn Axis = "1" Layers = "1" Angle = "-Pi / 3    " />
+        <Turn Axis = "0" Layers = "1" Angle = "-Pi / 3    " />
+        <Turn Axis = "1" Layers = "1" Angle = " Pi / 3    " />
+        <Turn Axis = "0" Layers = "1" Angle = " Pi / 3    " />
+        <Turn Axis = "1" Layers = "1" Angle = "-Pi / 3    " />
+        <Turn Axis = "0" Layers = "1" Angle = "-Pi * 2 / 3" />
+        <Turn Axis = "1" Layers = "1" Angle = "-Pi        " />
+        <Turn Axis = "0" Layers = "1" Angle = " Pi * 2 / 3" />
+
+        <SaveSolvedState/>
+        <Undo Repeat = "18" />
+
+        <Turn NormVector = "1;0;0" Angle = "-Pi / 180 * 20" />
+        <Turn NormVector = "0;0;1" Angle = " Pi / 180 * 30" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

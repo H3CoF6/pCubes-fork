@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Triangular Prism Tall</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Triangular Prism Tall</Menu>
+        <Menu>Other forms\2x2x2 variants\Triangular Prism Tall</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2017-10-10</Added>
+    </Interface>
+
+    <!--Source : Skallos' code for Triangular Prism 2x2x2-->
+    <Script>
+        clBlue    := '0000C8';
+        clGreen   := '009600';
+        clRed     := 'C80000';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        R := 0.5;
+
+        sAngle := PI * 2 / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * cos(sAngle * i);
+            y[i] := R * sin(sAngle * i);
+        end;
+
+        da := sAngle / 4;
+        for i := 0 to 2 do begin
+            ax[i] := sin(sAngle * i + da);
+            ay[i] := cos(sAngle * i + da);
+        end;
+        az := sqrt(2) / 2;
+        H := R * az;
+        H2 := H * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = "ax[0]; ay[0]; az" />
+        <Axis NormVector = "ax[1]; ay[1]; az" />
+        <Axis NormVector = "ax[2]; ay[2]; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0]; -H" />
+                <Add Vector = "x[1]; y[1]; -H" />
+                <Add Vector = "x[2]; y[2]; -H" />
+                <Add Vector = "x[0]; y[0]; H2" />
+                <Add Vector = "x[1]; y[1]; H2" />
+                <Add Vector = "x[2]; y[2]; H2" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "0;1;4;3" />
+                <Face Color = "clBlue  " VertexIndexes = "1;2;5;4" />
+                <Face Color = "clGreen " VertexIndexes = "2;0;3;5" />
+                <Face Color = "clYellow" VertexIndexes = "2;1;0" />
+                <Face Color = "clWhite " VertexIndexes = "3;4;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

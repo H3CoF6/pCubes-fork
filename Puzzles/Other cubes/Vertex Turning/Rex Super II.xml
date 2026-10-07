@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rex Super II</Name>
+        <Menu>Other Cubes\Vertex Turning\Rex Super II</Menu>
+        <Inventor>Manuel Garcéa Rubikonde</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-12-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9378</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.3;
+
+        CutV := W * sqrt(3) * 0.95;
+        CutE := W * sqrt(2) * 0.982;
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi / 3" PlaneDistances = "D" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Hide" >
+            <HideContaining Vector = "Vx[id]; Vy[id]; Vz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" id = "1" />
+        <ExecMacro MacroName = "Hide" id = "2" />
+        <ExecMacro MacroName = "Hide" id = "4" />
+        <ExecMacro MacroName = "Hide" id = "7" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "Hide" id = "1" />
+        <ExecMacro MacroName = "Hide" id = "2" />
+        <ExecMacro MacroName = "Hide" id = "4" />
+        <ExecMacro MacroName = "Hide" id = "7" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

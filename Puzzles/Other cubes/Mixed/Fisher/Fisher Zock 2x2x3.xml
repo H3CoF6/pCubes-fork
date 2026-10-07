@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fisher Zock 2x2x3</Name>
+        <Menu>Other cubes\Mixed\Fisher\Fisher Zock 2x2x3</Menu>
+        <Inventor>Martin Guadalupe Bueno Alcantar</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-08-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7810</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * 0.4;
+        DCut := (2 * W - D * sqrt(2)) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "2" From = "1" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi / 2" />
+        <SplitByAxes/>
+        <Split><Plane NormVector = " 1; 1; 0" NormDistance = "DCut" /></Split>
+        <Split><Plane NormVector = "-1;-1; 0" NormDistance = "DCut" /></Split>
+        <Undo/>
+    </Figure>
+</xml>

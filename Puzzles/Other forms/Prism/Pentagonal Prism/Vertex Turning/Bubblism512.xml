@@ -1,0 +1,151 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bubblism512</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Vertex Turning\Bubblism512</Menu>
+        <Inventor>Carl N. Hoff</Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2020-07-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=125</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '0000A0';
+        clOrange  := 'FF6000';
+        clRed     := 'FF0000';
+        clGreen   := '008000';
+        clWhite   := 'FFFFFF';
+        clViolett := '800080';
+
+        R := 0.67;
+        z := R * sqrt((-sqrt(5) + 5) / 8);
+        zo := -z / 4;
+        H1 := z + zo;
+        T := R * sqrt((sqrt(5) + 5) / 10) + zo;
+
+        Dmin := R * sqrt((sqrt(5) * 23 + 53) / 82) / 2;
+        Dmax := R * sqrt((-sqrt(5) + 13) / 8);
+        D := (Dmax * 3 + Dmin * 5) / 8;
+        D2 := (DMin + DMax) / 2;
+
+        for i := 0 to 4 do begin
+            x[i] := R * cos(2 * Pi / 5 * i);
+            y[i] := R * sin(2 * Pi / 5 * i);
+        end;
+
+        A1 := ArcCos((sqrt(5) - 5) / 8);
+        A2 := 2 * (Pi - A1); <!-- Pi - ArcCos((1 + 5 * sqrt(5)) / 16); -->
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "D" >
+        <Axis NormVector = " x[0]; y[0];  z" BaseVector = "0; 0;  zo" />
+        <Axis NormVector = " x[1]; y[1];  z" BaseVector = "0; 0;  zo" />
+        <Axis NormVector = " x[2]; y[2];  z" BaseVector = "0; 0;  zo" />
+        <Axis NormVector = " x[3]; Y[3];  z" BaseVector = "0; 0;  zo" />
+        <Axis NormVector = " x[4]; y[4];  z" BaseVector = "0; 0;  zo" />
+        <Axis NormVector = " x[0]; y[0]; -z" BaseVector = "0; 0; -zo" />
+        <Axis NormVector = " x[1]; y[1]; -z" BaseVector = "0; 0; -zo" />
+        <Axis NormVector = " x[2]; y[2]; -z" BaseVector = "0; 0; -zo" />
+        <Axis NormVector = " x[3]; y[3]; -z" BaseVector = "0; 0; -zo" />
+        <Axis NormVector = " x[4]; y[4]; -z" BaseVector = "0; 0; -zo" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; H1" />
+            <Vertices Vectors = "x; y;-H1" />
+            <Vertices Vectors = "0; 0; T" />
+            <Vertices Vectors = "0; 0;-T" />
+
+            <Faces>
+                <Face Color = "clGreen  " VertexIndexes = "5;6;1;0" />
+                <Face Color = "clRed    " VertexIndexes = "6;7;2;1" />
+                <Face Color = "clOrange " VertexIndexes = "7;8;3;2" />
+                <Face Color = "clViolett" VertexIndexes = "8;9;4;3" />
+                <Face Color = "clBlue   " VertexIndexes = "9;5;0;4" />
+
+                <Face Color = "clWhite  " VertexIndexes = "10;0;1" InvisibleEdges = "5" />
+                <Face Color = "clWhite  " VertexIndexes = "10;1;2" InvisibleEdges = "5" />
+                <Face Color = "clWhite  " VertexIndexes = "10;2;3" InvisibleEdges = "5" />
+                <Face Color = "clWhite  " VertexIndexes = "10;3;4" InvisibleEdges = "5" />
+                <Face Color = "clWhite  " VertexIndexes = "10;4;0" InvisibleEdges = "5" />
+
+                <Face Color = "clYellow " VertexIndexes = "11;9;8" InvisibleEdges = "5" />
+                <Face Color = "clYellow " VertexIndexes = "11;8;7" InvisibleEdges = "5" />
+                <Face Color = "clYellow " VertexIndexes = "11;7;6" InvisibleEdges = "5" />
+                <Face Color = "clYellow " VertexIndexes = "11;6;5" InvisibleEdges = "5" />
+                <Face Color = "clYellow " VertexIndexes = "11;5;9" InvisibleEdges = "5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "SplitCorners">
+            <HideContaining Vector = " x[0]; y[0]; H1" />
+            <HideContaining Vector = " x[0]; y[0];-H1" />
+            <InvertVisibility/>
+            <Split><Plane NormVector = " x[1]; y[1];-z" NormDistance = "DMin" /></Split>
+            <Split><Plane NormVector = " x[1]; y[1]; z" NormDistance = "DMin" /></Split>
+            <Split><Plane NormVector = " x[4]; y[4];-z" NormDistance = "DMin" /></Split>
+            <Split><Plane NormVector = " x[4]; y[4]; z" NormDistance = "DMin" /></Split>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "2*Pi/5" />
+        </Macro>
+        <ExecMacro MacroName = "SplitCorners" Repeat = "5" />
+
+        <HideContaining Vector = "0;0;0" />
+        <Macro Name = "HideCorners">
+            <HideContaining Vector = " x[v]; y[v]; H1" />
+            <HideContaining Vector = " x[v]; y[v];-H1" />
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCorners" v = "0" Repeat = "5" />
+
+        <Macro Name = "SplitEdges">
+            <Split><Plane NormVector = " x[v]; y[v];-z" NormDistance = "D2" /></Split>
+            <Split><Plane NormVector = " x[v]; y[v]; z" NormDistance = "D2" /></Split>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitEdges" v = "0" Repeat = "5" />
+
+        <ShowAll/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachPlaneHasOneColor" />
+
+    <Macros>
+        <Macro Name = "Sc" >
+            <Script>
+                ax1 := Random(10);
+                if ax1 &lt; 5 then begin
+                    ax2 := (ax1 + 1) mod 5;
+                    ax3 := ax1 + 5;
+                end else begin
+                    ax2 := (ax1 + 4) mod 5 + 5;
+                    ax3 := ax1 - 5;
+                end;
+            </Script>
+            <Turn Axis = "ax1" Layer = "1" Angle = " A1" />
+            <Turn Axis = "ax2" Layer = "1" Angle = "-A1" />
+            <Turn Axis = "ax1" Layer = "1" Angle = "-A1" />
+            <Turn Axis = "ax2" Layer = "1" Angle = " A1" />
+
+            <Turn Axis = "ax1" Layer = "1" Angle = " A1" />
+            <Turn Axis = "ax3" Layer = "1" Angle = "-A1" />
+            <Turn Axis = "ax1" Layer = "1" Angle = "-A1" />
+            <Turn Axis = "ax3" Layer = "1" Angle = " A1" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(10)" Layer = "1" Angle = "2 * Pi * Random" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <Script> A1 := ArcCos((sqrt(5) - 5) / 8); </Script>
+            <ExecMacro MacroName = "Sc" Repeat = "200" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

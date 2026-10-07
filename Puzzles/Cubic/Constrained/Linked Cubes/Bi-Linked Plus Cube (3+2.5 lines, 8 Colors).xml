@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bi-Linked Plus Cube (3+2.5 lines, 8 Colors)</Name>
+        <Menu>Cubic\Constrained\Linked Cubes\Bi-Linked Plus Cube (3+2.5 lines, 8 Colors)</Menu>
+        <Class>TTenon</Class>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2026-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7658</Link>
+    </Interface>
+ 
+    <Script>
+        clBlack := '202020';
+        clViolett := '800080';
+        clPink    := 'FF80FF';
+
+        W := 0.5;
+        D := W * 0.39;
+        D2 := (W - D) / 2; // size of small cubies
+        WD := (W + D) / 2; // center of cubies
+    </Script>
+
+    <Axes TurningAngles = " Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "_Macro_For_LinkedCube.xml" />
+
+        // Make Colored cube with gaps and with some black parts (Side^Place, ...)
+        <ExecMacro MacroName = "MakeCube" BlackParts = "'00,03,06,07,08,11,12,20,13,21,22,36,37'" />
+
+        <HideContaining Vector = "W;-W;0" />
+        <InvertVisibility/>
+        <Cut><Plane NormVector = "0;0;1" NormDistance = "-D2" /></Cut>
+        <ShowAll/>
+
+        // Make Stickers (Side^Place^Rotate, ...)
+        <Script> StickerColor := clViolett; </Script>
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfile1" SX = "D2" SY = "D2" Places = "'120,200,560,521'" />
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfile2" SX = "D2" SY = "D2" Places = "'022,103,220,301,581'" />
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfileE" SX = "D"  SY = "D2" Places = "'110,210,570,551'" />
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfileH" SX = "D"  SY = "D2" Places = "'131,251'" />
+
+        <Script> StickerColor := clPink; </Script>
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfile1" SX = "D2" SY = "D2" Places = "'001,080,321,360,401,480'" />
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfile2" SX = "D2" SY = "D2" Places = "'062,183,260,381,462,501'" />
+        <ExecMacro MacroName = "AddStickers" sProfile = "sProfileE" SX = "D"  SY = "D2" Places = "'031,070,351,370,431,470'" />
+
+        // Tenons  (Side^Place^Layer, ...)
+        <ExecMacro MacroName = "AddTenons"  Places = "'021,101,221,301,061,181,261,381,461,501,581'" />
+        <ExecMacro MacroName = "AddGrooves" Places = "'002,012,022,052,062,102,122,152,162,172,182'" />
+        <ExecMacro MacroName = "AddGrooves" Places = "'202,232,222,262,272,282,302,312,322,332,382'" />
+        <ExecMacro MacroName = "AddGrooves" Places = "'402,412,422,452,462,482,502,512,522,532,562'" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

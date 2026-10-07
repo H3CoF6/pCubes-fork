@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Zicronaminx</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Mixed\Zicronaminx</Menu>
+        <Inventor>Matthew Bahner</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-10-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3751</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0000C8'; // Blue
+        Colors[1] := 'C80000'; // Red
+        Colors[2] := '9900EE'; // Violett
+        Colors[3] := '009600'; // Green
+        Colors[4] := 'FF800A'; // Orange
+        Colors[5] := 'FF66FF'; // Pink
+
+        clUp   := 'FFFFFF'; // White
+        clDown := 'FFFF00'; // Yellow
+
+        R := 0.5;
+        D := R * 0.15;
+        R2 := R * 1.33;
+        D1 := R * cos(Pi/6);
+        H := R * 0.6;
+
+        RC := R * 0.47;
+        WC := 1.1;
+
+        procedure CalcHex(R);
+        begin
+            for i := 0 to 5 do begin
+                x[i] := R * cos(Pi / 3 * i);
+                y[i] :=-R * sin(Pi / 3 * i);
+            end;
+        end;
+        CalcHex(R);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "-D; D" NormVectors = " 0; 0; 1" />
+    <Axes TurningAngles = "0; Pi"  PlaneDistances = "0"     NormVectors = " x; y; 0" />
+    <Axes TurningAngles = "0; Pi"  PlaneDistances = "D1"    NormVectors = " y; x; 0" />
+
+    <Figure>
+        <Macro Name = "Prism" >
+            <Part>
+                <Vertices Vectors = " x; y;-H" />
+                <Vertices Vectors = " x; y; H" />
+
+                <Faces>
+                    <Face Color = "Colors[0]" VertexIndexes = " 1; 0; 6; 7" />
+                    <Face Color = "Colors[1]" VertexIndexes = " 2; 1; 7; 8" />
+                    <Face Color = "Colors[2]" VertexIndexes = " 3; 2; 8; 9" />
+                    <Face Color = "Colors[3]" VertexIndexes = " 4; 3; 9;10" />
+                    <Face Color = "Colors[4]" VertexIndexes = " 5; 4;10;11" />
+                    <Face Color = "Colors[5]" VertexIndexes = " 0; 5;11; 6" />
+
+                    <Face Color = "clUp"   VertexIndexes = "11;10; 9; 8; 7; 6" />
+                    <Face Color = "clDown" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "Prism" />
+
+        <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Base = "0; D1; 0" Top = "0; D1 * WC; 0" TopColor = "Colors[i]" />
+            <Turn NormVector = "0;0;1" Angle = "Pi/3" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+        <Turn NormVector = "0;0;1" Angle = "-2*Pi/3" />
+        <SplitByAxes/>
+
+        <Hide Axis = "0" Layers = "0;2" />
+        <RemoveAllVisible/>
+        <Script> CalcHex(R2); </Script>
+        <ExecMacro MacroName = "Prism" H = "D" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+        <ShowAll/>
+    </Figure>
+</xml>

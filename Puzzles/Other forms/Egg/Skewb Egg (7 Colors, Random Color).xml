@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Egg (7 Colors, Random Color)</Name>
+        <Menu>Other forms\Egg\Skewb Egg (7 Colors, Random Color)</Menu>
+        <Menu>Other forms\Skewb variants\Egg\Skewb Egg (7 Colors, Random Color)</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-04</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=421233#p421233</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '333333';
+        Colors[1] := 'FFFFFF';
+        Colors[2] := '50C0D0';
+        Colors[3] := 'FF0000';
+        Colors[4] := 'FFC030';
+        Colors[5] := 'FF7000';
+        Colors[6] := 'B0F070';
+
+        Pattern := '01234560123456';
+        C := Random(7);
+
+        for i := 0 to 6 do begin
+            cColors[i] := Colors[copy(Pattern, 1+i+C, 1)];
+        end;
+
+        K := 0.7;
+        L := K / 10;
+
+        Vx[0] := 0; Vy[0] := 0; Vz[0] := L;
+        Vx[1] := 0; Vy[1] := L; Vz[1] := 0;
+        Vx[2] := L; Vy[2] := L; Vz[2] := L;
+        Vx[3] :=-L; Vy[3] := L; Vz[3] := L;
+        Vx[4] := L; Vy[4] := 0; Vz[4] := 0;
+        Vx[5] := L; Vy[5] :=-L; Vz[5] := L;
+        Vx[6] :=-L; Vy[6] :=-L; Vz[6] := L;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "ColorEgg" >
+            <LoadFrom File = "Puzzles\Other forms\Egg\_Macro_For_Egg.xml" Color = "cColors[incr]" />
+            <SplitByAxes/>
+            <HideContaining Vector = " Vx[incr]; Vy[incr]; Vz[incr]" />
+            <HideContaining Vector = "-Vx[incr];-Vy[incr];-Vz[incr]" />
+            <RemoveAllVisible/>
+            <Script>Inc(incr);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "ColorEgg" incr = "0" Repeat = "7" />
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

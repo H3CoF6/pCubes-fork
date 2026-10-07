@@ -1,0 +1,207 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Horror-8 cube</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Horror-8 cube</Menu>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Inventor>Lennon</Inventor>
+        <Added>2018-02-17</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        CylinderWidth := 0.07;
+        W := 0.5 - CylinderWidth;
+        R := W * 2 / 7 / cos(3 * Pi / 8);
+        W2 := W + CylinderWidth;
+        Sc := W2/W;
+
+        A := Pi / 18; // 10 degrees
+    </Script>
+
+    <Axes TurningAngles = "A; Pi/2; Pi/2; A" PlaneDistances = "-W; 0; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "AddCylinder" >
+            <Cylinder Radius = "R" Color = "Colors[i]" Base = "Cx[i]; Cy[i]; Cz[i]" Top = "Cx[i]*Sc; Cy[i]*Sc; Cz[i]*Sc" >
+                <Top Color = "Colors[i]" />
+            </Cylinder>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCylinder" i = "0" Repeat = "6"/>
+
+        <Macro Name = "SplitPart">
+            <Hide  Axis = "0" Layer = "0" />
+            <Hide  Axis = "0" Layer = "3" />
+            <Hide  Axis = "1" Layer = "0" />
+            <Hide  Axis = "1" Layer = "3" />
+            <Split Axis = "0" From  = "2" />
+            <Hide  Axis = "0" Layer = "1" />
+            <Split Axis = "1" From  = "2" />
+            <Turn  Axis = "2" Angle = " A  " Layer = "0" />
+            <Turn  Axis = "2" Angle = "-A  " Layer = "3" />
+            <Split Axis = "1" From  = "2" />
+            <Turn  Axis = "2" Angle = "-A*3" Layer = "0" />
+            <Turn  Axis = "2" Angle = " A*3" Layer = "3" />
+            <Split Axis = "1" From  = "2" />
+            <Turn  Axis = "2" Angle = "-A*3" Layer = "0" />
+            <Turn  Axis = "2" Angle = " A*3" Layer = "3" />
+            <Split Axis = "1" From  = "2" />
+            <Turn  Axis = "2" Angle = " A*5" Layer = "0" />
+            <Turn  Axis = "2" Angle = "-A*5" Layer = "3" />
+            <ShowAll/>
+            <Hide  Axis = "0" Layer = "0" />
+            <Hide  Axis = "0" Layer = "3" />
+            <Hide  Axis = "1" Layer = "0" />
+            <Hide  Axis = "1" Layer = "3" />
+            <Hide  Axis = "0" Layer = "2" />
+            <Turn  Axis = "2" Angle = " A*4" Layer = "0" />
+            <Turn  Axis = "2" Angle = "-A*4" Layer = "3" />
+            <Split Axis = "1" From  = "2" />
+            <Turn  Axis = "2" Angle = "-A*6" Layer = "0" />
+            <Turn  Axis = "2" Angle = " A*6" Layer = "3" />
+            <Split Axis = "1" From  = "2" />
+            <Turn  Axis = "2" Angle = " A*2" Layer = "0" />
+            <Turn  Axis = "2" Angle = "-A*2" Layer = "3" />
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart"/>
+        <Turn Axis = "2" Angle = " Pi/2" Layer = "0" />
+
+        <Turn Axis = "0" Angle = " Pi/2" Layer = "1" />
+        <ExecMacro MacroName = "SplitPart"/>
+        <Turn Axis = "0" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "0" />
+        <Turn Axis = "1" Angle = " Pi  " Layer = "3" />
+
+        <Turn Axis = "1" Angle = " Pi/2" Layer = "1" />
+        <ExecMacro MacroName = "SplitPart"/>
+        <Turn Axis = "1" Angle = "-Pi/2" Layer = "1" />
+        <Turn Axis = "0" Angle = " Pi/2" Layer = "3" />
+        <Turn Axis = "0" Angle = " Pi  " Layer = "0" />
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameDirection" />
+    <Macros>
+        <Macro Name = "White" >
+            <Turn Axis = "0" Layer = "3" Angle = "-Pi/2"/>
+            <Turn Axis = "0" Layer = "0" Angle = " Pi"/>
+            <Turn Axis = "1" Layer = "3" Angle = " Pi/2"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layer = "2" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "1" Layer = "3" Angle = "-Pi/2"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi"/>
+            <Turn Axis = "0" Layer = "3" Angle = " Pi/2"/>
+        </Macro>
+
+        <Macro Name = "Blue" >
+            <Turn Axis = "0" Layer = "3" Angle = " -7*Pi/18"/>
+            <Turn Axis = "2" Layer = "3" Angle = "-16*Pi/18"/>
+            <Turn Axis = "0" Layer = "0" Angle = " -2*Pi/18"/>
+            <Turn Axis = "2" Layer = "0" Angle = "-11*Pi/18"/>
+            <Turn Axis = "1" Layer = "1" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "1" Layer = "2" Angle = " Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layer = "0" Angle = "11*Pi/18"/>
+            <Turn Axis = "0" Layer = "0" Angle = " 2*Pi/18"/>
+            <Turn Axis = "2" Layer = "3" Angle = "16*Pi/18"/>
+            <Turn Axis = "0" Layer = "3" Angle = " 7*Pi/18"/>
+        </Macro>
+
+        <Macro Name = "Circles" >
+            <ExecMacro MacroName = "White" />
+            <ExecMacro MacroName = "Blue" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" Description = "Replacing of standard scrambling" Sequence = "" >
+            <ExecMacro MacroName = "Circles" Repeat = "20" />
+            <Turn Axis = "0" Layer = "3" Angle = "-8*Pi/9"/>
+            <Turn Axis = "1" Layer = "3" Angle = " Pi/2"/>
+            <Turn Axis = "2" Layer = "2" Angle = " Pi/2"/>
+            <Turn Axis = "1" Layer = "0" Angle = "-Pi/3"/>
+            <Turn Axis = "0" Layer = "3" Angle = " Pi"/>
+            <Turn Axis = "0" Layer = "0" Angle = "2*Pi/9"/>
+            <Turn Axis = "1" Layer = "0" Angle = " Pi/9"/>
+            <Turn Axis = "1" Layer = "0" Angle = "-Pi/18"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/2"/>
+            <Turn Axis = "1" Layer = "0" Angle = "5*Pi/18"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/2"/>
+            <Turn Axis = "1" Layer = "0" Angle = "-2*Pi/9"/>
+            <Turn Axis = "1" Layer = "0" Angle = "-Pi/18"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/2"/>
+            <Turn Axis = "0" Layer = "0" Angle = "5*Pi/18"/>
+            <Turn Axis = "1" Layer = "0" Angle = " Pi"/>
+            <Turn Axis = "2" Layer = "2" Angle = "-Pi/2"/>
+            <Turn Axis = "1" Layer = "3" Angle = " Pi/2"/>
+            <Turn Axis = "2" Layer = "2" Angle = "-Pi/2"/>
+            <Turn Axis = "1" Layer = "3" Angle = "-Pi/2"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/2"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi"/>
+            <Turn Axis = "2" Layer = "1" Angle = "3*Pi/2"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/9"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/2"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/6"/>
+            <Turn Axis = "2" Layer = "2" Angle = " Pi/2"/>
+            <Turn Axis = "0" Layer = "3" Angle = "-Pi"/>
+            <Turn Axis = "2" Layer = "2" Angle = " Pi/2"/>
+            <Turn Axis = "1" Layer = "3" Angle = "-2*Pi/9"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/2"/>
+            <Turn Axis = "2" Layer = "0" Angle = "-Pi/2"/>
+            <Turn Axis = "1" Layer = "3" Angle = " Pi/18"/>
+            <Turn Axis = "0" Layer = "2" Angle = " Pi/2"/>
+            <Turn Axis = "2" Layer = "3" Angle = " Pi"/>
+            <Turn Axis = "0" Layer = "2" Angle = " Pi/2"/>
+            <Turn Axis = "2" Layer = "3" Angle = "-Pi/2"/>
+            <Turn Axis = "0" Layer = "2" Angle = "-Pi/2"/>
+            <Turn Axis = "2" Layer = "3" Angle = " Pi/6"/>
+            <Turn Axis = "2" Layer = "3" Angle = " Pi/9"/>
+            <Turn Axis = "1" Layer = "0" Angle = " Pi/2"/>
+            <Turn Axis = "0" Layer = "2" Angle = " Pi/2"/>
+            <Turn Axis = "2" Layer = "0" Angle = "-Pi/3"/>
+            <Turn Axis = "2" Layer = "0" Angle = " Pi/18"/>
+            <Turn Axis = "0" Layer = "2" Angle = " Pi/2"/>
+            <Turn Axis = "0" Layer = "3" Angle = "-Pi/6"/>
+            <Turn Axis = "1" Layer = "3" Angle = "Pi/6"/>
+            <Turn Axis = "1" Layer = "0" Angle = "-Pi/2"/>
+            <Turn Axis = "2" Layer = "2" Angle = "Pi/2"/>
+            <Turn Axis = "2" Layer = "1" Angle = "-Pi"/>
+            <Turn Axis = "0" Layer = "3" Angle = "-Pi/18"/>
+            <Turn Axis = "1" Layer = "3" Angle = "-Pi/9"/>
+            <Turn Axis = "2" Layer = "1" Angle = "Pi/2"/>
+            <Turn Axis = "0" Layer = "3" Angle = "Pi/18"/>
+            <Turn Axis = "2" Layer = "3" Angle = "-Pi/2"/>
+            <Turn Axis = "0" Layer = "0" Angle = "Pi/2"/>
+            <Turn Axis = "2" Layer = "0" Angle = "-2*Pi/9"/>
+            <Turn Axis = "1" Layer = "1" Angle = "Pi/2"/>
+            <Turn Axis = "0" Layer = "3" Angle = "-Pi"/>
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi/2"/>
+            <Turn Axis = "1" Layer = "3" Angle = "Pi"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/2"/>
+            <Turn Axis = "2" Layer = "1" Angle = "-Pi/2"/>
+            <Turn Axis = "0" Layer = "3" Angle = "-Pi/18"/>
+            <Turn Axis = "2" Layer = "1" Angle = "Pi/2"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi*17/18"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/18"/>
+            <Turn Axis = "2" Layer = "1" Angle = "Pi/2"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-2*Pi/9"/>
+            <Turn Axis = "1" Layer = "3" Angle = "-Pi"/>
+            <Turn Axis = "1" Layer = "3" Angle = "-Pi"/>
+            <Turn Axis = "2" Layer = "1" Angle = "Pi/2"/>
+            <Turn Axis = "0" Layer = "0" Angle = "Pi/18"/>
+            <Turn Axis = "2" Layer = "1" Angle = "-Pi/2"/>
+            <Turn Axis = "1" Layer = "3" Angle = "-Pi/2"/>
+            <Turn Axis = "2" Layer = "3" Angle = "-Pi/2"/>
+            <Turn Axis = "1" Layer = "0" Angle = "Pi*7/9"/>
+            <Turn Axis = "2" Layer = "0" Angle = "2*Pi/9"/>
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/2"/>
+        </Macro>
+    </Macros>
+</xml>

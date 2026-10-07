@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Shadow Tetrahedron</Name>
+        <Menu>Other forms\Pillowed\Tetrahedron\Shadow Tetrahedron</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7899</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00CC00';
+        Colors[3] := 'FFFFFF';
+        Colors[1] := '0099EE';
+        Colors[2] := 'CC0055';
+
+        K  := 0.5;
+        D := K * 0.66;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * (i + 0.5));
+            ay[i] := sin(2 * Pi / 3 * (i + 0.5));
+        end;
+        az := sqrt(3) / 2;
+
+        A1 := ArcCos(1 / 8);
+        A2 := ArcCos(-3 / 4);
+    </Script>
+
+     <Axes TurningAngles = "2 * Pi; 0" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "-D" >
+        <Axis NormVector = "ax[1]; ay[1]; az" />
+        <Axis NormVector = "ax[2]; ay[2]; az" />
+        <Axis NormVector = "ax[0]; ay[0]; az" />
+        <Axis NormVector = "ax[1]; ay[1];-az" />
+        <Axis NormVector = "ax[2]; ay[2];-az" />
+        <Axis NormVector = "ax[0]; ay[0];-az" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

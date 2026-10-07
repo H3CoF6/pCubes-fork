@@ -1,0 +1,133 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Smiley Cube</Name>
+        <Menu>Cubic\Unclassified\Smiley Cube</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5152</Link>
+    </Interface>
+
+    <Script>
+        clLightViolett := 'FF00B0';
+        clBlack        := '111111';
+        clWhite        := 'FFFFFF';
+
+        W := 0.5;
+
+        DCut := W * 1.03;
+
+        D := W / 3;
+        D2 := D * 1.02;
+        D3 := D * 1.04;
+
+        RMouth1 := W * 0.9;
+        RMouth2 := RMouth1 * 0.8;
+
+        RNose := W * 0.03;
+        NoseX := W * 0.08;
+        NoseY := W * 0.18;
+        NoseZ := W * 1.01;
+
+        REye1 := W * 0.25;
+        REye2 := W * 0.15;
+        EyeX1 := W * 0.67;
+        EyeX2 := W * 0.64;
+        EyeY1 := W * 0.67;
+        EyeY2 := W * 0.67;
+        EyeZ1 := W * 1.01;
+        EyeZ2 := W * 1.02;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "1; 0;-1" Angle = "Pi" />
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Turn NormVector = "1; 0;-1" Angle = "Pi" />
+
+        <RemoveContaining Vector = " Vx[0]; Vy[0]; Vz[0]" />
+        <RemoveContaining Vector = " Vx[1]; Vy[1]; Vz[1]" />
+        <RemoveContaining Vector = " Vx[2]; Vy[2]; Vz[2]" />
+        <RemoveContaining Vector = " Vx[4]; Vy[4]; Vz[4]" />
+        <RemoveContaining Vector = " Vx[5]; Vy[5]; Vz[5]" />
+        <RemoveContaining Vector = " Vx[6]; Vy[6]; Vz[6]" />
+        <RemoveContaining Vector = " Ex[0]; Ey[0]; Ez[0]" />
+        <RemoveContaining Vector = " Ex[6]; Ey[6]; Ez[6]" />
+
+        <Cut Color = "clLightViolett"> <Plane NormVector = "0; 1; 1" NormDistance = "-DCut" /> </Cut>
+
+        <Macro Name = "AddMouth" >
+            <HideAll/>
+            <Cylinder Radius = "RMouth1" Color = "Colors[0]" >
+                <Base X = "0" Y = "-D" Z = "0" />
+                <Top  X = "0" Y = "-D2" Z = "0" Color = "Colors[0]" />
+            </Cylinder>
+            <Cylinder Radius = "RMouth2" Color = "clBlack" >
+                <Base X = "0" Y = "-D2" Z = "0" />
+                <Top  X = "0" Y = "-D3" Z = "0" Color = "clBlack" />
+            </Cylinder>
+            <Cut> <Plane NormVector = " 0; 1; 1" NormDistance = "0" /></Cut>
+        </Macro>
+
+        <ExecMacro MacroName = "AddMouth" />
+        <Turn NormVector = "0; 1;-1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddMouth" />
+        <Turn NormVector = "1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddMouth" />
+        <Turn NormVector = "0; 1;-1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddMouth" />
+        <Turn NormVector = "1; 0; 0" Angle = "Pi" />
+
+        <ShowAll/>
+
+        <Macro Name = "AddNose" >
+            <Cylinder Radius = "RNose" Color = "clBlack" >
+                <Base X = "-NoseX" Y = "-NoseY" Z = "W" />
+                <Top  X = "-NoseX" Y = "-NoseY" Z = "NoseZ" Color = "clBlack" />
+            </Cylinder>
+            <Cylinder Radius = "RNose" Color = "clBlack" >
+                <Base X = " NoseX" Y = "-NoseY" Z = "W" />
+                <Top  X = " NoseX" Y = "-NoseY" Z = "NoseZ" Color = "clBlack" />
+            </Cylinder>
+        </Macro>
+        <ExecMacro MacroName = "AddNose" />
+
+        <Macro Name = "AddEye" >
+            <Cylinder Radius = "REye1" Color = "clWhite" >
+                <Base X = " EyeX1" Y = "EyeY1" Z = "W" />
+                <Top  X = " EyeX1" Y = "EyeY1" Z = "EyeZ1" Color = "clWhite" />
+            </Cylinder>
+            <Cylinder Radius = "REye2" Color = "clBlack" >
+                <Base X = " EyeX2" Y = "EyeY2" Z = "EyeZ1" />
+                <Top  X = " EyeX2" Y = "EyeY2" Z = "EyeZ2" Color = "clBlack" />
+            </Cylinder>
+            <Cylinder Radius = "REye1" Color = "clWhite" >
+                <Base X = "-EyeX1" Y = "EyeY1" Z = "W" />
+                <Top  X = "-EyeX1" Y = "EyeY1" Z = "EyeZ1" Color = "clWhite" />
+            </Cylinder>
+            <Cylinder Radius = "REye2" Color = "clBlack" >
+                <Base X = "-EyeX2" Y = "EyeY2" Z = "EyeZ1" />
+                <Top  X = "-EyeX2" Y = "EyeY2" Z = "EyeZ2" Color = "clBlack" />
+            </Cylinder>
+        </Macro>
+        <ExecMacro MacroName = "AddEye" />
+
+        <Turn NormVector = "0; 1; 1" Angle = "Pi" />
+        <ExecMacro MacroName = "AddNose" />
+        <ExecMacro MacroName = "AddEye" />
+        <Turn NormVector = "0; 1; 1" Angle = "Pi" />
+        
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>HexPrisma 9x9x9</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\HexPrisma 9x9x9</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-09-16</Added>
+    </Interface>
+
+     <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := '008000'; // Green
+        Colors[2] := 'C8C8C8'; // Light Gray
+        Colors[3] := '00FF00'; // Light Green
+        Colors[4] := 'FF6000'; // Orange
+        Colors[5] := '0064FF'; // Sky Blue
+        Colors[6] := 'FFFF00'; // Yellow
+        Colors[7] := 'FF64FF'; // Pink
+
+        R := 0.6;
+        H := R * 0.7;
+
+        NA := 9;
+        WD := R * 0.09;
+        for i := 0 to NA - 2 do
+            D[i] := WD * i - WD * (NA - 2) / 2;
+
+        N := 6;
+        A := 2*Pi / N;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(A * i);
+            y[i] := R * sin(A * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi/4" />
+        <Turn NormVector = " 0; 1; 0" Angle = "-Arctan(1/sqrt(2))" />
+
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[i-1]" VertexIndexes = "i1 + N; i2 + N; i2; i1" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                <Face Color = "Colors[N]"     VertexIndexes = "FromTo(0, N - 1)" />
+                <Face Color = "Colors[N + 1]" VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

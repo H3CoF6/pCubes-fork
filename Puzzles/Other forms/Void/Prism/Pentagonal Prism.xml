@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Void Pentagonal Prism</Name>
+        <Menu>Other forms\Void\Prism\Pentagonal Prism</Menu>
+        <Inventor>Matthew Ray</Inventor>
+        <Programmer>Knightcrawler</Programmer>
+        <Added>2016-10-24</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        sAngle := PI * 2 / 5;
+        H := R * sin(sAngle/2) * 2;
+
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D1 := H / 4;
+        D2 := R * (cos(sAngle/2) - sin(sAngle/2) * 2 / 4 * sin(sAngle));
+        S := 0.9 * R;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D2" FixedLayers = "1" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+        <Axis NormVector = "x[3]; y[3]; 0" />
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0];  H / 2" />
+                <Add Vector = "x[1]; y[1];  H / 2" />
+                <Add Vector = "x[2]; y[2];  H / 2" />
+                <Add Vector = "x[3]; y[3];  H / 2" />
+                <Add Vector = "x[4]; y[4];  H / 2" />
+                <Add Vector = "x[0]; y[0]; -H / 2" />
+                <Add Vector = "x[1]; y[1]; -H / 2" />
+                <Add Vector = "x[2]; y[2]; -H / 2" />
+                <Add Vector = "x[3]; y[3]; -H / 2" />
+                <Add Vector = "x[4]; y[4]; -H / 2" />
+            </Vertices>
+            <Faces>
+                <Face Color = "FFFFFF" VertexIndexes = "4;3;2;1;0" />
+                <Face Color = "FF0000" VertexIndexes = "0;1;6;5" />
+                <Face Color = "008000" VertexIndexes = "1;2;7;6" />
+                <Face Color = "700070" VertexIndexes = "2;3;8;7" />
+                <Face Color = "0050FF" VertexIndexes = "3;4;9;8" />
+                <Face Color = "FF8000" VertexIndexes = "4;0;5;9" />
+                <Face Color = "FFFF00" VertexIndexes = "5;6;7;8;9" />
+            </Faces>
+        </Part>
+        
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "      0;       0;    0" />
+        <RemoveContaining Vector = "      0;       0;  H/2" />
+        <RemoveContaining Vector = "      0;       0; -H/2" />
+        <RemoveContaining Vector = "-x[0]*S; -y[0]*S;    0" />
+        <RemoveContaining Vector = "-x[1]*S; -y[1]*S;    0" />
+        <RemoveContaining Vector = "-x[2]*S; -y[2]*S;    0" />
+        <RemoveContaining Vector = "-x[3]*S; -y[3]*S;    0" />
+        <RemoveContaining Vector = "-x[4]*S; -y[4]*S;    0" />
+    </Figure>
+
+    <Procedures CheckSolved="EachColorHasSameDirection" />
+</xml>

@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Halfminx</Name>
+        <Menu>Other forms\Dodecahedron\Truncated\Halfminx</Menu>
+        <Inventor>Aleh Hladzilin</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-04-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1921</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Cut Color = "404040" > <Plane NormVector = "Vx[0]; Vy[0]; Vz[0]" NormDistance = "0" /> </Cut>
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0; 0; 0" />
+
+        <Split> <Plane NormDistance = " D" NormVector = " Cx[2];  Cy[2];  Cz[2]" /> </Split>
+        <Split> <Plane NormDistance = "-D" NormVector = " Cx[2];  Cy[2];  Cz[2]" /> </Split>
+        <Split> <Plane NormDistance = " D" NormVector = "-Cx[3]; -Cy[3]; -Cz[3]" /> </Split>
+        <Split> <Plane NormDistance = "-D" NormVector = "-Cx[3]; -Cy[3]; -Cz[3]" /> </Split>
+        <Split> <Plane NormDistance = " D" NormVector = " Cx[4];  Cy[4];  Cz[4]" /> </Split>
+        <Split> <Plane NormDistance = "-D" NormVector = " Cx[4];  Cy[4];  Cz[4]" /> </Split>
+        <ShowAll/>
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

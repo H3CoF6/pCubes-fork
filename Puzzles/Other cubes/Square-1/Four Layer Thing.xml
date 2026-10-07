@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Four Layer Thing</Name>
+        <Menu>Other cubes\Square-1\Four Layer Thing</Menu>
+        <Inventor>Matt Shepit</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2017-05-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4169</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        for i := 0 to 5 do begin
+            ax[i] := sin(Pi / 6 * i);
+            ay[i] := cos(Pi / 6 * i);
+        end;
+
+        RCut := sqrt(3) / 2 - 0.04;
+        RCu2 := sqrt(2) / 2 - 0.01;
+    </Script>
+
+    <Axes TurningAngles = "Pi/6" PlaneDistances = "-1/3; 0; 1/3" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "Ax[0]; Ay[0]; 0" />
+        <Axis NormVector = "Ax[1]; Ay[1]; 0" />
+        <Axis NormVector = "Ax[2]; Ay[2]; 0" />
+        <Axis NormVector = "Ax[3]; Ay[3]; 0" />
+        <Axis NormVector = "Ax[4]; Ay[4]; 0" />
+        <Axis NormVector = "Ax[5]; Ay[5]; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Turn  Axis = "0" Layer = "2" Angle = "Pi/2" />
+        <Turn  Axis = "0" Layer = "0" Angle = "Pi/2" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "5" From = "1" />
+        <Turn  Axis = "0" Layer = "2" Angle = "-Pi/2" />
+        <Turn  Axis = "0" Layer = "0" Angle = "-Pi/2" />
+
+
+        <!-- cut edges and vertices for better control -->
+        <Cut> <Plane NormVector = " 1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1; -1" NormDistance = "-RCut" /> </Cut>
+
+        <Cut> <Plane NormVector = " 1;  1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  0;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  0; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  1;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  1; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1; -1" NormDistance = "-RCu2" /> </Cut>
+    </Figure>
+    <Procedures CheckSolved = "EachColorHasSameDirection" />
+</xml>

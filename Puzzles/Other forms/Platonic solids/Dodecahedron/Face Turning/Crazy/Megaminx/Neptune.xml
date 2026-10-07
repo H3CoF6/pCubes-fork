@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megaminx Crazy - Neptune</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Crazy\Megaminx\Neptune</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2015-10-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2894</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2;
+
+        RC := R * 0.34;
+
+        D1 := RSin;
+        L := 1.004;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; 0; sAngle; 0" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" PlaneDistances = "-D1  ; -D; D; D1  " />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" PlaneDistances = "-D1*2; -D; D; D1*2" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" PlaneDistances = "-D1  ; -D; D; D1  " />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" PlaneDistances = "-D1  ; -D; D; D1  " />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" PlaneDistances = "-D1*2; -D; D; D1*2" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" PlaneDistances = "-D1*2; -D; D; D1*2" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" > <Center X = "Cx[i] * L" Y =  "Cy[i] * L" Z =  "Cz[i] * L" /> </Circle>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "12" i = "0" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Star" File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Crazy\Textures\Star.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Star = 62,0,0, 87,0,0, 99,0,0, 193,0,0, 156,0,0, 146,0,0
+    </SetTextures>
+
+</xml>

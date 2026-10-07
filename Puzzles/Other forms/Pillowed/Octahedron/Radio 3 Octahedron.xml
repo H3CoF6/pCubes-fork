@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Radio 3 Octahedron</Name>
+        <Menu>Other forms\Pillowed\Octahedron\Radio 3 Octahedron</Menu>
+        <Inventor>Anthone Poole</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8074</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF6000'; // Orange
+        Colors[1] := '0088FF'; // Blue2
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := '00FF00'; // Green1
+        Colors[4] := '8800DD'; // Violett
+        Colors[5] := 'FF0000'; // Red
+        Colors[6] := '007700'; // Green3
+        Colors[7] := '0000EE'; // Blue3
+
+        K := 0.6;
+
+        include 'Figures\Scripts\Dodecahedron_Sq_Coordinates.inc';
+
+        D := K;
+        jumAngle := Arcsin(1/4) + Pi/6;
+
+        f1 := K * 0.1;
+
+        Pillow := 1.1;
+    </Script>
+
+    <Axes TurningAngles = " 0; 2*Pi / 3" JumbleAngle = "jumAngle" PlaneDistances = "D" NormVectors = " Vx; Vy; Vz" />
+
+    <Figure>
+        <LoadFrom File = "..\Tetrahedron\_Macro_Pillowed_Tetrahedron_v2.xml" />
+        <ExecMacro MacroName = "CalcCoordinates" />
+
+        <ExecMacro MacroName = "AddPillowedTetrahedron" />
+
+        <Split><Plane NormVector = " 1; 0; 0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" /></Split>
+
+        <RemoveContaining Vector = "-f1;-f1;-f1" />
+        <RemoveContaining Vector = " f1;-f1; f1" />
+        <RemoveContaining Vector = " f1; f1;-f1" />
+        <RemoveContaining Vector = "-f1; f1; f1" />
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+
+        <HideAll/>
+
+        <Script>
+            Colors[0] := Colors[4];
+            Colors[1] := Colors[5];
+            Colors[2] := Colors[6];
+            Colors[3] := Colors[7];
+        </Script>
+
+        <ExecMacro MacroName = "AddPillowedTetrahedron" />
+
+        <Split><Plane NormVector = " 1; 0; 0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" /></Split>
+
+        <RemoveContaining Vector = "-f1;-f1;-f1" />
+        <RemoveContaining Vector = " f1;-f1; f1" />
+        <RemoveContaining Vector = " f1; f1;-f1" />
+        <RemoveContaining Vector = "-f1; f1; f1" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Macros>
+        <Macro Name = "RandomTurns120" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "2*Pi/3"/>
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(20)" Layer = "1" Angle = "2 * Pi * Random"/>
+        </Macro>
+        <Macro Name = "Scramble120" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns120" Repeat = "100" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Scramble120" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,38 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyritohedron Cubed</Name>
+        <Menu>Other cubes\Hexaminx\Pyritohedron Cubed</Menu>
+        <Inventor>Xing Xu</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-02-11</Added>
+        <Link>https://twistypuzzles.com/forum/viewtopic.php?p=432077</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        T := 0.48; // incline
+        D := 0.4;
+
+        A2 := ArcCos( T / ( T^2 + T + 1));
+        A3 := ArcCos(-T / ( T^2 - T + 1));
+        A1 := A3 - A2;
+        A4 := A3 + A2;
+    </Script>
+
+
+    <Axes TurningAngles = "2 * Pi; 0; 2 * Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 0; 1; T" />
+        <Axis NormVector = " 0;-1; T" />
+        <Axis NormVector = " 1; T; 0" />
+        <Axis NormVector = "-1; T; 0" />
+        <Axis NormVector = " T; 0; 1" />
+        <Axis NormVector = " T; 0;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

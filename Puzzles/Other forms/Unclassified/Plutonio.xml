@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Plutonio</Name>
+        <Menu>Other forms\Unclassified\Plutonio</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-03-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9562</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0055EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        K := 0.75;
+        D := K * 0.4;
+
+        DZ := K * 0.6;
+        DCut := K * 0.55;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = "-1;-1; 0" />
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " 0; 0;-DZ" />
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[4]" />
+        <Transfer Vector = " 0; 0; DZ" />
+        <Cut Axis = "0" To = "1" />
+        <HideAll/>
+
+        <Transfer Vector = " 0; 0; DZ" />
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[5]" />
+        <Transfer Vector = " 0; 0;-DZ" />
+        <Cut Axis = "0" From = "1" />
+        <ShowAll/>
+
+        <Cut Color = "Colors[0] " ><Plane NormVector = " 1; 0; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[1] " ><Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[2] " ><Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[3] " ><Plane NormVector = " 0;-1; 0" NormDistance = "-DCut" /></Cut>
+
+        <SplitByAxes/>
+        <HideContaining Vector = "0;0;0" />
+        <Split><Plane NormVector = " 1; 1; 0" /></Split>
+        <Split><Plane NormVector = "-1; 1; 0" /></Split>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

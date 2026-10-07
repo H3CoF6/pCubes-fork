@@ -1,0 +1,131 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Madness Plus Plus</Name>
+        <Menu>Other forms\Associahedron\Madness Plus Plus</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8219</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=35991</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clOrange       := 'FF6000';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clLightViolett := 'FF0080';
+        clLightBlue    := '2828FF';
+        clViolett      := '800080';
+        clLightGreen   := '00FF00';
+
+        K  := 0.3;
+
+        s2 := sqrt(2);
+        s3 := sqrt(3);
+        C0 := K * s3 * (3 * s2 - 4) / 2;
+        C1 := K * s3 / 2;
+        C2 := K * 3 * (2 - s2) / 2;
+        C3 := K * 3 * (s2 - 1);
+        C4 := K * s3;
+        C5 := K * s3 * (3 * s2 - 2) / 2;
+        C6 := K * 3 * s2 / 2;
+        C7 := K * (3 * s2 - 2);
+        C8 := K * 3 / 2;
+
+        N0 := s3 / 2;
+        N1 := 1;
+        N2 := 0.5;
+
+        A1 := ArcCos( 1 / 8);
+        A2 := ArcCos(-3 / 4);
+
+        D1 := 1.07 * K;
+        D2 := 0.84 * K;
+    </Script>
+
+   <Axes TurningAngles = "0; 2 * Pi" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "D2" >
+        <Axis NormVector = "-N1;  0; N0" />
+        <Axis NormVector = " N2;-N0; N0" />
+        <Axis NormVector = " N2; N0; N0" />
+        <Axis NormVector = "-N1;  0;-N0" />
+        <Axis NormVector = " N2;-N0;-N0" />
+        <Axis NormVector = " N2; N0;-N0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "D1" >
+        <Axis NormVector = " N1;  0; 0" />
+        <Axis NormVector = "-N2;-N0; 0" />
+        <Axis NormVector = "-N2; N0; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;  0; C7" />
+
+                <Add Vector = " C4;  0; C3" />
+                <Add Vector = "-C1;-C8; C3" />
+                <Add Vector = "-C1; C8; C3" />
+
+                <Add Vector = " C4;-C3;  0" />
+                <Add Vector = " C0;-C6;  0" />
+                <Add Vector = "-C5;-C2;  0" />
+                <Add Vector = "-C5; C2;  0" />
+                <Add Vector = " C0; C6;  0" />
+                <Add Vector = " C4; C3;  0" />
+
+                <Add Vector = " C4;  0;-C3" />
+                <Add Vector = "-C1;-C8;-C3" />
+                <Add Vector = "-C1; C8;-C3" />
+
+                <Add Vector = "  0;  0;-C7" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue        " VertexIndexes = " 0; 2; 5; 4; 1" />
+                <Face Color = "clGreen       " VertexIndexes = " 0; 3; 7; 6; 2" />
+                <Face Color = "clViolett     " VertexIndexes = " 0; 1; 9; 8; 3" />
+
+                <Face Color = "clLightBlue   " VertexIndexes = "13;10; 4; 5;11" />
+                <Face Color = "clLightGreen  " VertexIndexes = "13;11; 6; 7;12" />
+                <Face Color = "clLightViolett" VertexIndexes = "13;12; 8; 9;10" />
+
+                <Face Color = "clYellow      " VertexIndexes = " 1; 4;10; 9" />
+                <Face Color = "clRed         " VertexIndexes = " 2; 6;11; 5" />
+                <Face Color = "clOrange      " VertexIndexes = " 3; 8;12; 7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Hide Axis = "ax1" From = "l1" To = "l2" />
+            <Turn Axis = "ax2" Layer = "l3" Angle = "an" />
+            <SplitByAxes/>
+            <Undo/>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Split" ax1 = "1" ax2 = "0" l1 = "0" l2 = "0" l3 = "1" an = " a1" />
+        <ExecMacro MacroName = "Split" ax1 = "2" ax2 = "0" l1 = "0" l2 = "0" l3 = "1" an = "-a1" />
+        <ExecMacro MacroName = "Split" ax1 = "3" ax2 = "0" l1 = "0" l2 = "0" l3 = "1" an = "-a2" />
+        <ExecMacro MacroName = "Split" ax1 = "3" ax2 = "0" l1 = "0" l2 = "0" l3 = "1" an = " a2" />
+
+        <ExecMacro MacroName = "Split" ax1 = "2" ax2 = "1" l1 = "0" l2 = "0" l3 = "1" an = " a1" />
+        <ExecMacro MacroName = "Split" ax1 = "4" ax2 = "1" l1 = "0" l2 = "0" l3 = "1" an = "-a2" />
+        <ExecMacro MacroName = "Split" ax1 = "4" ax2 = "1" l1 = "0" l2 = "0" l3 = "1" an = " a2" />
+
+        <ExecMacro MacroName = "Split" ax1 = "5" ax2 = "2" l1 = "0" l2 = "0" l3 = "1" an = "-a2" />
+        <ExecMacro MacroName = "Split" ax1 = "5" ax2 = "2" l1 = "0" l2 = "0" l3 = "1" an = " a2" />
+
+        <ExecMacro MacroName = "Split" ax1 = "5" ax2 = "3" l1 = "0" l2 = "0" l3 = "1" an = " a1" />
+        <ExecMacro MacroName = "Split" ax1 = "4" ax2 = "3" l1 = "0" l2 = "0" l3 = "1" an = " a2" />
+        <ExecMacro MacroName = "Split" ax1 = "4" ax2 = "3" l1 = "0" l2 = "0" l3 = "1" an = "-a1" />
+
+        <ExecMacro MacroName = "Split" ax1 = "5" ax2 = "4" l1 = "0" l2 = "0" l3 = "1" an = " a2" />
+        <ExecMacro MacroName = "Split" ax1 = "5" ax2 = "4" l1 = "0" l2 = "0" l3 = "1" an = "-a1" />
+    </Figure>
+</xml>

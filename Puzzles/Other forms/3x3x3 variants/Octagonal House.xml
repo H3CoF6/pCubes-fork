@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octagonal House</Name>
+        <Menu>Other forms\3x3x3 variants\Octagonal House</Menu>
+        <Inventor>Alexander Kiss</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-12-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9398</Link>
+    </Interface>
+ 
+    <Script>
+        Color := '555555';
+
+        W := 0.5;
+        D := W / 3;
+        DRoof := (D + W) / sqrt(2);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" TurnAxesWithPartNo = "14" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W * 1.5" />
+        <SplitByAxes/>
+        <Cut Color = "Color"><Plane NormVector = " 1; 0; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Color"><Plane NormVector = "-1; 0; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Color"><Plane NormVector = " 0; 1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Color"><Plane NormVector = " 0;-1; 0" NormDistance = "-W" /></Cut>
+        <Cut Color = "Color"><Plane NormVector = " 0; 0; 1" NormDistance = "-W" /></Cut>
+        <Cut Color = "Color"><Plane NormVector = " 1; 0;-1" NormDistance = "-DRoof" /></Cut>
+        <Cut Color = "Color"><Plane NormVector = "-1; 0;-1" NormDistance = "-DRoof" /></Cut>
+        <Hide Axis = "2" Layer = "2" />
+        <Cut Color = "Color"><Plane NormVector = " 1;-1; 0" NormDistance = "-DRoof" /></Cut>
+        <Cut Color = "Color"><Plane NormVector = "-1;-1; 0" NormDistance = "-DRoof" /></Cut>
+        <Cut Color = "Color"><Plane NormVector = " 1; 1; 0" NormDistance = "-DRoof" /></Cut>
+        <Cut Color = "Color"><Plane NormVector = "-1; 1; 0" NormDistance = "-DRoof" /></Cut>
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

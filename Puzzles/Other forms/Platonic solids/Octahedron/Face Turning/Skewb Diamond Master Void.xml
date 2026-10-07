@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Diamond Master Void</Name>
+        <Aliases>Void Master Diamond</Aliases>
+        <Menu>Other forms\Octahedron\Face Turning\Skewb Diamond Master Void</Menu>
+        <Menu>Other forms\Void\Octahedron\Skewb Diamond Master Void</Menu>
+        <Inventor>Samuel Martin</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-10-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12019</Link>
+    </Interface>
+
+    <Script>
+        W := 3 / 4;
+        D := W * 2 / 15;
+        C := W / 2 - D * sqrt(3) / 2;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi / 3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Split" >
+            <Split> <Plane NormVector = "Vx[i];Vy[i];Vz[i]" NormDistance = "C" /> </Split>
+            <Script>inc(i);</Script>
+        </Macro>
+        
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "Cx; Cy; Cz" />
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "6" />
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

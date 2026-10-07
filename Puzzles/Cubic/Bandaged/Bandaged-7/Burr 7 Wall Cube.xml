@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Burr 7 Wall Cube</Name>
+        <Menu>Cubic\Bandaged\Cube 7x7x7\Burr 7 Wall Cube</Menu>
+        <Inventor>Cameron Patzer</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-11-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5776</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 7;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('511=101,103,105,161,163,165,116,126,136,146,156,110,120,130,140,150');
+        ParseTxt('151=010,012,014,016,610,612,614,616');
+        ParseTxt('311=000,400,002,402,004,404,006,406,060,460,062,462,064,464,066,466');
+        ParseTxt('131=001,041,003,043,005,045,601,641,603,643,605,645');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(7)" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+
+        <Macro Name = "Preset" >
+            <Turn Axis = "2" Layers = "1;3;5" Angle = "Pi/2" />
+            <Turn Axis = "0" Layers = "0;6" Angle = "Pi/2" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Preset" />
+            <Turn Axis = "1" Layers = "Random(3) + 2" Angle = "Pi/2" />
+            <Turn Axis = "1" Layers = "Random(3) + 2" Angle = "Pi/2" />
+            <Turn Axis = "2" Layers = "Random(3) * 2 + 1" Angle = "Pi/2" />
+            <Turn Axis = "2" Layers = "Random(3) * 2 + 1" Angle = "Pi/2" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "2000" />
+        </Macro>
+    </Macros>
+</xml>

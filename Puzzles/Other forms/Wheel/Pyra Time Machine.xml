@@ -1,0 +1,129 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyra Time Machine</Name>
+        <Menu>Other forms\Wheel\Pyra Time Machine</Menu>
+        <Programmer>Boris</Programmer>
+        <Inventor>Roberto Cazares</Inventor>
+        <Added>2021-11-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9306</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := '0000C8'; // Blue
+        Colors[ 1] := '009600'; // Green
+        Colors[ 2] := 'C80000'; // Red
+        Colors[ 3] := 'FFFF00'; // Yellow
+
+        // slightly different colors for correct "Solved" procedure
+        Colors[10] := '0000C9'; // Blue
+        Colors[11] := '009601'; // Green
+        Colors[12] := 'C80001'; // Red
+        Colors[13] := 'FFFF01'; // Yellow
+
+        Colors[20] := '0000CA'; // Blue
+        Colors[21] := '009602'; // Green
+        Colors[22] := 'C80002'; // Red
+        Colors[23] := 'FFFF02'; // Yellow
+
+        Colors[30] := '0000CB'; // Blue
+        Colors[31] := '009603'; // Green
+        Colors[32] := 'C80003'; // Red
+        Colors[33] := 'FFFF03'; // Yellow
+
+        Colors[40] := '0000CC'; // Blue
+        Colors[41] := '009604'; // Green
+        Colors[42] := 'C80004'; // Red
+        Colors[43] := 'FFFF04'; // Yellow
+
+        Colors[50] := '0000CD'; // Blue
+        Colors[51] := '009605'; // Green
+        Colors[52] := 'C80005'; // Red
+        Colors[53] := 'FFFF05'; // Yellow
+
+        Colors[60] := '0000CE'; // Blue
+        Colors[61] := '009606'; // Green
+        Colors[62] := 'C80006'; // Red
+        Colors[63] := 'FFFF06'; // Yellow
+
+        Colors[70] := '0000CF'; // Blue
+        Colors[71] := '009607'; // Green
+        Colors[72] := 'C80007'; // Red
+        Colors[73] := 'FFFF07'; // Yellow
+
+        W := 0.5;
+        include 'Figures\Scripts\Tetrahedron_Coordinates.inc';
+
+        D := W * sqrt(3) / 3;
+        E := W * sqrt(3) / 9;
+
+        R := W * 0.66;
+        K := 1.3; // height of cylinders
+
+        A := 0.01; // incline
+        Ax := 0.97; // incline cut
+    </Script>
+
+    <Axes TurningAngles = "Pi/3; 2*Pi/3; 2*Pi/3" PlaneDistances = "-D; E" NormVectors = "Vx; Vy; Vz" />
+
+    <Figure>
+        <Script>i := 1;</Script>
+        <Macro Name = "AddCircle" >
+            <HideAll/>
+            <Cylinder Radius = "R" Color = "Colors[ax1]" Base = " Cx[ax1]; Cy[ax1]; Cz[ax1]" Top = " Cx[ax1] * K; Cy[ax1] * K; Cz[ax1] * K" />
+            <Split Color2 = "Colors[ax1 + 10]" Axis = "ax2" From = "2" />
+            <Hide Axis = "ax2" To = "1" />
+            <Turn Axis = "ax1" Layer = "0" Angle = "Pi" />
+            <Cut Color = "Colors[ax1 + 20]" Axis = "ax2" To = "2" />
+            <Undo/>
+            <ShowAll/>
+            <Turn Axis = "ax1" Layer = "0" Angle = "Pi/3" />
+            <Hide Axis = "ax1" From = "1" />
+            <Split Color2 = "Colors[ax1 + 30]" Axis = "ax2" From = "2" />
+            <Hide Axis = "ax2" To = "1" />
+            <Turn Axis = "ax1" Layer = "0" Angle = "Pi" />
+            <Cut Color = "Colors[ax1 + 40]" Axis = "ax2" To = "2" />
+            <Undo/>
+            <ShowAll/>
+            <Turn Axis = "ax1" Layer = "0" Angle = "Pi/3" />
+            <Hide Axis = "ax1" From = "1" />
+            <Split Color2 = "Colors[ax1 + 50]" Axis = "ax2" From = "2" />
+            <Hide Axis = "ax2" To = "1" />
+            <Turn Axis = "ax1" Layer = "0" Angle = "Pi" />
+            <Cut Color = "Colors[ax1 + 60]" Axis = "ax2" To = "2" />
+            <Undo Repeat = "3" />
+            <ShowAll/>
+
+            // incline for "Solved" procedure to work with 123456-order
+            <Cut Color = "Colors[ax1 + 70]" ><Plane NormVector = "-Cx[ax1] + Cx[ax2] * A;-Cy[ax1] + Cy[ax2] * A;-Cz[ax1] + Cz[ax2] * A" NormDistance = "-W / sqrt(3) * K * Ax"  /></Cut>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" ax1 = "0" ax2 = "1" />
+        <ExecMacro MacroName = "AddCircle" ax1 = "1" ax2 = "2" />
+        <ExecMacro MacroName = "AddCircle" ax1 = "2" ax2 = "3" />
+        <ExecMacro MacroName = "AddCircle" ax1 = "3" ax2 = "0" />
+
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_06.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 = 3,14,11, 18,14,11, 12,14,11,  7,14,11,  
+        tm_02 = 0,14,11, 19,14,11, 13,15,11,  8,15,11,  
+        tm_03 = 1,15,11, 20,15,11, 14,14, 3, 11,14,11, 
+        tm_04 = 2,14,11, 23,14, 3, 17,14,11, 10,14, 9, 
+        tm_05 = 5,14, 9, 22,14,11, 16,15,11,  9,15,11,  
+        tm_06 = 4,15,11, 21,15,11, 15,14,11,  6,14,11,  
+    </SetTextures>
+</xml>

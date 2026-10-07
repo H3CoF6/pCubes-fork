@@ -1,0 +1,145 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Face- and Corner-turning Icosahedron</Name>
+        <Menu>Other forms\Icosahedron\Mixed\Face- and Corner-turning Icosahedron</Menu>
+        <Inventor>Ryan Binter</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-12-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3496</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        // Each edge is defined by two Vertices
+        EdgeV1[ 0] :=  0; EdgeV2[ 0] :=  1;
+        EdgeV1[ 1] :=  0; EdgeV2[ 1] :=  2;
+        EdgeV1[ 2] :=  0; EdgeV2[ 2] :=  3;
+        EdgeV1[ 3] :=  0; EdgeV2[ 3] :=  4;
+        EdgeV1[ 4] :=  0; EdgeV2[ 4] :=  5;
+        EdgeV1[ 5] :=  1; EdgeV2[ 5] :=  2;
+        EdgeV1[ 6] :=  2; EdgeV2[ 6] :=  3;
+        EdgeV1[ 7] :=  3; EdgeV2[ 7] :=  4;
+        EdgeV1[ 8] :=  4; EdgeV2[ 8] :=  5;
+        EdgeV1[ 9] :=  5; EdgeV2[ 9] :=  1;
+        EdgeV1[10] :=  1; EdgeV2[10] :=  6;
+        EdgeV1[11] :=  2; EdgeV2[11] :=  7;
+        EdgeV1[12] :=  3; EdgeV2[12] :=  8;
+        EdgeV1[13] :=  4; EdgeV2[13] :=  9;
+        EdgeV1[14] :=  5; EdgeV2[14] := 10;
+        EdgeV1[15] :=  1; EdgeV2[15] := 10;
+        EdgeV1[16] :=  2; EdgeV2[16] :=  6;
+        EdgeV1[17] :=  3; EdgeV2[17] :=  7;
+        EdgeV1[18] :=  4; EdgeV2[18] :=  8;
+        EdgeV1[19] :=  5; EdgeV2[19] :=  9;
+        EdgeV1[20] :=  6; EdgeV2[20] :=  7;
+        EdgeV1[21] :=  7; EdgeV2[21] :=  8;
+        EdgeV1[22] :=  8; EdgeV2[22] :=  9;
+        EdgeV1[23] :=  9; EdgeV2[23] := 10;
+        EdgeV1[24] := 10; EdgeV2[24] :=  6;
+        EdgeV1[25] := 11; EdgeV2[25] :=  6;
+        EdgeV1[26] := 11; EdgeV2[26] :=  7;
+        EdgeV1[27] := 11; EdgeV2[27] :=  8;
+        EdgeV1[28] := 11; EdgeV2[28] :=  9;
+        EdgeV1[29] := 11; EdgeV2[29] := 10;
+
+        D1 := R * sqrt((25 + 11 * sqrt(5)) / 30) / 2;
+        D2 := R * (5 + sqrt(5)) / 10;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+        <Axis NormVector = "Cx[6]; Cy[6]; Cz[6]" />
+        <Axis NormVector = "Cx[7]; Cy[7]; Cz[7]" />
+        <Axis NormVector = "Cx[8]; Cy[8]; Cz[8]" />
+        <Axis NormVector = "Cx[9]; Cy[9]; Cz[9]" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "HideEdges">
+            <Script> v1 := EdgeV1[i]; v2 := EdgeV2[i]; Inc(i); </Script>
+            <HideContaining Vector = "(2 * Vx[v1] + Vx[v2]) / 3; (2 * Vy[v1] + Vy[v2]) / 3; (2 * Vz[v1] + Vz[v2]) / 3; " />
+            <HideContaining Vector = "(2 * Vx[v2] + Vx[v1]) / 3; (2 * Vy[v2] + Vy[v1]) / 3; (2 * Vz[v2] + Vz[v1]) / 3; " />
+        </Macro>
+        <ExecMacro MacroName = "HideEdges" i = "0" Repeat = "30" />
+
+        <RemoveAllVisible/>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "Vx[ 0]; Vy[ 0]; Vz[ 0]" />
+
+                <Add Vector = "Vx[ 1]; Vy[ 1]; Vz[ 1]" />
+                <Add Vector = "Vx[ 2]; Vy[ 2]; Vz[ 2]" />
+                <Add Vector = "Vx[ 3]; Vy[ 3]; Vz[ 3]" />
+                <Add Vector = "Vx[ 4]; Vy[ 4]; Vz[ 4]" />
+                <Add Vector = "Vx[ 5]; Vy[ 5]; Vz[ 5]" />
+
+                <Add Vector = "Vx[ 6]; Vy[ 6]; Vz[ 6]" />
+                <Add Vector = "Vx[ 7]; Vy[ 7]; Vz[ 7]" />
+                <Add Vector = "Vx[ 8]; Vy[ 8]; Vz[ 8]" />
+                <Add Vector = "Vx[ 9]; Vy[ 9]; Vz[ 9]" />
+                <Add Vector = "Vx[10]; Vy[10]; Vz[10]" />
+
+                <Add Vector = "Vx[11]; Vy[11]; Vz[11]" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = " 0; 1; 5" />
+                <Face VertexIndexes = " 0; 2; 1" />
+                <Face VertexIndexes = " 0; 3; 2" />
+                <Face VertexIndexes = " 0; 4; 3" />
+                <Face VertexIndexes = " 0; 5; 4" />
+                <Face VertexIndexes = " 1;10; 5" />
+                <Face VertexIndexes = " 2; 6; 1" />
+                <Face VertexIndexes = " 3; 7; 2" />
+                <Face VertexIndexes = " 4; 8; 3" />
+                <Face VertexIndexes = " 5; 9; 4" />
+                <Face VertexIndexes = "11; 7; 8" />
+                <Face VertexIndexes = "11; 8; 9" />
+                <Face VertexIndexes = "11; 9;10" />
+                <Face VertexIndexes = "11;10; 6" />
+                <Face VertexIndexes = "11; 6; 7" />
+                <Face VertexIndexes = " 7; 3; 8" />
+                <Face VertexIndexes = " 8; 4; 9" />
+                <Face VertexIndexes = " 9; 5;10" />
+                <Face VertexIndexes = "10; 1; 6" />
+                <Face VertexIndexes = " 6; 2; 7" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+
+        <Macro Name = "RemoveEdges">
+            <Script> v1 := EdgeV1[i]; v2 := EdgeV2[i]; Inc(i); </Script>
+            <RemoveContaining Vector = "(2 * Vx[v1] + Vx[v2]) / 3; (2 * Vy[v1] + Vy[v2]) / 3; (2 * Vz[v1] + Vz[v2]) / 3; " />
+            <RemoveContaining Vector = "(2 * Vx[v2] + Vx[v1]) / 3; (2 * Vy[v2] + Vy[v1]) / 3; (2 * Vz[v2] + Vz[v1]) / 3; " />
+        </Macro>
+        <ExecMacro MacroName = "RemoveEdges" i = "0" Repeat = "30" />
+
+        <ShowAll/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

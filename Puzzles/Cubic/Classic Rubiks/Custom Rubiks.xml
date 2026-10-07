@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rubik's Cube custom size</Name>
+        <Menu>Cubic\Classic Rubiks\Any size</Menu>
+        <Inventor>different</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-08-06</Added>
+    </Interface>
+
+    <Script>
+        N := 2;
+
+        RequestNumbers('Enter cube size', 'Size:', N);
+<!--
+
+variables must be assinged before call!
+
+may be in form
+
+        RequestNumbers(Caption, Label1, N1);
+        RequestNumbers(Caption, Label1, Label2, N1, N2);
+        RequestNumbers(Caption, Label1, Label2, Label3, N1, N2, N3);
+
+if user click Cancel, variable are not changed, but you may check this:
+
+        if not RequestNumbers('Enter cube size', 'Size:', N) then
+          ShowMessage('Cancelled');
+
+BUT! In this version you can't:
+  - break script.
+  - find out previous values of variables.
+
+-->
+
+
+<!--
+
+You can't use Script characters '<' and '>' directly because of
+    xml limitations, so use xml-strings '&lt;' and '&gt;' instead
+
+-->
+
+        N := Max(Min(N, 100), 2);
+
+        W := 0.5;
+
+        WD := 2 * W / N;
+        D[0] := -W + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <!-- at first cut central big gray cube to save time and memory -->
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "0" From = "N-1" />
+        <Split Axis = "1" From = "N-1" />
+        <Split Axis = "2" From = "N-1" />
+<!--        <RemoveContaining Vector = "0; 0; 0" /> for cube it's not usable when N = 2 -->
+        <RemoveGrayParts/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagonal Prism 5x5x5</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Hexagonal Prism 5x5x5</Menu>
+        <Inventor>Ruben Dario Velez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-07-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8721</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFF00';
+        Colors[1] := 'FF64FF';
+        Colors[2] := 'FF6000';
+        Colors[3] := '00FF00';
+        Colors[4] := '0064FF';
+        Colors[5] := 'FF0000';
+        Colors[6] := '646464';
+        Colors[7] := 'C8C8C8';
+
+        R := 0.45;
+        H := R * sqrt(6) * 3 / 8;
+        D :=  R / 8 * sqrt(2);
+        H1 := H * 1.05; // pillow
+        R1 := R * sqrt(3) / 2 * 1.05; // pillow
+
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 3 * i);
+            y[i] := R * sin(Pi / 3 * i);
+            xc[i] := R1 * cos(Pi / 3 * (i + 0.5));
+            yc[i] := R1 * sin(Pi / 3 * (i + 0.5));
+        end;
+        az := R / sqrt(2);        
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D*3;-D; D; D*3" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "y[1]; x[1]; az" />
+        <Axis NormVector = "y[5]; x[5]; az" />
+        <Axis NormVector = "y[3]; x[3]; az" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                Color := Colors[i];
+                i1 := (i + 1) mod 6;
+                i2 := i;
+                i3 := i + 6;
+                i4 := (i + 1) mod 6 + 6;
+                i5 := i + 14;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1; i2; i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = " i2; i3; i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = " i3; i4; i5" InvisibleEdges = "6" />
+            <Face Color = "Color" VertexIndexes = " i4; i1; i5" InvisibleEdges = "6" />
+        </Macro>
+
+        <Macro Name = "AddTop" >
+            <Face Color = "Color" VertexIndexes = " i; (i + 1) mod 6; 12" InvisibleEdges = "6" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "AddBottom" >
+            <Face Color = "Color" VertexIndexes = "11 - i; 11 - (i + 1) mod 6; 13" InvisibleEdges = "6" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " x; y; H" />
+            <Vertices Vectors = " x; y;-H" />
+            <Vertices Vectors = " 0; 0; H1" />
+            <Vertices Vectors = " 0; 0;-H1" />
+            <Vertices Vectors = " xc; yc;0" />
+            <Faces>
+                <ExecMacro MacroName = "AddFace"   i = "0" Repeat = "6" />
+                <ExecMacro MacroName = "AddTop"    i = "0" Color = "Colors[7]" Repeat = "6" />
+                <ExecMacro MacroName = "AddBottom" i = "0" Color = "Colors[6]" Repeat = "6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

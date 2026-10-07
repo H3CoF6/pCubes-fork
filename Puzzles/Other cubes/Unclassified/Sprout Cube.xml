@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sprout Cube</Name>
+        <Menu>Other cubes\Unclassified\Sprout Cube</Menu>
+        <Inventor>Diogo Sousa</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7523</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0066FF'; // clBlue
+        Colors[1] := '00BB00'; // clGreen
+        Colors[2] := 'FF0000'; // clRed
+        Colors[3] := 'FF8800'; // clOrange
+        Colors[4] := 'FFFFFF'; // clWhite
+        Colors[5] := 'FFFF00'; // clYellow
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        A := W * 1.385;
+        B := W * 0.55;
+        C := W * 0.20;
+
+        D := W * 1.274;
+
+        Sc := 0.23157240283401062; // x^4 - 4 x^3 - 6 x^2 - 20 x + 5 = 0
+
+        A2 := ArcCos((sqrt(3) * sqrt(2 + Sc^2) + Sc^2 - 2 * Sc) / (-2 - 2 * Sc));
+        A1 := 2 * (Pi - A2);
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "D" >
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = " 1; 1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "D" >
+        <Axis NormVector = "-1;-1;-sc" />
+        <Axis NormVector = " 1;-1; sc" />
+        <Axis NormVector = " 1; 1;-sc" />
+        <Axis NormVector = "-1; 1; sc" />
+
+        <Axis NormVector = " 1;-sc; 1" />
+        <Axis NormVector = "-1;-sc;-1" />
+        <Axis NormVector = " 1; sc;-1" />
+        <Axis NormVector = "-1; sc; 1" />
+
+        <Axis NormVector = " sc;-1; 1" />
+        <Axis NormVector = "-sc;-1;-1" />
+        <Axis NormVector = " sc; 1;-1" />
+        <Axis NormVector = "-sc; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed 2.xml" />
+
+        <SplitByAxes/>
+
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

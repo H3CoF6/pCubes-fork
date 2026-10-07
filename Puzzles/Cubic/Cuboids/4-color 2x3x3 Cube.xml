@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>4-color 2x3x3 Cube</Name>
+        <Menu>Cubic\Cuboids\4-color 2x3x3 Cube</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-04</Added>
+        <Link>https://cubezz.com/Buy-6014-FanXin+4-color+2x3x3+Magic+Cube+Puzzle.html</Link>
+    </Interface>
+
+    <Script>
+        clOrange := 'FF8800';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clGreen  := '00EE00';
+
+        W := 0.5;
+        D := W / 3;
+
+        WX := W;
+        WY := W;
+        WZ := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script>
+            for i := 0 to 3 do
+              Colors[i] := clOrange;
+            Colors[4] := -1;
+            Colors[5] := clYellow;
+            DWZ := D;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Script>
+            for i := 0 to 3 do
+              Colors[i] := clGreen;
+            Colors[4] := clWhite;
+            Colors[5] := -1;
+            DWZ := -D;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

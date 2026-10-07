@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Uncanny Mixup</Name>
+        <Menu>Other cubes\Bermuda Cubes\Uncanny Mixup</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-11-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3012</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * (sqrt(2) - 1);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "-1; 0; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Turn  Axis = "0" Layer = "1" Angle = " Pi/2" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <Turn  Axis = "1" Layer = "1" Angle = " Pi/2" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi/2" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <Macro Name = "SplitFaceCenter" >
+            <HideContaining Vector = "0; -W; 0" />
+            <InvertVisibility/>
+            <Split> <Plane NormVector = " 1; 1; 0" NormDistance = "-D" /> </Split>
+            <Split> <Plane NormVector = "-1; 1; 0" NormDistance = "-D" /> </Split>
+            <Split> <Plane NormVector = " 0; 1; 1" NormDistance = "-D" /> </Split>
+            <Split> <Plane NormVector = " 0; 1;-1" NormDistance = "-D" /> </Split>
+            <RemoveGrayParts/>
+            <ShowAll/>
+        </Macro>
+
+        // Middle layer
+        <Macro Name = "SplitML" >
+            <ExecMacro MacroName = "SplitFaceCenter" />
+            <Turn  Axis = "3" Layer = "1" Angle = "Pi/4" />
+        </Macro>
+        <ExecMacro MacroName = "SplitML" Repeat = "8"/>
+
+        // Top and bottom
+        <Macro Name = "SplitPair" >
+            <Turn  Axis = "ax" Layer = "1" Angle = " Pi/2 " />
+            <Turn  Axis = "3"  Layer = "1" Angle = " Angle" />
+            <ExecMacro MacroName = "SplitFaceCenter" />
+            <Turn  Axis = "3"  Layer = "1" Angle = " Pi/2" />
+            <ExecMacro MacroName = "SplitFaceCenter" />
+            <Undo  Repeat = "3" />
+        </Macro>
+        <ExecMacro MacroName = "SplitPair" ax = "0" Angle = " Pi/4" />
+        <ExecMacro MacroName = "SplitPair" ax = "1" Angle = "-Pi/4" />
+        <ExecMacro MacroName = "SplitPair" ax = "2" Angle = " Pi  " />
+    </Figure>
+</xml>

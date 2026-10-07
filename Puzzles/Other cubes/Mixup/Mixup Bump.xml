@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup Bump</Name>
+        <Menu>Other cubes\Mixup\Mixup Bump</Menu>
+        <Inventor>Tim Fitzrandolph</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-03-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7952</Link>
+    </Interface>
+
+    <Script>
+        BumpColor := 'E0C07D';
+
+        W := 0.5;
+        D := W * 2 / (1 + sqrt(2));
+
+        WX := W;
+        WY := W;
+        WZ := W;
+        DWX := 0.02;
+        DWY := 0.04;
+        DWZ := 0.06;
+        for i := 0 to 5 do
+            Colors[i] := BumpColor;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/2" PlaneDistances = "-D/2; D/2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "Ax1" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "Ax2" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Turn Axis = "Ax3" Angle = "Pi/4" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Undo/>
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+
+        <HideContaining Vector = " D; 0; 0" />
+        <HideContaining Vector = "-D; 0; 0" />
+        <HideContaining Vector = " 0; D; 0" />
+        <HideContaining Vector = " 0;-D; 0" />
+        <HideContaining Vector = " 0; 0; D" />
+        <HideContaining Vector = " 0; 0;-D" />
+
+        <HideContaining Vector = "-D; D; D" />
+        <HideContaining Vector = "-D; D;-D" />
+        <HideContaining Vector = "-D;-D; D" />
+        <HideContaining Vector = "-D;-D;-D" />
+        <HideContaining Vector = " D; D; D" />
+        <HideContaining Vector = " D; D;-D" />
+        <HideContaining Vector = " D;-D; D" />
+        <HideContaining Vector = " D;-D;-D" />
+
+        <HideContaining Vector = " 0;-D;-D" />
+        <HideContaining Vector = " 0;-D; D" />
+        <HideContaining Vector = " 0; D;-D" />
+        <HideContaining Vector = " 0; D; D" />
+        <HideContaining Vector = "-D; 0;-D" />
+        <HideContaining Vector = " D; 0;-D" />
+        <HideContaining Vector = "-D; 0; D" />
+        <HideContaining Vector = " D; 0; D" />
+        <HideContaining Vector = "-D;-D; 0" />
+        <HideContaining Vector = "-D; D; 0" />
+        <HideContaining Vector = " D;-D; 0" />
+        <HideContaining Vector = " D; D; 0" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+    </Figure>
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

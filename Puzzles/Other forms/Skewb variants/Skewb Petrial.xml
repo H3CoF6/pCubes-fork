@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Skewb Petrial</Name>
+        <Menu>Other forms\Skewb variants\Skewb Petrial</Menu>
+        <Inventor>Junseo Yoon</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2025-11-03</Added>
+        <Link>http://twistypuzzles.com/museum/museum_showitem.php?pkey=12710</Link>
+    </Interface>
+
+    <Script>
+        W := 0.7;
+        D := W * 0.2;
+
+        RCut1 := W * 0.87;
+        RCut2 := RCut1 - D;
+        RCut3 := RCut2 - D;
+        RCut4 := D / 2;
+
+        A := RCut1 / sqrt(2);
+        B := RCut2 / sqrt(2);
+        C := RCut3 / sqrt(2);
+
+        clRed    := 'FF0000';
+        clGreen  := '007700';
+        clBlue   := '0000FF';
+        clYellow := 'FFFF00';
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "MakeHexagon">
+            <!-- 1st trapezoid -->
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "W" />
+            <Cut Color = "Color" > <Plane NormVector = " 1; 1; 1" NormDistance = "-RCut4" /> </Cut>
+            <Cut Color = "Color" > <Plane NormVector = "-1;-1;-1" NormDistance = "-RCut4" /> </Cut>
+            <Cut Color = "Color" > <Plane NormVector = " 0; 1;-1" NormDistance = "-RCut1" /> </Cut>
+            <Cut Color = "Color" > <Plane NormVector = " 0;-1; 1" NormDistance = " RCut2" /> </Cut>
+            <Cut Color = "-2" InvisibleEdges = "5" > <Plane NormVector = " 1;-1; 0" NormDistance = "D" /> </Cut>
+            <Cut Color = "-2" InvisibleEdges = "5" > <Plane NormVector = "-1; 0; 1" NormDistance = "D" /> </Cut>
+            <HideAll/>
+
+            <!-- 2nd trapezoid -->
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "W" />
+            <Cut Color = "Color" > <Plane NormVector = " 1; 1; 1" NormDistance = "-RCut4" /> </Cut>
+            <Cut Color = "Color" > <Plane NormVector = "-1;-1;-1" NormDistance = "-RCut4" /> </Cut>
+            <Cut Color = "Color" > <Plane NormVector = "-1; 1; 0" NormDistance = "-RCut2" /> </Cut>
+            <Cut Color = "Color" > <Plane NormVector = " 1;-1; 0" NormDistance = " RCut3" /> </Cut>
+            <Cut Color = "-2" InvisibleEdges = "5" > <Plane NormVector = " 0;-1; 1" NormDistance = "-D" /> </Cut>
+            <Cut Color = "-2" InvisibleEdges = "5" > <Plane NormVector = " 1; 0;-1" NormDistance = "-D" /> </Cut>
+            <!-- Splitting for rendering purposes -->
+            <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = " 0; 1;-1" NormDistance = "-RCut2" /> </Split>
+            <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = "-1; 0; 1" NormDistance = "-RCut2" /> </Split>
+            <HideAll/>
+
+            <Turn NormVector = " 1; 1; 1" Angle = "-2 * Pi / 3" />
+        </Macro>
+
+        <Macro Name = "MakeRing">
+            <ExecMacro MacroName = "MakeHexagon" Repeat = "3" />
+            <Turn NormVector = " 0; 0; 1" Angle = " Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "MakeRing" Color = "clGreen"  />
+        <ExecMacro MacroName = "MakeRing" Color = "clBlue"   />
+        <ExecMacro MacroName = "MakeRing" Color = "clYellow" />
+        <ExecMacro MacroName = "MakeRing" Color = "clRed"    />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <!-- Splitting for rendering purposes -->
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = " 1; 1; 0" NormDistance = "0" /> </Split>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = " 1;-1; 0" NormDistance = "0" /> </Split>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = " 1; 0; 1" NormDistance = "0" /> </Split>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = "-1; 0; 1" NormDistance = "0" /> </Split>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = " 0; 1; 1" NormDistance = "0" /> </Split>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" > <Plane NormVector = " 0;-1; 1" NormDistance = "0" /> </Split>
+    </Figure>
+</xml>

@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Gyro Skewb</Name>
+        <Menu>Other forms\Skewb variants\Gyro Skewb</Menu>
+        <Inventor>Christopher Murray</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2067</Link>
+    </Interface>
+
+    <Script>
+        R := 0.6;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        ColorA := '008080'; <!-- Teal -->
+        ColorB := 'FF69B4'; <!-- Pink -->
+        ColorC := 'DDBB20'; <!-- Gold -->
+        ColorD := 'AAAAAA'; <!-- Gray -->
+
+        DCut1 := R * sqrt(5) / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[7]; Vy[7]; Vz[7]" />
+        <Axis NormVector = "Vx[8]; Vy[8]; Vz[8]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <Cut Color = "ColorA" > <Plane NormVector = "-vx[1];-vy[1];-vz[1]" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "ColorB" > <Plane NormVector = " vx[4]; vy[4]; vz[4]" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "ColorC" > <Plane NormVector = " vx[7]; vy[7]; vz[7]" NormDistance = "-DCut1" /> </Cut>
+        <Cut Color = "ColorD" > <Plane NormVector = "-vx[8];-vy[8];-vz[8]" NormDistance = "-DCut1" /> </Cut>
+    </Figure>
+</xml>

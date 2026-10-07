@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Corner Truncated 3x3x3 Extended 000 001</Name>
+        <Menu>Other forms\Tetrahedron\Corner Truncated 3x3x3 Extended 000 001</Menu>
+        <Menu>Other forms\3x3x3 variants\Truncated cube\Corner Truncated 3x3x3 Extended 000 001</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-04-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3871</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        K := 0.35;
+
+        A := K * 1 / 2;
+        B := K * 4 / 3;
+        C := K * 1 / 6;
+        D := K * 11 / 6;
+        X := K * 7 / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-C; C" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-A;-B; 0" />
+                <Add Vector = " B; A; 0" />
+                <Add Vector = "-A; A; D" />
+                <Add Vector = "-A; A;-D" />
+                <Add Vector = "-A;-X; C" />
+                <Add Vector = " X; A; C" />
+                <Add Vector = "-A;-X;-C" />
+                <Add Vector = " X; A;-C" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[4]" VertexIndexes = "0;1;2" />
+                <Face Color = "Colors[3]" VertexIndexes = "1;0;3" />
+                <Face Color = "Colors[2]" VertexIndexes = "4;6;0" />
+                <Face Color = "Colors[2]" VertexIndexes = "6;4;2;3" />
+                <Face Color = "Colors[0]" VertexIndexes = "7;5;1" />
+                <Face Color = "Colors[0]" VertexIndexes = "5;7;3;2" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "SplitLine" >
+            <Split><Plane NormVector = "rx;ry;rz" NormDistance = "i * C" /></Split>
+            <Script>i := i + 2;</Script>
+        </Macro>
+
+        <SplitByAxes/>
+
+        <ExecMacro MacroName = "SplitLine" rx = "0" ry = " 0" rz = " 1" i = "3" Repeat = "4" />
+        <ExecMacro MacroName = "SplitLine" rx = "0" ry = " 0" rz = "-1" i = "3" Repeat = "4" />
+
+        <Hide Axis = "0" From  = "0" To = "0" />
+        <Hide Axis = "1" From  = "2" To = "2" />
+        <Hide Axis = "2" From  = "0" To = "0" />
+        <Hide Axis = "2" From  = "2" To = "2" />
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "SplitLine" rx = "1" ry = " 0" rz = " 0" i = "3" Repeat = "2" />
+        <ExecMacro MacroName = "SplitLine" rx = "0" ry = "-1" rz = " 0" i = "3" Repeat = "2" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

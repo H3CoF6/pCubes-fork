@@ -1,0 +1,111 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Weird Pentultimate Plus</Name>
+        <Menu>Other forms\Dodecahedron\Other\Weird Pentultimate Plus</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-10</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // clWhite
+        Colors[ 1] := 'FFFF00'; // clYellow
+        Colors[ 2] := '0000CC'; // clBlue
+        Colors[ 3] := 'FF0000'; // clRed
+        Colors[ 4] := '00AA00'; // clGreen
+        Colors[ 5] := '800080'; // clViolett
+        Colors[ 6] := 'FFFFAA'; // clCream
+        Colors[ 7] := '0066CC'; // clLightBlue
+        Colors[ 8] := 'FF6000'; // clOrange
+        Colors[ 9] := '00FF00'; // clLightGreen
+        Colors[10] := 'FF88CC'; // clLightViolett
+        Colors[11] := '666666'; // clGray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * sqrt((85 + 38 * sqrt(5)) / 240);
+
+         // Rotate p around normalized v
+        procedure RotatePoint(Angle);
+        begin
+            Xp := Ex[e];
+            Yp := Ey[e];
+            Zp := Ez[e];
+            Xv := Cx[c] / RSin; // normalize v
+            Yv := Cy[c] / RSin;
+            Zv := Cz[c] / RSin;
+
+            ca := Cos(Angle);
+            sa := Sin(Angle);
+            c2 := 1 - ca;
+
+            px[ind] := Xp * (Xv * c2 * Xv + ca) +
+                       Yp * (Yv * c2 * Xv - sa * Zv) +
+                       Zp * (Zv * c2 * Xv + sa * Yv);
+
+            py[ind] := Xp * (Xv * c2 * Yv + sa * Zv) +
+                       Yp * (Yv * c2 * Yv + ca) +
+                       Zp * (Zv * c2 * Yv - sa * Xv);
+
+            pz[ind] := Xp * (Xv * c2 * Zv - sa * Yv) +
+                       Yp * (Yv * c2 * Zv + sa * Xv) +
+                       Zp * (Zv * c2 * Zv + ca);
+            Inc(ind);
+        end;
+
+        procedure CalcPlaneAxes(e, c, A);
+        begin
+            for i := 0 to 4 do
+                RotatePoint((i * 2 + 1) * A);
+        end;
+
+        ind := 0;
+        CalcPlaneAxes(10, 0, Pi/10);
+        CalcPlaneAxes( 9, 1, Pi/10);
+        CalcPlaneAxes( 8, 2,-Pi/10);
+        CalcPlaneAxes( 6, 3, Pi/10);
+        CalcPlaneAxes( 7, 4, Pi/10);
+        CalcPlaneAxes( 2, 5,-Pi/10);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/10" PlaneDistances = "0" TurnAxesWithLayer = "1">
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-D; D" NormVectors = " px; py; pz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "Split1" >
+            <Split Axis = "ax" From = "1" To = "2" />
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split1" ax = "0" Repeat = "6" />
+
+        <Macro Name = "Split2" >
+            <Turn Axis = "ax0" Layer = "0" Angle = "2*pi/10" />
+            <Split Axis = "ax  " From = "2" To = "2" />
+            <Split Axis = "ax+1" From = "1" To = "1" />
+            <Split Axis = "ax+2" From = "2" To = "2" />
+            <Split Axis = "ax+3" From = "1" To = "1" />
+            <Split Axis = "ax+4" From = "2" To = "2" />
+            <Undo/>
+        </Macro>
+        <ExecMacro MacroName = "Split2" ax0 = "0" ax = " 6" />
+        <ExecMacro MacroName = "Split2" ax0 = "1" ax = "11" />
+        <ExecMacro MacroName = "Split2" ax0 = "2" ax = "16" />
+        <ExecMacro MacroName = "Split2" ax0 = "3" ax = "21" />
+        <ExecMacro MacroName = "Split2" ax0 = "4" ax = "26" />
+        <ExecMacro MacroName = "Split2" ax0 = "5" ax = "31" />
+    </Figure>
+</xml>

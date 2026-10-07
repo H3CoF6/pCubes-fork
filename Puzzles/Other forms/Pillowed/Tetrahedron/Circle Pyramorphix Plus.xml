@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Circle Pyramorphix Plus</Name>
+        <Menu>Other forms\Pillowed\Tetrahedron\Circle Pyramorphix Plus</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7825</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFF00'; // Yellow
+        Colors[1] := 'EE0000'; // Red
+        Colors[2] := '00EE00'; // Green
+        Colors[3] := '0011EE'; // Blue
+
+        K := 0.5;
+        D := K * 0.843;
+        DCut := K * 1.15;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+    <Axes TurningAngles = "2 * Pi / 3;0;2 * Pi / 3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = " 0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = " 0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " 0" /></Split>
+
+        <Split><Plane NormVector = " 1; 1;-1" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = "-1;-1;-1" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = "-1; 1; 1" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 1;-1; 1" NormDistance = " D" /></Split>
+
+        <HideContaining Vector = " 0; 0; 0" />
+        <SplitByAxes/>
+        <ShowAll/>
+
+        <!-- cut -->
+
+        <Macro Name = "Cut" >
+            <Hide><Plane NormVector = "-1; 0; 0" NormDistance = " 0" /></Hide>
+            <Hide><Plane NormVector = " 0;-1; 0" NormDistance = " 0" /></Hide>
+            <Hide><Plane NormVector = " 0; 0;-1" NormDistance = " 0" /></Hide>
+            <Cut><Plane NormVector = " 2;-1;-1" NormDistance = "-DCut" /></Cut>
+            <Cut><Plane NormVector = "-1; 2;-1" NormDistance = "-DCut" /></Cut>
+            <Cut><Plane NormVector = "-1;-1; 2" NormDistance = "-DCut" /></Cut>
+            <ShowAll/>
+            <Turn NormVector = "0;1;0" Angle = "Pi" />
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "Cut" Repeat = "2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

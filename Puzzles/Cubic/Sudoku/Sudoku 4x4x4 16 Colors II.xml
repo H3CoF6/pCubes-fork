@@ -1,0 +1,103 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Sudoku Cube 4x4x4 - 16 colors II</Name>
+        <Menu>Cubic\Sudoku\4x4x4 - 16 colors II</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-16</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[ 1] := '800080'; // purple
+        Colors[ 2] := 'A77901'; // brown
+        Colors[ 3] := '00FFFF'; // aqua
+        Colors[ 4] := '1D9F00'; // green
+        Colors[ 5] := 'FFFF00'; // Yellow
+        Colors[ 6] := '405050'; // gray
+        Colors[ 7] := '0000FF'; // Blue
+        Colors[ 8] := 'A020F0'; // light purple
+        Colors[ 9] := '87FF4A'; // bright green
+        Colors[10] := 'FF0000'; // red
+        Colors[11] := 'FECC9B'; // skin
+        Colors[12] := '708090'; // light gray
+        Colors[13] := 'FF5C00'; // orange
+        Colors[14] := '00D86C'; // marine
+        Colors[15] := '017F5B'; // darkmarine
+        Colors[16] := 'FFFFFF'; // white
+
+        ColorsS := '123456789abcdefg';
+
+        W := 0.5;
+        N := 4;
+        D := W / 2;
+
+        function GetColor(): integer;
+        begin
+          substr := copy(SColors[sy + y], sx + x, 1));
+          Result := Pos(substr, ColorsS);
+        end;
+
+        SColors[ 0] := '    a957        ';
+        SColors[ 1] := '    6db2        ';
+        SColors[ 2] := '    3e41        ';
+        SColors[ 3] := '    8fgc        ';
+        SColors[ 4] := 'a6388fgcc127759a';
+        SColors[ 5] := '4cb22d6559b88ge4';
+        SColors[ 6] := '1fgee3944fd33cb1';
+        SColors[ 7] := 'd95771baaeg662fd';
+        SColors[ 8] := '    71ba        ';
+        SColors[ 9] := '    534e        ';
+        SColors[10] := '    9c8g        ';
+        SColors[11] := '    df26        ';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W*1.1" Color = "-1" />
+        <SplitByAxes/>
+
+        <Macro Name = "CutCell" >
+            <HideContaining Vector = "-W + D/2 + x * D; -W; W - D/2 - y * D" />
+            <InvertVisibility/>
+            <Cut Color = "Colors[GetColor]"><Plane NormVector = "0;1;0" NormDistance = "-W" /></Cut>
+            <ShowAll/>
+            <Script>Inc(x);</Script>
+        </Macro>
+
+        <Macro Name = "CutRow" >
+            <ExecMacro MacroName = "CutCell" x = "0" Repeat = "N" />
+            <Script>Inc(y);</Script>
+        </Macro>
+
+        <Macro Name = "CutFace" >
+            <ExecMacro MacroName = "CutRow" y = "0" Repeat = "N" /> 
+        </Macro>
+
+        <ExecMacro MacroName = "CutFace" sx = "N+1" sy = "N" /> // Face
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace"  sx = "1" sy = "N" /> // Left
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" sx = "3*N+1" sy = "N" /> // Back
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" sx = "2*N+1" sy = "N" /> // Right
+
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "CutFace" sx = "N+1" sy = "0" /> // Up
+
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "CutFace" sx = "N+1" sy = "2*N" /> // Down
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+    </Figure>
+    <Procedures CheckSolved="EachFaceConsistsOfDifferentColors" />
+</xml>

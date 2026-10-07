@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Chaos Jewel</Name>
+        <Menu>Other forms\Dipyramid\Hexagonal\Chaos Jewel</Menu>
+        <Inventor>Daniel Waxtonz</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9204</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red   
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := '009600'; // Green 
+        Colors[3] := 'A0A0A0'; // Gray  
+        Colors[4] := '0000C8'; // Blue  
+        Colors[5] := 'FFFFFF'; // White 
+
+        W := 0.5;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-W;-W;-W" />
+                <Add Vector = "-W;-W; W" />
+                <Add Vector = "-W; W;-W" />
+                <Add Vector = "-W; W; W" />
+                <Add Vector = " W;-W;-W" />
+                <Add Vector = " W;-W; W" />
+                <Add Vector = " W; W;-W" />
+                <Add Vector = " W; W; W" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[2]" VertexIndexes = "1;0;4;5" />
+                <Face Color = "Colors[2]" VertexIndexes = "2;3;7;6" />
+                <Face Color = "Colors[0]" VertexIndexes = "0;1;3;2" />
+                <Face Color = "Colors[0]" VertexIndexes = "5;4;6;7" />
+                <Face Color = "Colors[4]" VertexIndexes = "0;2;6;4" />
+                <Face Color = "Colors[4]" VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+        <Cut Color = "Colors[1]" > <Plane NormVector = " 2; 2;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[1]" > <Plane NormVector = "-2;-2; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[5]" > <Plane NormVector = " 2;-1; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[5]" > <Plane NormVector = "-2; 1;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[3]" > <Plane NormVector = "-1; 2; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[3]" > <Plane NormVector = " 1;-2;-2" NormDistance = "-W" /> </Cut>
+
+        <Split Axis = "2" From = "1" />
+        <Hide  Axis = "2" Layers = "1;2" />
+        <Split Axis = "0" From = "1" />
+        <Hide  Axis = "0" Layers = "1;2" />
+        <Split Axis = "1" From = "1" />
+        <InvertVisibility/>
+        <Hide  Axis = "2" Layers = "1;2" />
+        <Split Axis = "1" From = "2" />
+        <Hide  Axis = "1" Layers = "2" />
+        <Split Axis = "0" From = "2" />
+        <Hide  Axis = "0" Layers = "2" />
+        <Split Axis = "1" From = "1" />
+        <ShowAll/>
+
+        <Hide  Axis = "2" Layers = "0" />
+        <Split Axis = "1" From = "2" />
+        <Hide  Axis = "1" Layers = "0;1" />
+        <Split Axis = "0" From = "1" />
+        <Hide  Axis = "0" Layers = "0" />
+        <Split Axis = "2" From = "2" />
+        <Hide  Axis = "2" Layers = "2" />
+        <Split Axis = "0" From = "2" />
+        <ShowAll/>
+
+        <Hide  Axis = "2" Layers = "0" />
+        <Hide  Axis = "1" Layers = "2" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Hide  Axis = "0" Layers = "2" />
+        <Split Axis = "1" From = "1" />
+        <ShowAll/>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = "0;1;0" Angle = "-ArcTan(sqrt(2))" />
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

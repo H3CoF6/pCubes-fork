@@ -1,0 +1,146 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rootinger</Name>
+        <Menu>Other forms\2d\Marble\Rootinger</Menu>
+        <Inventor>Karolis Kairys</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7386</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'CCCCCC'; // clSilver
+        Colors[1] := 'EE0000'; // clRed
+        Colors[2] := 'FFDD00'; // clYellow
+        Colors[3] := '009900'; // clGreen
+        InnerColor := '888888'; // clGray
+        InnerColor2 := '888889'; // clGray2
+
+        K := 0.6;
+
+        D1 := K * 0.87;
+        D2 := K * 0.965;
+        D3 := K * 0.12;
+
+        Ax := Pi / 8;
+
+        R := 0.595;
+        RC1 := R * 0.96;
+        RC := R * 0.12;
+        for i := 0 to 15 do begin
+            Rx[i] := Rc * sin(i * 2 * Pi / 16);
+            Rz[i] := -Rc * cos(i * 2 * Pi / 16);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D1" >
+        <Axis NormVector = " sin(2*Pi/16);-cos(2*Pi/16); 0" />
+        <Axis NormVector = "-sin(2*Pi/16);-cos(2*Pi/16); 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/8; 0" PlaneDistances = "-D3; D3" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "0;-Pi/8; 0" MaxAngles = "0; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Script>Color := Colors[2];</Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <RemoveContaining Vector = "0;0;0"/>
+        <Cut Axis = "2" From = "2" />
+        <Hide Axis = "2" Layer = "2" />
+
+        <Script>Color := Colors[1];</Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <RemoveContaining Vector = "0;0;0"/>
+        <Cut Axis = "2" To = "1" />
+        <Hide Axis = "2" Layer = "0" />
+
+        <Script>Color := Colors[0];</Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "1" Angle = "-Pi/8" />
+       
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi/8" />
+
+        <ShowAll/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Split Axis = "1" From = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Split Axis = "0" From = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+
+        <Macro Name = "AddPiece" >
+            <Turn NormVector = "0;0;1" Angle = "-Ax * x" />
+            <Part>
+                <Vertices Vectors = "Rx; -R; Rz" >
+                    <Add Vector = "0; -RC1 + 0.0001 * i; 0" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[cl]" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15" />
+                    <Face Color = "InnerColor" VertexIndexes = " 1; 0;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 2; 1;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 3; 2;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 4; 3;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 5; 4;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 6; 5;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 7; 6;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 8; 7;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = " 9; 8;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "10; 9;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "11;10;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "12;11;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "13;12;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "14;13;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor" VertexIndexes = "15;14;16" InvisibleEdges = "6" />
+                    <Face Color = "InnerColor2" VertexIndexes = " 0;15;16" InvisibleEdges = "6" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = " Ax * x" />
+            <Script>Inc(x);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddPiece" x = "-2" cl = "3" Repeat = "6" />
+
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layer = "1" Angle = "-Pi/8" />
+        <SaveSolvedState/>
+        <Undo/>
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\2D + rotation\Vec\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\2D + rotation\Vec\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\2D + rotation\Vec\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\2D + rotation\Vec\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\2D + rotation\Vec\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\2D + rotation\Vec\tm_06.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 = 13,0,0
+        tm_02 = 14,0,0
+        tm_03 = 15,0,0
+        tm_04 = 16,0,0
+        tm_05 = 17,0,0
+        tm_06 = 18,0,0
+    </SetTextures>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

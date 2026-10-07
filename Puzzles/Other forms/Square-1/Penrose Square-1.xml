@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Penrose Square-1</Name>
+        <Menu>Other forms\Square-1\Penrose Square-1</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-08-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10199</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10225</Link>
+    </Interface>
+ 
+    <Script>
+        Color0 := 'C80000'; // Red
+        Color1 := '009600'; // Green
+        Color2 := 'FFFF00'; // Yellow
+
+        W := 0.5;
+        R := W * 0.6;
+        D := W * 0.3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi / 12" />
+
+        <Script>
+            Colors[0] := Color1;
+            Colors[1] := Color2;
+            Colors[2] := Color0;
+            Colors[3] := Color1;
+            Colors[4] := Color0;
+            Colors[5] := Color2;
+        </Script>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddCylinder" >
+            <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" ><Plane NormVector = " 1; 0; 0" NormDistance = "W - R" /></Split>
+            <Hide><Plane NormVector = " 1; 0; 0" NormDistance = "W - R" /></Hide>
+            <Cut Color = "-2" InvisibleEdges = "-1" ><Plane NormVector = " 0; 0;-1" NormDistance = "-(W - R)" /></Cut>
+            <HideAll/>
+            <Cylinder Radius = "R" Color = "c1">
+                <Base X = "W - R" Y = "-W" Z = "W - R" Color = "c2" />
+                <Top  X = "W - R" Y = " W" Z = "W - R" Color = "c3"/>
+            </Cylinder>
+            <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 1; 0; 0" NormDistance = "W - R" /> </Cut>
+            <Cut Color = "-2" InvisibleEdges = "-1" > <Plane NormVector = " 0; 0; 1" NormDistance = "W - R" /> </Cut>
+            <ShowAll/>
+            <Turn NormVector = "-1;-1; 1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "AddCylinder" c1 = "Color2" c2 = "Color0" c3 = "Color1" />
+        <ExecMacro MacroName = "AddCylinder" c1 = "Color0" c2 = "Color1" c3 = "Color2" />
+        <ExecMacro MacroName = "AddCylinder" c1 = "Color1" c2 = "Color2" c3 = "Color0" />
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 3" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi / 6" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>11x11x11 Barrel</Name>
+        <Menu>Other forms\Cylinder\11x11x11 Barrel</Menu>
+        <Inventor>Nathan Wilson</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-09-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5657</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red
+        Colors[1] := '4B0082'; // Indigo
+        Colors[2] := '006400'; // DarkGreen
+        Colors[3] := 'FF7F50'; // Coral
+        Colors[4] := '800000'; // Brown
+        Colors[5] := '0000C8'; // Blue
+        Colors[6] := '009600'; // Green
+        Colors[7] := 'FF800A'; // Orange
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        R := 0.5;
+        H := R;
+
+        NColors := 8;
+        NLayers := 11;
+        NSegPerColor := 5;
+
+        WD := R * sin(Pi / NColors) * 2 / NSegPerColor;
+
+        N := NColors * NSegPerColor;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i - Pi / NColors);
+            y[i] := R * sin(2 * Pi / N * i - Pi / NColors);
+        end;
+
+        // layers have different thickness!
+        for i := 0 to NLayers - 2 do
+          D[i] := x[(NSegPerColor * 3 + 1) / 2 + i];
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" TurnAxesWithLayer = "(NLayers - 1) div 2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "AddColor" >
+            <ExecMacro MacroName = "AddFace" Repeat = "NSegPerColor" />
+            <Script>Inc(c);</Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "clWhite" VertexIndexes = "FromTo(0, N - 1)" />
+                <ExecMacro MacroName = "AddColor" i = "0" c = "0" Repeat = "NColors" />
+                <Face Color = "clYellow" VertexIndexes = "FromTo(2 * N - 1, N)" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

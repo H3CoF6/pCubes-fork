@@ -1,0 +1,180 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bermuda Rocket - Earth (Fenzy A, 80deg turn)</Name>
+        <Menu>Other forms\Unclassified\Rocket\Bermuda Rocket - Earth (Fenzy A, 80deg turn)</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2021-05-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7249</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'FAFAFA';
+        clYellow := 'F0E400';
+        clBlue   := '1010D0';
+        clRed    := 'C80000';
+        clOrange := 'F07000';
+        clGreen  := '008000';
+
+        clCyan   := '20D0C0';
+        clPink   := 'E860C0';
+        clLGreen := '30E020';
+        clViolet := '602090';
+        clSilver := 'A0A0A0';
+
+        K  := 0.45;
+
+        // angle between axes = 77.869542155423386806 degs // = Arccos(1/(1/sin(Pi/18) - 1))
+        // N2 / N1 := -sqrt(3 / (4 - 8 * sin(Pi/18)) - 1/4);
+        N1 := -0.72565450331380011592;
+        N2 :=  0.68805925749197071360; // 9 * x^3 + 9 * x^2 - 9 * x - 1 = 0
+        N3 :=  0.97767166754628583615;
+        N4 := -0.21013831273060308487; // 3 * x^3 - 9 * x^2 - 3 * x + 1 = 0
+
+        C1  :=  K * 1.45336319381135493162; // x^3 + 9 * x^2 - 9 * x - 9 = 0
+        C2  :=  K * 1.19929184239511451162;
+        C3  :=  K * 0.82095289139516029405; // 3 * x^3 - 27 * x^2 - 3 * x + 19 = 0
+        C4  :=  K * 1.01615560704301140676;
+        C5  :=  K * 1.03861720206561240008; // C5 = C2 * sqrt(3) / 2
+        C6  := -K * 0.03109120412576337892; // 3 * x^3 - 27 * x^2 + 33 * x - 1 = 0
+        C7  :=  K * 0.76941682462355876068;
+        C8  :=  K * 0.36070796886443912111;
+        C9  := -K * 1.17904710860483970595; // 3 * x^3 + 9 * x^2 - 75 * x + 71 = 0
+        C10 := -K * 1.31721347439828884589;
+        C11 :=  K * 0.06417777247591214081; // x^3 + 9 * x^2 + 15 * x - 1 = 0
+        C12 :=  K * 0.79700524570718035374;
+        C13 := -K * 1.05069156365301542433; // 3 * x^3 - 45 * x^2 - 75 * x + 125 = 0
+        C14 := -K * 0.53690113136162610766;
+        C15 :=  K * 0.13759011945720273332;
+        C16 := -K * 1.19665210390770636839; // x^3 - 27 * x^2 + 15 * x + 19 = 0
+        C17 := -K * 0.23831307751934629098; // C17 = C15 * sqrt(3)
+        C18 :=  K * 0.34183637739814080441;
+        C19 := -K * 1.06829655895588208677; // x^3 - 45 * x^2 + 207 * x - 171 = 0
+
+        cos1 := cos(Pi*2/3);
+        sin1 := sin(Pi*2/3);
+        cos2 := cos(Pi*4/3);
+        sin2 := sin(Pi*4/3);
+        i := 0;
+        procedure Add3Vertex( x, y, z);
+        begin
+            Vx[i] := x;
+            Vy[i] := y;
+            Vz[i] := z;
+            Vx[i + 1] := x * cos1 - y * sin1;
+            Vy[i + 1] := x * sin1 + y * cos1;
+            Vz[i + 1] := z;
+            Vx[i + 2] := x * cos2 - y * sin2;
+            Vy[i + 2] := x * sin2 + y * cos2;
+            Vz[i + 2] := z;
+            i := i + 3;
+        end;
+        Add3Vertex(  C2,   0,  C3);
+        Add3Vertex(  C4,  C5,  C6);
+        Add3Vertex(  C4, -C5,  C6);
+        Add3Vertex(  C7,  C8,  C9);
+        Add3Vertex(  C7, -C8,  C9);
+        Add3Vertex( C10,   0, C11);
+        Add3Vertex( C12,   0, C13);
+        Add3Vertex( C14, C15, C16);
+        Add3Vertex( C14,-C15, C16);
+        Add3Vertex( C17, C18, C19);
+        Add3Vertex( C17,-C18, C19);
+
+        D  := K * 0.63041493819180925460;
+
+        A1 := Pi * 4/9; // 80 degs
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1*3;-A1*2;-A1; 0; A1; A1*2; A1*3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "N1;      0;       N2" />
+        <Axis NormVector = "N1*cos1; N1*sin1; N2" />
+        <Axis NormVector = "N1*cos2; N1*sin2; N2" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1*2;-A1; 0; A1; A1*2" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "N3;      0;       N4" />
+        <Axis NormVector = "N3*cos1; N3*sin1; N4" />
+        <Axis NormVector = "N3*cos2; N3*sin2; N4" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " 0; 0; C1" />
+            <Vertices Vectors = " Vx; Vy; Vz" />
+
+            <Faces>
+                <Face Color = "clBlue"   VertexIndexes = " 0; 1; 4;18; 8; 2" />
+                <Face Color = "clWhite"  VertexIndexes = " 0; 2; 5;16; 9; 3" />
+                <Face Color = "clGreen"  VertexIndexes = " 0; 3; 6;17; 7; 1" />
+                <Face Color = "clOrange" VertexIndexes = " 1; 7;13;19;10; 4" />
+                <Face Color = "clRed"    VertexIndexes = " 2; 8;14;20;11; 5" />
+                <Face Color = "clYellow" VertexIndexes = " 3; 9;15;21;12; 6" />
+
+                <Face Color = "clPink"   VertexIndexes = " 4;10;24;18" />
+                <Face Color = "clPink"   VertexIndexes = " 8;18;27;14" />
+                <Face Color = "clPink"   VertexIndexes = "18;24;27" />
+
+                <Face Color = "clLGreen" VertexIndexes = " 5;11;22;16" />
+                <Face Color = "clLGreen" VertexIndexes = " 9;16;25;15" />
+                <Face Color = "clLGreen" VertexIndexes = "16;22;25" />
+
+                <Face Color = "clCyan"   VertexIndexes = " 6;12;23;17" />
+                <Face Color = "clCyan"   VertexIndexes = " 7;17;26;13" />
+                <Face Color = "clCyan"   VertexIndexes = "17;23;26" />
+
+                <Face Color = "clViolet" VertexIndexes = "10;19;30;24" />
+                <Face Color = "clViolet" VertexIndexes = "13;26;32;19" />
+                <Face Color = "clViolet" VertexIndexes = "19;32;30" />
+                <Face Color = "clViolet" VertexIndexes = "11;20;28;22" />
+                <Face Color = "clViolet" VertexIndexes = "14;27;33;20" />
+                <Face Color = "clViolet" VertexIndexes = "20;33;28" />
+                <Face Color = "clViolet" VertexIndexes = "12;21;29;23" />
+                <Face Color = "clViolet" VertexIndexes = "15;25;31;21" />
+                <Face Color = "clViolet" VertexIndexes = "21;31;29" />
+
+                <Face Color = "clViolet" VertexIndexes = "22;28;31;25" InvisibleEdges = "7" />
+                <Face Color = "clViolet" VertexIndexes = "23;29;32;26" InvisibleEdges = "7" />
+                <Face Color = "clViolet" VertexIndexes = "24;30;33;27" InvisibleEdges = "7" />
+                <Face Color = "clViolet" VertexIndexes = "28;33;30;32;29;31" InvisibleEdges = "42" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Hide  Axis = "ax1" Layer = "0" />
+            <Turn  Axis = "ax1" Layer = "1" Angle = " angle" />
+            <Split Axis = "ax2" From = "1" />
+            <Turn  Axis = "ax2" Layer = "1" Angle = "-angle" />
+            <Split Axis = "ax1" From = "1" />
+            <Undo Repeat = "2"/>
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax1 = "3" ax2 = "1" angle = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = "4" ax2 = "2" angle = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = "5" ax2 = "0" angle = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = "3" ax2 = "2" angle = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = "4" ax2 = "0" angle = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = "5" ax2 = "1" angle = " A1" />
+
+        // split non-convex part into several
+        <HideContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+
+        <Macro Name = "Unconvex" >
+            <Split Color1 = "-2" InvisibleEdges1 = "-1" Color2 = "-2" InvisibleEdges2 = "-1" ><Plane NormVector = "1;0;0" NormDistance = "C17" /></Split>
+            <Hide><Plane NormVector = "1;0;0" NormDistance = "C17" /></Hide>
+            <Turn NormVector = "0;0;1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "Unconvex" Repeat = "3" />
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

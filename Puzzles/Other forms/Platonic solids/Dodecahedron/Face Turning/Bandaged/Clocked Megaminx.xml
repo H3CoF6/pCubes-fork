@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Clocked Megaminx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bandaged\Clocked Megaminx</Menu>
+        <Inventor>virtual model by AndyKybik</Inventor>
+        <Programmer>AndyKybik</Programmer>
+        <Added>2022-05-18</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2 + R * 0.05;
+
+        procedure Prepare();
+        begin
+            Count := Length(S) div 3;
+            for i := 0 to Count - 1 do begin
+                ax[i] := StrToInt(copy(S, i * 3 + 1, 1));
+                L[i] := StrToInt(copy(S, i * 3 + 2, 1));
+                Sign := copy(S, i * 3 + 3, 1);
+                if Sign = '-' then begin
+                    FromL[i] := L[i] + 1;
+                    ToL[i] := 20;
+                end else begin
+                    FromL[i] := 0;
+                    ToL[i] := L[i];
+                end;
+            end;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; sAngle; 0; sAngle; sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "Split1" >
+            <Split Axis = "ax[i]" From = "L[i] + 1" />
+            <Hide Axis = "ax[i]" From = "FromL[i]" To = "ToL[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <Macro Name = "Split2" >
+            <Script> Prepare; </Script>
+            <ExecMacro MacroName = "Split1" i = "0" Repeat = "Count" />
+            <ShowAll/>
+        </Macro>
+
+        // "52-" means split axis = "5" From = "2+1" and hide lower or upper half depending on sign
+        // these strings split very bandaged puzzle
+        <ExecMacro MacroName = "Split2" S = "'51-50-40-21-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50-40+31-21-10-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50-40+31+21-10*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31-30-40-11-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31-30-40+20-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31-30-40+20+11*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31-30+21-20-41-10-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31-30+21-20-41+10*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31-30+21-20+01-41-11-00+40*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31-30+21-20+01-41-11+40*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31-30+21-20+01-41+10*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31-30+21+40-11*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31-30+21+40+11+01*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31+41-21-10*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31+41-21+01*'" />
+        <ExecMacro MacroName = "Split2" S = "'51-50+31+41+10+01*'" />
+        <ExecMacro MacroName = "Split2" S = "'51+41-30-20+11*'" />
+        <ExecMacro MacroName = "Split2" S = "'51+41-30+20+11+01*'" />
+        <ExecMacro MacroName = "Split2" S = "'51+41+20+01*'" />
+
+        <Macro Name = "Hide" >
+            <Hide>  <Plane NormVector = " Cx[i]; Cy[i]; Cz[i]" NormDistance = "-D" /> </Hide>
+            <Hide>  <Plane NormVector = "-Cx[i];-Cy[i];-Cz[i]" NormDistance = "-D" /> </Hide>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" i = "0" Repeat = "6" />
+        <Macro Name = "Cut" >
+            <Split> <Plane NormVector = " Cx[i]; Cy[i]; Cz[i]" NormDistance = "-D" /> </Split>
+            <Split> <Plane NormVector = "-Cx[i];-Cy[i];-Cz[i]" NormDistance = "-D" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "6" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+    </Figure>
+</xml>

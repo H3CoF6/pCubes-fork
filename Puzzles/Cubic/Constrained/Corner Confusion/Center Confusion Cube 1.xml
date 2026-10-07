@@ -1,0 +1,94 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Center Confusion Cube 1</Name>
+        <Menu>Cubic\Constrained\Corner Confusion\Center Confusion Cube 1</Menu>
+        <Class>TTenon</Class>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2026-01-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7415</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        D := W * 0.45;
+        D2 := (W - D) / 2; // size of small cubies
+        WD := (W + D) / 2; // center of cubies
+    </Script>
+
+!--
+    <Script> ShowTextures := True; </Script>
+    <Textures>
+        <Texture Name = "Tenon" File = "..\Linked Cubes\Textures\Tenon.vec" />
+        <Texture Name = "Groove" File = "..\Linked Cubes\Textures\Groove.vec" />
+    </Textures>-->
+
+    <Axes TurningAngles = " Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "_Macro_For_Mayan.xml" />
+
+        // Make Colored cube with gaps and with some big parts (Side^Place, ...)
+        <ExecMacro MacroName = "MakeCube" Places = "'04,14,24,34,44,54'" />
+
+        <Macro Name = "CutC" >
+            <ExecMacro MacroName = "Setup" />
+
+            <HideContaining Vector = "0; 0; 0" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "1;0;0" NormDistance = "-D2" /></Cut>
+            <Cut><Plane NormVector = "0;0;1" NormDistance = "-D2" /></Cut>
+
+            <ShowAll/>
+
+            <ExecMacro MacroName = "UndoSetup" />
+        </Macro>
+
+        <Macro Name = "CutCs" >
+            <ExecMacro MacroName = "CutC" j = "0" Repeat = "(Length(Places) + 1) div 3" />
+        </Macro>
+
+        <Turn Axis = "0" Layer = "0" Angle = " Pi  " />
+        <Turn Axis = "0" Layer = "2" Angle = " Pi/2" />
+        <Turn Axis = "1" Layer = "0" Angle = "-Pi/2" />
+        <Turn Axis = "1" Layer = "2" Angle = " Pi  " />
+        <Turn Axis = "2" Layer = "0" Angle = "-Pi/2" />
+        <Turn Axis = "2" Layer = "2" Angle = "  0  " />
+
+        <ExecMacro MacroName = "CutCs" Places = "'04,14,24,34,44,54'" />
+        <Undo Repeat = "6" />
+
+        <RemoveContaining Vector = "-W;-W; W" />
+        <HideAll/>
+        <LoadFrom File = "Figures\Cube.xml" W = "W * 1.1" />
+        <SplitByAxes/>
+        <HideContaining Vector = "-W;-W; W" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Script>
+            AddTenon(-W,-W, W,  1, 0, 0);
+            AddTenon(-W,-W, W,  0, 1, 0);
+            AddTenon(-W,-W, W,  0, 0,-1);
+        </Script>
+
+        <Turn Axis = "0" Layer = "2" Angle = "Pi" />
+        <Turn Axis = "1" Layer = "0" Angle = "Pi/2" />
+
+        <Cut Axis = "0" From = "2" />
+        <Cut Axis = "1" To = "2" />
+        <Cut Axis = "2" From = "1" />
+        <RemoveContaining Vector = "0.4;-0.4;0" />
+        <RemoveContaining Vector = "0.4;0;0.4" />
+
+
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+</xml>

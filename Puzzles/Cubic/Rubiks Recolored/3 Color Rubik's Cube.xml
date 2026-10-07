@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3 Color Rubik's Cube</Name>
+        <Menu>Cubic\Rubiks Recolored\3 Color Rubik's Cube</Menu>
+        <Inventor>Denny Härtel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-11-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10801</Link>
+    </Interface>
+
+    <Script>
+        Color1 := 'FFBF00'; // Yellow
+        Color2 := '00A9FF'; // Blue
+        Color3 := 'BF009F'; // Violet
+
+        W := 0.5;
+        D := W / 3;
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        Sx[0] :=-D; Sy[0] :=-W; Sz[0] := W;
+        Sx[1] :=-D; Sy[1] := W; Sz[1] := W;
+        Sx[2] :=-W; Sy[2] := D; Sz[2] := W;
+        Sx[3] := D; Sy[3] := W; Sz[3] :=-W;
+        Sx[4] := D; Sy[4] :=-W; Sz[4] :=-W;
+        Sx[5] := W; Sy[5] :=-D; Sz[5] :=-W;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Sx; Sy; Sz" />
+
+            <Faces>
+                <Face Color = "Color1" VertexIndexes = " 1; 8;10"       InvisibleEdges = " 2" />
+                <Face Color = "Color1" VertexIndexes = " 1;10; 0"       InvisibleEdges = " 2" />
+                <Face Color = "Color1" VertexIndexes = " 1; 0; 8"       InvisibleEdges = " 2" />
+                                
+                <Face Color = "Color2" VertexIndexes = " 3;10; 8; 5; 9" InvisibleEdges = "10" />
+                <Face Color = "Color2" VertexIndexes = " 0;12; 5; 8"    InvisibleEdges = "10" />
+                <Face Color = "Color2" VertexIndexes = " 2;12; 0"       InvisibleEdges = " 1" />
+                <Face Color = "Color2" VertexIndexes = " 0;10; 3; 2"    InvisibleEdges = " 1" />
+                <Face Color = "Color2" VertexIndexes = " 3; 9; 2"       InvisibleEdges = " 2" />
+                                
+                <Face Color = "Color3" VertexIndexes = " 9; 5; 7"       InvisibleEdges = " 1" />
+                <Face Color = "Color3" VertexIndexes = " 4;13; 7; 5"    InvisibleEdges = " 2" />
+                <Face Color = "Color3" VertexIndexes = " 5;12; 4"       InvisibleEdges = " 1" />
+                <Face Color = "Color3" VertexIndexes = " 4;12; 2;11;13" InvisibleEdges = "10" />
+                <Face Color = "Color3" VertexIndexes = " 7;11; 2; 9"    InvisibleEdges = " 5" />
+                                
+                <Face Color = "Color1" VertexIndexes = " 6; 7;13"       InvisibleEdges = " 2" />
+                <Face Color = "Color1" VertexIndexes = " 6;11; 7"       InvisibleEdges = " 2" />
+                <Face Color = "Color1" VertexIndexes = " 6;13;11"       InvisibleEdges = " 2" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,155 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Squashed Cube</Name>
+        <Menu>Other forms\Trapezohedron\Face Turning\Squashed Cube</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-01-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2874</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clOrange       := 'FF6000';
+        clGreen        := '008000';
+        clBlue         := '0000A0';
+        clRed          := 'FF0000';
+        clWhite        := 'FFFFFF';
+
+        R  := 0.7;
+        X1 := R;
+        X2 := R / 2;
+        Y  := R * sqrt(3) / 2;
+        H  := R * 3/8*sqrt(2);
+        Z  := H / 3;
+
+        D  := R / 4 / sqrt(3);
+
+        nx1 := 1;
+        nx2 := 1 / 2;
+        ny  := sqrt(3) / 2;
+        nz  := sqrt(2);
+
+        A1 := ArcCos(1/3);     // 1.23
+        A2 := pi - A1;         // 1.91
+
+        A3 := 2 * ArcCos(1/3); // 2.46
+        A4 := pi - A3;         // 0.67
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A4; -A3; -A2; -A1; 0; A1; A2; A3; A4; Pi" PlaneDistances = "-D; D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " nx1;   0; nz" />
+        <Axis NormVector = "-nx2; -ny; nz" />
+        <Axis NormVector = "-nx2;  ny; nz" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "  0;  0;  H " />
+
+                <Add Vector = "-X1;  0;  Z" />
+                <Add Vector = " X2;  Y;  Z" />
+                <Add Vector = " X2; -Y;  Z" />
+
+                <Add Vector = "-X2;  Y; -Z" />
+                <Add Vector = " X1;  0; -Z" />
+                <Add Vector = "-X2; -Y; -Z" />
+
+                <Add Vector = "  0;  0; -H " />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clRed    " VertexIndexes = "0;2;4;1" />
+                <Face Color = "clYellow " VertexIndexes = "0;3;5;2" />
+                <Face Color = "clGreen  " VertexIndexes = "0;1;6;3" />
+
+                <Face Color = "clBlue   " VertexIndexes = "2;5;7;4" />
+                <Face Color = "clOrange " VertexIndexes = "3;6;7;5" />
+                <Face Color = "clWhite  " VertexIndexes = "1;4;7;6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Angle = "Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi" Layer = "1" />
+
+        <Turn Axis = "1" Angle = "Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi" Layer = "1" />
+
+        <Turn Axis = "2" Angle = "Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Angle = "Pi" Layer = "1" />
+
+        <RemoveGrayParts/>
+        <HideContaining Vector = "  0;  0;  H" />
+        <HideContaining Vector = "-X1;  0;  Z" />
+        <HideContaining Vector = " X2;  Y;  Z" />
+        <HideContaining Vector = " X2; -Y;  Z" />
+        <HideContaining Vector = "-X2;  Y; -Z" />
+        <HideContaining Vector = " X1;  0; -Z" />
+        <HideContaining Vector = "-X2; -Y; -Z" />
+        <HideContaining Vector = "  0;  0; -H" />
+
+        <HideContaining Vector = "-X1/2;    0;  (Z+H)/2" />
+        <HideContaining Vector = " X2/2;  Y/2;  (Z+H)/2" />
+        <HideContaining Vector = " X2/2; -Y/2;  (Z+H)/2" />
+
+        <HideContaining Vector = "-X2/2;  Y/2; -(Z+H)/2" />
+        <HideContaining Vector = " X1/2;    0; -(Z+H)/2" />
+        <HideContaining Vector = "-X2/2; -Y/2; -(Z+H)/2" />
+
+        <HideContaining Vector = "-(X1+X2)/2;  Y/2; 0" />
+        <HideContaining Vector = "         0;    Y; 0" />
+        <HideContaining Vector = " (X1+X2)/2;  Y/2; 0" />
+        <HideContaining Vector = " (X1+X2)/2; -Y/2; 0" />
+        <HideContaining Vector = "         0;   -Y; 0" />
+        <HideContaining Vector = "-(X1+X2)/2; -Y/2; 0" />
+
+        <Split> <Plane NormVector = "sqrt(3)/2;  1/2; 0" NormDistance = " D" /> </Split>
+        <Split> <Plane NormVector = "sqrt(3)/2;  1/2; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "sqrt(3)/2; -1/2; 0" NormDistance = " D" /> </Split>
+        <Split> <Plane NormVector = "sqrt(3)/2; -1/2; 0" NormDistance = "-D" /> </Split>
+        <Split> <Plane NormVector = "0; 1; 0" NormDistance = " D" /> </Split>
+        <Split> <Plane NormVector = "0; 1; 0" NormDistance = "-D" /> </Split>
+        <RemoveGrayParts/>
+
+        <Macro Name = "SplitE" >
+            <Split Axis = "Ax1" From  = "1" />
+            <Split Axis = "Ax1" From  = "2" />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = " Ang1" />
+            <Split Axis = "Ax2" From  = "1" />
+            <Split Axis = "Ax2" From  = "2" />
+            <Turn  Axis = "Ax2" Layer = "1" Angle = " Ang2" />
+            <Split Axis = "Ax1" From  = "1" />
+            <Split Axis = "Ax1" From  = "2" />
+            <Turn  Axis = "Ax1" Layer = "1" Angle = "-Ang1" />
+            <Split Axis = "Ax2" From  = "1" />
+            <Split Axis = "Ax2" From  = "2" />
+            <Turn  Axis = "Ax2" Layer = "1" Angle = "-Ang2" />
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "2" Ax2 = "0" Ang1 = " A1" Ang2 = " A2" />
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "2" Ax2 = "1" Ang1 = "-A1" Ang2 = "-A2" />
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "0" Ax2 = "1" Ang1 = " A1" Ang2 = " A2" />
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "0" Ax2 = "2" Ang1 = "-A1" Ang2 = "-A2" />
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "1" Ax2 = "2" Ang1 = " A1" Ang2 = " A2" />
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "1" Ax2 = "0" Ang1 = "-A1" Ang2 = "-A2" />
+
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "1" Ax2 = "0" Ang1 = " A2" Ang2 = "-A2" />
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "0" Ax2 = "1" Ang1 = "-A2" Ang2 = " A2" />
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "2" Ax2 = "1" Ang1 = " A2" Ang2 = "-A2" />
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "1" Ax2 = "2" Ang1 = "-A2" Ang2 = " A2" />
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "0" Ax2 = "2" Ang1 = " A2" Ang2 = "-A2" />
+        <ExecMacro MacroName = "SplitE" Repeat = "3" Ax1 = "2" Ax2 = "0" Ang1 = "-A2" Ang2 = " A2" />
+
+        <ShowAll/>
+
+    </Figure>
+</xml>

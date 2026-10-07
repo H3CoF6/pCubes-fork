@@ -1,0 +1,173 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Axis UFO 2x2x2</Name>
+        <Menu>Other forms\2x2x2 variants\Axis UFO 2x2x2</Menu>
+        <Inventor>Aleksandr Ermolenko</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6523</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0000C8'; // Blue
+        Colors[1] := '009600'; // Green
+        Colors[2] := 'FF800A'; // Orange
+        Colors[3] := 'FF00B0'; // LightViolett
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'C80000'; // Red
+        Colors[6] := 'A0A0A0'; // gray up
+        Colors[7] := '303030'; // dark down
+
+        sColors[ 9] := '666666666666666666';
+        sColors[ 8] := '666666666666666666';
+        sColors[ 7] := '626666606666616666';
+        sColors[ 6] := '666666666666666666';
+        sColors[ 5] := '666666666666666666';
+        sColors[ 4] := '666666666666666666';
+        sColors[ 3] := '666666666666666666';
+        sColors[ 2] := '666666666666666666';
+        sColors[ 1] := '666666666666666666';
+        sColors[ 0] := '626260606061616162';
+        sColors[10] := '573737374747475757';
+        sColors[11] := '777777777777777777';
+        sColors[12] := '777777777777777777';
+        sColors[13] := '777777777777777777';
+        sColors[14] := '777777777777777777';
+        sColors[15] := '777777777777777777';
+        sColors[16] := '777777777777777777';
+        sColors[17] := '777737777747777757';
+        sColors[18] := '777777777777777777';
+        sColors[19] := '777777777777777777';
+
+        D := 0.6;
+        H := 1 / 3;
+        N := 18;
+
+        for i := 0 to 5 do begin
+            ax[i] := cos(2*Pi / 3 * (i + 0.5));
+            ay[i] := sin(2*Pi / 3 * (i + 0.5));
+        end;
+        az := 1 / sqrt(2);
+
+        // color labels
+        R := 0.7;
+        R1 := R * 0.8;
+        R2 := R * 0.63;
+        R3 := R * 0.5;
+        L := 0.09;
+        W := 2 * L;
+
+// converting coordinates of profile Ufo.vec:
+// Size 144x144
+// Line 139,-1, 128,13, 62,29, 59,35, 55,39, 49,42, 44,52, 36,63, 25,72, 13,78, 1,79
+// Line 44,52, 50,82, 54,82, 49,42
+// Line 5,52, 3,82, 1,82, 2,42
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', sProfile);
+          if p = 0 then begin
+            substr := sProfile;
+            sProfile := '';
+          end else begin
+            substr := copy(sProfile, 1, p-1);
+            Delete(sProfile, 1, p);
+          end;
+          Result := StrToInt(substr);
+        end;
+
+        // Ufo's profile
+        sProfile := '139, 0, 128,13, 62,29, 59,35, 55,39, 49,42, 44,52, 36,63, 25,72, 13,78, 1,79';
+        ProfileSize := 144;
+        pCount := 0;
+        while Length(sProfile) > 0 do begin
+          px[pCount] := GetInt / ProfileSize * R;
+          pz[pCount] := GetInt / ProfileSize * R;
+          Inc(pCount);
+        end;
+
+        SectorAngle := Pi / 3;
+        nSections := N div 6;
+        SectionAngle := SectorAngle / nSections;
+        sa := sin(SectionAngle);
+        ca := cos(SectionAngle);
+        ca2 := cos(SectionAngle/2);
+
+        procedure CalcSlice(i);
+        begin
+            for j := 0 to N - 1 do begin
+                sa := sin(SectionAngle * j);
+                ca := cos(SectionAngle * j);
+                Vx[j]   := px[i] * sa;
+                Vy[j]   := px[i] * ca;
+                Vz[j]   := pz[i];
+                Vx[j+N] := px[i+1] * sa;
+                Vy[j+N] := px[i+1] * ca;
+                Vz[j+N] := pz[i+1];
+            end;
+        end;
+
+        function GetZ(XC);
+        begin
+          Result := pz[1] + (XC / ca2 - px[1]) * (pz[2] - pz[1]) / (px[2] - px[1]);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+
+        function GetColor();
+        begin
+            Result := Colors[Copy(sColors[k+ColorShift],i+1,1)];
+        end;
+    </Script>
+
+    <Axes TurningAngles = " Pi / 2" PlaneDistances = "0" TurnAxesWithPartNo = "0" NormVectors = "ax; ay; az" />
+
+    <Figure>
+        <Macro Name = "AddFace">
+            <Face Color = "GetColor" VertexIndexes = "(i + 1) mod N; i; i + N; (i + 1) mod N + N" InvisibleEdges = "-1" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "AddSegment">
+            <Part>
+                <Vertices Vectors = "Vx; Vy; Vz" />
+
+                <Faces>
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+
+                    <Face Color = "Color1" VertexIndexes = "FromTo( 0,N-1)" InvisibleEdges = "-1" />
+                    <Face Color = "Color2" VertexIndexes = "FromTo(2*N-1,N)" InvisibleEdges = "-1" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddSegments">
+            <Script> CalcSlice(k); </Script>
+            <ExecMacro MacroName = "AddSegment" />
+            <Script>Inc(k);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSegments" k = "0" Repeat = "9" Color = "Colors[6]" Color1 = "-2" Color2 = "       -2" ColorShift = " 0" />
+        <ExecMacro MacroName = "AddSegments" k = "9" Repeat = "1" Color = "Colors[6]" Color1 = "-2" Color2 = "Colors[6]" ColorShift = " 0" />
+
+        <HideAll/> 
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSegments" k = "0" Repeat = "9" Color = "Colors[7]" Color1 = "-2" Color2 = "       -2" ColorShift = "10" />
+        <ExecMacro MacroName = "AddSegments" k = "9" Repeat = "1" Color = "Colors[7]" Color1 = "-2" Color2 = "Colors[7]" ColorShift = "10" />
+        <ShowAll/>
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

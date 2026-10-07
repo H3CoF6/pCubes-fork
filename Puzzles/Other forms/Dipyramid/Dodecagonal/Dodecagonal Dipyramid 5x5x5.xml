@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dodecagonal Dipyramid 5x5x5</Name>
+        <Aliases>5x5x5 Dodecagonal Bipyramid</Aliases>
+        <Menu>Other forms\Dipyramid\Dodecagonal\Dodecagonal Dipyramid 5x5x5</Menu>
+        <Inventor>David Gugl</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-08-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7705</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFAA'; // LightYellow
+        Colors[ 1] := '0077FF'; // LightBlue
+        Colors[ 2] := 'BBBBBB'; // Gray
+        Colors[ 3] := 'FF77EE'; // Pink
+        Colors[ 4] := 'FF0000'; // Red
+        Colors[ 5] := '009600'; // Green
+        Colors[ 6] := 'FFFF00'; // Yellow
+        Colors[ 7] := '00FF00'; // LightGreen
+        Colors[ 8] := 'FF6600'; // Orange
+        Colors[ 9] := '800080'; // Violett
+        Colors[10] := 'FFFFFF'; // White
+        Colors[11] := '0000FF'; // Blue
+
+        R := 0.6;
+        H := R*sqrt(2);
+
+        WD := R * sqrt(2/27);
+        for i := 0 to 3 do
+            D[i] := (i - 1.5) * WD;
+
+        N := 12;
+        for i := 0 to N - 1 do begin
+            x[i] := R * cos(2 * Pi / N * i);
+            y[i] := R * sin(2 * Pi / N * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = "0;1;0" Angle = "-ArcTan(sqrt(2))" />
+
+        <Macro Name = "AddFaceUp" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Color := Colors[i];
+                Inc(i);
+            </Script>
+
+            <Face Color = "Color" VertexIndexes = " N + 1; i1; i2" InvisibleEdges = "5" />
+        </Macro>
+
+        <Macro Name = "AddFaceDown" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Color := Colors[(i + N div 2) mod N];
+                Inc(i);
+            </Script>
+
+            <Face Color = "Color" VertexIndexes = " N; i2; i1" InvisibleEdges = "5" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = " x; y; 0" />
+            <Vertices Vectors = " 0; 0;-H" />
+            <Vertices Vectors = " 0; 0; H" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFaceUp" i = "0" Repeat = "N" />
+                <ExecMacro MacroName = "AddFaceDown" i = "0" Repeat = "N" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

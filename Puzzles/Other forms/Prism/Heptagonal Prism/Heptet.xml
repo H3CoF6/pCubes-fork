@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Heptet</Name>
+        <Menu>Other forms\Prism\Heptagonal Prism\Heptet</Menu>
+        <Inventor>Luke Borg</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2025-07-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12810</Link>
+    </Interface>
+
+    <Script>
+        clRed     := 'FF0000';
+        clOrange  := 'FF6000';
+        clYellow  := 'FFFF00';
+        clGreen   := '008000';
+        clCyan    := '00FFFF';
+        clBlue    := '0000A0';
+        clViolett := '800080';
+        clWhite   := 'FFFFFF';
+        clGray    := '303030';
+
+        R := 0.6;
+        H := 0.25;
+        sAngle := Pi * 2 / 7;
+
+        F := R * (1 + cos(sAngle)) / 2;
+
+        for i := 0 to 6 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+   </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "F" FixedLayers = "0" NormVectors = "x; y; 0" />
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" NormVectors = "0; 0; 1" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x; y;-H" />
+            <Vertices Vectors = " x; y; H" />
+            <Faces>
+                <Face Color = "clRed"     VertexIndexes = " 7; 8; 1; 0" />
+                <Face Color = "clOrange"  VertexIndexes = " 8; 9; 2; 1" />
+                <Face Color = "clYellow"  VertexIndexes = " 9;10; 3; 2" />
+                <Face Color = "clGreen"   VertexIndexes = "10;11; 4; 3" />
+                <Face Color = "clCyan"    VertexIndexes = "11;12; 5; 4" />
+                <Face Color = "clBlue"    VertexIndexes = "12;13; 6; 5" />
+                <Face Color = "clViolett" VertexIndexes = "13; 7; 0; 6" />
+                <Face Color = "clGray"    VertexIndexes = " 0; 1; 2; 3; 4; 5; 6" />
+                <Face Color = "clWhite"   VertexIndexes = "13;12;11;10; 9; 8; 7" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+    </Figure>
+</xml>

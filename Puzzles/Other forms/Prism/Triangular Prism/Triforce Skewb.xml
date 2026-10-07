@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triforce Skewb</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Triforce Skewb</Menu>
+        <Menu>Other forms\Skewb variants\Prism\Triforce Skewb</Menu>
+        <Inventor>El_Cubitero</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2020-09-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7988</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.6;
+
+        sAngle := PI * 2 / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * cos(sAngle * i);
+            y[i] := R * sin(sAngle * i);
+        end;
+
+        az := sqrt(2) / 4;
+        bz := sqrt(3) / 2;
+        H := 2 * R * az;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" >
+        <Axis NormVector = "  0;   0; -1" />
+        <Axis NormVector = "  1;   0; az" />
+        <Axis NormVector = "-1/2;-bz; az" />
+        <Axis NormVector = "-1/2; bz; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "0;1;4;3" />
+                <Face Color = "clBlue  " VertexIndexes = "1;2;5;4" />
+                <Face Color = "clGreen " VertexIndexes = "2;0;3;5" />
+                <Face Color = "clYellow" VertexIndexes = "2;1;0" />
+                <Face Color = "clWhite " VertexIndexes = "3;4;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

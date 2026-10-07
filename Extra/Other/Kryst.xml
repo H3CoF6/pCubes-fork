@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Kryst</Name>
+        <Menu>Grigr\Kryst</Menu>
+        <Inventor></Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-09-22</Added>
+        <Link></Link>
+    </Interface>
+
+Unknown internal organization (0-based axes)
+
+    <Script>
+        K  := 0.5;
+        A1 := Pi/7;
+        SC := sin(A1);
+        CC := cos(A1);
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" JumbleAngle = "A1" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Hide Axis = "0" Layer = "0" />
+        <Split> <Plane NormVector = " 0; SC;-CC" /></Split>
+        <Split> <Plane NormVector = " 0; CC; SC" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "0" Layer = "1" />
+        <Split> <Plane NormVector = " 0; SC; CC" /></Split>
+        <Split> <Plane NormVector = " 0; CC;-SC" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "1" Layer = "0" />
+        <Split> <Plane NormVector = " SC;  0; CC" /></Split>
+        <Split> <Plane NormVector = " CC;  0;-SC" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "1" Layer = "1" />
+        <Split> <Plane NormVector = " SC;  0;-CC" /></Split>
+        <Split> <Plane NormVector = " CC;  0; SC" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "2" Layer = "0" />
+        <Split> <Plane NormVector = " SC;-CC;  0" /></Split>
+        <Split> <Plane NormVector = " CC; SC;  0" /></Split>
+        <ShowAll/>
+
+        <Hide Axis = "2" Layer = "1" />
+        <Split> <Plane NormVector = " SC; CC;  0" /></Split>
+        <Split> <Plane NormVector = " CC;-SC;  0" /></Split>
+        <ShowAll/>
+
+    </Figure>
+</xml>

@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bubbloid 112</Name>
+        <Menu>Other cubes\Vertex Turning\Bubbloid 112</Menu>
+        <Inventor>Carl Hoff</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2018-11-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3488</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        WX := W;
+        WY := W;
+        WZ := 4 * W / 5;
+
+        D := W * sqrt(3) * 3/5;
+        Ax := WZ - W;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1; 1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = "-1; 1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = " 1;-1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = "-1;-1; 1" BaseVector = "0; 0; Ax" />
+        <Axis NormVector = " 1; 1;-1" BaseVector = "0; 0;-Ax" />
+        <Axis NormVector = "-1; 1;-1" BaseVector = "0; 0;-Ax" />
+        <Axis NormVector = " 1;-1;-1" BaseVector = "0; 0;-Ax" />
+        <Axis NormVector = "-1;-1;-1" BaseVector = "0; 0;-Ax" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <SplitByAxes/>
+        <Macro Name = "Cut">
+            <Turn Axis = "i" Angle = "2 * Pi / 3" Layer = "1" />
+            <SplitByAxes/>
+            <Script>Inc(i); if i = 8 then i := 0;</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "24"/>
+        <Undo Repeat = "24"/>
+    </Figure>
+</xml>

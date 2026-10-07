@@ -1,0 +1,135 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tricky Disky (3 wings, 6 colors)</Name>
+        <Menu>Other forms\Tricky Disky\Tricky Disky (3 wings, 6 colors)</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=479</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'DD0000'; // clRed
+        Colors[1] := '0022EE'; // clBlue
+        Colors[2] := 'FFFF00'; // clYellow
+        Colors[3] := 'FF8800'; // clOrange
+        Colors[4] := '00BB00'; // clGreen
+        Colors[5] := 'AA00AA'; // clViolett
+        clWhite   := 'FFFFFF';
+
+        R := 0.45;
+        H := R * 0.4;
+        HC := H * 1.002;
+        D := R * 0.96;
+        D1 := R * 1.55;
+        RC := R * 0.27;
+
+        c6 := cos(Pi/6);
+        s6 := sin(Pi/6);
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2*Pi/3 * i + Pi/3);
+            ay[i] := sin(2*Pi/3 * i + Pi/3);
+        end;
+
+        for i := 0 to 59 do begin // 60-sided cyrcle
+            cx[i] := R * cos(i * 2*Pi/60);
+            cy[i] := R * sin(i * 2*Pi/60);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D" >
+        <Axis NormVector = "ax[0]; ay[0]; 0" />
+        <Axis NormVector = "ax[1]; ay[1]; 0" />
+        <Axis NormVector = "ax[2]; ay[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector" >
+            <HideAll/>
+            <Cylinder Radius = "R" Color = "Color" >
+                <Base X = "0" Y = "0" Z = "0" />
+                <Top  X = "0" Y = "0" Z = " H" Color = "clWhite" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "-c6; -s6; 0" /> </Cut>
+            <Cut> <Plane NormVector = " c6; -s6; 0" /> </Cut>
+
+            <Turn NormVector = "0; 0; 1" Angle = "Pi/3" />
+        </Macro>
+
+        <Macro Name = "AddSectors" >
+            <ExecMacro MacroName = "AddSector" Color = "Colors[i]" />
+            <ExecMacro MacroName = "AddSector" Color = "clWhite" />
+            <Script>Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "AddCircle" >
+            <Part>
+                <Vertices Vectors = "cx;cy;HC" />
+                <Faces>
+                    <Face Color = "clWhite" VertexIndexes = "0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Turn NormVector = "0; 0; 1" Angle = "Pi/6" />
+        <ExecMacro MacroName = "AddSectors" i = "0" Repeat = "3" />
+        <ExecMacro MacroName = "AddCircle" />
+
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <Turn NormVector = "0; 0; 1" Angle = "Pi/3" />
+        <ExecMacro MacroName = "AddSectors" Repeat = "3" />
+        <ExecMacro MacroName = "AddCircle" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <ShowAll/>
+
+        <Macro Name = "AddCylinder" >
+            <HideAll/>
+            <Cylinder Radius = "RC" Color = "Color" >
+                <Base X = "0" Y = "-D" Z = "0" />
+                <Top  X = "0" Y = "-D1" Z = "0" Color = "Color" />
+            </Cylinder>
+        </Macro>
+
+        <Macro Name = "AddCylinderPart" >
+            <Cut Color = "clWhite"> <Plane NormVector = "0; 1; 0" NormDistance = "-D" /> </Cut>
+
+            <ExecMacro MacroName = "AddCylinder" Color = "Colors[c1]" />
+            <Cut> <Plane NormVector = "-1; 0; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+
+            <ExecMacro MacroName = "AddCylinder" Color = "Colors[c2]" />
+            <Cut> <Plane NormVector = " 1; 0; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+
+            <ExecMacro MacroName = "AddCylinder" Color = "Colors[c3]" />
+            <Cut> <Plane NormVector = "-1; 0; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0;-1" /> </Cut>
+
+            <ExecMacro MacroName = "AddCylinder" Color = "Colors[c4]" />
+            <Cut> <Plane NormVector = " 1; 0; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0;-1" /> </Cut>
+
+            <ShowAll/>
+            <Turn NormVector = "0; 0; 1" Angle = "2*Pi/3" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCylinderPart" c1 = "0" c2 = "2" c3 = "4" c4 = "5" />
+        <ExecMacro MacroName = "AddCylinderPart" c1 = "1" c2 = "0" c3 = "3" c4 = "4" />
+        <ExecMacro MacroName = "AddCylinderPart" c1 = "2" c2 = "1" c3 = "5" c4 = "3" />
+        <Turn NormVector = "0; 0; 1" Angle = "-Pi/6" />
+
+        <Split> <Plane NormVector = " 0; 0; 1" /> </Split>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

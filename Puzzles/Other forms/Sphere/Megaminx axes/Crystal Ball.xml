@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crystal Ball</Name>
+        <Menu>Other forms\Sphere\Megaminx axes\Crystal Ball</Menu>
+        <Inventor>Christopher Moore</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7630</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        K := 0.6;
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+
+        D1 := K * 0.8587928937980 * ss; // D1 := C57 * ss;
+        D2 := K * 0.847;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5; 2*Pi/5; 0; 2*Pi/5; 2*Pi/5" PlaneDistances = "-D1; -D2; D2; D1" >
+        <Axis NormVector = "  0;-cs; ss" />
+        <Axis NormVector = "  0;-cs;-ss" />
+        <Axis NormVector = "-ss;  0;-cs" />
+        <Axis NormVector = " ss;  0;-cs" />
+        <Axis NormVector = " cs;-ss;  0" />
+        <Axis NormVector = " cs; ss;  0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+
+        <Macro Name = "Split">
+            <Split><Plane NormVector = "  0;-cs; ss" NormDistance = "S" /></Split>
+            <Split><Plane NormVector = "  0;-cs;-ss" NormDistance = "S" /></Split>
+            <Split><Plane NormVector = "-ss;  0;-cs" NormDistance = "S" /></Split>
+            <Split><Plane NormVector = " ss;  0;-cs" NormDistance = "S" /></Split>
+            <Split><Plane NormVector = " cs;-ss;  0" NormDistance = "S" /></Split>
+            <Split><Plane NormVector = " cs; ss;  0" NormDistance = "S" /></Split>
+        </Macro>
+        <ExecMacro MacroName = "Split" S = " D2"/>
+        <ExecMacro MacroName = "Split" S = "-D2"/>
+
+        <Macro Name = "HideCenters">
+            <HideContaining Vector = "    0;-cs*S; ss*S" />
+            <HideContaining Vector = "    0;-cs*S;-ss*S" />
+            <HideContaining Vector = "-ss*S;    0;-cs*S" />
+            <HideContaining Vector = " ss*S;    0;-cs*S" />
+            <HideContaining Vector = " cs*S;-ss*S;    0" />
+            <HideContaining Vector = " cs*S; ss*S;    0" />
+        </Macro>
+        <ExecMacro MacroName = "HideCenters" S = " K*0.9"/>
+        <ExecMacro MacroName = "HideCenters" S = "-K*0.9"/>
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <ExecMacro MacroName = "Split" S = " D2"/>
+        <ExecMacro MacroName = "Split" S = "-D2"/>
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

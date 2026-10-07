@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star Prism Super (4 layers)</Name>
+        <Menu>Other forms\Square-1\Star Prism Super (4 layers)</Menu>
+        <Inventor>Hidetoshi Takeji</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3113</Link>
+    </Interface>
+
+    <Script>
+        Colors[5] := 'AAAAAA'; // Gray
+        Colors[0] := 'FFFF00'; // Yellow
+        Colors[4] := 'EE0011'; // Red
+        Colors[3] := 'FFFFFF'; // White
+        Colors[2] := 'EE55AA'; // Pink
+        Colors[1] := 'FF800A'; // Orange
+
+        Colors[6] := '0055EE'; // Blue
+        Colors[7] := '00AA00'; // Green
+
+        Colors[-1] := -1;
+
+        R := 0.7;
+        rs := R * (sqrt(3) - 1) / 2;
+        rc := rs * sqrt(3);
+
+        N := 6;
+        Angle := 2 * Pi / N;
+
+        R2 := R * 0.35;
+        H  := R * 0.5;
+        H1 := H * 1.005;
+
+        c0 := 7;
+        c1 :=-1;
+        c4 :=-1;
+        c5 := 6;
+    </Script>
+
+    <Axes TurningAngles = "0; Angle; Angle; Angle; Angle; 0" PlaneDistances = "-H;-H/2; 0; H/2; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " 0;  0; H" />
+                    <Add Vector = "rc;-rs; H" />
+                    <Add Vector = " R;  0; H" />
+                    <Add Vector = "rc; rs; H" />
+                    <Add Vector = " 0;  0;-H" />
+                    <Add Vector = "rc;-rs;-H" />
+                    <Add Vector = " R;  0;-H" />
+                    <Add Vector = "rc; rs;-H" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[c0]" VertexIndexes = "0;1;2;3" />
+                    <Face Color = "Colors[c1]" VertexIndexes = "1;0;4;5" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "2;1;5;6" />
+                    <Face Color = "Colors[c3]" VertexIndexes = "3;2;6;7" />
+                    <Face Color = "Colors[c4]" VertexIndexes = "0;3;7;4" />
+                    <Face Color = "Colors[c5]" VertexIndexes = "7;6;5;4" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0; 0; 1" Angle = "Angle" />
+        </Macro>
+        <ExecMacro MacroName = "AddSector" c2 = "0" c3 = "5" />
+        <ExecMacro MacroName = "AddSector" c2 = "1" c3 = "0" />
+        <ExecMacro MacroName = "AddSector" c2 = "2" c3 = "1" />
+        <ExecMacro MacroName = "AddSector" c2 = "3" c3 = "2" />
+        <ExecMacro MacroName = "AddSector" c2 = "4" c3 = "3" />
+        <ExecMacro MacroName = "AddSector" c2 = "5" c3 = "4" />
+
+        <Circle Color = "Colors[6]" Radius = "R2" Center = "0; 0; -H1" />
+        <Circle Color = "Colors[7]" Radius = "R2" Center = "0; 0;  H1" />
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

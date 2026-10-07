@@ -1,0 +1,66 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Stinx</Name>
+        <Menu>Other forms\Dodecahedron\Truncated\Stinx</Menu>
+        <Inventor>David Gugl</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-11-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4388</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        clGray := '404040';
+
+        D := (Rsin + R2sin) / 2;
+        RIn := Rsin;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Script>R := 0.8;</Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <Cut Color = "clGray" > <Plane NormVector = "Cx[0]; Cy[0]; Cz[0]" NormDistance = "-D" /> </Cut>
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+        <Cut> <Plane NormVector = "Cx[1]; Cy[1]; Cz[1]" NormDistance = "-RIn" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[2]; Cy[2]; Cz[2]" NormDistance = "-RIn" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[3]; Cy[3]; Cz[3]" NormDistance = "-RIn" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[4]; Cy[4]; Cz[4]" NormDistance = "-RIn" /> </Cut>
+        <Cut> <Plane NormVector = "Cx[5]; Cy[5]; Cz[5]" NormDistance = "-RIn" /> </Cut>
+        <HideAll/>
+        
+        <Script>R := 0.7;</Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Cut Color = "clGray" > <Plane NormVector = "Cx[0]; Cy[0]; Cz[0]" NormDistance = "-D" /> </Cut>
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "SplitLayer" >
+            <Turn Axis = "axis" Layer = "1" Angle = "sAngle" />
+            <SplitByAxes/>
+        </Macro>
+        <ExecMacro MacroName = "SplitLayer" axis = "1" Repeat = "5" />
+        <ExecMacro MacroName = "SplitLayer" axis = "2" Repeat = "5" />
+        <ExecMacro MacroName = "SplitLayer" axis = "3" Repeat = "5" />
+        <ExecMacro MacroName = "SplitLayer" axis = "4" Repeat = "5" />
+        <ExecMacro MacroName = "SplitLayer" axis = "5" Repeat = "5" />
+        <ShowAll/>
+
+    </Figure>
+</xml>

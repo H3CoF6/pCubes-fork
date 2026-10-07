@@ -1,0 +1,50 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Keter Cube</Name>
+        <Menu>Other cubes\Unclassified\Keter Cube</Menu>
+        <Inventor>Diogo Sousa</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-11-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8631</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'FFFF00';
+        clBlue    := '0000A0';
+        clOrange  := 'FF6000';
+        clRed     := 'FF0000';
+        clGreen   := '008000';
+        clViolett := '800080';
+
+        W := 0.5;
+
+        for i := 0 to 2 do begin
+            nx[i] := -sin(2 * Pi / 3 * i);
+            ny[i] := -cos(2 * Pi / 3 * i);
+        end;
+        nz := sqrt(3)/2;
+
+        A1 := ArcCos(1/8);
+        A2 := ArcCos(-3/4);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1;-A2; 0; A2; A1" PlaneDistances = "0" TurnAxesWithPartNo = "3" >
+        <Axis NormVector = " nx[0]; ny[0]; nz" />
+        <Axis NormVector = " nx[1]; ny[1]; nz" />
+        <Axis NormVector = " nx[2]; ny[2]; nz" />
+        <Axis NormVector = " nx[0]; ny[0];-nz" />
+        <Axis NormVector = " nx[1]; ny[1];-nz" />
+        <Axis NormVector = " nx[2]; ny[2];-nz" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = "1;1;0" Angle = "ArcTan(sqrt(2))" />
+
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

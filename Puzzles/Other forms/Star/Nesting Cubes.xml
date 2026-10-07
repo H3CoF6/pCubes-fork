@@ -1,0 +1,136 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Nesting Cubes</Name>
+        <Menu>Other forms\Star\Nesting Cubes</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1654</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        D := (Rsin + R2sin) / 2;
+        D := Cz[1];
+
+        kv := (5 + 2 * sqrt(5) + sqrt(5 * (3 + sqrt(5)))) / 15;
+        // coefficient to make parts more cubic
+
+        for i := 0 to 19 do begin
+          vx[i] := vx[i] * kv;
+          vy[i] := vy[i] * kv;
+          vz[i] := vz[i] * kv;
+        end;
+
+        D1 := R * 0.167;
+        D2 := R * 0.365;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; 0; sAngle" PlaneDistances = "-D; D">
+        <Axis NormVector = " Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = " Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = " Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = " Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = " Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = " Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddPart">
+            <Part>
+                <Vertices>
+                    <Add Vector = "cx[c1]; cy[c1]; cz[c1]" />
+                    <Add Vector = "cx[c2]; cy[c2]; cz[c2]" />
+                    <Add Vector = "cx[c3]; cy[c3]; cz[c3]" />
+                    <Add Vector = "vx[ v]; vy[ v]; vz[ v]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[Color0]" VertexIndexes = "0;1;3" />
+                    <Face Color = "Colors[Color1]" VertexIndexes = "1;2;3" />
+                    <Face Color = "Colors[Color2]" VertexIndexes = "2;0;3" />
+                    <Face VertexIndexes = "1;0;2" />
+                </Faces>
+            </Part>
+            <Split><Plane NormVector = "vx[ v] - cx[c1]; vy[ v] - cy[c1]; vz[ v] - cz[c1]" NormDistance = "D1" /></Split>
+            <Split><Plane NormVector = "vx[ v] - cx[c1]; vy[ v] - cy[c1]; vz[ v] - cz[c1]" NormDistance = "D2" /></Split>
+            <Split><Plane NormVector = "vx[ v] - cx[c2]; vy[ v] - cy[c2]; vz[ v] - cz[c2]" NormDistance = "D1" /></Split>
+            <Split><Plane NormVector = "vx[ v] - cx[c2]; vy[ v] - cy[c2]; vz[ v] - cz[c2]" NormDistance = "D2" /></Split>
+            <Split><Plane NormVector = "vx[ v] - cx[c3]; vy[ v] - cy[c3]; vz[ v] - cz[c3]" NormDistance = "D1" /></Split>
+            <Split><Plane NormVector = "vx[ v] - cx[c3]; vy[ v] - cy[c3]; vz[ v] - cz[c3]" NormDistance = "D2" /></Split>
+            <HideAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddPart" c1 = " 0" c2 = " 1" c3 = " 5" v = " 0" Color0 = "5" Color1 = "0" Color2 = "4" />
+        <ExecMacro MacroName = "AddPart" c1 = " 0" c2 = " 2" c3 = " 1" v = " 1" Color0 = "0" Color1 = "1" Color2 = "5" />
+        <ExecMacro MacroName = "AddPart" c1 = " 0" c2 = " 3" c3 = " 2" v = " 2" Color0 = "1" Color1 = "2" Color2 = "0" />
+        <ExecMacro MacroName = "AddPart" c1 = " 0" c2 = " 4" c3 = " 3" v = " 3" Color0 = "2" Color1 = "4" Color2 = "1" />
+        <ExecMacro MacroName = "AddPart" c1 = " 0" c2 = " 5" c3 = " 4" v = " 4" Color0 = "4" Color1 = "5" Color2 = "2" />
+        <ExecMacro MacroName = "AddPart" c1 = " 5" c2 = " 1" c3 = " 8" v = " 5" Color0 = "0" Color1 = "4" Color2 = "3" />
+        <ExecMacro MacroName = "AddPart" c1 = " 1" c2 = " 2" c3 = " 9" v = " 6" Color0 = "1" Color1 = "5" Color2 = "3" />
+        <ExecMacro MacroName = "AddPart" c1 = " 2" c2 = " 3" c3 = "10" v = " 7" Color0 = "2" Color1 = "0" Color2 = "3" />
+        <ExecMacro MacroName = "AddPart" c1 = " 3" c2 = " 4" c3 = " 6" v = " 8" Color0 = "4" Color1 = "1" Color2 = "3" />
+        <ExecMacro MacroName = "AddPart" c1 = " 4" c2 = " 5" c3 = " 7" v = " 9" Color0 = "5" Color1 = "2" Color2 = "3" />
+        <ExecMacro MacroName = "AddPart" c1 = " 1" c2 = " 9" c3 = " 8" v = "10" Color0 = "3" Color1 = "1" Color2 = "4" />
+        <ExecMacro MacroName = "AddPart" c1 = " 2" c2 = "10" c3 = " 9" v = "11" Color0 = "3" Color1 = "2" Color2 = "5" />
+        <ExecMacro MacroName = "AddPart" c1 = " 3" c2 = " 6" c3 = "10" v = "12" Color0 = "3" Color1 = "4" Color2 = "0" />
+        <ExecMacro MacroName = "AddPart" c1 = " 4" c2 = " 7" c3 = " 6" v = "13" Color0 = "3" Color1 = "5" Color2 = "1" />
+        <ExecMacro MacroName = "AddPart" c1 = " 5" c2 = " 8" c3 = " 7" v = "14" Color0 = "3" Color1 = "0" Color2 = "2" />
+        <ExecMacro MacroName = "AddPart" c1 = " 8" c2 = " 9" c3 = "11" v = "15" Color0 = "1" Color1 = "4" Color2 = "2" />
+        <ExecMacro MacroName = "AddPart" c1 = " 9" c2 = "10" c3 = "11" v = "16" Color0 = "2" Color1 = "5" Color2 = "4" />
+        <ExecMacro MacroName = "AddPart" c1 = "10" c2 = " 6" c3 = "11" v = "17" Color0 = "4" Color1 = "0" Color2 = "5" />
+        <ExecMacro MacroName = "AddPart" c1 = " 6" c2 = " 7" c3 = "11" v = "18" Color0 = "5" Color1 = "1" Color2 = "0" />
+        <ExecMacro MacroName = "AddPart" c1 = " 7" c2 = " 8" c3 = "11" v = "19" Color0 = "0" Color1 = "2" Color2 = "1" />
+
+        <Part>
+            <Vertices>
+                <Add Vector = "Cx[ 0]; Cy[ 0]; Cz[ 0]" />
+                <Add Vector = "Cx[ 1]; Cy[ 1]; Cz[ 1]" />
+                <Add Vector = "Cx[ 2]; Cy[ 2]; Cz[ 2]" />
+                <Add Vector = "Cx[ 3]; Cy[ 3]; Cz[ 3]" />
+                <Add Vector = "Cx[ 4]; Cy[ 4]; Cz[ 4]" />
+                <Add Vector = "Cx[ 5]; Cy[ 5]; Cz[ 5]" />
+                <Add Vector = "Cx[ 6]; Cy[ 6]; Cz[ 6]" />
+                <Add Vector = "Cx[ 7]; Cy[ 7]; Cz[ 7]" />
+                <Add Vector = "Cx[ 8]; Cy[ 8]; Cz[ 8]" />
+                <Add Vector = "Cx[ 9]; Cy[ 9]; Cz[ 9]" />
+                <Add Vector = "Cx[10]; Cy[10]; Cz[10]" />
+                <Add Vector = "Cx[11]; Cy[11]; Cz[11]" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = " 0; 1; 5" />
+                <Face VertexIndexes = " 0; 2; 1" />
+                <Face VertexIndexes = " 0; 3; 2" />
+                <Face VertexIndexes = " 0; 4; 3" />
+                <Face VertexIndexes = " 0; 5; 4" />
+                <Face VertexIndexes = " 1; 8; 5" />
+                <Face VertexIndexes = " 2; 9; 1" />
+                <Face VertexIndexes = " 3;10; 2" />
+                <Face VertexIndexes = " 4; 6; 3" />
+                <Face VertexIndexes = " 5; 7; 4" />
+                <Face VertexIndexes = "11; 7; 8" />
+                <Face VertexIndexes = "11; 8; 9" />
+                <Face VertexIndexes = "11; 9;10" />
+                <Face VertexIndexes = "11;10; 6" />
+                <Face VertexIndexes = "11; 6; 7" />
+                <Face VertexIndexes = " 7; 5; 8" />
+                <Face VertexIndexes = " 8; 1; 9" />
+                <Face VertexIndexes = " 9; 2;10" />
+                <Face VertexIndexes = "10; 3; 6" />
+                <Face VertexIndexes = " 6; 4; 7" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

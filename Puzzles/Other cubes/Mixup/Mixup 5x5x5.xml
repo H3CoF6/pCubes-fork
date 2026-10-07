@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup 5x5x5</Name>
+        <Menu>Other cubes\Mixup\5x5x5</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8835</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36751</Link>
+        <Added>2021-05-27</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D1 := W * (sqrt(2) - 1) / 2;
+        D2 := D1 * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/4; Pi/4; Pi/2" PlaneDistances = "-D2; -D1; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "Split14" >
+            <Split Axis = "Ax" From = "1" />
+            <Split Axis = "Ax" From = "4" />
+        </Macro>
+        <ExecMacro MacroName = "Split14" Ax = "0" />
+        <ExecMacro MacroName = "Split14" Ax = "1" />
+        <ExecMacro MacroName = "Split14" Ax = "2" />
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax1" Angle = "Pi/4" Layer = "1" />
+            <ExecMacro MacroName = "Split14" Ax = "Ax2" />
+            <ExecMacro MacroName = "Split14" Ax = "Ax3" />
+            <Turn  Axis = "Ax2" Angle = "Pi/4" Layer = "1" />
+            <ExecMacro MacroName = "Split14" Ax = "Ax3" />
+            <ExecMacro MacroName = "Split14" Ax = "Ax1" />
+            <Undo/>
+            <Turn  Axis = "Ax3" Angle = "Pi/4" Layer = "1" />
+            <ExecMacro MacroName = "Split14" Ax = "Ax1" />
+            <ExecMacro MacroName = "Split14" Ax = "Ax2" />
+            <Undo/>
+            <Undo/>
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+
+        <Macro Name = "Split23" >
+            <Split Axis = "Ax" From = "2" />
+            <Split Axis = "Ax" From = "3" />
+        </Macro>
+        <ExecMacro MacroName = "Split23" Ax = "0" />
+        <ExecMacro MacroName = "Split23" Ax = "1" />
+        <ExecMacro MacroName = "Split23" Ax = "2" />
+
+        <Macro Name = "Split3" >
+            <Turn  Axis = "Ax1" Angle = "Pi/4" Layer = "2" />
+            <ExecMacro MacroName = "Split23" Ax = "Ax2" />
+            <ExecMacro MacroName = "Split23" Ax = "Ax3" />
+            <Undo/>
+            <RemoveGrayParts/>
+        </Macro>
+        <ExecMacro MacroName = "Split3" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+        <ExecMacro MacroName = "Split3" Ax1 = "1" Ax2 = "2" Ax3 = "0" />
+        <ExecMacro MacroName = "Split3" Ax1 = "2" Ax2 = "0" Ax3 = "1" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(3)" Layer = "2" Angle = "Pi/4 * Random(8)" />
+            <Turn Axis = "Random(3)" Layer = "Random(2) * 2 + 1" Angle = "Pi/2 * Random(4)" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(5)" Angle = "2 * Pi * Random" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc1" Repeat = "50" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

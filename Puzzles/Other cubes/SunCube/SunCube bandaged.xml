@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>SunCube bandaged</Name>
+        <Menu>Other cubes\SunCube\SunCube bandaged</Menu>
+        <Inventor>Mr. Fok</Inventor>
+        <Programmer>Evgeniy Grigoriev, Zergosaur</Programmer>
+        <Added>2018-09-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6859</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * (sqrt(2) - 1);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <HideContaining Vector = " Vx; Vy; Vz" />
+            <Turn  Axis = "Ax1" Layer = "0" Angle = " Pi / 4" />
+            <Turn  Axis = "Ax1" Layer = "2" Angle = "-Pi / 4" />
+            <Split Axis = "Ax2" From  = "1" />
+            <Split Axis = "Ax2" From  = "2" />
+            <Hide  Axis = "Ax2" Layer = "0" />
+            <Hide  Axis = "Ax2" Layer = "2" />
+            <SplitByAxes/>
+            <ShowAll/>
+            <Undo Repeat = "2" />
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "1" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

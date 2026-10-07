@@ -1,0 +1,88 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Chimera Total Chaos 5x5+7x7 Variant III Free Edge</Name>
+        <Menu>Cubic\Bandaged\Cube 7x7x7\Chimera TC 5x5+7x7 III FE</Menu>
+        <Inventor>Andrey Polyakov</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2014-05-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4520</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 7;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('221=146, 440, 110, 416');
+        ParseTxt('212=101, 461, 164, 404');
+        ParseTxt('122=011, 641, 614, 044');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "0" From = "4" To = "6" Angle = "Pi/2"/>
+            <Turn Axis = "1" From = "4" To = "6" Angle = "-Pi/2"/>
+            <Turn Axis = "0" From = "4" To = "6" Angle = "-Pi/2"/>
+            <Turn Axis = "1" From = "4" To = "6" Angle = "Pi/2"/>
+            <Turn Axis = "0" From = "4" To = "6" Angle = "Pi/2"/>
+            <Turn Axis = "1" From = "4" To = "6" Angle = "-Pi/2"/>
+            <Turn Axis = "0" From = "4" To = "6" Angle = "-Pi/2"/>
+            <Turn Axis = "1" From = "4" To = "6" Angle = "Pi/2"/>
+
+            <Turn Axis = "0" Layer = "3" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "1" Layer = "3" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "0" Layer = "0" Angle = "Pi/2"/>
+            <Turn Axis = "0" Layer = "6" Angle = "Pi/2"/>
+            <Turn Axis = "1" Layer = "0" Angle = "Pi/2"/>
+            <Turn Axis = "1" Layer = "6" Angle = "Pi/2"/>
+            <Turn Axis = "0" Layer = "3" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "1" Layer = "3" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/2"/>
+            <Turn Axis = "0" Layer = "6" Angle = "-Pi/2"/>
+            <Turn Axis = "1" Layer = "0" Angle = "-Pi/2"/>
+            <Turn Axis = "1" Layer = "6" Angle = "-Pi/2"/>
+            <Turn Axis = "0" Layer = "6" Angle = "Pi"/>
+            <Turn Axis = "2" Layer = "6" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "0" Layer = "6" Angle = "Pi/2"/>
+            <Turn Axis = "2" Layer = "6" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "0" Layer = "6" Angle = "Pi/2"/>
+
+            <Turn Axis = "2" Layer = "3" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layer = "4" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layer = "5" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layer = "6" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" From = "0" To = "0" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" From = "1" To = "2" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+        <Macro Name = "Sc2" >
+            <Turn Axis = "0" From = "6" To = "6" Angle = "Pi/2"/>
+            <Turn Axis = "2" From = "0" To = "0" Angle = "-Pi/2"/>
+            <Turn Axis = "0" From = "6" To = "6" Angle = "-Pi/2"/>
+            <ExecMacro MacroName = "Sc1" Repeat = "10" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(7)" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Turn Axis = "0" From = "4" To = "6" Angle = "Pi/2"/>
+            <Turn Axis = "1" From = "4" To = "6" Angle = "Pi"/>
+            <ExecMacro MacroName = "Sc2" Repeat = "10" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

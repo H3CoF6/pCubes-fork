@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cubosfera 5x5x5</Name>
+        <Menu>Other forms\Unclassified\Ball in a cube\Cubosfera 5x5x5</Menu>
+        <Inventor>Carlos Ramírez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9448</Link>
+    </Interface>                   
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D  := W / 5;
+        D2 := D * 3;
+        K  := 0.694;
+        CW := 3 * D;
+        CH := (W - CW) / 2;
+        H  := (W + CW) / 2;
+        DW := D;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2;-D; D; D2" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <S1plitByAxes/>
+
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "1" />
+        <RemoveContaining Vector = "0;0;0"/>
+        <HideAll/>
+
+        <Transfer Vector = " DW; DW;-DW" />
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <Transfer Vector = "-DW;-DW; DW" />
+
+        <Cut Axis = "0" To = "4" />
+        <Cut Axis = "1" To = "4" />
+        <Cut Axis = "2" From = "1" />
+        <HideAll/>
+
+        <Macro Name = "AddSegments" >
+            <Transfer Vector = " DW; DW;-DW" />
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Transfer Vector = "-DW;-DW; DW" />
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = "W " /></Split>
+            <Split><Plane NormVector = " 0; 0;-1" NormDistance = "D2" /></Split>
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "D2" /></Split>
+            <Split><Plane NormVector = "-1; 0; 0" NormDistance = "W " /></Split>
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = "D2" /></Split>
+            <Split><Plane NormVector = " 0;-1; 0" NormDistance = "W " /></Split>
+            <HideContaining Vector = " D*3.5; 0; D*5.5" />
+            <HideContaining Vector = " 0; D*3.5; D*5.5" />
+            <RemoveAllVisible/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSegments" Color = "clWhite" />
+        <Turn NormVector = "-1;-1; 1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddSegments" Color = "clBlue" />
+        <Turn NormVector = "-1;-1; 1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "AddSegments" Color = "clRed" />
+        <Turn NormVector = "-1;-1; 1" Angle = "2*Pi/3" />
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

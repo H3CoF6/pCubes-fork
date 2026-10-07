@@ -1,0 +1,123 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star Prism Custom Size</Name>
+        <Menu>Other forms\Prism\Star Prism Custom Size</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Luna</Programmer>
+        <Added>2022-10-09</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clTop      := 'FFFFFF'; // White
+        clBottom   := '888888'; // Gray
+
+        Colors[ 0] := 'FF0000'; // Red
+        Colors[ 1] := 'FF6000'; // Orange
+        Colors[ 2] := 'FFFF00'; // Yellow
+        Colors[ 3] := '008000'; // Green
+        Colors[ 4] := '2828FF'; // LightBlue
+        Colors[ 5] := '0000A0'; // Blue
+        Colors[ 6] := '800080'; // Violet
+        Colors[ 7] := 'FF0080'; // LightViolet
+        Colors[ 8] := '00FF00'; // LightGreen
+        Colors[ 9] := '800000'; // Brown;
+        Colors[10] := '9D60FF'; // Lilac
+        Colors[11] := '5000FF'; // Purple
+        Colors[12] := '00FFFF'; // Cyan
+        Colors[13] := '006464'; // Teal
+        Colors[14] := '640046'; // Plum
+        Colors[15] := 'FF64FF'; // Pink
+
+        R := 0.6;
+        H := R * 0.3;
+
+        Order := 5;
+        SubOrder := 2;
+        NWidth := 1;
+        NHeight := 3;
+
+        RequestNumbers('Input prism orders', 'Order:', 'SubOrd:', Order, SubOrder);
+        RequestNumbers('Input cut numbers', 'HLayers:', 'VLayers:', NWidth, NHeight);
+
+        Order := Min(Max(Order, 3), 15);
+        NWidth := Min(Max(NWidth, 1), 10);
+        NHeight := Min(Max(NHeight, 1), 10);
+        SubOrder := Min(Max(SubOrder, 2), (Order - 1) div 2);
+
+        sAngle := Pi * 2 / Order;
+        sAngle2 := sAngle / 2;
+
+        R1 := R * cos(sAngle2 * SubOrder) / cos(sAngle2 * (SubOrder - 1));
+        Ord2 := 2 * Order;
+
+        for i := 0 to Order - 1 do begin
+            // axes
+            A := sAngle * i;
+            Ax[i] := sin(A);
+            Ay[i] := cos(A);
+
+            // star
+            A := A - sAngle2 * SubOrder;
+            X[2 * i] := R * sin(A);
+            Y[2 * i] := R * cos(A);
+
+            A := A + sAngle2;
+            X[2 * i + 1] := R1 * sin(A);
+            Y[2 * i + 1] := R1 * cos(A);
+        end;
+
+        DOuter := R * cos(sAngle2 * SubOrder);
+        DInner := DOuter * cos(sAngle);
+        dW := (DOuter - DInner) / NWidth;
+        for i := 0 to NWidth do
+            HArray[i] := DOuter - dW * i;
+
+        dH := 2 * H / NHeight;
+        for i := 0 to NHeight - 1 do
+            VArray[i] := -H + (i + 1) * dH;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" NormVectors = "0; 0; 1" PlaneDistances = "VArray" />
+    <Axes TurningAngles = "Pi" PlaneDistances = "HArray" NormVectors = "Ax; Ay; 0" FixedLayers = " 0; NWidth + 1"/>
+
+    <Figure>
+        <Macro Name = "AddSides" >
+            <Script>
+                i1 := i mod Ord2;
+                i2 := (i + 1) mod Ord2;
+                i3 := (i + 2) mod Ord2;
+                c1 := c mod Order;
+                c2 := (c - SubOrder + 1 + Order) mod Order;
+                i := i + 2;
+                Inc(c);
+            </Script>
+            <Face Color = "Colors[c1]" VertexIndexes = "i1 + Ord2; i2 + Ord2; i2; i1" />
+            <Face Color = "Colors[c2]" VertexIndexes = "i2 + Ord2; i3 + Ord2; i3; i2" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+
+            <Faces>
+                <Face Color = "clBottom" VertexIndexes = "FromTo(0, Ord2 - 1)" />
+                <Face Color = "clTop"    VertexIndexes = "FromTo(2 * Ord2 - 1, Ord2)" />
+                <ExecMacro MacroName = "AddSides" c = "0" i = "0" Repeat = "Order" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

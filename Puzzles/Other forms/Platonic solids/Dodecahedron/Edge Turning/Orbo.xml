@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Orbo</Name>
+        <Menu>Other forms\Dodecahedron\Edge Turning\Orbo</Menu>
+        <Menu>Other forms\Moving Hole\Orbo</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-12-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3683</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+        OuterColor := 'FFFFFF';
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        D := R / sqrt(3);
+        RC := R * sqrt((5 - 2 * sqrt(5)) / 15);
+        DCut := R * sqrt(5) / 3;
+
+        RIn := R * 0.61; // R * phi
+        ROut := R; 
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D" TurnAxesWithLayer = "1" FixedLayers = "0" >
+        <Axis NormVector = " Ex[0]; Ey[0]; Ez[0]" />
+        <Axis NormVector = " Ex[1]; Ey[1]; Ez[1]" />
+        <Axis NormVector = " Ex[2]; Ey[2]; Ez[2]" />
+        <Axis NormVector = " Ex[3]; Ey[3]; Ez[3]" />
+        <Axis NormVector = " Ex[4]; Ey[4]; Ez[4]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[i]" Center = " Cx[i]; Cy[i]; Cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "11" i = "1" />
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" R = "RIn" />
+
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := OuterColor;
+        </Script>
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" R = "ROut" />
+
+        <Macro Name = "CutE" >
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1"> <Plane NormVector = " Ex[i]; Ey[i]; Ez[i]" NormDistance = " D" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" Repeat = "30" i = "0" />
+
+        <RemoveContaining Vector = " Cx; Cy; Cz" />
+        <HideContaining   Vector = " Ex; Ey; Ez" />
+        <RemoveAllVisible/>
+
+        <Macro Name = "HideTriangles" >
+            <HideContaining Vector = " (2*Cx[i]+Ex[j])/2.7; (2*Cy[i]+Ey[j])/2.7; (2*Cz[i]+Ez[j])/2.7" />
+            <HideContaining Vector = " (2*Cx[i]-Ex[j])/2.7; (2*Cy[i]-Ey[j])/2.7; (2*Cz[i]-Ez[j])/2.7" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "CreateTriangles" >
+            <LoadFrom File = "Figures\Dodecahedron.xml" />
+            <Split> <Plane NormVector = " Ex[k]; Ey[k]; Ez[k]" NormDistance = " D" /> </Split>
+            <Split> <Plane NormVector = " Ex[k]; Ey[k]; Ez[k]" NormDistance = "-D" /> </Split>
+            <RemoveContaining Vector = "0;0;0" />
+            <ExecMacro MacroName = "CutE" Repeat = "30" i = "0" />
+            <RemoveGrayParts/>
+            <ExecMacro MacroName = "HideTriangles" Repeat = "12" i = "0" j = "k"/>
+            <RemoveAllVisible/>
+            <Script> Inc(k); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CreateTriangles" Repeat = "15" k = "0" />
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,208 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>PNP-11 (2 Layers)</Name>
+        <Menu>Other forms\2D + rotation\PNP-11 (2 Layers)</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-09-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10437</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=419422#p419422</Link>
+    </Interface>
+
+    <Script>
+        <!-- convert num in [0..15] into Hex -->
+        function IntToHex1(num);
+        begin
+            case (num) of
+                10: Result := 'A';
+                11: Result := 'B';
+                12: Result := 'C';
+                13: Result := 'D';
+                14: Result := 'E';
+                15: Result := 'F';
+            else
+                Result := IntToStr(num);
+            end;
+        end;
+
+        <!-- Convert num in [0..255] into Hex -->
+        function IntToHex2(num);
+        begin
+            Result := IntToHex1(num div 16) + IntToHex1(num mod 16);
+        end;
+
+        function RGB( R, G, B);
+        begin
+            Result := IntToHex2(int(255 * R)) + IntToHex2(int(255 * G)) + IntToHex2(int(255 * B));
+        end;
+
+        <!-- http://www.easyrgb.com/en/math.php -->
+        <!-- Convert (H,S,V) in [0,1] x [0,1] x [0,1] to Hex (######)-->
+        function HSVToHex(H, S, V);
+        begin
+            <!-- Enforce Hue Bounds -->
+            H := H - int(H);
+
+            if not (S = 0) then begin // non-zero Saturation
+                vh := H * 6;
+                vi := int(vh);
+                v1 := V * (1 - S);
+                v2 := V * (1 - S * (vh - vi));
+                v3 := V * (1 - S * (1 - (vh - vi)));
+
+                case (vi) of
+                    0 : RGB(  V, v3, v1);
+                    1 : RGB( v2,  V, v1);
+                    2 : RGB( v1,  V, v3);
+                    3 : RGB( v1, v2,  V);
+                    4 : RGB( v3, v1,  V);
+                    5 : RGB(  V, v1, v2);
+                end;
+            end else
+                RGB( V, V, V);
+        end;
+
+        N := 11;
+        for i := 0 to N - 1 do begin
+             Colors[i, 0] := HSVToHex(i/N, 1.00, 0.87);
+             Colors[i, 1] := HSVToHex(i/N, 0.75, 1.00);
+        end;
+
+        R := 0.6;
+        Spiral := 0.2;
+        NR := 70 div N; // sides per tooth
+        H  := R * 0.25;
+        H1 := H * 1.005;
+
+        // sticker parameters
+        WA := 0.79;
+        R2 := R * 0.95;
+        R1 := R * 0.76;
+
+        Angle := 2 * Pi / N;
+        D  := R * sin(Angle / 4);
+        H2 := H1 + (H1 - H);
+
+        for i := 0 to NR do begin
+            ac := i / NR * Angle;
+            sc := sin(ac);
+            cc := cos(ac);
+
+            // spiral coordinates
+            x[i] := R * Exp(i / NR * Spiral) * sc;
+            y[i] := R * Exp(i / NR * Spiral) * cc;
+
+            // side sticker coordinates
+            xc1[i] := R1 * sc;
+            yc1[i] := R1 * cc;
+            xc2[i] := R2 * sc;
+            yc2[i] := R2 * cc;
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = " 0; Angle; Angle; 0" PlaneDistances = "-H; 0; H" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 0; 1" Angle = " Angle / 4"  />
+
+        <Macro Name = "AddFace" >
+            <Face Color = "Color" VertexIndexes = " i + 1; i; i + NR + 1; i + NR + 2" InvisibleEdges = "10" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "AddSector" >
+            // tooth
+            <Script>
+                Color0 := Colors[c, 0];
+                Color1 := Colors[c, 1];
+            </Script>
+
+            <Part>
+                <Vertices Vectors = " 0; 0;-H" />          0
+                <Vertices Vectors = " x; y;-H" />          1 ..     NR + 1
+                <Vertices Vectors = " x; y; 0" />     NR + 2 .. 2 * NR + 2
+                <Vertices Vectors = " x; y; H" /> 2 * NR + 3 .. 3 * NR + 3
+                <Vertices Vectors = " 0; 0; H" /> 3 * NR + 4
+
+                <Faces>
+                    <Face Color = "Color1" VertexIndexes = "FromTo(0, NR + 1)" />
+                    <ExecMacro MacroName = "AddFace" i = "1" Color = "Color1" Repeat = "NR" />
+                    <ExecMacro MacroName = "AddFace" i = "NR + 2" Color = "Color0" Repeat = "NR" />
+                    <Face Color = "Color0" VertexIndexes = "FromTo(3*NR + 4, 2*NR + 3)" />
+                    <Face VertexIndexes = "IntToStr(0) + '';'' + IntToStr(NR+1) + '';'' + IntToStr(3 * NR + 3) + '';'' + IntToStr(3*NR + 4)" />
+                    <Face VertexIndexes = "IntToStr(0) + '';'' + IntToStr(3*NR + 4) + '';'' + IntToStr(2*NR + 3) + '';'' + IntToStr(1)" />
+                </Faces>
+            </Part>
+
+            <Turn NormVector = " 0; 0; 1" Angle = "-Angle / 4"  />
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = " D" /> </Cut>
+            <Turn NormVector = " 0; 0; 1" Angle = "Angle"  />
+            <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-D" /> </Cut>
+            <Turn NormVector = " 0; 0; 1" Angle = "-(N - 1) / 2 * Angle"  />
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = " D" /> </Cut>
+            <Turn NormVector = " 0; 0; 1" Angle = "(N - 2.5) / 2 * Angle"  />
+            <HideAll/>
+
+            // stickers
+            <Macro Name = "AddSticker" >
+                <Part>
+                    <Vertices Vectors = " xc1[i    ]; yc1[i    ]; H2" />
+                    <Vertices Vectors = " xc1[i + 1]; yc1[i + 1]; H2" />
+                    <Vertices Vectors = " xc2[i + 1]; yc2[i + 1]; H2" />
+                    <Vertices Vectors = " xc2[i    ]; yc2[i    ]; H2" />
+                    <Faces>
+                        <Face Color = "Color0" VertexIndexes = "0;1;2;3" InvisibleEdges = "10" />
+                    </Faces>
+                </Part>
+                <Part>
+                    <Vertices Vectors = " xc1[i    ]; yc1[i    ];-H2" />
+                    <Vertices Vectors = " xc1[i + 1]; yc1[i + 1];-H2" />
+                    <Vertices Vectors = " xc2[i + 1]; yc2[i + 1];-H2" />
+                    <Vertices Vectors = " xc2[i    ]; yc2[i    ];-H2" />
+                    <Faces>
+                        <Face Color = "Color1" VertexIndexes = "3;2;1;0" InvisibleEdges = "10" />
+                    </Faces>
+                </Part>
+                <Script> Inc(i); </Script>
+            </Macro>
+            <ExecMacro MacroName = "AddSticker" i = "0" Repeat = "NR" />
+            <Turn NormVector = " 0; 0; 1" Angle = " Angle * (1 - WA) / 2"  />
+            <Cut> <Plane NormVector = " 1; 0; 0" /> </Cut>
+            <Turn NormVector = " 0; 0; 1" Angle = " Angle * WA"  />
+            <Cut> <Plane NormVector = "-1; 0; 0" /> </Cut>
+            <Turn NormVector = " 0; 0; 1" Angle = " Angle * (1 - WA) / 2"  />
+
+            <HideAll/>
+
+            <Script>inc(c);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" c = "0" Repeat = "N" />
+
+        <Cylinder Radius = "R" Base = " 0; 0; H" Top = " 0; 0; H1" />
+        <Cylinder Radius = "R" Base = " 0; 0;-H" Top = " 0; 0;-H1" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

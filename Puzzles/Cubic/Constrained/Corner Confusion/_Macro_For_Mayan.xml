@@ -1,0 +1,134 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Script>
+        // Tenon
+        procedure AddTenon(x, y, z, nx, ny, nz);
+        begin
+          PartNo := CallGlobal('GetVisiblePartContaining', x, y, z);
+          FaceNo := CallGlobal('FindFaceByNorm', PartNo, nx, ny, nz);
+          CallGlobal('SetTenon', 1, PartNo, FaceNo);
+          if VarExists('ShowTextures') then
+            if ShowTextures then
+              CallGlobal('SetTexture', 'Tenon', PartNo, FaceNo, 0);
+        end;
+    </Script>
+
+        <Macro Name = "Setup" >
+            <Script>
+                S := StrToInt(copy(Places, 3*j+1, 1)); // side: red - 0, orange - 1 etc
+                 AX :=-Pi/2 * StrToInt(copy('310200', S+1, 1)); // make a side to be in front
+                 AY := Pi/2 * StrToInt(copy('000031', S+1, 1)); // ...
+                N := StrToInt(copy(Places, 3*j+2, 1)); // No of part on the side: 012/345/678
+                 DX :=-WD * (N mod 3 - 1);
+                 DY := WD;
+                 DZ := WD * (N div 3 - 1);
+                R := Pi/2 * StrToInt(copy('003103122', N+1, 1));
+                Inc(j);
+            </Script>
+
+            <Turn NormVector = "0;0;1" Angle = "AX" /> // red - 0, orange - 1 etc
+            <Turn NormVector = "1;0;0" Angle = "AY" />
+            <Transfer Vector = " DX; DY; DZ" /> 
+            <Turn NormVector = "0;1;0" Angle = "R" />
+        </Macro>
+
+        <Macro Name = "UndoSetup" >
+            <Turn NormVector = "0;1;0" Angle = "-R" />
+            <Transfer Vector = "-DX;-DY;-DZ" /> 
+            <Turn NormVector = "1;0;0" Angle = "-AY" />
+            <Turn NormVector = "0;0;1" Angle = "-AX" />
+        </Macro>
+
+        <Macro Name = "HideBPart" >
+            <ExecMacro MacroName = "Setup" />
+
+            <HideContaining Vector = "0;0;0"/>
+
+            <ExecMacro MacroName = "UndoSetup" />
+        </Macro>
+        <Macro Name = "HideBParts" >
+            <ExecMacro MacroName = "HideBPart" j = "0" Repeat = "(Length(Places) + 1) div 3" />
+        </Macro>
+
+        <Macro Name = "MakeCube" >
+            <LoadFrom File = "Figures\Cube.xml" />
+            <SplitByAxes/>
+
+            <ExecMacro MacroName = "HideBParts" />
+
+            // make gaps
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-D2" /></Split>
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = " D2" /></Split>
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /></Split>
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = " D2" /></Split>
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D2" /></Split>
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D2" /></Split>
+            <HideContaining Vector = "Cx;Cy;Cz" />
+            <HideContaining Vector = "Ex;Ey;Ez" />
+            <HideContaining Vector = "Vx;Vy;Vz" />
+            <RemoveAllVisible/>
+
+            <ShowAll/>
+        </Macro>
+
+
+        <Macro Name = "CutH" >
+            <ExecMacro MacroName = "Setup" />
+
+            <HideContaining Vector = "0; 0; 0" />
+            <InvertVisibility/>
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-1" ><Plane NormVector = "1;0;0" NormDistance = "0" /></Split>
+            <Hide><Plane NormVector = " 1;0;0" NormDistance = "0" /></Hide>
+            <Cut><Plane NormVector = "0;1;-1" NormDistance = "-DE" /></Cut>
+            <ShowAll/>
+
+            <ExecMacro MacroName = "UndoSetup" />
+        </Macro>
+        <Macro Name = "CutHs" >
+            <ExecMacro MacroName = "CutH" j = "0" Repeat = "(Length(Places) + 1) div 3" />
+        </Macro>
+
+        <Macro Name = "CutE" >
+            <ExecMacro MacroName = "Setup" />
+
+            <HideContaining Vector = "0; 0; 0" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "0;1;-1" NormDistance = "-DE" /></Cut>
+            <ShowAll/>
+
+            <ExecMacro MacroName = "UndoSetup" />
+        </Macro>
+        <Macro Name = "CutEs" >
+            <ExecMacro MacroName = "CutE" j = "0" Repeat = "(Length(Places) + 1) div 3" />
+        </Macro>
+
+        <Macro Name = "CutV" >
+            <ExecMacro MacroName = "Setup" />
+
+            <HideContaining Vector = "0;0;0" />
+            <InvertVisibility/>
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-1" ><Plane NormVector = "1;0;0" NormDistance = "D" /></Split>
+            <Hide><Plane NormVector = " 1;0;0" NormDistance = "D" /></Hide>
+            <Cut><Plane NormVector = " 0;-1; 1" NormDistance = " RC - WD * sqrt(2)" /></Cut>
+            <ShowAll/>
+
+            <ExecMacro MacroName = "UndoSetup" />
+        </Macro>
+        <Macro Name = "CutVs" >
+            <ExecMacro MacroName = "CutV" j = "0" Repeat = "(Length(Places) + 1) div 3" />
+        </Macro>
+
+        <Macro Name = "CutW" >
+            <ExecMacro MacroName = "Setup" />
+
+            <HideContaining Vector = "0;0;0" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "-1;0;0" NormDistance = "-D" /></Cut>
+            <ShowAll/>
+
+            <ExecMacro MacroName = "UndoSetup" />
+        </Macro>
+        <Macro Name = "CutWs" >
+            <ExecMacro MacroName = "CutW" j = "0" Repeat = "(Length(Places) + 1) div 3" />
+        </Macro>
+</xml>

@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Flat Pyramid Penta 4</Name>
+        <Menu>Other forms\Pyramid\Biaxes Virtual\Flat Pyramid Penta 4</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-02-26</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clRed     := 'FF0000';
+        clYellow  := 'FFFF00';
+        clGreen   := '008000';
+        clBlue    := '0000FF';
+        clOrange  := 'FF6000';
+        clFuchsia := 'FF00FF';
+        clOlive   := '808000';
+        clNavy    := '000080';
+        clBlack1  := '010101';
+        clBlack2  := '010102';
+
+        K := 0.5;
+
+        pX := K * 1.61803399;
+        pY := K * 0.38196601;
+
+        AngleD := 116.56505118;
+
+        Angle  := AngleD * Pi/180;
+        AngleM := (Pi - Angle)/2;
+        x := cos(AngleM);
+        y := sin(AngleM);
+
+        A := 2*Pi/5;
+
+        D := K * 0.2008;  // 1 middle point
+        N := 0.62;
+    </Script>
+
+    <Axes TurningAngles = "A" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " x; -y; 0" />
+        <Axis NormVector = "-x; -y; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " Px;  -K;  0" />
+                <Add Vector = "-Px;  -K;  0" />
+                <Add Vector = "  0; -Py;  K" />
+                <Add Vector = "  0; -Py; -K" />
+                <Add Vector = "  0;  Px;  K" />
+                <Add Vector = "  0;  Px; -K" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clRed    " VertexIndexes = "2;1;0" />
+                <Face Color = "clYellow " VertexIndexes = "0;1;3" />
+                <Face Color = "clGreen  " VertexIndexes = "1;2;4" />
+                <Face Color = "clBlue   " VertexIndexes = "0;4;2" />
+                <Face Color = "clOrange " VertexIndexes = "1;5;3" />
+                <Face Color = "clFuchsia" VertexIndexes = "0;3;5" />
+                <Face Color = "clOlive  " VertexIndexes = "1;4;5" />
+                <Face Color = "clNavy   " VertexIndexes = "0;5;4" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "clBlack1" ><Plane NormVector = "0; -1; 0" NormDistance = "-K * N" /></Cut>
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart" Repeat = "4" />
+        <Undo Repeat = "100" />
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

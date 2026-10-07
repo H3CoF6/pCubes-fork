@@ -1,0 +1,213 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Script>
+        // Stickers
+        Delta := 1.001;
+
+        // 'SizeX,SizeY, X1,Y1, ...'
+        sProfile1 := '200,200, 161,50, 168,52, 174,56, 178,62, 180,69, 180,131, 178,138, 174,144, 168,148, 161,150, 39,150, 32,148, 26,144, 22,138, 20,131, 20,69, 22,62, 26,56, 32,52, 39,50';
+        sProfile2 := '200,200, 135,20, 141,21, 146,24, 149,29, 150,35, 150,50, 147,76, 137,100, 121,121, 100,137, 76,147, 50,150, 35,150, 29,149, 24,146, 21,141, 20,135, 20,65, 21,59, 24,54, 29,51, 35,50, 41,49, 46,46, 49,41, 50,35, 51,29, 54,24, 59,21, 65,20';
+        sProfileE := '256,200, 217,50, 224,52, 230,56, 234,62, 236,69, 236,131, 234,138, 230,144, 224,148, 217,150, 39,150, 32,148, 26,144, 22,138, 20,131, 20,69, 22,62, 26,56, 32,52, 39,50';
+        sProfileH := '256,200, 167,50, 130,100, 167,150, 39,150, 32,148, 26,144, 22,138, 20,131, 20,69, 22,62, 26,56, 32,52, 39,50';
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', sProfile);
+          if p = 0 then begin
+            substr := sProfile;
+            sProfile := '';
+          end else begin
+            substr := copy(sProfile, 1, p-1);
+            Delete(sProfile, 1, p);
+          end;
+          Result := StrToInt(Trim(substr));
+        end;
+
+        procedure PrepareSticker(sProfile, ScaleX, ScaleY);
+        begin
+          VarRemove('STx');
+          VarRemove('STz');
+          sCount := 0;
+          ProfileSizeX := GetInt;
+          ProfileSizeY := GetInt;
+          while Length(sProfile) > 0 do begin
+            STx[sCount] := (GetInt / ProfileSizeX * 2 - 1) * ScaleX;
+            STz[sCount] := (GetInt / ProfileSizeY * 2 - 1) * ScaleY;
+            Inc(sCount);
+          end;
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+
+
+        // Tenon/groove
+
+        procedure AddTenon(x, y, z, nx, ny, nz);
+        begin
+          PartNo := CallGlobal('GetVisiblePartContaining', x, y, z);
+          FaceNo := CallGlobal('FindFaceByNorm', PartNo, nx, ny, nz);
+          CallGlobal('SetTenon', 1, PartNo, FaceNo);
+          if VarExists('ShowTextures') then
+            if ShowTextures then
+              CallGlobal('SetTexture', 'Tenon', PartNo, FaceNo, 0);
+        end;
+
+        procedure AddGroove(x, y, z, nx, ny, nz);
+        begin
+          PartNo := CallGlobal('GetVisiblePartContaining', x, y, z);
+          FaceNo := CallGlobal('FindFaceByNorm', PartNo, nx, ny, nz);
+          CallGlobal('SetGroove', 1, PartNo, FaceNo);
+          if VarExists('ShowTextures') then
+            if ShowTextures then
+              CallGlobal('SetTexture', 'Groove', PartNo, FaceNo, 0);
+        end;
+    </Script>
+
+        <Macro Name = "HideBPart" >
+            <Script>
+                S := StrToInt(copy(BlackParts, 3*j+1, 1)); // side: red - 0, orange - 1 etc
+                 AX :=-Pi/2 * StrToInt(copy('310200', S+1, 1)); // make a side to be in front
+                 AY := Pi/2 * StrToInt(copy('000031', S+1, 1)); // ...
+                N := StrToInt(copy(BlackParts, 3*j+2, 1)); // No of part on the side: 012/345/678
+                 DX := WD * (N mod 3 - 1);
+                 DY :=-W;
+                 DZ :=-WD * (N div 3 - 1);
+                Inc(j);
+            </Script>
+
+            // setup
+            <Turn NormVector = "0;0;1" Angle = "AX" /> // red - 0, orange - 1 etc
+            <Turn NormVector = "1;0;0" Angle = "AY" />
+            <Transfer1 Vector = " DX; DY; DZ" /> 
+
+            <HideContaining Vector = "DX;DY;DZ"/>
+
+            // undo setup
+            <Transfer1 Vector = "-DX;-DY;-DZ" /> 
+            <Turn NormVector = "1;0;0" Angle = "-AY" />
+            <Turn NormVector = "0;0;1" Angle = "-AX" />
+        </Macro>
+        <Macro Name = "HideBParts" >
+            <ExecMacro MacroName = "HideBPart" j = "0" Repeat = "(Length(BlackParts) + 1) div 3" />
+        </Macro>
+
+        <Macro Name = "MakeCube" >
+            <LoadFrom File = "Figures\Cube.xml" />
+            <SplitByAxes/>
+
+            <ExecMacro MacroName = "HideBParts" />
+            <InvertVisibility/>
+            <RemoveAllVisible/>
+            <ShowAll/>
+
+            // make gaps
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-D2" /></Split>
+            <Split><Plane NormVector = " 1; 0; 0" NormDistance = " D2" /></Split>
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /></Split>
+            <Split><Plane NormVector = " 0; 1; 0" NormDistance = " D2" /></Split>
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D2" /></Split>
+            <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D2" /></Split>
+            <HideContaining Vector = "Cx;Cy;Cz" />
+            <HideContaining Vector = "Ex;Ey;Ez" />
+            <HideContaining Vector = "Vx;Vy;Vz" />
+            <RemoveAllVisible/>
+
+            // add black parts
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "clBlack" />
+            <SplitByAxes/>
+            <ExecMacro MacroName = "HideBParts" />
+            <RemoveAllVisible/>                
+            <ShowAll/>
+        </Macro>
+
+
+        // Make Stickers
+
+        <Macro Name = "AddSticker" >
+            <Script>
+                S := StrToInt(copy(Places, 4*j+1, 1)); // side: red - 0, orange - 1 etc
+                 AX :=-Pi/2 * StrToInt(copy('310200', S+1, 1)); // make a side to be in front
+                 AY := Pi/2 * StrToInt(copy('000031', S+1, 1)); // ...
+                N := StrToInt(copy(Places, 4*j+2, 1)); // No of part on the side: 012/345/678
+                 DX :=-WD * (N mod 3 - 1);
+                 DY := Delta * W;
+                 DZ := WD * (N div 3 - 1);
+                R := StrToInt(copy(Places, 4*j+3, 1)); // rotate
+                if StickerColor = 'UseSideColor' then
+                    SColor := Colors[S]
+                else
+                    SColor := StickerColor;
+                Inc(j);
+            </Script>
+
+            // setup
+            <Turn NormVector = "0;0;1" Angle = "AX" /> // red - 0, orange - 1 etc
+            <Turn NormVector = "1;0;0" Angle = "AY" />
+            <Transfer Vector = " DX; DY; DZ" /> 
+            <Turn NormVector = "0;1;0" Angle = "-Pi/2 * R" />
+
+            <Part>
+                <Vertices Vectors = " STx; 0; STz" />
+                <Faces>
+                    <Face Color = "SColor" VertexIndexes = "FromTo( 0, sCount - 1)" />
+                </Faces>
+            </Part>
+
+            // undo setup
+            <Turn NormVector = "0;1;0" Angle = " Pi/2 * R" />
+            <Transfer Vector = "-DX;-DY;-DZ" /> 
+            <Turn NormVector = "1;0;0" Angle = "-AY" />
+            <Turn NormVector = "0;0;1" Angle = "-AX" />
+        </Macro>
+
+        <Macro Name = "AddStickers" >
+            <Script> PrepareSticker(sProfile, SX, SY); </Script>
+            <ExecMacro MacroName = "AddSticker" j = "0" Repeat = "(Length(Places) + 1) div 4" />
+        </Macro>
+
+
+        // Tenons
+
+        <Macro Name = "AddTenon" >
+            <Script>
+                S := StrToInt(copy(Places, 4*j+1, 1)); // side: red - 0, orange - 1 etc
+                 AX :=-Pi/2 * StrToInt(copy('310200', S+1, 1)); // make a side to be in front
+                 AY := Pi/2 * StrToInt(copy('000031', S+1, 1)); // ...
+                N := StrToInt(copy(Places, 4*j+2, 1)); // No of part on the side: 012/345/678
+                 DX :=-WD * (N mod 3 - 1);
+                 DZ := WD * (N div 3 - 1);
+                DY := -WD * (StrToInt(copy(Places, 4*j+3, 1)) - 1); // layer 0 or 1 or 2
+                Inc(j);
+            </Script>
+
+            // setup
+            <Turn NormVector = "0;0;1" Angle = "AX" /> // red - 0, orange - 1 etc
+            <Turn NormVector = "1;0;0" Angle = "AY" />
+            <Transfer Vector = " DX; DY; DZ" /> 
+
+            <Script>
+                if Tenon then
+                  AddTenon( 0, 0, 0,  0,-1, 0)
+                else
+                  AddGroove( 0, 0, 0,  0,-1, 0);
+            </Script>
+
+            // undo setup
+            <Transfer Vector = "-DX;-DY;-DZ" /> 
+            <Turn NormVector = "1;0;0" Angle = "-AY" />
+            <Turn NormVector = "0;0;1" Angle = "-AX" />
+        </Macro>
+
+        <Macro Name = "AddTenons" >
+            <ExecMacro MacroName = "AddTenon" j = "0" Tenon = "True" Repeat = "(Length(Places) + 1) div 4" />
+        </Macro>
+
+        <Macro Name = "AddGrooves" >
+            <ExecMacro MacroName = "AddTenon" j = "0" Tenon = "False" Repeat = "(Length(Places) + 1) div 4" />
+        </Macro>
+</xml>

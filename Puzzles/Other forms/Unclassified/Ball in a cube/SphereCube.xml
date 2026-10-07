@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>SphereCube</Name>
+        <Menu>Other forms\Unclassified\Ball in a cube\SphereCube</Menu>
+        <Inventor>Roberto Cazares</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9236</Link>
+    </Interface>                   
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := 'FF6000'; // Orange
+        Colors[2] := '0000A0'; // Blue
+        Colors[3] := '008000'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W * 0.5;
+        for i := 0 to 2 do
+            DD[i] := (-1 + i) * D;
+
+        K := W * 1.0;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "DD" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "1" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <HideAll/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+        <Cut Axis = "1" To = "3" />
+        <Cut Axis = "2" From = "1" />
+
+        <Split Color2 = "Colors[1]" Axis = "0" From = "1" />
+        <Split Color1 = "Colors[0]" Axis = "0" From = "3" />
+        <Split Color2 = "Colors[3]" Axis = "1" From = "1" />
+        <Split Color1 = "Colors[4]" Axis = "2" From = "3" />
+
+        <ShowAll/>
+        <RemoveContaining Vector = "-0; 0; 0" />
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

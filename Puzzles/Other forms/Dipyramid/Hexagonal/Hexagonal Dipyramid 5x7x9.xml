@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagonal Dipyramid 5x7x9</Name>
+        <Menu>Other forms\Dipyramid\Hexagonal\Hexagonal Dipyramid 5x7x9</Menu>
+        <Inventor>Zigor Martinez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9976</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'F0E68C'; // Khaki
+        Colors[ 1] := '800000'; // Brown
+        Colors[ 2] := 'FF0080'; // LightViolett
+        Colors[ 3] := 'FF6000'; // Orange
+        Colors[ 4] := '0000A0'; // Blue
+        Colors[ 5] := '2828FF'; // LightBlue
+        Colors[ 6] := '008000'; // Green
+        Colors[ 7] := '00FF00'; // LightGreen
+        Colors[ 8] := '800080'; // Violett
+        Colors[ 9] := 'FF0000'; // Red
+        Colors[10] := '00FFFF'; // Cyan
+        Colors[11] := 'FFFF00'; // Yellow
+
+        W := 0.5;
+        X := 7;
+        Y := 9;
+        Z := 5;
+
+        N := Max(Max(x, y), z);
+        WD := W * 0.18;
+        D[0] := -WD * (N / 2 - 1);
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut Color = "Colors[ 6]" > <Plane NormVector = " 2; 2;-1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 7]" > <Plane NormVector = "-2;-2; 1" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 8]" > <Plane NormVector = " 2;-1; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[ 9]" > <Plane NormVector = "-2; 1;-2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[10]" > <Plane NormVector = "-1; 2; 2" NormDistance = "-W" /> </Cut>
+        <Cut Color = "Colors[11]" > <Plane NormVector = " 1;-2;-2" NormDistance = "-W" />  </Cut>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "0" From = "6" />
+        <Split Axis = "0" From = "7" />
+        <Split Axis = "0" From = "8" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "1" From = "6" />
+        <Split Axis = "1" From = "7" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <Split Axis = "2" From = "5" />
+        <Split Axis = "2" From = "6" />
+
+        <RemoveGrayParts/>
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/4" />
+        <Turn NormVector = "0;1;0" Angle = "-ArcTan(sqrt(2))" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "Pi" />
+        </Macro>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(N)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Script>N := 7;</Script>
+            <ExecMacro MacroName = "Sc1" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

@@ -1,0 +1,184 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Petal 4 (Triplex 4)</Name>
+        <Menu>Other forms\2d\Petal\Petal 4 (Triplex 4)</Menu>
+        <Inventor>Douglas A. Engel</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4310</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'DD0000'; // Red
+        Colors[1] := 'EECC00'; // Yellow
+        Colors[2] := '0066EE'; // Blue
+        Colors[3] := 'AAAAAA'; // Gray
+        Colors[4] := 'FFFFFF'; // White
+
+        K := 0.6;
+        sAngle := 2*Pi / 3;
+
+        D := K * 0.333526099730881; // = K * C15 / sqrt(3);
+        DCut := D - K * 0.2;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Sphere" >
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        </Macro>
+
+        <Macro Name = "Split" >
+            <Split Axis = "0" From  = "1" />
+            <Turn  Axis = "0" Layer = "1" Angle = " sAngle" />
+            <Split Axis = "1" From  = "1" />
+            <Turn  Axis = "1" Layer = "1" Angle = "-sAngle" />
+        </Macro>
+
+        <Macro Name = "SplitAll" >
+            <SplitByAxes/>
+            <ExecMacro MacroName = "Split" Repeat = "5" />
+            <Undo Repeat = "10" />
+        </Macro>
+
+        // Solution 1
+        <ExecMacro MacroName = "Sphere" Color = "Colors[0]" />
+        <SplitByAxes/>
+        <Cut  Axis = "1" From = "1" />
+        <Cut  Axis = "0" To   = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = "-sAngle" />
+        <Cut  Axis = "0" To   = "1" />
+        <Undo/>
+
+        <ExecMacro MacroName = "Sphere" Color = "Colors[2]" />
+        <SplitByAxes/>
+        <Cut  Axis = "0" From = "1" />
+        <Cut  Axis = "1" To   = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = " sAngle" />
+        <Cut  Axis = "1" To   = "1" />
+        <Undo/>
+
+        <ExecMacro MacroName = "Sphere" Color = "Colors[1]" />
+        <SplitByAxes/>
+        <Cut  Axis = "0" From = "1" />
+        <Cut  Axis = "1" From = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = "-sAngle" />
+        <Cut  Axis = "0" To   = "1" />
+        <Undo/>
+        <Turn Axis = "0" Layer = "1" Angle = " sAngle" />
+        <Cut  Axis = "1" To   = "1" />
+        <Undo/>
+
+        <ExecMacro MacroName = "Sphere" Color = "Colors[3]" />
+        <ExecMacro MacroName = "SplitAll" />
+        <HideContaining Vector = "-K*0.5; -K*0.5; K*0.7" />
+        <HideContaining Vector = " K*0.5; -K*0.5; K*0.7" />
+        <Turn Axis = "1" Layer = "1" Angle = "-sAngle" />
+        <Cut  Axis = "0" From   = "1" />
+        <Undo/>
+        <Turn Axis = "0" Layer = "1" Angle = " sAngle" />
+        <Cut  Axis = "1" From   = "1" />
+        <Undo/>
+
+        <ExecMacro MacroName = "Sphere" Color = "Colors[4]" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1;-1; 1" NormDistance = " DCut" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1;-1; 1" NormDistance = " DCut" /> </Cut>
+
+        <ExecMacro MacroName = "Sphere" Color = "Colors[4]" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1; 1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[4]"  > <Plane NormVector = "-1;-1; 1" NormDistance = " DCut" /> </Cut>
+
+        <ExecMacro MacroName = "Sphere" Color = "Colors[4]" />
+        <Cut Axis = "0" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = " 1; 1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[4]"  > <Plane NormVector = " 1;-1; 1" NormDistance = " DCut" /> </Cut>
+        <ShowAll/>
+        <ExecMacro MacroName = "SplitAll" />
+
+        <RemoveContaining Vector = "0; 0; K" />
+        <RemoveContaining Vector = "0;-K; 0" />
+        <ExecMacro MacroName = "Sphere" Color = "-1" />
+        <ExecMacro MacroName = "SplitAll" />
+        <HideContaining Vector = "0; 0; K" />
+        <HideContaining Vector = "0;-K; 0" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+        <SaveSolvedState/>
+
+        // Solution 2
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+
+        <ExecMacro MacroName = "Sphere" Color = "Colors[3]" />
+        <ExecMacro MacroName = "SplitAll" />
+        <HideContaining Vector = "-K*0.5; -K*0.7; K*0.5" />
+        <HideContaining Vector = " K*0.5; -K*0.7; K*0.5" />
+        <Turn Axis = "1" Layer = "1" Angle = " sAngle" />
+        <Cut  Axis = "0" From   = "1" />
+        <Undo/>
+        <Turn Axis = "0" Layer = "1" Angle = "-sAngle" />
+        <Cut  Axis = "1" From   = "1" />
+        <Undo/>
+
+        <ExecMacro MacroName = "Sphere" Color = "Colors[0]" />
+        <SplitByAxes/>
+        <Cut  Axis = "1" From = "1" />
+        <Cut  Axis = "0" To   = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = " sAngle" />
+        <Cut  Axis = "0" To   = "1" />
+        <Undo/>
+
+        <ExecMacro MacroName = "Sphere" Color = "Colors[2]" />
+        <SplitByAxes/>
+        <Cut  Axis = "0" From = "1" />
+        <Cut  Axis = "1" To   = "1" />
+        <Turn Axis = "0" Layer = "1" Angle = "-sAngle" />
+        <Cut  Axis = "1" To   = "1" />
+        <Undo/>
+
+        <ExecMacro MacroName = "Sphere" Color = "Colors[1]" />
+        <SplitByAxes/>
+        <Cut  Axis = "0" From = "1" />
+        <Cut  Axis = "1" From = "1" />
+        <Turn Axis = "1" Layer = "1" Angle = " sAngle" />
+        <Cut  Axis = "0" To   = "1" />
+        <Undo/>
+        <Turn Axis = "0" Layer = "1" Angle = "-sAngle" />
+        <Cut  Axis = "1" To   = "1" />
+        <Undo/>
+
+        <ShowAll/>
+        <ExecMacro MacroName = "SplitAll" />
+
+        <RemoveContaining Vector = "0; 0; K" />
+        <RemoveContaining Vector = "0;-K; 0" />
+        <ExecMacro MacroName = "Sphere" Color = "-1" />
+        <ExecMacro MacroName = "SplitAll" />
+        <HideContaining Vector = "0; 0; K" />
+        <HideContaining Vector = "0;-K; 0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        // turn puzzle to user
+        <Turn NormVector = "1;0;0" Angle = "  45 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,128 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Barrel #0 (4 colors)</Name>
+        <Menu>Other forms\Cylinder\Barrel\Barrel #0 (4 colors)</Menu>
+        <Menu>Other forms\2x2x2 variants\Barrel #0 (4 colors)</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4750</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'AA00CC';
+        Colors[1] := 'EE0011';
+        Colors[2] := '00CC00';
+        Colors[3] := 'FFEE00';
+
+        H := 0.53;
+        R := H / sqrt(2);
+
+        for i := 0 to 29 do begin
+            x[i] := R * cos(2 * Pi / 30 * i);
+            y[i] := R * sin(2 * Pi / 30 * i);
+        end;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+        az := 1 / sqrt(2);
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "ax[0]; ay[0]; az" />
+        <Axis NormVector = "ax[1]; ay[1]; az" />
+        <Axis NormVector = "ax[2]; ay[2]; az" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Body">
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "FromTo(0, 29)" />
+
+                    <Face Color = "Color" VertexIndexes = "30;31; 1; 0" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "31;32; 2; 1" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "32;33; 3; 2" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "33;34; 4; 3" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "34;35; 5; 4" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "35;36; 6; 5" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "36;37; 7; 6" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "37;38; 8; 7" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "38;39; 9; 8" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "39;40;10; 9" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "40;41;11;10" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "41;42;12;11" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "42;43;13;12" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "43;44;14;13" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "44;45;15;14" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "45;46;16;15" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "46;47;17;16" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "47;48;18;17" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "48;49;19;18" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "49;50;20;19" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "50;51;21;20" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "51;52;22;21" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "52;53;23;22" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "53;54;24;23" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "54;55;25;24" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "55;56;26;25" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "56;57;27;26" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "57;58;28;27" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "58;59;29;28" InvisibleEdges = "10" />
+                    <Face Color = "Color" VertexIndexes = "59;30; 0;29" InvisibleEdges = "10" />
+
+                    <Face Color = "Color" VertexIndexes = "FromTo(59, 30)" />
+                </Faces>
+            </Part>
+            <SplitByAxes/>
+        </Macro>
+
+        <Macro Name = "2Petals" >
+            <HideAll/>
+            <ExecMacro MacroName = "Body" Color = "Colors[c]" />
+            <Cut Axis = "ax1" From = "1" />
+            <Cut Axis = "ax2" To = "1" />
+        </Macro>
+
+        <ExecMacro MacroName = "Body" Color = "Colors[3]" />
+        <HideContaining Vector = "0;0;H" />
+        <HideContaining Vector = "0;0;-H" />
+        <RemoveAllVisible />
+
+        <ExecMacro MacroName = "2Petals" c = "2" ax1 = "2" ax2 = "1" />
+        <ExecMacro MacroName = "2Petals" c = "1" ax1 = "1" ax2 = "0" />
+        <ExecMacro MacroName = "2Petals" c = "0" ax1 = "0" ax2 = "2" />
+        <ShowAll/>
+        <SaveSolvedState />
+
+        <RemoveAllVisible/>
+        <ExecMacro MacroName = "Body" Color = "Colors[3]" />
+        <HideContaining Vector = "0;0;H" />
+        <HideContaining Vector = "0;0;-H" />
+        <RemoveAllVisible />
+
+        <ExecMacro MacroName = "2Petals" c = "2" ax1 = "2" ax2 = "0" />
+        <ExecMacro MacroName = "2Petals" c = "1" ax1 = "1" ax2 = "2" />
+        <ExecMacro MacroName = "2Petals" c = "0" ax1 = "0" ax2 = "1" />
+        <ShowAll/>
+        <SaveSolvedState />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

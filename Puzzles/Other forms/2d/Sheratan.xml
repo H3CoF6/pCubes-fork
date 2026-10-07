@@ -1,0 +1,123 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sheratan</Name>
+        <Menu>Other forms\2d\Sheratan</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-12-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11048</Link>
+    </Interface>
+
+    <Script>
+        clRed   := 'A70000';
+        clGreen := '00A700';
+        clBlue  := '0000A7';
+        clBlack := '333333';
+
+        K := 0.6;
+
+        C15 := K * 0.57768415038417;
+        C29 := K * 1.00517373279507;
+
+        D1 := C29 / sqrt(2) * 1.001;
+        D2 := C15 / sqrt(3);
+
+        D3 := D1 - K * 0.09;
+        D4 := D2 - K * 0.09;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D1" >
+        <Axis NormVector = " 0;-1; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; 2*Pi/3" PlaneDistances = "D2" >
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <!-- Aliases -->
+
+        <Macro Name = "A"      > <Turn  Axis = "0" Layer = "1" Angle = " Pi"     /> </Macro>
+        <Macro Name = "B"      > <Turn  Axis = "1" Layer = "1" Angle = " 2*Pi/3" /> </Macro>
+        <Macro Name = "B'"     > <Turn  Axis = "1" Layer = "1" Angle = "-2*Pi/3" /> </Macro>
+        <Macro Name = "CutA"   > <Cut   Axis = "0" From  = "1"                   /> </Macro>
+        <Macro Name = "CutA'"  > <Cut   Axis = "0" To    = "1"                   /> </Macro>
+        <Macro Name = "CutB"   > <Cut   Axis = "1" From  = "1"                   /> </Macro>
+        <Macro Name = "CutB'"  > <Cut   Axis = "1" To    = "1"                   /> </Macro>
+        <Macro Name = "SplitA" > <Split Axis = "0" From  = "1"                   /> </Macro>
+        <Macro Name = "SplitB" > <Split Axis = "1" From  = "1"                   /> </Macro>
+
+        <!-- supporting macros -->
+
+        <Macro Name = "Unbandage" >
+            <ExecMacro MacroName = "SplitA A SplitB B" Repeat = "9" />
+            <Undo Repeat = "18" />
+        </Macro>
+
+        <!-- Colored parts -->
+
+        <Macro Name = "CreateShard" >
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <ExecMacro MacroName = "Unbandage CutA CutB A CutB A B A B' CutA" />
+            <Undo Repeat = "5" />
+            <HideAll/>
+
+            <ExecMacro MacroName = "B'" />
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut InvisibleEdges = "-1" > <Plane NormVector = "-1; 0; 1" /> </Cut>
+            <Cut InvisibleEdges = "-1" > <Plane NormVector = " 0; 1; 1" /> </Cut>
+            <ExecMacro MacroName = "CutB CutA' B CutA'" />
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1"> <Plane NormVector = "-1; 0; 1" /> </Split>
+            <HideAll/>
+
+            <Turn Axis = "1" Layer = "1" Angle = " 2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "CreateShard" Color = "clGreen" />
+        <ExecMacro MacroName = "CreateShard" Color = "clRed"   />
+        <ExecMacro MacroName = "CreateShard" Color = "clBlue"  />
+        <Undo Repeat = "9" />
+
+        <!-- Black part -->
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+        <ExecMacro MacroName = "CutA CutB' Unbandage" />
+
+        <!-- Black base -->
+
+        <Macro Name = "Base" >
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "clBlack" />
+            <Cut Axis = "0" To = "1" />
+            <Cut Axis = "1" To = "1" />
+        </Macro>
+
+        <ExecMacro MacroName = "Base" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 0;-1; 1" NormDistance = " D3" /> </Cut>
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 1;-1; 1" NormDistance = " D4" /> </Cut>
+
+        <ExecMacro MacroName = "Base" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 0; 1;-1" NormDistance = "-D3" /> </Cut>
+        <Cut Color = "clBlack"     > <Plane NormVector = " 1;-1; 1" NormDistance = " D4" /> </Cut>
+
+        <ExecMacro MacroName = "Base" />
+        <Cut Color = "clBlack"     > <Plane NormVector = " 0;-1; 1" NormDistance = " D3" /> </Cut>
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = "-1; 1;-1" NormDistance = "-D4" /> </Cut>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <!-- align to screen -->
+
+        <Turn NormVector = "1;0;0" Angle = " Pi/4" />
+        <Turn NormVector = "0;0;1" Angle = "-Arctan(1 / sqrt(2)) / 2" /> // = "-Arctan(sqrt(3) - sqrt(2))"
+
+        <!-- default turn for every puzzle in pCubes -->
+
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

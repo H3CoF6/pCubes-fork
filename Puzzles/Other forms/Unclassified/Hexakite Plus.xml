@@ -1,0 +1,88 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexakite Plus</Name>
+        <Menu>Other forms\Unclassified\Hexakite Plus</Menu>
+        <Inventor>Akkei</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-01-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11656</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'F0F0F0'; // White
+        Colors[ 1] := 'C0C0C0'; // Silver
+        Colors[ 2] := 'FFFF00'; // Yellow
+        Colors[ 3] := '808000'; // Olive
+        Colors[ 4] := '00FF00'; // Lime
+        Colors[ 5] := '008000'; // Green
+        Colors[ 6] := 'FF69B4'; // Pink
+        Colors[ 7] := 'FF6000'; // Orange
+
+        Colors[ 8] := '404040'; // Gray
+        Colors[ 9] := '0000FF'; // Blue
+        Colors[10] := '000080'; // Navy
+        Colors[11] := '7800FF'; // Purple
+        Colors[12] := '00BFFF'; // Deep Sky
+        Colors[13] := '00FFE1'; // Teal
+        Colors[14] := 'FF0000'; // Red
+        Colors[15] := '800000'; // Brown
+
+        S := sqrt(3);
+
+        W := 0.5;
+        D := W * (4 + sqrt(2)) / 14;
+
+        DCut := W;
+    </Script>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "-D; D" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <Cut Color = "Colors[ 0]"> <Plane NormVector = " 1; 1;-S" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[ 3]"> <Plane NormVector = " 1;-1; S" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[ 4]"> <Plane NormVector = " 1;-1;-S" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[ 7]"> <Plane NormVector = " 1; 1; S" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[12]"> <Plane NormVector = "-1;-1;-S" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[13]"> <Plane NormVector = "-1; 1;-S" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[14]"> <Plane NormVector = "-1; 1; S" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[15]"> <Plane NormVector = "-1;-1; S" NormDistance = "-DCut" /> </Cut>
+
+        <Cut Color = "Colors[ 8]"> <Plane NormVector = "-1;-2; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[ 9]"> <Plane NormVector = "-2;-1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[10]"> <Plane NormVector = "-2; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[11]"> <Plane NormVector = "-1; 2; 0" NormDistance = "-DCut" /> </Cut>
+
+        <Cut Color = "Colors[ 5]"> <Plane NormVector = " 1;-2; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[ 6]"> <Plane NormVector = " 1; 2; 0" NormDistance = "-DCut" /> </Cut>
+
+        <Turn NormVector = "1;0;0" Angle = " Pi / 3" />
+        <Cut Color = "Colors[ 1]"> <Plane NormVector = " 2; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[ 2]"> <Plane NormVector = " 2;-1; 0" NormDistance = "-DCut" /> </Cut>
+        <Turn NormVector = "1;0;0" Angle = "-Pi / 3" />
+
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Turn  Axis = "1" Angle = "Pi/3" Layer = "0" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split">
+            <Turn Axis = "i and 2 shr 1" Layer = "1" Angle = "Pi/3" />
+            <SplitByAxes/>
+            <RemoveGrayParts/>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "12" />
+
+        <Undo Repeat = "13" />
+    </Figure>
+</xml>

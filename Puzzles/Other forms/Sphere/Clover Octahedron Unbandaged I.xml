@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Clover Octahedron Unbandaged I (Sphere)</Name>
+        <Menu>Other forms\Sphere\Clover Octahedron Unbandaged I</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-21</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0088FF'; // Blue1
+        Colors[1] := '00AA00'; // Green2
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := 'FF0000'; // Red
+        Colors[4] := 'FF6000'; // Orange
+        Colors[5] := '8800DD'; // Violett
+        Colors[6] := '00FF00'; // Green1
+        Colors[7] := '0033EE'; // Blue2
+
+        K := 0.6;
+
+        nA := 1;
+        n0 := 1 + sqrt(2);
+
+        AA1 := ArcCos(-(7 - 4 * sqrt(2)) / 17);
+
+        D := K * 0.89;
+    </Script>
+
+    <Axes TurningAngles = "Pi" AvailableAngles = "-AA1; 0; AA1" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "  0; nA; n0" />
+        <Axis NormVector = " nA;  0; n0" />
+        <Axis NormVector = "  0;-nA; n0" />
+        <Axis NormVector = "-nA;  0; n0" />
+
+        <Axis NormVector = "  0; n0; nA" />
+        <Axis NormVector = " nA; n0;  0" />
+        <Axis NormVector = "  0; n0;-nA" />
+        <Axis NormVector = "-nA; n0;  0" />
+
+        <Axis NormVector = " n0;  0; nA" />
+        <Axis NormVector = " n0; nA;  0" />
+        <Axis NormVector = " n0;  0;-nA" />
+        <Axis NormVector = " n0;-nA;  0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSector" >
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[c]" />
+            <Cut> <Plane NormVector = " 1; 0; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1; 0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+
+            <HideAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi / 2" />
+            <Script> Inc(c); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" Repeat = "4" c = "0" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSector" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <Macro Name = "unbandage1">
+            <Turn Axis = "ax1" Layer = "l1" Angle = "Pi" />
+            <Turn Axis = "ax2" Layer = "l2" Angle = "Pi" />
+            <Turn Axis = "ax1" Layer = "l1" Angle = "Pi" />
+            <Turn Axis = "ax2" Layer = "l2" Angle = "Pi" />
+            <SplitByAxes />
+            <Undo Repeat = "4" />
+        </Macro>
+        <ExecMacro MacroName = "unbandage1" ax1 = " 0" ax2 = " 2" l1 = "2" l2 = "2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 2" ax2 = " 6" l1 = "0" l2 = "2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 4" ax2 = " 6" l1 = "0" l2 = "0" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 2" ax2 = " 6" l1 = "2" l2 = "0" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = "11" ax2 = " 7" l1 = "0" l2 = "2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = "11" ax2 = " 7" l1 = "2" l2 = "0" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 5" ax2 = " 9" l1 = "2" l2 = "2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 5" ax2 = " 7" l1 = "0" l2 = "0" />
+
+        <ExecMacro MacroName = "unbandage1" ax1 = " 1" ax2 = " 8" l1 = "2" l2 = "2" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 1" ax2 = " 8" l1 = "0" l2 = "0" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 3" ax2 = "10" l1 = "2" l2 = "0" />
+        <ExecMacro MacroName = "unbandage1" ax1 = " 3" ax2 = "10" l1 = "0" l2 = "2" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Little Red Hat Cube</Name>
+        <Menu>Cubic\Rubiks Recolored\Little Red Hat Cube</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-04</Added>
+        <Link>https://www.magiccubemall.com/p/2Pcs-Qiyi-Cube-Set-Vivid-Color-Little-Red-Hat-Cube-Volcano-Cube-_2830087.html</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        Colors[0] := '00AAFF';
+        Colors[1] := '00EE00';
+        Colors[2] := 'FFFFFF';
+        Colors[3] := 'FFFF00';
+        Colors[4] := 'FF9900';
+        Colors[5] := 'FF0000';
+        D := W / 3;
+
+        WX := W;
+        WY := W;
+        WZ := W;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <Cut Axis = "2" To = "2" />
+
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := Colors[5];
+        </Script>
+
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <Cut Axis = "2" From = "2" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

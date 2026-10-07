@@ -1,0 +1,164 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Framed Trunk</Name>
+        <Menu>Other forms\Unclassified\Framed Trunk</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-10-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10505</Link>
+    </Interface>
+
+    <Script>
+        clWhite := 'FFFFFF';
+
+        <!-- convert num in [0..15] into Hex -->
+        function IntToHex1(num);
+        begin
+            case (num) of
+                10: Result := 'A';
+                11: Result := 'B';
+                12: Result := 'C';
+                13: Result := 'D';
+                14: Result := 'E';
+                15: Result := 'F';
+            else
+                Result := IntToStr(num);
+            end;
+        end;
+
+        <!-- Convert num in [0..255] into Hex -->
+        function IntToHex2(num);
+        begin
+            Result := IntToHex1(num div 16) + IntToHex1(num mod 16);
+        end;
+
+        function RGB( R, G, B);
+        begin
+            Result := IntToHex2(int(255 * R)) + IntToHex2(int(255 * G)) + IntToHex2(int(255 * B));
+        end;
+
+        <!-- http://www.easyrgb.com/en/math.php -->
+        <!-- Convert (H,S,V) in [0,1] x [0,1] x [0,1] to Hex (######)-->
+        function HSVToHex(H, S, V);
+        begin
+            <!-- Enforce Hue Bounds -->
+            H := H - int(H);
+
+            if not (S = 0) then begin // non-zero Saturation
+                vh := H * 6;
+                vi := int(vh);
+                v1 := V * (1 - S);
+                v2 := V * (1 - S * (vh - vi));
+                v3 := V * (1 - S * (1 - (vh - vi)));
+
+                case (vi) of
+                    0 : RGB(  V, v3, v1);
+                    1 : RGB( v2,  V, v1);
+                    2 : RGB( v1,  V, v3);
+                    3 : RGB( v1, v2,  V);
+                    4 : RGB( v3, v1,  V);
+                    5 : RGB(  V, v1, v2);
+                end;
+            end else
+                RGB( V, V, V);
+        end;
+
+        N := 12;
+        for i := 0 to N - 1 do
+             Cols[i] := HSVToHex(i/N, 1.00, 1.00);
+
+        W := 0.6;
+        H := W / 4;
+
+        sAngle := 2 * PI / N;
+
+        // Cylinder parameters
+        RC := W * 2 / 3;
+        xc := W / 6 * 1.5;
+        yc := W / 6 * 1;
+        zc := W / 6 * 5;
+
+        // White labels parameters
+        LW := W * 1.001;
+        LD := W * 0.1;
+    </Script>
+
+    <Axes TurningAngles = "Pi" N1ormVectors = "x; y; 0" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; sAngle; sAngle; 0" PlaneDistances = "-H; 0; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "sAngle / 2" />
+
+        <Macro Name = "AddPart" >
+            <Script> for j := 0 to 5 do Colors[j] := Cols[i]; </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "W" WZ = "H" />
+            <Turn NormVector = "0;0;1" Angle = "-sAngle * (i - 1.5)" />
+            <Cut> <Plane NormVector = "0; 1; 0" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = "-sAngle" />
+            <Cut> <Plane NormVector = "0;-1; 0" /> </Cut>
+            <Split Axis = "2" From  = "2" />
+            <HideContaining  Vector = "0; 0; H" />
+            <Turn NormVector = "0;0;1" Angle = "sAngle * (i - 0.5)" />
+            <HideAll/>
+            <Script> inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddPart" i = "0" Repeat = "12" />
+
+        <Macro Name = "AddLabel" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "X1; LW; Z1" />
+                    <Add Vector = "X2; LW; Z1" />
+                    <Add Vector = "X1; LW; Z2" />
+                    <Add Vector = "X2; LW; Z2" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "clWhite" VertexIndexes = "0;1;3;2" />
+                </Faces>
+            </Part>
+        </Macro>
+        <Macro Name = "AddLabel2" >
+            <ExecMacro MacroName = "AddLabel" X1 = "-W + LD" X2 = "-W * tan(sAngle/2) - LD" Z1 = "-LD" Z2 = "-H + LD" />
+            <ExecMacro MacroName = "AddLabel" X1 = "-W * tan(sAngle/2) + LD" X2 = " W * tan(sAngle/2) - LD" Z1 = "-LD" Z2 = "-H + LD" />
+            <ExecMacro MacroName = "AddLabel" X1 = " W * tan(sAngle/2) + LD" X2 = " W - LD" Z1 = "-LD" Z2 = "-H + LD" />
+            <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "AddLabel2" X1 = "-1" X2 = "-0.5" Z1 = "H" Z2 = "H / 2" Repeat = "4" />
+
+        <Cylinder Radius = "RC" Color = "clWhite" Base = "-xc;-yc;-zc" BaseColor = "clWhite" Top = " xc; yc; zc" TopColor = "clWhite" />
+        <Split Axis = "2" From  = "1" />
+        <Split Axis = "2" From  = "3" />
+        <RemoveContaining Vector = "0;0;0" />
+        <Split Axis = "0" From  = "1" />
+        <Split Axis = "1" From  = "1" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layers = "1;2" Angle = "Pi/6" />
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layers = "1;2" Angle = "Pi/6" />
+        <SaveSolvedState/>
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "2" Layers = "1;2" Angle = "Pi" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layers = "1;2" Angle = "Pi / 6" />
+        <SaveSolvedState/>
+        <Turn Axis = "2" Layers = "1;2" Angle = "Pi / 6" />
+        <SaveSolvedState/>
+        <Undo Repeat = "5" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

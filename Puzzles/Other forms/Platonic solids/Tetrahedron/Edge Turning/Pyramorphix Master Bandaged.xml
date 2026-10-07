@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyramorphix Master Bandaged</Name>
+        <Menu>Other forms\Tetrahedron\Edge Turning\Pyramorphix Master Bandaged</Menu>
+        <Inventor>Hidetoshi Takeji</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-05-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2493</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * 0.25;
+
+        procedure Prepare();
+        begin
+            Count := Length(S) div 3;
+            for i := 0 to Count - 1 do begin
+                ax[i] := StrToInt(copy(S, i * 3 + 1, 1));
+                L[i] := StrToInt(copy(S, i * 3 + 2, 1));
+                Sign := copy(S, i * 3 + 3, 1);
+                if Sign = '-' then begin
+                    FromL[i] := L[i] + 1;
+                    ToL[i] := 20;
+                end else begin
+                    FromL[i] := 0;
+                    ToL[i] := L[i];
+                end;
+            end;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom1 File = "Figures\Cube.xml" />
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <Macro Name = "Split1" >
+            <Split Axis = "ax[i]" From = "L[i] + 1" />
+            <Hide Axis = "ax[i]" From = "FromL[i]" To = "ToL[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <Macro Name = "Split2" >
+            <Script> Prepare; </Script>
+            <ExecMacro MacroName = "Split1" i = "0" Repeat = "Count" />
+            <ShowAll/>
+        </Macro>
+
+        // "52-" means split axis = "5" From = "2+1" and hide lower or upper half depending on sign
+        // these strings split very bandaged puzzle
+        <ExecMacro MacroName = "Split2" S = "'21-10-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'01+21-10+20*'" />
+        <ExecMacro MacroName = "Split2" S = "'21+10+01-11*'" />
+        <ExecMacro MacroName = "Split2" S = "'21-01-11+20*'" />
+    </Figure>
+</xml>

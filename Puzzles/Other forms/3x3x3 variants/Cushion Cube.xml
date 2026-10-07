@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cushion Cube</Name>
+        <Menu>Other forms\3x3x3 variants\Cushion Cube</Menu>
+        <Inventor>Gordon Wade</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-04-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3493</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0000C8'; // Blue
+        Colors[1] := 'C80000'; // Red
+        Colors[2] := '333333'; // Black
+        Colors[3] := Colors[2];
+        Colors[4] := Colors[1];
+        Colors[5] := Colors[0];
+
+        W := 0.5;
+        D := W / 3;
+        DCut1 := W * 2 * sqrt(2) / 3;
+        DCut2 := W * 5 * sqrt(3) / 9;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Cut Color = "Colors[0]" ><Plane NormVector = " 1; 0;-1" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[1]" ><Plane NormVector = "-1; 0; 1" NormDistance = "-DCut1" /></Cut>
+
+        <Cut Color = "Colors[0]" ><Plane NormVector = " 1; 1;-1" NormDistance = "-DCut2" /></Cut>
+        <Cut Color = "Colors[0]" ><Plane NormVector = " 1;-1;-1" NormDistance = "-DCut2" /></Cut>
+        <Cut Color = "Colors[1]" ><Plane NormVector = "-1; 1; 1" NormDistance = "-DCut2" /></Cut>
+        <Cut Color = "Colors[1]" ><Plane NormVector = "-1;-1; 1" NormDistance = "-DCut2" /></Cut>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

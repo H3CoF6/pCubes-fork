@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Masterball 5</Name>
+        <Menu>Other forms\Sphere\Masterball\Masterball 5</Menu>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-07-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8112</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=402335</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // clRed
+        Colors[1] := 'FF6000'; // clOrange
+        Colors[2] := 'FFFF00'; // clYellow
+        Colors[3] := '008000'; // clGreen
+        Colors[4] := '2828FF'; // clLightBlue
+        Colors[5] := '0000A0'; // clBlue
+        Colors[6] := '800080'; // clViolett
+        Colors[7] := 'FF0080'; // clLightViolett
+
+        K := 0.6;
+        D1 := K * 0.205; // 0.20 didn't look nice (broken line)
+        D2 := K * 0.605;
+    </Script>
+
+    <Axes TurningAngles = "Pi/4" PlaneDistances = "-D2; -D1; D1; D2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = "-1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0;0;1" Angle = "Pi/8" />
+        <Macro Name = "AddSector" >
+            <Script>Color := Colors[i];</Script>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = "-cos(Pi/8); -sin(Pi/8); 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " cos(Pi/8); -sin(Pi/8); 0" NormDistance = "0" /> </Cut>
+            <Turn NormVector = "0;0;1" Angle = "Pi/4" />
+            <HideAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = "0" Repeat = "8" />
+        <Turn NormVector = "0;0;1" Angle = "-Pi/8" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

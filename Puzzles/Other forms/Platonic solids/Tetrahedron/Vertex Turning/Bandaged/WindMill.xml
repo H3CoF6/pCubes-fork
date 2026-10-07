@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>WindMill</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Bandaged\WindMill</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2014-07-08</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 5;
+        D := W * 4 / sqrt(3) / N;
+        D0 := -W / sqrt(3);
+
+        procedure Prepare();
+        begin
+            Count := Length(S) div 3;
+            for i := 0 to Count - 1 do begin
+                ax[i] := StrToInt(copy(S, i * 3 + 1, 1));
+                L[i] := StrToInt(copy(S, i * 3 + 2, 1));
+                Sign := copy(S, i * 3 + 3, 1);
+                if Sign = '-' then begin
+                    FromL[i] := L[i] + 1;
+                    ToL[i] := 20;
+                end else begin
+                    FromL[i] := 0;
+                    ToL[i] := L[i];
+                end;
+            end;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D0 + D; D0 + 2*D; D0 + 3*D; D0 + 4*D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <Macro Name = "Split1" >
+            <Split Axis = "ax[i]" From = "L[i] + 1" />
+            <Hide Axis = "ax[i]" From = "FromL[i]" To = "ToL[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <Macro Name = "Split2" >
+            <Script> Prepare; </Script>
+            <ExecMacro MacroName = "Split1" i = "0" Repeat = "Count" />
+            <ShowAll/>
+        </Macro>
+
+        // "52-" means split axis = "5" From = "2+1" and hide lower or upper half depending on sign
+        // these strings split very bandaged puzzle
+        <ExecMacro MacroName = "Split2" S = "'33-32-31-23-22-21-13-12-11-10-30-20-03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'33-32-31-23-22-21-13-12-11-10-30-20+02-01*'" />
+        <ExecMacro MacroName = "Split2" S = "'33-32-31-23-22-21-13-12-11-10-30+02-01-20+00*'" />
+        <ExecMacro MacroName = "Split2" S = "'33-32-31-23-22-21-13-12-11-10+02-01-30-20+00*'" />
+        <ExecMacro MacroName = "Split2" S = "'33-32-31-23-22-21-13-12-11-10+02-01-30+20-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'33-32-31-23-22-21-13-12-11-10+02-01-30+20+00*'" />
+        <ExecMacro MacroName = "Split2" S = "'33-32-31-23-22-21-13-12-11+30-20-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'33-32-31-23-22-21-13-12+30-20-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'33-32-31-23-22-21+11-01-00-10-30*'" />
+        <ExecMacro MacroName = "Split2" S = "'33-32-31-23-22+30-10-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'33-32-31+21-20-11-01-00-10*'" />
+        <ExecMacro MacroName = "Split2" S = "'33-32+20-10-00*'" />
+    </Figure>
+</xml>

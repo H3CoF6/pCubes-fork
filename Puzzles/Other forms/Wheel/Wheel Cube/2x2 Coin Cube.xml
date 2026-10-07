@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x2 Coin Cube</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\2x2 Coin Cube</Menu>
+        <Inventor>Matt Lozano</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-15</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36372</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        RC := W;
+        Sc := 1.1;
+
+        D1 := W;
+        D2 := W * (1 + Sc) / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D1; 0; D1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = " 2*Pi / 3; 0; 2*Pi / 3" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" Base = "Cx[i]; Cy[i]; Cz[i]" Top  = "Cx[i] * Sc; Cy[i] * Sc; cz[i] * Sc" TopColor = "Colors[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0; 0; 0" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "W" />
+        <SplitByAxes/>
+        <HideContaining Vector = "0; 0; 0" />
+        <RemoveAllVisible />
+        <ShowAll/>
+   </Figure>
+</xml>

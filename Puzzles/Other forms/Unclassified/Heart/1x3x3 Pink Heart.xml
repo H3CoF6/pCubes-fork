@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>1x3x3 Pink Heart</Name>
+        <Menu>Other forms\Unclassified\Heart\1x3x3 Pink Heart</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-11-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4125</Link>
+    </Interface>
+
+    <Script>
+        Color  := 'D80040'; // Violette
+        W := 1/2;
+        D := W / 3;
+        R := D * 2;
+        C := W;
+        H := D;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-1/6; 1/6" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-D;-C;-H" />
+                <Add Vector = "-D;-C; H" />
+                <Add Vector = "-D; D;-H" />
+                <Add Vector = "-D; D; H" />
+                <Add Vector = " C;-C;-H" />
+                <Add Vector = " C;-C; H" />
+                <Add Vector = " C; D;-H" />
+                <Add Vector = " C; D; H" />
+            </Vertices>
+
+            <Faces>
+                <Face                 VertexIndexes = "0;1;3;2" />
+                <Face Color = "Color" VertexIndexes = "5;4;6;7" />
+                <Face Color = "Color" VertexIndexes = "1;0;4;5" />
+                <Face                 VertexIndexes = "2;3;7;6" />
+                <Face Color = "Color" VertexIndexes = "0;2;6;4" />
+                <Face Color = "Color" VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+
+        <HideContaining Vector = " 0; 0; 0" />
+
+        <Cylinder Radius = "R" Color = "Color">
+            <Base X = "D" Y = "D" Z = "-H" Color = "Color" />
+            <Top  X = "D" Y = "D" Z = " H" Color = "Color"/>
+        </Cylinder>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "D" /> </Cut>
+
+        <HideContaining Vector = " D; D; 0" />
+
+        <Cylinder Radius = "R" Color = "Color">
+            <Base X = "-D" Y = "-D" Z = "-H" Color = "Color" />
+            <Top  X = "-D" Y = "-D" Z = " H" Color = "Color"/>
+        </Cylinder>
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "D" /> </Cut>
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

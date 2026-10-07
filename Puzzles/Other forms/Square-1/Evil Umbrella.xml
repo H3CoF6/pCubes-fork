@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Evil Umbrella</Name>
+        <Menu>Other forms\Square-1\Evil Umbrella</Menu>
+        <Inventor>Volker Kienert</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3229</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '390068';
+        Colors[1] := 'FF0000';
+        Colors[2] := 'FFAFE2';
+        Colors[3] := 'FF00BB';
+        Colors[4] := 'FFFF00';
+        Colors[5] := 'FFFFFF';
+        Colors[6] := '770000';
+
+        W := 0.4;
+        D := W / 3;
+        H := W * 4 / 3;
+        A := sin(Pi / 12);
+        B := cos(Pi / 12);
+        X := H + W;
+        Y := W * (A / B - 1);
+        DCut := W * (2 * X + Y) / sqrt(2*X^2 + Y^2);
+
+        WZ  := (H + W) / 2;
+        DWZ := (H - W) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 0; 1" Angle = "Pi / 12" />
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Cut Color = "Colors[5]"><Plane NormVector = " X; X; Y" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[5]"><Plane NormVector = "-X; X; Y" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[5]"><Plane NormVector = " X;-X; Y" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "Colors[5]"><Plane NormVector = "-X;-X; Y" NormDistance = "-DCut" /></Cut>
+
+		<Split><Plane NormVector = " A; B; 0" NormDistance = "0" /></Split>
+		<Split><Plane NormVector = " A;-B; 0" NormDistance = "0" /></Split>
+		<Split><Plane NormVector = " B; A; 0" NormDistance = "0" /></Split>
+		<Split><Plane NormVector = " B;-A; 0" NormDistance = "0" /></Split>
+        
+		<RemoveContaining Vector = " W; 0; 0"/>
+		<RemoveContaining Vector = "-W; 0; 0"/>
+		<RemoveContaining Vector = " 0; W; 0"/>
+		<RemoveContaining Vector = " 0;-W; 0"/>
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 6 do begin
+                Colors[i] := Colors[6];
+            end;
+            Colors[4] := 'FFFF00';
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Split><Plane NormVector = " A; B; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " A;-B; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " B; A; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " B;-A; 0" NormDistance = "0" /></Split>
+
+        <RemoveContaining Vector = " W; W;-W"/>
+        <RemoveContaining Vector = " W;-W;-W"/>
+        <RemoveContaining Vector = "-W; W;-W"/>
+        <RemoveContaining Vector = "-W;-W;-W"/>
+
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tri Star Cube</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Tri Star Cube</Menu>
+        <Programmer>Skallos</Programmer>
+        <Inventor>not invented</Inventor>
+        <Added>2017-11-04</Added>
+    </Interface>
+
+    <Script>
+        W := 0.425;
+        RC := W * 0.8;
+        Sc := 1.3;
+        D := W / 5;
+        sAngle := 2 * Pi / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/6; Pi/2; 0; Pi/2; Pi/6" PlaneDistances = "-W; -D; D; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "AddCircle" >
+            <HideAll/>
+
+            <Cylinder Radius = "RC" Color = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+
+            <Script>
+                ax := i div 2;
+                Layer := (i mod 2) * 4;
+                cut := (ax + 1) mod 3;
+            </Script>
+
+            <Split Axis = "cut" From  = "2" />
+            <Turn  Axis = "ax"  Layer = "Layer" Angle = "sAngle" />
+            <Split Axis = "cut" From  = "2" />
+            <Turn  Axis = "ax"  Layer = "Layer" Angle = "sAngle" />
+            <Split Axis = "cut" From  = "2" />
+            <Undo/>
+
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "6" />
+        <ShowAll/>
+
+    </Figure>
+</xml>

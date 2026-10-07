@@ -1,0 +1,146 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Split Dino Pentagonal Bifrustum</Name>
+        <Menu>Other forms\Bifrustum\Pentagonal Bifrustum\Split Dino Pentagonal Bifrustum</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-02-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11745</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        R := 0.7;
+        D := R * sqrt(5) / 3;
+
+        dAngle  := (Arctan(2) + Arcsin(2/3)) / 2;
+        dAngle2 := (Arctan(2) - Arcsin(2/3)) / 2;
+        sAngle := 2*Pi / 5;
+
+        Rsin  := R * sin(dAngle);
+        Rcos  := R * cos(dAngle);
+        R2sin := R * sin(dAngle2);
+        R2cos := R * cos(dAngle2);
+
+        for i := 0 to 4 do begin
+            Vx[i] := Rcos * sin(sAngle * (i - 0.5));
+            Vy[i] := Rcos * cos(sAngle * (i - 0.5));
+            Vz[i] := Rsin - R2Sin;
+        end;
+
+        for i := 5 to 9 do begin
+            Vx[i] := R2cos * sin(sAngle * (i - 0.5));
+            Vy[i] := R2cos * cos(sAngle * (i - 0.5));
+            Vz[i] := 0;
+        end;
+
+        for i := 10 to 14 do begin
+            Vx[i] := Vx[i - 10];
+            Vy[i] := Vy[i - 10];
+            Vz[i] :=-Vz[i - 10];
+        end;
+    </Script>
+
+    <Axes TurningAngles = " 0; 2*Pi/3" PlaneDistances = "D" >
+        <Axis NormVector = " Vx[0]; Vy[0]; Vz[0] + R2Sin" BaseVector = " 0; 0;-R2Sin" />
+        <Axis NormVector = " Vx[1]; Vy[1]; Vz[1] + R2Sin" BaseVector = " 0; 0;-R2Sin" />
+        <Axis NormVector = " Vx[2]; Vy[2]; Vz[2] + R2Sin" BaseVector = " 0; 0;-R2Sin" />
+        <Axis NormVector = " Vx[3]; Vy[3]; Vz[3] + R2Sin" BaseVector = " 0; 0;-R2Sin" />
+        <Axis NormVector = " Vx[4]; Vy[4]; Vz[4] + R2Sin" BaseVector = " 0; 0;-R2Sin" />
+
+        <Axis NormVector = " Vx[0]; Vy[0];-Vz[0] - R2Sin" BaseVector = " 0; 0; R2Sin" />
+        <Axis NormVector = " Vx[1]; Vy[1];-Vz[1] - R2Sin" BaseVector = " 0; 0; R2Sin" />
+        <Axis NormVector = " Vx[2]; Vy[2];-Vz[2] - R2Sin" BaseVector = " 0; 0; R2Sin" />
+        <Axis NormVector = " Vx[3]; Vy[3];-Vz[3] - R2Sin" BaseVector = " 0; 0; R2Sin" />
+        <Axis NormVector = " Vx[4]; Vy[4];-Vz[4] - R2Sin" BaseVector = " 0; 0; R2Sin" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "RCos" >
+        <Axis NormVector = " Vx[0]; Vy[0]; 0" />
+        <Axis NormVector = " Vx[1]; Vy[1]; 0" />
+        <Axis NormVector = " Vx[2]; Vy[2]; 0" />
+        <Axis NormVector = " Vx[3]; Vy[3]; 0" />
+        <Axis NormVector = " Vx[4]; Vy[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1"/>
+    </Axes>
+
+   <Figure>
+        <Part>
+            <Vertices Vectors = " Vx; Vy; Vz" />
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = "4;3;2;1;0" />
+
+                <Face Color = "Colors[ 1]" VertexIndexes = "0;1;6;5" />
+                <Face Color = "Colors[ 2]" VertexIndexes = "1;2;7;6" />
+                <Face Color = "Colors[ 3]" VertexIndexes = "2;3;8;7" />
+                <Face Color = "Colors[ 4]" VertexIndexes = "3;4;9;8" />
+                <Face Color = "Colors[ 5]" VertexIndexes = "4;0;5;9" />
+
+                <Face Color = "Colors[ 6]" VertexIndexes = "13;12;7;8" />
+                <Face Color = "Colors[ 7]" VertexIndexes = "14;13;8;9" />
+                <Face Color = "Colors[ 8]" VertexIndexes = "10;14;9;5" />
+                <Face Color = "Colors[ 9]" VertexIndexes = "11;10;5;6" />
+                <Face Color = "Colors[10]" VertexIndexes = "12;11;6;7" />
+
+                <Face Color = "Colors[11]" VertexIndexes = "10;11;12;13;14" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "i" Layer = "1" Angle = "2*Pi/3" />
+            <SplitByAxes/>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "Hide1" >
+            <Hide Axis = "i" Layer = "1" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "Hide2" >
+            <HideContaining Vector = " Vx[i]; Vy[i]; Vz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" i = " 0" Repeat = "5" />
+        <ExecMacro MacroName = "Split" i = " 0" Repeat = "5" />
+        <ExecMacro MacroName = "Split" i = " 5" Repeat = "5" />
+        <ExecMacro MacroName = "Split" i = " 5" Repeat = "5" />
+        <Undo Repeat = "20" />
+
+        <ExecMacro MacroName = "Hide1" i = "10" Repeat = "5" />
+        <InvertVisibility/>
+        <ExecMacro MacroName = "Hide2" i = " 5" Repeat = "5" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <ExecMacro MacroName = "Split" i = " 0" Repeat = "5" />
+        <ExecMacro MacroName = "Split" i = " 5" Repeat = "5" />
+
+        <ExecMacro MacroName = "Hide1" i = "10" Repeat = "5" />
+        <InvertVisibility/>
+        <ExecMacro MacroName = "Hide2" i = " 5" Repeat = "5" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <ExecMacro MacroName = "Split" i = " 0" Repeat = "5" />
+        <ExecMacro MacroName = "Split" i = " 5" Repeat = "5" />
+
+        <ExecMacro MacroName = "Hide1" i = "10" Repeat = "5" />
+        <InvertVisibility/>
+        <ExecMacro MacroName = "Hide2" i = " 5" Repeat = "5" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Undo Repeat = "20" />
+   </Figure>
+</xml>

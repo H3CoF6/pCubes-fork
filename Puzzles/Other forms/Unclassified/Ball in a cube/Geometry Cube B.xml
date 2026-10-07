@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Geometry Cube B</Name>
+        <Menu>Other forms\Unclassified\Ball in a cube\Geometry Cube B</Menu>
+        <Menu>Other forms\3x3x3 variants\Geometry Cube B</Menu>
+        <Inventor>Moyu</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6849</Link>
+    </Interface>                   
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W / 3;
+        K := W * 0.84;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Hide Axis = "0" Layer = "2" />
+        <Hide Axis = "2" Layer = "2" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "-1" />
+        <SplitByAxes/>
+        <Cut Axis = "0" To = "2" />
+        <Cut Axis = "2" To = "2" />
+        <ShowAll/>
+        <Turn NormVector = " 1; 1; 0" Angle = "Pi" />
+    </Figure>
+</xml>

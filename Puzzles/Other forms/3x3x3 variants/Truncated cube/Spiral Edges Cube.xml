@@ -1,0 +1,39 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Spiral Edges Cube</Name>
+        <Menu>Other forms\3x3x3 variants\Truncated cube\Spiral Edges Cube</Menu>
+        <Aliases>Octagonal Edges C8000040210</Aliases>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2872</Link>
+    </Interface>
+
+    <Script>
+        Colors[6] := '009484';
+        Colors[7] := 'A5211F';
+        Colors[8] := '38ABEA';
+
+        W := 0.5;
+        D := W / 3;
+        RCut := W * sqrt(2) / 3  * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Cut Color = "Colors[6]"><Plane NormVector = "-1;-1; 0" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[7]"><Plane NormVector = " 1; 0;-1" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[8]"><Plane NormVector = " 0; 1; 1" NormDistance = "-RCut" /></Cut>
+    </Figure>
+</xml>

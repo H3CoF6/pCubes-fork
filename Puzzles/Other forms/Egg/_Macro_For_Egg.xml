@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Programmer>Skallos,Boris</Programmer>
+    <Link>https://nyjp07.com/index_egg_E.html</Link>
+
+    <Script>
+        if not VarExists('K') then
+            K := 0.7;
+        if not VarExists('a') then
+            a := 1;
+        if not VarExists('b') then
+            b := 0.3;
+        if not VarExists('Nx') then
+            Nx := 20;
+        if not VarExists('Nz') then
+            Nz := 20;
+
+        for i := 0 to Nx - 1 do begin
+            Ax := 2*Pi/Nx * i;
+            cs[i] := cos(Ax);
+            ss[i] := sin(Ax);
+        end;
+
+        // Egg's equation by Skallos from https://nyjp07.com/index_egg_E.html
+        for j := 0 to Nz do begin
+            M := tan(Pi/Nz/2 * j);
+            Z[j] := -K * a * ((1 + M^2 * b) * 2 / (1 + M^2)^2 - a);
+            R[j] := (-Z[j] + K * a) * M;
+        end;
+    </Script>
+
+    <Macro Name = "AddVertex" >
+        <Add Vector = " R[j] * cs[i]; R[j] * ss[i]; Z[j]" />
+        <Script>Inc(i);</Script>
+    </Macro>
+    <Macro Name = "AddVertexRow" >
+        <ExecMacro MacroName = "AddVertex" i = "0" Repeat = "Nx" />
+        <Script>Inc(j);</Script>
+    </Macro>
+
+    <Macro Name = "AddSegmentFace" >
+        <Face Color = "Color" VertexIndexes = " (i + Nx - 1) mod Nx + 1 + Nx * j; i + 1 + Nx * j; i + 1 + Nx * (j + 1); (i + Nx - 1) mod Nx + 1 + Nx * (j + 1)" InvisibleEdges = "15" />
+        <Script>Inc(j);</Script>
+    </Macro>
+    <Macro Name = "AddSegment" >
+        <Face Color = "Color" VertexIndexes = " 0; i + 1; (i + Nx - 1) mod Nx + 1" InvisibleEdges = "7" />
+        <ExecMacro MacroName = "AddSegmentFace" j = "0" Repeat = "Nz - 2" />
+        <Face Color = "Color" VertexIndexes = "Nx * (Nz - 1) + 1; (i + Nx - 1) mod Nx + Nx * (Nz - 2) + 1; i + Nx * (Nz - 2) + 1" InvisibleEdges = "7" />
+        <Script>Inc(i);</Script>
+    </Macro>
+
+    <Part>
+        <Vertices>
+            <Add Vector = " 0; 0; Z[0]" />
+            <ExecMacro MacroName = "AddVertexRow" j = "1" Repeat = "Nz - 1" />
+            <Add Vector = " 0; 0; Z[Nz]" />
+        </Vertices>
+
+        <Faces>
+            <ExecMacro MacroName = "AddSegment" i = "0" Repeat = "Nx" />
+        </Faces>
+    </Part>
+</xml>

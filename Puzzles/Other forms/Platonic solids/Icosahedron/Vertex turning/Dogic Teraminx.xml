@@ -1,0 +1,39 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dogic Teraminx</Name>
+        <Menu>Other forms\Icosahedron\Vertex turning\Dogic Teraminx</Menu>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-08-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7608</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D1 := Rsin;
+        D2 := (5 * Rsin + R) / 6;
+        D3 := (4 * Rsin + 2 * R) / 6;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D1; D2; D3" FixedLayers = "0" NormVectors = "Vx; Vy; Vz" />
+
+   <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Hide" >
+            <Hide Axis = "ax" From = "3" />
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Hide" ax = "0" Repeat = "12" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+   </Figure>
+
+   <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

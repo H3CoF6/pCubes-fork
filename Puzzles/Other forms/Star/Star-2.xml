@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star-2</Name>
+        <Menu>Other forms\Star\Star-2</Menu>
+        <Inventor>AllomantiCuber</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-04-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11839</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=428690</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'FFFFFF';
+        clYellow := 'FFFF00';
+        clRed    := 'EE0000';
+        clOrange := 'FF7700';
+        clGreen  := '00AA00';
+        clPurple := 'AA00AA';
+        clBlue   := '0000FF';
+
+        R := 0.7;
+        H := R * 0.5;
+
+        R1 := R * (3 - sqrt(5)) / 3 * 2;
+
+        sAngle := Pi * 2 / 5;
+        for i := 0 to 4 do begin
+            x[i]  := R  * sin(sAngle * i);
+            y[i]  := R  * cos(sAngle * i);
+            xi[i] := R1 * sin(sAngle * (i + 0.5));
+            yi[i] := R1 * cos(sAngle * (i + 0.5));
+        end;
+
+        D := H / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" NormVectors = " y; x; 0" />
+
+    <Axes TurningAngles = "Pi / 5" PlaneDistances = "-D; D" NormVectors = " 0; 0; 1" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "  x;  y; H" />
+            <Vertices Vectors = "  x;  y;-H" />
+            <Vertices Vectors = " xi; yi; H" />
+            <Vertices Vectors = " xi; yi;-H" />
+
+            <Faces>
+                <Face Color = "clWhite " VertexIndexes = " 14;4;13;3;12;2;11;1;10;0" />
+                <Face Color = "clYellow" VertexIndexes = " 5;15;6;16;7;17;8;18;9;19" />
+                <Face Color = "clRed   " VertexIndexes = " 2;7;16;11" />
+                <Face Color = "clRed   " VertexIndexes = " 6;1;11;16" />
+                <Face Color = "clBlue  " VertexIndexes = " 1;6;15;10" />
+                <Face Color = "clBlue  " VertexIndexes = " 5;0;10;15" />
+                <Face Color = "clOrange" VertexIndexes = " 9;4;14;19" />
+                <Face Color = "clOrange" VertexIndexes = " 0;5;19;14" />
+                <Face Color = "clPurple" VertexIndexes = " 8;3;13;18" />
+                <Face Color = "clPurple" VertexIndexes = " 4;9;18;13" />
+                <Face Color = "clGreen " VertexIndexes = " 3;8;17;12" />
+                <Face Color = "clGreen " VertexIndexes = " 7;2;12;17" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

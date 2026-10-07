@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhombic Dodecahedron - Edge face 3 (e23, f13) - Bram</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Bram 3 (e23, f13)</Menu>
+        <Inventor>Bram Cohen</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-02-27</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;t=31442</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+
+        DE := R / 4 * sqrt(2);
+        DF := R / 4;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "DE" TurnAxesWithLayer = "0" FixedLayers = "0">
+        <Axis NormVector = " 0; -1; 1" />
+    </Axes>
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "DF" TurnAxesWithLayer = "0" FixedLayers = "0">
+        <Axis NormVector = " 0; -1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "Pi/2" />
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart" Repeat = "8" />
+        <Undo Repeat = "16" />
+    </Figure>
+</xml>

@@ -1,0 +1,101 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+Cuts on Cylinder are only barely visible with Anti-Alias.
+Also, centers disappear for some reason.
+Solving??
+
+   <Interface>
+        <Name>Megaminx Barrel</Name>
+        <Menu>Skallos\Megaminx Barrel</Menu>
+        <Menu>Other forms\Megaminx Barrel</Menu>
+        <Inventor></Inventor>
+        <Programmer>Skallos</Programmer>
+    </Interface>
+
+    <Script>
+        mAngle := ArcTan(0.5);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+        sAngle := PI * 2 / 5;
+        for i := 1 to 5 do begin
+            x[i] := sin(sAngle * (i - 1)) * Ac;
+            y[i] := cos(sAngle * (i - 1)) * Ac;
+        end;
+
+        R := 0.7;
+        dAngle := (Arctan(2) + Arcsin(2/3)) / 2;
+        dAngle2 := (Arctan(2) - Arcsin(2/3)) / 2;
+        Rsin := R * sin(dAngle);
+        R2sin := R * sin(dAngle2);
+
+        D := (Rsin + R2sin) / 1.5;
+      
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clGrey   := '808080';
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "   0;    0;  1" />
+        <Axis NormVector = "x[1]; y[1]; As" />
+        <Axis NormVector = "x[2]; y[2]; As" />
+        <Axis NormVector = "x[3]; y[3]; As" />
+        <Axis NormVector = "x[4]; y[4]; As" />
+        <Axis NormVector = "x[5]; y[5]; As" />
+    </Axes>
+
+   <Figure>
+        <Cylinder Radius = "0.6" Color = "clRed" >
+            <Base X = "0" Y = "0" Z = "-0.6" Color = "clGrey" />
+            <Top  X = "0" Y = "0" Z = " 0.6" Color = "clWhite" />
+        </Cylinder>
+
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = " cos(3*pi/5); sin(3*pi/5); 0" NormDistance = "0" /> </Cut>
+
+        <HideContaining Vector = "0; 0; 0" />
+        <Cylinder Radius = "0.6" Color = "clOrange" >
+            <Base X = "0" Y = "0" Z = "-0.6" Color = "clGrey" />
+            <Top  X = "0" Y = "0" Z = " 0.6" Color = "clWhite" />
+        </Cylinder>
+
+        <Cut> <Plane NormVector = " cos(2*pi/5); sin(2*pi/5); 0" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = " cos(5*pi/5); sin(5*pi/5); 0" NormDistance = "0" /> </Cut>
+
+        <HideContaining Vector = "0; 0; 0" />
+        <Cylinder Radius = "0.6" Color = "clYellow" >
+            <Base X = "0" Y = "0" Z = "-0.6" Color = "clGrey" />
+            <Top  X = "0" Y = "0" Z = " 0.6" Color = "clWhite" />
+        </Cylinder>
+
+        <Cut> <Plane NormVector = " cos(4*pi/5); sin(4*pi/5); 0" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = " cos(7*pi/5); sin(7*pi/5); 0" NormDistance = "0" /> </Cut>
+
+        <HideContaining Vector = "0; 0; 0" />
+        <Cylinder Radius = "0.6" Color = "clGreen" >
+            <Base X = "0" Y = "0" Z = "-0.6" Color = "clGrey" />
+            <Top  X = "0" Y = "0" Z = " 0.6" Color = "clWhite" />
+        </Cylinder>
+
+        <Cut> <Plane NormVector = " cos(6*pi/5); sin(6*pi/5); 0" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = " cos(9*pi/5); sin(9*pi/5); 0" NormDistance = "0" /> </Cut>
+
+        <HideContaining Vector = "0; 0; 0" />
+        <Cylinder Radius = "0.6" Color = "clBlue" >
+            <Base X = "0" Y = "0" Z = "-0.6" Color = "clGrey" />
+            <Top  X = "0" Y = "0" Z = " 0.6" Color = "clWhite" />
+        </Cylinder>
+
+        <Cut> <Plane NormVector = " cos(8*pi/5); sin(8*pi/5); 0" NormDistance = "0" /> </Cut>
+        <Cut> <Plane NormVector = " cos(pi/5)  ; sin(pi/5)  ; 0" NormDistance = "0" /> </Cut>
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

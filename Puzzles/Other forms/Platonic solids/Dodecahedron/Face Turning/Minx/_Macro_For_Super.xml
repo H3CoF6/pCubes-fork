@@ -1,0 +1,134 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Script>
+        R1Sin := R * sin(mAngle);
+        R1Cos := R * cos(mAngle);
+
+        X0[0] := 0;
+        Y0[0] := 0;
+        Z0[0] := R;
+        for i := 1 to 5 do begin
+            X0[i] := R1Cos * sin(sAngle * (i - 1));
+            Y0[i] := R1Cos * cos(sAngle * (i - 1));
+            Z0[i] := R1Sin;
+        end;
+        for i := 6 to 10 do begin
+            X0[i] := R1Cos * sin(sAngle * (i - 0.5));
+            Y0[i] := R1Cos * cos(sAngle * (i - 0.5));
+            Z0[i] := -R1Sin;
+        end;
+        X0[11] := 0;
+        Y0[11] := 0;
+        Z0[11] := -R;
+
+        R1 := R1Sin / sin(dAngle);
+        R1Sin := R1 * sin(dAngle);
+        R1Cos := R1 * cos(dAngle);
+        R2sin := R1 * sin(dAngle2);
+        R2cos := R1 * cos(dAngle2);
+
+        for i := 0 to 4 do begin
+            x1[i] := R1Cos * sin(sAngle * (i - 0.5));
+            y1[i] := R1Cos * cos(sAngle * (i - 0.5));
+            z1[i] := R1Sin;
+        end;
+
+        for i := 5 to 9 do begin
+            x1[i] := R2cos * sin(sAngle * (i - 0.5));
+            y1[i] := R2cos * cos(sAngle * (i - 0.5));
+            z1[i] := R2sin;
+        end;
+
+        for i := 10 to 14 do begin
+            x1[i] := R2cos * sin(sAngle * i);
+            y1[i] := R2cos * cos(sAngle * i);
+            z1[i] := -R2sin;
+        end;
+
+        for i := 15 to 19 do begin
+            x1[i] := R1Cos * sin(sAngle * i);
+            y1[i] := R1Cos * cos(sAngle * i);
+            z1[i] := -R1Sin;
+        end;
+
+        dT := 1 / R * (DCut1 - 0.001);
+
+    </Script>
+
+        <Macro Name = "Pyramid">
+            <Part>
+                <Vertices>
+                    <Add Vector = "X0[i0]; Y0[i0]; Z0[i0]" />
+                    <Add Vector = "X1[i1]; Y1[i1]; Z1[i1]" />
+                    <Add Vector = "X1[i2]; Y1[i2]; Z1[i2]" />
+                    <Add Vector = "X1[i3]; Y1[i3]; Z1[i3]" />
+                    <Add Vector = "X1[i4]; Y1[i4]; Z1[i4]" />
+                    <Add Vector = "X1[i5]; Y1[i5]; Z1[i5]" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Colors[c1]" VertexIndexes = "0;2;1" />
+                    <Face Color = "Colors[c2]" VertexIndexes = "0;3;2" />
+                    <Face Color = "Colors[c3]" VertexIndexes = "0;4;3" />
+                    <Face Color = "Colors[c4]" VertexIndexes = "0;5;4" />
+                    <Face Color = "Colors[c5]" VertexIndexes = "0;1;5" />
+                    <Face                      VertexIndexes = "1;2;3;4;5" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <HideAll/>
+
+        <ExecMacro MacroName = "Pyramid" i0 = " 0" i1 = " 0" i2 = " 1" i3 = " 2" i4 = " 3" i5 = " 4" c1 = "1" c2 = " 2" c3 = " 3" c4 = " 4" c5 = "5" />
+        <ExecMacro MacroName = "Pyramid" i0 = " 2" i1 = " 1" i2 = " 6" i3 = "11" i4 = " 7" i5 = " 2" c1 = "1" c2 = " 9" c3 = "10" c4 = " 3" c5 = "0" />
+        <ExecMacro MacroName = "Pyramid" i0 = " 3" i1 = " 2" i2 = " 7" i3 = "12" i4 = " 8" i5 = " 3" c1 = "2" c2 = "10" c3 = " 6" c4 = " 4" c5 = "0" />
+        <ExecMacro MacroName = "Pyramid" i0 = " 4" i1 = " 3" i2 = " 8" i3 = "13" i4 = " 9" i5 = " 4" c1 = "3" c2 = " 6" c3 = " 7" c4 = " 5" c5 = "0" />
+        <ExecMacro MacroName = "Pyramid" i0 = " 5" i1 = " 4" i2 = " 9" i3 = "14" i4 = " 5" i5 = " 0" c1 = "4" c2 = " 7" c3 = " 8" c4 = " 1" c5 = "0" />
+        <ExecMacro MacroName = "Pyramid" i0 = " 1" i1 = " 0" i2 = " 5" i3 = "10" i4 = " 6" i5 = " 1" c1 = "5" c2 = " 8" c3 = " 9" c4 = " 2" c5 = "0" />
+        <ExecMacro MacroName = "Pyramid" i0 = " 8" i1 = " 8" i2 = "12" i3 = "17" i4 = "18" i5 = "13" c1 = "3" c2 = "10" c3 = "11" c4 = " 7" c5 = "4" />
+        <ExecMacro MacroName = "Pyramid" i0 = " 9" i1 = " 9" i2 = "13" i3 = "18" i4 = "19" i5 = "14" c1 = "4" c2 = " 6" c3 = "11" c4 = " 8" c5 = "5" />
+        <ExecMacro MacroName = "Pyramid" i0 = "10" i1 = " 5" i2 = "14" i3 = "19" i4 = "15" i5 = "10" c1 = "5" c2 = " 7" c3 = "11" c4 = " 9" c5 = "1" />
+        <ExecMacro MacroName = "Pyramid" i0 = " 6" i1 = " 6" i2 = "10" i3 = "15" i4 = "16" i5 = "11" c1 = "1" c2 = " 8" c3 = "11" c4 = "10" c5 = "2" />
+        <ExecMacro MacroName = "Pyramid" i0 = " 7" i1 = " 7" i2 = "11" i3 = "16" i4 = "17" i5 = "12" c1 = "2" c2 = " 9" c3 = "11" c4 = " 6" c5 = "3" />
+        <ExecMacro MacroName = "Pyramid" i0 = "11" i1 = "17" i2 = "16" i3 = "15" i4 = "19" i5 = "18" c1 = "10" c2 = "9" c3 = " 8" c4 = " 7" c5 = "6" />
+
+        <Cut Color = "Colors[ 0]" > <Plane NormVector = "-X0[0];-Y0[0];-Z0[0]" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "Colors[ 1]" > <Plane NormVector = "-X0[1];-Y0[1];-Z0[1]" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "Colors[ 2]" > <Plane NormVector = "-X0[2];-Y0[2];-Z0[2]" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "Colors[ 3]" > <Plane NormVector = "-X0[3];-Y0[3];-Z0[3]" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "Colors[ 4]" > <Plane NormVector = "-X0[4];-Y0[4];-Z0[4]" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "Colors[ 5]" > <Plane NormVector = "-X0[5];-Y0[5];-Z0[5]" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "Colors[11]" > <Plane NormVector = " X0[0]; Y0[0]; Z0[0]" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "Colors[ 6]" > <Plane NormVector = " X0[1]; Y0[1]; Z0[1]" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "Colors[ 7]" > <Plane NormVector = " X0[2]; Y0[2]; Z0[2]" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "Colors[ 8]" > <Plane NormVector = " X0[3]; Y0[3]; Z0[3]" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "Colors[ 9]" > <Plane NormVector = " X0[4]; Y0[4]; Z0[4]" NormDistance = "-DCut2" /> </Cut>
+        <Cut Color = "Colors[10]" > <Plane NormVector = " X0[5]; Y0[5]; Z0[5]" NormDistance = "-DCut2" /> </Cut>
+
+        <Split> <Plane NormVector = " X0[0]; Y0[0]; Z0[0]" NormDistance = "-DCut1" /> </Split>
+        <Split> <Plane NormVector = " X0[1]; Y0[1]; Z0[1]" NormDistance = "-DCut1" /> </Split>
+        <Split> <Plane NormVector = " X0[2]; Y0[2]; Z0[2]" NormDistance = "-DCut1" /> </Split>
+        <Split> <Plane NormVector = " X0[3]; Y0[3]; Z0[3]" NormDistance = "-DCut1" /> </Split>
+        <Split> <Plane NormVector = " X0[4]; Y0[4]; Z0[4]" NormDistance = "-DCut1" /> </Split>
+        <Split> <Plane NormVector = " X0[5]; Y0[5]; Z0[5]" NormDistance = "-DCut1" /> </Split>
+        <Split> <Plane NormVector = "-X0[0];-Y0[0];-Z0[0]" NormDistance = "-DCut1" /> </Split>
+        <Split> <Plane NormVector = "-X0[1];-Y0[1];-Z0[1]" NormDistance = "-DCut1" /> </Split>
+        <Split> <Plane NormVector = "-X0[2];-Y0[2];-Z0[2]" NormDistance = "-DCut1" /> </Split>
+        <Split> <Plane NormVector = "-X0[3];-Y0[3];-Z0[3]" NormDistance = "-DCut1" /> </Split>
+        <Split> <Plane NormVector = "-X0[4];-Y0[4];-Z0[4]" NormDistance = "-DCut1" /> </Split>
+        <Split> <Plane NormVector = "-X0[5];-Y0[5];-Z0[5]" NormDistance = "-DCut1" /> </Split>
+
+        <RemoveContaining Vector = " X0[0] * dT; Y0[0] * dT; Z0[0] * dT" />
+        <RemoveContaining Vector = " X0[1] * dT; Y0[1] * dT; Z0[1] * dT" />
+        <RemoveContaining Vector = " X0[2] * dT; Y0[2] * dT; Z0[2] * dT" />
+        <RemoveContaining Vector = " X0[3] * dT; Y0[3] * dT; Z0[3] * dT" />
+        <RemoveContaining Vector = " X0[4] * dT; Y0[4] * dT; Z0[4] * dT" />
+        <RemoveContaining Vector = " X0[5] * dT; Y0[5] * dT; Z0[5] * dT" />
+        <RemoveContaining Vector = "-X0[0] * dT;-Y0[0] * dT;-Z0[0] * dT" />
+        <RemoveContaining Vector = "-X0[1] * dT;-Y0[1] * dT;-Z0[1] * dT" />
+        <RemoveContaining Vector = "-X0[2] * dT;-Y0[2] * dT;-Z0[2] * dT" />
+        <RemoveContaining Vector = "-X0[3] * dT;-Y0[3] * dT;-Z0[3] * dT" />
+        <RemoveContaining Vector = "-X0[4] * dT;-Y0[4] * dT;-Z0[4] * dT" />
+        <RemoveContaining Vector = "-X0[5] * dT;-Y0[5] * dT;-Z0[5] * dT" />
+</xml>

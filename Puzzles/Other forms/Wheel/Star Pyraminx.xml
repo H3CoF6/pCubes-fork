@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star Pyraminx</Name>
+        <Menu>Other forms\Wheel\Star Pyraminx</Menu>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Added>2016-11-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4779</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clYellow := 'FFFF00';
+
+        W := 0.5;
+        D := W * sqrt(3) / 3;
+        R := W * 0.65;
+
+        N := W / 3;
+        M := N + 0.03;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/15; 2*Pi/3; 2*Pi/3" PlaneDistances = "-D; 0" >
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " W; -W;  W" />
+                <Add Vector = "-W;  W;  W" />
+                <Add Vector = " W;  W; -W" />
+                <Add Vector = "-W; -W; -W" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue  " VertexIndexes = "0;1;3" />
+                <Face Color = "clGreen " VertexIndexes = "1;2;3" />
+                <Face Color = "clRed   " VertexIndexes = "0;3;2" />
+                <Face Color = "clYellow" VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Cylinder Radius = "R" Color = "clYellow" >
+            <Base X = " N" Y = " N" Z = " N" />
+            <Top  X = " M" Y = " M" Z = " M" Color = "clYellow" />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clBlue" >
+            <Base X = "-N" Y = "-N" Z = " N" />
+            <Top  X = "-M" Y = "-M" Z = " M" Color = "clBlue  " />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clRed" >
+            <Base X = " N" Y = "-N" Z = "-N" />
+            <Top  X = " M" Y = "-M" Z = "-M" Color = "clRed   " />
+        </Cylinder>
+
+        <Cylinder Radius = "R" Color = "clGreen" >
+            <Base X = "-N" Y = " N" Z = "-N" />
+            <Top  X = "-M" Y = " M" Z = "-M" Color = "clGreen " />
+        </Cylinder>
+
+        <Macro Name = "Split">
+            <Split Axis = "a2" From = "2" />
+            <Turn Axis = "a1" Angle = "2*Pi/5" Layer = "0" />
+        </Macro>
+
+        <Hide Axis = "0" From = "1" To = "2" />
+        <ExecMacro MacroName = "Split" a1 = "0" a2 = "1" Repeat = "5" />
+        <ShowAll/>
+
+        <Hide Axis = "1" From = "1" To = "2" />
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = "2" Repeat = "5" />
+        <ShowAll/>
+
+        <Hide Axis = "2" From = "1" To = "2" />
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = "3" Repeat = "5" />
+        <ShowAll/>
+
+        <Hide Axis = "3" From = "1" To = "2" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "0" Repeat = "5" />
+        <ShowAll/>
+
+    </Figure>
+</xml>

@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Monolith of Time</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Monolith of Time</Menu>
+        <Inventor>Carlos Ramirez</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9459</Link>
+    </Interface>
+
+    <Script>
+        W := 0.37;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := W / 3;
+
+        WC := W * 4 / 3;
+        RC := W;
+        C := 0.001;
+        DC := (-RC * C + WC) / sqrt(C^2 + 1) * 0.99;
+        R1 := W * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = " Pi/2; Pi/6; Pi/2; Pi/2; Pi/2; Pi/6; Pi/2" PlaneDistances = "-WC;-W;-D; D; W; WC" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = " W * 1.5" WZ = "W" />
+        <SplitByAxes/>
+
+        <Cylinder Radius = "RC" Color = "clYellow" Base = " 0; 0;-W" Top = " 0; 0;-WC" TopColor = "clYellow" />
+        <Cylinder Radius = "RC" Color = "clWhite"  Base = " 0; 0; W" Top = " 0; 0; WC" TopColor = "clWhite"  />
+        <Cut Color = "FFFF01" > <Plane NormVector = "-C; 0; 1" NormDistance = "-DC" /> </Cut>
+        <Cut Color = "FFFFFE" > <Plane NormVector = " C; 0;-1" NormDistance = "-DC" /> </Cut>
+
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn  Axis = "2" Layers = "1;5" Angle = "Pi/3" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "2" Layers = "1;5" Angle = "Pi/3" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "2" Layer = "5" Angle = "Pi/6" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "2" Layer = "5" Angle = "Pi/3" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "2" Layer = "5" Angle = "Pi/3" />
+        <Split Axis = "0" From  = "1" />
+        <Undo  Repeat = "6" />
+        <Turn  Axis = "2" Layer = "1" Angle = "1*Pi/6" />
+        <Turn  Axis = "2" Layer = "5" Angle = "2*Pi/6" />
+        <HideAll/>
+
+        <Circle Radius = "R1" Color = "clYellow" Center = " 0; 0;-WC*1.001" />
+        <Circle Radius = "R1" Color = "clWhite " Center = " 0; 0; WC*1.001" />
+        <SplitByAxes/>
+        <ShowAll/>
+        <Connect Axis = "2" Layers = "0;3;6" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_06.vec" />
+        <Texture Name = "tm_07" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_07.vec" />
+        <Texture Name = "tm_08" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_08.vec" />
+        <Texture Name = "tm_09" File = "Puzzles\Other forms\Wheel\Wheel Cube\tm_09.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 = 25, 7, 6, 16, 7, 6
+        tm_02 = 26, 7, 6, 15, 7, 4
+        tm_03 = 23, 7, 6, 18, 7, 6
+        tm_04 = 24, 7, 6, 17, 7, 6
+        tm_05 = 22, 7, 6, 19, 7, 6
+        tm_06 = 21, 7, 6, 20, 7, 7
+        tm_07 = 29,12,11, 12,12,11
+        tm_08 = 28,13,12, 13,13,12
+        tm_09 = 27,12, 4, 14,12,11
+    </SetTextures>
+</xml>

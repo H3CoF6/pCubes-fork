@@ -1,0 +1,251 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Real Teraminx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Multi-puzzles\Real\Real Teraminx</Menu>
+        <Menu>Other forms\Multi-puzzles\Real\Real Teraminx</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-16</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := (5 * Rsin + 1 * R2sin) / 6;
+        D2 := (4 * Rsin + 2 * R2sin) / 6;
+        D3 := (3 * Rsin + 3 * R2sin) / 6;
+        R2 := R * 43.7 * R2sin / 10 / (RSin + R2Sin);
+        delta := 0.015;
+
+        mAngle := ArcTan(0.5);
+        As := sin(mAngle);
+        Ac := cos(mAngle);
+        sAngle := PI * 2 / 5;
+        for i := 1 to 5 do begin
+            xa[i] := sin(sAngle * (i - 1)) * Ac;
+            ya[i] := cos(sAngle * (i - 1)) * Ac;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; sAngle; sAngle; 0; sAngle; sAngle; sAngle" PlaneDistances = "-D1; -D2; -D3; D3; D2; D1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Split Axis = "0" From  = "1" />
+        <Split Axis = "1" From  = "1" />
+        <Split Axis = "2" From  = "1" />
+        <Split Axis = "3" From  = "1" />
+        <Split Axis = "4" From  = "1" />
+        <Split Axis = "5" From  = "1" />
+
+        <Split Axis = "0" From  = "6" />
+        <Split Axis = "1" From  = "6" />
+        <Split Axis = "2" From  = "6" />
+        <Split Axis = "3" From  = "6" />
+        <Split Axis = "4" From  = "6" />
+        <Split Axis = "5" From  = "6" />
+
+        <RemoveContaining Vector = "0; 0; 0" />
+        <RemoveContaining Vector = "0; 0;  D1" />
+        <RemoveContaining Vector = "0; 0; -D1" />
+        <RemoveContaining Vector = " xa[1] * D1;  ya[1] * D1;  As * D1" />
+        <RemoveContaining Vector = " xa[2] * D1;  ya[2] * D1;  As * D1" />
+        <RemoveContaining Vector = " xa[3] * D1;  ya[3] * D1;  As * D1" />
+        <RemoveContaining Vector = " xa[4] * D1;  ya[4] * D1;  As * D1" />
+        <RemoveContaining Vector = " xa[5] * D1;  ya[5] * D1;  As * D1" />
+        <RemoveContaining Vector = "-xa[1] * D1; -ya[1] * D1; -As * D1" />
+        <RemoveContaining Vector = "-xa[2] * D1; -ya[2] * D1; -As * D1" />
+        <RemoveContaining Vector = "-xa[3] * D1; -ya[3] * D1; -As * D1" />
+        <RemoveContaining Vector = "-xa[4] * D1; -ya[4] * D1; -As * D1" />
+        <RemoveContaining Vector = "-xa[5] * D1; -ya[5] * D1; -As * D1" />
+
+        <Script>
+            R := 0.985;
+            DCut1 := RSin - delta;
+            DCut2 := RSin;
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Super.xml" />
+        <ShowAll/>
+
+        <Split Axis = "0" From  = "2" />
+        <Split Axis = "1" From  = "2" />
+        <Split Axis = "2" From  = "2" />
+        <Split Axis = "3" From  = "2" />
+        <Split Axis = "4" From  = "2" />
+        <Split Axis = "5" From  = "2" />
+
+        <Split Axis = "0" From  = "5" />
+        <Split Axis = "1" From  = "5" />
+        <Split Axis = "2" From  = "5" />
+        <Split Axis = "3" From  = "5" />
+        <Split Axis = "4" From  = "5" />
+        <Split Axis = "5" From  = "5" />
+
+        <RemoveContaining Vector = "0; 0;  (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "0; 0; -(DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[1] * (DCut1 + DCut2)/2;  ya[1] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[2] * (DCut1 + DCut2)/2;  ya[2] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[3] * (DCut1 + DCut2)/2;  ya[3] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[4] * (DCut1 + DCut2)/2;  ya[4] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[5] * (DCut1 + DCut2)/2;  ya[5] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[1] * (DCut1 + DCut2)/2; -ya[1] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[2] * (DCut1 + DCut2)/2; -ya[2] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[3] * (DCut1 + DCut2)/2; -ya[3] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[4] * (DCut1 + DCut2)/2; -ya[4] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[5] * (DCut1 + DCut2)/2; -ya[5] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+
+        <ShowAll/>
+
+        <Script>
+            R := 0.827;
+            DCut1 := RSin - delta;
+            DCut2 := RSin;
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Super.xml" />
+
+        <ShowAll/>
+        <Split Axis = "0" From  = "3" />
+        <Split Axis = "1" From  = "3" />
+        <Split Axis = "2" From  = "3" />
+        <Split Axis = "3" From  = "3" />
+        <Split Axis = "4" From  = "3" />
+        <Split Axis = "5" From  = "3" />
+
+        <Split Axis = "0" From  = "4" />
+        <Split Axis = "1" From  = "4" />
+        <Split Axis = "2" From  = "4" />
+        <Split Axis = "3" From  = "4" />
+        <Split Axis = "4" From  = "4" />
+        <Split Axis = "5" From  = "4" />
+
+        <RemoveContaining Vector = "0; 0;  (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "0; 0; -(DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[1] * (DCut1 + DCut2)/2;  ya[1] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[2] * (DCut1 + DCut2)/2;  ya[2] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[3] * (DCut1 + DCut2)/2;  ya[3] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[4] * (DCut1 + DCut2)/2;  ya[4] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[5] * (DCut1 + DCut2)/2;  ya[5] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[1] * (DCut1 + DCut2)/2; -ya[1] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[2] * (DCut1 + DCut2)/2; -ya[2] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[3] * (DCut1 + DCut2)/2; -ya[3] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[4] * (DCut1 + DCut2)/2; -ya[4] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[5] * (DCut1 + DCut2)/2; -ya[5] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+
+        <Script>
+            R := 0.59;
+            DCut1 := RSin - delta;
+            DCut2 := RSin;
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Super.xml" />
+
+        <ShowAll/>
+
+        <Script> R := R2; </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+          <Macro Name = "Split">
+            <Split Axis = "id" From = "2" />
+            <Split Axis = "id" From = "5" />
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" Repeat = "6" id = "0" />
+
+        <RemoveContaining Vector = "0; 0;  D2" />
+        <RemoveContaining Vector = "0; 0; -D2" />
+        <RemoveContaining Vector = " xa[1] * D2;  ya[1] * D2;  As * D2" />
+        <RemoveContaining Vector = " xa[2] * D2;  ya[2] * D2;  As * D2" />
+        <RemoveContaining Vector = " xa[3] * D2;  ya[3] * D2;  As * D2" />
+        <RemoveContaining Vector = " xa[4] * D2;  ya[4] * D2;  As * D2" />
+        <RemoveContaining Vector = " xa[5] * D2;  ya[5] * D2;  As * D2" />
+        <RemoveContaining Vector = "-xa[1] * D2; -ya[1] * D2; -As * D2" />
+        <RemoveContaining Vector = "-xa[2] * D2; -ya[2] * D2; -As * D2" />
+        <RemoveContaining Vector = "-xa[3] * D2; -ya[3] * D2; -As * D2" />
+        <RemoveContaining Vector = "-xa[4] * D2; -ya[4] * D2; -As * D2" />
+        <RemoveContaining Vector = "-xa[5] * D2; -ya[5] * D2; -As * D2" />
+        <RemoveGrayParts/>
+        <SplitByAxes/>
+
+        <Script>
+            R := 0.827;
+            DCut1 := RSin - delta;
+            DCut2 := RSin;
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Super.xml" />
+
+        <ShowAll/>
+        <Split Axis = "0" From  = "3" />
+        <Split Axis = "1" From  = "3" />
+        <Split Axis = "2" From  = "3" />
+        <Split Axis = "3" From  = "3" />
+        <Split Axis = "4" From  = "3" />
+        <Split Axis = "5" From  = "3" />
+
+        <Split Axis = "0" From  = "4" />
+        <Split Axis = "1" From  = "4" />
+        <Split Axis = "2" From  = "4" />
+        <Split Axis = "3" From  = "4" />
+        <Split Axis = "4" From  = "4" />
+        <Split Axis = "5" From  = "4" />
+
+        <RemoveContaining Vector = "0; 0;  (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "0; 0; -(DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[1] * (DCut1 + DCut2)/2;  ya[1] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[2] * (DCut1 + DCut2)/2;  ya[2] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[3] * (DCut1 + DCut2)/2;  ya[3] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[4] * (DCut1 + DCut2)/2;  ya[4] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = " xa[5] * (DCut1 + DCut2)/2;  ya[5] * (DCut1 + DCut2)/2;  As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[1] * (DCut1 + DCut2)/2; -ya[1] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[2] * (DCut1 + DCut2)/2; -ya[2] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[3] * (DCut1 + DCut2)/2; -ya[3] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[4] * (DCut1 + DCut2)/2; -ya[4] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+        <RemoveContaining Vector = "-xa[5] * (DCut1 + DCut2)/2; -ya[5] * (DCut1 + DCut2)/2; -As * (DCut1 + DCut2)/2" />
+
+        <Script>
+            R := 0.57;
+            DCut1 := RSin - delta;
+            DCut2 := RSin;
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Super.xml" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <Script>
+            R := 0.49205;
+            include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        </Script>
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Remove" >
+            <RemoveContaining Vector = " cx[i]; cy[i]; cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Remove" Repeat = "12" i = "0" />
+        <RemoveGrayParts/>
+
+        <Script>
+            R := 0.57;
+            DCut1 := RSin - delta;
+            DCut2 := RSin;
+        </Script>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Super.xml" />
+
+        <ShowAll/>
+        <Script> R := 0.4325; </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+    </Figure>
+
+</xml>

@@ -1,0 +1,117 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star Puck</Name>
+        <Menu>Other forms\Cylinder\Star Puck</Menu>
+        <Inventor>Adam G. Cowan</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-02-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2935</Link>
+    </Interface>
+
+    <Script>
+        clRed     := 'C80000';
+        clGreen   := '009600';
+        clBlue    := '0000C8';
+        clOrange  := 'FF800A';
+        clViolett := '800080';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        R := 0.6;
+        H := 0.2;
+        H2 := H + 0.002;
+
+        for i := 0 to 4 do begin
+            ax[i] := R * cos(2*Pi/5 * i);
+            ay[i] := R * sin(2*Pi/5 * i);
+        end;
+
+        D := R * 0.31;
+        DC := R * 0.384;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D" >
+        <Axis NormVector = "ax[0]; ay[0]; 0" />
+        <Axis NormVector = "ax[1]; ay[1]; 0" />
+        <Axis NormVector = "ax[2]; ay[2]; 0" />
+        <Axis NormVector = "ax[3]; ay[3]; 0" />
+        <Axis NormVector = "ax[4]; ay[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Radius = "R" >
+            <Base X = "0" Y = "0" Z = "-H" />
+            <Top  X = "0" Y = "0" Z = " H" />
+        </Cylinder>
+        <SplitByAxes/>
+        <RemoveContaining Vector = "-ax[0]*R; -ay[0]*R; 0" />
+        <RemoveContaining Vector = "-ax[1]*R; -ay[1]*R; 0" />
+        <RemoveContaining Vector = "-ax[2]*R; -ay[2]*R; 0" />
+        <RemoveContaining Vector = "-ax[3]*R; -ay[3]*R; 0" />
+        <RemoveContaining Vector = "-ax[4]*R; -ay[4]*R; 0" />
+        <Hide Axis = "0" From = "0" To = "2" />
+
+        <Script> Color := clRed; i := 0; </Script>
+        <Cylinder Radius = "R" Color = "Color" >
+            <Base X = "0" Y = "0" Z = "-H" Color = "clWhite " />
+            <Top  X = "0" Y = "0" Z = " H" Color = "clYellow" />
+        </Cylinder>
+        <Cut> <Plane NormVector = "ax[i]; ay[i]; 0" NormDistance = "D" /> </Cut>
+        <Cut> <Plane NormVector = "ax[(i+1) mod 5]; ay[(i+1) mod 5]; 0" NormDistance = "D" /> </Cut>
+        <Cut Color = "Color"> <Plane NormVector = "-ax[(i+3) mod 5]; -ay[(i+3) mod 5]; 0" NormDistance = "DC" /> </Cut>
+        <Hide Axis = "0" From = "0" To = "2" />
+
+        <Script> Color := clGreen; i := 1; </Script>
+        <Cylinder Radius = "R" Color = "Color" >
+            <Base X = "0" Y = "0" Z = "-H" Color = "clWhite " />
+            <Top  X = "0" Y = "0" Z = " H" Color = "clYellow" />
+        </Cylinder>
+        <Cut> <Plane NormVector = "ax[i]; ay[i]; 0" NormDistance = "D" /> </Cut>
+        <Cut> <Plane NormVector = "ax[(i+1) mod 5]; ay[(i+1) mod 5]; 0" NormDistance = "D" /> </Cut>
+        <Cut Color = "Color"> <Plane NormVector = "-ax[(i+3) mod 5]; -ay[(i+3) mod 5]; 0" NormDistance = "DC" /> </Cut>
+        <Hide Axis = "0" From = "0" To = "2" />
+
+        <Script> Color := clBlue; i := 2; </Script>
+        <Cylinder Radius = "R" Color = "Color" >
+            <Base X = "0" Y = "0" Z = "-H" Color = "clWhite " />
+            <Top  X = "0" Y = "0" Z = " H" Color = "clYellow" />
+        </Cylinder>
+        <Cut> <Plane NormVector = "ax[i]; ay[i]; 0" NormDistance = "D" /> </Cut>
+        <Cut> <Plane NormVector = "ax[(i+1) mod 5]; ay[(i+1) mod 5]; 0" NormDistance = "D" /> </Cut>
+        <Cut Color = "Color"> <Plane NormVector = "-ax[(i+3) mod 5]; -ay[(i+3) mod 5]; 0" NormDistance = "DC" /> </Cut>
+        <Hide Axis = "0" From = "0" To = "2" />
+
+        <Script> Color := clOrange; i := 3; </Script>
+        <Cylinder Radius = "R" Color = "Color" >
+            <Base X = "0" Y = "0" Z = "-H" Color = "clWhite " />
+            <Top  X = "0" Y = "0" Z = " H" Color = "clYellow" />
+        </Cylinder>
+        <Cut> <Plane NormVector = "ax[i]; ay[i]; 0" NormDistance = "D" /> </Cut>
+        <Cut> <Plane NormVector = "ax[(i+1) mod 5]; ay[(i+1) mod 5]; 0" NormDistance = "D" /> </Cut>
+        <Cut Color = "Color"> <Plane NormVector = "-ax[(i+3) mod 5]; -ay[(i+3) mod 5]; 0" NormDistance = "DC" /> </Cut>
+        <Hide Axis = "0" From = "0" To = "2" />
+
+        <Script> Color := clViolett; i := 4; </Script>
+        <Cylinder Radius = "R" Color = "Color" >
+            <Base X = "0" Y = "0" Z = "-H" Color = "clWhite " />
+            <Top  X = "0" Y = "0" Z = " H" Color = "clYellow" />
+        </Cylinder>
+        <Cut> <Plane NormVector = "ax[i]; ay[i]; 0" NormDistance = "D" /> </Cut>
+        <Cut> <Plane NormVector = "ax[(i+1) mod 5]; ay[(i+1) mod 5]; 0" NormDistance = "D" /> </Cut>
+        <Cut Color = "Color"> <Plane NormVector = "-ax[(i+3) mod 5]; -ay[(i+3) mod 5]; 0" NormDistance = "DC" /> </Cut>
+        <Hide Axis = "0" From = "0" To = "2" />
+
+        <ShowAll/>
+
+        <Circle Radius = "R" Color = "clYellow" > <Center X =  "0" Y =  "0" Z = " H2" /> </Circle>
+        <Circle Radius = "R" Color = "clWhite " > <Center X =  "0" Y =  "0" Z = "-H2" /> </Circle>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

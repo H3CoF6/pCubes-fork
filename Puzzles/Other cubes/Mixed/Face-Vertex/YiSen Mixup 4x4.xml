@@ -1,0 +1,121 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>YiSen Mixup 4x4</Name>
+        <Menu>Other cubes\Mixed\Face-Vertex\YiSen Mixup 4x4</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-06</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=403032</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0055EE'; // Blue
+        Colors[3] := '00BB00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'CCCCCC'; // LightGray
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.985;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/4; Pi/2" PlaneDistances = "-1/6; 0; 1/6" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "Vx[0]; Vy[0]; Vz[0]" />
+                <Add Vector = "Vx[1]; Vy[1]; Vz[1]" />
+                <Add Vector = "Vx[2]; Vy[2]; Vz[2]" />
+                <Add Vector = "Vx[3]; Vy[3]; Vz[3]" />
+                <Add Vector = "Vx[4]; Vy[4]; Vz[4]" />
+                <Add Vector = "Vx[5]; Vy[5]; Vz[5]" />
+                <Add Vector = "Vx[6]; Vy[6]; Vz[6]" />
+                <Add Vector = "Vx[7]; Vy[7]; Vz[7]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "0;1;3;2" />
+                <Face Color = "Colors[1]" VertexIndexes = "5;4;6;7" />
+                <Face Color = "Colors[2]" VertexIndexes = "1;0;4;5" />
+                <Face Color = "Colors[3]" VertexIndexes = "2;3;7;6" />
+                <Face Color = "Colors[4]" VertexIndexes = "0;2;6;4" />
+                <Face Color = "Colors[5]" VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+        <RemoveGrayParts/>
+
+        <Turn Axis = "0" From = "1" To = "2" Angle = "Pi/4" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Turn Axis = "1" From = "1" To = "2" Angle = "Pi/4" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Undo />
+
+        <Turn Axis = "2" From = "1" To = "2" Angle = "Pi/4" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "1" From = "1" To = "2" Angle = "Pi/4" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Turn Axis = "0" From = "1" To = "2" Angle = "Pi/4" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Undo />
+
+        <Turn Axis = "2" From = "1" To = "2" Angle = "Pi/4" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "2" From = "1" To = "2" Angle = "Pi/4" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Turn Axis = "0" From = "1" To = "2" Angle = "Pi/4" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Undo />
+
+        <Turn Axis = "1" From = "1" To = "2" Angle = "Pi/4" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Undo Repeat = "2" />
+    </Figure>
+</xml>

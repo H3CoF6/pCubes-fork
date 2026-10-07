@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagemoid</Name>
+        <Menu>Other forms\Unclassified\Hexagemoid</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8652</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36598</Link>
+    </Interface>
+
+    <Script>
+        R := 0.65;
+        H := R;
+        z := R / 2;
+
+        D1 := R * sqrt(3) / 6;
+        D2 := R / 6;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 3 * (i+0.5));
+            y[i] := R * sin(Pi / 3 * (i+0.5));
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " ax[0]; ay[0]; 0" />
+        <Axis NormVector = " ax[1]; ay[1]; 0" />
+        <Axis NormVector = " ax[2]; ay[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "0; 0; H" />
+            <Vertices Vectors = "x; y; z" />
+            <Vertices Vectors = "x; y;-z" />
+            <Vertices Vectors = "0; 0;-H" />
+
+            <Faces>
+                <Face Color = "5d8aa8" VertexIndexes = "0;1;2" />
+                <Face Color = "0f4d92" VertexIndexes = "0;2;3" />
+                <Face Color = "89cfd0" VertexIndexes = "0;3;4" />
+                <Face Color = "21abcd" VertexIndexes = "0;4;5" />
+                <Face Color = "5070a0" VertexIndexes = "0;5;6" />
+                <Face Color = "80d0ff" VertexIndexes = "0;6;1" />
+
+                <Face Color = "cc0000" VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "ff6000" VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "ffff00" VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "009000" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "000090" VertexIndexes = "11;12; 6; 5" />
+                <Face Color = "900090" VertexIndexes = "12; 7; 1; 6" />
+
+                <Face Color = "e1a95f" VertexIndexes = " 8; 7;13" />
+                <Face Color = "e9d66b" VertexIndexes = " 9; 8;13" />
+                <Face Color = "fdfd96" VertexIndexes = "10; 9;13" />
+                <Face Color = "fdcf3f" VertexIndexes = "11;10;13" />
+                <Face Color = "af940c" VertexIndexes = "12;11;13" />
+                <Face Color = "e9d6ac" VertexIndexes = " 7;12;13" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

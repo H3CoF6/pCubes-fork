@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Megtatwinx</Name>
+        <Menu>Other forms\Multi-core\Megtatwinx</Menu>
+        <Inventor>Pantazis Constantine Houlis</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-12-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3884</Link>
+    </Interface>
+
+    <Script>
+        R := 0.4;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := (Rsin + R2sin) / 2;
+
+        Tx := Vx[6] * (1 + D / RSin) / 2; // * (sqrt(5) + 1) / 4
+        Ty := Vy[6] * (1 + D / RSin) / 2;
+        Tz := Vz[6] * (1 + D / RSin) / 2;
+    </Script>
+
+    <Axes TurningAngles = " 0; sAngle" PlaneDistances = "D">
+        <Axis NormVector = "Cx[ 0]; Cy[ 0]; Cz[ 0]" BaseVector = " Tx; Ty; Tz" />
+        <Axis NormVector = "Cx[ 1]; Cy[ 1]; Cz[ 1]" BaseVector = " Tx; Ty; Tz" />
+        <Axis NormVector = "Cx[ 2]; Cy[ 2]; Cz[ 2]" BaseVector = " Tx; Ty; Tz" />
+        <Axis NormVector = "Cx[ 8]; Cy[ 8]; Cz[ 8]" BaseVector = " Tx; Ty; Tz" />
+        <Axis NormVector = "Cx[ 9]; Cy[ 9]; Cz[ 9]" BaseVector = " Tx; Ty; Tz" />
+        <Axis NormVector = "Cx[10]; Cy[10]; Cz[10]" BaseVector = " Tx; Ty; Tz" />
+
+        <Axis NormVector = "Cx[ 3]; Cy[ 3]; Cz[ 3]" BaseVector = "-Tx;-Ty;-Tz" />
+        <Axis NormVector = "Cx[ 4]; Cy[ 4]; Cz[ 4]" BaseVector = "-Tx;-Ty;-Tz" />
+        <Axis NormVector = "Cx[ 5]; Cy[ 5]; Cz[ 5]" BaseVector = "-Tx;-Ty;-Tz" />
+        <Axis NormVector = "Cx[ 6]; Cy[ 6]; Cz[ 6]" BaseVector = "-Tx;-Ty;-Tz" />
+        <Axis NormVector = "Cx[ 7]; Cy[ 7]; Cz[ 7]" BaseVector = "-Tx;-Ty;-Tz" />
+        <Axis NormVector = "Cx[11]; Cy[11]; Cz[11]" BaseVector = "-Tx;-Ty;-Tz" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Split" >
+            <Split><Plane NormVector = "Cx[i]; Cy[i]; Cz[i]" NormDistance = "D" /></Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Transfer Vector = " Tx; Ty; Tz" />
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "12" />
+        <Transfer Vector = "-Tx;-Ty;-Tz" />
+        <HideAll/>
+        <Transfer Vector = "-Tx;-Ty;-Tz" />
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "12" />
+        <Transfer Vector = " Tx; Ty; Tz" />
+        <ShowAll/>
+        <RemoveContaining Vector = "0;0;0" />
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

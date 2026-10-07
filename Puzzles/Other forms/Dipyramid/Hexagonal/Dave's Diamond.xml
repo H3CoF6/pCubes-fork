@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Dave's Diamond</Name>
+        <Menu>Other forms\Dipyramid\Hexagonal\Dave's Diamond</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-04-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3462</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clOrange       := 'FF6000';
+        clRed          := 'FF0000';
+        clGreen        := '008000';
+        clWhite        := 'FFFFFF';
+        clLightViolett := 'FF0080';
+        clLightBlue    := '2828FF';
+        clViolett      := '800080';
+        clBrown        := '800000';
+        clLightGreen   := '00FF00';
+        clCyan         := '00DCB4';
+
+        R := 0.6;
+        H := R * sqrt(2);
+
+        az := R^2 / H;
+
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi/3 * i);
+            y[i] := R * sin(Pi/3 * i);
+        end;
+
+        A1 := ArcCos(-4 / 5);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1;-Pi/2; 0; Pi/2; A1; Pi" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " x[0]; y[0]; az" />
+        <Axis NormVector = " x[1]; y[1]; az" />
+        <Axis NormVector = " x[2]; y[2]; az" />
+        <Axis NormVector = " x[3]; y[3]; az" />
+        <Axis NormVector = " x[4]; y[4]; az" />
+        <Axis NormVector = " x[5]; y[5]; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "0   ; 0   ;  H" />
+                <Add Vector = "x[0]; y[0];  0" />
+                <Add Vector = "x[1]; y[1];  0" />
+                <Add Vector = "x[2]; y[2];  0" />
+                <Add Vector = "x[3]; y[3];  0" />
+                <Add Vector = "x[4]; y[4];  0" />
+                <Add Vector = "x[5]; y[5];  0" />
+                <Add Vector = "0   ; 0   ; -H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlue  "       VertexIndexes = "0;1;2" />
+                <Face Color = "clGreen "       VertexIndexes = "0;2;3" />
+                <Face Color = "clRed   "       VertexIndexes = "0;3;4" />
+                <Face Color = "clOrange"       VertexIndexes = "0;4;5" />
+                <Face Color = "clYellow"       VertexIndexes = "0;5;6" />
+                <Face Color = "clWhite "       VertexIndexes = "0;6;1" />
+
+                <Face Color = "clLightBlue"    VertexIndexes = "7;2;1" />
+                <Face Color = "clLightGreen"   VertexIndexes = "7;3;2" />
+                <Face Color = "clBrown "       VertexIndexes = "7;4;3" />
+                <Face Color = "clViolett"      VertexIndexes = "7;5;4" />
+                <Face Color = "clLightViolett" VertexIndexes = "7;6;5" />
+                <Face Color = "clCyan "        VertexIndexes = "7;1;6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,48 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>OctoChair</Name>
+        <Menu>Other forms\Octahedron\Face Turning\OctoChair</Menu>
+        <Inventor>El Cubitero</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10683</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=420103</Link>
+    </Interface>
+
+    <Script>
+        CutColor1 := '333333';
+        CutColor2 := '333334';
+
+        W := 0.75;
+        D := W / sqrt(3) / 2;
+        DCut := D * 3 / 4;
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi / 3" PlaneDistances = "D" >
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+        <HideContaining Vector = "0;0;0" />
+        <Macro Name = "Split" >
+            <Split> <Plane NormVector = "Cx[i];Cy[i];Cz[i]" NormDistance = "D" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "2" Repeat = "6" />
+
+        <InvertVisibility/>
+        <Split> <Plane NormVector = " 1; 0; 0" NormDistance = "0" /> </Split>
+        <HideContaining Vector = "D;0;0" />
+        <Cut Color = "CutColor1" > <Plane NormVector = "-1;-1; 1" NormDistance = "DCut" /> </Cut>
+        <ShowAll/>
+        <HideContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+        <Cut Color = "CutColor2" > <Plane NormVector = " 1;-1; 1" NormDistance = "DCut" /> </Cut>
+        <ShowAll/>
+    </Figure>
+</xml>

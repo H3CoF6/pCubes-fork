@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Celtic Cube Junior III (flat, 24 colors)</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Celtic Cube Junior\Crazy Celtic Cube Junior III (24 colors)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-15</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_24_Colors.inc';
+
+        W  := 0.45;
+        include 'Figures\Scripts\Deltoidal Icositetrahedron_Coordinates.inc'; // for axes
+
+        A1 := ArcCos( s2 / 8 + 0.25);
+        A2 := ArcCos( s2 / 4 - 0.5 );
+        A3 := ArcCos(-s2 / 2 - 0.25); // = A1 + A2
+
+        D := W * 1.12;
+        D2 := W * 1.1575;
+        DCut := W * 1.03;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D" FixedLayers = "0" NormVectors = "Cx;Cy;Cz" />
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+
+        <Macro Name = "Split" >
+            <Split Axis = "i" From = "1" />
+            <Split Axis = "i" From = "2" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" Repeat = "24" />
+
+        <Macro Name = "HideV" >
+            <Hide><Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "-DCut" /></Hide>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideV" i = "0" Repeat = "18" />
+
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Teramoid</Name>
+        <Menu>Other forms\Dodecahedron\Truncated\Teramoid</Menu>
+        <Inventor>Nathan Wilson</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6285</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := (5 * Rsin + 1 * R2sin) / 6;
+        D2 := (4 * Rsin + 2 * R2sin) / 6;
+        D3 := (3 * Rsin + 3 * R2sin) / 6;
+
+        DCut := D1 * 1.005;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; sAngle; 0; sAngle; sAngle" PlaneDistances = "-D2; -D3; D3; D2">
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+    </Axes>
+
+   <Axes TurningAngles = "sAngle; sAngle; sAngle; 0; sAngle; sAngle; sAngle" PlaneDistances = "-D1;-D2;-D3; D3; D2; D1" >
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Cut Color = "clWhite " > <Plane NormVector = "0; 0; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormVector = "0; 0;-1" NormDistance = "-DCut" /> </Cut>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

@@ -1,0 +1,212 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Spin - 5</Name>
+        <Menu>Other forms\2d\Marble\Spin - 5</Menu>
+        <Inventor>Cuiu-Huang Chang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1458</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C14346';
+        Colors[1] := '3F83FE';
+        Colors[2] := 'F1F41F';
+        Colors[3] := '43D280';
+        Colors[4] := 'FC9F38';
+        clBody1   := '1F5964';
+        clBody2   := 'FFFFFF';
+
+        R  := 0.5;
+        sAngle := 2*Pi / 26;
+
+        H1 := R * 0.07;
+        H2 := H1 * 1.3;
+
+        dy := R * 1.06;
+        R1 := dy * (cos(2 * sAngle) - cos(3 * sAngle)) / 2;
+        R2 := R1 * 0.7;
+
+        for i := 0 to 15 do begin
+            x1[i] := R1 * cos(2 * Pi / 16 * (i));
+            y1[i] := R1 * sin(2 * Pi / 16 * (i)) + dy;
+            x2[i] := R2 * cos(2 * Pi / 16 * (i));
+            y2[i] := R2 * sin(2 * Pi / 16 * (i)) + dy;
+        end;
+
+        D := dy * (cos(2 * sAngle) + cos(3 * sAngle)) / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi; 0" PlaneDistances = "D"  >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; sAngle; 0" PlaneDistances = "-H1; H1" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddBody">
+            <Cylinder Color = "cl" Radius = "R" Base = "0;  H1; 0" Top = "0;  H2; 0" >
+                <Base Color = "cl" />
+                <Top  Color = "cl" />
+            </Cylinder>
+            <Cylinder Color = "cl" Radius = "R" Base = "0; -H1; 0" Top = "0; -H2; 0" >
+                <Base Color = "cl" />
+                <Top  Color = "cl" />
+            </Cylinder>
+        </Macro>
+
+        // two-colored body
+
+        <ExecMacro MacroName = "AddBody" cl = "clBody2" />
+        <Cut> <Plane NormVector = "0;0;1" NormDistance = "D" /> </Cut>
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddBody" cl = "clBody1" />
+        <Cut> <Plane NormVector = "0;0;-1" NormDistance = "-D" /> </Cut>
+        <ShowAll/>
+
+        <Macro Name = "AddPuck" >
+            <HideAll/>
+            <Part>
+                <Vertices Vectors = "x1;  0; y1" />
+                <Vertices Vectors = "x2; H1; y2" />
+                <Vertices Vectors = "x2;-H1; y2" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "16;17; 1; 0" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "17;18; 2; 1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "18;19; 3; 2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "19;20; 4; 3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "20;21; 5; 4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "21;22; 6; 5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "22;23; 7; 6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "23;24; 8; 7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "24;25; 9; 8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "25;26;10; 9" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "26;27;11;10" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "27;28;12;11" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "28;29;13;12" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "29;30;14;13" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "30;31;15;14" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "31;16; 0;15" InvisibleEdges = "10" />
+
+                    <Face Color = "cl" VertexIndexes = "24;23;22;21;20;19;18;17;16;31;30;29;28;27;26;25" />
+
+                    <Face Color = "cl" VertexIndexes = "33;32; 0; 1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "34;33; 1; 2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "35;34; 2; 3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "36;35; 3; 4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "37;36; 4; 5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "38;37; 5; 6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "39;38; 6; 7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "40;39; 7; 8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "41;40; 8; 9" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "42;41; 9;10" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "43;42;10;11" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "44;43;11;12" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "45;44;12;13" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "46;45;13;14" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "47;46;14;15" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "32;47;15; 0" InvisibleEdges = "10" />
+
+                    <Face Color = "cl" VertexIndexes = "32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47" />
+                </Faces>
+            </Part>
+            <Cut Color = "FF0000" ><Plane NormVector = "0; 0; 1" NormDistance = "R * (0.99 + i * 0.0005)" /></Cut> // cut every marble in a slightly different way to distinct them in the Solving procedure
+            <ShowAll/>
+            <Turn NormVector = "0; 1; 0" Angle = "dir * sAngle" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "SolvedStates">
+            <Turn Axis = "1" Layer = "1" Angle = "sAngle" />
+            <SaveSolvedState/>
+        </Macro>
+
+        // reverse-order is also a solution (does it exist?)
+        <ExecMacro MacroName = "AddPuck" cl = "Colors[0]" Repeat = "6" i = "0" dir = "1" />
+        <ExecMacro MacroName = "AddPuck" cl = "Colors[1]" Repeat = "5" i = "0" dir = "1" />
+        <ExecMacro MacroName = "AddPuck" cl = "Colors[2]" Repeat = "5" i = "0" dir = "1" />
+        <ExecMacro MacroName = "AddPuck" cl = "Colors[3]" Repeat = "5" i = "0" dir = "1" />
+        <ExecMacro MacroName = "AddPuck" cl = "Colors[4]" Repeat = "5" i = "0" dir = "1" />
+        <ExecMacro MacroName = "SolvedStates" Repeat = "26" />
+        <Hide Axis = "1" Layer = "0" />
+        <Cut Axis = "1" From = "2" /> // remove reversed marbles to create direct order
+        <ShowAll/>
+        // direct order
+        <ExecMacro MacroName = "AddPuck" cl = "Colors[0]" Repeat = "6" i = "0" dir = "-1" />
+        <ExecMacro MacroName = "AddPuck" cl = "Colors[1]" Repeat = "5" i = "0" dir = "-1" />
+        <ExecMacro MacroName = "AddPuck" cl = "Colors[2]" Repeat = "5" i = "0" dir = "-1" />
+        <ExecMacro MacroName = "AddPuck" cl = "Colors[3]" Repeat = "5" i = "0" dir = "-1" />
+        <ExecMacro MacroName = "AddPuck" cl = "Colors[4]" Repeat = "5" i = "0" dir = "-1" />
+        <ExecMacro MacroName = "SolvedStates" Repeat = "26" />
+
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "tm_01" File = "Puzzles\Other forms\2D + rotation\Vec\tm_01.vec" />
+        <Texture Name = "tm_02" File = "Puzzles\Other forms\2D + rotation\Vec\tm_02.vec" />
+        <Texture Name = "tm_03" File = "Puzzles\Other forms\2D + rotation\Vec\tm_03.vec" />
+        <Texture Name = "tm_04" File = "Puzzles\Other forms\2D + rotation\Vec\tm_04.vec" />
+        <Texture Name = "tm_05" File = "Puzzles\Other forms\2D + rotation\Vec\tm_05.vec" />
+        <Texture Name = "tm_06" File = "Puzzles\Other forms\2D + rotation\Vec\tm_06.vec" />
+        <Texture Name = "tm_07" File = "Puzzles\Other forms\2D + rotation\Vec\tm_07.vec" />
+        <Texture Name = "tm_08" File = "Puzzles\Other forms\2D + rotation\Vec\tm_08.vec" />
+        <Texture Name = "tm_09" File = "Puzzles\Other forms\2D + rotation\Vec\tm_09.vec" />
+        <Texture Name = "tm_10" File = "Puzzles\Other forms\2D + rotation\Vec\tm_10.vec" />
+        <Texture Name = "tm_11" File = "Puzzles\Other forms\2D + rotation\Vec\tm_11.vec" />
+        <Texture Name = "tm_12" File = "Puzzles\Other forms\2D + rotation\Vec\tm_12.vec" />
+        <Texture Name = "tm_13" File = "Puzzles\Other forms\2D + rotation\Vec\tm_13.vec" />
+        <Texture Name = "tm_14" File = "Puzzles\Other forms\2D + rotation\Vec\tm_14.vec" />
+        <Texture Name = "tm_15" File = "Puzzles\Other forms\2D + rotation\Vec\tm_15.vec" />
+        <Texture Name = "tm_16" File = "Puzzles\Other forms\2D + rotation\Vec\tm_16.vec" />
+        <Texture Name = "tm_17" File = "Puzzles\Other forms\2D + rotation\Vec\tm_17.vec" />
+        <Texture Name = "tm_18" File = "Puzzles\Other forms\2D + rotation\Vec\tm_18.vec" />
+        <Texture Name = "tm_19" File = "Puzzles\Other forms\2D + rotation\Vec\tm_19.vec" />
+        <Texture Name = "tm_20" File = "Puzzles\Other forms\2D + rotation\Vec\tm_20.vec" />
+        <Texture Name = "tm_21" File = "Puzzles\Other forms\2D + rotation\Vec\tm_21.vec" />
+        <Texture Name = "tm_22" File = "Puzzles\Other forms\2D + rotation\Vec\tm_22.vec" />
+        <Texture Name = "tm_23" File = "Puzzles\Other forms\2D + rotation\Vec\tm_23.vec" />
+        <Texture Name = "tm_24" File = "Puzzles\Other forms\2D + rotation\Vec\tm_24.vec" />
+        <Texture Name = "tm_25" File = "Puzzles\Other forms\2D + rotation\Vec\tm_25.vec" />
+        <Texture Name = "tm_26" File = "Puzzles\Other forms\2D + rotation\Vec\tm_26.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        tm_01 =  4,33,12,  4,16,12
+        tm_02 =  5,33,12,  5,16,12
+        tm_03 =  6,33,12,  6,16,12
+        tm_04 =  7,33,12,  7,16,12
+        tm_05 =  8,33,12,  8,16,12
+        tm_06 =  9,33,12,  9,16,12
+        tm_07 = 10,33,12, 10,16,12
+        tm_08 = 11,33,12, 11,16,12
+        tm_09 = 12,33,12, 12,16,12
+        tm_10 = 13,33,12, 13,16,12
+        tm_11 = 14,33,12, 14,16,12
+        tm_12 = 15,33,12, 15,16,12
+        tm_13 = 16,33,12, 16,16,12
+        tm_14 = 17,33,12, 17,16,12
+        tm_15 = 18,33,12, 18,16,12
+        tm_16 = 19,33,12, 19,16,12
+        tm_17 = 20,33,12, 20,16,12
+        tm_18 = 21,33,12, 21,16,12
+        tm_19 = 22,33,12, 22,16,12
+        tm_20 = 23,33,12, 23,16,12
+        tm_21 = 24,33,12, 24,16,12
+        tm_22 = 25,33,12, 25,16,12
+        tm_23 = 26,33,12, 26,16,12
+        tm_24 = 27,33,12, 27,16,12
+        tm_25 = 28,33,12, 28,16,12
+        tm_26 = 29,33,12, 29,16,12
+    </SetTextures>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

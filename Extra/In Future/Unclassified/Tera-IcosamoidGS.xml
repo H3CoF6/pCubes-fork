@@ -1,0 +1,100 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tera-Icosamoid</Name>
+        <Menu>Other forms\Antiprism\Tera-Icosamoid</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Evgeniy Grigoriev + Skallos</Programmer>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D1 := (1 * R + 9 * RSin) / 10;
+        D2 := (2 * R + 8 * RSin) / 10;
+        D3 := (3 * R + 7 * RSin) / 10;
+        D4 := (4 * R + 6 * RSin) / 10;
+		
+		RC1 := 0.475;
+		RC2 := 0.450;
+		RC3 := 0.425;
+		
+		Da := 0.0001;
+		Db := 0.2;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D3; -D2; -D1; D1; D2; D3" FixedLayers = "3" >
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+		<SplitByAxes/>
+
+        <HideContaining Vector = "Vx; Vy; Vz" />
+
+		<Cut Color = "FFFFFF" > <Plane NormVector = " Vx[0]; Vy[0]; Vz[0]" NormDistance = "-Rsin" /> </Cut>
+		<Cut Color = "FFFF00" > <Plane NormVector = "-Vx[0];-Vy[0];-Vz[0]" NormDistance = "-Rsin" /> </Cut>
+		<Cylinder Radius = "RC1" Color = "FFFF00" >
+                <Base X = "0" Y = "0" Z = "D1+Da" />
+                <Top  X = "0" Y = "0" Z = "D2" Color = "FFFF00" />
+        </Cylinder>
+		<Cylinder Radius = "RC2" Color = "FFFF00" >
+                <Base X = "0" Y = "0" Z = "D2+Da" />
+                <Top  X = "0" Y = "0" Z = "D3" Color = "FFFF00" />
+        </Cylinder>
+		<Cylinder Radius = "RC3" Color = "FFFF00" >
+                <Base X = "0" Y = "0" Z = "D3+Da" />
+                <Top  X = "0" Y = "0" Z = "D4" Color = "FFFF00" />
+        </Cylinder>
+		<Cylinder Radius = "RC1" Color = "FFFFFF" >
+                <Base X = "0" Y = "0" Z = "-D1-Da" />
+                <Top  X = "0" Y = "0" Z = "-D2" Color = "FFFFFF" />
+        </Cylinder>
+		<Cylinder Radius = "RC2" Color = "FFFFFF" >
+                <Base X = "0" Y = "0" Z = "-D2-Da" />
+                <Top  X = "0" Y = "0" Z = "-D3" Color = "FFFFFF" />
+        </Cylinder>
+		<Cylinder Radius = "RC3" Color = "FFFFFF" >
+                <Base X = "0" Y = "0" Z = "-D3-Da" />
+                <Top  X = "0" Y = "0" Z = "-D4" Color = "FFFFFF" />
+        </Cylinder>
+		<SplitByAxes/>
+		<RemoveContaining Vector = "0;0; D2" />
+		<RemoveContaining Vector = "0;0; D3" />
+		<RemoveContaining Vector = "0;0;-D2" />
+		<RemoveContaining Vector = "0;0;-D3" />
+		
+		<RemoveContaining Vector = "Vx[1 ]/2;Vy[1 ]/2; D2" />
+		<RemoveContaining Vector = "Vx[1 ]/2;Vy[1 ]/2; D3" />
+		<RemoveContaining Vector = "Vx[2 ]/2;Vy[2 ]/2; D2" />
+		<RemoveContaining Vector = "Vx[2 ]/2;Vy[2 ]/2; D3" />
+		<RemoveContaining Vector = "Vx[3 ]/2;Vy[3 ]/2; D2" />
+		<RemoveContaining Vector = "Vx[3 ]/2;Vy[3 ]/2; D3" />
+		<RemoveContaining Vector = "Vx[4 ]/2;Vy[4 ]/2; D2" />
+		<RemoveContaining Vector = "Vx[4 ]/2;Vy[4 ]/2; D3" />
+		<RemoveContaining Vector = "Vx[5 ]/2;Vy[5 ]/2; D2" />
+		<RemoveContaining Vector = "Vx[5 ]/2;Vy[5 ]/2; D3" />
+		<RemoveContaining Vector = "Vx[6 ]/2;Vy[6 ]/2;-D2" />
+		<RemoveContaining Vector = "Vx[6 ]/2;Vy[6 ]/2;-D3" />
+		<RemoveContaining Vector = "Vx[7 ]/2;Vy[7 ]/2;-D2" />
+		<RemoveContaining Vector = "Vx[7 ]/2;Vy[7 ]/2;-D3" />
+		<RemoveContaining Vector = "Vx[8 ]/2;Vy[8 ]/2;-D2" />
+		<RemoveContaining Vector = "Vx[8 ]/2;Vy[8 ]/2;-D3" />
+		<RemoveContaining Vector = "Vx[9 ]/2;Vy[9 ]/2;-D2" />
+		<RemoveContaining Vector = "Vx[9 ]/2;Vy[9 ]/2;-D3" />
+		<RemoveContaining Vector = "Vx[10]/2;Vy[10]/2;-D2" />
+		<RemoveContaining Vector = "Vx[10]/2;Vy[10]/2;-D3" />
+		<ShowAll/>
+		<Cut Color = "FFFFFF" > <Plane NormVector = " Vx[0]; Vy[0]; Vz[0]" NormDistance = "-D4" /> </Cut>
+		<Cut Color = "FFFF00" > <Plane NormVector = "-Vx[0];-Vy[0];-Vz[0]" NormDistance = "-D4" /> </Cut>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

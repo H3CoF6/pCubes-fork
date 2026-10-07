@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Heartrix Inverted</Name>
+        <Menu>Other forms\Unclassified\Heartrix Inverted</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-07-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9030</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36992</Link>
+    </Interface>
+
+    <Script>
+        clWhite  := 'F0F0F0';
+        clBlue   := '0000FF';
+        clRed    := 'FF0000';
+        clCyan   := '00FFFF';
+        clPink   := 'FF69B4';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clGreen  := '008000';
+        clLime   := '00FF00';
+        clPurple := '800080';
+
+        K  := 0.3;
+        s2 := sqrt(2);
+        pZ0 := K * (1 + s2);
+        pY1 := K * sqrt(2 * s2);
+        pZ1 := K * (s2 - 1);
+        pX2 := K * sqrt(s2);
+        pX3 := K * sqrt(8 + 9 * s2) / 7;
+        pZ3 := K * (3 * s2 + 5) / 7;
+        pX4 := K * sqrt(3 * s2 - 4);
+        pZ4 := K * (3 - s2);
+	
+	D1 := pZ1;
+	D2 := pZ1 * 5/3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D1" FixedLayers = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "D2" FixedLayers = "0" >
+        <Axis NormVector = "-pX2;-pX2; pZ1" />
+        <Axis NormVector = " pX2; pX2; pZ1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;   0;-pZ0" />
+
+                <Add Vector = "   0;-pY1;-pZ1" />
+                <Add Vector = "-pY1;   0;-pZ1" />
+                <Add Vector = "   0; pY1;-pZ1" />
+                <Add Vector = " pY1;   0;-pZ1" />
+
+                <Add Vector = " pX2;-pX2; pZ1" />
+                <Add Vector = "-pX2;-pX2; pZ1" />
+                <Add Vector = "-pX2; pX2; pZ1" />
+                <Add Vector = " pX2; pX2; pZ1" />
+
+                <Add Vector = " pX3;-pX3; pZ3" />
+                <Add Vector = "-pX3; pX3; pZ3" />
+
+                <Add Vector = "-pX4;-pX4; pZ4" />
+                <Add Vector = " pX4; pX4; pZ4" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clGreen"  VertexIndexes = "  0; 1; 6; 2" />
+                <Face Color = "clOrange" VertexIndexes = "  0; 2; 7; 3" />
+                <Face Color = "clBlue"   VertexIndexes = "  0; 3; 8; 4" />
+                <Face Color = "clRed"    VertexIndexes = "  0; 4; 5; 1" />
+
+                <Face Color = "clCyan"   VertexIndexes = "  1; 5; 9; 11; 6" />
+                <Face Color = "clYellow" VertexIndexes = "  2; 6;11; 10; 7" />
+                <Face Color = "clLime"   VertexIndexes = "  3; 7;10; 12; 8" />
+                <Face Color = "clWhite"  VertexIndexes = "  4; 8;12;  9; 5" />
+
+                <Face Color = "clPink"   VertexIndexes = "  9;10;11" />
+                <Face Color = "clPurple" VertexIndexes = " 10; 9;12" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Pair">
+            <Turn Axis = "0" Angle = "-Pi/2" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Angle = "2*Pi/3" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "2" Angle = "2*Pi/3" Layer = "1" />
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "Pair" Repeat = "4" />
+        <Undo Repeat = "12" />
+        <RemoveGrayParts/>
+
+        // splitting non-convex part
+        <HideContaining Vector = "0;0;K" />
+        <InvertVisibility/>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "2" InvisibleEdges2 = "2" ><Plane NormVector = "1;1;0" /></Split>
+        <ShowAll/>
+    </Figure>
+</xml>

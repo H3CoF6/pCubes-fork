@@ -1,0 +1,43 @@
+﻿<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Oblique Skewb</Name>
+        <Menu>Other cubes\Multi-core\Oblique Skewb</Menu>
+        <Menu>Other cubes\Vertex Turning\Skewb\Oblique Skewb</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>madartilect</Programmer>
+        <Added>2024-04-08</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * sqrt(3) / 12;
+        AZ := W * 0.25;
+        WX := W * 0.75;
+        WY := WX;
+
+        sAngle := 2*Pi / 3;
+    </Script>
+
+    <Axes>
+        <Axis TurningAngles = " 0; sAngle" NormVector = " 1; 1; 1" BaseVector = " 0; 0; AZ" PlaneDistances = "D" />
+        <Axis TurningAngles = " 0; sAngle" NormVector = "-1;-1;-1" BaseVector = " 0; 0;-AZ" PlaneDistances = "D" />
+        <Axis TurningAngles = " 0; sAngle" NormVector = "-1;-1; 1" BaseVector = " 0; 0; AZ" PlaneDistances = "D" />
+        <Axis TurningAngles = " 0; sAngle" NormVector = " 1; 1;-1" BaseVector = " 0; 0;-AZ" PlaneDistances = "D" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Macro Name = "Split" >
+            <SplitByAxes/>
+            <Turn Axis = "ax" Layer = "1" Angle = "sAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax = "0" Repeat = "3" />
+        <ExecMacro MacroName = "Split" ax = "1" Repeat = "3" />
+        <ExecMacro MacroName = "Split" ax = "2" Repeat = "3" />
+        <ExecMacro MacroName = "Split" ax = "3" Repeat = "3" />
+    </Figure>
+</xml>

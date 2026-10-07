@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Radio Cube 3</Name>
+        <Menu>Other cubes\Unclassified\Radio Cube 3</Menu>
+        <Inventor>Eitan Cher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3624</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0066FF'; // Blue
+        Colors[1] := '00DD00'; // Green
+        Colors[2] := 'FF8800'; // Orange
+        Colors[3] := 'FF0000'; // Red
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := '8800AA'; // Purple
+
+        phi := (Sqrt(5) - 1) / 2; // The golden ratio
+
+        W := 0.5;
+
+        A := W * 1.35;
+        B := W * 0.18;
+        D := A * 0.65;
+
+        jumAngle := Arcsin(1/4) + Pi/6;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" JumbleAngle = "jumAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 2 + Phi; 0" />
+        <Axis NormVector = "-1; 2 + Phi; 0" />
+
+        <Axis NormVector = " 2 + Phi; 0;-1" />
+        <Axis NormVector = " 2 + Phi; 0; 1" />
+
+        <Axis NormVector = " 0; 1; 2 + Phi" />
+        <Axis NormVector = " 0;-1; 2 + Phi" />
+
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <Turn NormVector = "0;0;1" Angle = "Pi/2"/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

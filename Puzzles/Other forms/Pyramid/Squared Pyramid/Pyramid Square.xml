@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyramid Square-1</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other forms\Pyramid\Squared Pyramid\Pyramid Square-1</Menu>
+        <Menu>Other forms\Square-1\Pyramid Square-1</Menu>
+        <Menu>Other forms\Johnson Solids\(J1) Square Pyramid\Pyramid Square-1</Menu>
+        <Inventor>Ivano Bellio</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-03-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4975</Link>
+    </Interface>
+
+    <Script>
+        clYellow := 'FFFF00';
+        clGreen  := '008000';
+        clBlue   := '0000A0';
+        clRed    := 'FF0000';
+        clWhite  := 'FFFFFF';
+
+        S15 := sin (Pi / 12); // 15 degrees
+        C15 := cos (Pi / 12);
+
+        H  := 1 / sqrt(2);
+        dH := -0.25;
+        D := 0.07;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 6" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "C15; S15; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;    0; H+dH" />
+                <Add Vector = " 0.5;  0.5;   dH" />
+                <Add Vector = " 0.5; -0.5;   dH" />
+                <Add Vector = "-0.5; -0.5;   dH" />
+                <Add Vector = "-0.5;  0.5;   dH" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clWhite " VertexIndexes = "1;2;3;4" />
+                <Face Color = "clRed   " VertexIndexes = "0;2;1" />
+                <Face Color = "clYellow" VertexIndexes = "0;3;2" />
+                <Face Color = "clGreen " VertexIndexes = "0;4;3" />
+                <Face Color = "clBlue  " VertexIndexes = "0;1;4" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Angle = "-Pi / 6" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "-Pi / 3" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "-Pi / 6" Layer = "1" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Angle = "Pi * 2 / 3" Layer = "1" />
+    </Figure>
+</xml>

@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bram Weirdlings - Corner face180 3 (c12, f23)</Name>
+        <Menu>Other cubes\Bram Weirdlings\Corner face\3 (c12, f23)</Menu>
+        <Inventor>William Kretschmer</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-04-20</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=32144</Link>
+    </Interface>
+
+    <Script>
+        // Face
+        W := 0.5;
+        F23 := -W / 3;
+
+        // Angle
+        aF := Pi;
+        aC := 2*Pi/3;
+    </Script>
+
+    <Axes TurningAngles = "aC" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; -1; 1" />
+    </Axes>
+    <Axes TurningAngles = "aF" PlaneDistances = "F23" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split1">
+            <Turn Axis = "1" Angle = " aF" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Angle = " aF" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "0" Angle = " aC" Layer = "1" />
+            <SplitByAxes/>
+        </Macro>
+        <Macro Name = "Split2">
+            <Turn Axis = "1" Angle = " aF" Layer = "1" />
+            <SplitByAxes/>
+            <Turn Axis = "0" Angle = " aC" Layer = "1" />
+            <SplitByAxes/>
+        </Macro>
+        <Macro Name = "Split">
+            <ExecMacro MacroName = "Split1" Repeat = "3" />
+            <ExecMacro MacroName = "Split2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Repeat = "6" />
+
+        <Undo Repeat = "66" />
+    </Figure>
+</xml>

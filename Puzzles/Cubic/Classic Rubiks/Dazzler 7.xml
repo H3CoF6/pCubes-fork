@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>V-Cube 7 Dazzler</Name>
+        <Menu>Cubic\Classic Rubiks\Dazzler 7</Menu>
+        <Inventor>Panagiotis Verdes</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-11-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2638</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        N := 7;
+
+        WD := 2 * W / N;
+        D[0] := -W + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+    </Script>
+ 
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <RemoveContaining Vector = "Cx;Cy;Cz" />
+        <RemoveContaining Vector = "Vx;Vy;Vz" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "-1" />
+        <SplitByAxes/>
+        <HideContaining Vector = "Cx;Cy;Cz" />
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+    </Figure>
+</xml>

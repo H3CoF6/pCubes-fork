@@ -1,0 +1,201 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>JAMmed 1024</Name>
+        <Menu>Cubic\Bandaged\Cube 10x10x10\JAMmed 1024</Menu>
+        <Inventor>Harley Olsthoorn</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-05-04</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=31395</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 10;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('112=504, 494');
+
+        ParseTxt('122=922, 942, 064, 046, 066, 926');
+        ParseTxt('212=602, 294, 606, 296');
+        ParseTxt('221=620, 440, 640, 629, 249, 269, 449');
+
+        ParseTxt('222=060, 600, 800, 802, 804, 808, 820, 840, 280, 086, 088, 082, 048, 068, 288');
+
+        ParseTxt('132=014, 964');
+        ParseTxt('312=104, 694');
+
+        ParseTxt('233=400, 477');
+
+        ParseTxt('414=040, 050');
+
+        ParseTxt('424=646');
+
+        ParseTxt('444=006');
+        ParseTxt('441=660, 661, 662, 663');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(10)" Angle = "Pi/2 * (Random(3) + 1)" />
+        </Macro>
+
+        <Macro Name = "Turn1" >
+            <Turn Axis = "ax[i]" From = "FromL[i]"  To = "ToL[i]" Angle = "A[i]" />
+            <Script> Inc(i);</Script>
+        </Macro>
+        <Macro Name = "Turn2" >
+            <Script> Prepare(); </Script>
+            <ExecMacro MacroName = "Turn1" i = "0" Repeat = "Count" />
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <Script>
+                procedure Prepare();
+                begin
+                    Count := Length(S) div 4;
+                    for i := 0 to Count - 1 do begin
+                        ax[i]    := StrToInt(copy(S, i * 4 + 1, 1));
+                        FromL[i] := StrToInt(copy(S, i * 4 + 2, 1));
+                        ToL[i]   := StrToInt(copy(S, i * 4 + 3, 1));
+                        Sign     :=          copy(S, i * 4 + 4, 1);
+                        Case Sign of
+                        '-': A[i] := -Pi/2;
+                        '+': A[i] :=  Pi/2;
+                        '|': A[i] :=  Pi;
+                        end;
+                    end;
+                end;
+            </Script>
+
+            // "157|" means turn axis = "1" From = "5" To "7" and Angle depending on sign
+            <ExecMacro MacroName = "Turn2" S = "''" />
+            <ExecMacro MacroName = "Turn2" S = "'169|203+069+203|003|203+069-203-069+289+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069+203-069-203+069+203-069-289-069+203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-203+069+203-069-289+069+203-069-203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069+203-069-289|103-203+103+203-103-203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'103+289+069+203+069-203-069+203+069-289+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069+203-069-203+069+203-069-289-103-203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'103+203+103-203-103+289+069+203+069-203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'069+203+069-289-203|003+203-003-289|069-'" />
+            <ExecMacro MacroName = "Turn2" S = "'245+069|245|069-289|069+245|069|245-069+'" />
+            <ExecMacro MacroName = "Turn2" S = "'289|203-145-203+145+289|145-203-145+203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'145+203+145-299|145+203-145-203+145+203|'" />
+            <ExecMacro MacroName = "Turn2" S = "'145-299|288+266-169+203-169-203+169+203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'169-288|069+203+069-203-069+203+069-169+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203-169-203+169+203-169-288+266+169+203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'169-203-169+203+169-266+288|003-203-003+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203+003-203-003+288-266-288-169+203-169-'" />
+            <ExecMacro MacroName = "Turn2" S = "'203+169+203-169-003-203-003+203+003-203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'003+288-266+169+203-169-203+169+203-169-'" />
+            <ExecMacro MacroName = "Turn2" S = "'266-288-069+203-069-203+069+203-069-288+'" />
+            <ExecMacro MacroName = "Turn2" S = "'169+203-169-203+169+203-169-288+069+203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-203+069+203-069-288-069+203-069-203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069+203-069-288+169+203+169-203-169+203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'169-299+003-203-003+203+003-203-003+299-'" />
+            <ExecMacro MacroName = "Turn2" S = "'003-203+003+203-003-203+003+277-169+203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'169-203+169+203-169-277+288-266|045+203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'045-203+045+203|045-288+266|288+266-045-'" />
+            <ExecMacro MacroName = "Turn2" S = "'203-045+203+045-203|045+277-288|299-266-'" />
+            <ExecMacro MacroName = "Turn2" S = "'045+203-045-203+045+203|045-299+045+203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'045-203+045+203|045-266|277+145+203-145-'" />
+            <ExecMacro MacroName = "Turn2" S = "'203-045+203+045-145+203+145-203+145+203|'" />
+            <ExecMacro MacroName = "Turn2" S = "'145-288+277+266+045+203-045-203+045+203|'" />
+            <ExecMacro MacroName = "Turn2" S = "'045-277-266+045+203-045-203+045+203|045-'" />
+            <ExecMacro MacroName = "Turn2" S = "'266-045-203-045+203+045-203|045+266-145-'" />
+            <ExecMacro MacroName = "Turn2" S = "'203-145+203+145-203|145+299-203-169+203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'169-203+069-203-069+203-145-203+145+299+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203-069+203+069-203+103+203-103-045+203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'045-203+045+203|045-299-203+069+203+069-'" />
+            <ExecMacro MacroName = "Turn2" S = "'203+103+203-103-203+045+203+045-299+045+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203-045-203+045+203|045-203+145-299+203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'145+203+145-299-145-203-145+203+145-203|'" />
+            <ExecMacro MacroName = "Turn2" S = "'145+299|145-203-145+203+145-203|145+299|'" />
+            <ExecMacro MacroName = "Turn2" S = "'203-145-203+145|203|145-266-145-203-145+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203+145-203|145+266+203-103-203+103+203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'003+203-003-203+145-203+145+266-145-203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'145+203+145-203|145+266+145+203-145|203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'145+299+145+203-145-203+145+203|145-299-'" />
+            <ExecMacro MacroName = "Turn2" S = "'203-069+203+069-203+103+203-103-203+045+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203+045-203-169+203+169-203+069-203-069+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203+145+203+145|203+145+289+203-145+203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'145-289-045+203-045-203-069+203+069-203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'169+203+169-045+203|045-203+003+045-003-'" />
+            <ExecMacro MacroName = "Turn2" S = "'045|203|045-289+145+203-145-203+145+203|'" />
+            <ExecMacro MacroName = "Turn2" S = "'145-289-203+169-203-169+289+003-203-003+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203+003-203-003+289-169+203+169-203-169+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203+169-289+169+203+169-203-169+203+169-'" />
+            <ExecMacro MacroName = "Turn2" S = "'289-069+203-069-203+069+203-069-169+203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'169-203-169+203+169-289+169+203-169-203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'169+203-169-289|069+203+069-203-069+203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-045+203-045-203+045+203|045-289|267+'" />
+            <ExecMacro MacroName = "Turn2" S = "'169-003-103-069+145-069-145|069|145-069-'" />
+            <ExecMacro MacroName = "Turn2" S = "'145+069|145-069|145-069|145+069-169-069+'" />
+            <ExecMacro MacroName = "Turn2" S = "'169+069-203+069+203-169+069-169-103-069-'" />
+            <ExecMacro MacroName = "Turn2" S = "'103+069+103-069-103+033+203-069+203+069-'" />
+            <ExecMacro MacroName = "Turn2" S = "'203-069+203+033-203-069+203+069-203-069+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203+169+069+169-069-169+069+169-022+169+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-169-069+169+069-169-022-145-069+145+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-145-069|145+000|145+069-145-000|169+'" />
+            <ExecMacro MacroName = "Turn2" S = "'103-003|269+069-269-069-123+101+069+103-'" />
+            <ExecMacro MacroName = "Turn2" S = "'044|145+003-145-044-145+003+145-044+145-'" />
+            <ExecMacro MacroName = "Turn2" S = "'003+145+044-245+003+245-044+055-003-103-'" />
+            <ExecMacro MacroName = "Turn2" S = "'003+103+003+269-003-269|003+103-003+103+'" />
+            <ExecMacro MacroName = "Turn2" S = "'003+269-003-269+003+269+003+269-003+169-'" />
+            <ExecMacro MacroName = "Turn2" S = "'003-169+045-069-245-069-245+055|003-103-'" />
+            <ExecMacro MacroName = "Turn2" S = "'003+103+003+269-003-269+003+103-003+103+'" />
+            <ExecMacro MacroName = "Turn2" S = "'003+269-003-269+055-003-169+003+169-003+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203+003-203-003+169+003+169-003+203+003-'" />
+            <ExecMacro MacroName = "Turn2" S = "'203-055|003-169+003+169-003+203+003-203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'003+169+003+169-003+203+003-203-055+103-'" />
+            <ExecMacro MacroName = "Turn2" S = "'269+169+069-169-069+169+103-069+103+069-'" />
+            <ExecMacro MacroName = "Turn2" S = "'103-069|101+123+069|203+069+203-033-145-'" />
+            <ExecMacro MacroName = "Turn2" S = "'069+145+069-145-069|145+033-069|169+069-'" />
+            <ExecMacro MacroName = "Turn2" S = "'169-069-269-069+269+245+069-245-033-245+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069+245-069-245+069|245-033-069+245+069-'" />
+            <ExecMacro MacroName = "Turn2" S = "'245-033+069+103-069-103+069-203+069+203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-145-069-145+000-245+069+245-069-245+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069|245-000|245-069-245+000+145+069+145-'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-145+069|145-000+145+069+145-069-145+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069|145-000-245+069+245-069-245+069|245-'" />
+            <ExecMacro MacroName = "Turn2" S = "'000-145+069-145-000|069|145+069-145-000-'" />
+            <ExecMacro MacroName = "Turn2" S = "'145+069|145-069-145+069-145-069-145+069|'" />
+            <ExecMacro MacroName = "Turn2" S = "'145-000|103-003-169+103-269+069-269-069+'" />
+            <ExecMacro MacroName = "Turn2" S = "'269+069-203-069|203+069-169-069+169+069-'" />
+            <ExecMacro MacroName = "Turn2" S = "'145+069|145-245-069-245+000|269-003-203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'003+069+103-069+269+069-269-044|069+169+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-169-069-269-069+269+069-169+069-169-'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-269-069+269+044+245-003+245+044|245-'" />
+            <ExecMacro MacroName = "Turn2" S = "'003+245+044+169-203-069|245+069+245-069|'" />
+            <ExecMacro MacroName = "Turn2" S = "'269+069-269-169+069+169-069-169+069+169-'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-169+069+169-069-169+069+169-069-203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'069+203+069-203-069+203+069-000|245+069+'" />
+            <ExecMacro MacroName = "Turn2" S = "'245-069-245+069|245-145+069+145-069-145+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069|145-011+203-069+203+069-203-069+203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-203-069+203+069-203-069+203+069-203-'" />
+            <ExecMacro MacroName = "Turn2" S = "'069+203+069-203-069+203+069|269-069+269+'" />
+            <ExecMacro MacroName = "Turn2" S = "'001|103-069+103+069-103-069+103+069-001+'" />
+            <ExecMacro MacroName = "Turn2" S = "'203+069+203-023-269+069+269-069-269+069+'" />
+            <ExecMacro MacroName = "Turn2" S = "'269-069-001|269-069+269+023-203-069+203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069-203-069+203+069-023-069+203-069-203+'" />
+            <ExecMacro MacroName = "Turn2" S = "'069+103+003|269-069-045-103-269+103+269-'" />
+            <ExecMacro MacroName = "Turn2" S = "'103-269+103+'" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

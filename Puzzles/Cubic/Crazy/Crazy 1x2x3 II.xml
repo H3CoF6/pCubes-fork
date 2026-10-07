@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy 1x2x3 II</Name>
+        <Menu>Cubic\Crazy\Crazy 1x2x3 II</Menu>
+        <Inventor>Zsolt Árpád Papp</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-11-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7074</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        WX := W / 3 * 2;
+        WY := W;
+        WZ := W / 2;
+        D := WY / 3;
+
+        R := WX * 0.65;
+
+        Delta := 0.002;
+        WC := WX + Delta;
+    </Script>
+
+    <Axes TurningAngles = "Pi;Pi;Pi" PlaneDistances = "0; WX" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+
+        <Circle Radius = "R" Color = "clOrange" Center =  " WC; 0; 0" />
+        <Circle Radius = "R" Color = "clRed   " Center =  "-WC; 0; 0" />
+
+        <SplitByAxes/>
+
+        <Connect Axis = "0" Layers = "0;2" />
+    </Figure>
+</xml>

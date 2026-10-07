@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Corner Turning Curvy Chop</Name>
+        <Menu>Other cubes\Mixed\Edge-Vertex\Corner Turning Curvy Chop</Menu>
+        <Inventor>MattStudios</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7828</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+
+        D1 := W * (sqrt(2) / 2 + 0.11);
+        D2 := W * 2 / sqrt(3);
+
+        WX := W;
+        WY := W;
+        WZ := W / 2;
+        DWZ := W / 2
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "D1" FixedLayers = "0" >
+        <Axis NormVector = " 0;  1; 1" />
+        <Axis NormVector = " 1;  0; 1" />
+        <Axis NormVector = " 0; -1; 1" />
+        <Axis NormVector = "-1;  0; 1" />
+    </Axes>
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D2" FixedLayers = "0" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Angle = "Pi" Layer = "1" />
+        <Turn Axis = "2" Angle = "Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "1" Angle = "Pi" Layer = "1" />
+        <Turn Axis = "3" Angle = "Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+
+    </Figure>
+</xml>

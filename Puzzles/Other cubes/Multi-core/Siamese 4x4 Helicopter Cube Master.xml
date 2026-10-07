@@ -1,0 +1,96 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese 4x4 Helicopter Cube Master</Name>
+        <Menu>Other cubes\Multi-core\Siamese 4x4 Helicopter Cube Master</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-12</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0033EE'; // Blue
+        Colors[1] := '00BB00'; // Green
+        Colors[2] := 'FF6600'; // Orange
+        Colors[3] := 'EE0000'; // Red
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W  := 0.5;
+        D  := W / 3;
+        D2 := W * sqrt(2);
+        H  := W * 2 / 3;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/2; Pi/2" PlaneDistances = "0; D" >
+        <Axis NormVector = " 1; 0; 0" BaseVector = " D; D; 0" />
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-D;-D; 0" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = " D; D; 0" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = "-D;-D; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0;Pi;Pi" PlaneDistances = "D2/3; D2/2" >
+        <Axis NormVector = " 0; 1; 1" BaseVector = " D; D; 0" />
+        <Axis NormVector = " 0; 1;-1" BaseVector = " D; D; 0" />
+        <Axis NormVector = " 1; 0; 1" BaseVector = " D; D; 0" />
+        <Axis NormVector = " 1; 0;-1" BaseVector = " D; D; 0" />
+        <Axis NormVector = " 1; 1; 0" BaseVector = " D; D; 0" />
+
+        <Axis NormVector = " 0;-1; 1" BaseVector = "-D;-D; 0" />
+        <Axis NormVector = " 0;-1;-1" BaseVector = "-D;-D; 0" />
+        <Axis NormVector = "-1; 0; 1" BaseVector = "-D;-D; 0" />
+        <Axis NormVector = "-1; 0;-1" BaseVector = "-D;-D; 0" />
+        <Axis NormVector = "-1;-1; 0" BaseVector = "-D;-D; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " D;-D; H" />
+                <Add Vector = " W;-D; H" />
+                <Add Vector = " W; W; H" />
+                <Add Vector = "-D; W; H" />
+                <Add Vector = "-D; D; H" />
+                <Add Vector = "-W; D; H" />
+                <Add Vector = "-W;-W; H" />
+                <Add Vector = " D;-W; H" />
+                <Add Vector = " D;-D;-H" />
+                <Add Vector = " W;-D;-H" />
+                <Add Vector = " W; W;-H" />
+                <Add Vector = "-D; W;-H" />
+                <Add Vector = "-D; D;-H" />
+                <Add Vector = "-W; D;-H" />
+                <Add Vector = "-W;-W;-H" />
+                <Add Vector = " D;-W;-H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "Colors[5]" VertexIndexes = "0;1;2;3;4;5;6;7" />
+                <Face Color = "Colors[4]" VertexIndexes = "15;14;13;12;11;10;9;8" />
+                <Face Color = "Colors[2]" VertexIndexes = "1;0;8;9" />
+                <Face Color = "Colors[1]" VertexIndexes = "2;1;9;10" />
+                <Face Color = "Colors[3]" VertexIndexes = "3;2;10;11" />
+                <Face Color = "Colors[0]" VertexIndexes = "4;3;11;12" />
+                <Face Color = "Colors[3]" VertexIndexes = "5;4;12;13" />
+                <Face Color = "Colors[0]" VertexIndexes = "6;5;13;14" />
+                <Face Color = "Colors[2]" VertexIndexes = "7;6;14;15" />
+                <Face Color = "Colors[1]" VertexIndexes = "0;7;15;8" />
+             </Faces>
+        </Part>
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layers = "1;2" Angle = "Pi" />
+        <Turn Axis = "1" Layers = "1;2" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+        <Turn Axis = "2" Layers = "1;2" Angle = "Pi" />
+        <Turn Axis = "3" Layers = "1;2" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+    </Figure>
+</xml>

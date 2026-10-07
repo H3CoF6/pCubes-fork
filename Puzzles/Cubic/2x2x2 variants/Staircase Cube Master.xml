@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Staircase Cube Master</Name>
+        <Menu>Cubic\2x2x2 variants\Staircase Cube Master</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1488</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.6;
+        N := 6;
+        D := W / N;
+        WX := D;
+        WY := D*2;
+        WZ := D;
+
+        S[0] := '   1  ';
+        S[1] := '  11  ';
+        S[2] := ' 111  ';
+        S[3] := '1111  ';
+        S[4] := '      ';
+        S[5] := '      ';
+
+        function GetType(x1, z1);
+        begin
+            if (x1 &lt; 0) or (z1 &lt; 0) or (x1 &gt;= N) or (z1 &gt;= N) then
+                Result := ' '
+            else
+                Result := copy(S[N-1-z1], x1 + 1, 1);
+        end;
+
+        procedure CalcCubie(No);
+        begin
+            x := No mod N;
+            z := No div N;
+            Colors[0] := -1;
+            Colors[1] := -1;
+            Colors[4] := -1;
+            Colors[5] := -1;
+            CType := GetType(x,z);
+            if CType = '1' then begin
+                if GetType(x-1,z) = ' ' then Colors[0] := clRed;
+                if GetType(x+1,z) = ' ' then Colors[1] := clOrange;
+                if GetType(x,z-1) = ' ' then Colors[4] := clYellow;
+                if GetType(x,z+1) = ' ' then Colors[5] := clWhite;
+            end;
+            if CType &lt;&gt; ' ' then begin 
+                DWX := D * (2 * x - N + 1);
+                DWZ := D * (2 * z - N + 1);
+                CCount := 1;
+            end else
+                CCount := 0;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCubie">
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <Macro Name = "AddCubies">
+            <Script> CalcCubie(No); Inc(No); </Script>
+            <ExecMacro MacroName = "AddCubie" Repeat = "CCount" /> // if CCount = 1 then draw cubie
+        </Macro>
+
+        <ExecMacro MacroName = "AddCubies" No = "0" Repeat = "N*N" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

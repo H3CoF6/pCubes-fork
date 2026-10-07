@@ -1,0 +1,97 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Penrose Fused</Name>
+        <Menu>Other forms\3x3x3 variants\Penrose Fused</Menu>
+        <Inventor>Sergio Borrego Miras</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9219</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF'; // White
+        Colors[1] := 'FF7700'; // Orange
+        Colors[2] := Colors[0];
+        Colors[3] := '00AA00'; // Green
+        Colors[4] := Colors[1];
+        Colors[5] := Colors[3];
+
+        W := 0.5;
+        D := W / 3;
+
+        N := 10;
+
+        for i := 0 to N do begin
+            y[i] := 2 * D * cos(Pi / 2 / N * i) + D;
+            z[i] := 2 * D * sin(Pi / 2 / N * i) + D;
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "1" />
+        <HideContaining Vector = "0;0;0" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = " D; W; W" />
+        <RemoveContaining Vector = "-W; W; W" />
+        <RemoveContaining Vector = "-W;-W; D" />
+        <RemoveContaining Vector = "-W;-W;-W" />
+        <RemoveContaining Vector = " W; D;-W" />
+        <RemoveContaining Vector = " W;-W;-W" />
+
+        <Macro Name = "AddFace" >
+            <Face Color = "Colors[c2]" VertexIndexes = "i + N + 2; i + N + 3; i + 1; i" InvisibleEdges = "ie" />
+            <Script> Inc(i); </Script>
+        </Macro>
+
+        <Macro Name = "AddCylinder" >
+            <Part>
+                <Vertices Vectors = " W; y; z" />
+                <Vertices Vectors = " W; D; D" />
+                <Vertices Vectors = "-W; y; z" />
+                <Vertices Vectors = "-W; D; D" />
+
+                <Faces>
+                    <Face Color = "Colors[c1]" VertexIndexes = "FromTo(0, N + 1)" />
+                    <ExecMacro MacroName = "AddFace" i = "0" ie = "2" />
+                    <ExecMacro MacroName = "AddFace" i = "1" Repeat = "N - 2" ie = "10" />
+                    <ExecMacro MacroName = "AddFace" i = "N - 1" ie = "8" />
+                    <Face VertexIndexes = "N + 2; 0; N + 1; 2 * N + 3" />
+                    <Face VertexIndexes = "N; 2 * N + 2; 2 * N + 3; N + 1" />
+                    <Face Color = "Colors[c3]" VertexIndexes = "FromTo(2 * N + 3, N + 2)" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "1;-1; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "AddCylinder" c1 = "1" c2 = "3" c3 = "0" />
+        <ExecMacro MacroName = "AddCylinder" c1 = "0" c2 = "1" c3 = "3" />
+        <ExecMacro MacroName = "AddCylinder" c1 = "3" c2 = "0" c3 = "1" />
+
+        <SplitByAxes/>
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

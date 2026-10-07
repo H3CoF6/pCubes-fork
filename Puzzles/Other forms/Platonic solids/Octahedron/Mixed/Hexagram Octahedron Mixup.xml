@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagram Octahedron Mixup</Name>
+        <Menu>Other forms\Octahedron\Mixed\Hexagram Octahedron Mixup</Menu>
+        <Inventor>limCube</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-11</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36550</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE55BB'; // Rose
+        Colors[1] := '0066FF'; // LightBlue
+        Colors[2] := 'EE0000'; // Red
+        Colors[3] := 'FFEE00'; // Yellow
+        Colors[4] := 'FF6600'; // Orange
+        Colors[5] := '333333'; // Black
+        Colors[6] := 'AA00DD'; // Purple
+        Colors[7] := '00AA00'; // Green
+
+        W := 0.75;
+        RCut := W * 0.76;
+        D := W / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2;Pi/4;Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "Cut" >
+            <HideContaining Vector = "Vx[v]; Vy[v]; Vz[v]" />
+            <Cut> <Plane NormVector = "-Vx[v]; -Vy[v]; -Vz[v]" NormDistance = "-RCut" /> </Cut>
+            <ShowAll/>
+            <Script>Inc(v);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" v = "0" Repeat = "6" />
+
+        <Macro Name = "TurnAndSplit">
+            <Turn  Axis = "ax1" Layers = "1" Angle = "Pi/4" />
+            <Split Axis = "ax2" From = "1" />
+            <Split Axis = "ax3" From = "1" />
+            <Split Axis = "ax2" From = "2" />
+            <Split Axis = "ax3" From = "2" />
+            <Turn  Axis = "ax2" Layers = "1" Angle = "Pi/4" />
+            <Split Axis = "ax1" From = "1" />
+            <Split Axis = "ax3" From = "1" />
+            <Split Axis = "ax1" From = "2" />
+            <Split Axis = "ax3" From = "2" />
+            <Turn  Axis = "ax3" Layers = "1" Angle = "Pi/4" />
+            <Split Axis = "ax2" From = "1" />
+            <Split Axis = "ax1" From = "1" />
+            <Split Axis = "ax2" From = "2" />
+            <Split Axis = "ax1" From = "2" />
+            <Undo  Repeat = "3" />
+        </Macro>
+
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = "0" ax2 = "1" ax3 = "2"/>
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = "1" ax2 = "0" ax3 = "2"/>
+        <ExecMacro MacroName = "TurnAndSplit" ax1 = "2" ax2 = "0" ax3 = "1"/>
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

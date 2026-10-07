@@ -1,0 +1,106 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Edge Heptagonal Prism 1</Name>
+        <Menu>Other forms\Prism\Heptagonal Prism\Edge Heptagonal Prism 1</Menu>
+        <Inventor>virtual</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-08-02</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clRed    := 'C80000';
+        clPurple := '800080';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+        clCyan   := '00FFFF';
+        clLime   := '00FF00';
+
+        R := 0.6;
+
+        sAngle := Pi * 2 / 7;
+        for i := 0 to 6 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+        AZ := R * sin(Pi / 7);
+
+        H := R * sin(Pi * 5 / 7);
+        D := R * sin(Pi*3/14) / sqrt(2 / cos(Pi / 7)^2 - 1);
+
+        // Calcs angle from 2 to 3 while rotating over 1
+        function Angle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        begin
+          vx := y1 * z2 - y2 * z1;
+          vy := z1 * x2 - z2 * x1;
+          vz := x1 * y2 - x2 * y1;
+          wx := y1 * z3 - y3 * z1;
+          wy := z1 * x3 - z3 * x1;
+          wz := x1 * y3 - x3 * y1;
+          Result := ArcCos((vx*wx + vy*wy + vz*wz) / (vx^2 + vy^2 + vz^2));
+        end;
+
+        A1 := Angle(x[0], y[0],  AZ, x[6], y[6], AZ, x[1], y[1], AZ);
+        A2 := Angle(x[0], y[0], -AZ, x[6], y[6], AZ, x[1], y[1], AZ);
+    </Script>
+
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A2;-A1;0;A1;A2" PlaneDistances = "D" FixedLayers = "0">
+        <Axis NormVector = " -x[0]; -y[0];  AZ" />
+        <Axis NormVector = " -x[1]; -y[1];  AZ" />
+        <Axis NormVector = " -x[2]; -y[2];  AZ" />
+        <Axis NormVector = " -x[3]; -y[3];  AZ" />
+        <Axis NormVector = " -x[4]; -y[4];  AZ" />
+        <Axis NormVector = " -x[5]; -y[5];  AZ" />
+        <Axis NormVector = " -x[6]; -y[6];  AZ" />
+        <Axis NormVector = " -x[0]; -y[0]; -AZ" />
+        <Axis NormVector = " -x[1]; -y[1]; -AZ" />
+        <Axis NormVector = " -x[2]; -y[2]; -AZ" />
+        <Axis NormVector = " -x[3]; -y[3]; -AZ" />
+        <Axis NormVector = " -x[4]; -y[4]; -AZ" />
+        <Axis NormVector = " -x[5]; -y[5]; -AZ" />
+        <Axis NormVector = " -x[6]; -y[6]; -AZ" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Vector X = "x[0]" Y = "y[0]" Z = "-H" />
+                <Vector X = "x[1]" Y = "y[1]" Z = "-H" />
+                <Vector X = "x[2]" Y = "y[2]" Z = "-H" />
+                <Vector X = "x[3]" Y = "y[3]" Z = "-H" />
+                <Vector X = "x[4]" Y = "y[4]" Z = "-H" />
+                <Vector X = "x[5]" Y = "y[5]" Z = "-H" />
+                <Vector X = "x[6]" Y = "y[6]" Z = "-H" />
+
+                <Vector X = "x[0]" Y = "y[0]" Z = " H" />
+                <Vector X = "x[1]" Y = "y[1]" Z = " H" />
+                <Vector X = "x[2]" Y = "y[2]" Z = " H" />
+                <Vector X = "x[3]" Y = "y[3]" Z = " H" />
+                <Vector X = "x[4]" Y = "y[4]" Z = " H" />
+                <Vector X = "x[5]" Y = "y[5]" Z = " H" />
+                <Vector X = "x[6]" Y = "y[6]" Z = " H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 7; 8; 1; 0" />
+                <Face Color = "clBlue  " VertexIndexes = " 8; 9; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = " 9;10; 3; 2" />
+                <Face Color = "clOrange" VertexIndexes = "10;11; 4; 3" />
+                <Face Color = "clPurple" VertexIndexes = "11;12; 5; 4" />
+                <Face Color = "clCyan  " VertexIndexes = "12;13; 6; 5" />
+                <Face Color = "clLime  " VertexIndexes = "13; 7; 0; 6" />
+
+                <Face Color = "clYellow" VertexIndexes = "0;1;2;3;4;5;6" />
+                <Face Color = "clWhite " VertexIndexes = "13;12;11;10;9;8;7" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+    </Figure>
+</xml>

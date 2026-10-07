@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Square-6</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other cubes\Square-1\Square-6</Menu>
+        <Inventor>Nathan Sachleben</Inventor>
+        <Programmer>Boris</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11914</Link>
+        <Added>2024-06-27</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        Angle := Pi / 36; // 5 degrees
+    </Script>
+
+    <Axes TurningAngles = "Pi / 36" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = " 0; 0; 1" Angle = "Angle * 15" />
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+        <Macro Name = "Split">
+            <Turn Axis = "0" Layer = "1" Angle = "Angle * X" />
+            <Split Axis = "1" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split" X = "2" Repeat = "3" />
+        <ExecMacro MacroName = "Split" X = "3" Repeat = "4" />
+        <ExecMacro MacroName = "Split" X = "2" Repeat = "3" />
+        <ExecMacro MacroName = "Split" X = "3" Repeat = "4" />
+
+        <Undo Repeat = "14" />
+    </Figure>
+</xml>

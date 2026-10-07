@@ -1,0 +1,182 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Maple Leaves Pentultimate Extreme</Name>
+        <Menu>Other forms\Sphere\Maple Leaves Pentultimate Extreme</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8143</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0000CC'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := '800080'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        K := 0.6;
+
+        R := 1;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+
+        // Rotate p around normalized v
+        procedure RotatePoint(Xp, Yp, Zp, Xv, Yv, Zv, Angle);
+        begin
+            ca := Cos(Angle);
+            sa := Sin(Angle);
+            c2 := 1 - ca;
+
+            px[i] := Xp * (Xv * c2 * Xv + ca) +
+                     Yp * (Yv * c2 * Xv - sa * Zv) +
+                     Zp * (Zv * c2 * Xv + sa * Yv);
+
+            py[i] := Xp * (Xv * c2 * Yv + sa * Zv) +
+                     Yp * (Yv * c2 * Yv + ca) +
+                     Zp * (Zv * c2 * Yv - sa * Xv);
+
+            pz[i] := Xp * (Xv * c2 * Zv - sa * Yv) +
+                     Yp * (Yv * c2 * Zv + sa * Xv) +
+                     Zp * (Zv * c2 * Zv + ca);
+            Inc(i);
+        end;
+
+        i := 0;
+        RotatePoint ( 1, 0, 0,  0,-cs,-ss, 1*pi/10);
+        RotatePoint (-1, 0, 0,  0,-cs,-ss, 3*pi/10);
+        RotatePoint ( 1, 0, 0,  0,-cs,-ss, 5*pi/10);
+        RotatePoint (-1, 0, 0,  0,-cs,-ss, 7*pi/10);
+        RotatePoint ( 1, 0, 0,  0,-cs,-ss, 9*pi/10);
+        RotatePoint (-1, 0, 0,  0,-cs, ss, 1*pi/10);
+        RotatePoint ( 1, 0, 0,  0,-cs, ss, 3*pi/10);
+        RotatePoint (-1, 0, 0,  0,-cs, ss, 5*pi/10);
+        RotatePoint ( 1, 0, 0,  0,-cs, ss, 7*pi/10);
+        RotatePoint (-1, 0, 0,  0,-cs, ss, 9*pi/10);
+        RotatePoint ( 0, 1, 0,  -ss,0,-cs, 1*pi/10);
+        RotatePoint ( 0,-1, 0,  -ss,0,-cs, 3*pi/10);
+        RotatePoint ( 0, 1, 0,  -ss,0,-cs, 5*pi/10);
+        RotatePoint ( 0,-1, 0,  -ss,0,-cs, 7*pi/10);
+        RotatePoint ( 0, 1, 0,  -ss,0,-cs, 9*pi/10);
+        RotatePoint ( 0,-1, 0,   ss,0,-cs, 1*pi/10);
+        RotatePoint ( 0, 1, 0,   ss,0,-cs, 3*pi/10);
+        RotatePoint ( 0,-1, 0,   ss,0,-cs, 5*pi/10);
+        RotatePoint ( 0, 1, 0,   ss,0,-cs, 7*pi/10);
+        RotatePoint ( 0,-1, 0,   ss,0,-cs, 9*pi/10);
+        RotatePoint ( 0, 0,-1,   cs,-ss,0, 1*pi/10);
+        RotatePoint ( 0, 0, 1,   cs,-ss,0, 3*pi/10);
+        RotatePoint ( 0, 0,-1,   cs,-ss,0, 5*pi/10);
+        RotatePoint ( 0, 0, 1,   cs,-ss,0, 7*pi/10);
+        RotatePoint ( 0, 0,-1,   cs,-ss,0, 9*pi/10);
+        RotatePoint ( 0, 0, 1,   cs, ss,0, 1*pi/10);
+        RotatePoint ( 0, 0,-1,   cs, ss,0, 3*pi/10);
+        RotatePoint ( 0, 0, 1,   cs, ss,0, 5*pi/10);
+        RotatePoint ( 0, 0,-1,   cs, ss,0, 7*pi/10);
+        RotatePoint ( 0, 0, 1,   cs, ss,0, 9*pi/10);
+
+        D := K * 1.0028680188979 * py[10]; // C71*py[10]
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/10" PlaneDistances = "0" TurnAxesWithLayer = "1">
+        <Axis NormVector = "  0;-cs; ss" />
+        <Axis NormVector = "  0;-cs;-ss" />
+        <Axis NormVector = "-ss;  0;-cs" />
+        <Axis NormVector = " ss;  0;-cs" />
+        <Axis NormVector = " cs;-ss;  0" />
+        <Axis NormVector = " cs; ss;  0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/4; 0; Pi/4" PlaneDistances = "-D; D" NormVectors = " px; py; pz" />
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+
+        <Macro Name = "Turn3">
+            <Turn Axis = "ax  " Layer = "2" Angle = "Pi/4" />
+            <Turn Axis = "ax+1" Layer = "2" Angle = "Pi/4" />
+            <Turn Axis = "ax+2" Layer = "2" Angle = "Pi/4" />
+            <Split Axis = "a1" From = "1" />
+        </Macro>
+
+        <Macro Name = "Split" >
+            <Split Axis = "a1" From = "1" />
+            <Turn Axis = "a1" Layer = "0" Angle = "2*Pi/10" />
+            <Split Axis = "a2    " From = "2" />
+            <Split Axis = "a2 + 1" From = "2" />
+            <Split Axis = "a2 + 2" From = "2" />
+            <Split Axis = "a2 + 3" From = "2" />
+            <Split Axis = "a2 + 4" From = "2" />
+
+            <ExecMacro MacroName = "Turn3" ax = "a2" />
+            <ExecMacro MacroName = "Turn3" ax = "a2" />
+            <ExecMacro MacroName = "Turn3" ax = "a2"   />
+            <ExecMacro MacroName = "Turn3" ax = "a2+1" />
+            <ExecMacro MacroName = "Turn3" ax = "a2+1" />
+            <ExecMacro MacroName = "Turn3" ax = "a2+1" />
+            <ExecMacro MacroName = "Turn3" ax = "a2+2" />
+            <ExecMacro MacroName = "Turn3" ax = "a2+2" />
+            <ExecMacro MacroName = "Turn3" ax = "a2+2" />
+            <Undo Repeat = "28" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" a1 = "0" a2 = "11" />
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = " 6" />
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = "16" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "21" />
+        <ExecMacro MacroName = "Split" a1 = "4" a2 = "26" />
+        <ExecMacro MacroName = "Split" a1 = "5" a2 = "31" />
+
+        <HideContaining Vector = "0;0;0" />
+
+        <Macro Name = "Hide1">
+            <HideContaining Vector = " C17;-C32; C54" />
+            <HideContaining Vector = " C32;-C54; C17" />
+            <HideContaining Vector = "   0;-C71;   0" />
+            <HideContaining Vector = "-C17;-C32; C54" />
+            <HideContaining Vector = "-C32;-C54; C17" />
+
+            <HideContaining Vector = "-C14;-C53; C39" />
+            <HideContaining Vector = "   0;-C44; C51" />
+            <HideContaining Vector = " C14;-C53; C39" />
+            <HideContaining Vector = "  C8;-C64; C16" />
+            <HideContaining Vector = " -C8;-C64; C16" />
+
+            <HideContaining Vector = " C10;-C58; C28" />
+            <HideContaining Vector = "   0;-C65; C18" />
+            <HideContaining Vector = "-C10;-C58; C28" />
+            <HideContaining Vector = " -C3;-C49; C46" />
+            <HideContaining Vector = "  C3;-C49; C46" />
+            <Turn NormVector = "0; 1; 0" Angle = "Pi" />
+        </Macro>
+
+        <Macro Name = "Hide2">
+            <ExecMacro MacroName = "Hide1" Repeat = "2" />
+            <Turn NormVector = "0; 0; 1" Angle = "Pi" />
+        </Macro>
+
+        <Macro Name = "Hide3">
+            <ExecMacro MacroName = "Hide2" Repeat = "2" />
+            <Turn NormVector = "1; 1; 1" Angle = "2*Pi/3" />
+        </Macro>
+
+        <ExecMacro MacroName = "Hide3" Repeat = "3" />
+
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

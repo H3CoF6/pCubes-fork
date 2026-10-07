@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Great Dodecahedron Skewb</Name>
+        <Menu>Other forms\Star\Great Dodecahedron\Great Dodecahedron Skewb</Menu>
+        <Menu>Other forms\Skewb variants\Star\Great Dodecahedron Skewb</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-06-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1626</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := R * 0.;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[8]; Cy[8]; Cz[8]" />
+        <Axis NormVector = "Cx[9]; Cy[9]; Cz[9]" />
+    </Axes>
+
+    <Figure>
+
+        // colored part
+
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <Script>include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc'</Script>
+
+        <Macro Name = "SplitAxes">
+            <Split Color2 = "Colors[i]"> <Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "Rsin" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitAxes" i = "0" Repeat = "12" />
+
+        <Macro Name = "HideEdges">
+            <HideContaining Vector = "Ex[i]*0.9; Ey[i]*0.9; Ez[i]*0.9" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideEdges" i = "0" Repeat = "30" />
+
+        <RemoveAllVisible/>
+
+
+        // gray part
+
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+
+        <Macro Name = "SplitAxesGray">
+            <Split> <Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "Rsin" /> </Split>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitAxesGray" i = "0" Repeat = "12" />
+
+        <RemoveContaining Vector = "Ex; Ey; Ez" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

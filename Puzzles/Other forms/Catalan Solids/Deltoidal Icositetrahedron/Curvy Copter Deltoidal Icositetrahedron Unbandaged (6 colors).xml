@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Curvy Copter Deltoidal Icositetrahedron Unbandaged (6 colors)</Name>
+        <Menu>Other forms\Catalan Solids\Deltoidal Icositetrahedron\Curvy Copter Unbandaged (6 colors)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-05</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Col[0] := '9900EE'; // Purple
+        Col[1] := 'FFFF00'; // Yellow
+        Col[2] := 'FF8800'; // Orange
+        Col[3] := 'FF0000'; // Red
+        Col[4] := '00DD00'; // Green
+        Col[5] := '0055FF'; // Blue
+
+        for i := 0 to 23 do
+            Colors[ i] := Col[i div 4];
+
+        W  := 0.45;
+
+        D := W;
+
+        JumAngle := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "JumAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Deltoidal Icositetrahedron.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn  Axis = "Ax1" Layers = "0;2" Angle = " A * JumAngle" />
+            <Turn  Axis = "Ax2" Layers = "0;2" Angle = " B * JumAngle" />
+            <Split Axis = "Ax1" From  = "1" />
+            <Split Axis = "Ax1" From  = "2" />
+            <Undo Repeat = "2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "5" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "3" Ax2 = "4" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "5" A = " 1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "4" A = " 1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "4" Ax2 = "0" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "3" Ax2 = "2" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "5" Ax2 = "0" A = "-1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "2" A = "-1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "3" A = "-1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "4" Ax2 = "1" A = " 1" B = " 1" />
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "3" A = " 1" B = "-1" />
+        <ExecMacro MacroName = "Split" Ax1 = "5" Ax2 = "1" A = " 1" B = "-1" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

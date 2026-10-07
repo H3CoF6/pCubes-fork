@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Switzerland Puck</Name>
+        <Menu>Other forms\Cylinder\Switzerland Puck</Menu>
+        <Inventor>Zoltán Pataki, Udulo Mszmp and Géza Csomós</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-12-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1043</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'DD0000'; // clRed
+        Colors[1] := 'DD0001'; // clRed2
+
+        Colors[2] := 'FFFFFF';
+
+        R := 0.6;
+        N := 12;
+
+        R1 := R * 0.5;
+        R2 := R * 0.25;
+        H := R * 0.25;
+        D := H / 3;
+        H1 := H * 1.002;
+        H2 := H1 + (H1 - H);
+        Angle := 2 * Pi / N;
+        ca := cos(Angle / 2);
+        sa := sin(Angle / 2);
+    </Script>
+
+    <Axes TurningAngles = "0; Angle; 0" PlaneDistances = "-H; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Turn NormVector = "0; 0; 1" Angle = "Angle / 2" />
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "R" Color = "Colors[0]" >
+                <Base X = "0" Y = "0" Z = " H" Color = "Colors[1]"/>
+                <Top  X = "0" Y = "0" Z = "-H" Color = "Colors[0]" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "-ca; -sa; 0" /> </Cut>
+            <Cut> <Plane NormVector = " ca; -sa; 0" /> </Cut>
+            <Turn NormVector = "0; 0; 1" Angle = "Angle" />
+            <HideAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" Repeat = "12"  />
+
+        <ShowAll/>
+        <Turn NormVector = "0; 0; 1" Angle = "-Angle / 2" />
+
+        <Cylinder Radius = "R1" >
+            <Base X = "0" Y = "0" Z = "H"/>
+            <Top  X = "0" Y = "0" Z = "H1" Color = "Colors[1]" />
+        </Cylinder>
+
+        <Cylinder Radius = "R1" >
+            <Base X = "0" Y = "0" Z = "-H"/>
+            <Top  X = "0" Y = "0" Z = "-H1" Color = "Colors[0]" />
+        </Cylinder>
+
+        <Circle Radius = "R2" Color = "Colors[2]" Center = "0; 0; H2" />
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Textures>
+        <Texture Name = "Cross" File = "Textures\White_Cross.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Cross = 0,0,2, 1,0,2, 2,0,2, 3,0,2, 4,0,2, 5,0,2, 6,0,2, 7,0,2, 8,0,2, 9,0,2, 10,0,2, 11,0,2
+    </SetTextures>
+</xml>

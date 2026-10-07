@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dino Square Cupola Shallow Alternate Coloring</Name>
+        <Menu>Other forms\Johnson Solids\(J4) Square Cupola\Dino Square Cupola Shallow AC</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-03-22</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+        A := W * (sqrt(2) - 1);
+        D := W * 0.906;
+
+        A1 := ArcCos((sqrt(2) - 2) / 4);
+        A2 := ArcCos(-(2 * sqrt(2) + 1) / 4);
+
+        DH := - W * 0.7;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi" AvailableAngles = "-A2; -A1; 0; A1; A2" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " A; A; W" BaseVector = "0; 0; DH" />
+        <Axis NormVector = " A;-A; W" BaseVector = "0; 0; DH" />
+        <Axis NormVector = "-A; A; W" BaseVector = "0; 0; DH" />
+        <Axis NormVector = "-A;-A; W" BaseVector = "0; 0; DH" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Square Cupola Alternate Coloring.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split">
+            <Turn Axis = "Ax" Angle = " A1" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+            <Turn Axis = "Ax" Angle = "-A1" Layer = "1" />
+            <SplitByAxes/>
+            <Undo/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax = "0" />
+        <ExecMacro MacroName = "Split" Ax = "1" />
+        <ExecMacro MacroName = "Split" Ax = "2" />
+        <ExecMacro MacroName = "Split" Ax = "3" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

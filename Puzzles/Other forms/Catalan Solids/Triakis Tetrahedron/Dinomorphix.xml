@@ -1,0 +1,67 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dinomorphix</Name>
+        <Menu>Other forms\Tetrahedron\Mixed\Dinomorphix</Menu>
+        <Menu>Other forms\Catalan Solids\Triakis Tetrahedron\Dinomorphix</Menu>
+        <Inventor>Traiphum Prungtaengkit</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2026-01-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1784</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Tetrahedron_Standard_Colors.inc';
+
+        K  := 0.5;
+        C0 := K / 3 * 1.8; // pillow
+        C1 := K;
+        D := C1 / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " C1; C1; C1" />
+                <Add Vector = " C1;-C1;-C1" />
+                <Add Vector = "-C1;-C1; C1" />
+                <Add Vector = "-C1; C1;-C1" />
+                <Add Vector = " C0;-C0; C0" />
+                <Add Vector = " C0; C0;-C0" />
+                <Add Vector = "-C0; C0; C0" />
+                <Add Vector = "-C0;-C0;-C0" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "4;0;2" InvisibleEdges = "5" />
+                <Face Color = "Colors[0]" VertexIndexes = "4;2;1" InvisibleEdges = "5" />
+                <Face Color = "Colors[0]" VertexIndexes = "4;1;0" InvisibleEdges = "5" />
+
+                <Face Color = "Colors[1]" VertexIndexes = "5;0;1" InvisibleEdges = "5" />
+                <Face Color = "Colors[1]" VertexIndexes = "5;1;3" InvisibleEdges = "5" />
+                <Face Color = "Colors[1]" VertexIndexes = "5;3;0" InvisibleEdges = "5" />
+
+                <Face Color = "Colors[2]" VertexIndexes = "6;0;3" InvisibleEdges = "5" />
+                <Face Color = "Colors[2]" VertexIndexes = "6;3;2" InvisibleEdges = "5" />
+                <Face Color = "Colors[2]" VertexIndexes = "6;2;0" InvisibleEdges = "5" />
+
+                <Face Color = "Colors[3]" VertexIndexes = "7;1;2" InvisibleEdges = "5" />
+                <Face Color = "Colors[3]" VertexIndexes = "7;2;3" InvisibleEdges = "5" />
+                <Face Color = "Colors[3]" VertexIndexes = "7;3;1" InvisibleEdges = "5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

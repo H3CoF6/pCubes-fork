@@ -1,0 +1,120 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyramick</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Pyramick</Menu>
+        <Menu>Other forms\Multi-core\Pyramick</Menu>
+        <Inventor>Ryan Beam</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8121</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=35913</Link>
+        <Link>https://youtube.com/watch?v=5TYrAiqSHdo</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EDFF11'; // clYellow
+        Colors[1] := 'EE0000'; // clRed
+        Colors[2] := '00CC00'; // clGreen
+        Colors[3] := '0055EE'; // clBlue
+        Colors[4] := 'FFFFFF'; // clWhite
+
+        R := 0.7;
+
+        sAngle := 2 * Pi / 3;
+        for i := 0 to 2 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+        end;
+
+        D1 := R / 4 / sqrt(2);
+        D2  := R / 2;
+
+        H1 := D1 * 3;
+        H2 := D1 * 5;
+
+        az := D1 * 2;
+
+        procedure RotatePoint(Xp, Yp, Zp, Xv, Yv, Zv, Angle);
+        begin
+          ca := Cos(Angle);
+          sa := Sin(Angle);
+          c2 := 1 - Cos(Angle);
+
+          Nx := Xp * (Xv * c2 * Xv + ca) +
+                Yp * (Yv * c2 * Xv - sa * Zv) +
+                Zp * (Zv * c2 * Xv + sa * Yv);
+
+          Ny := Xp * (Xv * c2 * Yv + sa * Zv) +
+                Yp * (Yv * c2 * Yv + ca) +
+                Zp * (Zv * c2 * Yv - sa * Xv);
+
+          Nz := Xp * (Xv * c2 * Zv - sa * Yv) +
+                Yp * (Yv * c2 * Zv + sa * Xv) +
+                Zp * (Zv * c2 * Zv + ca);
+
+          aax[n] := Nx; aay[n] := Ny; aaz[n] := Nz;
+          Inc(n);
+        end;
+
+        n := 0;
+        k := 1/R*sqrt(8)/3;
+        for i := 0 to 2 do
+            for j := 1 to 5 do begin
+                RotatePoint(x[i], y[i],  0,  x[i] * k, y[i] * k, -az * k, sAngle/2 * j);
+                RotatePoint(   0,    0, D1,  x[i] * k, y[i] * k, -az * k, sAngle/2 * j);
+            end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle/2" PlaneDistances = "D1" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "x[0]; y[0]; -az" />
+        <Axis NormVector = "x[1]; y[1]; -az" />
+        <Axis NormVector = "x[2]; y[2]; -az" />
+    </Axes>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D1" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D2" >
+        <Axis NormVector = "x[0]; y[0]; 0" BaseVector = "0; 0; D1" />
+        <Axis NormVector = "x[1]; y[1]; 0" BaseVector = "0; 0; D1" />
+        <Axis NormVector = "x[2]; y[2]; 0" BaseVector = "0; 0; D1" />
+        <Axis NormVector = "aax[ 0]; aay[ 0]; aaz[ 0]" BaseVector = "aax[ 1]; aay[ 1]; aaz[ 1]" />
+        <Axis NormVector = "aax[ 2]; aay[ 2]; aaz[ 2]" BaseVector = "aax[ 3]; aay[ 3]; aaz[ 3]" />
+        <Axis NormVector = "aax[ 4]; aay[ 4]; aaz[ 4]" BaseVector = "aax[ 5]; aay[ 5]; aaz[ 5]" />
+        <Axis NormVector = "aax[ 6]; aay[ 6]; aaz[ 6]" BaseVector = "aax[ 7]; aay[ 7]; aaz[ 7]" />
+        <Axis NormVector = "aax[ 8]; aay[ 8]; aaz[ 8]" BaseVector = "aax[ 9]; aay[ 9]; aaz[ 9]" />
+        <Axis NormVector = "aax[10]; aay[10]; aaz[10]" BaseVector = "aax[11]; aay[11]; aaz[11]" />
+        <Axis NormVector = "aax[12]; aay[12]; aaz[12]" BaseVector = "aax[13]; aay[13]; aaz[13]" />
+        <Axis NormVector = "aax[14]; aay[14]; aaz[14]" BaseVector = "aax[15]; aay[15]; aaz[15]" />
+        <Axis NormVector = "aax[16]; aay[16]; aaz[16]" BaseVector = "aax[17]; aay[17]; aaz[17]" />
+        <Axis NormVector = "aax[18]; aay[18]; aaz[18]" BaseVector = "aax[19]; aay[19]; aaz[19]" />
+        <Axis NormVector = "aax[20]; aay[20]; aaz[20]" BaseVector = "aax[21]; aay[21]; aaz[21]" />
+        <Axis NormVector = "aax[22]; aay[22]; aaz[22]" BaseVector = "aax[23]; aay[23]; aaz[23]" />
+        <Axis NormVector = "aax[24]; aay[24]; aaz[24]" BaseVector = "aax[25]; aay[25]; aaz[25]" />
+        <Axis NormVector = "aax[26]; aay[26]; aaz[26]" BaseVector = "aax[27]; aay[27]; aaz[27]" />
+        <Axis NormVector = "aax[28]; aay[28]; aaz[28]" BaseVector = "aax[29]; aay[29]; aaz[29]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H1" />
+            <Vertices Vectors = "x; y; H2" />
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "0;1;2" />
+                <Face Color = "Colors[1]" VertexIndexes = "2;5;3;0" />
+                <Face Color = "Colors[2]" VertexIndexes = "1;4;5;2" />
+                <Face Color = "Colors[3]" VertexIndexes = "0;3;4;1" />
+                <Face Color = "Colors[4]" VertexIndexes = "5;4;3" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "Split">
+            <Split Axis = "ax" From = "1" />
+            <Script> Inc(ax); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" ax = "0" Repeat = "7" />
+    </Figure>
+</xml>

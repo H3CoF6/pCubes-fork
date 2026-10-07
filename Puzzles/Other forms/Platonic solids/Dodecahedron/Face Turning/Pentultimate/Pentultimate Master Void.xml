@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentultimate Master Void</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Pentultimate\Pentultimate Master Void</Menu>
+        <Menu>Other forms\Void\Dodecahedron\Pentultimate Master</Menu>
+        <Inventor>Mr. Fok</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-05-11</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4265</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4908</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R * 0.086;
+        k := D / Cz[1];
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = " Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = " Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = " Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = " Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = " Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = " Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Remove" >
+            <RemoveContaining Vector = "Cx[i]; Cy[i]; Cz[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Remove" i = "0" Repeat = "12" />
+
+        <Macro Name = "CutC" >
+            <HideContaining Vector = " Cx[i] * k; Cy[i] * k; Cz[i] * k" />
+            <InvertVisibility/>
+            <HideContaining Vector = " Vx; Vy; Vz" />
+            <HideContaining Vector = " Ex; Ey; Ez" />
+            <Cut><Plane NormVector = " Cx[i]; Cy[i]; Cz[i]" NormDistance = "RSin * 0.85" /></Cut>
+            <ShowAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutC" i = "0" Repeat = "12" />
+
+        <Macro Name = "CutV" >
+            <HideContaining Vector = " Vx[i]; Vy[i]; Vz[i]" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = " Vx[i]; Vy[i]; Vz[i]" NormDistance = "RSin * 1." /></Cut>
+            <ShowAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "20" />
+
+        <Macro Name = "CutE" >
+            <HideContaining Vector = " Ex[i]; Ey[i]; Ez[i]" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = " Ex[i]; Ey[i]; Ez[i]" NormDistance = "RSin * 0.95" /></Cut>
+            <ShowAll/>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "30" />
+
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Nautilus 12</Name>
+        <Class>TSquare1</Class> <!-- Scramble -->
+        <Menu>Other forms\Square-1\Nautilus\Nautilus 12</Menu>
+        <Inventor>idea of Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-08-25</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        NautilusExpansion := 1.5; 
+        W := 0.4;
+        H := W * 0.5;
+        D := H / 3;
+        mAngle := 4 * Pi/180; // minimal angle, degrees
+        sCount := 12;  // segments count
+        AxisDirection := 10 * Pi/180;
+
+        angles[ 0] :=  8 * Pi/180; Colors[ 0] := '0000C8'; // Blue       
+        angles[ 1] := 12 * Pi/180; Colors[ 1] := '0080FF'; // SkyBlue    
+        angles[ 2] := 16 * Pi/180; Colors[ 2] := '009600'; // Green      
+        angles[ 3] := 20 * Pi/180; Colors[ 3] := 'E6C800'; // Yellow     
+        angles[ 4] := 24 * Pi/180; Colors[ 4] := 'FF9600'; // Orange     
+        angles[ 5] := 28 * Pi/180; Colors[ 5] := 'DC0000'; // Red        
+        angles[ 6] := 32 * Pi/180; Colors[ 6] := '00FF00'; // Lime       
+        angles[ 7] := 36 * Pi/180; Colors[ 7] := '800080'; // Purple     
+        angles[ 8] := 40 * Pi/180; Colors[ 8] := '808000'; // Olive      
+        angles[ 9] := 44 * Pi/180; Colors[ 9] := '00FFFF'; // Cyan       
+        angles[10] := 48 * Pi/180; Colors[10] := 'FF7F50'; // Coral      
+        angles[11] := 52 * Pi/180; Colors[11] := 'FF00FF'; // Fuchsia    
+    </Script>
+
+    <Axes TurningAngles = "mAngle" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "cos(AxisDirection); sin(AxisDirection); 0" />
+    </Axes>
+
+    <Figure>
+
+        <Script>SumAngle := 0; H1 := -H; H2 := H; </Script>
+
+        <Macro Name = "AddSegment" >
+            <HideAll/>
+            <Script>Color := Colors[index];</Script>
+            <LoadFrom File = "Puzzles\Other forms\Square-1\Nautilus\_Macro_For_Nautilus.xml" />
+            <Cut Color = "Color"><Plane NormVector = "-sin(SumAngle); -cos(SumAngle); 0" /></Cut>
+            <Script>SumAngle := SumAngle + angles[index]</Script>
+            <Cut Color = "Color"><Plane NormVector = "sin(SumAngle); cos(SumAngle); 0" /></Cut>
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "1" />
+            <Split Color1 = "Color" Color2 = "Color" Axis = "0" From = "2" />
+            <Script>Inc(index); </Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSegment" index = "0" Repeat = "sCount" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

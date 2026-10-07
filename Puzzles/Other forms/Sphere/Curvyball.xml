@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Curvyball</Name>
+        <Menu>Other forms\Sphere\Curvyball</Menu>
+        <Inventor>JoseRo</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-03-31</Added>
+        <Link>https://www.instagram.com/p/CG-cWM0KYyB/</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0066FF'; // Blue
+        Colors[3] := '00DD00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        K := 0.6;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        D := K * 0.66;
+        DCut := K * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "Arccos(1/3)" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "HideC" >
+            <Hide><Plane NormVector = " Cx[i]; Cy[i]; Cz[i]" NormDistance = "-DCut" /></Hide>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "HideC" i = "0" Repeat = "6" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

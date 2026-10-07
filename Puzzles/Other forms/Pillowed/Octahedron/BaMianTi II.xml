@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>BaMianTi II</Name>
+        <Menu>Other forms\Pillowed\Octahedron\BaMianTi II</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7822</Link>
+    </Interface>
+
+    <Script>
+        K := 0.5;
+        Colors[0] := 'EE0000';
+        Colors[1] := 'FFFF00';
+        Colors[2] := '00BB00';
+        Colors[3] := '0055EE';
+
+        D := K * 1.45607124601745 / sqrt(3); // C37 / sqrt(3)
+        DCut := K * 1.14;
+        f := K * 0.5;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; 0; 2*Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = " 1;-1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = " 1; 1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+
+        <RemoveContaining Vector = "-f;-f;-f" />
+        <RemoveContaining Vector = " f;-f; f" />
+        <RemoveContaining Vector = " f; f;-f" />
+        <RemoveContaining Vector = "-f; f; f" />
+
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+        <InvertVisibility/>
+
+        <Script>
+            Tmp := Colors[1];
+            Colors[1] := Colors[2];
+            Colors[2] := Tmp;
+        </Script>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "0" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "0" /></Split>
+
+        <RemoveContaining Vector = "-f;-f;-f" />
+        <RemoveContaining Vector = " f;-f; f" />
+        <RemoveContaining Vector = " f; f;-f" />
+        <RemoveContaining Vector = "-f; f; f" />
+        <ShowAll/>
+
+        <Turn NormVector = " 1;-1; 0" Angle = "Pi" />
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

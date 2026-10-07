@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Truncated Pyramorphix</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Tetrahedron\Truncated Pyramorphix</Menu>
+        <Menu>Other forms\2x2x2 variants\Truncated Pyramorphix</Menu>
+        <Inventor>Wen Hsi Kang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-12-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4194</Link>
+    </Interface>
+
+    <Script>
+        W := 0.67;
+        DCut := W * 5 / 9 * sqrt(3);
+        DCut2 := W * 0.97;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <Cut Color = "clRed   " > <Plane NormDistance = "-DCut" NormVector = "-1;-1; 1" /> </Cut>
+        <Cut Color = "clBlue  " > <Plane NormDistance = "-DCut" NormVector = "-1; 1;-1" /> </Cut>
+        <Cut Color = "clGreen " > <Plane NormDistance = "-DCut" NormVector = " 1;-1;-1" /> </Cut>
+        <Cut Color = "clYellow" > <Plane NormDistance = "-DCut" NormVector = " 1; 1; 1" /> </Cut>
+
+        <!-- cut edges for better control -->
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "-DCut2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "-DCut2" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Siamese 3x3x3-2 Fully Functional</Name>
+        <Menu>Cubic\Multi-core\Siamese 3x3x3-2 Fully Functional</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-28</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 5;
+        D2 := D * 2;
+        D3 := D * 3;
+        A := Pi / 2;
+    </Script>
+ 
+    <Axes>
+        <Axis TurningAngles = "A; 0"    NormVector = " 1; 0; 0" BaseVector = "-D;-D2; 0" PlaneDistances = "-D"    />
+        <Axis TurningAngles = "A; A; 0" NormVector = " 0; 1; 0" BaseVector = "-D;-D2; 0" PlaneDistances = "-D; D" />
+
+        <Axis TurningAngles = "0; A"    NormVector = " 1; 0; 0" BaseVector = " D; D2; 0" PlaneDistances = " D"    />
+        <Axis TurningAngles = "0; A; A" NormVector = " 0; 1; 0" BaseVector = " D; D2; 0" PlaneDistances = "-D; D" />
+    </Axes>
+ 
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D3" WY = "WX" WZ = "WX" DWX = " D" DWY = " D2" DWZ = "0" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D3" WY = "WX" WZ = "WX" DWX = "-D" DWY = "-D2" DWZ = "0" />
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "0; 0; D" />
+        <RemoveContaining Vector = "0; 0;-D" />
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D2" WY = "D" WZ = "D3" DWX = "0" DWY = "0" DWZ = "0" />
+        <SplitByAxes/>
+
+        <Split><Plane NormVector = "1;0;0"/></Split>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

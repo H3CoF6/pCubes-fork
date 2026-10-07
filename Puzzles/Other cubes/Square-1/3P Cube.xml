@@ -1,0 +1,38 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3P Cube</Name>
+        <Menu>Other cubes\Square-1\3P Cube</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-02-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3864</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        Angle := 2*Pi / 12; // 30 degrees
+        for i := 0 to 5 do begin
+            A := Angle * i + Pi/12;
+            xa[i] := sin(A);
+            ya[i] := cos(A);
+        end;
+
+        D := W * 2 / 7;
+    </Script>
+
+    <Axes TurningAngles = "Angle" NormVectors = "0; 0; 1" PlaneDistances = "-D; D" TurnAxesWithPartNo = "0" />
+
+    <Axes TurningAngles = "Pi/2" NormVectors = "xa; ya; 0" PlaneDistances = "0" TurnAxesWithPartNo = "0" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Split Axis = "2" From = "1" />
+        <Turn Axis = "2" Layer = "1" Angle = " Pi/2" />
+        <SplitByAxes/>
+        <Undo/>
+    </Figure>
+</xml>

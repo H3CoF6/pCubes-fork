@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Super Dots 4x4x4</Name>
+        <Menu>Cubic\Rubiks Recolored\Super Dots 4x4x4</Menu>
+        <Inventor>Casey Weaver</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11054</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        clGold := '785757';
+        for i := 0 to 5 do
+            Colors[i] := clGold;
+
+        W := 0.5;
+        D := W / 2;
+
+        WC := W * 1.001;
+
+        A := W / 4;
+        B := 3 * W / 4;
+
+        Rs := A * 0.9;
+        Rl := B * 0.9;
+
+        X[0] :=-B; Y[0] :=-B; R[0] := Rs;
+        X[1] :=-B; Y[1] :=-A; R[1] := Rs;
+        X[2] :=-B; Y[2] := A; R[2] := Rs;
+        X[3] :=-B; Y[3] := B; R[3] := Rs;
+        X[4] :=-A; Y[4] := B; R[4] := Rs;
+        X[5] := A; Y[5] := B; R[5] := Rs;
+        X[6] := B; Y[6] := B; R[6] := Rs;
+        X[7] := A; Y[7] :=-A; R[7] := Rl;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddCircle">
+            <Circle Radius = "R[i]" Color = "Color" Base = "X[i]; Y[i]; W" Center = "X[i]; Y[i]; WC" />
+            <Script>inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "AddSideCircles">
+            <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "8" />
+            <Turn NormVector = " 1;-1; 1" Angle = "2*Pi/3" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddSideCircles" Color = "clWhite " />
+        <ExecMacro MacroName = "AddSideCircles" Color = "clBlue  " />
+        <ExecMacro MacroName = "AddSideCircles" Color = "clRed   " />
+        <Turn NormVector = " 1; 1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSideCircles" Color = "clYellow" />
+        <ExecMacro MacroName = "AddSideCircles" Color = "clOrange" />
+        <ExecMacro MacroName = "AddSideCircles" Color = "clGreen " />
+        <Turn NormVector = " 1; 1; 0" Angle = "Pi" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

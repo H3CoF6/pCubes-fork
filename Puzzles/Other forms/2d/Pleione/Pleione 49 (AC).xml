@@ -1,0 +1,116 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pleione 49 (AC)</Name>
+        <Menu>Other forms\2d\Pleione\Pleione 49 (AC)</Menu>
+        <Inventor>Dmitry Andreev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-11-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10953</Link>
+    </Interface>
+
+    <Script>
+        clPink   := 'FF69B4';
+        clBlack  := '333333';
+
+        K := 0.8;
+
+        ang := 2 * Pi / 9;
+
+        s2 := sqrt(2);
+        ca := cos(ang);
+
+        p := 1 / (1 + s2 / tan(Pi/9));       <!-- face normal component -->
+        b := K * (p + 1) / s2;               <!-- distance between 4-fold vertex and origin -->
+
+        <!--
+        For context, some constants were named with respect to
+        an isosceles triangle with one base at (0,0),
+        a vertex of (b,0), and a vertex angle of t.
+        -->
+        d := K * sqrt((1 + p^2) / 2);        <!-- distance between 4-fold and 9-fold verticies -->
+        e := b * sqrt(1 - ca);               <!-- distance between 2 9-fold edges -->
+
+        s := arcsin(K / 2 / d);              <!-- base angle -->
+        t := arcsin(e / 2 / d);              <!-- vertex angle -->
+
+        Y1 := d / (1 / tan(s) + 1 / tan(t)); <!-- y-coord of intersection point -->
+        Y2 := e * cos(t) / 2;                <!-- y-coord of upper base point -->
+
+        D1 := b / s2;                        <!-- 9-fold back face cut depth -->
+        D2 := b * (ca + 1) / 2;              <!-- 4-fold back face cut depth -->
+        D3 := b / sqrt(1 + 2 * p ^ 2);       <!-- face cut depth -->
+        D4 := Y1 / Y2 * (D1 - K) + K;        <!-- 9-fold cut depth -->
+        D5 := D2 * 1.02;                     <!-- 4-fold cut depth -->
+        D6 := ((b - D5) / p + D5) / s2;      <!-- facet cut depth -->
+    </Script>
+
+    <Axes TurningAngles = " 0; ang" PlaneDistances = "D4" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = " 0; Pi/2" PlaneDistances = "D5" >
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Cut">
+            <Cut Color = "Color" > <Plane NormVector = "-p; 1;-p" NormDistance = "-D3" /> </Cut>
+            <Turn NormVector = " ax;-1; 0" Angle = "2*Pi / N" />
+        </Macro>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "K" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <ExecMacro MacroName = "Cut" Color = "clBlack" N = "4" ax = "0" Repeat = "4" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 1;-1; 0" NormDistance = " D1" /> </Cut>
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 0;-1; 0" NormDistance = " D2" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "K" />
+        <Cut Axis = "0" To = "1" />
+        <ExecMacro MacroName = "Cut" Color = "clBlack" N = "9" ax = "1" Repeat = "9" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 0; 1; 0" NormDistance = "-D2" /> </Cut>
+        <Cut Color = "clBlack"     > <Plane NormVector = " 1;-1; 0" NormDistance = " D1" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "K" />
+        <Cut Axis = "1" To = "1" />
+        <ExecMacro MacroName = "Cut" Color = "clBlack" N = "4" ax = "0" Repeat = "4" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = "-1; 1; 0" NormDistance = "-D1" /> </Cut>
+        <Cut Color = "clBlack"     > <Plane NormVector = " 0;-1; 0" NormDistance = " D2" /> </Cut>
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "K" />
+        <Cut Axis = "0" To   = "1" />
+        <Cut Axis = "1" From = "1" />
+        <ExecMacro MacroName = "Cut" Color = "clBlack" N = "4" ax = "0" Repeat = "4" />
+        <HideAll/>
+
+        <LoadFrom File = "Figures\Cube.xml" W = "K" />
+        <Cut Axis = "0" From = "1" />
+        <ExecMacro MacroName = "Cut" Color = "clPink" N = "9" ax = "1" Repeat = "9" />
+        <ShowAll/>
+
+        <Cut Color = "clPink"> <Plane NormVector = "-1; 1; 0" NormDistance = "-D6" /> </Cut>
+
+        <Macro Name = "Unbandage">
+            <Turn Axis = "0" Layer = "1" Angle = "2*Pi/9" />
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "  Pi/2" />
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "Unbandage" Repeat = "14" />
+        <Undo Repeat = "28" />
+
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/8" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = " 1; 0; 0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = " 0; 0; 1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>32 Ball</Name>
+        <Menu>Other forms\Sphere\32 Ball</Menu>
+        <Inventor>Zhanqiang Li</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2019-05-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6180</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // red
+        Colors[1] := 'FFFF00'; // yellow
+        Colors[2] := '0000A0'; // blue
+        Colors[3] := 'FFFFFF'; // white
+
+        K := 0.6;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi*2/3" PlaneDistances = "0" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Script>Color := Colors[0];</Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 0; 0" /> </Cut>
+        <HideAll/>
+
+        <Script>Color := Colors[1];</Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut> <Plane NormVector = " 0; 0; 1" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" /> </Cut>
+        <HideAll/>
+
+        <Script>Color := Colors[2];</Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut> <Plane NormVector = " 0; 0;-1" /> </Cut>
+        <Cut> <Plane NormVector = " 1; 0; 0" /> </Cut>
+        <HideAll/>
+
+        <Script>Color := Colors[3];</Script>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        <Cut> <Plane NormVector = " 0; 0;-1" /> </Cut>
+        <Cut> <Plane NormVector = "-1; 0; 0" /> </Cut>
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/> <!-- state 1 -->
+
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <SaveSolvedState/> <!-- state 2 -->
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "2" Layer = "0" Angle = "Pi" />
+        <SaveSolvedState/> <!-- state 3 -->
+        <Undo Repeat = "4" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

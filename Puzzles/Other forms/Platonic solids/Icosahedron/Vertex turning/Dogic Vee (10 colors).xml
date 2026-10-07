@@ -1,0 +1,127 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dogic Vee (10 colors)</Name>
+        <Menu>Other forms\Icosahedron\Vertex turning\Dogic Vee (10 colors)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-09-14</Added>
+    </Interface>
+
+    <Script>
+        Color[ 0] := '00FF00'; // LightGreen
+        Color[ 1] := '2828FF'; // LightBlue
+        Color[ 2] := 'FFFF00'; // Yellow
+        Color[ 3] := '008000'; // Green
+        Color[ 4] := '800000'; // Brown
+        Color[ 5] := '800080'; // Violett
+        Color[ 6] := 'FFFFFF'; // White
+        Color[ 7] := 'FF0000'; // Red
+        Color[ 8] := '0000A0'; // Blue
+        Color[ 9] := 'FF0080'; // LightViolett
+        Color[10] := '303030'; // Black
+        Color[11] := '00DCB4'; // Cyan
+
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D1 := Rsin;
+        D2 := (Rsin + R) / 2;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D1; D2" FixedLayers = "0" NormVectors = "Vx; Vy; Vz" TurnAxesWithPartNo = "0" />
+
+    <Figure>
+        <Macro Name = "AddColor" >
+            <Face Color = "Color[c]" VertexIndexes = "v3;e1;v2" InvisibleEdges = "2" />
+            <Face Color = "Color[c]" VertexIndexes = "v3;v1;e1" InvisibleEdges = "2" />
+            <Face Color = "Color[c]" VertexIndexes = "v3;e2;v1" InvisibleEdges = "2" />
+            <Face Color = "Color[c]" VertexIndexes = "v3;v4;e2" InvisibleEdges = "2" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Ex; Ey; Ez" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddColor" c = " 0" v1 = " 0" e1 = "19" v2 = " 8" v3 = " 3" v4 = " 7" e2 = "18" />
+                <ExecMacro MacroName = "AddColor" c = " 1" v1 = " 0" e1 = "18" v2 = " 7" v3 = " 2" v4 = " 6" e2 = "17" />
+                <ExecMacro MacroName = "AddColor" c = " 3" v1 = " 0" e1 = "20" v2 = " 9" v3 = " 4" v4 = " 8" e2 = "19" />
+                <ExecMacro MacroName = "AddColor" c = " 4" v1 = "11" e1 = "33" v2 = " 3" v3 = " 8" v4 = " 4" e2 = "34" />
+                <ExecMacro MacroName = "AddColor" c = " 5" v1 = "11" e1 = "32" v2 = " 2" v3 = " 7" v4 = " 3" e2 = "33" />
+                <ExecMacro MacroName = "AddColor" c = " 6" v1 = "11" e1 = "35" v2 = " 5" v3 = "10" v4 = " 1" e2 = "36" />
+                <ExecMacro MacroName = "AddColor" c = " 7" v1 = " 0" e1 = "21" v2 = "10" v3 = " 5" v4 = " 9" e2 = "20" />
+                <ExecMacro MacroName = "AddColor" c = " 8" v1 = " 0" e1 = "17" v2 = " 6" v3 = " 1" v4 = "10" e2 = "21" />
+                <ExecMacro MacroName = "AddColor" c = " 9" v1 = "11" e1 = "36" v2 = " 1" v3 = " 6" v4 = " 2" e2 = "32" />
+                <ExecMacro MacroName = "AddColor" c = "11" v1 = "11" e1 = "34" v2 = " 4" v3 = " 9" v4 = " 5" e2 = "35" />
+            </Faces>
+        </Part>
+
+        // Make PartNo = 0
+        <Split><Plane NormVector = "-Vx[0];-Vy[0];-Vz[0]" NormDistance = "-D2"/> </Split>
+        <Split><Plane NormVector = "-Vx[3];-Vy[3];-Vz[3]" NormDistance = "-D1"/> </Split>
+        <Split><Plane NormVector = "-Vx[4];-Vy[4];-Vz[4]" NormDistance = "-D1"/> </Split>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+
+        <Turn Axis = " 3" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 4" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 4" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 7" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = "11" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 7" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = "11" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 4" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = "   sAngle" />
+        <Turn Axis = " 5" Layers = "1;2" Angle = "   sAngle" />
+        <Turn Axis = " 4" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 5" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 4" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 5" Layers = "1;2" Angle = "  -sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = "  -sAngle" />
+        <Turn Axis = " 4" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 0" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 5" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 0" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 2" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 6" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = "10" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 6" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = "10" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 5" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = "10" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 5" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = "10" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 0" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 8" Layers = "1;2" Angle = "   sAngle" />
+        <Turn Axis = "11" Layers = "1;2" Angle = "   sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 5" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = "11" Layers = "1;2" Angle = "  -sAngle" />
+        <Turn Axis = " 8" Layers = "1;2" Angle = "  -sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 5" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 0" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = "10" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 5" Layers = "1;2" Angle = "   sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = "   sAngle" />
+        <Turn Axis = "10" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = " 6" Layers = "1;2" Angle = "-2*sAngle" />
+        <Turn Axis = "10" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 9" Layers = "1;2" Angle = "  -sAngle" />
+        <Turn Axis = " 5" Layers = "1;2" Angle = "  -sAngle" />
+        <Turn Axis = "10" Layers = "1;2" Angle = " 2*sAngle" />
+        <Turn Axis = " 6" Layers = "1;2" Angle = " 2*sAngle" />
+        <SaveSolvedState/>
+        <Undo Repeat = "54" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

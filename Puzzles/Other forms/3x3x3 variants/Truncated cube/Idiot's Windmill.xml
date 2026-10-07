@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Idiot's Windmill</Name>
+        <Alias>Sharp Edges (C0C00000)</Alias>
+        <Menu>Other forms\3x3x3 variants\Truncated cube\Idiot's Windmill</Menu>
+        <Menu>Other forms\Prism\Octagonal Prism\Idiot's Windmill</Menu>
+        <Inventor>Andreas Nortmann</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-04-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3781</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+
+        A := arctan(2/3);
+        RCut := D * cos(A) + W * sin(A); // = (D * 3 + W * 2) / sqrt(13)
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Turn NormVector = "0;0;1" Angle = "A" />
+        <Cut Color = "Colors[2]" InvisibleEdges = "4" ><Plane NormVector = " 0; 1; 0" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[3]" InvisibleEdges = "4" ><Plane NormVector = " 0;-1; 0" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[0]" InvisibleEdges = "1" ><Plane NormVector = " 1; 0; 0" NormDistance = "-RCut" /></Cut>
+        <Cut Color = "Colors[1]" InvisibleEdges = "1" ><Plane NormVector = "-1; 0; 0" NormDistance = "-RCut" /></Cut>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

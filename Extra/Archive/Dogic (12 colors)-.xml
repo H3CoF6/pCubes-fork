@@ -1,0 +1,153 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Dogic (12 colors)-</Name>
+        <Menu>Other forms\Icosahedron\Vertex turning\Dogic (12 colors)-</Menu>
+        <Inventor>Zoltán and Robert Vecsei</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=643</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+        include 'Figures\Scripts\Icosahedron_Standard_10_Colors.inc';
+
+        Color[ 0] := clYellow;
+        Color[ 1] := clBlue;
+        Color[ 2] := clLightBlue;
+        Color[ 3] := clLightGreen;
+        Color[ 4] := clGreen;
+        Color[ 5] := clRed;
+        Color[ 6] := clLightViolett;
+        Color[ 7] := clViolett;
+        Color[ 8] := clBrown;
+        Color[ 9] := clCyan;
+        Color[10] := 'ffffff'; // clWhite
+        Color[11] := '303030'; // clBlack
+
+        D1 := (Rsin + R) / 2;
+        D2 := Rsin;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D1; -D2; D2; D1" FixedLayers = "2" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+    </Axes>
+
+    <Figure>
+        // Gray body
+
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "RemoveCorners">
+            <RemoveContaining Vector = "Vx[i];Vy[i];Vz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveCorners" i = "0" Repeat = "12" />
+
+        <Macro Name = "HideCenters">
+            <HideContaining Vector = "Cx[i];Cy[i];Cz[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenters" i = "0" Repeat = "20" />
+        <InvertVisibility/>
+
+        <Macro Name = "CutCenters">
+            <Cut> <Plane NormVector = "-Cx[i];-Cy[i];-Cz[i]" NormDistance = "-R*0.79" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutCenters" i = "0" Repeat = "20" />
+        <ShowAll/>
+
+
+        // Color parts
+
+        <Macro Name = "AddCorner">
+            <Part>
+                <Vertices>
+                    <Add Vector = "Vx[v]; Vy[v]; Vz[v]" />
+                    <Add Vector = "(Vx[v] + Vx[v1]) / 2; (Vy[v] + Vy[v1]) / 2; (Vz[v] + Vz[v1]) / 2" />
+                    <Add Vector = "(Vx[v] + Vx[v2]) / 2; (Vy[v] + Vy[v2]) / 2; (Vz[v] + Vz[v2]) / 2" />
+                    <Add Vector = "(Vx[v] + Vx[v3]) / 2; (Vy[v] + Vy[v3]) / 2; (Vz[v] + Vz[v3]) / 2" />
+                    <Add Vector = "(Vx[v] + Vx[v4]) / 2; (Vy[v] + Vy[v4]) / 2; (Vz[v] + Vz[v4]) / 2" />
+                    <Add Vector = "(Vx[v] + Vx[v5]) / 2; (Vy[v] + Vy[v5]) / 2; (Vz[v] + Vz[v5]) / 2" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Cl" VertexIndexes = " 0; 1; 2" />
+                    <Face Color = "Cl" VertexIndexes = " 0; 2; 3" />
+                    <Face Color = "Cl" VertexIndexes = " 0; 3; 4" />
+                    <Face Color = "Cl" VertexIndexes = " 0; 4; 5" />
+                    <Face Color = "Cl" VertexIndexes = " 0; 5; 1" />
+                    <Face              VertexIndexes = "5;4;3;2;1" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[ 0]" v = " 0" v1 = " 5" v2 = " 4" v3 = " 3" v4 = " 2" v5 = " 1" />
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[ 1]" v = " 1" v1 = " 0" v2 = " 2" v3 = " 6" v4 = "10" v5 = " 5" />
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[ 2]" v = " 2" v1 = " 0" v2 = " 3" v3 = " 7" v4 = " 6" v5 = " 1" />
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[ 3]" v = " 3" v1 = " 0" v2 = " 4" v3 = " 8" v4 = " 7" v5 = " 2" />
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[ 4]" v = " 4" v1 = " 0" v2 = " 5" v3 = " 9" v4 = " 8" v5 = " 3" />
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[ 5]" v = " 5" v1 = " 0" v2 = " 1" v3 = "10" v4 = " 9" v5 = " 4" />
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[ 6]" v = " 6" v1 = " 1" v2 = " 2" v3 = " 7" v4 = "11" v5 = "10" />
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[ 7]" v = " 7" v1 = " 2" v2 = " 3" v3 = " 8" v4 = "11" v5 = " 6" />
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[ 8]" v = " 8" v1 = " 3" v2 = " 4" v3 = " 9" v4 = "11" v5 = " 7" />
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[ 9]" v = " 9" v1 = " 4" v2 = " 5" v3 = "10" v4 = "11" v5 = " 8" />
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[10]" v = "10" v1 = " 5" v2 = " 1" v3 = " 6" v4 = "11" v5 = " 9" />
+        <ExecMacro MacroName = "AddCorner" Cl = "Color[11]" v = "11" v1 = " 6" v2 = " 7" v3 = " 8" v4 = " 9" v5 = "10" />
+
+        <Macro Name = "AddCenter">
+            <Script> </Script>
+            <Part>
+                <Vertices>
+                    <Add Vector = "(Vx[v1] + Vx[v2] + Vx[v3]) / 3; (Vy[v1] + Vy[v2] + Vy[v3]) / 3; (Vz[v1] + Vz[v2] + Vz[v3]) / 3" />
+                    <Add Vector = "(Vx[v1] + Vx[v2]) / 2; (Vy[v1] + Vy[v2]) / 2; (Vz[v1] + Vz[v2]) / 2" />
+                    <Add Vector = "(Vx[v2] + Vx[v3]) / 2; (Vy[v2] + Vy[v3]) / 2; (Vz[v2] + Vz[v3]) / 2" />
+                    <Add Vector = "(Vx[v3] + Vx[v1]) / 2; (Vy[v3] + Vy[v1]) / 2; (Vz[v3] + Vz[v1]) / 2" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color[v1]" VertexIndexes = " 0; 3; 1" InvisibleEdges = "5" />
+                    <Face Color = "Color[v2]" VertexIndexes = " 0; 1; 2" InvisibleEdges = "5" />
+                    <Face Color = "Color[v3]" VertexIndexes = " 0; 2; 3" InvisibleEdges = "5" />
+                </Faces>
+            </Part>
+        </Macro>
+        <ExecMacro MacroName = "AddCenter" v1 = " 0" v2 = " 1" v3 = " 5" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 0" v2 = " 2" v3 = " 1" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 0" v2 = " 3" v3 = " 2" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 0" v2 = " 4" v3 = " 3" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 0" v2 = " 5" v3 = " 4" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 1" v2 = "10" v3 = " 5" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 2" v2 = " 6" v3 = " 1" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 3" v2 = " 7" v3 = " 2" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 4" v2 = " 8" v3 = " 3" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 5" v2 = " 9" v3 = " 4" />
+        <ExecMacro MacroName = "AddCenter" v1 = "11" v2 = " 7" v3 = " 8" />
+        <ExecMacro MacroName = "AddCenter" v1 = "11" v2 = " 8" v3 = " 9" />
+        <ExecMacro MacroName = "AddCenter" v1 = "11" v2 = " 9" v3 = "10" />
+        <ExecMacro MacroName = "AddCenter" v1 = "11" v2 = "10" v3 = " 6" />
+        <ExecMacro MacroName = "AddCenter" v1 = "11" v2 = " 6" v3 = " 7" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 7" v2 = " 3" v3 = " 8" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 8" v2 = " 4" v3 = " 9" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 9" v2 = " 5" v3 = "10" />
+        <ExecMacro MacroName = "AddCenter" v1 = "10" v2 = " 1" v3 = " 6" />
+        <ExecMacro MacroName = "AddCenter" v1 = " 6" v2 = " 2" v3 = " 7" />
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+</xml>

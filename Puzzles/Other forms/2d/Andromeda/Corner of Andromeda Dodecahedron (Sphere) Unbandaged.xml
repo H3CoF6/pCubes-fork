@@ -1,0 +1,129 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Corner of Andromeda Dodecahedron (Sphere) Unbandaged</Name>
+        <Menu>Other forms\2d\Andromeda\Corner of Andromeda Dodecahedron (Sphere) Unbandaged</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-10-28</Added>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFF00'; // Violett
+        Colors[ 1] := '00FF00'; // LightGreen
+        Colors[ 2] := 'FF0080'; // Yellow
+        Colors[ 3] := '0000A0'; // Blue
+        Colors[ 4] := 'FF0000'; // Red
+        Colors[ 5] := '800000'; // Brown
+        Colors[ 6] := '008000'; // Green
+        Colors[ 7] := '8800DD'; // Violett
+        Colors[ 8] := '3868BF'; // LightBlue
+        Colors[ 9] := 'FF6000'; // Orange
+        Colors[10] := '00DCB4'; // Cyan
+        Colors[11] := 'FFFFFF'; // White
+
+        K := 0.7;
+
+        C0  := 0.192893711352;
+        C1  := 0.218483370127;
+        C2  := 0.374821658114;
+        C3  := 0.567715369466;
+        C4  := 0.728335176957;
+        C5  := 0.755467260516;
+        C6  := 0.824957552676;
+        C7  := 0.921228888309;
+        C8  := 0.959987701391;
+        C9  := 1.137066133860;
+        C10 := 1.167123436475;
+        C11 := 1.222371704903;
+        C12 := 1.272096282575;
+        C13 := 1.527703070858;
+        C14 := 1.646917940690;
+        C15 := 1.746186440985;
+        C16 := 1.865401310817;
+        C17 := 1.888445389283;
+        C18 := 1.977838965420;
+        C19 := 2.097053835252;
+
+        // Calcs normal to plane with 3 points
+        procedure Normal(x1, y1, z1, x2, y2, z2, x3, y3, z3, i);
+        begin
+          nx := (y1-y3) * (z2-z3) - (y2-y3) * (z1-z3);
+          ny := (z1-z3) * (x2-x3) - (z2-z3) * (x1-x3);
+          nz := (x1-x3) * (y2-y3) - (x2-x3) * (y1-y3);
+
+          // normalize vector
+          dn := sqrt(nx^2 + ny^2 + nz^2);
+          px[i] := nx / dn; py[i] := ny / dn; pz[i] := nz / dn;
+        end;
+
+        // Calc all Normals and fill array
+
+        Normal( C10,   0, C17,  C13,-C4,C12,  C15, C2, C9,   2); // 24; 76; 52
+        Normal( C17, C10,   0,  C14, C7, C8,  C19, C0, C1,  24); // 28; 64;  4
+        Normal( C17,-C10,   0,  C19,-C0,-C1,  C16,-C3, C6,  30); // 29;  5; 40
+
+        // All angles there: http://twistypuzzles.com/forum/viewtopic.php?f=1&amp;p=358806
+        A1 := 1.07971961926539; // 61,8633772
+        A2 := 2 * Pi - 4 * A1 ; // 1.96430683;  // 112,546491
+        A3 := A1*2;             // 123,7267545
+        A4 := A2 + A1;          // 174,4098683
+
+        D  := K * 0.935;
+    </Script>
+
+    <Axes TurningAngles = "0; 2 *Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "D" >
+        <Axis NormVector = " px[ 2]; py[ 2]; pz[ 2]" />
+        <Axis NormVector = " px[24]; py[24]; pz[24]" />
+        <Axis NormVector = " px[30]; py[30]; pz[30]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "ax1" Layer = "1" Angle = "an1" />
+            <SplitByAxes/>
+            <Undo />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax1 = "0" ax2 = "1" an1 = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = "0" ax2 = "2" an1 = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = "0" ax2 = "2" an1 = " A3" />
+        <ExecMacro MacroName = "Split" ax1 = "1" ax2 = "0" an1 = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = "1" ax2 = "2" an1 = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = "1" ax2 = "2" an1 = " A3" />
+        <ExecMacro MacroName = "Split" ax1 = "2" ax2 = "0" an1 = " A1" />
+        <ExecMacro MacroName = "Split" ax1 = "2" ax2 = "1" an1 = "-A1" />
+        <ExecMacro MacroName = "Split" ax1 = "2" ax2 = "2" an1 = " A3" />
+
+        <Macro Name = "Unbandage" >
+            <Turn Axis = "ax1" Layer = "1" Angle = "an1" />
+            <Turn Axis = "ax2" Layer = "1" Angle = "an2" />
+            <Split Axis = "ax3" From = "1"  />
+            <Undo Repeat = "2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Unbandage" ax1 = "0" ax2 = "1" ax3 = "0" an1 = "-A1" an2 = " A1" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "0" ax2 = "2" ax3 = "0" an1 = " A3" an2 = "-A1" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "1" ax2 = "2" ax3 = "1" an1 = "-A1" an2 = " A1" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "1" ax2 = "0" ax3 = "1" an1 = " A3" an2 = "-A1" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "2" ax2 = "0" ax3 = "2" an1 = "-A1" an2 = " A1" />
+        <ExecMacro MacroName = "Unbandage" ax1 = "2" ax2 = "1" ax3 = "2" an1 = " A3" an2 = "-A1" />
+
+        <Cut> <Plane NormVector = " C63; 0; C21" NormDistance = "K * 0.75" /> </Cut>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-90 * Pi/180" />
+        <Turn NormVector = "1;0;0" Angle = " 21 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

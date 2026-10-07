@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mini 36x54x54 CrazyPill</Name>
+        <Menu>Other forms\Unclassified\Mini 36x54x54 CrazyPill</Menu>
+        <Inventor>Ilya Toporgilka</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-09-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10189</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '800080'; // Violett
+        Colors[1] := 'FFFFFF'; // White
+        Colors[2] := 'F67F05'; // Orange
+        Colors[3] := '005600'; // Green
+        Colors[4] := '000078'; // Blue
+        Colors[5] := 'F80000'; // Red
+        Colors[6] := 'FFFF00'; // Yellow
+        Colors[7] := 'FF0080'; // Pink
+
+        W := 0.6;
+        D := W / 3;
+        DCut := D * sqrt(2) * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" TurnAxesWithPartNo = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "W * 1.1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+
+        <Macro Name = "MakeSector" >
+            <HideContaining Vector = " D; D; D" />
+            <InvertVisibility/>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0; 0;-1" NormDistance = "-D * 2" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = "-1; 0;-1" NormDistance = "-DCut" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0;-1;-1" NormDistance = "-DCut" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = "-1; 0; 0" NormDistance = "-W" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0;-1; 0" NormDistance = "-W" /></Cut>
+            <ShowAll/>
+            <Turn NormVector = "0; 0; 1" Angle = "Pi/2" />
+            <Script>Inc(c);</Script>
+        </Macro>
+        <ExecMacro MacroName = "MakeSector" c = "0" Repeat = "4" />
+        <Turn NormVector = "1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "MakeSector" Repeat = "4" />
+        <Turn NormVector = "1; 0; 0" Angle = "Pi" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

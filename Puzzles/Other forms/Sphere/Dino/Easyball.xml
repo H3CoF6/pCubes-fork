@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Easyball</Name>
+        <Menu>Other forms\Sphere\Dino\Easyball</Menu>
+        <Inventor>Kim Junghwan</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3093</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := '0077EE'; // Blue
+        Colors[2] := '00BB00'; // Green
+        Colors[3] := 'FFEE00'; // Yellow
+        Colors[4] := 'FFFFFF'; // White
+        Colors[5] := '333333'; // Black
+
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        K := 0.6;
+        D := K * 0.333526099730881; // C15/K/sqrt(3);
+        DC1 := K * 0.942;
+        DC2 := K * 0.875;
+
+        f := 0.25;
+    </Script>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = " 1;-1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "HideCorners" >
+            <HideContaining Vector = "f*vx[id]; f*vy[id]; f*vz[id]" />
+            <Script>Inc(id);</Script>
+        </Macro>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[5]" />
+        <SplitByAxes/>
+
+        <ExecMacro MacroName = "HideCorners" Repeat = "8" id = "0" />
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[4]" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "HideCorners" Repeat = "8" id = "0" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "ColorVertex" >
+            <Split><Plane NormVector = "Vx[v];Vy[v];Vz[v]" NormDistance = "-DC1" /></Split>
+            <Hide> <Plane NormVector = "Vx[v];Vy[v];Vz[v]" NormDistance = "-DC1" /></Hide>
+            <Cut>  <Plane NormVector = "Vx[v];Vy[v];Vz[v]" NormDistance = "-DC2" /></Cut>
+
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Colors[cl]" />
+            <Cut>  <Plane NormVector = "-Vx[v];-Vy[v];-Vz[v]" NormDistance = " DC2" /></Cut>
+            <Cut>  <Plane NormVector = " Vx[v]; Vy[v]; Vz[v]" NormDistance = "-DC1" /></Cut>
+
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "ColorVertex" v = "5" cl = "0" />
+        <ExecMacro MacroName = "ColorVertex" v = "6" cl = "1" />
+        <ExecMacro MacroName = "ColorVertex" v = "0" cl = "2" />
+        <ExecMacro MacroName = "ColorVertex" v = "3" cl = "3" />
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

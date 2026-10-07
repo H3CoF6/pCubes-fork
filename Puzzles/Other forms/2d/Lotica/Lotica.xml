@@ -1,0 +1,100 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Lotica</Name>
+        <Menu>Other forms\2d\Lotica\Lotica</Menu>
+        <Inventor>Serguei and Alexandre Bagdassarian</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4116</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clGreen  := '00BB00';
+        clWhite  := 'FFFFFF';
+
+        K := 0.6;
+
+        C29 := K * 1.00517373279507;
+        D := C29 / sqrt(2) * 1.01;
+
+        DCut := D - K * 0.09;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D" >
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D" >
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <!-- Aliases -->
+
+        <Macro Name = "A"      > <Turn  Axis = "0" Layer = "1" Angle = " Pi"   /> </Macro>
+        <Macro Name = "B"      > <Turn  Axis = "1" Layer = "1" Angle = " Pi/2" /> </Macro>
+        <Macro Name = "CutA"   > <Cut   Axis = "0" From  = "1"                 /> </Macro>
+        <Macro Name = "CutA'"  > <Cut   Axis = "0" To    = "1"                 /> </Macro>
+        <Macro Name = "CutB"   > <Cut   Axis = "1" From  = "1"                 /> </Macro>
+        <Macro Name = "CutB'"  > <Cut   Axis = "1" To    = "1"                 /> </Macro>
+        <Macro Name = "SplitA" > <Split Axis = "0" From  = "1"                 /> </Macro>
+        <Macro Name = "SplitB" > <Split Axis = "1" From  = "1"                 /> </Macro>
+
+        <!-- supporting macros -->
+
+        <Macro Name = "Unbandage" >
+            <ExecMacro MacroName = "SplitA A SplitB B" Repeat = "8" />
+            <Undo Repeat = "16" />
+        </Macro>
+
+        <Macro Name = "AddSphere" >
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+        </Macro>
+
+        <!-- Colored parts -->
+
+        <ExecMacro MacroName = "AddSphere CutA' CutB " Color = "clRed"    />
+        <ExecMacro MacroName = "AddSphere CutA  CutB " Color = "clYellow" />
+        <ExecMacro MacroName = "AddSphere CutA  CutB'" Color = "clGreen"  />
+
+        <!-- White base -->
+
+        <Macro Name = "Base" >
+            <ExecMacro MacroName = "AddSphere CutA' CutB'" Color = "clWhite"  />
+        </Macro>
+
+        <ExecMacro MacroName = "Base" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 1;-1; 0" NormDistance = " DCut" /> </Cut>
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 0;-1; 0" NormDistance = " DCut" /> </Cut>
+
+        <ExecMacro MacroName = "Base" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = "-1; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clWhite"     > <Plane NormVector = " 0;-1; 0" NormDistance = " DCut" /> </Cut>
+
+        <ExecMacro MacroName = "Base" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "clWhite"     > <Plane NormVector = " 1;-1; 0" NormDistance = " DCut" /> </Cut>
+
+        <ShowAll/>
+
+        <ExecMacro MacroName = "Unbandage" />
+
+        <SaveSolvedState/>
+
+        <!-- align to screen -->
+
+        <Turn NormVector = "0;0;1" Angle = "-Pi/8" />
+
+        <!-- default turn for every puzzle in pCubes -->
+
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

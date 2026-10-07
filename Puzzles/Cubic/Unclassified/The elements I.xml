@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>The elements I</Name>
+        <Menu>Cubic\Unclassified\The elements I</Menu>
+        <Inventor>Patrick Timmerman</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2019-08-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5235</Link>
+    </Interface>
+ 
+    <Script>
+        Colors[0] := '0000C8'; // clBlue
+        Colors[1] := 'FFFFFF'; // clWhite
+        Colors[2] := 'C80000'; // clRed
+        Colors[3] := 'FFFF00'; // clYellow
+        Colors[4] := '009600'; // clGreen
+
+        W := 0.55;
+        D := W / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <SplitByAxes/>
+
+        <Macro Name = "CutLayer" >
+            <Cut Color = "Colors[c]" ><Plane NormVector = "-1; 0; 0" NormDistance = "-2*D" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 1; 0; 0" NormDistance = "-2*D" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Cut>
+            <Cut Color = "Colors[c]" ><Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Cut>
+        </Macro>
+
+        <Cut Color = "Colors[0]" ><Plane NormVector = " 0; 0;-1" NormDistance = "-D" /></Cut>
+        <Cut Color = "Colors[4]" ><Plane NormVector = " 0; 0; 1" NormDistance = "-2*D" /></Cut>
+        <Hide Axis = "2" Layer = "0" />
+        <ExecMacro MacroName = "CutLayer" c = "1" />
+        <InvertVisibility/>
+
+        <Split><Plane NormVector = "0; 0; 1" NormDistance = "-D" /></Split>
+        <HideContaining Vector = " 0; 0; 0" />
+        <ExecMacro MacroName = "CutLayer" c = "3" />
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "CutLayer" c = "2" />
+        <ShowAll/>
+
+        <Split><Plane NormVector = "1; 0; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = "1; 0; 0" NormDistance = " D" /></Split>
+
+        <SaveSolvedState/>
+
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

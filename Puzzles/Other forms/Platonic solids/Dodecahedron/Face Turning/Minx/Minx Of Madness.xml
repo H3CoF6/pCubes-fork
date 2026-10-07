@@ -1,0 +1,37 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Minx Of Madness</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Minx\Minx Of Madness</Menu>
+        <Inventor></Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2025-10-07</Added>
+        <Link>https://www.youtube.com/watch?v=q3rSbZRTimE</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        N := 10;
+        for i := 0 to N - 1 do
+            D[i] := ((2 * N - i - 1) * Rsin + (i + 1) * R2sin) / 2 / N;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "D" NormVectors = "Cx; Cy; Cz" FixedLayers = "0" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <!-- at first remove central part to accelerate creation -->
+        <Macro Name = "SplitF" >
+            <Split Axis = "i" From = "N" />
+            <Script>Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitF" i = "0" Repeat = "12" />
+        <RemoveGrayParts/>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

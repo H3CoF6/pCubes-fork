@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fused Junior Cubes</Name>
+        <Menu>Cubic\Multi-core\Fused Junior Cubes</Menu>
+        <Inventor>Steve Marshall</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-06-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2920</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+
+        W1 := W / 2;
+        T1 := W / 3;
+
+        W2 := W / 3 * 2;
+        W22 := W / 3;
+        D2 := W1 / 3;
+        T2 := W / 6;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "D2" >
+        <Axis NormVector = " 1; 0; 0" BaseVector = " T1;-T1; T1" />
+        <Axis NormVector = " 0;-1; 0" BaseVector = " T1;-T1; T1" />
+        <Axis NormVector = " 0; 0; 1" BaseVector = " T1;-T1; T1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "-1; 0; 0" BaseVector = "-T2; T2;-T2" />
+        <Axis NormVector = " 0; 1; 0" BaseVector = "-T2; T2;-T2" />
+        <Axis NormVector = " 0; 0;-1" BaseVector = "-T2; T2;-T2" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = "-T1; T1;-T1" />
+        <LoadFrom File = "Figures\Cube.xml" W = "W1" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = "-D2" /></Split>
+        <Split><Plane NormVector = " 0;-1; 0" NormDistance = "-D2" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = "-D2" /></Split>
+        <RemoveContaining Vector = "-D2; D2;-D2" />
+        <Transfer Vector = " T1;-T1; T1" />
+        <HideAll/>
+
+        <Transfer Vector = " T2;-T2; T2" />
+        <LoadFrom File = "Figures\Cube.xml" W = "W2" />
+        <SplitByAxes/>
+        <Transfer Vector = "-W22; W22;-W22" />
+        <RemoveContaining Vector = " 0; 0; 0" />
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W22" Color = "-1" />
+        <Transfer Vector = " W22;-W22; W22" />
+        <Transfer Vector = "-T2; T2;-T2" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

@@ -1,0 +1,265 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>JAMmed Gigaminx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bandaged\JAMmed Gigaminx</Menu>
+        <Inventor>Harley Olsthoorn</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-01-08</Added>
+        <Link>https://jockeyandmusic.com/jammed-gigaminx/</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6537</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF0000'; // Red         
+        Colors[ 1] := 'FFF08F'; // LightYellow 
+        Colors[ 2] := '007700'; // Green       
+        Colors[ 3] := 'FFFFFF'; // White       
+        Colors[ 4] := '0000FF'; // Blue        
+        Colors[ 5] := 'FF38E4'; // LightViolett
+        Colors[ 6] := 'FFFF00'; // Yellow      
+        Colors[ 7] := '00FF00'; // LightGreen  
+        Colors[ 8] := 'AAAAAA'; // Gray        
+        Colors[ 9] := '7777FF'; // LightBlue   
+        Colors[10] := 'B200FF'; // Violett     
+        Colors[11] := 'FF6A00'; // Orange      
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := (3 * Rsin + 1 * R2sin) / 4;
+        D2 := (2 * Rsin + 2 * R2sin) / 4;
+
+        procedure Prepare();
+        begin
+            Count := Length(S) div 3;
+            for i := 0 to Count - 1 do begin
+                ax[i] := StrToInt(copy(S, i * 3 + 1, 1));
+                L[i] := StrToInt(copy(S, i * 3 + 2, 1));
+                Sign := copy(S, i * 3 + 3, 1);
+                if Sign = '-' then begin
+                    FromL[i] := L[i] + 1;
+                    ToL[i] := 20;
+                end else begin
+                    FromL[i] := 0;
+                    ToL[i] := L[i];
+                end;
+            end;
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D1;-D2; D2; D1" FixedLayers = "2" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "Split1" >
+            <Split Axis = "ax[i]" From = "L[i] + 1" />
+            <Hide Axis = "ax[i]" From = "FromL[i]" To = "ToL[i]" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <Macro Name = "Split2" >
+            <Script> Prepare; </Script>
+            <ExecMacro MacroName = "Split1" i = "0" Repeat = "Count" />
+            <ShowAll/>
+        </Macro>
+
+        // "52-" means split axis = "5" From = "2+1" and hide lower or upper half depending on sign
+        // these strings split very bandaged puzzle
+        <ExecMacro MacroName = "Split2" S = "'52-51-41-23-22-01+50-40*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41-23-22-01+50+40*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41-23-22+50-40*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41-23-22+50+40*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41-23+50-40*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41-23+50+40*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41+32-22-11-10-50-01*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41+32-22-11-10-50+01*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41+32-22-11-10+01+50*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41+32-22-11+01+50*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41+32+22-50-33-11*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41+32+22-50-33+11-10*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41+32+22-50+11+33*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51-41+32+22+33+23*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41-31-12-40-30-01*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41-31-12-40-30+01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41-31-12-40+30-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41-31-12-40+30+01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41-31+22-12-40-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41-31+22-12-40+01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41-31+22+13-12-40-23*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41-31+22+13-12-40+23*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41-31+22+13+23+40*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31-21-01-30-20-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31-21-01-30-20+00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31-21-01-30+20-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31-21-01-30+20+00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31-21+12-30-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31-21+12-30+01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22-21-20-11-10-01*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22-21-20-11-10+01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22-21-20-11+01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22-21-20+11-10-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22-21-20+11-10+01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22-21-20+11+01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22-21+12-11-01+10*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22-21+12-11+03-02-01-00*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22-21+12+02-13*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22+13-12-03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22+13-12+03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23-22+13+03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23+13-12-03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23+13-12+03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32-31+23+13+02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32+22-11+33-03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32+22-11+33+03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32+22+03-02+33-23*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32+22+03-02+33+23*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32+22+03+33-23*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42-41+32+22+03+33+23*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42+32-21-11-10-43+20*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42+32-21-11+43-20*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42+32-21-11+43+20*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42+32-21+11+43-03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42+32-21+11+43+03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42+32+11+33-43-03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42+32+11+33-43+03-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42+32+11+33+03-43-02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52-51+42+32+11+33+03-43+02*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42-31-21-30-53*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42-31-21+13-12-53-30*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42-31-21+13-12-53+30*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42-31-21+13+30-53*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42-31+21+12-02-53*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42-31+21+12+03-02-53-13*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42-31+21+12+03-02-53+13*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42-31+21+12+03+53*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42+21-53-43-20*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42+21-53-43+20*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42+21-53+43-20*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42+21-53+43+20*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42+21+02-53-43*'" />
+        <ExecMacro MacroName = "Split2" S = "'52+42+21+02-53+43*'" />
+
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(6)" Layer = "Random(5)" Angle = "sAngle * (Random(4) + 1)"/>
+        </Macro>
+
+        <Macro Name = "Turn1" >
+            <Turn Axis = "ax[i]" From = "FromL[i]"  To = "ToL[i]" Angle = "A[i]" />
+            <Script> Inc(i);</Script>
+        </Macro>
+        <Macro Name = "Turn2" >
+            <Script> Prepare; </Script>
+            <ExecMacro MacroName = "Turn1" i = "0" Repeat = "Count" />
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <Script>
+                sAngle := Pi * 2 / 5;
+                procedure Prepare();
+                begin
+                    Count := Length(S) div 5;
+                    for i := 0 to Count - 1 do begin
+                        ax[i]    := StrToInt(copy(S, i * 5 + 1, 1));
+                        FromL[i] := StrToInt(copy(S, i * 5 + 2, 1));
+                        ToL[i]   := StrToInt(copy(S, i * 5 + 3, 1));
+                        Sign     :=          copy(S, i * 5 + 4, 2);
+                        Case Sign of
+                        '--': A[i] :=-sAngle * 2;
+                        '- ': A[i] :=-sAngle;
+                        '+ ': A[i] := sAngle;
+                        '++': A[i] := sAngle * 2;
+                        end;
+                    end;
+                end;
+            </Script>
+
+            // "157|" means turn axis = "1" From = "5" To "7" and Angle depending on sign
+            <ExecMacro MacroName = "Turn2" S = "'101++234--501+ 401- 501- 001+ 501- 001+ 501+ 534++'" />
+            <ExecMacro MacroName = "Turn2" S = "'034- 534+ 034+ 344+ 101- 201- 101+ 201+ 101- 201- '" />
+            <ExecMacro MacroName = "Turn2" S = "'101+ 201+ 101- 201- 101+ 201+ 101- 201- 101+ 201+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'344- 101- 201- 101+ 201+ 101- 201- 101+ 201+ 344+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'434- 201- 434+ 344- 201+ 001- 201- 001+ 201- 534+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'344- 534- 034- 534+ 034+ 344+ 101- 201- 101+ 201+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'101- 201- 101+ 201+ 101- 201- 101+ 201+ 101- 201- '" />
+            <ExecMacro MacroName = "Turn2" S = "'101+ 201+ 434+ 534+ 434- 534- 434+ 534+ 434- 534- '" />
+            <ExecMacro MacroName = "Turn2" S = "'434+ 534+ 434- 534- 434+ 534+ 434- 534- 434+ 534+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'434- 534- 434+ 534+ 434- 534- 344+ 101- 201- 101+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'201+ 101- 201- 101+ 201+ 344- 301- 201- 434- 201- '" />
+            <ExecMacro MacroName = "Turn2" S = "'434+ 201+ 001+ 301++534+ 034- 534+ 034+ 101- 201- '" />
+            <ExecMacro MacroName = "Turn2" S = "'101+ 201+ 101- 201- 101+ 201+ 344- 434+ 534+ 434- '" />
+            <ExecMacro MacroName = "Turn2" S = "'534- 434+ 534+ 434- 534- 434+ 534+ 434- 534- 434+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'534+ 434- 534- 344+ 434+ 534+ 434- 534- 434+ 534+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'434- 534- 344- 301+ 534++034- 534+ 034+ 534- 201--'" />
+            <ExecMacro MacroName = "Turn2" S = "'301+ 401+ 134--534- 434+ 534+ 434- 534- 434+ 534+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'434- 534- 344+ 534- 201+ 101- 201- 101+ 201+ 344- '" />
+            <ExecMacro MacroName = "Turn2" S = "'434+ 534+ 434- 534- 434+ 534+ 434- 534- 434+ 534+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'434- 534- 434+ 534+ 434- 534- 344+ 201- 034- 534+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'034+ 434+ 534+ 434- 534- 434+ 534+ 434- 534- 101- '" />
+            <ExecMacro MacroName = "Turn2" S = "'201- 101+ 201+ 101- 201- 101+ 201+ 101- 201- 101+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'201+ 101- 201- 101+ 201+ 101- 201- 101+ 201+ 101- '" />
+            <ExecMacro MacroName = "Turn2" S = "'201- 101+ 201+ 344- 034+ 134+ 034- 134- 034+ 134+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'034- 134- 344--501- 001- 501+ 001+ 501- 001- 501+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'001+ 501- 001- 501+ 001+ 501- 001- 501+ 001+ 344- '" />
+            <ExecMacro MacroName = "Turn2" S = "'534- 101- 201+ 101+ 344- 201- 034- 534+ 034+ 434+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'534+ 434- 534- 434+ 534+ 434- 534- 434+ 534+ 434- '" />
+            <ExecMacro MacroName = "Turn2" S = "'534- 434+ 534+ 434- 534- 344+ 101- 201- 101+ 201+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'101- 201- 101+ 201+ 344- 034- 201- 534+ 034+ 201+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'434- 201- 434+ 201- 101- 201+ 101+ 001- 301- 401--'" />
+            <ExecMacro MacroName = "Turn2" S = "'301--434- 534+ 434+ 201++301- 001- 301+ 001+ 434- '" />
+            <ExecMacro MacroName = "Turn2" S = "'534+ 434+ 344- 100+ 344- 100+ 344- 100+ 344- 100+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'344- 100- 344+ 100+ 344+ 333+ 100+ 344++100+ 344- '" />
+            <ExecMacro MacroName = "Turn2" S = "'100+ 333--100+ 344--100--344+ 100- 333- 100+ 344--'" />
+            <ExecMacro MacroName = "Turn2" S = "'434- 201- 434+ 201- 101- 201+ 101+ 534- 034- 534+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'034+ 534+ 434+ 534- 434- 534++201--501- 001+ 501+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'001+ 101+ 001- 101- 434- 534+ 434+ 301--001--301++'" />
+            <ExecMacro MacroName = "Turn2" S = "'001++501- 401+ 501+ 100++344- 100++344- 100- 344- '" />
+            <ExecMacro MacroName = "Turn2" S = "'100+ 333+ 111- 100--501+ 344- 501- 100- 401- 234+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'401+ 234- 401+ 501+ 401- 501- 401+ 100+ 111+ 001- '" />
+            <ExecMacro MacroName = "Turn2" S = "'101- 001- 501- 001+ 501+ 001--434- 201- 434+ 201- '" />
+            <ExecMacro MacroName = "Turn2" S = "'101- 201+ 101+ 201--301--434- 534+ 434+ 301+ 001++'" />
+            <ExecMacro MacroName = "Turn2" S = "'301+ 201+ 301- 201- 401- 501- 401+ 501+ 344- 034--'" />
+            <ExecMacro MacroName = "Turn2" S = "'534+ 434+ 534- 434- 234- 134+ 234+ 100++344- 434+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'344+ 434- 100++344--100- 344+ 111- 344--100--333- '" />
+            <ExecMacro MacroName = "Turn2" S = "'434+ 534- 434- 134++501+ 401- 501- 134- 534- 201- '" />
+            <ExecMacro MacroName = "Turn2" S = "'534- 201+ 034+ 134- 034- 234+ 401- 234- 401+ 234+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'401- 234- 401+ 234+ 401- 234- 401+ 234+ 401- 234- '" />
+            <ExecMacro MacroName = "Turn2" S = "'401+ 344--501- 401- 301--434- 534+ 434+ 100+ 501+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'344- 100++334++234+ 401- 234- 401+ 234+ 401- 234- '" />
+            <ExecMacro MacroName = "Turn2" S = "'401+ 344--501- 101+ 334+ 234+ 401- 234- 401+ 234+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'401- 234- 401+ 344- 201+ 344- 201- 534+ 201+ 534- '" />
+            <ExecMacro MacroName = "Turn2" S = "'201- 534+ 201+ 534- 344- 201- 101- 201+ 101+ 334- '" />
+            <ExecMacro MacroName = "Turn2" S = "'434+ 534+ 434- 534- 434+ 534+ 434- 534- 344++134+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'301- 401+ 333+ 344+ 234+ 401+ 234- 344--234+ 401- '" />
+            <ExecMacro MacroName = "Turn2" S = "'234- 401+ 344--333+ 401+ 101+ 001- 111- 100- 111- '" />
+            <ExecMacro MacroName = "Turn2" S = "'334- 234+ 401- 234- 401+ 234+ 401- 234- 401+ 334- '" />
+            <ExecMacro MacroName = "Turn2" S = "'100++334+ 234+ 401- 234- 401+ 234+ 401- 234- 401+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'234+ 401- 234- 401+ 234+ 401- 234- 401+ 101--334+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'234+ 401- 234- 401+ 234+ 401- 234- 401+ 234+ 401- '" />
+            <ExecMacro MacroName = "Turn2" S = "'234- 401+ 234+ 401- 234- 401+ 334+ 234+ 401- 234- '" />
+            <ExecMacro MacroName = "Turn2" S = "'401+ 234+ 401- 234- 401+ 344- 201++301- 001- 301+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'001+ 201- 534+ 201++534- 201- 534+ 201- 534+ 201+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'534- 100--501- 100--301++201--434- 534+ 434+ 100--'" />
+            <ExecMacro MacroName = "Turn2" S = "'501- 401- 301- 401+ 301+ 401- 301- 401+ 301+ 501--'" />
+            <ExecMacro MacroName = "Turn2" S = "'234- 034--434- 034- 234+ 401- 234- 401+ 134- 034+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'134+ 034- 134- 034+ 134+ 034- 134- 034+ 134+ 034- '" />
+            <ExecMacro MacroName = "Turn2" S = "'134- 034+ 134+ 034- 134- 434+ 534+ 434- 344++'" />
+
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

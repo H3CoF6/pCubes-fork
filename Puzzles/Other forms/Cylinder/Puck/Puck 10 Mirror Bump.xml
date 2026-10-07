@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Puck 10 Mirror Bump</Name>
+        <Menu>Other forms\Cylinder\Puck\Puck 10 Mirror Bump</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-04-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7886</Link>
+    </Interface>
+
+    <Script>
+        Color := '3868BF'; // clLightBlue
+
+        R := 0.6;
+        N := 10;
+
+        R1 := R * 0.6;
+        R2 := R * 0.3;
+        H := R * 0.25;
+        H1 := H * 1.002;
+        Angle := 2 * Pi / N;
+
+        dx := R * 0.17;
+        dy := R * 0.09;
+    </Script>
+
+    <Axes TurningAngles = "0; Angle; 0" PlaneDistances = "-H; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Cylinder Radius = "R" Color = "Color" >
+           <Base X = "dx" Y = "dy" Z = " H" Color = "Color" />
+           <Top  X = "dx" Y = "dy" Z = "-H" Color = "Color" />
+        </Cylinder>
+        <Cylinder Radius = "R1" >
+           <Base X = "0" Y = "0" Z = "H"/>
+           <Top  X = "0" Y = "0" Z = "H1" Color = "Color" />
+        </Cylinder>
+        <Cylinder Radius = "R1" >
+           <Base X = "0" Y = "0" Z = "-H"/>
+           <Top  X = "0" Y = "0" Z = "-H1" Color = "Color" />
+        </Cylinder>
+
+        <Macro Name = "Split">
+            <SplitByAxes/>
+            <Turn Axis = "0" Angle = "Angle" Layer = "1" />
+        </Macro>
+
+        <Macro Name = "Save">
+            <SaveSolvedState/>
+            <Turn Axis = "0" Angle = "Angle" Layer = "1" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" Repeat = "5" />
+        <ExecMacro MacroName = "Save" Repeat = "10" />
+
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "1" Layer = "0" Angle = "Pi" />
+        <ExecMacro MacroName = "Save" Repeat = "10" />
+        <Undo Repeat = "28" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

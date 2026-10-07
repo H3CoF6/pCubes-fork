@@ -1,0 +1,80 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Canny Uncube</Name>
+        <Menu>Other cubes\Bermuda Cubes\Canny Uncube</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2015-08-20</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1498</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        L := W * sqrt(2);
+        D := W * (sqrt(2) - 1);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-W; -W; -W" />
+                <Add Vector = "-W;  W; -W" />
+                <Add Vector = "-D;  W; -W" />
+                <Add Vector = " 0;  L; -W" />
+                <Add Vector = " L;  0; -W" />
+                <Add Vector = " W; -D; -W" />
+                <Add Vector = " W; -W; -W" />
+
+                <Add Vector = "-W; -W;  W" />
+                <Add Vector = "-W;  W;  W" />
+                <Add Vector = "-D;  W;  W" />
+                <Add Vector = " 0;  L;  W" />
+                <Add Vector = " L;  0;  W" />
+                <Add Vector = " W; -D;  W" />
+                <Add Vector = " W; -W;  W" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "FFFFFF" VertexIndexes = " 0; 1; 2; 3;4;5;6" />
+                <Face Color = "FFFF00" VertexIndexes = "13;12;11;10;9;8;7" />
+                <Face Color = "C80000" VertexIndexes = " 0; 7; 8; 1" />
+                <Face Color = "FF800A" VertexIndexes = " 1; 8; 9; 2" />
+                <Face Color = "FF800B" VertexIndexes = " 2; 9;10; 3" />
+                <Face Color = "0000C8" VertexIndexes = " 3;10;11; 4" />
+                <Face Color = "C80070" VertexIndexes = " 4;11;12; 5" />
+                <Face Color = "C80071" VertexIndexes = " 5;12;13; 6" />
+                <Face Color = "009600" VertexIndexes = " 6;13; 7; 0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn  Axis = "0" Layer = "0" Angle = " Pi" />
+        <Split Axis = "1" From  = "1" />
+        <Turn  Axis = "0" Layer = "0" Angle = " Pi" />
+
+        <Turn  Axis = "1" Layer = "0" Angle = " Pi" />
+        <Split Axis = "0" From  = "1" />
+        <Turn  Axis = "1" Layer = "0" Angle = " Pi" />
+
+        <Turn  Axis = "2" Layer = "1" Angle = " Pi / 2" />
+        <Split Axis = "3" From  = "1" />
+        <Split Axis = "3" From  = "2" />
+        <Turn  Axis = "2" Layer = "1" Angle = "-Pi / 2" />
+    </Figure>
+</xml>

@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Gigahexaminx</Name>
+        <Menu>Other Cubes\Hexaminx\Gigahexaminx</Menu>
+        <Inventor>Ryan Binter</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2250</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        A := W * 1.09;
+        B := W * 0.4;
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+
+        D1 := W / (ss + cs);
+        D2 := W * cs;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "-D2; -D1; D1; D2" FixedLayers = "2" >
+        <Axis NormVector = "  0; ss; cs" />
+        <Axis NormVector = "  0; ss;-cs" />
+        <Axis NormVector = " cs;  0; ss" />
+        <Axis NormVector = "-cs;  0; ss" />
+        <Axis NormVector = " ss; cs;  0" />
+        <Axis NormVector = " ss;-cs;  0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

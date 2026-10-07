@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Decaminx</Name>
+        <Menu>Other forms\Trapezohedron\Truncated\Decaminx</Menu>
+        <Inventor>Taras Bereznyak</Inventor>
+        <Programmer>Taras Bereznyak</Programmer>
+        <Added>2025-01-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12127</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF';
+        Colors[1] := 'FFFF00';
+        Colors[2] := 'FF00FF';
+        Colors[3] := '00FFFF';
+        Colors[4] := 'FF0000';
+        Colors[5] := 'A0A0A0';
+        Colors[6] := '00FF00';
+        Colors[7] := 'FF8000';
+        Colors[8] := '008000';
+        Colors[9] := '8000FF';
+
+        H := 0.5;
+
+        s2 := sqrt(2);
+        C := s2 - 1;
+        S := sqrt( 1 - C^2);
+        T := S / s2;
+
+        D := H * 0.75;
+    </Script>
+
+    <Axes TurningAngles = " 0; 2*Pi" AvailableAngles = "-Pi * 3 / 4;-Pi / 2; 0; Pi / 2; Pi * 3 / 4" PlaneDistances = "D" >
+        <Axis NormVector = "-S; 0; C" />
+        <Axis NormVector = " 0;-S; C" />
+        <Axis NormVector = " S; 0; C" />
+        <Axis NormVector = " 0; S; C" />
+
+        <Axis NormVector = "-T;-T;-C" />
+        <Axis NormVector = " T;-T;-C" />
+        <Axis NormVector = " T; T;-C" />
+        <Axis NormVector = "-T; T;-C" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/2" PlaneDistances = "D" >
+        <Axis NormVector = " 0; 0; 1" />
+        <Axis NormVector = " 0; 0;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" W = "H * 1.3" />
+        <SplitByAxes/>
+
+        <Cut Color = "Colors[0]" > <Plane NormVector = " 0; 0;-1" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[1]" > <Plane NormVector = "-S; 0;-C" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[2]" > <Plane NormVector = " 0;-S;-C" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[3]" > <Plane NormVector = " S; 0;-C" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[4]" > <Plane NormVector = " 0; S;-C" NormDistance = "-H" /> </Cut>
+
+        <Cut Color = "Colors[5]" > <Plane NormVector = " 0; 0; 1" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[6]" > <Plane NormVector = "-T;-T; C" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[7]" > <Plane NormVector = " T;-T; C" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[8]" > <Plane NormVector = " T; T; C" NormDistance = "-H" /> </Cut>
+        <Cut Color = "Colors[9]" > <Plane NormVector = "-T; T; C" NormDistance = "-H" /> </Cut>
+    </Figure>
+
+    <Macros>
+        <Macro Name = "Sc1" >
+            <Script>
+                ax1 := ax mod 4; // 1
+                ax2 := (ax + 1) mod 4; // 2
+            </Script>
+            <Turn Axis = "ax1" Layers = "1" Angle = "-Pi*3/4" />
+            <Turn Axis = "ax2" Layers = "1" Angle = " Pi*3/4" />
+            <Turn Axis = "ax1" Layers = "1" Angle = " Pi*3/4" />
+            <Turn Axis = "ax2" Layers = "1" Angle = "-Pi*3/4" />
+            <Turn Axis = "8" Layers = "1" Angle = "2*Pi * Random" />
+        </Macro>
+
+        <Macro Name = "Sc2" >
+            <Script>
+                ax1 := (ax + 1) mod 4 + 4; // 5
+                ax2 := ax + 4; // 4
+            </Script>
+
+            <Turn Axis = "ax1" Layers = "1" Angle = "-Pi*3/4" />
+            <Turn Axis = "ax2" Layers = "1" Angle = " Pi*3/4" />
+            <Turn Axis = "ax1" Layers = "1" Angle = " Pi*3/4" />
+            <Turn Axis = "ax2" Layers = "1" Angle = "-Pi*3/4" />
+            <Turn Axis = "9" Layers = "1" Angle = "2*Pi * Random" />
+        </Macro>
+
+        <Macro Name = "Sc3" >
+            <Script>
+                ax1 := ax mod 4; // 1
+                ax2 := (ax + 1) mod 4; // 2
+            </Script>
+            <Turn Axis = "ax1" Layers = "1" Angle = " Pi*3/4" />
+            <Turn Axis = "  8" Layers = "1" Angle = " Pi    " />
+            <Turn Axis = "ax1" Layers = "1" Angle = "-Pi*3/4" />
+            <Turn Axis = "  8" Layers = "1" Angle = " Pi/2  " />
+            <Turn Axis = "ax2" Layers = "1" Angle = " Pi*3/4" />
+            <Turn Axis = "  8" Layers = "1" Angle = " Pi    " />
+            <Turn Axis = "ax2" Layers = "1" Angle = "-Pi*3/4" />
+            <Turn Axis = "  8" Layers = "1" Angle = "-Pi/2  " />
+            <Turn Axis = "ax1" Layers = "1" Angle = " Pi*3/4" />
+            <Turn Axis = "  8" Layers = "1" Angle = "-Pi    " />
+            <Turn Axis = "ax1" Layers = "1" Angle = "-Pi*3/4" />
+        </Macro>
+
+        <Macro Name = "Sc4" >
+            <Script>
+                ax1 := ax mod 4; // 1
+                ax2 := (ax + 1) mod 4; // 2
+            </Script>
+            <Turn Axis = "ax1" Layers = "1" Angle = "-Pi*3/4" />
+            <Turn Axis = "  8" Layers = "1" Angle = " Pi    " />
+            <Turn Axis = "ax1" Layers = "1" Angle = " Pi*3/4" />
+            <Turn Axis = "  8" Layers = "1" Angle = " Pi/2  " />
+            <Turn Axis = "ax2" Layers = "1" Angle = "-Pi*3/4" />
+            <Turn Axis = "  8" Layers = "1" Angle = "-Pi    " />
+            <Turn Axis = "ax2" Layers = "1" Angle = " Pi*3/4" />
+            <Turn Axis = "  8" Layers = "1" Angle = "-Pi/2  " />
+            <Turn Axis = "ax1" Layers = "1" Angle = "-Pi*3/4" />
+            <Turn Axis = "  8" Layers = "1" Angle = " Pi    " />
+            <Turn Axis = "ax1" Layers = "1" Angle = " Pi*3/4" />
+        </Macro>
+
+        <Macro Name = "Sc5" >
+            <Turn Axis = "ax" Layers = "1" Angle = " Pi*3/4"/>
+            <Turn Axis = "8"  Layers = "1" Angle = " Pi/2  "/>
+            <Turn Axis = "9"  Layers = "1" Angle = " Pi/2  "/>
+            <Turn Axis = "ax" Layers = "1" Angle = "-Pi*3/4"/>
+            <Turn Axis = "8"  Layers = "1" Angle = "-Pi/2  "/>
+            <Turn Axis = "9"  Layers = "1" Angle = "-Pi/2  "/>
+            <Turn Axis = "ax" Layers = "1" Angle = " Pi*3/4"/>
+            <Turn Axis = "8"  Layers = "1" Angle = "-Pi/2  "/>
+            <Turn Axis = "9"  Layers = "1" Angle = "-Pi/2  "/>
+            <Turn Axis = "ax" Layers = "1" Angle = "-Pi*3/4"/>
+            <Turn Axis = "8"  Layers = "1" Angle = " Pi/2  "/>
+            <Turn Axis = "9"  Layers = "1" Angle = " Pi/2  "/>
+            <Turn Axis = "ax" Layers = "1" Angle = " Pi*3/4"/>
+            <Turn Axis = "8"  Layers = "1" Angle = "-Pi/2  "/>
+            <Turn Axis = "9"  Layers = "1" Angle = "-Pi/2  "/>
+            <Turn Axis = "ax" Layers = "1" Angle = "-Pi*3/4"/>
+            <Turn Axis = "8"  Layers = "1" Angle = "-Pi/2  "/>
+            <Turn Axis = "9"  Layers = "1" Angle = "-Pi/2  "/>
+        </Macro>
+
+
+        <Macro Name = "Sc12" >
+            <ExecMacro MacroName = "Sc1" ax = "Random(4)" />
+            <ExecMacro MacroName = "Sc2" ax = "Random(4)" />
+            <ExecMacro MacroName = "Sc3" ax = "Random(4)" />
+            <ExecMacro MacroName = "Sc4" ax = "Random(4)" />
+            <ExecMacro MacroName = "Sc5" ax = "Random(8)" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(6)" Layer = "1" Angle = "Random * 2 * Pi" />
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "Sc12" Repeat = "100" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "1000" />
+        </Macro>
+    </Macros>
+</xml>

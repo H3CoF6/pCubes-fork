@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Curvyminx</Name>
+        <Menu>Other forms\Archimedean Solids\Truncated Tetrahedron\Curvyminx</Menu>
+        <Inventor>Tony Fisher</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1620</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+        D := W * 4 / 5 / sqrt(3);
+        D0 := -W / sqrt(3);
+        D1 := D0 + D;
+        D2 := D0 + 2*D;
+        DCut := D0 + 3*D;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D1; D2" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <Cut Color = "Colors[2]"> <Plane NormVector = "-1;-1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[3]"> <Plane NormVector = " 1; 1; 1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[1]"> <Plane NormVector = " 1;-1;-1" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[0]"> <Plane NormVector = "-1; 1;-1" NormDistance = "-DCut" /> </Cut>
+
+        <SplitByAxes/>
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

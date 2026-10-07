@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>3/4 of 4x4x4</Name>
+        <Menu>Cubic\Unclassified\3/4 of 4x4x4</Menu>
+        <Inventor>Aleh Hladzilin</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5504</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'DD0000'; // Blue
+        Colors[1] := 'FF7700'; // Green
+        Colors[2] := '0000EE'; // Red
+        Colors[3] := '00AA00'; // Orange
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        CylinderHeight := W * 0.02;
+        RC := W * 0.975;
+        D := W / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Hide Axis = "0" From = "0" To = "1" />
+        <Hide Axis = "1" From = "2" To = "3" />
+        <RemoveAllVisible/>
+
+        <Cylinder Radius = "RC" Base = "0;0;0" Top = "0; -CylinderHeight; 0" />
+        <Cut> <Plane NormVector = " 1; 1; 0" NormDistance = "0" /> </Cut>
+        <HideAll/>
+
+        <Cylinder Radius = "RC" Base = "0;0;0" Top = "CylinderHeight; 0; 0" />
+        <Cut> <Plane NormVector = "-1;-1; 0" NormDistance = "0" /> </Cut>
+        <ShowAll/>
+    </Figure>
+</xml>

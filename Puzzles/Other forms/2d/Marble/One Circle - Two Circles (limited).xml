@@ -1,0 +1,155 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>One Circle - Two Circles (limited)</Name>
+        <Menu>Other forms\2d\Marble\One Circle - Two Circles (limited)</Menu>
+        <Inventor>Diniar Namdarian</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-07</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3312</Link>
+    </Interface>
+
+    <Script>
+        clBody    := 'EEEEEE'; // White
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := 'AA00AA'; // Violett
+        Colors[2] := 'FF8800'; // Orange
+        Colors[3] := 'FFFFFF'; // White
+        Colors[4] := '00DD00'; // Green
+        Colors[5] := '0066FF'; // Blue
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        WP := W * 1.001;
+        HP := WP * 1.08;
+        R1 := W * 0.12;
+        R2 := R1 * 0.8;
+
+        RC := W * 0.55;
+
+        delta := W * 0.84;
+        for i := 0 to 9 do begin
+            x1[i] := R1 * cos(2 * Pi / 10 * i);
+            y1[i] := R1 * sin(2 * Pi / 10 * i) - delta;
+            x2[i] := R2 * cos(2 * Pi / 10 * i);
+            y2[i] := R2 * sin(2 * Pi / 10 * i) - delta;
+        end;
+
+        DCut := W * 0.2;
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/6" PlaneDistances = "WP" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi"  PlaneDistances = "WP" >
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Figure>
+
+        // Body
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Macro Name = "CutBody">
+            <Cut Color = "clBody" > <Plane NormVector = "-cx[id]; -cy[id]; -cz[id]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutBody" Repeat = "6" id = "0" />
+
+        <SplitByAxes/>
+        <Cut Color = "clBody" > <Plane NormVector = " 1; 1; 0" NormDistance = "-DCut" /> </Cut>
+
+        <Macro Name = "AddCylinder">
+            <HideAll/>
+            <Cylinder Radius = "RC" Color = "Color" >
+                <Base X = "W " Y = "0" Z = "0" />
+                <Top  X = "WP" Y = "0" Z = "0" Color = "Color" />
+            </Cylinder>
+        </Macro>
+
+        <ExecMacro MacroName = "AddCylinder" Color = "Colors[5]" />
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "0" /> </Cut>
+        <Cut Axis = "2" To = "1" />
+        <ExecMacro MacroName = "AddCylinder" Color = "Colors[4]" />
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+        <Cut Axis = "2" To = "1" />
+        <ExecMacro MacroName = "AddCylinder" Color = "Colors[0]" />
+        <Cut Axis = "2" From = "1" />
+
+        <Turn Axis = "0" NormVector = "1;1;0" Angle = "Pi" />
+
+        <ExecMacro MacroName = "AddCylinder" Color = "Colors[2]" />
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "0" /> </Cut>
+        <Cut Axis = "2" To = "1" />
+        <ExecMacro MacroName = "AddCylinder" Color = "Colors[1]" />
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+        <Cut Axis = "2" To = "1" />
+        <ExecMacro MacroName = "AddCylinder" Color = "Colors[3]" />
+        <Cut Axis = "2" From = "1" />
+
+        <Turn Axis = "0" NormVector = "1;1;0" Angle = "Pi" />
+
+        // Pucks
+
+        <Macro Name = "AddPuck">
+            <Part>
+                <Vertices Vectors = "HP; x2; y2" />
+                <Vertices Vectors = "WP; x1; y1" />
+
+                <Faces>
+                    <Face Color = "cl" VertexIndexes = "0;1;2;3;4;5;6;7;8;9" />
+
+                    <Face Color = "cl" VertexIndexes = "10;11;1;0" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "11;12;2;1" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "12;13;3;2" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "13;14;4;3" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "14;15;5;4" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "15;16;6;5" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "16;17;7;6" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "17;18;8;7" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "18;19;9;8" InvisibleEdges = "10" />
+                    <Face Color = "cl" VertexIndexes = "19;10;0;9" InvisibleEdges = "10" />
+
+                    <Face VertexIndexes = "19;18;17;16;15;14;13;12;11;10" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddPucks">
+            <ExecMacro MacroName = "AddPuck" />
+            <Turn Axis = "0" NormVector = "1;0;0" Angle = " Pi/6" />
+        </Macro>
+
+        <Turn Axis = "0" NormVector = "1;0;0" Angle = " Pi/12" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[5]" Repeat = "3" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[4]" Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[0]" Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[5]" Repeat = "1" />
+        <Turn Axis = "0" NormVector = "1;0;0" Angle = "-Pi/12" />
+
+        <Turn Axis = "0" NormVector = "1;1;0" Angle = "Pi" />
+
+        <Turn Axis = "0" NormVector = "1;0;0" Angle = " Pi/12" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[2]" Repeat = "3" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[1]" Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[3]" Repeat = "4" />
+        <ExecMacro MacroName = "AddPucks" cl = "Colors[2]" Repeat = "1" />
+        <Turn Axis = "0" NormVector = "1;0;0" Angle = "-Pi/12" />
+
+        <Turn Axis = "0" NormVector = "1;1;0" Angle = "Pi" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-135 * Pi/180" />
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

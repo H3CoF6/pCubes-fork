@@ -1,0 +1,96 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Polaris Cube</Name>
+        <Menu>Other cubes\Vertex Turning\Polaris Cube</Menu>
+        <Inventor>Guan Yang</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-10-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7803</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        RCu1 := 0.75 * W;
+
+        RCut := sqrt(3) / 2 - 0.01;
+        RCu2 := sqrt(2) / 2 - 0.005;
+
+        A := W * 1.2;
+        B := W * 0.3;
+
+        D := sqrt(3)/3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/3;Pi*2/3;Pi*2/3;Pi/3" PlaneDistances = "-D;0;D" >
+        <Axis NormVector = "-1; -1; -1" />
+        <Axis NormVector = " 1;  1; -1" />
+        <Axis NormVector = " 1; -1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+
+        <Macro Name = "SplitV">
+            <Split> <Plane NormVector = "-1; -1; -1" NormDistance = "-D" /> </Split>
+            <HideContaining Vector = "W; W; W" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = " -1; -1;  2" NormDistance = "-RCu1" /> </Cut>
+            <Cut> <Plane NormVector = " -1;  2; -1" NormDistance = "-RCu1" /> </Cut>
+            <Cut> <Plane NormVector = "  2; -1; -1" NormDistance = "-RCu1" /> </Cut>
+            <ShowAll/>
+            <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "SplitV" Ax = "0" Repeat = "4" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+        <ExecMacro MacroName = "SplitV" Ax = "0" Repeat = "4" />
+        <Turn NormVector = "0;0;1" Angle = "Pi" />
+
+        <Turn  Axis = "0" Layer = "0" Angle = "Pi/3" />
+        <Turn  Axis = "0" Layer = "3" Angle = "Pi/3" />
+        <Turn  Axis = "1" Layer = "0" Angle = "Pi/3" />
+        <Turn  Axis = "1" Layer = "3" Angle = "Pi/3" />
+        <Turn  Axis = "2" Layer = "0" Angle = "Pi/3" />
+        <Turn  Axis = "2" Layer = "3" Angle = "Pi/3" />
+        <Turn  Axis = "3" Layer = "0" Angle = "Pi/3" />
+        <Turn  Axis = "3" Layer = "3" Angle = "Pi/3" />
+
+        <Split Axis = "0" From = "2"/>
+        <Split Axis = "1" From = "2"/>
+        <Split Axis = "2" From = "2"/>
+        <Split Axis = "3" From = "2"/>
+
+        <Undo Repeat="8" />
+
+        <!-- cut edges and vertices for better control -->
+        <Cut> <Plane NormVector = " 1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1; -1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  1" NormDistance = "-RCut" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1; -1" NormDistance = "-RCut" /> </Cut>
+
+        <Cut> <Plane NormVector = " 1;  1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1; -1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1; -1;  0" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  0;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 1;  0; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = "-1;  0; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  1;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0;  1; -1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1;  1" NormDistance = "-RCu2" /> </Cut>
+        <Cut> <Plane NormVector = " 0; -1; -1" NormDistance = "-RCu2" /> </Cut>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

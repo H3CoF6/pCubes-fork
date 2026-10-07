@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Xminx</Name>
+        <Menu>Other cubes\Unclassified\Xminx</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-12-13</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7144</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+
+        // pillow parameters
+        A := W * 1.2;
+        B := W * 0.2;
+
+        s5 := sqrt(5);
+        a1 := -s5 + sqrt(3 + s5);
+        a2 :=  s5 + sqrt(3 - s5);
+
+        D := W * a2 / sqrt(2 + a2^2);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 5" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "-a1;   1;   1" />
+        <Axis NormVector = "  1; -a1;   1" />
+        <Axis NormVector = "  1;   1; -a1" />
+
+        <Axis NormVector = " a2;  -1;  -1" />
+        <Axis NormVector = " -1;  a2;  -1" />
+        <Axis NormVector = " -1;  -1;  a2" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube Pillowed.xml" />
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

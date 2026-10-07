@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sun Skewb</Name>
+        <Menu>Other forms\Wheel\Wheel Cube\Sun Skewb</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Jack.S.N.Triton</Programmer>
+        <Added>2019-09-12</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        W := 0.43;
+        S := 1.2;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4; 0; Pi / 4" PlaneDistances = "-W; W" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "0" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = "-1;  1;  1" />
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = " 1; -1;  1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "W" Color = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i] * S" Y = "Cy[i] * S" Z = "Cz[i] * S" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "0" Angle = "Pi / 4" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "2" Angle = "Pi / 4" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "0" Angle = "Pi / 4" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "2" Angle = "Pi / 4" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "0" Angle = "Pi / 4" />
+        <SplitByAxes/>
+        <Turn Axis = "2" Layer = "2" Angle = "Pi / 4" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

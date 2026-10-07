@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Fractured Compino</Name>
+        <Menu>Other cubes\Vertex Turning\Fractured Compino</Menu>
+        <Inventor>Joseph Wong</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-04-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6156</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := 0.37;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3; 0; Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1;  1;  1" />
+        <Axis NormVector = "-1; -1;  1" />
+        <Axis NormVector = "-1;  1; -1" />
+        <Axis NormVector = " 1; -1; -1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split1">
+            <Turn Axis = "Ax" Layer = "2" Angle = " Pi/3" />
+            <SplitByAxes/>                               
+            <Turn Axis = "Ax" Layer = "2" Angle = "-Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Split1" Ax = "0"/>
+        <ExecMacro MacroName = "Split1" Ax = "1"/>
+        <ExecMacro MacroName = "Split1" Ax = "2"/>
+        <ExecMacro MacroName = "Split1" Ax = "3"/>
+
+        <Macro Name = "RemovePart">
+            <RemoveContaining Vector = " Vx1;-Vy1; Vz1" />
+            <RemoveContaining Vector = "-Vx1; Vy1; Vz1" />
+            <RemoveContaining Vector = "-Vx1;-Vy1;-Vz1" />
+            <RemoveContaining Vector = " Vx1; Vy1;-Vz1" />
+            <RemoveContaining Vector = " Vx2;-Vy2; Vz2" />
+            <RemoveContaining Vector = "-Vx2; Vy2; Vz2" />
+            <RemoveContaining Vector = "-Vx2;-Vy2;-Vz2" />
+            <RemoveContaining Vector = " Vx2; Vy2;-Vz2" />
+        </Macro>
+
+        <ExecMacro MacroName = "RemovePart" Vx1 = "0.5" Vx2 = "0.5" Vy1 = "  0" Vy2 = "0.2" Vz1 = "0.5" Vz2 = "0.5"/>
+        <ExecMacro MacroName = "RemovePart" Vx1 = "0.5" Vx2 = "0.5" Vy1 = "0.5" Vy2 = "0.5" Vz1 = "  0" Vz2 = "0.2"/>
+        <ExecMacro MacroName = "RemovePart" Vx1 = "  0" Vx2 = "0.2" Vy1 = "0.5" Vy2 = "0.5" Vz1 = "0.5" Vz2 = "0.5"/>
+
+        <ExecMacro MacroName = "RemovePart" Vx1 = "0.4 " Vx2 = "0.5 " Vy1 = "0.22" Vy2 = "0.22" Vz1 = "0.5 " Vz2 = "0.4 "/>
+        <ExecMacro MacroName = "RemovePart" Vx1 = "0.4 " Vx2 = "0.5 " Vy1 = "0.5 " Vy2 = "0.4 " Vz1 = "0.22" Vz2 = "0.22"/>
+        <ExecMacro MacroName = "RemovePart" Vx1 = "0.22" Vx2 = "0.22" Vy1 = "0.4 " Vy2 = "0.5 " Vz1 = "0.5 " Vz2 = "0.4 "/>
+    </Figure>
+</xml>

@@ -1,0 +1,88 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentahedron Crazy - Jupiter</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Face Turning\Pentahedron Crazy\Jupiter</Menu>
+        <Inventor>Daqing Bao</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2015-10-24</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3699</Link>
+    </Interface>
+
+    <Script>
+        clYellow  := 'EDFF11';
+        clBlue    := '5050FF';
+        clOrange  := 'FF5C00';
+        clViolett := '7700CD';
+        clWhite   := 'FFFFFF';
+
+        H := 0.5;
+        R := H * 2 / sqrt(3);
+        RC1 := H * 0.5;
+        RC2 := H * 0.8;
+        DC := 1.001;
+        HC := H * DC;
+
+        for i := 0 to 2 do begin
+            Vx[i] := R * cos(2*Pi * i / 3);
+            Vy[i] := R * sin(2*Pi * i / 3);
+            Cx[i] := -Vx[i] / 2 * DC;
+            Cy[i] := -Vy[i] / 2 * DC;
+        end;
+
+        D1 := H;
+        D2 := H / 3;
+
+        D3 := -R / 2;
+        D4 := -R / 8;
+
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "-D1; -D2; D2; D1" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D3; D4" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " Vx[0]; Vy[0]; 0" />
+        <Axis NormVector = " Vx[1]; Vy[1]; 0" />
+        <Axis NormVector = " Vx[2]; Vy[2]; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "Vx[0]; Vy[0];  H" />
+                <Add Vector = "Vx[1]; Vy[1];  H" />
+                <Add Vector = "Vx[2]; Vy[2];  H" />
+                <Add Vector = "Vx[0]; Vy[0]; -H" />
+                <Add Vector = "Vx[1]; Vy[1]; -H" />
+                <Add Vector = "Vx[2]; Vy[2]; -H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clViolett" VertexIndexes = "0;1;2" />
+                <Face Color = "clYellow"  VertexIndexes = "4;3;5" />
+                <Face Color = "clBlue"    VertexIndexes = "0;3;4;1" />
+                <Face Color = "clOrange"  VertexIndexes = "1;4;5;2" />
+                <Face Color = "clWhite"   VertexIndexes = "2;5;3;0" />
+            </Faces>
+        </Part>
+
+        <Circle Radius = "RC1" Color = "clViolett" Center = "0; 0;  HC" />
+        <Circle Radius = "RC1" Color = "clYellow"  Center = "0; 0; -HC" />
+
+        <SplitByAxes/>
+
+        <Connect Axis = "0" Layers = "0;2;4" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Circle" File = "Puzzles\Other forms\Prism\Triangular Prism\Face Turning\Pentahedron Crazy\Circle.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Circle = 27,0,0, 34,0,0
+    </SetTextures>
+
+</xml>

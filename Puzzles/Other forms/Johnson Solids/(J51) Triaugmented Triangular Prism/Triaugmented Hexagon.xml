@@ -1,0 +1,103 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triaugmented Hexagon</Name>
+        <Menu>Other forms\Johnson Solids\(J51) Triaugmented Triangular Prism\Triaugmented Hexagon</Menu>
+        <Inventor>Mark Segedin</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2396</Link>
+        <Added>2017-03-03</Added>
+    </Interface>
+
+    <Script>
+        clBlue    := '0000C8';
+        clGreen   := '009600';
+        clRed     := 'C80000';
+        clYellow  := 'FFFF00';
+        clWhite   := 'FFFFFF';
+
+        R := 0.45;
+        KR := (1 + sqrt(6)) / 2;
+        R2 := KR * R;
+
+        H := R / 2 * sqrt(3);
+        for i := 0 to 2 do begin
+            x[i] := R * sin(2*Pi/3 * i);
+            y[i] := R * cos(2*Pi/3 * i);
+            x2[i] := -KR * x[i];
+            y2[i] := -KR * y[i];
+        end;
+
+        D := R / 2;
+        RCut := R * 1.15;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" FixedLayers = "1">
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi" PlaneDistances = "0">
+        <Axis NormVector = "y[0]; x[0]; 0" />
+        <Axis NormVector = "y[1]; x[1]; 0" />
+        <Axis NormVector = "y[2]; x[2]; 0" />
+    </Axes>
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y;-H" />
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x2; y2; 0" />
+
+            <Faces>
+                <Face Color = "clYellow" VertexIndexes = "0;1;2" />
+                <Face Color = "clWhite " VertexIndexes = "5;4;3" />
+
+                <Face Color = "clYellow" VertexIndexes = "1;0;8" />
+                <Face Color = "clYellow" VertexIndexes = "2;1;6" />
+                <Face Color = "clYellow" VertexIndexes = "0;2;7" />
+                <Face Color = "clWhite " VertexIndexes = "3;4;8" />
+                <Face Color = "clWhite " VertexIndexes = "4;5;6" />
+                <Face Color = "clWhite " VertexIndexes = "5;3;7" />
+
+                <Face Color = "clRed   " VertexIndexes = "0;7;3" />
+                <Face Color = "clRed   " VertexIndexes = "3;8;0" />
+                <Face Color = "clGreen " VertexIndexes = "1;8;4" />
+                <Face Color = "clGreen " VertexIndexes = "4;6;1" />
+                <Face Color = "clBlue  " VertexIndexes = "2;6;5" />
+                <Face Color = "clBlue  " VertexIndexes = "5;7;2" />
+             </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "5" From = "1" />
+        <Split Axis = "6" From = "1" />
+
+        <!-- cut vertices for better control -->
+        <Macro Name = "Cut">
+            <Hide><Plane NormVector = "0;-1;0" NormDistance = " D" /></Hide>
+            <Cut><Plane NormVector = "-1; 0;-1" NormDistance = "-RCut" /></Cut>
+            <Cut><Plane NormVector = "-1; 0; 1" NormDistance = "-RCut" /></Cut>
+            <Cut><Plane NormVector = " 1; 0; 1" NormDistance = "-RCut" /></Cut>
+            <Cut><Plane NormVector = " 1; 0;-1" NormDistance = "-RCut" /></Cut>
+            <ShowAll/>
+            <Turn Axis = "6" Layers = "0;1" Angle = "2*Pi/3"/>
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "3" />
+
+        <SaveSolvedState/>
+        <Turn Axis = "6" Layers = "0;1" Angle = "Pi/3"/>
+        <SaveSolvedState/>
+        <Undo/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

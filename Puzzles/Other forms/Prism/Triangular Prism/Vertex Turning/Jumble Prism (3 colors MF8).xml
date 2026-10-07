@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+    <Interface>
+        <Name>Jumble Prism (3 colors MF8)</Name>
+        <Menu>Other forms\Prism\Triangular Prism\Vertex Turning\Jumble Prism (3 colors MF8)</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>Evgeniy Grigoriev, xchemist</Programmer>
+        <Added>2021-04-29</Added>
+        <Link>https://www.hknowstore.com/locale/en-US/item.aspx?corpname=nowstore&amp;itemid=3f3bd16e-29aa-44f8-a568-193bdd37f392</Link>
+    </Interface>
+
+    <Script>
+        Colors[1] := 'FF0011'; // Red
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[0] := '0077EE'; // Blue
+
+        R := 0.6;
+        H := R * sqrt(3) / 2;
+        D  := R / 2 / sqrt(7);
+        RC := R * 0.625;
+        RR := R / 2 * 1.001;
+
+        for i := 0 to 2 do begin
+            x[i] := R * sin(2*Pi/3 * i);
+            y[i] := R * cos(2*Pi/3 * i);
+        end;
+
+        xr := RR * sin(2*Pi/3 / 2);
+        yr := RR * cos(2*Pi/3 / 2);
+
+        xe[0] := (x[0] + x[1]) / 2;
+        xe[1] := (x[1] + x[2]) / 2;
+        xe[2] := (x[0] + x[2]) / 2;
+        ye[0] := (y[0] + y[1]) / 2;
+        ye[1] := (y[1] + y[2]) / 2;
+        ye[2] := (y[0] + y[2]) / 2;
+
+        A1 := ArcCos( 1/8);
+        A2 := ArcCos(-3/4);
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-A2;-A1; 0; A1; A2" PlaneDistances = "D">
+        <Axis NormVector = "x[0]; y[0]; H" />
+        <Axis NormVector = "x[1]; y[1]; H" />
+        <Axis NormVector = "x[2]; y[2]; H" />
+        <Axis NormVector = "x[0]; y[0];-H" />
+        <Axis NormVector = "x[1]; y[1];-H" />
+        <Axis NormVector = "x[2]; y[2];-H" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x;  y;-H" />
+            <Vertices Vectors = " x;  y; H" />
+            <Vertices Vectors = "xe; ye;-H" />
+            <Vertices Vectors = "xe; ye; H" />
+            <Vertices Vectors = " 0;  0;-H" />
+            <Vertices Vectors = " 0;  0; H" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = " 0; 6;12; 8" />
+                <Face Color = "Colors[0]" VertexIndexes = " 3;11;13; 9" />
+                <Face Color = "Colors[1]" VertexIndexes = " 1; 7;12; 6" />
+                <Face Color = "Colors[1]" VertexIndexes = " 4; 9;13;10" />
+                <Face Color = "Colors[2]" VertexIndexes = " 2; 8;12; 7" />
+                <Face Color = "Colors[2]" VertexIndexes = " 5;10;13;11" />
+
+                <Face Color = "Colors[0]" VertexIndexes = " 6; 0; 3; 9" />
+                <Face Color = "Colors[0]" VertexIndexes = "11; 3; 0; 8" />
+                <Face Color = "Colors[1]" VertexIndexes = " 7; 1; 4;10" />
+                <Face Color = "Colors[1]" VertexIndexes = " 9; 4; 1; 6" />
+                <Face Color = "Colors[2]" VertexIndexes = " 8; 2; 5;11" />
+                <Face Color = "Colors[2]" VertexIndexes = "10; 5; 2; 7" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "ExtraStickers" >
+            <HideAll/>
+            <Circle Radius = "RC" Color = "Colors[c]" Center = "xr; yr; 0" />
+            <Cut><Plane NormVector = "-x[1]; -y[1];  H" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = "-x[1]; -y[1]; -H" NormDistance = "-D" /></Cut>
+
+            <HideAll/>
+            <Circle Radius = "RC" Color = "Colors[c]" Center = "xr; yr; 0" />
+            <Cut><Plane NormVector = "-x[0]; -y[0];  H" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = "x[0]-x[1]; y[0]-y[1]; 0" /></Cut>
+
+            <HideAll/>
+            <Circle Radius = "RC" Color = "Colors[c]" Center = "xr; yr; 0" />
+            <Cut><Plane NormVector = "-x[0]; -y[0]; -H" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = "x[0]-x[1]; y[0]-y[1]; 0" /></Cut>
+        </Macro>
+
+        <ExecMacro MacroName = "ExtraStickers" c = "1" />
+        <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "ExtraStickers" c = "2" />
+        <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "ExtraStickers" c = "0" />
+        <Turn NormVector = "0;0;1" Angle = "2*Pi/3" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

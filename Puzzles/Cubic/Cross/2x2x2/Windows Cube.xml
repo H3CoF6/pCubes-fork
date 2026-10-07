@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Windows Cube</Name>
+        <Menu>Cubic\Cross\2x2x2\Windows Cube</Menu>
+        <Inventor>Nikola Tutic</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2019-11-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2745</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        dW := W * 0.1;
+        D := W - dW;
+        D1 := D - dW;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+
+        <Macro Name = "AddBorder" >
+            <Part>
+                <Vertices>
+                    <Add Vector = "-D  + D * x; -D  + D * y; D" />
+                    <Add Vector = " 0  + D * x; -D  + D * y; D" />
+                    <Add Vector = " 0  + D * x; -D  + D * y; W" />
+                    <Add Vector = "-D  + D * x; -D  + D * y; W" />
+                    <Add Vector = "-D1 + D * x; -D1 + D * y; D" />
+                    <Add Vector = "-dW + D * x; -D1 + D * y; D" />
+                    <Add Vector = "-dW + D * x; -D1 + D * y; W" />
+                    <Add Vector = "-D1 + D * x; -D1 + D * y; W" />
+                </Vertices>
+
+                <Faces>
+                    <Face VertexIndexes = "0;1;2;3" />f
+                    <Face VertexIndexes = "7;6;5;4" />b
+                    <Face VertexIndexes = "2;6;7;3" InvisibleEdges = "5" Color = "Color" />u
+                    <Face VertexIndexes = "0;4;5;1" InvisibleEdges = "5" Color = "cd" />d
+                    <Face VertexIndexes = "3;7;4;0" InvisibleEdges = "5" Color = "-2" />l
+                    <Face VertexIndexes = "1;5;6;2" InvisibleEdges = "5" Color = "-2" />r
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "AddBorders" >
+            <ExecMacro MacroName = "AddBorder" x = "0" y = "0" cd = "-1" />
+            <ExecMacro MacroName = "AddBorder" x = "0" y = "1" cd = "-2" />
+            <ExecMacro MacroName = "AddBorder" x = "1" y = "0" cd = "-1" />
+            <ExecMacro MacroName = "AddBorder" x = "1" y = "1" cd = "-2" />
+            <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddBorders" Repeat = "4" Color = "clWhite" />
+        <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "AddBorders" Repeat = "4" Color = "clGreen" />
+        <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "AddBorders" Repeat = "4" Color = "clOrange" />
+        <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+        <Turn NormVector = "1;-1;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddBorders" Repeat = "4" Color = "clYellow" />
+        <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "AddBorders" Repeat = "4" Color = "clRed" />
+        <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+        <ExecMacro MacroName = "AddBorders" Repeat = "4" Color = "clBlue" />
+        <Turn NormVector = "1;1;1" Angle = "2 * Pi / 3" />
+        <Turn NormVector = "1;-1;0" Angle = "Pi" />
+
+        <Script> W := W - dW; </Script>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

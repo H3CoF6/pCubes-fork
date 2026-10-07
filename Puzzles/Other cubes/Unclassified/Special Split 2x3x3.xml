@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Special Split 2x3x3</Name>
+        <Menu>Other cubes\Unclassified\Special Split 2x3x3</Menu>
+        <Inventor>Justin Costa</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-02-26</Added>
+        <Link>https://www.instagram.com/p/B8zqnlfJ5Oc</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        WX := W;
+        WY := W;
+        D := W / 3;
+        WZ := d * (sqrt(2) + 1); // wz := D / cos(3*Pi/8);
+    </Script>
+
+    <Axes TurningAngles = "Pi/8" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "ax" Layer = "0" Angle = "Angle" />
+            <Turn Axis = "ax" Layer = "2" Angle = "Angle" />
+            <Split Axis = "2" From = "1" />
+            <Undo Repeat = "2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax = "0" Angle = " 3 * Pi / 8" />
+        <ExecMacro MacroName = "Split" ax = "0" Angle = "-3 * Pi / 8" />
+        <ExecMacro MacroName = "Split" ax = "1" Angle = " 3 * Pi / 8" />
+        <ExecMacro MacroName = "Split" ax = "1" Angle = "-3 * Pi / 8" />
+
+
+<!--        <Turn Axis = "0" Layer = "0" Angle = "3 * Pi / 8" />
+        <Turn Axis = "0" Layer = "2" Angle = "3 * Pi / 8" />
+        <Split Axis = "2" From = "1" />
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "0" Layer = "0" Angle = "-3 * Pi / 8" />
+        <Turn Axis = "0" Layer = "2" Angle = "-3 * Pi / 8" />
+        <Split Axis = "2" From = "1" />
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "1" Layer = "0" Angle = "3 * Pi / 8" />
+        <Turn Axis = "1" Layer = "2" Angle = "3 * Pi / 8" />
+        <Split Axis = "2" From = "1" />
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "1" Layer = "0" Angle = "-3 * Pi / 8" />
+        <Turn Axis = "1" Layer = "2" Angle = "-3 * Pi / 8" />
+        <Split Axis = "2" From = "1" />
+        <Undo Repeat = "2" />
+-->
+    </Figure>
+</xml>

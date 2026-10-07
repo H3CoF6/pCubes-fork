@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Twistball (3 colors)</Name>
+        <Menu>Other forms\Sphere\Dino\Twistball (3 colors)</Menu>
+        <Inventor>Josip Matijek</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3937</Link>
+    </Interface>
+
+    <Script>
+        Color1 := 'FF0000'; // Red
+        Color2 := 'FFFF00'; // Yellow
+        Color3 := '00CC00'; // Green
+
+        K := 0.6;
+        D := K * 0.585;
+        sAngle := 2*Pi / 3;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "1; 1; 1" />
+        <Axis NormVector = "1; 1;-1" />
+        <Axis NormVector = "1;-1; 1" />
+        <Axis NormVector = "1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSphere">
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSphere" Color = "Color1" />
+        <Cut Axis = "0" From = "2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "Color2" />
+        <Cut Axis = "0" From = "1" To = "2" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddSphere" Color = "Color3" />
+        <Cut Axis = "0" To = "1" />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

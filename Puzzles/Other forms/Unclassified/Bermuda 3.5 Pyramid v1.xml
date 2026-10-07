@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Bermuda 3.5 Pyramid v1</Name>
+        <Menu>Other forms\Unclassified\Bermuda 3.5 Pyramid v1</Menu>
+        <Inventor>Fenz</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-05-05</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=27530</Link>
+    </Interface>
+
+    <Script>
+        clYellow       := 'FFFF00';
+        clBlue         := '0000A0';
+        clOrange       := 'FF6000';
+        clViolett      := '800080';
+        clBrown        := '800000';
+        clCyan         := '00DCB4';
+        clWhite        := 'F0F0F0';
+
+        k   := 0.8;
+        pH1 := k;
+        pH2 := k / 2;
+        pA1 := k * sqrt(3) / 3;
+        pA2 := k / 3;
+        pC  := k * sqrt(3) / 2;
+        pB  := 2 * pA2;
+
+        px[0] := -sqrt(3);
+        py[0] := -1;
+        pz[0] :=  1;
+        px[1] :=  0;
+        py[1] :=  2;
+        pz[1] :=  1;
+        px[2] :=  sqrt(3);
+        py[2] := -1;
+        pz[2] :=  1;
+
+        // Jumble Angles
+        A1 := ArcCos(-1/4);
+        A2 := 2 * A1;
+        A3 := 3 * A1;
+
+        D  := k / sqrt(5) / 4;
+        DCut := k * 5 / 12;
+
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3" PlaneDistances = "D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " -sqrt(3); -1; 1" />
+        <Axis NormVector = "       0 ;  2; 1" />
+        <Axis NormVector = "  sqrt(3); -1; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "   0;    0;  pH1" />
+
+                <Add Vector = "   0; -pH1;    0" />
+                <Add Vector = " -pC;  pH2;    0" />
+                <Add Vector = "  pC;  pH2;    0" />
+
+                <Add Vector = "-pA1; -pA2; -pA2" />
+                <Add Vector = "   0;   pB; -pA2" />
+                <Add Vector = " pA1; -pA2; -pA2" />
+
+                <Add Vector = "   0;    0; -pH2" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clYellow " VertexIndexes = "0;2;4;1" />
+                <Face Color = "clOrange " VertexIndexes = "0;3;5;2" />
+                <Face Color = "clBlue   " VertexIndexes = "0;1;6;3" />
+
+                <Face Color = "clCyan   " VertexIndexes= "7;4;2;5" />
+                <Face Color = "clViolett" VertexIndexes= "7;5;3;6" />
+                <Face Color = "clBrown  " VertexIndexes= "7;6;1;4" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "clWhite" >
+            <Plane NormVector = "0;0;1" NormDistance = "-DCut" />
+        </Cut>
+
+        <Split Axis = "1" From = "1"/>
+
+        <Turn  Axis = "1" Layer = "1" Angle = "-A3" />
+        <Split Axis = "2" From = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = " A3" />
+
+        <Turn  Axis = "1" Layer = "1" Angle = "-A2" />
+        <Split Axis = "2" From = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = " A2" />
+
+        <Turn  Axis = "1" Layer = "1" Angle = "-A1" />
+        <Split Axis = "2" From = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = " A1" />
+
+        <Turn  Axis = "1" Layer = "1" Angle = "-A3" />
+
+        <Turn  Axis = "2" Layer = "1" Angle = " A2" />
+        <Split Axis = "1" From = "1"/>
+        <Turn  Axis = "2" Layer = "1" Angle = "-A2" />
+
+        <Turn  Axis = "2" Layer = "1" Angle = " A1" />
+        <Split Axis = "1" From = "1"/>
+        <Turn  Axis = "2" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "2" Layer = "1" Angle = " A3" />
+        <Split Axis = "0" From = "1"/>
+
+        <Turn  Axis = "0" Layer = "1" Angle = " A1" />
+        <Split Axis = "2" From = "1"/>
+
+        <Turn  Axis = "2" Layer = "1" Angle = "-A2" />
+        <Split Axis = "1" From = "1"/>
+        <Turn  Axis = "2" Layer = "1" Angle = " A2" />
+        <Turn  Axis = "0" Layer = "1" Angle = "-A1" />
+
+        <Turn  Axis = "2" Layer = "1" Angle = "-A3" />
+
+        <Turn  Axis = "2" Layer = "1" Angle = " A2" />
+        <Turn  Axis = "1" Layer = "1" Angle = " A2" />
+        <Turn  Axis = "2" Layer = "1" Angle = "-A1" />
+        <Split Axis = "1" From = "1"/>
+        <Turn  Axis = "1" Layer = "1" Angle = "-A2" />
+        <Turn  Axis = "2" Layer = "1" Angle = " A1" />
+        <Split Axis = "1" From = "1"/>
+
+        <Turn  Axis = "2" Layer = "1" Angle = "-A1" />
+        <Turn  Axis = "1" Layer = "1" Angle = " A2" />
+        <Turn  Axis = "2" Layer = "1" Angle = " A1" />
+        <Turn  Axis = "1" Layer = "1" Angle = "-A2" />
+        <Turn  Axis = "2" Layer = "1" Angle = "-A2" />
+        <Turn  Axis = "1" Layer = "1" Angle = " A3" />
+    </Figure>
+</xml>

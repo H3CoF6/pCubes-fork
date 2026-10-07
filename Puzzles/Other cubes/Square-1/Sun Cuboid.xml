@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sun Cuboid</Name>
+        <Menu>Other cubes\Square-1\Sun Cuboid</Menu>
+        <Inventor>Marcell Mágori</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-02-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9626</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        H := W * 0.7;
+
+        D1 := H / 3;
+        D2 := W * 0.5;
+
+        RC := W * 0.8;
+        HC := H * 1.01;
+
+        WX := W;
+        WY := W;
+        WZ := H;
+    </Script>
+
+    <Axes TurningAngles = "Pi/4" PlaneDistances = "-H;-D1; D1; H" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+        <Turn  Axis = "0" Layer = "2" Angle = "Pi / 4" />
+        <SplitByAxes/>
+        <Turn  Axis = "0" Layer = "2" Angle = "Pi / 4" />
+        <SplitByAxes/>
+        <Turn  Axis = "0" Layer = "2" Angle = "Pi / 4" />
+        <SplitByAxes/>
+        <Undo Repeat = "3" />
+
+        <Hide Axis = "0" Layer = "2" />
+        <Hide Axis = "1" Layers = "0;2" />
+        <Turn  Axis = "0" Layer = "2" Angle = "Pi / 2" />
+        <Hide Axis = "1" Layers = "0;2" />
+        <RemoveAllVisible/>
+        <Undo/>
+        <ShowAll/>
+
+        <Turn  Axis = "0" Layer = "2" Angle = "Pi / 4" />
+        <Hide Axis = "0" Layer = "2" />
+        <Hide Axis = "1" Layers = "0;2" />
+        <Turn  Axis = "0" Layer = "2" Angle = "Pi / 2" />
+        <Hide Axis = "1" Layers = "0;2" />
+        <RemoveAllVisible/>
+        <Undo Repeat = "2" />
+        <ShowAll/>
+
+        <Circle Color = "clWhite " Radius = "RC" Center = "0; 0; HC" />
+        <Circle Color = "clYellow" Radius = "RC" Center = "0; 0;-HC" />
+        <SplitByAxes/>
+
+        <Connect Axis = "0" Layers = "0;2;4" />
+    </Figure>
+</xml>

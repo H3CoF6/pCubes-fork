@@ -1,0 +1,79 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Discrete Helicopter Skewb</Name>
+        <Menu>Other cubes\Unclassified\Discrete Helicopter Skewb</Menu>
+        <Inventor></Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-09-24</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'EE0000'; // Red
+        Colors[1] := 'FF6600'; // Orange
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := '00AA00'; // Green
+        Colors[4] := 'FFEE00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.5;
+        D := W * 7 / 3 / sqrt(6);
+
+        CutV := W * sqrt(3) * 0.96;
+        CutE := W * sqrt(2) * 0.985;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 6" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi;0;Pi" PlaneDistances = "-D;D" >
+        <Axis NormVector = " 1; 2; 1" /> <!--RotatePoint( 1, 1, 0, -f, f,-f, -1*pi/6)-->
+        <Axis NormVector = "-1; 1; 2" /> <!--RotatePoint( 1, 1, 0, -f, f,-f, -3*pi/6)-->
+        <Axis NormVector = "-2;-1; 1" /> <!--RotatePoint( 1, 1, 0, -f, f,-f, -5*pi/6)-->
+        <Axis NormVector = " 1; 1; 2" /> <!--RotatePoint( 0, 1, 1, -f,-f, f, -1*pi/6)-->
+        <Axis NormVector = " 2;-1; 1" /> <!--RotatePoint( 0, 1, 1, -f,-f, f, -3*pi/6)-->
+        <Axis NormVector = " 1;-2;-1" /> <!--RotatePoint( 0, 1, 1, -f,-f, f, -5*pi/6)-->
+        <Axis NormVector = "-1;-2; 1" /> <!--RotatePoint(-1,-1, 0,  f,-f,-f, -1*pi/6)-->
+        <Axis NormVector = " 1;-1; 2" /> <!--RotatePoint(-1,-1, 0,  f,-f,-f, -3*pi/6)-->
+        <Axis NormVector = " 2; 1; 1" /> <!--RotatePoint(-1,-1, 0,  f,-f,-f, -5*pi/6)-->
+        <Axis NormVector = "-1;-1; 2" /> <!--RotatePoint( 0,-1, 1,  f, f, f, -1*pi/6)-->
+        <Axis NormVector = "-2; 1; 1" /> <!--RotatePoint( 0,-1, 1,  f, f, f, -3*pi/6)-->
+        <Axis NormVector = "-1; 2;-1" /> <!--RotatePoint( 0,-1, 1,  f, f, f, -5*pi/6)-->
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "Split" >
+            <Split Axis = "a1" From = "1" />
+            <Turn Axis = "a1" Layer = "0" Angle = "2*Pi/6" />
+            <Split Axis = "a2    " From = "2" />
+            <Split Axis = "a2 + 1" From = "1" />
+            <Split Axis = "a2 + 2" From = "2" />
+            <Undo/>
+        </Macro>
+        <ExecMacro MacroName = "Split" a1 = "2" a2 = " 4" />
+        <ExecMacro MacroName = "Split" a1 = "1" a2 = " 7" />
+        <ExecMacro MacroName = "Split" a1 = "3" a2 = "10" />
+        <ExecMacro MacroName = "Split" a1 = "0" a2 = "13" />
+
+        <!-- cut edges and vertices for better control -->
+        <Macro Name = "CutV" >
+            <Cut><Plane NormVector = "Vx[i]; Vy[i]; Vz[i]" NormDistance = "-CutV" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutV" i = "0" Repeat = "8" />
+
+        <Macro Name = "CutE" >
+            <Cut><Plane NormVector = "Ex[i]; Ey[i]; Ez[i]" NormDistance = "-CutE" /></Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutE" i = "0" Repeat = "12" />
+    </Figure>
+</xml>

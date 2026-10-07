@@ -1,0 +1,101 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cylinder 3x3x3</Name>
+        <Menu>Other forms\Cylinder\Cylinder 3x3x3</Menu>
+        <Menu>Other forms\3x3x3 variants\Cylinder\Cylinder 3x3x3</Menu>
+        <Inventor>Rex Rossano Perez</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2154</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0055EE';
+        clBlack  := '333333';
+        clViolett:= 'AA00CC';
+        clRed    := 'EE0011';
+        clGreen  := '00CC00';
+
+        R := 0.6;
+        H := R;
+        D := (R * sqrt(2) - H) / sqrt(3) * 1.2;
+
+        N := 60;
+        for i := 0 to N - 1 do begin
+            A := 2*Pi / N * i;
+            x[i] := R * cos(A);
+            y[i] := R * sin(A);
+        end;
+
+        DCut := R / 6;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+        az := 1 / sqrt(2);
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "ax[0]; ay[0]; az" />
+        <Axis NormVector = "ax[1]; ay[1]; az" />
+        <Axis NormVector = "ax[2]; ay[2]; az" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = " i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "Body" >
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "clBlack" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                    <Face Color = "clGreen" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+            <SplitByAxes/>
+        </Macro>
+
+        <ExecMacro MacroName = "Body" Color = "clViolett"  />
+        <RemoveContaining Vector = "0;0;0" />
+        <Hide><Plane NormVector = " 0; 0; 1" NormDistance = "DCut" /></Hide>
+        <Hide><Plane NormVector = " 0; 0;-1" NormDistance = "DCut" /></Hide>
+        <InvertVisibility/>
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Body" Color = "clRed"  />
+        <Hide><Plane NormVector = " 0; 0;-1" NormDistance = "DCut" /></Hide>
+        <RemoveAllVisible/>
+
+        <ExecMacro MacroName = "Body" Color = "clBlue"  />
+        <Hide><Plane NormVector = " 0; 0; 1" NormDistance = "DCut" /></Hide>
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>SG Cube (8 colors)</Name>
+        <Menu>Cubic\Rubiks Recolored\SG Cube (8 colors)</Menu>
+        <Inventor>Jared McComb</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4849</Link>
+    </Interface>
+
+    <Script>
+        C[1] := 'FF800A';
+        C[2] := '0000C8';
+        C[3] := '00DD00';
+        C[4] := '0066FF';
+        C[5] := 'C80000';
+        C[6] := 'FFFFFF';
+        C[7] := 'DDBB00';
+        C[8] := 'EE00CC';
+
+        W := 0.5;
+        D := W / 3;
+
+        WX := D;
+        WY := D;
+        WZ := D;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCubie" >
+            <Script>
+                Color := C[StrToInt(copy(SColors, 1, 1))];
+                for j := 0 to 5 do
+                    Colors[j] := Color;
+                Delete(SColors, 1, 1);
+
+                DWX := (i mod 3 - 1) * D * 2;
+                DWY := (i div 3 mod 3 - 1) * D * 2;
+                DWZ := (i div 9 - 1) * D * 2;
+
+                Inc(i);
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCubie" i = "0"  SColors = "2116646643113" Repeat = "13" />
+        <ExecMacro MacroName = "AddCubie" i = "14" SColors = "4554377377558" Repeat = "13" />
+
+        <Macro Name = "TurnAndSave" >
+            <SaveSolvedState/>
+            <Turn Axis = "2" From = "0" To = "2" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "TurnAndSave" Repeat = "4" />
+        <Turn Axis = "1" From = "0" To = "2" Angle = "Pi" />
+        <ExecMacro MacroName = "TurnAndSave" Repeat = "4" />
+        <Turn Axis = "1" From = "0" To = "2" Angle = "Pi" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star Prism Master</Name>
+        <Menu>Other forms\Prism\Pentagonal Prism\Face Turning\Star Prism Master</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-07-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8067</Link>
+    </Interface>
+
+    <Script>
+        clBlue   := '0055EE';
+        clGreen  := '00BB00';
+        clRed    := 'DD0000';
+        clPurple := '9977FF';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+        clOrange := 'FF6000';
+
+        R := 0.65;
+
+        H := R * 0.6;
+        sAngle := 2*PI / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * cos(sAngle * i);
+            y[i] := R * sin(sAngle * i);
+        end;
+
+        D1 := (x[1] + x[2]) / 2;
+        D2 := (x[2] + D1) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "D1; D2" FixedLayers = "2" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+        <Axis NormVector = "x[3]; y[3]; 0" />
+        <Axis NormVector = "x[4]; y[4]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "-H/2;0;H/2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " x; y; H" />
+            <Vertices Vectors = " x; y;-H" />
+            <Faces>
+                <Face Color = "clPurple" VertexIndexes = "5;6;1;0" />
+                <Face Color = "clBlue  " VertexIndexes = "6;7;2;1" />
+                <Face Color = "clGreen " VertexIndexes = "7;8;3;2" />
+                <Face Color = "clOrange" VertexIndexes = "8;9;4;3" />
+                <Face Color = "clRed   " VertexIndexes = "9;5;0;4" />
+                <Face Color = "clWhite " VertexIndexes = "0;1;2;3;4" />
+                <Face Color = "clYellow" VertexIndexes = "9;8;7;6;5" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

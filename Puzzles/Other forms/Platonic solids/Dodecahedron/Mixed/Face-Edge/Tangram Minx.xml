@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tangram Minx</Name>
+        <Menu>Other forms\Dodecahedron\Mixed\Face-Edge\Tangram Minx</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-10-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6339</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := R2Sin;
+        D2 := R / sqrt(3); // =Vx[2];
+
+        for i := 0 to 4 do begin
+            ax[i] := cos(Pi/5 * i);
+            ay[i] := sin(Pi/5 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 10" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D2;D2" FixedLayers = "1" NormVectors = " ax; ay; 0" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

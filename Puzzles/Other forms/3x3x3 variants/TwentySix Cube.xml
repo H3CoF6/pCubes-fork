@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>TwentySix Cube</Name>
+        <Menu>Other forms\3x3x3 variants\TwentySix Cube</Menu>
+        <Inventor>José Romero</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-03-03</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9658</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        D2 := D * 2;
+        W := W / 3 * 1.2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddTetrahedron" >
+            <HideAll/>
+            <Transfer Vector = "-X;-Y;-Z" />
+            <LoadFrom File = "Figures\Tetrahedron.xml" />
+            <Cut><Plane NormVector = " 1; 0; 0" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = " 0;-1; 0" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = " 0; 0; 1" NormDistance = "-D" /></Cut>
+            <Cut><Plane NormVector = " 0; 0;-1" NormDistance = "-D" /></Cut>
+            <Transfer Vector = " X; Y; Z" />
+        </Macro>
+        <Macro Name = "AddTetrahedron3" >
+            <ExecMacro MacroName = "AddTetrahedron" X = "-D2" />
+            <ExecMacro MacroName = "AddTetrahedron" X = " 0" />
+            <ExecMacro MacroName = "AddTetrahedron" X = " D2" />
+        </Macro>
+        <Macro Name = "AddTetrahedron9" >
+            <ExecMacro MacroName = "AddTetrahedron3" Y = "-D2" />
+            <ExecMacro MacroName = "AddTetrahedron3" Y = " 0" />
+            <ExecMacro MacroName = "AddTetrahedron3" Y = " D2" />
+        </Macro>
+        <ExecMacro MacroName = "AddTetrahedron9" Z = "-D2" />
+        <ExecMacro MacroName = "AddTetrahedron9" Z = " 0" />
+        <ExecMacro MacroName = "AddTetrahedron9" Z = " D2" />
+        <ShowAll/>
+        <RemoveContaining Vector = "0;0;0" />
+    </Figure>
+</xml>

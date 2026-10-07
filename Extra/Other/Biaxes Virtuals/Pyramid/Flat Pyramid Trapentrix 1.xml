@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Flat Pyramid Trapentrix 1</Name>
+        <Menu>Other forms\Pyramid\Biaxes Virtual\Flat Pyramid Trapentrix 1</Menu>
+        <Inventor>not invented</Inventor>
+        <!--<Inventor>Timur Evbatyrov?</Inventor>-->
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-02-26</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clGreen  := '008000';
+        clBlue   := '0000FF';
+        clBlack1 := '010101';
+        clBlack2 := '010102';
+
+        K := 0.5;
+
+        pX := K * 2.61803399;
+        pY := K * 0.61803399;
+        pZ := K * 1;
+
+        AngleD := 138.18968503;
+
+        Angle  := AngleD * Pi/180;
+        AngleM := (Pi - Angle)/2;
+        x := cos(AngleM);
+        y := sin(AngleM);
+
+        A := Pi*2/3;
+
+        D := K * 0.279;   // stars
+    </Script>
+
+    <Axes TurningAngles = "A" PlaneDistances = "-D" FixedLayers = "0" >
+        <Axis NormVector = " x; -y; 0" />
+        <Axis NormVector = "-x; -y; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " Px; -K;   0" />
+                <Add Vector = "-Px; -K;   0" />
+                <Add Vector = "  0; Py;  Pz" />
+                <Add Vector = "  0; Py; -Pz" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = "0;2;1" />
+                <Face Color = "clYellow" VertexIndexes = "1;3;0" />
+                <Face Color = "clGreen " VertexIndexes = "0;3;2" />
+                <Face Color = "clBlue  " VertexIndexes = "1;2;3" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "clBlack1" ><Plane NormVector = "-Px;K;0" NormDistance = "-K * 0.935" /></Cut>
+        <Cut Color = "clBlack2" ><Plane NormVector = " Px;K;0" NormDistance = "-K * 0.935" /></Cut>
+
+        <SplitByAxes/>
+
+        <Macro Name = "SplitPart">
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "0" Angle = " A" Layer = "1" /> <SplitByAxes/>
+            <Turn Axis = "1" Angle = "-A" Layer = "1" /> <SplitByAxes/>
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "SplitPart" Repeat = "5" />
+        <Undo Repeat = "40" />
+
+        <SaveSolvedState/>
+    </Figure>
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

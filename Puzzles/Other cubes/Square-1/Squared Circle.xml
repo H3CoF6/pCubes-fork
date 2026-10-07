@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Squared Circle</Name>
+        <Menu>Other cubes\Square-1\Squared Circle</Menu>
+        <Inventor>Alexandr Bezrukov</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2018-12-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7137</Link>
+    </Interface>
+
+    <Script>
+        S15 := sin (Pi/12); // 15 degrees
+        C15 := cos (Pi/12);
+
+        W := 0.5;
+        H := W;
+        D := H / 3;
+        RC := W / 4;
+        Delta := 0.002;
+    </Script>
+
+    <Axes TurningAngles = "Pi/6" PlaneDistances = "-H;-D; D; H" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "C15; S15; 0" />
+        <Axis NormVector = "S15; -C15; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Circle Color = "clWhite " Radius = "RC" Center = "0; 0;  H + Delta" />
+        <Circle Color = "clYellow" Radius = "RC" Center = "0; 0; -H - Delta" />
+
+        <Connect Axis = "0" Layers = "0;2;4" />
+
+        <SplitByAxes/>
+        <Turn  Axis = "0" Layer = "2" Angle = "Pi/6" />
+        <SplitByAxes/>
+        <Turn  Axis = "0" Layer = "2" Angle = "Pi/6" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+    </Figure>
+</xml>

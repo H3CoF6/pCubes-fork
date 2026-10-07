@@ -1,0 +1,130 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cosminx</Name>
+        <Menu>Other forms\Sphere\Cosminx</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2018-08-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6005</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        C0 := (3 +     sqrt(5)) / 4;
+        C1 := (1 +     sqrt(5)) / 2;
+        C2 := (2 +     sqrt(5)) / 2;
+        C3 := (3 +     sqrt(5)) / 2;
+        C4 := (5 + 3 * sqrt(5)) / 4;
+        C5 := 1 / 2;
+
+        K := 0.6;
+        D := 0.58;
+
+        A1 := ArcCos((  3 + 3 * sqrt(5))/20 );
+        A2 := ArcCos((-15 -     sqrt(5))/20 );
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A1;-A2;0;A2;A1" PlaneDistances = "-D;D" FixedLayers = "1" >
+        <Axis NormVector = "  0; C5; C4" />
+        <Axis NormVector = "  0; C5;-C4" />
+        <Axis NormVector = " C4;  0; C5" />
+        <Axis NormVector = " C4;  0;-C5" />
+        <Axis NormVector = " C5; C4;  0" />
+        <Axis NormVector = " C5;-C4;  0" />
+        <Axis NormVector = " C5; C0; C3" />
+        <Axis NormVector = " C5; C0;-C3" />
+        <Axis NormVector = " C5;-C0; C3" />
+        <Axis NormVector = " C5;-C0;-C3" />
+        <Axis NormVector = " C3; C5; C0" />
+        <Axis NormVector = " C3; C5;-C0" />
+        <Axis NormVector = " C3;-C5; C0" />
+        <Axis NormVector = " C3;-C5;-C0" />
+        <Axis NormVector = " C0; C3; C5" />
+        <Axis NormVector = " C0; C3;-C5" />
+        <Axis NormVector = " C0;-C3; C5" />
+        <Axis NormVector = " C0;-C3;-C5" />
+        <Axis NormVector = " C0; C1; C2" />
+        <Axis NormVector = " C0; C1;-C2" />
+        <Axis NormVector = " C0;-C1; C2" />
+        <Axis NormVector = " C0;-C1;-C2" />
+        <Axis NormVector = " C2; C0; C1" />
+        <Axis NormVector = " C2; C0;-C1" />
+        <Axis NormVector = " C2;-C0; C1" />
+        <Axis NormVector = " C2;-C0;-C1" />
+        <Axis NormVector = " C1; C2; C0" />
+        <Axis NormVector = " C1; C2;-C0" />
+        <Axis NormVector = " C1;-C2; C0" />
+        <Axis NormVector = " C1;-C2;-C0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Cut1">
+            <Turn  Axis = "a" Angle = "J" Layer = "0" />
+            <Turn  Axis = "a" Angle = "J" Layer = "2" />
+            <Turn  Axis = "b" Angle = "K" Layer = "0" />
+            <Turn  Axis = "b" Angle = "K" Layer = "2" />
+            <Split Axis = "a" From = "1" />
+            <Split Axis = "a" From = "2" />
+            <Undo Repeat = "4"/>
+        </Macro>
+        <Macro Name = "Cut2">
+            <Turn Axis = "a" Angle = " J" Layer = "0" />
+            <Turn Axis = "a" Angle = " J" Layer = "2" />
+            <Turn Axis = "b" Angle = " J" Layer = "0" />
+            <Turn Axis = "b" Angle = " J" Layer = "2" />
+            <Turn Axis = "a" Angle = "-J" Layer = "0" />
+            <Turn Axis = "a" Angle = "-J" Layer = "2" />
+            <Turn Axis = "b" Angle = "-J" Layer = "0" />
+            <Turn Axis = "b" Angle = "-J" Layer = "2" />
+            <SplitByAxes/>
+            <Undo Repeat = "8"/>
+        </Macro>
+
+        <ExecMacro MacroName = "Cut1" a = "9 " b = "0 " J = " A1" K = " A1"/>
+        <ExecMacro MacroName = "Cut1" a = "4 " b = "14" J = "-A1" K = " A1"/>
+        <ExecMacro MacroName = "Cut1" a = "5 " b = "17" J = "-A1" K = " A1"/>
+        <ExecMacro MacroName = "Cut1" a = "7 " b = "8 " J = " A1" K = " A1"/>
+        <ExecMacro MacroName = "Cut1" a = "8 " b = "7 " J = " A1" K = " A1"/>
+
+        <ExecMacro MacroName = "Cut2" a = "0 " b = "1 " J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "1 " b = "0 " J = "-A2"/>
+        <ExecMacro MacroName = "Cut2" a = "2 " b = "3 " J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "3 " b = "2 " J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "4 " b = "5 " J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "5 " b = "4 " J = "-A2"/>
+        <ExecMacro MacroName = "Cut2" a = "6 " b = "18" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "7 " b = "19" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "8 " b = "20" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "9 " b = "21" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "10" b = "22" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "11" b = "23" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "12" b = "24" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "13" b = "25" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "14" b = "26" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "15" b = "27" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "16" b = "28" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "17" b = "29" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "18" b = "6 " J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "19" b = "7 " J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "20" b = "8 " J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "21" b = "9 " J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "22" b = "10" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "23" b = "11" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "24" b = "12" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "25" b = "13" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "26" b = "14" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "27" b = "15" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "28" b = "16" J = " A2"/>
+        <ExecMacro MacroName = "Cut2" a = "29" b = "17" J = " A2"/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

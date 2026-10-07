@@ -1,0 +1,243 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>White Hole GE-7-BAF Super</Name>
+        <Menu>Other forms\Unclassified\White Hole\White Hole GE-7-BAF Super</Menu>
+        <Inventor>Francisco Bedmar Alvarez</Inventor>
+        <Programmer>Boris, Skallos</Programmer>
+        <Added>2024-01-02</Added>
+        <Link>https://twistypuzzles.com/forum/viewtopic.php?t=39101</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Vectors.inc';
+
+        Colors[ 0] := '8B0A50'; // DeepPink
+        Colors[ 1] := '0000FF'; // Blue
+        Colors[ 2] := '00BFFF'; // DeepSky
+        Colors[ 3] := '007700'; // Green
+        Colors[ 4] := 'FFFF00'; // Yellow
+        Colors[ 5] := 'FF6000'; // Orange
+        Colors[ 6] := 'FF0000'; // Red
+
+        Colors[ 7] := 'FF5BBD'; // MediumPink
+        Colors[ 8] := '44AA99'; // Teal
+        Colors[ 9] := '00FFFF'; // Cyan
+        Colors[10] := '00FF00'; // Lime
+        Colors[11] := 'F0E68C'; // Khaki
+        Colors[12] := 'FF7F50'; // Coral
+        Colors[13] := 'CD5C5C'; // Indian
+
+        clTop     := 'FFFFFF'; // White
+        clBottom  := '333333'; // Black
+
+        R1 := 0.5;
+        N := 7;
+        nAngle := 2*Pi / N;
+        nAngle2 := nAngle / 2;
+
+        H1 := R1 * sqrt((cos(nAngle2) - cos(nAngle)) / 2);
+
+        A1 := VectorRotatingAngle(0, R1, H1, R1 * sin(nAngle), R1 *cos(nAngle), H1, R1 * sin(nAngle2), R1 * cos(nAngle2),-H1);  // (A[0], A[1], B[0])
+        A2 := A1 * 2;
+        A3 := A1 * 3;
+
+        VectorRotatePoint(R1 * sin(nAngle), R1 *cos(nAngle), H1,  0, R1, H1, -A1, True);  // (A[1], A[0], -A1, True)
+        H2 := Ans_Z;                                                                                                                  
+        R2 := VectorLength(Ans_X, Ans_Y, 0);                                                                                          
+
+        D := VectorDistanceToPlane(0, R1, H1, R1 * sin(nAngle), R1 * cos(nAngle), H1, 0);  // (A[0], A[1], 0)                     
+
+        DCut := D * 0.85;
+
+        for i := 0 to N - 1 do begin
+            sa := sin(nAngle * i);
+            ca := cos(nAngle * i);
+            sa2 := sin(nAngle * (i + 1/2));
+            ca2 := cos(nAngle * (i + 1/2));
+
+            Ax[i] :=  R1 * sa;
+            Ay[i] :=  R1 * ca;
+
+            Bx[i] :=  R1 * sa2;
+            By[i] :=  R1 * ca2;
+
+            Cx[i] :=  R2 * sa2;
+            Cy[i] :=  R2 * ca2;
+
+            Dx[i] :=  R2 * sa;
+            Dy[i] :=  R2 * ca;
+        end;
+        Az := H1;
+        Bz :=-H1;
+        Cz := H2;
+        Dz :=-H2;
+
+        function Next(i); // cycle in N-ring (0..6, 7..13 etc)
+        begin
+            Result := i + 1;
+            if Result mod N = 0 then
+                Result := Result - N;
+        end;
+
+        // Dashes and dots
+
+        // Four vertices A[0], A[1], B[0], C[0] determine dashs and dots.
+        Delta := 0.001;
+        RC := R1 * 0.04;
+        VectorNormalToPlane( Ax[1], Ay[1], Az,  Ax[0], Ay[0], Az,  Cx[0], Cy[0], Cz);
+        ENx := Ans_X; ENy := Ans_Y; ENz := Ans_Z;
+
+        k := 0.3;
+        Ex := (Ax[0] + Ax[1]) / 2 * k + Cx[0] * (1 - k);
+        Ey := (Ay[0] + Ay[1]) / 2 * k + Cy[0] * (1 - k);
+        Ez :=  Az                 * k + Cz    * (1 - k);
+
+        VectorNormalToPlane( Ax[0], Ay[0], Az,  Ax[1], Ay[1], Az,  Bx[0], By[0], Bz);
+
+        procedure Add(AAX, AAY);
+        begin
+            Fx[i] := ((Ax[1] + Bx[0]) / 2 + AAX * (Bx[0] - Ax[1]) / 2) + AAY * (Ax[0] - (Ax[1] + Bx[0]) / 2) + Delta * Ans_X;
+            Fy[i] := ((Ay[1] + By[0]) / 2 + AAX * (By[0] - Ay[1]) / 2) + AAY * (Ay[0] - (Ay[1] + By[0]) / 2) + Delta * Ans_Y;
+            Fz[i] := ((Az    + Bz   ) / 2 + AAX * (Bz    - Az   ) / 2) + AAY * (Az    - (Az    + Bz   ) / 2) + Delta * Ans_Z;
+            Inc(i);
+        end;
+
+        i := 0;
+        Add(-0.05, 0.002);
+        Add( 0.05, 0.002);
+        Add( 0.05, 0.2);
+        Add(-0.05, 0.2);
+    </Script>
+
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D" NormVectors = " Ax; Ay; Az" FixedLayers = "0" />
+    <Axes TurningAngles = "2*Pi" AvailableAngles = "-A3;-A2;-A1; 0; A1; A2; A3" PlaneDistances = "D" NormVectors = " Bx; By; Bz" FixedLayers = "0" />
+
+    <Figure>
+        <Macro Name = "CreateCoreSlice" >
+            <LoadFrom File = "Figures\CubeMono.xml" Width = "H2 * 1.1" Color = "-1" />
+            <Cut> <Plane NormVector = "-Bx[0];-By[0];-Bz" NormDistance = "-D" /> </Cut>
+            <Cut                      Color = "-2" > <Plane NormVector = " By[2]; Bx[2]; 0" /> </Cut>
+            <Cut                      Color = "-2" > <Plane NormVector = "-By[3];-Bx[3]; 0" /> </Cut>
+            <Cut InvisibleEdges = "2" Color = "-2" > <Plane NormVector = " Bx[0] - Ax[0]; By[0] - Ay[0]; Bz - Az" /> </Cut>
+            <Cut InvisibleEdges = "6" Color = "-2" > <Plane NormVector = " Bx[0] - Ax[1]; By[0] - Ay[1]; Bz - Az" /> </Cut>
+            <Cut InvisibleEdges = "18" > <Plane NormVector = " Bx[0]; By[0]; Bz" NormDistance = " DCut" /> </Cut>
+            <Cut InvisibleEdges = "10" Color = "Clr" > <Plane NormVector = " 0; 0; 1" NormDistance = "-H2" /> </Cut>
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" > <Plane NormVector = " Ay[3]; Ax[3]; 0" /> </Split>
+            <HideAll/>
+            <Turn NormVector = "0;0;1" Angle = "nAngle" />
+        </Macro>
+        <ExecMacro MacroName = "CreateCoreSlice" Clr = "clBottom" Repeat = "N" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "CreateCoreSlice" Clr = "clTop   " Repeat = "N" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <Macro Name = "AddColor" >
+            <Face Color = "Colors[c]" VertexIndexes = "v1;v2;v3" />
+            <Face Color = "Colors[c]" VertexIndexes = "v1;v4;v2" />
+            <Face Color = "Colors[c]" VertexIndexes = "v1;v5;v4" />
+            <Script>
+                c  := Next(c );
+                v1 := Next(v1);
+                v2 := Next(v2);
+                v3 := Next(v3);
+                v4 := Next(v4);
+                v5 := Next(v5);
+            </Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Ax;Ay; Az" />
+            <Vertices Vectors = "Bx;By; Bz" />
+            <Vertices Vectors = "Cx;Cy; Cz" />
+            <Vertices Vectors = "Dx;Dy; Dz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddColor" c = " 0" v1 = " 0" v2 = " 1" v3 = " 7" v4 = "14" v5 = "20" Repeat = "N" />
+                <ExecMacro MacroName = "AddColor" c = " 7" v1 = " 8" v2 = " 7" v3 = " 1" v4 = "22" v5 = "23" Repeat = "N" />
+
+                <Face Color = "clTop   " VertexIndexes = "20;19;18;17;16;15;14" />
+                <Face Color = "clBottom" VertexIndexes = "21;22;23;24;25;26;27" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+
+        <Macro Name = "Unbandage" >
+            <Turn  Axis = "i  " Layer = "1" Angle = " A1" />
+            <Turn  Axis = "i+N" Layer = "1" Angle = "-A1" />
+            <Split Axis = "i  " From  = "1" />
+            <Undo  Repeat = "2" />
+
+            <Turn  Axis = "i+N" Layer = "1" Angle = " A1" />
+            <Turn  Axis = "i  " Layer = "1" Angle = "-A1" />
+            <Split Axis = "i+N" From  = "1" />
+            <Undo  Repeat = "2" />
+
+            <Script>inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" i = "0" Repeat = "N" />
+        <ShowAll/>
+
+        <!-- dashes and dots -->
+
+        <Macro Name = "DashAndDot" >
+            <Circle Radius = "RC" Color = "0" Center = "Ex+ENx*Delta;Ey+ENy*Delta;Ez+ENz*Delta" Base = "Ex;Ey;Ez" />
+            <Part>
+                <Vertices Vectors = "Fx;Fy;Fz" />
+
+                <Faces>
+                    <Face Color = "0" VertexIndexes = "0;1;2;3" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0;0;1" Angle = "nAngle" />
+        </Macro>
+        <ExecMacro MacroName = "DashAndDot" Repeat = "N" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "DashAndDot" Repeat = "N" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <!-- collect solutions -->
+
+        <Macro Name = "ax1 " > <Turn Axis = "ax1" Layers = "1" Angle="-A1" />  </Macro>
+        <Macro Name = "ax1'" > <Turn Axis = "ax1" Layers = "1" Angle=" A1" />  </Macro>
+        <Macro Name = "ax2 " > <Turn Axis = "ax2" Layers = "1" Angle="-A1" />  </Macro>
+        <Macro Name = "ax2'" > <Turn Axis = "ax2" Layers = "1" Angle=" A1" />  </Macro>
+        <Macro Name = "bx1 " > <Turn Axis = "bx1" Layers = "1" Angle="-A1" />  </Macro>
+        <Macro Name = "bx1'" > <Turn Axis = "bx1" Layers = "1" Angle=" A1" />  </Macro>
+        <Macro Name = "bx2 " > <Turn Axis = "bx2" Layers = "1" Angle="-A1" />  </Macro>
+        <Macro Name = "bx2'" > <Turn Axis = "bx2" Layers = "1" Angle=" A1" />  </Macro>
+
+        <Macro Name = "Exchange4" >
+            <Script>
+                if ax1 &lt; N then begin
+                    ax2 := Next(ax1);
+                    bx1 := ax1 + N;
+                    bx2 := ax2 + N;
+                end else begin
+                    ax2 := ax1 - 1;
+                    if ax1 mod N = 0 then
+                        ax2 := ax2 + N;
+                    bx1 := ax1 - N;
+                    bx2 := ax2 - N;
+                end;
+            </Script>
+            <ExecMacro MacroName = "ax2' bx2 bx2 ax2 bx2' bx1 ax1 ax2' ax1' ax2 ax1 ax2' ax1' ax2 ax1 ax2' ax1' ax2 ax1 ax2' ax1' ax2 ax1 ax2' ax1' ax2 bx1' bx2 ax2' bx2'" />
+            <ExecMacro MacroName = "bx2' ax2 bx2 ax2' bx2' ax2 bx1' ax2 bx1 ax2' bx1' ax2 bx1 ax2' bx2 bx2 ax2 bx1' ax2' bx1 ax2 bx1' ax2' bx1 bx2' bx2' ax2' bx2 ax2 bx2'" />
+            <Script> ax1 := ax1 + dax1; </Script>
+        </Macro>
+
+        <SaveSolvedState/> <!-- solution 1 -->
+        <ExecMacro MacroName = "Exchange4" ax1 = " 0" dax1 = " 1" Repeat = "N - 1" />
+        <SaveSolvedState/> <!-- solution 2 -->
+        <ExecMacro MacroName = "Exchange4" ax1 = "2*N - 1" dax1 = "-1" Repeat = "N - 1" />
+        <SaveSolvedState/> <!-- solution 3 -->
+        <Undo Repeat = "60 * (N - 1) * 2" />
+        <ExecMacro MacroName = "Exchange4" ax1 = "2*N - 1" dax1 = "-1" Repeat = "N - 1" />
+        <SaveSolvedState/> <!-- solution 4 -->
+        <Undo Repeat = "60 * (N - 1)" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,70 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Soviet Union Piece Shuffle Cube II (Random Color)</Name>
+        <Menu>Other forms\3x3x3 variants\Soviet Union Piece Shuffle Cube II (Random Color)</Menu>
+        <Inventor>Unknown</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-08-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2840</Link>
+    </Interface>
+
+    <Script>
+        Colors0[0] := 'FF0000'; // clRed
+        Colors1[0] := 'FFFFFF'; // clWhite
+        Colors2[0] := 'FFFF00'; // clYellow
+
+        Colors0[1] := 'FF0000'; // clRed
+        Colors1[1] := 'FFFF00'; // clYellow
+        Colors2[1] := '0000FF'; // clBlue
+
+        C := Random(2);
+
+        Colors[0] := Colors1[C];
+        Colors[1] := Colors1[C];
+        Colors[2] := Colors1[C];
+        Colors[3] := Colors1[C];
+        Colors[4] := Colors2[C];
+        Colors[5] := Colors0[C];
+
+        W := 0.5;
+        D := W / 3;
+
+        DCutE := W * 2 / 3 * sqrt(2);
+        DCutV := W * 5 / 3 / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vectors = " Vx; Vy; Vz" />
+
+        <Cut Color = "Colors1[C]" ><Plane NormVector = "-1; 1; 0" NormDistance = "-DCutE" /></Cut>
+        <Cut Color = "Colors1[C]" ><Plane NormVector = "-1;-1; 0" NormDistance = "-DCutE" /></Cut>
+        <Cut Color = "Colors1[C]" ><Plane NormVector = " 1;-1; 0" NormDistance = "-DCutE" /></Cut>
+        <Cut Color = "Colors1[C]" ><Plane NormVector = " 1; 1; 0" NormDistance = "-DCutE" /></Cut>
+
+        <InvertVisibility/>
+        <Cut Color = "Colors0[C]" ><Plane NormVector = " 1; 1;-1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "Colors0[C]" ><Plane NormVector = " 1;-1;-1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "Colors0[C]" ><Plane NormVector = "-1; 1;-1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "Colors0[C]" ><Plane NormVector = "-1;-1;-1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "Colors2[C]" ><Plane NormVector = " 1; 1; 1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "Colors2[C]" ><Plane NormVector = " 1;-1; 1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "Colors2[C]" ><Plane NormVector = "-1; 1; 1" NormDistance = "-DCutV" /></Cut>
+        <Cut Color = "Colors2[C]" ><Plane NormVector = "-1;-1; 1" NormDistance = "-DCutV" /></Cut>
+
+        <ShowAll/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

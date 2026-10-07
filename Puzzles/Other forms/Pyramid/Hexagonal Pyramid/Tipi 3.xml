@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tipi 3</Name>
+        <Menu>Other forms\Pyramid\Hexagonal Pyramid\Tipi 3</Menu>
+        <Inventor>Dario Dagné</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-05-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8328</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFF00'; // Yellow
+        Colors[1] := '0044EE'; // Blue
+        Colors[2] := 'BB00BB'; // Violet
+        Colors[3] := 'DD0000'; // Red
+        Colors[4] := '0088FF'; // Light Blue
+        Colors[5] := 'FF7700'; // Ogange
+        Colors[6] := '00BB00'; // Green
+
+        R := 0.6;
+        H := R * 2.25;
+
+        for i := 0 to 5 do begin
+            x[i] := R * cos(Pi / 3 * (i + 0.5));
+            y[i] := R * sin(Pi / 3 * (i + 0.5));
+        end;
+
+        for i := 0 to 2 do begin
+            ax[i] := cos(2 * Pi / 3 * i);
+            ay[i] := sin(2 * Pi / 3 * i);
+        end;
+
+        D := H / 9;
+
+        Z := -D * 3; // z-coordinate of Bottom
+
+        dZ := H * 0.1; // vertical slide
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "ax[0]; ay[0]; 0" BaseVector = "0; 0; -dZ" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "0; 0; 1" BaseVector = "0; 0; -dz" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "x; y; Z - dz">
+                <Add  Vector  = "0; 0; Z + H - dz" />
+            </Vertices>
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "6;0;1" />
+                <Face Color = "Colors[1]" VertexIndexes = "6;1;2" />
+                <Face Color = "Colors[2]" VertexIndexes = "6;2;3" />
+                <Face Color = "Colors[3]" VertexIndexes = "6;3;4" />
+                <Face Color = "Colors[4]" VertexIndexes = "6;4;5" />
+                <Face Color = "Colors[5]" VertexIndexes = "6;5;0" />
+                <Face Color = "Colors[6]" VertexIndexes = "5;4;3;2;1;0" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/3" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi/3" />
+        <SplitByAxes/>
+        <Undo Repeat = "2" />
+    </Figure>
+</xml>

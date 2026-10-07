@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Penrose Cube</Name>
+        <Menu>Other forms\3x3x3 variants\Penrose Cube</Menu>
+        <Inventor>Antonio Garrido Rubio</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2018-09-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6643</Link>
+    </Interface>
+ 
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        R := W * 2/3;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+ 
+    <Figure>
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "0;1;3;2" /> <!-- clRed -->
+                <Face Color = "Colors[5]" VertexIndexes = "5;4;6;7" /> <!-- clWhite -->
+                <Face Color = "Colors[2]" VertexIndexes = "1;0;4;5" /> <!-- clBlue -->
+                <Face Color = "Colors[0]" VertexIndexes = "2;3;7;6" />
+                <Face Color = "Colors[2]" VertexIndexes = "0;2;6;4" />
+                <Face Color = "Colors[5]" VertexIndexes = "3;1;5;7" />
+            </Faces>
+        </Part>
+        
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "-W; W;-W" />
+        <RemoveContaining Vector = "-W;-W;-W" />
+        <RemoveContaining Vector = " W;-W;-W" />
+        <RemoveContaining Vector = " W;-W; W" />
+        <RemoveContaining Vector = " W; W; W" />
+        <RemoveContaining Vector = "-W; W; W" />
+
+        <RemoveContaining Vector = " 0;-W;-W" />
+        <RemoveContaining Vector = " W; 0; W" />
+        <RemoveContaining Vector = "-W; W; 0" />
+
+        <InvertVisibility/>
+        <Cylinder Radius = "R" Color = "Colors[5]"> <!-- clWhite -->
+            <Base X = "D" Y = "-W" Z = "D" Color = "Colors[2]" />
+            <Top  X = "D" Y = " W" Z = "D" Color = "Colors[0]"/>
+        </Cylinder>
+        <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "D" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "D" /> </Cut>
+        <ShowAll/>
+
+        <InvertVisibility/>
+        <Cylinder Radius = "R" Color = "Colors[2]"> <!-- clBlue -->
+            <Base X = "-W" Y = "-D" Z = "-D" Color = "Colors[0]" />
+            <Top  X = " W" Y = "-D" Z = "-D" Color = "Colors[5]"/>
+        </Cylinder>
+        <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "D" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "D" /> </Cut>
+        <ShowAll/>
+
+        <InvertVisibility/>
+        <Cylinder Radius = "R" Color = "Colors[0]"> <!-- clRed -->
+            <Base X = "-D" Y = "D" Z = "-W" Color = "Colors[2]" />
+            <Top  X = "-D" Y = "D" Z = " W" Color = "Colors[5]"/>
+        </Cylinder>
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "D" /> </Cut>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "D" /> </Cut>
+        <ShowAll/>
+        
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

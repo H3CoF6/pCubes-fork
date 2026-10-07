@@ -1,0 +1,152 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Easy Avenger Puzzler</Name>
+        <Menu>Other forms\2d\Easy Avenger Puzzler</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-08-22</Added>
+        <Link>https://twistypuzzles.com/forum/viewtopic.php?p=430386</Link>
+    </Interface>
+
+    <Script>
+        clGreen  := '008000';
+        clBlue   := '0000FF';
+        clYellow := 'FFFF00';
+        clBlack  := '202020';
+
+        K  := 0.12;
+        s6 := sqrt(6);
+        C0 := K * (3 + s6) / 3;
+        C1 := K * (1 + s6);
+        C2 := K * (3 + 4 * s6) / 3;
+        C3 := K * 3 * (1 + s6) / 2;
+        C4 := K;
+
+        D1 := C1;
+        D2 := C1 * 2 / sqrt(3);
+
+        DCut1 := D1 - K * 0.3;
+        DCut2 := D2 - K * 0.3;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "D1" FixedLayers = "0">
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "D2" FixedLayers = "0">
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "CreateBody" >
+            <HideAll/>
+            <Part>
+                <Vertices>
+                    <Add Vector = "  0;  0; C3" />
+                    <Add Vector = "  0;  0;-C3" />
+                    <Add Vector = " C3;  0;  0" />
+                    <Add Vector = "-C3;  0;  0" />
+                    <Add Vector = "  0;-C3;  0" />
+                    <Add Vector = " C0; C0; C2" />
+                    <Add Vector = " C0;-C0; C2" />
+                    <Add Vector = " C0;-C0;-C2" />
+                    <Add Vector = "-C0;-C0; C2" />
+                    <Add Vector = "-C0;-C0;-C2" />
+                    <Add Vector = " C2; C0; C0" />
+                    <Add Vector = " C2;-C0; C0" />
+                    <Add Vector = " C2;-C0;-C0" />
+                    <Add Vector = "-C2;-C0; C0" />
+                    <Add Vector = "-C2;-C0;-C0" />
+                    <Add Vector = " C0;-C2; C0" />
+                    <Add Vector = " C0;-C2;-C0" />
+                    <Add Vector = "-C0;-C2; C0" />
+                    <Add Vector = "-C0;-C2;-C0" />
+                    <Add Vector = " C1; C4; C1" />
+                    <Add Vector = " C1;-C4; C1" />
+                    <Add Vector = " C1;-C4;-C1" />
+                    <Add Vector = "-C1;-C4; C1" />
+                    <Add Vector = "-C1;-C4;-C1" />
+                    <Add Vector = " C1;-C1; C4" />
+                    <Add Vector = " C1;-C1;-C4" />
+                    <Add Vector = "-C1;-C1; C4" />
+                    <Add Vector = "-C1;-C1;-C4" />
+                    <Add Vector = " C4;-C1; C1" />
+                    <Add Vector = " C4;-C1;-C1" />
+                    <Add Vector = "-C4;-C1; C1" />
+                    <Add Vector = "-C4;-C1;-C1" />
+                </Vertices>
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = " 6;28;15;24;11;20; " />
+                    <Face Color = "Color" VertexIndexes = " 7;21;12;25;16;29; " />
+                    <Face Color = "Color" VertexIndexes = " 8;22;13;26;17;30; " />
+                    <Face Color = "Color" VertexIndexes = " 9;31;18;27;14;23; " />
+                    <Face Color = "Color" VertexIndexes = " 0; 8;30;28; 6;" />
+                    <Face Color = "Color" VertexIndexes = " 0; 6;20;19; 5;" />
+                    <Face Color = "Color" VertexIndexes = " 1; 7;29;31; 9;" />
+                    <Face Color = "Color" VertexIndexes = " 2;10;19;20;11;" />
+                    <Face Color = "Color" VertexIndexes = " 2;11;24;25;12;" />
+                    <Face Color = "Color" VertexIndexes = " 3;14;27;26;13;" />
+                    <Face Color = "Color" VertexIndexes = " 4;15;28;30;17;" />
+                    <Face Color = "Color" VertexIndexes = " 4;17;26;27;18;" />
+                    <Face Color = "Color" VertexIndexes = " 4;18;31;29;16;" />
+                    <Face Color = "Color" VertexIndexes = " 4;16;25;24;15;" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "CreateBody" Color = "clYellow" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "0" From = "1" />
+
+        <ExecMacro MacroName = "CreateBody" Color = "clGreen" />
+        <Cut Axis = "1" To   = "1" />
+        <Cut Axis = "0" From = "1" />
+
+        <ExecMacro MacroName = "CreateBody" Color = "clBlue" />
+        <Cut Axis = "1" From = "1" />
+        <Cut Axis = "0" To   = "1" />
+
+        <ExecMacro MacroName = "CreateBody" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormDistance = "-DCut2" NormVector = "-1; 1;-1" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormDistance = " DCut1" NormVector = " 0;-1; 0" /> </Cut>
+
+        <ExecMacro MacroName = "CreateBody" Color = "clBlack" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormDistance = " DCut2" NormVector = " 1;-1; 1" /> </Cut>
+        <Cut InvisibleEdges = "-1"> <Plane NormDistance = " DCut1" NormVector = " 0;-1; 0" /> </Cut>
+
+        <ExecMacro MacroName = "CreateBody" Color = "clBlack" />
+        <Cut Axis = "1" To = "1" />
+        <Cut InvisibleEdges = "-1"> <Plane NormDistance = "-DCut1" NormVector = " 0; 1; 0" /> </Cut>
+        <Cut Color = "clBlack"    > <Plane NormDistance = " DCut2" NormVector = " 1;-1; 1" /> </Cut>
+        <ShowAll/>
+
+        <Macro Name = "Split1" >
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "Pi/3" />
+        </Macro>
+
+        <Macro Name = "Split2" >
+            <ExecMacro MacroName = "Split1" Repeat = "6" />
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Split2" Repeat = "4" />
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;1;0" Angle = "-3*Pi/4" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/8" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

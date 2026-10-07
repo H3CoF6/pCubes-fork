@@ -1,0 +1,107 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+    <Interface>
+        <Name>Crazy2face - 2N Jupiter</Name>
+        <Aliases>Crazy2face Z-012121</Aliases>
+        <Menu>Cubic\Crazy\Crazy 3x3x3\Crazy2face\2N Jupiter</Menu>
+        <Inventor>Rline</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-05-05</Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?t=25893</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+        W := 0.5;
+
+        D := W / 3;
+        Delta := 1.001;
+
+        R := W * 0.8;
+        WC := W * Delta;
+
+        FaceStatus[0] := 0;
+        FaceStatus[1] := 1;
+        FaceStatus[2] := 1;
+        FaceStatus[3] := 1;
+        FaceStatus[4] := 2;
+        FaceStatus[5] := 2;
+
+        for i := 0 to 5 do 
+            D2[i] := W * (FaceStatus[i] + 1);
+    </Script>
+
+    // this is version with free core. For version with fixed core uncomment this line and comment next
+<!--    <Axes TurningAngles = "Pi/2" FixedLayers = "2" >-->
+    <Axes TurningAngles = "Pi/2" TurnAxesWithLayer = "2" >
+        <Axis NormVector = "1; 0; 0" PlaneDistances = "-D2[0];-D; D; D2[1]" />
+        <Axis NormVector = "0; 1; 0" PlaneDistances = "-D2[2];-D; D; D2[3]" />
+        <Axis NormVector = "0; 0; 1" PlaneDistances = "-D2[4];-D; D; D2[5]" />
+    </Axes>
+
+    <Figure>
+        // make center parts ordered from 0 to 6 corresponding to face number (for SetTextures)
+        <Script>W0 := W; W := W * Delta; include 'Figures\Scripts\Cube_Coordinates.inc';</Script> // save W
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "R" Color = "Colors[ax]" Center = " Cx[ax]; Cy[ax]; Cz[ax]" />
+            <SplitByAxes/>
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" ax = " 0" Repeat = "6" />
+        <HideContaining Vector = " Cx; Cy; Cz" />
+        <RemoveAllVisible/>
+        <ExecMacro MacroName = "AddCircle" ax = " 0" Repeat = "6" />
+        <RemoveContaining Vector = " Cx; Cy; Cz" />
+
+        // RemoveCircles with FaceStatus = 2
+        <Script>W := W0; include 'Figures\Scripts\Cube_Coordinates.inc';</Script> // restore W and coordinates
+        <Macro Name = "RemoveStatus2" >
+            <Cut><Plane NormVector = "-Cx[ax];-Cy[ax];-Cz[ax]" NormDistance = "-W * (3 - FaceStatus[ax])" /></Cut>
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "RemoveStatus2" ax = "0" Repeat = "6" />
+
+        <HideAll/>
+
+        // make "cube" with thick yellow face
+        <Script>W0 := W;</Script> // temporary save W
+        <LoadFrom File = "Figures\Cube.xml" W = "W * delta" />
+        <Script>W := W0; include 'Figures\Scripts\Cube_Coordinates.inc';</Script> // restore W and coordinates
+        <Macro Name = "Cut" >
+            // cut if FaceStatus = 0 or 1, not cut if 2
+            <Cut Color = "Colors[ax]" ><Plane NormVector = "-Cx[ax];-Cy[ax];-Cz[ax]" NormDistance = "-W * Max(FaceStatus[ax],1)" /></Cut>
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" ax = "0" Repeat = "6" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <InvertVisibility/>
+
+        // hide center with FaceStatus = 0 (keep this face to save order of faces, only for SetTextures)
+
+        <Macro Name = "HideCenter01" >
+            // hide if FaceStatus = 0 or 1, not hide if 2
+            <Hide><Plane NormVector = "-Cx[ax];-Cy[ax];-Cz[ax]" NormDistance = "-W * Max(FaceStatus[ax],1)" /></Hide>
+            <Script>Inc(ax);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideCenter01" ax = " 0" Repeat = "6" />
+
+        <InvertVisibility/>
+
+        <Connect Axis = "0" Layers = "0;2;4" />
+        <Connect Axis = "1" Layers = "0;2;4" />
+        <Connect Axis = "2" Layers = "0;2;4" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Dot" File = "Puzzles/Cubic/Unclassified/Textures/Dot.vec" />
+    </Textures>
+    <SetTextures>
+        Dot = 0,0,0
+    </SetTextures>
+</xml>

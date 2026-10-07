@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexagonal Frustrum Skewb</Name>
+        <Menu>Other forms\Skewb variants\Hexagonal Frustrum Skewb</Menu>
+        <Inventor></Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0000'; // Red
+        Colors[1] := 'FF6000'; // Orange
+        Colors[2] := 'FFFF00'; // Yellow
+        Colors[3] := '008000'; // Green
+        Colors[4] := '0000A0'; // Blue
+        Colors[5] := 'FF0080'; // LightViolett
+        Colors[6] := '3868BF'; // LightBlue
+
+        W := 0.4;
+        R := W / sqrt(3);
+        N := 4;
+        D := 4 * W * sqrt(3) / 3 / N;
+        D0 := -sqrt(3) * W / 3;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" > <!-- D0 + D == 0 -->
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <Cut Color = "Colors[0]"> <Plane NormVector = "-1; 1; 1" NormDistance = "-R" /> </Cut>
+        <Cut Color = "Colors[2]"> <Plane NormVector = " 1; 1;-1" NormDistance = "-R" /> </Cut>
+        <Cut Color = "Colors[4]"> <Plane NormVector = "-1;-1;-1" NormDistance = "-R" /> </Cut>
+        <Cut Color = "Colors[6]"> <Plane NormVector = " 1;-1; 1" NormDistance = "-R" /> </Cut>
+        <Turn Axis = "3" Layer = "0" Angle = "Pi / 3" />
+        <Cut Color = "Colors[1]"> <Plane NormVector = "-1; 1; 1" NormDistance = "-R" /> </Cut>
+        <Cut Color = "Colors[3]"> <Plane NormVector = " 1; 1;-1" NormDistance = "-R" /> </Cut>
+        <Cut Color = "Colors[5]"> <Plane NormVector = "-1;-1;-1" NormDistance = "-R" /> </Cut>
+        <Cut Color = "Colors[6]"> <Plane NormVector = "-1; 1;-1" NormDistance = "-D0 - 2*D" /> </Cut>
+        <Turn Axis = "3" Layer = "0" Angle = "-Pi / 3" />
+        <SplitByAxes/>
+
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi / 4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "-arctan(sqrt(2))" />
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tetrahedron Crazy Simplified</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Crazy\Crazy Simplified</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-01-12</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9447</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        RC := W * 0.42;
+        DC := W / 3 * 1.001;
+
+        R := sqrt(3) * W;
+        D1 := -R / 3;
+        D2 := 0;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/3" PlaneDistances = "D1; D2" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <Circle Radius = "RC" Color = "Colors[0]" Center = "-DC; DC;-DC" />
+        <Circle Radius = "RC" Color = "Colors[1]" Center = " DC;-DC;-DC" />
+        <Circle Radius = "RC" Color = "Colors[2]" Center = "-DC;-DC; DC" />
+        <Circle Radius = "RC" Color = "Colors[3]" Center = " DC; DC; DC" />
+
+        <SplitByAxes/>
+
+        <Connect Layers = "0;2" />
+
+        <Macro Name = "Cut" >
+            <Hide Axis = "ax1" From = "1" />
+            <Hide Axis = "ax2" From = "2" />
+            <Hide Axis = "ax3" From = "2" />
+            <RemoveAllVisible/>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Cut" ax1 = "0" ax2 = "1" ax3 = "2" />
+        <ExecMacro MacroName = "Cut" ax1 = "0" ax2 = "2" ax3 = "3" />
+        <ExecMacro MacroName = "Cut" ax1 = "0" ax2 = "3" ax3 = "1" />
+
+        <ExecMacro MacroName = "Cut" ax1 = "1" ax2 = "0" ax3 = "2" />
+        <ExecMacro MacroName = "Cut" ax1 = "1" ax2 = "2" ax3 = "3" />
+        <ExecMacro MacroName = "Cut" ax1 = "1" ax2 = "3" ax3 = "0" />
+
+        <ExecMacro MacroName = "Cut" ax1 = "2" ax2 = "1" ax3 = "0" />
+        <ExecMacro MacroName = "Cut" ax1 = "2" ax2 = "0" ax3 = "3" />
+        <ExecMacro MacroName = "Cut" ax1 = "2" ax2 = "3" ax3 = "1" />
+
+        <ExecMacro MacroName = "Cut" ax1 = "3" ax2 = "1" ax3 = "2" />
+        <ExecMacro MacroName = "Cut" ax1 = "3" ax2 = "2" ax3 = "0" />
+        <ExecMacro MacroName = "Cut" ax1 = "3" ax2 = "0" ax3 = "1" />
+
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Triangle" File = "Puzzles\Other forms\Platonic solids\Tetrahedron\Vertex Turning\Crazy\Triangle.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Triangle = 17,0,0, 21,0,0, 25,0,0, 29,0,0
+    </SetTextures>
+
+</xml>

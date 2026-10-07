@@ -1,0 +1,145 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mixup Quadrilateral Icosahedron</Name>
+        <Menu>Other forms\Unclassified\Mixup Quadrilateral Icosahedron</Menu>
+        <Inventor>Marcell Mágori</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-02-29</Added>
+    </Interface>
+
+    <Script>
+        clRed     := 'F40000';
+        clYellow  := 'FCEC00';
+        clGreen   := '2F9D00';
+        clBlue    := '2B78DC';
+        clWhite   := 'F0F0F0';
+
+        clOrange  := 'F79800';
+        clMaroon  := '820011';
+        clLime    := '95FF00';
+        clSky     := '75CEFF';
+        clPurple  := 'B463FF';
+
+        Colors[ 0] := clMaroon;
+        Colors[ 1] := clOrange;
+        Colors[ 2] := clBlue;
+        Colors[ 3] := clBlue;
+        Colors[ 4] := clPurple;
+        Colors[ 5] := clGreen;
+        Colors[ 6] := clLime;
+        Colors[ 7] := clLime;
+        Colors[ 8] := clWhite;
+        Colors[ 9] := clMaroon;
+        Colors[10] := clRed;
+        Colors[11] := clRed;
+        Colors[12] := clOrange;
+        Colors[13] := clPurple;
+        Colors[14] := clSky;
+        Colors[15] := clSky;
+        Colors[16] := clGreen;
+        Colors[17] := clWhite;
+        Colors[18] := clYellow;
+        Colors[19] := clYellow;
+
+        W := 0.45;
+
+        sAngle := 2*Pi / 5;
+
+        CX := W * (31 + 5 * sqrt(5)) / 44;
+        CY := W * sqrt(10 * (85 - 31 * sqrt(5))) / 44;
+
+        D1 := W * 0.15;
+        D2 := W * 0.45084;
+        D3 := W * 0.6762;
+
+        R := W * 0.1275;
+
+        for i := 0 to 4 do begin
+            x[i] := cos(sAngle * i);
+            y[i] := sin(sAngle * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi / 3; Pi" PlaneDistances = " D2; D3" NormVectors = " x; y; 0" />
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+
+        <Macro Name = "Cut">
+            <Cut Color = "Colors[i + 0]"> <Plane NormVector = "-CX;-CY; 0" NormDistance = "-W" /> </Cut>
+            <Cut Color = "Colors[i + 1]"> <Plane NormVector = "-CX; CY; 0" NormDistance = "-W" /> </Cut>
+            <Turn NormVector = " x[1]; y[1]; 0" Angle = "Pi / 3" />
+            <Cut Color = "Colors[i + 2]"> <Plane NormVector = "-CX;-CY; 0" NormDistance = "-W" /> </Cut>
+            <Turn NormVector = " x[1]; y[1]; 0" Angle = "-2 * Pi / 3" />
+            <Cut Color = "Colors[i + 3]"> <Plane NormVector = "-CX;-CY; 0" NormDistance = "-W" /> </Cut>
+            <Turn NormVector = " x[1]; y[1]; 0" Angle = "Pi / 3" />
+            <Turn NormVector = "0;0;1" Angle = "sAngle" />
+            <Script>i := i + 4;</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut" i = "0" Repeat = "5" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Hide">
+            <HideContaining Vector = "0; 0; 0" />
+
+            <HideContaining Vector = "W; 0; D1" />
+            <HideContaining Vector = "W; 0;-D1" />
+
+            <HideContaining Vector = "D2; 0; W" />
+            <HideContaining Vector = "D2; 0;-W" />
+
+            <HideContaining Vector = "W*0.8; W*0.5; D1" />
+            <HideContaining Vector = "W*0.8; W*0.5;-D1" />
+
+            <HideContaining Vector = "W*0.9; W*0.4; 2*D1" />
+            <HideContaining Vector = "W*0.9; W*0.4;-2*D1" />
+            <HideContaining Vector = "W*0.9;-W*0.4; 2*D1" />
+            <HideContaining Vector = "W*0.9;-W*0.4;-2*D1" />
+
+            <Turn NormVector = "0;0;1" Angle = "sAngle" />
+        </Macro>
+
+        <ExecMacro MacroName = "Hide" Repeat = "5" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "Unbandage">
+            <Turn  Axis = "i" Angle = "Pi/3" Layer = "1" />
+            <SplitByAxes/>
+            <Turn  Axis = "i" Angle = "Pi/3" Layer = "1" />
+            <SplitByAxes/>
+            <Script>inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Unbandage" i = "1" Repeat = "5" />
+        <Undo Repeat = "10" />
+
+        <ExecMacro MacroName = "Hide" Repeat = "5" />
+        <RemoveAllVisible/>
+        <ShowAll/>
+
+        <Macro Name = "AddCircle">
+            <Circle Radius = "R" Color = "Colors[i + 0]" Center = " CX; CY; 0" />
+            <Circle Radius = "R" Color = "Colors[i + 1]" Center = " CX;-CY; 0" />
+            <Turn NormVector = " x[1]; y[1]; 0" Angle = " Pi / 3" />
+            <Circle Radius = "R" Color = "Colors[i + 2]" Center = " CX; CY; 0" />
+            <Turn NormVector = " x[1]; y[1]; 0" Angle = "-2 * Pi / 3" />
+            <Circle Radius = "R" Color = "Colors[i + 3]" Center = " CX; CY; 0" />
+            <Turn NormVector = " x[1]; y[1]; 0" Angle = "Pi / 3" />
+            <Turn NormVector = "0;0;1" Angle = "sAngle" />
+            <Script>i := i + 4</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddCircle" i = "0" Repeat = "5" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

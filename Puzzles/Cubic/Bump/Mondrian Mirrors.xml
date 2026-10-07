@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mondrian Mirrors</Name>
+        <Menu>Cubic\Bump\Mondrian Mirrors</Menu>
+        <Inventor>Ids Tjalling Meijer</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2020-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7780</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF'; // clWhite 
+        Colors[1] := 'C80000'; // clRed   
+        Colors[2] := 'FFFF00'; // clYellow
+        Colors[3] := '0000C8'; // clBlue  
+
+        W := 0.5;
+        D := W / 3;
+
+        DX := W * 0.3;
+        DY := W * 0.2;
+        DZ :=-W * 0.1;
+
+        SColors[0] := '302 020 003 000 001 100';
+        SColors[1] := '000 010 200 120 300 000';
+        SColors[2] := '010 300 010 030 020 203';
+
+        function GetInt(): integer;
+        begin
+          Result := StrToInt(copy(SColors[Y+1], X+2 + Side * 4, 1));
+        end;
+
+        Side := 0;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "1" Color = "-1" />
+        <SplitByAxes/>
+
+        <Macro Name = "CutCubie" >
+            <HideContaining Vector = "x * 2*D; -W; -y * 2*D" /> // cut face surface
+            <InvertVisibility />
+            <Cut Color = "Colors[GetInt]"><Plane NormVector = "0;1;0" NormDistance = "-DCut" /></Cut>
+            <ShowAll/>
+            <Script>Inc(x);</Script>
+        </Macro>
+
+        <Macro Name = "CutRow" >
+            <ExecMacro MacroName = "CutCubie" x = "-1" Repeat = "3" />
+            <Script>Inc(y);</Script>
+        </Macro>
+
+        <Macro Name = "CutFace" >
+            <ExecMacro MacroName = "CutRow" y = "-1" Repeat = "3" />
+            <Script>Inc(Side);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "CutFace" DCut = "W - DY" /> F
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/2" />
+
+        <ExecMacro MacroName = "CutFace" DCut = "W + DX" /> R
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/2" />
+
+        <ExecMacro MacroName = "CutFace" DCut = "W + DY" /> B
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/2" />
+
+        <ExecMacro MacroName = "CutFace" DCut = "W - DX" /> L
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/2" />
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi/2" />
+
+        <ExecMacro MacroName = "CutFace" DCut = "W + DZ" /> U
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi  " />
+
+        <ExecMacro MacroName = "CutFace" DCut = "W - DZ" /> D
+        <Turn NormVector = " 1; 0; 0" Angle = " Pi/2" />
+
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 6" />
+</xml>

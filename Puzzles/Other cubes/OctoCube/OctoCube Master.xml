@@ -1,0 +1,44 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>OctoCube Master</Name>
+        <Menu>Other cubes\OctoCube\OctoCube Master</Menu>
+        <Inventor>Dayan</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-11-22</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := 0.45 * W;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Split" >
+            <Hide Axis = "Ax1" Layer = "0" />
+            <Hide Axis = "Ax1" Layer = "2" />
+            <Turn Axis = "Ax2" Angle = "Pi / 4" Layer = "0" />
+            <Turn Axis = "Ax2" Angle = "Pi / 4" Layer = "2" />
+            <SplitByAxes/>
+            <Undo/>
+            <Undo/>
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Split" Ax1 = "0" Ax2 = "2" />
+        <ExecMacro MacroName = "Split" Ax1 = "1" Ax2 = "0" />
+        <ExecMacro MacroName = "Split" Ax1 = "2" Ax2 = "1" />
+
+        <RemoveGrayParts/>
+
+    </Figure>
+</xml>

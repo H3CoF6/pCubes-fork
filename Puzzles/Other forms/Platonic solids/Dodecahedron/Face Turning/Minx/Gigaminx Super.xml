@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Gigaminx Super</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Minx\Gigaminx Super</Menu>
+        <Inventor>Brian Deplae</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-07-28</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2393</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := (3 * Rsin + 1 * R2sin) / 4;
+        D2 := (2 * Rsin + 2 * R2sin) / 4;
+
+        delta := 0.02;
+    </Script>
+
+    <Axes TurningAngles = "sAngle; sAngle; 0; sAngle; sAngle" PlaneDistances = "-D1; -D2; D2; D1" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Script> R := 1.005; DCut1 := RSin; DCut2 := RSin + delta; </Script>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Super.xml" />
+
+        <Script> R := 0.768; DCut1 := RSin + delta; DCut2 := RSin + 2 * delta; </Script>
+        <LoadFrom File = "Puzzles\Other forms\Platonic solids\Dodecahedron\Face Turning\Minx\_Macro_For_Super.xml" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

@@ -1,0 +1,126 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Shallow Hexamixup 3x3x4</Name>
+        <Menu>Other forms\Bifrustum\Square Bifrustum\Shallow Hexamixup 3x3x4</Menu>
+        <Inventor>Marcell Mágori</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-05-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8641</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36609</Link>
+    </Interface>
+
+    <Script>
+        clBlack  := '202020';
+        clCyan   := '00FFFF';
+        clBlue   := '0000FF';
+        clCoral  := 'FF7F50';
+        clRed    := 'FF0000';
+        clYellow := 'FFFF00';
+        clOrange := 'FF6000';
+        clGolden := 'DDBB20';
+        clLime   := '00FF00';
+        clGreen  := '008000';
+
+        K   := 0.5;
+        nA1 := K / 2;
+        nA2 := K;
+        nA3 := K * sqrt(3) / 2;
+
+        D := K / 3;
+
+        RCut := nA3 * 0.8;
+    </Script>
+
+    <Axes TurningAngles = "Pi/6" PlaneDistances = "-D; 0; D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " nA1; nA1; nA3" />
+                <Add Vector = " nA1;-nA1; nA3" />
+                <Add Vector = "-nA1;-nA1; nA3" />
+                <Add Vector = "-nA1; nA1; nA3" />
+
+                <Add Vector = " nA2; nA2;   0" />
+                <Add Vector = " nA2;-nA2;   0" />
+                <Add Vector = "-nA2;-nA2;   0" />
+                <Add Vector = "-nA2; nA2;   0" />
+
+                <Add Vector = " nA1; nA1;-nA3" />
+                <Add Vector = " nA1;-nA1;-nA3" />
+                <Add Vector = "-nA1;-nA1;-nA3" />
+                <Add Vector = "-nA1; nA1;-nA3" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clBlack " VertexIndexes = " 0; 3; 2; 1" />
+
+                <Face Color = "clRed   " VertexIndexes = " 0; 1; 5; 4" />
+                <Face Color = "clGreen " VertexIndexes = " 1; 2; 6; 5" />
+                <Face Color = "clGolden" VertexIndexes = " 2; 3; 7; 6" />
+                <Face Color = "clCyan  " VertexIndexes = " 3; 0; 4; 7" />
+
+                <Face Color = "clOrange" VertexIndexes = " 4; 5; 9; 8" />
+                <Face Color = "clBlue  " VertexIndexes = " 5; 6;10; 9" />
+                <Face Color = "clCoral " VertexIndexes = " 6; 7;11;10" />
+                <Face Color = "clLime  " VertexIndexes = " 7; 4; 8;11" />
+
+                <Face Color = "clYellow" VertexIndexes = " 8; 9;10;11" />
+            </Faces>
+        </Part>
+
+        <Macro Name = "Split" >
+            <Split Axis = "0" From = "1" />
+            <Split Axis = "0" From = "3" />
+            <Split Axis = "1" From = "1" />
+            <Split Axis = "1" From = "3" />
+            <Split Axis = "2" From = "1" />
+            <Split Axis = "2" From = "2" />
+            <Split Axis = "2" From = "3" />
+
+            <Turn Axis = "0" Angle = "Pi/6" Layers = "1;2" />
+            <Split Axis = "1" From = "1" />
+            <Split Axis = "1" From = "3" />
+            <Turn Axis = "0" Angle = "-2*Pi/6" Layers = "1;2" />
+            <Split Axis = "1" From = "1" />
+            <Split Axis = "1" From = "3" />
+            <Undo Repeat = "2" />
+
+            <Turn Axis = "1" Angle = "Pi/6" Layers = "1;2" />
+            <Split Axis = "0" From = "1" />
+            <Split Axis = "0" From = "3" />
+            <Turn Axis = "1" Angle = "-2*Pi/6" Layers = "1;2" />
+            <Split Axis = "0" From = "1" />
+            <Split Axis = "0" From = "3" />
+            <Undo Repeat = "2" />
+
+            <Hide Axis = "0" Layer = "0" />
+            <Hide Axis = "1" Layer = "0" />
+            <Hide Axis = "0" Layer = "3" />
+            <Hide Axis = "1" Layer = "3" />
+            <Split> <Plane NormVector = "0;0;1" NormDistance = "RCut" /> </Split>
+            <Split> <Plane NormVector = "0;0;1" NormDistance = "-RCut" /> </Split>
+            <ShowAll/>
+            <RemoveGrayParts/>
+        </Macro>
+
+        <ExecMacro MacroName = "Split" />
+        <Turn Axis = "0" Angle = "Pi/3" Layers = "1;2" />
+        <ExecMacro MacroName = "Split" />
+        <Turn Axis = "0" Angle = "-2*Pi/3" Layers = "1;2" />
+        <ExecMacro MacroName = "Split" />
+        <Undo Repeat = "2" />
+
+        <Turn Axis = "1" Angle = "Pi/3" Layers = "1;2" />
+        <ExecMacro MacroName = "Split" />
+        <Turn Axis = "1" Angle = "-2*Pi/3" Layers = "1;2" />
+        <ExecMacro MacroName = "Split" />
+        <Undo Repeat = "2" />
+    </Figure>
+</xml>

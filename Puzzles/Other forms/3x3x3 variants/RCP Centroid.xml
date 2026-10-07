@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>RCP Centroid</Name>
+        <Menu>Other forms\3x3x3 variants\RCP Centroid</Menu>
+        <Inventor>Troy Robinson</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-06-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8037</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Octahedron_Standard_Colors.inc';
+
+        W := 0.5;
+        D := W * 0.5;
+        R := W * 0.6;
+        L := W * 0.6;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCylinder" >
+            <HideAll/>
+            <Cylinder Color = "Colors[c1]" Radius = "R" Base = "0;0;0" Top = "L;L;L" > 
+                <Top Color = "Colors[c2]" />
+            </Cylinder>
+            <Cut><Plane NormVector = "1;0;0" /></Cut>
+            <Cut><Plane NormVector = "0;1;0" /></Cut>
+            <Cut><Plane NormVector = "0;0;1" /></Cut>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "AddCylinder" c1 = "3" c2 = "4" />
+        <ExecMacro MacroName = "AddCylinder" c1 = "2" c2 = "5" />
+        <ExecMacro MacroName = "AddCylinder" c1 = "1" c2 = "7" />
+        <ExecMacro MacroName = "AddCylinder" c1 = "6" c2 = "0" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddCylinder" c1 = "0" c2 = "6" />
+        <ExecMacro MacroName = "AddCylinder" c1 = "7" c2 = "1" />
+        <ExecMacro MacroName = "AddCylinder" c1 = "5" c2 = "2" />
+        <ExecMacro MacroName = "AddCylinder" c1 = "4" c2 = "3" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

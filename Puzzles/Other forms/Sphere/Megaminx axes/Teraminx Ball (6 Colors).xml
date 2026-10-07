@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Teraminx Ball (6 Colors)</Name>
+        <Menu>Other forms\Sphere\Megaminx axes\Teraminx Ball (6 Colors)</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-03-27</Added>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clOrange := 'FF800A';
+        clBlue   := '0000C8';
+        clGreen  := '009600';
+        clYellow := 'FFFF00';
+        clWhite  := 'FFFFFF';
+
+        Colors[ 0] := clWhite;
+        Colors[ 1] := clOrange;
+        Colors[ 2] := clOrange;
+        Colors[ 3] := clBlue;
+        Colors[ 4] := clWhite;
+        Colors[ 5] := clGreen;
+        Colors[ 6] := clRed;
+        Colors[ 7] := clRed;
+        Colors[ 8] := clGreen;
+        Colors[ 9] := clYellow;
+        Colors[10] := clBlue;
+        Colors[11] := clYellow;
+
+        K := 0.6;
+        D1 := K * 0.56;
+        D2 := K * 0.65;
+        D3 := K * 0.74;
+
+        phi := (Sqrt(5) - 1) / 2; // The golden ratio
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "-D3;-D2;-D1; D1; D2; D3" FixedLayers = "3" >
+        <Axis NormVector = "   0;  -1; phi" />
+        <Axis NormVector = "   0;  -1;-phi" />
+        <Axis NormVector = "-phi;   0;  -1" />
+        <Axis NormVector = " phi;   0;  -1" />
+        <Axis NormVector = "   1;-phi;   0" />
+        <Axis NormVector = "   1; phi;   0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

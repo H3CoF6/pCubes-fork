@@ -1,0 +1,97 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bronto Star</Name>
+        <Menu>Other forms\Star\Small Stellated Dodecahedron\Bronto Star</Menu>
+        <Inventor>Jason Smith</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3486</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        D := Rsin;
+
+        K1 := (sqrt(5) - 1)/4;
+        K2 := sqrt((25 - 11 * sqrt(5)) * 2) / 4;
+        
+        k := (3 - sqrt(5))/2;
+        D1 := -D / R;
+        D2 := D1 * 1.02;
+        RC := R * 0.34;
+        DCut := -R * D2;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCircle">
+            <Cylinder Radius = "RC" Color = "Colors[i0]" >
+                <Base X = "Vx[i]*D1" Y = "Vy[i]*D1" Z = "Vz[i]*D1" Color = "Colors[i0]" />
+                <Top  X = "Vx[i]*D2" Y = "Vy[i]*D2" Z = "Vz[i]*D2" Color = "Colors[i0]" />
+            </Cylinder>
+        </Macro>
+
+        <Macro Name = "AddPart">
+            <Part>
+                <Vertices>
+                    <Add Vector = "Vx[i0]; Vy[i0]; Vz[i0]" />
+                    <Add Vector = "Vx[i0] + (Vx[i1]-Vx[i0]) * k; Vy[i0] + (Vy[i1]-Vy[i0]) * k; Vz[i0] + (Vz[i1]-Vz[i0]) * k; " />
+                    <Add Vector = "Vx[i0] + (Vx[i2]-Vx[i0]) * k; Vy[i0] + (Vy[i2]-Vy[i0]) * k; Vz[i0] + (Vz[i2]-Vz[i0]) * k; " />
+                    <Add Vector = "Vx[i0] + (Vx[i3]-Vx[i0]) * k; Vy[i0] + (Vy[i3]-Vy[i0]) * k; Vz[i0] + (Vz[i3]-Vz[i0]) * k; " />
+                    <Add Vector = "Vx[i0] + (Vx[i4]-Vx[i0]) * k; Vy[i0] + (Vy[i4]-Vy[i0]) * k; Vz[i0] + (Vz[i4]-Vz[i0]) * k; " />
+                    <Add Vector = "Vx[i0] + (Vx[i5]-Vx[i0]) * k; Vy[i0] + (Vy[i5]-Vy[i0]) * k; Vz[i0] + (Vz[i5]-Vz[i0]) * k; " />
+                </Vertices>
+                <Faces>
+                    <Face Color = "Colors[i0]" VertexIndexes = "0;2;1" />
+                    <Face Color = "Colors[i0]" VertexIndexes = "0;3;2" />
+                    <Face Color = "Colors[i0]" VertexIndexes = "0;4;3" />
+                    <Face Color = "Colors[i0]" VertexIndexes = "0;5;4" />
+                    <Face Color = "Colors[i0]" VertexIndexes = "0;1;5" />
+                    <Face VertexIndexes = "1;2;3;4;5" />
+                </Faces>
+            </Part>
+            <HideAll/>
+
+            <ExecMacro MacroName = "AddCircle" i = "i1" />
+            <ExecMacro MacroName = "AddCircle" i = "i2" />
+            <ExecMacro MacroName = "AddCircle" i = "i3" />
+            <ExecMacro MacroName = "AddCircle" i = "i4" />
+            <ExecMacro MacroName = "AddCircle" i = "i5" />
+            <Cut><Plane NormVector = "Vx[i0]; Vy[i0]; Vz[i0]" NormDistance = "DCut" /></Cut>
+            <HideAll/>
+
+        </Macro>
+
+        <ExecMacro MacroName = "AddPart" i0 = " 0" i1 = " 6" i2 = " 7" i3 = " 8" i4 = " 9" i5 = "10" />
+        <ExecMacro MacroName = "AddPart" i0 = " 1" i1 = " 3" i2 = " 4" i3 = " 9" i4 = "11" i5 = " 7" />
+        <ExecMacro MacroName = "AddPart" i0 = " 2" i1 = " 4" i2 = " 5" i3 = "10" i4 = "11" i5 = " 8" />
+        <ExecMacro MacroName = "AddPart" i0 = " 3" i1 = " 1" i2 = " 6" i3 = "11" i4 = " 9" i5 = " 5" />
+        <ExecMacro MacroName = "AddPart" i0 = " 4" i1 = " 1" i2 = " 2" i3 = " 7" i4 = "11" i5 = "10" />
+        <ExecMacro MacroName = "AddPart" i0 = " 5" i1 = " 2" i2 = " 3" i3 = " 8" i4 = "11" i5 = " 6" />
+        <ExecMacro MacroName = "AddPart" i0 = " 6" i1 = " 0" i2 = " 5" i3 = " 9" i4 = " 8" i5 = " 3" />
+        <ExecMacro MacroName = "AddPart" i0 = " 7" i1 = " 0" i2 = " 1" i3 = "10" i4 = " 9" i5 = " 4" />
+        <ExecMacro MacroName = "AddPart" i0 = " 8" i1 = " 0" i2 = " 2" i3 = " 6" i4 = "10" i5 = " 5" />
+        <ExecMacro MacroName = "AddPart" i0 = " 9" i1 = " 0" i2 = " 3" i3 = " 7" i4 = " 6" i5 = " 1" />
+        <ExecMacro MacroName = "AddPart" i0 = "10" i1 = " 0" i2 = " 4" i3 = " 8" i4 = " 7" i5 = " 2" />
+        <ExecMacro MacroName = "AddPart" i0 = "11" i1 = " 1" i2 = " 5" i3 = " 4" i4 = " 3" i5 = " 2" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,159 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pentapie (AC)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Pentapie (AC)</Menu>
+        <Inventor>Karolis Kairys</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-04-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11108</Link>
+    </Interface>
+
+    <Script>
+        Color1 := 'EE0000';
+        Color2 := 'FFFFFF';
+
+        K := 0.6;
+        D1 := K * 0.75;
+        D2 := K * 0.18;
+        R  := K * 2 / 3;
+        RC := K * 2 / 3;
+        H := D1 * 1.2;
+
+        N := 40;
+        for i := 0 to N - 1 do begin
+            x[i] := RC * cos(2 * Pi / N * i);
+            y[i] := RC * sin(2 * Pi / N * i);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" AvailableAngles = "-Pi/2; 0" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" MinAngles = "-Pi/2; -Pi/2" MaxAngles = "0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi/5" PlaneDistances = "D1">
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddCylinderFace" >
+            <Script>
+                i1 := i;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+        <Macro Name = "AddCylinder" >
+            <Part>
+                <Vertices Vectors = " x; y; H" />
+                <Vertices Vectors = " x; y; D1" />
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddCylinderFace" i = "0" Repeat = "N" />
+                    <Face Color = "-1" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <Macro Name = "Split5" >
+            <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1"> <Plane NormVector = " 0; 0; 1" NormDistance = "D2" /> </Split>
+            <Turn NormVector = " 0;-1; 0" Angle = "2*Pi/5" />
+        </Macro>
+
+        <Macro Name = "RemoveEdges" >
+            <RemoveContaining Vector = " 0;-H; R" />
+            <Turn NormVector = " 0;-1; 0" Angle = "Pi/5" />
+        </Macro>
+
+        <Macro Name = "HideEdges" >
+            <HideContaining Vector = " 0;-H; R" />
+            <Turn NormVector = " 0;-1; 0" Angle = "Pi/5" />
+        </Macro>
+
+        <Macro Name = "Unbandage" >
+            <SplitByAxes/>
+            <Turn Axis = "1" Layer = "1" Angle = "2*Pi/5" />
+        </Macro>
+
+        <Turn NormVector = " 1;-1; 1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "AddCylinder" Color =  "Color1" />
+        <Turn NormVector = " 1;-1; 1" Angle = " 2*Pi/3" />
+        <ExecMacro MacroName = "Split5" Repeat = "5" />
+        <ExecMacro MacroName = "RemoveEdges" Repeat = "10" />
+        <HideAll/>
+
+        <Turn NormVector = " 1;-1; 1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "AddCylinder" Color =  "Color2" />
+        <Turn NormVector = " 1;-1; 1" Angle = " 2*Pi/3" />
+        <ExecMacro MacroName = "Split5" Repeat = "5" />
+        <ExecMacro MacroName = "HideEdges" Repeat = "10" />
+        <RemoveAllVisible/>
+
+        <Turn NormVector = " 0; 0; 1" Angle = "-Pi/2" />
+
+        <Turn NormVector = " 1;-1; 1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "AddCylinder" Color =  "Color1" />
+        <Turn NormVector = " 1;-1; 1" Angle = " 2*Pi/3" />
+        <ExecMacro MacroName = "Split5" Repeat = "5" />
+        <ExecMacro MacroName = "RemoveEdges" Repeat = "10" />
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+        <HideAll/>
+
+        <Turn NormVector = " 1;-1; 1" Angle = "-2*Pi/3" />
+        <ExecMacro MacroName = "AddCylinder" Color =  "Color2" />
+        <Turn NormVector = " 1;-1; 1" Angle = " 2*Pi/3" />
+        <ExecMacro MacroName = "Split5" Repeat = "5" />
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+        <ExecMacro MacroName = "HideEdges" Repeat = "10" />
+        <HideContaining Vector = " R;-H; 0" />
+        <HideContaining Vector = "-R;-H; 0" />
+        <RemoveAllVisible/>
+
+        <Turn NormVector = " 0; 0; 1" Angle = " Pi/2" />
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "-1" />
+        <Split> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Split>
+        <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "-D1" /> </Cut>
+        <Hide Axis = "0" Layer = "0" />
+        <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-D1" /> </Cut>
+        <ShowAll/>
+
+        <ExecMacro MacroName = "Unbandage" Repeat = "5" />
+        <Turn Axis = "0" Layer = "1" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "Unbandage" Repeat = "5" />
+        <Turn Axis = "0" Layer = "1" Angle = " Pi/2" />
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "0;0;1" Angle = "-45 * Pi/180" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+
+    <Macros>
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "0" Layer = "0" Angle = " Pi/2" />
+            <Turn Axis = "1" Layer = "1" Angle = " 2*Pi * Random"/>
+            <Turn Axis = "0" Layer = "0" Angle = "-Pi/2" />
+            <Turn Axis = "1" Layer = "1" Angle = " 2*Pi * Random"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

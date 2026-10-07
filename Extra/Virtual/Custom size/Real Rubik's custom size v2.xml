@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Real Rubik's Cube custom size v2</Name>
+        <Menu>Cubic\Unclassified\Real Any size v2</Menu>
+        <Inventor>different</Inventor>
+        <Programmer>Skallos</Programmer>
+    </Interface>
+
+    <Script>
+        N := 4;
+
+        RequestNumbers('Enter cube size', 'Size:', N);
+
+        N := Max(Min(N, 11), 4);
+
+        W := 0.5;
+
+        WD := 2 * W / N;
+        D[0] := -W + WD;
+        for i := 1 to N - 2 do
+            D[i] := D[i-1] + WD;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+
+
+
+                <Macro Name = "CreateCube">
+            <Script> W := (W - i * WD)-0.035; </Script>
+                        <LoadFrom File = "Figures\Cube.xml" />
+
+                        <Split Axis = "0" From = "1+i"/>
+                        <Split Axis = "1" From = "1+i"/>
+                        <Split Axis = "2" From = "1+i"/>
+                        <Split Axis = "0" From = "N-1-i"/>
+                        <Split Axis = "1" From = "N-1-i"/>
+                        <Split Axis = "2" From = "N-1-i"/>
+
+                        <Script> W := 0.5; </Script>
+                        <SplitByAxes/>
+                        <RemovegrayParts/>
+        </Macro>
+
+                <Macro Name = "VoidHole">
+                        <Hide Axis = "A" From = "0" To = "L" />
+                        <Hide Axis = "B" From = "0" To = "L" />
+                        <Hide Axis = "A" From = "N-1-L" To = "N" />
+                        <Hide Axis = "B" From = "N-1-L" To = "N" />
+                        <RemoveAllVisible/>
+                        <ShowAll/>
+                </Macro>
+
+                <Macro Name = "VoidCube">
+            <ExecMacro MacroName = "VoidHole" A = "0" B = "1" L = "i" />
+            <ExecMacro MacroName = "VoidHole" A = "0" B = "2" L = "i" />
+            <ExecMacro MacroName = "VoidHole" A = "1" B = "2" L = "i" />
+                        <RemoveGrayParts/>
+        </Macro>
+
+                <Macro Name = "CenterPieces">
+            <Script> WE := WD * (j + 1) / (2 + i) - D[i]; if (N - 1) / 2 = i
+                                                then WE := WD / (i + 1);
+        DCut1 := W - j * WD - 0.06; DCut2 := W - j * WD - 0.025; </Script>
+                        <LoadFrom File = "Puzzles\Cubic\Classic Rubiks\_Macro_For_Super.xml" />
+                        <ShowAll/>
+            <Script>Inc(j);</Script>
+        </Macro>
+
+                <Macro Name = "RealPieces">
+            <ExecMacro MacroName = "CreateCube" i = "k" />
+                        <ExecMacro MacroName = "VoidCube" i = "k" />
+                        <ExecMacro MacroName = "CenterPieces" Repeat = "k+1" i = "k+1" j = "0"/>
+            <Script>Inc(k);</Script>
+        </Macro>
+
+                <ExecMacro MacroName = "RealPieces" Repeat = "floor((N - 1)/ 2)" k = "0" />
+
+                <ExecMacro MacroName = "CreateCube" i = "floor((N - 1)/ 2)" />
+    </Figure>
+</xml>
+<ExecMacro MacroName = "VoidCube" i = "3 * floor(N / 2) - N" />

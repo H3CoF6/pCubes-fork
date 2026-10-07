@@ -1,0 +1,103 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Radio Plane</Name>
+        <Menu>Other forms\2d\Radio Plane</Menu>
+        <Inventor>Joshua Riegel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-30</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10443</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        phi := (Sqrt(5) - 1) / 2; // The golden ratio
+
+        K := 0.6;
+
+        C5  := K * 0.1468645272239;
+        C9  := K * 0.1876476951941;
+        C21 := K * 0.3569761362781;
+        C26 := K * 0.4252794919841;
+        C27 := K * 0.4504848759586;
+        C35 := K * 0.5412521455247;
+        C48 := K * 0.7288998407188;
+        C59 := K * 0.8757643679428;
+        C63 := K * 0.9345756579487;
+        C70 := K * 0.9917370214833;
+
+        D1 := (C21 + C63) / sqrt(3);
+        D2 := C21 * phi / sqrt(1+phi^2);
+        D3 := K * 0.997;
+
+        jumAngle := Arcsin(1/4) + Pi/6;
+
+        DCut := K * 0.7;
+
+        ax[0] :=-1; ay[0] :=-2 - phi; az[0] := 0;
+        ax[1] := 1; ay[1] :=-2 - phi; az[1] := 0;
+        ax[2] := 1; ay[2] :=-1      ; az[2] := 1;
+        ax[3] := 0; ay[3] :=-1      ; az[3] := 2 + phi;
+        ax[4] :=-1; ay[4] :=-1      ; az[4] := 1;
+
+//ShowMessage(phi);
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi/3" JumbleAngle = "jumAngle" PlaneDistances = "D1" NormVectors = "ax; ay; az" />
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "Unbandage" >
+            <Turn  Axis = "i"           Layer = "1" Angle = " 2*Pi/3" />
+            <Split Axis = "(i+2) mod 5" From  = "1" />
+            <Split Axis = "(i+3) mod 5" From  = "1" />
+            <Turn  Axis = "i"           Layer = "1" Angle = " 2*Pi/3" />
+            <Split Axis = "(i+2) mod 5" From  = "1" />
+            <Split Axis = "(i+3) mod 5" From  = "1" />
+            <Turn  Axis = "i"           Layer = "1" Angle = " 2*Pi/3" />
+            <Script>inc(i);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "Unbandage" i = "0" Repeat = "5" />
+
+        <Cut> <Plane NormVector = "0; -1; phi" NormDistance = "D2" /> </Cut>
+
+        <Cut> <Plane NormVector = "    0;  -C5; -C70" NormDistance = "-D3" /> </Cut>   6
+        <Cut> <Plane NormVector = " -C59;   C9; -C27" NormDistance = "-D3" /> </Cut> 208
+        <Cut> <Plane NormVector = "  C59;   C9; -C27" NormDistance = "-D3" /> </Cut> 212
+        <Cut> <Plane NormVector = " -C35;  C48;  C26" NormDistance = "-D3" /> </Cut> 457
+        <Cut> <Plane NormVector = "  C35;  C48;  C26" NormDistance = "-D3" /> </Cut> 461
+
+        <Macro Name = "Cut1" >
+            <Hide Axis = "i" Layer = "0" />
+            <Hide Axis = "(i+2) mod 5" Layer = "0" />
+            <Cut> <Plane NormVector = "ax[(i+1) mod 5]; ay[(i+1) mod 5]; az[(i+1) mod 5]" NormDistance = "DCut" /> </Cut>
+            <ShowAll/>
+            <Script>inc(i);</Script>
+        </Macro>
+
+        <Macro Name = "Cut2" >
+            <ExecMacro MacroName = "Cut1" i = "0" Repeat = "5" />
+            <Turn  Axis = "j" Layer = "1" Angle = " 2*Pi/3" />
+            <ExecMacro MacroName = "Cut1" i = "0" Repeat = "5" />
+            <Turn  Axis = "j" Layer = "1" Angle = " 2*Pi/3" />
+            <ExecMacro MacroName = "Cut1" i = "0" Repeat = "5" />
+            <Turn  Axis = "j" Layer = "1" Angle = " 2*Pi/3" />
+            <Script>inc(j);</Script>
+        </Macro>
+        <ExecMacro MacroName = "Cut2" j = "0" Repeat = "5" />
+        <SaveSolvedState/>
+
+        <Turn NormVector = "1;0;0" Angle = "ArcTan(phi)" />
+
+        // default turn for every puzzle in pCubes
+        <Turn NormVector = "1;0;0" Angle = "-20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = " 30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

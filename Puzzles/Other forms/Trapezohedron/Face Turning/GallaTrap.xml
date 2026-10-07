@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>GallaTrap</Name>
+        <Menu>Other forms\Trapezohedron\Face Turning\GallaTrap</Menu>
+        <Inventor>David Pitcher</Inventor>
+        <Programmer>uot</Programmer>
+        <Added>2020-07-31</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7965</Link>
+    </Interface>
+
+    <Script>
+        clYellow    := 'FFFF00';
+        clBlue      := '0000A0';
+        clOrange    := 'FF6000';
+        clRed       := 'FF0000';
+        clGreen     := '008000';
+        clWhite     := 'FFFFFF';
+        clViolett   := '800080';
+        clLightBlue := '2868FF';
+
+        R := 0.65;
+
+        x0 := R * sqrt(4 - 2 * sqrt(2));
+        Vz := R * (3 - 2 * sqrt(2));
+
+        for i := 0 to 7 do begin
+            x[i] := x0 * cos(Pi / 4 * (i + 0.5));
+            y[i] := x0 * sin(Pi / 4 * (i + 0.5));
+            z[i] := Vz;
+            az[i] := -R;
+            if i mod 2 = 0 then begin
+                z[i] := -Vz;
+                az[i] := R;
+            end;
+        end;
+
+        D := R * 0.3; // sqrt((7 - 4 * sqrt(2)) / 17) * 1.08
+
+        A1 := ArcCos(sqrt(2) / 2 - 1 / 4); // 62.8 degs
+        A2 := ArcCos((sqrt(2) - 4) / 7); // 111.7 degs
+        A3 := (2 * Pi - A1 ) / 2; // 148.6 degs
+    </Script>
+
+    <Axes TurningAngles = "0; 2 * Pi" AvailableAngles = "-A3; -A2; -A1; 0; A1; A2; A3" PlaneDistances = "D" NormVectors = " x; y; az" />
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = " 0; 0; R" />
+            <Vertices Vectors = " x; y; z" />
+            <Vertices Vectors = " 0; 0;-R" />
+
+            <Faces>
+                <Face Color = "clBlue     " VertexIndexes = "0;6;7;8" />
+                <Face Color = "clGreen    " VertexIndexes = "0;4;5;6" />
+                <Face Color = "clRed      " VertexIndexes = "0;2;3;4" />
+                <Face Color = "clOrange   " VertexIndexes = "0;8;1;2" />
+
+                <Face Color = "clYellow   " VertexIndexes = "9;1;8;7" />
+                <Face Color = "clWhite    " VertexIndexes = "9;7;6;5" />
+                <Face Color = "clViolett  " VertexIndexes = "9;5;4;3" />
+                <Face Color = "clLightBlue" VertexIndexes = "9;3;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

@@ -1,0 +1,129 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Floppy Comet Plus</Name>
+        <Menu>Other forms\Prism\Decagonal Prism\Floppy Comet Plus</Menu>
+        <Menu>Other forms\Multi-core\Floppy Comet Plus</Menu>
+        <Inventor>Marcell Mágori</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2021-11-08</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9612</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=413353</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clGreen  := '009600';
+        clOrange := 'FF7700';
+        clBlue   := '0000C8';
+        clYellow := 'EEFF00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.55;
+
+        sAngle18 := Pi / 10;
+        sAngle36 := Pi / 5;
+        sAngle54 := 3 * Pi / 10;
+        sAngle72 := 2 * Pi / 5;
+
+        ax := cos(sAngle18);
+        ay := sin(sAngle18);
+        bx := cos(sAngle36);
+        by := sin(sAngle36);
+        cx := cos(sAngle54);
+        cy := sin(sAngle54);
+        dx := cos(sAngle72);
+        dy := sin(sAngle72);
+
+        D1 := R / 6; <!-- Cut Depth Free Variable-->
+        D2 := D1 * dx / cx;
+        D3 := R / 2; <!-- Face Depth Free Variable-->
+        D4 := D1 * (3 + sqrt(5)) / (4 * cx);
+
+        <!-- Ugly Algebra -->
+        px0 := D4 + D3 / dy;
+        py0 := 0;
+        px1 := D4 + D3 / dy * bx;
+        py1 := D3 / dy * by;
+        px2 := D3 / dy * ay;
+        py2 := D4 * by / bx + D3 / dy * ax;
+        px3 := 0;
+        py3 := py2;
+
+        H := D4 / bx / 2 + D3 / dy; <!-- Square Cross Section -->
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D1" >
+        <Axis NormVector = " cx; cy; 0" BaseVector = " D2; 0; 0" />
+        <Axis NormVector = "-cx; cy; 0" BaseVector = "-D2; 0; 0" />
+        <Axis NormVector = "-cx;-cy; 0" BaseVector = "-D2; 0; 0" />
+        <Axis NormVector = " cx;-cy; 0" BaseVector = " D2; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = " px0; py0; H" />
+                <Add Vector = " px1; py1; H" />
+                <Add Vector = " px2; py2; H" />
+                <Add Vector = " px3; py3; H" />
+                <Add Vector = "-px2; py2; H" />
+                <Add Vector = "-px1; py1; H" />
+                <Add Vector = "-px0;-py0; H" />
+                <Add Vector = "-px1;-py1; H" />
+                <Add Vector = "-px2;-py2; H" />
+                <Add Vector = "-px3;-py3; H" />
+                <Add Vector = " px2;-py2; H" />
+                <Add Vector = " px1;-py1; H" />
+
+                <Add Vector = " px0; py0;-H" />
+                <Add Vector = " px1; py1;-H" />
+                <Add Vector = " px2; py2;-H" />
+                <Add Vector = " px3; py3;-H" />
+                <Add Vector = "-px2; py2;-H" />
+                <Add Vector = "-px1; py1;-H" />
+                <Add Vector = "-px0;-py0;-H" />
+                <Add Vector = "-px1;-py1;-H" />
+                <Add Vector = "-px2;-py2;-H" />
+                <Add Vector = "-px3;-py3;-H" />
+                <Add Vector = " px2;-py2;-H" />
+                <Add Vector = " px1;-py1;-H" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "clGreen " VertexIndexes = " 1; 0;12;13" />
+                <Face Color = "clGreen " VertexIndexes = " 2; 1;13;14" />
+                <Face Color = "clGreen " VertexIndexes = " 3; 2;14;15" InvisibleEdges = "8" />
+                <Face Color = "clOrange" VertexIndexes = " 4; 3;15;16" InvisibleEdges = "2" />
+                <Face Color = "clOrange" VertexIndexes = " 5; 4;16;17" />
+                <Face Color = "clOrange" VertexIndexes = " 6; 5;17;18" />
+                <Face Color = "clBlue  " VertexIndexes = " 7; 6;18;19" />
+                <Face Color = "clBlue  " VertexIndexes = " 8; 7;19;20" />
+                <Face Color = "clBlue  " VertexIndexes = " 9; 8;20;21" InvisibleEdges = "8" />
+                <Face Color = "clRed   " VertexIndexes = "10; 9;21;22" InvisibleEdges = "2" />
+                <Face Color = "clRed   " VertexIndexes = "11;10;22;23" />
+                <Face Color = "clRed   " VertexIndexes = " 0;11;23;12" />
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 2; 3; 4; 5; 6; 7; 8; 9;10;11" />
+                <Face Color = "clWhite " VertexIndexes = "23;22;21;20;19;18;17;16;15;14;13;12" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Turn Axis = "1" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "3" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Turn Axis = "0" Layer = "1" Angle = "Pi" />
+        <Turn Axis = "2" Layer = "1" Angle = "Pi" />
+        <SplitByAxes/>
+        <Undo Repeat = "6"/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

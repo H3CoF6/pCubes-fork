@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>The Centurion Eye</Name>
+        <Menu>Other forms\Cylinder\The Centurion Eye</Menu>
+        <Inventor>Christopher Moore</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8050</Link>
+        <Added>2020-07-02</Added>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'C80000'; // Red
+        Colors[ 1] := 'E30000'; //
+        Colors[ 2] := 'FF800A'; // Orange
+        Colors[ 3] := 'FFBF05'; //
+        Colors[ 4] := 'FFFF00'; // Yellow
+        Colors[ 5] := 'AFFF00'; //
+        Colors[ 6] := '00FF00'; // LightGreen
+        Colors[ 7] := '00BA00'; //
+        Colors[ 8] := '009600'; // Green
+        Colors[ 9] := '006B64'; //
+        Colors[10] := '0000C8'; // Blue
+        Colors[11] := '1C34C3'; //
+        Colors[12] := '3868BF'; // LightBlue
+        Colors[13] := '6F40B0'; //
+        Colors[14] := 'FF0080'; // LightViolett
+        Colors[15] := '9B349F'; //
+        Colors[16] := '800080'; // Violett
+        Colors[17] := '800040'; //
+        Colors[18] := '800000'; // Brown
+        Colors[19] := 'A40000'; //
+
+        clDown  := '7F7F7F'; // Gray
+        clUp    := 'FFFFFF'; // White
+
+        N := 20;
+        M := 5;
+
+        R := 0.6;
+        R1 := R * 0.6;
+        R2 := R * 0.3;
+        H :=  R * 0.25;
+        H1 := R * 0.3;
+        H2 := H1 * 1.002;
+
+        AngleM  := 2 * Pi / N / M;
+        AngleM2 := AngleM / 2;
+        AngleB  := 2 * Pi / N;
+        AngleB2 := Pi / N;
+    </Script>
+
+    <Axes TurningAngles = "0; AngleM; 0" PlaneDistances = "-H; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddPrism" >
+            <Part>
+                <Vertices>
+                    <Add Vector = " 0; 0; Z2" />
+                    <Add Vector = "-x; y; Z2" />
+                    <Add Vector = " 0; L; Z2" />
+                    <Add Vector = " x; y; Z2" />
+                    <Add Vector = " 0; 0; Z1" />
+                    <Add Vector = "-x; y; Z1" />
+                    <Add Vector = " 0; L; Z1" />
+                    <Add Vector = " x; y; Z1" />
+                </Vertices>
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "3;2;1;0" />
+                    <Face Color = "Color" VertexIndexes = "4;5;6;7" />
+                    <Face Color = "Color" VertexIndexes = "0;1;5;4" />
+                    <Face Color = "Color" VertexIndexes = "1;2;6;5" InvisibleEdges = "2" />
+                    <Face Color = "Color" VertexIndexes = "2;3;7;6" InvisibleEdges = "8" />
+                    <Face Color = "Color" VertexIndexes = "3;0;4;7" />
+                </Faces>
+            </Part>
+            <Turn NormVector = "0; 0; 1" Angle = "A" />
+        </Macro>
+
+        <Macro Name = "AddBigSector" >
+            <ExecMacro MacroName = "AddPrism" Color = "Colors[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Turn NormVector = "0; 0; 1" Angle = "AngleB2" />
+        <ExecMacro MacroName = "AddBigSector" i = "0" Repeat = "N" Z1 = " H " Z2 = " H1" A = "AngleB" L = "R1" x = "R1 * sin(AngleB2)" y = "R1 * cos(AngleB2)" />
+        <ExecMacro MacroName = "AddBigSector" i = "0" Repeat = "N" Z1 = "-H1" Z2 = "-H " A = "AngleB" L = "R1" x = "R1 * sin(AngleB2)" y = "R1 * cos(AngleB2)" />
+        <Turn NormVector = "0; 0; 1" Angle = "-AngleB2" />
+
+        <Macro Name = "AddMicroSectors" >
+            <ExecMacro MacroName = "AddPrism" Color = "Colors[i]" Repeat = "M" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Turn NormVector = "0; 0; 1" Angle = "AngleM2" />
+        <ExecMacro MacroName = "AddMicroSectors" i = "0" Repeat = "N" Z1 = "-H" Z2 = "H" A = "AngleM" L = "R" x = "R * sin(AngleM2)" y = "R * cos(AngleM2)" />
+        <Turn NormVector = "0; 0; 1" Angle = "-AngleM2" />
+
+        <Circle Color = "clUp  " Radius = "R2" Center = "0; 0; H2" />
+        <Circle Color = "clDown" Radius = "R2" Center = "0; 0;-H2" />
+        <Split Axis = "1" From = "1" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

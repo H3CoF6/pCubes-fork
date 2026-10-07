@@ -1,0 +1,106 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+Visualization-engine must be updated
+must understang how edges constructed
+
+    <Interface>
+        <Name>Mixup 5x5</Name>
+        <Class>TMixup</Class>
+        <Menu>Grigr\Mixup 5x5</Menu>
+        <Inventor>MF8</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Link>http://twistypuzzles.com/museum/museum_showitem.php?pkey=2613</Link>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8835</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36751</Link>
+        <Added>2016-11-24</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D1 := W / (4 * sqrt(2) + 2);
+        D2 := W * (3+sqrt(2)) / 14;
+        DCut := W * 0.499;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = "-D2; -D1; D1; D2" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Turn  Axis = "0" Angle = " Pi / 4" Layer = "2" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <Turn  Axis = "0" Angle = "-Pi / 4" Layer = "2" />
+
+        <Turn  Axis = "1" Angle = " Pi / 4" Layer = "2" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <Turn  Axis = "1" Angle = "-Pi / 4" Layer = "2" />
+
+        <Turn  Axis = "2" Angle = " Pi / 4" Layer = "2" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Turn  Axis = "2" Angle = "-Pi / 4" Layer = "2" />
+
+        <Hide Axis = "0" From = "1" To = "3" />
+        <Hide Axis = "1" To = "1" />
+        <Hide Axis = "1" From = "3" To = "4" />
+        <Hide Axis = "2" To = "1" />
+        <Hide Axis = "2" From = "3" To = "4" />
+        <HideContaining Vector = " W / 2; 0; 0" />
+        <HideContaining Vector = "-W / 2; 0; 0" />
+        <Cut><Plane NormVector = " 1; 0; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut><Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "1" From = "1" To = "3" />
+        <Hide Axis = "2" To = "1" />
+        <Hide Axis = "2" From = "3" To = "4" />
+        <Hide Axis = "0" To = "1" />
+        <Hide Axis = "0" From = "3" To = "4" />
+        <HideContaining Vector = "0;  W / 2; 0" />
+        <HideContaining Vector = "0; -W / 2; 0" />
+        <Cut><Plane NormVector = "0; 1; 0" NormDistance = "-DCut" /> </Cut>
+        <Cut><Plane NormVector = "0;-1; 0" NormDistance = "-DCut" /> </Cut>
+        <ShowAll/>
+
+        <Hide Axis = "2" From = "1" To = "3" />
+        <Hide Axis = "0" To = "1" />
+        <Hide Axis = "0" From = "3" To = "4" />
+        <Hide Axis = "1" To = "1" />
+        <Hide Axis = "1" From = "3" To = "4" />
+        <HideContaining Vector = "0; 0;  W / 2" />
+        <HideContaining Vector = "0; 0; -W / 2" />
+        <Cut><Plane NormVector = "0; 0;  1" NormDistance = "-DCut" /> </Cut>
+        <Cut><Plane NormVector = "0; 0; -1" NormDistance = "-DCut" /> </Cut>
+        <ShowAll/>
+
+        <RemoveGrayParts/>
+
+    </Figure>
+</xml>

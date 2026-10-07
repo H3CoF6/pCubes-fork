@@ -1,0 +1,108 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>SG Cube II</Name>
+        <Menu>Cubic\Rubiks Recolored\SG Cube II</Menu>
+        <Inventor>Andrey Yerashkevich</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-01-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5068</Link>
+    </Interface>
+
+    <Script>
+        C1 := 'C80000';
+        C2 := '009600';
+        C3 := '0000C8';
+        C4 := 'FF800A';
+        C5 := 'FFFFFF';
+        C6 := 'FFFF00';
+
+        W := 0.51;
+        Cut := 0.50;
+        D := 1/6;
+        delta := 0.002;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Script>
+        </Script>
+
+        <LoadFrom File = "Figures\Cube.xml" />
+        <SplitByAxes/>
+
+        <Macro Name = "CutBlock" >
+            <InvertVisibility/>
+            <Cut Color = "Color"> <Plane NormVector = " 1; 0; 0" NormDistance = "-Cut" /> </Cut>
+            <Cut Color = "Color"> <Plane NormVector = "-1; 0; 0" NormDistance = "-Cut" /> </Cut>
+            <Cut Color = "Color"> <Plane NormVector = " 0; 1; 0" NormDistance = "-Cut" /> </Cut>
+            <Cut Color = "Color"> <Plane NormVector = " 0;-1; 0" NormDistance = "-Cut" /> </Cut>
+            <Cut Color = "Color"> <Plane NormVector = " 0; 0; 1" NormDistance = "-Cut" /> </Cut>
+            <Cut Color = "Color"> <Plane NormVector = " 0; 0;-1" NormDistance = "-Cut" /> </Cut>
+            <ShowAll/>
+        </Macro>
+
+        <HideContaining Vector = "-D;-D; W"/>
+        <ExecMacro MacroName = "CutBlock" Color = "C5" />
+
+        <HideContaining Vector = "-W;-D;-D" />
+        <ExecMacro MacroName = "CutBlock" Color = "C1" />
+
+        <HideContaining Vector = " D;-W;-D"/>
+        <ExecMacro MacroName = "CutBlock" Color = "C3" />
+
+        <HideContaining Vector = "-D; W; D"/>
+        <ExecMacro MacroName = "CutBlock" Color = "C2" />
+
+        <HideContaining Vector = " W; D; D"/>
+        <ExecMacro MacroName = "CutBlock" Color = "C4" />
+
+        <HideContaining Vector = " D; D;-W"/>
+        <ExecMacro MacroName = "CutBlock" Color = "C6" />
+
+        <RemoveContaining Vector = "Vx[2];Vy[2];Vz[2]"/>
+        <RemoveContaining Vector = "Vx[5];Vy[5];Vz[5]"/>
+
+        <Macro Name = "AddSq" >
+            <Script>
+                for i := 0 to 5 do
+                    Colors[i] := -1;
+                Colors[5] := Color;
+                WX := D - delta;
+                WY := D - delta;
+                WZ := delta;
+                DWX :=  D * 2 + delta;
+                DWY := -D * 2 - delta;
+                DWZ :=  D + delta;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Turn NormVector = "1; -1; 1" Angle = "2 * Pi / 3" />
+        </Macro>
+        <ExecMacro MacroName = "AddSq" Color = "C3" />
+        <ExecMacro MacroName = "AddSq" Color = "C5" />
+        <ExecMacro MacroName = "AddSq" Color = "C4" />
+        <Turn NormVector = "1; 1; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSq" Color = "C2" />
+        <ExecMacro MacroName = "AddSq" Color = "C1" />
+        <ExecMacro MacroName = "AddSq" Color = "C6" />
+        <Turn NormVector = "1; 1; 0" Angle = "Pi" />
+
+        <Macro Name = "TurnAndSave" >
+            <SaveSolvedState/>
+            <Turn Axis = "2" From = "0" To = "2" Angle = "Pi/2" />
+        </Macro>
+
+        <ExecMacro MacroName = "TurnAndSave" Repeat = "4" />
+        <Turn Axis = "1" From = "0" To = "2" Angle = "Pi" />
+        <ExecMacro MacroName = "TurnAndSave" Repeat = "4" />
+        <Turn Axis = "1" From = "0" To = "2" Angle = "Pi" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

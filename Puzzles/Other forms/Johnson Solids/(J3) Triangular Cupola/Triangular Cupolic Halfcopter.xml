@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Triangular Cupolic Halfcopter</Name>
+        <Menu>Other forms\Johnson Solids\(J3) Triangular Cupola\Triangular Cupolic Halfcopter</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2017-08-14</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / sqrt(2);
+
+        jumbAngle := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "jumbAngle" PlaneDistances = "D" FixedLayers = "0" >
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = " 1;-1; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboctahedron.xml" />
+
+        <SplitByAxes/>
+
+        <Cut Color = "404040" > <Plane NormVector = " 1;-1; 1" />  </Cut>
+
+        <Turn Axis = "0" Angle = "Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <Turn Axis = "1" Angle = "Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <Turn Axis = "2" Angle = "Pi" Layer = "1" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <Turn NormVector = "1;1;0" Angle = "-ArcTan(sqrt(2))" />
+
+    </Figure>
+</xml>

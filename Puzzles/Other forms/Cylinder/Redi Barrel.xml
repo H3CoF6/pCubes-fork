@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Redi Barrel</Name>
+        <Menu>Other forms\Cylinder\Redi Barrel</Menu>
+        <Inventor>Jesus Palmero</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-01-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6864</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'FF1100';
+        clGreen  := '00DD00';
+        clYellow := 'FFFF00';
+        clBlue   := '0099FF';
+
+        R := 0.5;
+        H := R;
+        s2 := sqrt(2);
+
+        D := R / sqrt(3);
+        Angle := 2*Pi/3;
+
+        dx := R * 0.2;
+        dy := R * 0.4;
+        dz := R * (1 - 0.2 * s2);
+    </Script>
+
+    <Axes TurningAngles = "Angle; 0; Angle" PlaneDistances = "-D; D" >
+        <Axis NormVector = " s2;  0; 1" />
+        <Axis NormVector = "  0; s2; 1" />
+        <Axis NormVector = "-s2;  0; 1" />
+        <Axis NormVector = "  0;-s2; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddQuarter" >
+            <Cylinder Radius = "R" Color = "Color" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Color "/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Color" />
+            </Cylinder>
+            <SplitByAxes/>
+            <HideContaining Vector = " dx;-dy; dz" />
+            <HideContaining Vector = "  0; -R;  0" />
+            <HideContaining Vector = "-dx;-dy;-dz" />
+            <RemoveAllVisible/>
+            <Turn NormVector = "0; 0; 1" Angle = "Pi / 2" />
+        </Macro>
+        <ExecMacro MacroName = "AddQuarter" Color = "clRed   " />
+        <ExecMacro MacroName = "AddQuarter" Color = "clGreen " />
+        <ExecMacro MacroName = "AddQuarter" Color = "clYellow" />
+        <ExecMacro MacroName = "AddQuarter" Color = "clBlue  " />
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+
+        <Turn Axis = "3" Layer = "2" Angle = " Angle"/>
+        <Turn Axis = "1" Layer = "0" Angle = " Angle"/>
+        <Turn Axis = "3" Layer = "2" Angle = " Angle"/>
+        <Turn Axis = "1" Layer = "0" Angle = "-Angle"/>
+        <Turn Axis = "3" Layer = "2" Angle = " Angle"/>
+        <Turn Axis = "1" Layer = "0" Angle = " Angle"/>
+        <Turn Axis = "3" Layer = "2" Angle = "-Angle"/>
+        <Turn Axis = "1" Layer = "0" Angle = " Angle"/>
+        <Turn Axis = "3" Layer = "2" Angle = " Angle"/>
+        <Turn Axis = "1" Layer = "0" Angle = " Angle"/>
+
+        <Turn Axis = "1" Layer = "2" Angle = " Angle"/>
+        <Turn Axis = "3" Layer = "0" Angle = " Angle"/>
+        <Turn Axis = "1" Layer = "2" Angle = " Angle"/>
+        <Turn Axis = "3" Layer = "0" Angle = "-Angle"/>
+        <Turn Axis = "1" Layer = "2" Angle = " Angle"/>
+        <Turn Axis = "3" Layer = "0" Angle = " Angle"/>
+        <Turn Axis = "1" Layer = "2" Angle = "-Angle"/>
+        <Turn Axis = "3" Layer = "0" Angle = " Angle"/>
+        <Turn Axis = "1" Layer = "2" Angle = " Angle"/>
+        <Turn Axis = "3" Layer = "0" Angle = " Angle"/>
+
+        <SaveSolvedState/>
+        <Undo Repeat = "20" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

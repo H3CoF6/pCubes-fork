@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Four Sided Extended Octagon</Name>
+        <Menu>Other forms\3x3x3 variants\Four Sided Extended Octagon</Menu>
+        <Inventor>Jean-Claude Constantin</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-01-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4465</Link>
+    </Interface>
+
+    <Script>
+        clRed          := 'C80000';
+        clOrange       := 'FF800A';
+        clBlue         := '0000C8';
+        clGreen        := '009600';
+        clYellow       := 'FFFF00';
+        clWhite        := 'FFFFFF';
+        clLightViolett := 'FF0080';
+        clViolett      := '800080';
+        clLightBlue    := '7A7AFF';
+        clCyan         := '00DCB4';
+
+        for i := 0 to 3 do
+            Colors[i] := -1;
+        Colors[4] := clOrange;
+        Colors[5] := clRed;
+
+        W := 0.5;
+        D := W / 3;
+        DCut := W * 2 * sqrt(2) / 3;
+
+        WX := D;
+        WY := D;
+        WZ := W;
+        DWX := W+D;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Cut Color = "clCyan        " ><Plane NormVector = " 1; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clViolett     " ><Plane NormVector = " 1;-1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clLightViolett" ><Plane NormVector = "-1; 1; 0" NormDistance = "-DCut" /></Cut>
+        <Cut Color = "clLightBlue   " ><Plane NormVector = "-1;-1; 0" NormDistance = "-DCut" /></Cut>
+
+        <Macro Name = "AddLedge" >
+            <Script>
+                Colors[1] := c1;
+                Colors[2] := c1;
+                Colors[3] := c2;
+            </Script>
+            <LoadFrom File = "Figures\Cuboid.xml" />
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "AddLedge" c1 = "clBlue  " c2 = "clLightBlue   " />
+        <ExecMacro MacroName = "AddLedge" c1 = "clWhite " c2 = "clLightViolett" />
+        <ExecMacro MacroName = "AddLedge" c1 = "clGreen " c2 = "clCyan        " />
+        <ExecMacro MacroName = "AddLedge" c1 = "clYellow" c2 = "clViolett     " />
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Half Truncated Cuboid</Name>
+        <Menu>Other forms\Half Truncated Cube\Half Truncated Cuboid</Menu>
+        <Inventor>Josh Bostick</Inventor>
+        <Programmer>Ginanjar Syahfia</Programmer>
+        <Added>2017-10-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2177</Link>
+    </Interface>
+
+    <Script>
+        clBlue                  := '0000C8';
+        clGreen                 := '009600';
+        clRed                   := 'C80000';
+        clOrange                := 'FF800A';
+        clYellow                := 'FFFF00';
+        clWhite                 := 'FFFFFF';
+        clPayneGrey             := '536878';
+        clPersianBlue           := '1c39bb';
+        clWine                  := '722f37';
+        clBritishRacingGreen    := '004225';
+
+        W := 0.5;
+        WX := W;
+        WY := W;
+        WZ := W * 4 / 3;
+        dCut := W * 2 * sqrt(3) / 3;
+
+        D1 := W / 3;
+        D2 := 2 * W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D1; D1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D2; 0; D2" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <SplitByAxes/>
+
+        <Cut Color = "clPayneGrey         "> <Plane NormVector = " 1; 1; 1" NormDistance = "-dCut" /> </Cut>
+        <Cut Color = "clPersianBlue       "> <Plane NormVector = " 1;-1;-1" NormDistance = "-dCut" /> </Cut>
+        <Cut Color = "clWine              "> <Plane NormVector = "-1;-1; 1" NormDistance = "-dCut" /> </Cut>
+        <Cut Color = "clBritishRacingGreen"> <Plane NormVector = "-1; 1;-1" NormDistance = "-dCut" /> </Cut>
+
+    </Figure>
+</xml>

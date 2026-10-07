@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Programmer>Skallos</Programmer>
+
+    <Script>
+        N := 8; // number of faces per side
+
+        for i := 0 to N - 2 do begin
+           Sp[i] :=  R * sin(Pi / 4 / N * (i + 1));
+           Sn[i] := -Sp[i];
+           Cp[i] :=  R * cos(Pi / 4 / N * (i + 1));
+           Cn[i] := -Cp[i];
+        end;
+
+        for i := 0 to 23 do
+          Vi[i] := 14 + i * (N - 1); // vertex index for i-th side
+                
+        D := R / sqrt(2);
+                
+        if not VarExists('ColorsA[0]') then
+            for i := 0 to 11 do
+                 ColorsA[i] := Colors[i];
+                
+        if not VarExists('ColorsB[0]') then
+            for i := 0 to 11 do
+                ColorsB[i] := Colors[i];
+    </Script>
+
+    <Macro Name = "AddFace" >
+        <Face Color = "Color" VertexIndexes = " V1 + i + 1; V1 + i; V2 + i; V2 + i + 1" InvisibleEdges = "10" />
+        <Script>Inc(i)</Script>
+    </Macro>
+
+    <Macro Name = "AddSide" >
+        <Face Color = "Color" VertexIndexes = " V1 + 0; C; V2 + 0" InvisibleEdges = "4"  />
+        <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N - 2" />
+        <Face Color = "Color" VertexIndexes = " A; V1 + N - 2; V2 + N - 2; B" InvisibleEdges = "10" />
+    </Macro>
+
+    <Part>
+        <Vertices>
+            <Add Vector = " R; 0; 0" /> 0
+            <Add Vector = "-R; 0; 0" />
+            <Add Vector = " 0; R; 0" />
+            <Add Vector = " 0;-R; 0" />
+            <Add Vector = " 0; 0; R" />
+            <Add Vector = " 0; 0;-R" /> 5
+                            
+            <Add Vector = " D; D; D" /> 6
+            <Add Vector = " D; D;-D" />
+            <Add Vector = " D;-D; D" />
+            <Add Vector = " D;-D;-D" />
+            <Add Vector = "-D; D; D" />
+            <Add Vector = "-D; D;-D" />
+            <Add Vector = "-D;-D; D" />
+            <Add Vector = "-D;-D;-D" /> 13
+        </Vertices>
+                        
+        <Vertices Vectors = " Cp; Sp; Sp" /> 14 - 20 =  Vi[0]...
+        <Vertices Vectors = " Cp; Sp; Sn" />
+        <Vertices Vectors = " Cp; Sn; Sp" />
+        <Vertices Vectors = " Cp; Sn; Sn" />
+        <Vertices Vectors = " Cn; Sp; Sp" />
+        <Vertices Vectors = " Cn; Sp; Sn" />
+        <Vertices Vectors = " Cn; Sn; Sp" />
+        <Vertices Vectors = " Cn; Sn; Sn" />
+                    
+        <Vertices Vectors = " Sp; Cp; Sp" />
+        <Vertices Vectors = " Sp; Cp; Sn" />
+        <Vertices Vectors = " Sp; Cn; Sp" />
+        <Vertices Vectors = " Sp; Cn; Sn" />
+        <Vertices Vectors = " Sn; Cp; Sp" />
+        <Vertices Vectors = " Sn; Cp; Sn" />
+        <Vertices Vectors = " Sn; Cn; Sp" />
+        <Vertices Vectors = " Sn; Cn; Sn" />
+                    
+        <Vertices Vectors = " Sp; Sp; Cp" />
+        <Vertices Vectors = " Sp; Sp; Cn" />
+        <Vertices Vectors = " Sp; Sn; Cp" />
+        <Vertices Vectors = " Sp; Sn; Cn" />
+        <Vertices Vectors = " Sn; Sp; Cp" />
+        <Vertices Vectors = " Sn; Sp; Cn" />
+        <Vertices Vectors = " Sn; Sn; Cp" />
+        <Vertices Vectors = " Sn; Sn; Cn" /> 175-181 = Vi[23]...+N-2
+
+        <Faces>
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[ 4]" A = " 6" B = " 7" C = " 0" V1 = "Vi[ 0]" V2 = "Vi[ 1]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[ 0]" A = " 8" B = " 6" C = " 0" V1 = "Vi[ 2]" V2 = "Vi[ 0]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[ 5]" A = " 9" B = " 8" C = " 0" V1 = "Vi[ 3]" V2 = "Vi[ 2]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[ 8]" A = " 7" B = " 9" C = " 0" V1 = "Vi[ 1]" V2 = "Vi[ 3]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[ 7]" A = "11" B = "10" C = " 1" V1 = "Vi[ 5]" V2 = "Vi[ 4]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[ 2]" A = "10" B = "12" C = " 1" V1 = "Vi[ 4]" V2 = "Vi[ 6]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[ 6]" A = "12" B = "13" C = " 1" V1 = "Vi[ 6]" V2 = "Vi[ 7]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[10]" A = "13" B = "11" C = " 1" V1 = "Vi[ 7]" V2 = "Vi[ 5]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[ 4]" A = " 7" B = " 6" C = " 2" V1 = "Vi[ 9]" V2 = "Vi[ 8]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[ 3]" A = " 6" B = "10" C = " 2" V1 = "Vi[ 8]" V2 = "Vi[12]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[ 7]" A = "10" B = "11" C = " 2" V1 = "Vi[12]" V2 = "Vi[13]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[11]" A = "11" B = " 7" C = " 2" V1 = "Vi[13]" V2 = "Vi[ 9]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[ 5]" A = " 8" B = " 9" C = " 3" V1 = "Vi[10]" V2 = "Vi[11]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[ 1]" A = "12" B = " 8" C = " 3" V1 = "Vi[14]" V2 = "Vi[10]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[ 6]" A = "13" B = "12" C = " 3" V1 = "Vi[15]" V2 = "Vi[14]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[ 9]" A = " 9" B = "13" C = " 3" V1 = "Vi[11]" V2 = "Vi[15]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[ 0]" A = " 6" B = " 8" C = " 4" V1 = "Vi[16]" V2 = "Vi[18]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[ 1]" A = " 8" B = "12" C = " 4" V1 = "Vi[18]" V2 = "Vi[22]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[ 2]" A = "12" B = "10" C = " 4" V1 = "Vi[22]" V2 = "Vi[20]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[ 3]" A = "10" B = " 6" C = " 4" V1 = "Vi[20]" V2 = "Vi[16]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[ 8]" A = " 9" B = " 7" C = " 5" V1 = "Vi[19]" V2 = "Vi[17]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[ 9]" A = "13" B = " 9" C = " 5" V1 = "Vi[23]" V2 = "Vi[19]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsA[10]" A = "11" B = "13" C = " 5" V1 = "Vi[21]" V2 = "Vi[23]" />
+            <ExecMacro MacroName = "AddSide" Color = "ColorsB[11]" A = " 7" B = "11" C = " 5" V1 = "Vi[17]" V2 = "Vi[21]" />
+        </Faces>
+    </Part>
+</xml>

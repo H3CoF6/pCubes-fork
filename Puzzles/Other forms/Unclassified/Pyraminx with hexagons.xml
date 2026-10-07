@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyraminx with hexagons</Name>
+        <Menu>Other forms\Unclassified\Pyraminx with hexagons</Menu>
+        <Inventor>Jürgen Brandt</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-08-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3201</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFF00'; // Yellow
+        Colors[ 1] := 'C80000'; // Red
+        Colors[ 2] := '0000C8'; // Blue
+        Colors[ 3] := '009600'; // Green
+        Colors[ 4] := 'FFBBDD'; // SLViolett
+        Colors[ 5] := 'FFAAFF'; // Violett
+        Colors[ 6] := '5500CC'; // DarkViolett
+        Colors[ 7] := 'EE4400'; // Orange
+        Colors[ 8] := 'AA00DD'; // DarkerViolett
+        Colors[ 9] := '00AAFF'; // Aqua
+        Colors[10] := 'DC0000'; // Red02
+        Colors[11] := '882200'; // Brown
+        Colors[12] := 'FFFFDD'; // White
+        Colors[13] := '00EECC'; // Green03
+        Colors[14] := '00FFAA'; // SGreen
+        Colors[15] := 'FFFF66'; // LightYellow
+        Colors[16] := 'E0C07C'; 
+        Colors[17] := 'E0C07D'; 
+        Colors[18] := 'E0C07E'; 
+        Colors[19] := 'E0C07F'; 
+
+        W := 0.5;
+        include 'Figures\Scripts\Tetrahedron_Coordinates.inc';
+
+        D := W * sqrt(3) / 9;
+
+        DCut1 := W * 3 / sqrt(11);
+        DCut2 := W * 5 / 3 / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "D" >
+        <Axis NormVector = " 1; 1;-1" />
+        <Axis NormVector = "-1;-1;-1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+<!--        <Part>
+            <Vertices>
+                <Add Vector = "Vx[0]; Vy[0]; Vz[0]" />
+                <Add Vector = "Vx[1]; Vy[1]; Vz[1]" />
+                <Add Vector = "Vx[2]; Vy[2]; Vz[2]" />
+                <Add Vector = "Vx[3]; Vy[3]; Vz[3]" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = "1;2;3" /> // clBlue
+                <Face Color = "Colors[1]" VertexIndexes = "0;3;2" /> // clGreen
+                <Face Color = "Colors[2]" VertexIndexes = "0;1;3" /> // clRed
+                <Face Color = "Colors[3]" VertexIndexes = "0;2;1" /> // clYellow
+            </Faces>
+        </Part>-->
+
+        <Cut Color = "Colors[ 4]" ><Plane NormVector = "-1; 1;-3" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[ 5]" ><Plane NormVector = " 1;-1;-3" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[ 6]" ><Plane NormVector = "-1;-1; 3" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[ 7]" ><Plane NormVector = " 1; 1; 3" NormDistance = "-DCut1" /></Cut>
+
+        <Cut Color = "Colors[ 8]" ><Plane NormVector = "-3;-1; 1" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[ 9]" ><Plane NormVector = "-3; 1;-1" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[10]" ><Plane NormVector = " 3;-1;-1" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[11]" ><Plane NormVector = " 3; 1; 1" NormDistance = "-DCut1" /></Cut>
+
+        <Cut Color = "Colors[12]" ><Plane NormVector = " 1;-3;-1" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[13]" ><Plane NormVector = "-1;-3; 1" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[14]" ><Plane NormVector = "-1; 3;-1" NormDistance = "-DCut1" /></Cut>
+        <Cut Color = "Colors[15]" ><Plane NormVector = " 1; 3; 1" NormDistance = "-DCut1" /></Cut>
+
+        <Cut Color = "Colors[16]" ><Plane NormVector = "-1; 1;-1" NormDistance = "-DCut2" /></Cut>
+        <Cut Color = "Colors[17]" ><Plane NormVector = " 1;-1;-1" NormDistance = "-DCut2" /></Cut>
+        <Cut Color = "Colors[18]" ><Plane NormVector = "-1;-1; 1" NormDistance = "-DCut2" /></Cut>
+        <Cut Color = "Colors[19]" ><Plane NormVector = " 1; 1; 1" NormDistance = "-DCut2" /></Cut>
+
+        <SplitByAxes/>
+    </Figure>
+</xml>

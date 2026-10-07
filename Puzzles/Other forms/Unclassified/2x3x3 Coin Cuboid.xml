@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>2x3x3 Coin Cuboid</Name>
+        <Menu>Other forms\Unclassified\2x3x3 Coin Cuboid</Menu>
+        <Inventor>Eoin Dowling</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2023-02-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=10876</Link>
+    </Interface>
+
+    <Script>
+        clWhite := 'FFFFFF';
+        clBeige := 'A09375';
+        clPlum1 := 'A093FF';
+        clPlum2 := '5242C9';
+        clPink1 := 'FFA3EC';
+        clPink2 := '992472';
+        clTeal1 := '7CF8FF';
+        clTeal2 := '4D9A9E';
+        clBlue1 := '68B3FF';
+        clBlue2 := '132866';
+
+        for i := 0 to 5 do
+            Colors[i] := clWhite;
+        Colors[1] := -1;
+
+        W := 0.5;
+        WX := W / 3;
+        WY := W;
+        WZ := W * 2 / 3;
+        D := W / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Cut InvisibleEdges = "-1" > <Plane NormVector = "1;0;0" NormDistance = "0" /> </Cut>
+        <HideAll/>
+
+        <Script>
+            for i := 0 to 5 do begin
+                Colors[i] := clBeige;
+            end;
+            Colors[0] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" />
+        <Cut InvisibleEdges = "-1"> <Plane NormVector = "-1;0;0" NormDistance = "0" /> </Cut>
+        <HideAll/>
+
+        <Macro Name = "AddCyl">
+            <Cylinder Radius = "2*WX" Color = "c1" Base = " D; Wy; 0" Top = " D;-Wy; 0" TopColor = "cTop" />
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "D" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = "0" /> </Cut>
+            <HideAll/>
+
+            <Cylinder Radius = "2*WX" Color = "c2" Base = " D; Wy; 0" Top = " D;-Wy; 0" TopColor = "cTop" />
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "D" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0;-1" NormDistance = "0" /> </Cut>
+            <Cut InvisibleEdges = "-1"> <Plane NormVector = " 0;-1; 0" NormDistance = "0" /> </Cut>
+            <HideAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "AddCyl" cTop = "clWhite" c1 = "clPlum1" c2 = "clPink1" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <ExecMacro MacroName = "AddCyl" cTop = "clWhite" c1 = "clPink2" c2 = "clPlum2" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+
+        <ExecMacro MacroName = "AddCyl" cTop = "clBeige" c1 = "clTeal2" c2 = "clBlue2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <ExecMacro MacroName = "AddCyl" cTop = "clBeige" c1 = "clBlue1" c2 = "clTeal1" />
+        <Turn NormVector = "0;1;0" Angle = "Pi" />
+
+        <ShowAll/>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

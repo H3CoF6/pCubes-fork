@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Pyraminx Constrained</Name>
+        <Menu>Other forms\Tetrahedron\Vertex Turning\Constrained\Pyraminx Constrained</Menu>
+        <Inventor>Matt</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-06-29</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7827</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=396153</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=406304</Link>
+    </Interface>
+
+    <Script>
+//        include 'Figures\Scripts\Cube_Standard_Colors.inc';
+
+        W := 0.5;
+        D := W * 0.1;
+        sAngle := 2 * Pi / 3;
+
+        // small parts
+        sProfile := '97,36, 97,56, 84,59, 74,65, 65,74, 59,84, 56,95, 55,105, 56,115, 59,126, 65,136, 74,145, 84,151, 94,154, 105,155, 115,154, 126,151, 136,145, 145,136, 151,126, 154,115, 155,105, 154,95, 151,84, 145,74, 136,65, 126,59, 113,56, 113,36, 105,35';
+        ProfileSize := 210;
+
+        function GetInt(): integer;
+        begin
+          p := Pos(',', sProfile);
+          if p = 0 then begin
+            substr := sProfile;
+            sProfile := '';
+          end else begin
+            substr := copy(sProfile, 1, p-1);
+            Delete(sProfile, 1, p);
+          end;
+          Result := StrToInt(Trim(substr));
+        end;
+
+        pCount := 0;
+        while Length(sProfile) > 0 do begin
+          SPx[pCount] := 1.001;
+          SPy[pCount] := -(GetInt / ProfileSize - 0.5) * W;
+          SPz[pCount] := (GetInt / ProfileSize - 0.5) * W;
+          Inc(pCount);
+        end;
+
+        procedure CalcVectors();
+        begin
+            for i := 0 to pCount - 1 do begin
+                Vx[i] := Cx[c1]*SPx[i] + Cx[c2]*SPy[i] + Cx[c3]*SPz[i];
+                Vy[i] := Cy[c1]*SPx[i] + Cy[c2]*SPy[i] + Cy[c3]*SPz[i];
+                Vz[i] := Cz[c1]*SPx[i] + Cz[c2]*SPy[i] + Cz[c3]*SPz[i];
+            end;
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+
+        s3 := sqrt(3);
+        Kp := 0.32;
+        Cx[4] := s3 * Kp; Cy[4] := -s3 * Kp; Cz[4] := 0;
+        Cx[5] := Kp; Cy[5] := Kp; Cz[5] := -2 * Kp;
+    </Script>
+ 
+    <Axes TurningAngles = "0; sAngle; 0" PlaneDistances = "-W /s3; -D" TurnAxesWithLayer = "2" >
+        <Axis NormVector = " 1; 1;-1" MinAngles = "0; 0; 0" MaxAngles = "0; sAngle; 0" />
+        <Axis NormVector = "-1;-1;-1" MinAngles = "0; 0; 0" MaxAngles = "0; sAngle; 0" />
+        <Axis NormVector = "-1; 1; 1" MinAngles = "0; 0; 0" MaxAngles = "0; sAngle; 0" />
+        <Axis NormVector = " 1;-1; 1" MinAngles = "0; 0; 0" MaxAngles = "0; sAngle; 0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "AddSmallParts" >
+           <Script>CalcVectors;</Script>
+           <Part>
+               <Vertices Vectors = "Vx; Vy; Vz" />
+               <Faces>
+                   <Face Color = "Color" VertexIndexes = "FromTo(0,pCount - 1)" />
+               </Faces>
+           </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSmallParts" Color = "clYellow"  c1 = "3" c2 = "4" c3 = "5" />
+
+        <Turn NormVector = " 1; 1;-1" Angle = "-sAngle" />
+        <ExecMacro MacroName = "AddSmallParts" Color = "clGreen" />
+        <Turn NormVector = " 1; 1;-1" Angle = " sAngle" />
+
+        <Turn NormVector = " 1; 1;-1" Angle = " sAngle" />
+        <ExecMacro MacroName = "AddSmallParts" Color = "clBlue" />
+        <Turn NormVector = " 1; 1;-1" Angle = "-sAngle" />
+
+        <Turn NormVector = "-1; 1; 1" Angle = " sAngle" />
+        <ExecMacro MacroName = "AddSmallParts" Color = "clRed" />
+        <Turn NormVector = "-1; 1; 1" Angle = "-sAngle" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Q120"  File = "Puzzles\Other forms\Platonic solids\Tetrahedron\Vertex Turning\Constrained\Q120.vec" />
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Q120 = 6,0,2, 10,0,0, 12,0,1, 13,0,0
+    </SetTextures>
+</xml>

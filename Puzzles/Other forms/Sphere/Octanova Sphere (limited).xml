@@ -1,0 +1,198 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Octanova Sphere (limited)</Name>
+        <Menu>Other forms\Sphere\Octanova Sphere (limited)</Menu>
+        <Inventor>Joseph Wong</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-02-15</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6486</Link>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        Colors[0] := 'DD00EE'; // clViolett
+        Colors[1] := 'FF99FF'; // clRose
+        Colors[2] := 'FFFFFF'; // clWhite
+        Colors[3] := 'FFFF00'; // clYellow
+        Colors[4] := '0033FF'; // clBlue
+        Colors[5] := '00EE00'; // clGreen
+        Colors[6] := 'EE0000'; // clRed
+        Colors[7] := 'FF7700'; // clOrange
+
+        K := 0.6;
+
+        D := K * 0.87;
+        f := 0.4;
+        DCut := 0.415;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 10" PlaneDistances = "-D;D" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 1;-1; 0" />
+        <Axis NormVector = " 0; 1;-1" />
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0;-1" />
+        <Axis NormVector = " 1; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <Script>Color := Colors[i];</Script>
+            <HideAll/>
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" />
+            <Cut> <Plane NormVector = " 1; 0; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "0" /> </Cut>
+            <Turn NormVector = "0; 0; 1" Angle = "Pi/2" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "AddSegment" i = "0" Repeat = "4" />
+        <Turn NormVector = "1; 0; 0" Angle = "Pi" />
+        <ExecMacro MacroName = "AddSegment" Repeat = "4" />
+        <Turn NormVector = "1; 0; 0" Angle = "Pi" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <Macro Name = "TurnEdges" >
+            <Turn Axis = "Id" Layer = "0" Angle = "2*Pi/10" />
+            <Turn Axis = "Id" Layer = "2" Angle = "2*Pi/10" />
+            <Script>Inc(Id);</Script>
+        </Macro>
+
+        <ExecMacro MacroName = "TurnEdges" Id = "4" Repeat = "6" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "TurnEdges" Id = "4" Repeat = "6" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "TurnEdges" Id = "4" Repeat = "6" />
+        <SplitByAxes/>
+        <ExecMacro MacroName = "TurnEdges" Id = "4" Repeat = "6" />
+        <SplitByAxes/>
+        <Undo Repeat = "48" />
+
+        <Macro Name = "Cut4Edges" >
+            <HideContaining Vector = "f; 0; f" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = " 1; 0;-2" NormDistance = "-DCut" /> </Cut>
+            <Cut> <Plane NormVector = "-2; 0; 1" NormDistance = "-DCut" /> </Cut>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Cut4Edges" Repeat = "4" />
+
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "Cut4Edges" Repeat = "3" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "Cut4Edges" Repeat = "3" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <Turn NormVector = "1;0;0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "Cut4Edges" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut4Edges" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+
+
+        <Macro Name = "TurnEdges2" >
+            <Turn Axis = "Id" Layer = "0" Angle = "5*Pi/10" />
+            <Turn Axis = "Id" Layer = "2" Angle = "5*Pi/10" />
+            <Script>Inc(Id);</Script>
+        </Macro>
+        <ExecMacro MacroName = "TurnEdges2" Id = "4" Repeat = "6" />
+
+        <ExecMacro MacroName = "Cut4Edges" Repeat = "4" />
+
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <ExecMacro MacroName = "Cut4Edges" Repeat = "3" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi/2" />
+
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+        <ExecMacro MacroName = "Cut4Edges" Repeat = "3" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "Pi" />
+
+        <Turn NormVector = "1;0;0" Angle = " Pi/2" />
+        <ExecMacro MacroName = "Cut4Edges" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Cut4Edges" />
+        <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        <Turn NormVector = "1;0;0" Angle = "-Pi/2" />
+        <Undo Repeat = "12" />
+
+        <HideContaining Vector = "   0; C26;  C9" />
+        <HideContaining Vector = "   0; C26; -C9" />
+        <HideContaining Vector = "   0;-C26;  C9" />
+        <HideContaining Vector = "   0;-C26; -C9" />
+        <HideContaining Vector = " C26;   0;  C9" />
+        <HideContaining Vector = " C26;   0; -C9" />
+        <HideContaining Vector = "-C26;   0;  C9" />
+        <HideContaining Vector = "-C26;   0; -C9" />
+        <HideContaining Vector = " C26;  C9;   0" />
+        <HideContaining Vector = " C26; -C9;   0" />
+        <HideContaining Vector = "-C26;  C9;   0" />
+        <HideContaining Vector = "-C26; -C9;   0" />
+        <HideContaining Vector = "  C9; C26;   0" />
+        <HideContaining Vector = " -C9; C26;   0" />
+        <HideContaining Vector = "  C9;-C26;   0" />
+        <HideContaining Vector = " -C9;-C26;   0" />
+        <HideContaining Vector = "  C9;   0; C26" />
+        <HideContaining Vector = " -C9;   0; C26" />
+        <HideContaining Vector = "  C9;   0;-C26" />
+        <HideContaining Vector = " -C9;   0;-C26" />
+        <HideContaining Vector = "   0;  C9; C26" />
+        <HideContaining Vector = "   0; -C9; C26" />
+        <HideContaining Vector = "   0;  C9;-C26" />
+        <HideContaining Vector = "   0; -C9;-C26" />
+
+        <Macro Name = "HidePieces" >
+            <HideContaining Vector = " a; b; c" />
+            <HideContaining Vector = "-a; b; c" />
+            <HideContaining Vector = " a;-b; c" />
+            <HideContaining Vector = "-a;-b; c" />
+            <HideContaining Vector = " a; b;-c" />
+            <HideContaining Vector = "-a; b;-c" />
+            <HideContaining Vector = " a;-b;-c" />
+            <HideContaining Vector = "-a;-b;-c" />
+        </Macro>
+
+        <ExecMacro MacroName = "HidePieces" a = "C8"  b = "C2"  c = "C25" />
+        <ExecMacro MacroName = "HidePieces" a = "C8"  b = "C25" c = "C2"  />
+        <ExecMacro MacroName = "HidePieces" a = "C25" b = "C8"  c = "C2"  />
+        <ExecMacro MacroName = "HidePieces" a = "C25" b = "C2"  c = "C8"  />
+        <ExecMacro MacroName = "HidePieces" a = "C2"  b = "C8"  c = "C25" />
+        <ExecMacro MacroName = "HidePieces" a = "C2"  b = "C25" c = "C8"  />
+
+        <ExecMacro MacroName = "HidePieces" a = "C12" b = "C6"  c = "C21" />
+        <ExecMacro MacroName = "HidePieces" a = "C12" b = "C21" c = "C6"  />
+        <ExecMacro MacroName = "HidePieces" a = "C21" b = "C6"  c = "C12" />
+        <ExecMacro MacroName = "HidePieces" a = "C21" b = "C12" c = "C6"  />
+        <ExecMacro MacroName = "HidePieces" a = "C6"  b = "C21" c = "C12" />
+        <ExecMacro MacroName = "HidePieces" a = "C6"  b = "C12" c = "C21" />
+
+        <HideContaining Vector = "0;0;0" />
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Puck 3-layers</Name>
+        <Menu>Other forms\Cylinder\Puck\Puck 3-layers</Menu>
+        <Inventor>Jin H Kim</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-01-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2334</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // clRed
+        Colors[1] := 'FF800A'; // clOrange
+        Colors[2] := 'FFFF00'; // clYellow
+        Colors[3] := '009600'; // clGreen
+        Colors[4] := '0000C8'; // clBlue
+        Colors[5] := '800080'; // clViolett
+
+        ColorUp   := '222222';
+        ColorDown := '666666';
+
+        N := 12;
+
+        R := 0.5;
+        R1 := R * 0.5;
+        H := R * 1;
+        D := H / 3;
+        H1 := H + 0.0003;
+        Angle := 2 * Pi / N;
+
+        ca := cos(Angle / 2);
+        sa := sin(Angle / 2);
+    </Script>
+
+    <Axes TurningAngles = "0; Angle; Angle; Angle; 0" PlaneDistances = "-H; -D; D; H" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Figure>
+
+        <Turn NormVector = "0; 0; 1" Angle = "Angle / 2" />
+        <Macro Name = "AddSector" >
+            <Cylinder Radius = "R" Color = "Colors[c]" >
+               <Base X = "0" Y = "0" Z = " H" Color = "Colors[c]"/>
+               <Top  X = "0" Y = "0" Z = "-H" Color = "Colors[c]" />
+            </Cylinder>
+            <Cut> <Plane NormVector = "-ca; -sa; 0" /> </Cut>
+            <Cut> <Plane NormVector = " ca; -sa; 0" /> </Cut>
+            <Turn NormVector = "0; 0; 1" Angle = "Angle" />
+            <HideAll/>
+        </Macro>
+        <ExecMacro MacroName = "AddSector" i = " 0" c = "0" />
+        <ExecMacro MacroName = "AddSector" i = " 1" c = "1" />
+        <ExecMacro MacroName = "AddSector" i = " 2" c = "1" />
+        <ExecMacro MacroName = "AddSector" i = " 3" c = "2" />
+        <ExecMacro MacroName = "AddSector" i = " 4" c = "2" />
+        <ExecMacro MacroName = "AddSector" i = " 5" c = "3" />
+        <ExecMacro MacroName = "AddSector" i = " 6" c = "3" />
+        <ExecMacro MacroName = "AddSector" i = " 7" c = "4" />
+        <ExecMacro MacroName = "AddSector" i = " 8" c = "4" />
+        <ExecMacro MacroName = "AddSector" i = " 9" c = "5" />
+        <ExecMacro MacroName = "AddSector" i = "10" c = "5" />
+        <ExecMacro MacroName = "AddSector" i = "11" c = "0" />
+
+        <ShowAll/>
+        <Turn NormVector = "0; 0; 1" Angle = "-Angle / 2" />
+
+        <Circle Radius = "R1" Color = "ColorUp  " Center =  "0; 0;  H1" />
+        <Circle Radius = "R1" Color = "ColorDown" Center =  "0; 0; -H1" />
+
+        <SplitByAxes/>
+
+        <SaveSolvedState/>
+        <Turn Axis = "0" Angle = "Angle" From = "1" To = "3" />
+        <SaveSolvedState/>
+        <Undo/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

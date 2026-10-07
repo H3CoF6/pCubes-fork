@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Hexashift (pillowed)</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Hexashift (pillowed)</Menu>
+        <Inventor>Grégoire Pfennig</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2021-04-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7940</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0066FF'; // Blue
+        Colors[1] := 'FF0000'; // Red
+        Colors[2] := '9900EE'; // Violett
+        Colors[3] := '00EE00'; // LightGreen
+        Colors[4] := 'FF7700'; // Orange
+        Colors[5] := 'FF66FF'; // LightViolett
+
+        clUp   := 'FFFFFF'; // White
+        clDown := 'FFFF00'; // Yellow
+
+        R := 0.6;
+        H := R * 0.65;
+        H2 := R * 3/4 * sqrt(3/2);
+        D := H2 / 3;
+        az := sqrt(2) / 4;
+        bz := sqrt(3) / 2;
+
+        for i := 0 to 5 do begin
+            x[i] := R * sin(Pi / 3 * (i));
+            y[i] := R * cos(Pi / 3 * (i));
+        end;
+    </Script>
+
+     <Axes TurningAngles = "Pi/3; 0; Pi/3" PlaneDistances = "-D; D" >
+        <Axis NormVector = "   0;  0; -1" />
+        <Axis NormVector = "   1;  0; az" />
+        <Axis NormVector = "-1/2;-bz; az" />
+        <Axis NormVector = "-1/2; bz; az" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "x[0]; y[0];-H" />
+                <Add Vector = "x[1]; y[1];-H" />
+                <Add Vector = "x[2]; y[2];-H" />
+                <Add Vector = "x[3]; y[3];-H" />
+                <Add Vector = "x[4]; y[4];-H" />
+                <Add Vector = "x[5]; y[5];-H" />
+                <Add Vector = "x[0]; y[0]; H" />
+                <Add Vector = "x[1]; y[1]; H" />
+                <Add Vector = "x[2]; y[2]; H" />
+                <Add Vector = "x[3]; y[3]; H" />
+                <Add Vector = "x[4]; y[4]; H" />
+                <Add Vector = "x[5]; y[5]; H" />
+
+                <Add Vector = " 0; 0; H2" />
+                <Add Vector = " 0; 0;-H2" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[0]" VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "Colors[1]" VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "Colors[2]" VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "Colors[3]" VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "Colors[4]" VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "Colors[5]" VertexIndexes = "11; 6; 0; 5" />
+
+                <Face Color = "clDown" VertexIndexes = "13; 0; 1" InvisibleEdges = "5" />
+                <Face Color = "clDown" VertexIndexes = "13; 1; 2" InvisibleEdges = "5" />
+                <Face Color = "clDown" VertexIndexes = "13; 2; 3" InvisibleEdges = "5" />
+                <Face Color = "clDown" VertexIndexes = "13; 3; 4" InvisibleEdges = "5" />
+                <Face Color = "clDown" VertexIndexes = "13; 4; 5" InvisibleEdges = "5" />
+                <Face Color = "clDown" VertexIndexes = "13; 5; 0" InvisibleEdges = "5" />
+
+                <Face Color = "clUp" VertexIndexes = "12; 7; 6" InvisibleEdges = "5" />
+                <Face Color = "clUp" VertexIndexes = "12; 8; 7" InvisibleEdges = "5" />
+                <Face Color = "clUp" VertexIndexes = "12; 9; 8" InvisibleEdges = "5" />
+                <Face Color = "clUp" VertexIndexes = "12;10; 9" InvisibleEdges = "5" />
+                <Face Color = "clUp" VertexIndexes = "12;11;10" InvisibleEdges = "5" />
+                <Face Color = "clUp" VertexIndexes = "12; 6;11" InvisibleEdges = "5" />
+            </Faces>
+        </Part>
+
+        <Split Axis = "0" From = "1" To = "1" />
+        <Split Axis = "0" From = "2" To = "2" />
+        <Turn Axis = "0" Layers = "0;2" Angle = "Pi/3" />
+        <SplitByAxes/>
+        <Undo/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

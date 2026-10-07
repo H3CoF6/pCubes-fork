@@ -1,0 +1,453 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>JAMmed Petaminx</Name>
+        <Menu>Other forms\Dodecahedron\Face Turning\Bandaged\JAMmed Petaminx</Menu>
+        <Inventor>Harley Olsthoorn</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2016-10-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5491</Link>
+        <Link>https://www.youtube.com/watch?v=rvD9k34_OhE</Link>
+        <Link>https://www.youtube.com/watch?v=-lEZRCnuzik</Link>
+
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FF0000'; // Red         
+        Colors[ 1] := 'FFF08F'; // LightYellow 
+        Colors[ 2] := '007700'; // Green       
+        Colors[ 3] := 'FFFFFF'; // White       
+        Colors[ 4] := '0000FF'; // Blue        
+        Colors[ 5] := 'FF38E4'; // LightViolett
+        Colors[ 6] := 'FFFF00'; // Yellow      
+        Colors[ 7] := '00FF00'; // LightGreen  
+        Colors[ 8] := 'AAAAAA'; // Gray        
+        Colors[ 9] := '7777FF'; // LightBlue   
+        Colors[10] := 'B200FF'; // Violett     
+        Colors[11] := 'FF6A00'; // Orange      
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D1 := (7 * Rsin + 1 * R2sin) / 8;
+        D2 := (6 * Rsin + 2 * R2sin) / 8;
+        D3 := (5 * Rsin + 3 * R2sin) / 8;
+        D4 := (4 * Rsin + 4 * R2sin) / 8;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D1;-D2;-D3;-D4; D4; D3; D2; D1" FixedLayers = "4" >
+        <Axis NormVector = "Cx[0]; Cy[0]; Cz[0]" />
+        <Axis NormVector = "Cx[1]; Cy[1]; Cz[1]" />
+        <Axis NormVector = "Cx[2]; Cy[2]; Cz[2]" />
+        <Axis NormVector = "Cx[3]; Cy[3]; Cz[3]" />
+        <Axis NormVector = "Cx[4]; Cy[4]; Cz[4]" />
+        <Axis NormVector = "Cx[5]; Cy[5]; Cz[5]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "HideV1" >
+            <HideContaining Vector = "Vx[v]; Vy[v]; Vz[v]" />
+        </Macro>
+
+        <Macro Name = "HideV21" >
+            <HideContaining Vector = "(Vx[v1] + Vx[v2]) / 2.1; (Vy[v1] + Vy[v2]) / 2.1; (Vz[v1] + Vz[v2]) / 2.1" />
+        </Macro>
+
+        <Macro Name = "HideV22" >
+            <HideContaining Vector = "(2 * Vx[v1] + Vx[v2]) / 3.1; (2 * Vy[v1] + Vy[v2]) / 3.1; (2 * Vz[v1] + Vz[v2]) / 3.1" />
+        </Macro>
+
+        <Macro Name = "HideV31" >
+            <HideContaining Vector = "(2 * Vx[v1] + 2 * Vx[v2] + Vx[v3]) / 5.1; (2 * Vy[v1] + 2 * Vy[v2] + Vy[v3]) / 5.1; (2 * Vz[v1] + 2 * Vz[v2] + Vz[v3]) / 5.1" />
+        </Macro>
+
+        <Macro Name = "HideV32" >
+            <HideContaining Vector = "(Vx[v1] + Vx[v2] + 4 * Vx[v3]) / 6.1; (Vy[v1] + Vy[v2] + 4 * Vy[v3]) / 6.1; (Vz[v1] + Vz[v2] + 4 * Vz[v3]) / 6.1" />
+        </Macro>
+
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "4" />
+        <Split Axis = "3" From = "4" />
+        <Split Axis = "4" From = "4" />
+        <Split Axis = "5" From = "4" />
+        <Split Axis = "0" From = "5" />
+        <Split Axis = "1" From = "5" />
+        <Split Axis = "2" From = "5" />
+        <Split Axis = "3" From = "5" />
+        <Split Axis = "4" From = "5" />
+        <Split Axis = "5" From = "5" />
+
+        <ExecMacro MacroName = "HideV1" v = " 4" />
+        <ExecMacro MacroName = "HideV1" v = " 8" />
+        <ExecMacro MacroName = "HideV1" v = "10" />
+        <ExecMacro MacroName = "HideV1" v = "16" />
+                                                            
+        <ExecMacro MacroName = "HideV21" v1 = " 7" v2 = "11" />
+        <ExecMacro MacroName = "HideV21" v1 = " 0" v2 = " 1" />
+        <ExecMacro MacroName = "HideV21" v1 = " 7" v2 = " 2" />
+        <ExecMacro MacroName = "HideV21" v1 = "17" v2 = "18" />
+        <ExecMacro MacroName = "HideV21" v1 = "19" v2 = "14" />
+        <ExecMacro MacroName = "HideV21" v1 = " 9" v2 = "14" />
+                                                            
+        <ExecMacro MacroName = "HideV21" v1 = " 2" v2 = " 3" />
+        <ExecMacro MacroName = "HideV21" v1 = " 2" v2 = " 1" />
+        <ExecMacro MacroName = "HideV21" v1 = "16" v2 = "11" />
+        <ExecMacro MacroName = "HideV21" v1 = " 4" v2 = " 9" />
+        <ExecMacro MacroName = "HideV21" v1 = "15" v2 = "19" />
+        <ExecMacro MacroName = "HideV21" v1 = "15" v2 = "19" />
+        <ExecMacro MacroName = "HideV21" v1 = "18" v2 = "19" />
+                                                            
+        <ExecMacro MacroName = "HideV21" v1 = " 7" v2 = "12" />
+        <ExecMacro MacroName = "HideV21" v1 = "17" v2 = "12" />
+        <ExecMacro MacroName = "HideV21" v1 = " 6" v2 = "11" />
+        <ExecMacro MacroName = "HideV21" v1 = "13" v2 = " 9" />
+        <ExecMacro MacroName = "HideV21" v1 = " 5" v2 = " 0" />
+        <ExecMacro MacroName = "HideV21" v1 = " 5" v2 = "14" />
+
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+        <Split Axis = "3" From = "2" />
+        <Split Axis = "4" From = "2" />
+        <Split Axis = "5" From = "2" />
+        <Split Axis = "0" From = "7" />
+        <Split Axis = "1" From = "7" />
+        <Split Axis = "2" From = "7" />
+        <Split Axis = "3" From = "7" />
+        <Split Axis = "4" From = "7" />
+        <Split Axis = "5" From = "7" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <ExecMacro MacroName = "HideV1" v = " 4" />
+        <ExecMacro MacroName = "HideV1" v = " 8" />
+        <ExecMacro MacroName = "HideV1" v = "10" />
+        <ExecMacro MacroName = "HideV1" v = "16" />
+
+        <ExecMacro MacroName = "HideV21" v1 = " 7" v2 = "11" />
+        <ExecMacro MacroName = "HideV21" v1 = " 0" v2 = " 1" />
+        <ExecMacro MacroName = "HideV21" v1 = " 7" v2 = " 2" />
+        <ExecMacro MacroName = "HideV21" v1 = "17" v2 = "18" />
+        <ExecMacro MacroName = "HideV21" v1 = "19" v2 = "14" />
+        <ExecMacro MacroName = "HideV21" v1 = " 9" v2 = "14" />
+                                                           
+        <ExecMacro MacroName = "HideV21" v1 = " 3" v2 = " 2" />
+        <ExecMacro MacroName = "HideV21" v1 = " 1" v2 = " 2" />
+        <ExecMacro MacroName = "HideV21" v1 = " 4" v2 = " 9" />
+        <ExecMacro MacroName = "HideV21" v1 = "11" v2 = "16" />
+        <ExecMacro MacroName = "HideV21" v1 = "15" v2 = "19" />
+        <ExecMacro MacroName = "HideV21" v1 = "18" v2 = "19" />
+
+        <ExecMacro MacroName = "HideV31" v1 = " 3" v2 = " 8" v3 = " 9" />
+        <ExecMacro MacroName = "HideV31" v1 = " 3" v2 = " 8" v3 = " 7" />
+        <ExecMacro MacroName = "HideV31" v1 = " 3" v2 = " 4" v3 = " 1" />
+        <ExecMacro MacroName = "HideV31" v1 = " 3" v2 = " 4" v3 = "13" />
+        <ExecMacro MacroName = "HideV31" v1 = " 1" v2 = " 6" v3 = " 5" />
+        <ExecMacro MacroName = "HideV31" v1 = " 1" v2 = " 6" v3 = " 7" />
+        <ExecMacro MacroName = "HideV31" v1 = "13" v2 = "18" v3 = "12" />
+        <ExecMacro MacroName = "HideV31" v1 = "13" v2 = "18" v3 = "14" />
+        <ExecMacro MacroName = "HideV31" v1 = "10" v2 = "15" v3 = "14" />
+        <ExecMacro MacroName = "HideV31" v1 = "10" v2 = "15" v3 = "11" />
+        <ExecMacro MacroName = "HideV31" v1 = "16" v2 = "15" v3 = "18" />
+        <ExecMacro MacroName = "HideV31" v1 = "16" v2 = "15" v3 = " 6" />
+
+
+        <ExecMacro MacroName = "HideV22" v1 = " 3" v2 = " 2" />
+        <ExecMacro MacroName = "HideV22" v1 = " 3" v2 = " 4" />
+        <ExecMacro MacroName = "HideV22" v1 = " 3" v2 = " 8" />
+        <ExecMacro MacroName = "HideV22" v1 = " 1" v2 = " 0" />
+        <ExecMacro MacroName = "HideV22" v1 = " 1" v2 = " 2" />
+        <ExecMacro MacroName = "HideV22" v1 = " 1" v2 = " 6" />
+        <ExecMacro MacroName = "HideV22" v1 = "18" v2 = "19" />
+        <ExecMacro MacroName = "HideV22" v1 = "18" v2 = "17" />
+        <ExecMacro MacroName = "HideV22" v1 = "18" v2 = "13" />
+        <ExecMacro MacroName = "HideV22" v1 = "15" v2 = "19" />
+        <ExecMacro MacroName = "HideV22" v1 = "15" v2 = "16" />
+        <ExecMacro MacroName = "HideV22" v1 = "15" v2 = "10" />
+
+        <ExecMacro MacroName = "HideV32" v1 = " 3" v2 = " 2" v3 = "12" />
+        <ExecMacro MacroName = "HideV32" v1 = "11" v2 = "16" v3 = "12" />
+        <ExecMacro MacroName = "HideV32" v1 = "13" v2 = "18" v3 = "12" />
+        <ExecMacro MacroName = "HideV32" v1 = " 7" v2 = " 2" v3 = " 6" />
+        <ExecMacro MacroName = "HideV32" v1 = " 0" v2 = " 5" v3 = " 6" />
+        <ExecMacro MacroName = "HideV32" v1 = "15" v2 = "16" v3 = " 6" />
+        <ExecMacro MacroName = "HideV32" v1 = " 6" v2 = " 1" v3 = " 5" />
+        <ExecMacro MacroName = "HideV32" v1 = " 4" v2 = " 9" v3 = " 5" />
+        <ExecMacro MacroName = "HideV32" v1 = "19" v2 = "15" v3 = " 5" />
+        <ExecMacro MacroName = "HideV32" v1 = " 3" v2 = " 4" v3 = "13" />
+        <ExecMacro MacroName = "HideV32" v1 = "12" v2 = "17" v3 = "13" />
+        <ExecMacro MacroName = "HideV32" v1 = "14" v2 = "19" v3 = "13" />
+
+        <ExecMacro MacroName = "HideV32" v1 = " 3" v2 = " 8" v3 = " 7" />
+        <ExecMacro MacroName = "HideV32" v1 = " 1" v2 = " 6" v3 = " 7" />
+        <ExecMacro MacroName = "HideV32" v1 = "16" v2 = "17" v3 = " 7" />
+        <ExecMacro MacroName = "HideV32" v1 = " 3" v2 = " 2" v3 = " 0" />
+        <ExecMacro MacroName = "HideV32" v1 = "10" v2 = " 6" v3 = " 0" />
+        <ExecMacro MacroName = "HideV32" v1 = " 9" v2 = "14" v3 = " 0" />
+        <ExecMacro MacroName = "HideV32" v1 = "13" v2 = " 8" v3 = "17" />
+        <ExecMacro MacroName = "HideV32" v1 = "11" v2 = " 7" v3 = "17" />
+        <ExecMacro MacroName = "HideV32" v1 = "19" v2 = "15" v3 = "17" />
+        <ExecMacro MacroName = "HideV32" v1 = " 0" v2 = " 4" v3 = "14" />
+        <ExecMacro MacroName = "HideV32" v1 = "10" v2 = "15" v3 = "14" />
+        <ExecMacro MacroName = "HideV32" v1 = "13" v2 = "18" v3 = "14" />
+
+        <ExecMacro MacroName = "HideV22" v1 = " 7" v2 = " 2" />
+        <ExecMacro MacroName = "HideV22" v1 = " 7" v2 = "11" />
+        <ExecMacro MacroName = "HideV22" v1 = " 7" v2 = "12" />
+        <ExecMacro MacroName = "HideV22" v1 = " 0" v2 = " 1" />
+        <ExecMacro MacroName = "HideV22" v1 = " 0" v2 = " 4" />
+        <ExecMacro MacroName = "HideV22" v1 = " 0" v2 = " 5" />
+        <ExecMacro MacroName = "HideV22" v1 = "17" v2 = "12" />
+        <ExecMacro MacroName = "HideV22" v1 = "17" v2 = "16" />
+        <ExecMacro MacroName = "HideV22" v1 = "17" v2 = "18" />
+        <ExecMacro MacroName = "HideV22" v1 = "14" v2 = " 5" />
+        <ExecMacro MacroName = "HideV22" v1 = "14" v2 = " 9" />
+        <ExecMacro MacroName = "HideV22" v1 = "14" v2 = "19" />
+
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "3" From = "3" />
+        <Split Axis = "4" From = "3" />
+        <Split Axis = "5" From = "3" />
+        <Split Axis = "0" From = "6" />
+        <Split Axis = "1" From = "6" />
+        <Split Axis = "2" From = "6" />
+        <Split Axis = "3" From = "6" />
+        <Split Axis = "4" From = "6" />
+        <Split Axis = "5" From = "6" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+
+        <ExecMacro MacroName = "HideV1" v = " 4" />
+        <ExecMacro MacroName = "HideV1" v = " 8" />
+        <ExecMacro MacroName = "HideV1" v = "10" />
+        <ExecMacro MacroName = "HideV1" v = "16" />
+
+        <ExecMacro MacroName = "HideV21" v1 = " 7" v2 = "11" />
+        <ExecMacro MacroName = "HideV21" v1 = " 0" v2 = " 1" />
+        <ExecMacro MacroName = "HideV21" v1 = " 7" v2 = " 2" />
+        <ExecMacro MacroName = "HideV21" v1 = "17" v2 = "18" />
+        <ExecMacro MacroName = "HideV21" v1 = "19" v2 = "14" />
+        <ExecMacro MacroName = "HideV21" v1 = " 9" v2 = "14" />
+                                                           
+        <ExecMacro MacroName = "HideV21" v1 = " 7" v2 = "12" />
+        <ExecMacro MacroName = "HideV21" v1 = "17" v2 = "12" />
+        <ExecMacro MacroName = "HideV21" v1 = " 6" v2 = "11" />
+        <ExecMacro MacroName = "HideV21" v1 = "13" v2 = " 9" />
+        <ExecMacro MacroName = "HideV21" v1 = " 5" v2 = " 0" />
+        <ExecMacro MacroName = "HideV21" v1 = " 5" v2 = "14" />
+
+        <ExecMacro MacroName = "HideV1" v = " 5" />
+        <ExecMacro MacroName = "HideV1" v = " 6" />
+        <ExecMacro MacroName = "HideV1" v = "12" />
+        <ExecMacro MacroName = "HideV1" v = "13" />
+
+        <ExecMacro MacroName = "HideV22" v1 = " 3" v2 = " 2" />
+        <ExecMacro MacroName = "HideV22" v1 = " 3" v2 = " 4" />
+        <ExecMacro MacroName = "HideV22" v1 = " 3" v2 = " 8" />
+        <ExecMacro MacroName = "HideV22" v1 = " 1" v2 = " 0" />
+        <ExecMacro MacroName = "HideV22" v1 = " 1" v2 = " 2" />
+        <ExecMacro MacroName = "HideV22" v1 = " 1" v2 = " 6" />
+        <ExecMacro MacroName = "HideV22" v1 = "18" v2 = "19" />
+        <ExecMacro MacroName = "HideV22" v1 = "18" v2 = "17" />
+        <ExecMacro MacroName = "HideV22" v1 = "18" v2 = "13" />
+        <ExecMacro MacroName = "HideV22" v1 = "15" v2 = "19" />
+        <ExecMacro MacroName = "HideV22" v1 = "15" v2 = "16" />
+        <ExecMacro MacroName = "HideV22" v1 = "15" v2 = "10" />
+
+        <ExecMacro MacroName = "HideV22" v1 = " 7" v2 = " 2" />
+        <ExecMacro MacroName = "HideV22" v1 = " 7" v2 = "11" />
+        <ExecMacro MacroName = "HideV22" v1 = " 7" v2 = "12" />
+        <ExecMacro MacroName = "HideV22" v1 = " 0" v2 = " 1" />
+        <ExecMacro MacroName = "HideV22" v1 = " 0" v2 = " 4" />
+        <ExecMacro MacroName = "HideV22" v1 = " 0" v2 = " 5" />
+        <ExecMacro MacroName = "HideV22" v1 = "17" v2 = "12" />
+        <ExecMacro MacroName = "HideV22" v1 = "17" v2 = "16" />
+        <ExecMacro MacroName = "HideV22" v1 = "17" v2 = "18" />
+        <ExecMacro MacroName = "HideV22" v1 = "14" v2 = " 5" />
+        <ExecMacro MacroName = "HideV22" v1 = "14" v2 = " 9" />
+        <ExecMacro MacroName = "HideV22" v1 = "14" v2 = "19" />
+
+        <ExecMacro MacroName = "HideV1" v = " 0" />
+        <ExecMacro MacroName = "HideV1" v = " 7" />
+        <ExecMacro MacroName = "HideV1" v = "14" />
+        <ExecMacro MacroName = "HideV1" v = "17" />
+
+        <ExecMacro MacroName = "HideV21" v1 = " 3" v2 = " 4" />
+        <ExecMacro MacroName = "HideV21" v1 = " 3" v2 = " 8" />
+        <ExecMacro MacroName = "HideV21" v1 = " 1" v2 = " 6" />
+        <ExecMacro MacroName = "HideV21" v1 = "13" v2 = "18" />
+        <ExecMacro MacroName = "HideV21" v1 = "10" v2 = "15" />
+        <ExecMacro MacroName = "HideV21" v1 = "16" v2 = "15" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <Split Axis = "4" From = "1" />
+        <Split Axis = "5" From = "1" />
+        <Split Axis = "0" From = "8" />
+        <Split Axis = "1" From = "8" />
+        <Split Axis = "2" From = "8" />
+        <Split Axis = "3" From = "8" />
+        <Split Axis = "4" From = "8" />
+        <Split Axis = "5" From = "8" />
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(6)" Layer = "Random(9)" Angle = "sAngle * (Random(4) + 1)"/>
+        </Macro>
+
+        <Macro Name = "Turn1" >
+            <Turn Axis = "ax[i]" From = "FromL[i]"  To = "ToL[i]" Angle = "A[i]" />
+            <Script> Inc(i);</Script>
+        </Macro>
+        <Macro Name = "Turn2" >
+            <Script> Prepare; </Script>
+            <ExecMacro MacroName = "Turn1" i = "0" Repeat = "Count" />
+            <ShowAll/>
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" >
+            <Script>
+                sAngle := Pi * 2 / 5;
+                procedure Prepare();
+                begin
+                    Count := Length(S) div 5;
+                    for i := 0 to Count - 1 do begin
+                        ax[i]    := StrToInt(copy(S, i * 5 + 1, 1));
+                        FromL[i] := StrToInt(copy(S, i * 5 + 2, 1));
+                        ToL[i]   := StrToInt(copy(S, i * 5 + 3, 1));
+                        Sign     :=          copy(S, i * 5 + 4, 2);
+                        Case Sign of
+                        '--': A[i] :=-sAngle * 2;
+                        '- ': A[i] :=-sAngle;
+                        '+ ': A[i] := sAngle;
+                        '++': A[i] := sAngle * 2;
+                        end;
+                    end;
+                end;
+            </Script>
+
+            <ExecMacro MacroName = "Turn2" S = "'503++158- 258++058++458+ 003+ 103+ 003- 103- 403- '" />
+            <ExecMacro MacroName = "Turn2" S = "'258+ 403+ 258- 203--103- 203+ 103+ 058- 558+ 058+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'403+ 058+ 158- 058- 158- 258- 158+ 258+ 158+ 058+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'158- 058- 258- 158+ 258+ 158+ 058+ 158- 058- 558- '" />
+            <ExecMacro MacroName = "Turn2" S = "'158- 303- 458+ 558- 458- 558- 203+ 378- 058+ 158+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'058- 158- 058+ 158+ 058- 158- 378+ 058+ 158+ 058- '" />
+            <ExecMacro MacroName = "Turn2" S = "'158- 058+ 158+ 058- 158- 378- 058+ 158+ 058- 158- '" />
+            <ExecMacro MacroName = "Turn2" S = "'058+ 158+ 058- 158- 378++458+ 558+ 458- 558- 458+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'558+ 458- 558- 378- 058+ 158+ 058- 158- 058+ 158+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'058- 158- 378- 058+ 158+ 058- 158- 058+ 158+ 058- '" />
+            <ExecMacro MacroName = "Turn2" S = "'158- 378++458+ 558+ 458- 558- 458+ 558+ 458- 558- '" />
+            <ExecMacro MacroName = "Turn2" S = "'378- 458+ 558+ 458- 558- 458+ 558+ 458- 558- 458+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'558+ 458- 558- 458+ 558+ 458- 558- 378- 058+ 158+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'058- 158- 058+ 158+ 058- 158- 378+ 058+ 158+ 058- '" />
+            <ExecMacro MacroName = "Turn2" S = "'158- 058+ 158+ 058- 158- 058+ 158+ 058- 158- 058+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'158+ 058- 158- 378- 158- 258- 158+ 258+ 158- 558--'" />
+            <ExecMacro MacroName = "Turn2" S = "'378++158++458+ 558- 458- 378- 458+ 558+ 458- 558- '" />
+            <ExecMacro MacroName = "Turn2" S = "'458+ 558+ 458- 558- 058+ 158+ 058- 158- 058+ 158+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'058- 158- 378+ 458+ 558+ 458- 558- 458+ 558+ 458- '" />
+            <ExecMacro MacroName = "Turn2" S = "'558- 378--058+ 158+ 058- 158- 058+ 158+ 058- 158- '" />
+            <ExecMacro MacroName = "Turn2" S = "'378+ 158+ 458+ 558- 458- 158+ 258- 158+ 258+ 558- '" />
+            <ExecMacro MacroName = "Turn2" S = "'203+ 378+ 458+ 558+ 458- 558- 458+ 558+ 458- 558- '" />
+            <ExecMacro MacroName = "Turn2" S = "'378- 458+ 558+ 458- 558- 458+ 558+ 458- 558- 378+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'458+ 558+ 458- 558- 458+ 558+ 458- 558- 378--058+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'158+ 058- 158- 058+ 158+ 058- 158- 058+ 158+ 058- '" />
+            <ExecMacro MacroName = "Turn2" S = "'158- 058+ 158+ 058- 158- 378+ 058+ 158+ 058- 158- '" />
+            <ExecMacro MacroName = "Turn2" S = "'058+ 158+ 058- 158- 378- 058+ 158+ 058- 158- 058+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'158+ 058- 158- 058+ 158+ 058- 158- 058+ 158+ 058- '" />
+            <ExecMacro MacroName = "Turn2" S = "'158- 378+ 058+ 158+ 058- 158- 058+ 158+ 058- 158- '" />
+            <ExecMacro MacroName = "Turn2" S = "'058+ 158+ 058- 158- 058+ 158+ 058- 158- 378- 058+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'158+ 058- 158- 058+ 158+ 058- 158- 378+ 303--158+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'258- 158+ 258+ 158- 558--003+ 203+ 303++558- 458+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'558- 458- 378- 058+ 158+ 058- 158- 058+ 158+ 058- '" />
+            <ExecMacro MacroName = "Turn2" S = "'158- 378+ 458+ 558+ 458- 558- 458+ 558+ 458- 558- '" />
+            <ExecMacro MacroName = "Turn2" S = "'378+ 458+ 558+ 458- 558- 458+ 558+ 458- 558- 378- '" />
+            <ExecMacro MacroName = "Turn2" S = "'058+ 158+ 058- 158- 058+ 158+ 058- 158- 458+ 558+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'458- 558- 458+ 558+ 458- 558- 378- 058+ 158+ 058- '" />
+            <ExecMacro MacroName = "Turn2" S = "'158- 058+ 158+ 058- 158- 378+ 058+ 158+ 058- 158- '" />
+            <ExecMacro MacroName = "Turn2" S = "'058+ 158+ 058- 158- 058+ 158+ 058- 158- 058+ 158+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'058- 158- 378+ 458+ 558+ 458- 558- 458+ 558+ 458- '" />
+            <ExecMacro MacroName = "Turn2" S = "'558- 458+ 558+ 458- 558- 458+ 558+ 458- 558- 378- '" />
+            <ExecMacro MacroName = "Turn2" S = "'058+ 158+ 058- 158- 058+ 158+ 058- 158- 378- 158- '" />
+            <ExecMacro MacroName = "Turn2" S = "'258- 158+ 258+ 378+ 158- 258- 158+ 258+ 203- 058- '" />
+            <ExecMacro MacroName = "Turn2" S = "'558+ 058++158- 058- 158- 258- 158+ 258+ 158++303- '" />
+            <ExecMacro MacroName = "Turn2" S = "'558+ 058- 558+ 058+ 558+ 458+ 558- 458- 303--158++'" />
+            <ExecMacro MacroName = "Turn2" S = "'203--303--258- 403- 258+ 203- 158- 303- 158+ 558++'" />
+            <ExecMacro MacroName = "Turn2" S = "'158- 303- 158+ 203- 003- 203++458+ 203+ 458- 388+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'377- 366+ 355- 088- 366--377++388++355+ 088+ 388- '" />
+            <ExecMacro MacroName = "Turn2" S = "'088- 388- 088- 388- 088+ 366- 355- 088+ 377--088+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'388- 088- 388- 088+ 388- 088- 377+ 366- 088- 377- '" />
+            <ExecMacro MacroName = "Turn2" S = "'366+ 377- 088--388- 088+ 388- 088+ 388- 366+ 377+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'088--388- 088--355- 366+ 203- 103- 203+ 103+ 203+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'458- 203- 458+ 203++458+ 203- 458+ 203+ 458- 203+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'558- 203- 558+ 458- 088+ 388- 088- 377- 088+ 388- '" />
+            <ExecMacro MacroName = "Turn2" S = "'088- 377- 388+ 088- 258- 403+ 258- 403- 258+ 403- '" />
+            <ExecMacro MacroName = "Turn2" S = "'158+ 403+ 158- 258+ 088--388- 088+ 388- 088++403++'" />
+            <ExecMacro MacroName = "Turn2" S = "'158--303- 558+ 303+ 558- 258- 403- 258+ 088+ 158- '" />
+            <ExecMacro MacroName = "Turn2" S = "'258- 158+ 258+ 158+ 058+ 158- 058- 158--403+ 258- '" />
+            <ExecMacro MacroName = "Turn2" S = "'403- 258+ 303- 558+ 303+ 558- 088- 158--303+ 558- '" />
+            <ExecMacro MacroName = "Turn2" S = "'158++558+ 158- 088+ 558++303- 158++303++003--303--'" />
+            <ExecMacro MacroName = "Turn2" S = "'558- 303+ 558- 203- 458+ 203+ 458- 088++388- 088++'" />
+            <ExecMacro MacroName = "Turn2" S = "'377++088--388- 088+ 377- 366+ 355- 088+ 158- 303- '" />
+            <ExecMacro MacroName = "Turn2" S = "'258- 403- 258+ 303+ 203+ 058- 558+ 058+ 558+ 458+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'558- 458- 203++558++158- 303- 158+ 203- 458+ 203+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'458- 055- 388- 377+ 388- 055+ 377+ 355+ 055+ 388+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'377- 355+ 366- 055+ 355+ 377- 366+ 055- 068+ 355--'" />
+            <ExecMacro MacroName = "Turn2" S = "'068- 366- 055+ 355- 068--355- 055+ 355+ 055- 355+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'068+ 355+ 377++388+ 068- 368- 068- 368+ 068+ 055+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'368- 055++068++055- 258+ 377+ 258- 366+ 388--055--'" />
+            <ExecMacro MacroName = "Turn2" S = "'388+ 055++068+ 368--055+ 368++068- 388++055- 388--'" />
+            <ExecMacro MacroName = "Turn2" S = "'055- 388- 355--458+ 055+ 458- 355--068- 388- 068+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'303--158++403+ 258- 403- 258+ 558+ 303+ 558- 003- '" />
+            <ExecMacro MacroName = "Turn2" S = "'203++068- 055- 558+ 058+ 558+ 458+ 558- 458- 558- '" />
+            <ExecMacro MacroName = "Turn2" S = "'003--303--558--158- 303- 158+ 203- 458+ 203+ 458- '" />
+            <ExecMacro MacroName = "Turn2" S = "'355- 055--068--355--458- 355- 458+ 068- 355- 055+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'355- 068- 355- 068- 355+ 068- 388- 068+ 388- 377--'" />
+            <ExecMacro MacroName = "Turn2" S = "'055--068- 355+ 055- 388- 055+ 355- 258+ 355- 258- '" />
+            <ExecMacro MacroName = "Turn2" S = "'355- 055- 355++055+ 366- 388- 366--458- 203+ 458+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'503- 003+ 503+ 003- 458- 203- 458+ 388- 355++377- '" />
+            <ExecMacro MacroName = "Turn2" S = "'103- 558- 203+ 103+ 203- 558+ 055+ 377+ 458- 203+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'458+ 003++103+ 003- 103- 503- 003- 503+ 003+ 503- '" />
+            <ExecMacro MacroName = "Turn2" S = "'003- 503+ 458- 203- 458+ 377--503- 003- 503+ 003+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'503- 003- 503+ 003+ 377- 503+ 403+ 503- 403- 503+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'403+ 503- 403- 377+ 503+ 403+ 503- 403- 503+ 403+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'503- 403+ 377- 158+ 503+ 403- 503- 403+ 503+ 403+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'503- 403- 503+ 403+ 503- 403- 377+ 503+ 403+ 503- '" />
+            <ExecMacro MacroName = "Turn2" S = "'403- 503+ 403+ 503- 403- 377--258+ 403+ 258- 403- '" />
+            <ExecMacro MacroName = "Turn2" S = "'258+ 403++503- 403- 503+ 403+ 503- 403+ 503+ 258- '" />
+            <ExecMacro MacroName = "Turn2" S = "'366+ 377+ 503- 003- 503+ 003+ 503- 003- 503+ 003+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'366- 003+ 103+ 003- 103- 377- 258- 158- 258+ 158+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'258- 158- 258+ 158+ 366+ 388- 258- 158- 258+ 158+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'366- 258- 158- 258+ 158+ 258- 158- 258+ 158+ 366--'" />
+            <ExecMacro MacroName = "Turn2" S = "'403+ 503+ 403- 503- 403- 258+ 403+ 258- 403--258- '" />
+            <ExecMacro MacroName = "Turn2" S = "'403+ 258- 403- 258+ 403- 158+ 403+ 158--203- 558+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'458+ 303+ 203+ 458- 258+ 158- 258- 158+ 258+ 158+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'058+ 158- 058- 158++303+ 158++258- 403- 258+ 003- '" />
+            <ExecMacro MacroName = "Turn2" S = "'203--158- 203- 303- 158+ 458- 203- 458+ 203- 103- '" />
+            <ExecMacro MacroName = "Turn2" S = "'203+ 103+ 203- 103- 203+ 103+ 203+ 458- 203--458+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'203- 103- 203+ 103+ 303+ 003+ 203--078- 478- 378- '" />
+            <ExecMacro MacroName = "Turn2" S = "'478- 378- 478+ 378+ 078- 478+ 378- 478+ 378- 078- '" />
+            <ExecMacro MacroName = "Turn2" S = "'478- 078- 478- 078+ 478- 378- 078- 378++478- 078+ '" />
+            <ExecMacro MacroName = "Turn2" S = "'478--356- 078+ 356--078++356- 478- 356--078--355- '" />
+            <ExecMacro MacroName = "Turn2" S = "'078- 378++456--378--056+ 478++078+ 478+ 003- 103- '" />
+            <ExecMacro MacroName = "Turn2" S = "'003+ 103+ 478+ 356+ 478+ 378++078+ 303+ 158- 303- '" />
+            <ExecMacro MacroName = "Turn2" S = "'158+ 078+ 558+ 078+ 558- 478--378- 456+ 378+ 078++'" />
+            <ExecMacro MacroName = "Turn2" S = "'456++378--056+ 078--478- 078+ 378--203+ 356- 378- '" />
+            <ExecMacro MacroName = "Turn2" S = "'458+ 378- 003- 503- 003+ 503+ 356--103- 456++078- '" />
+            <ExecMacro MacroName = "Turn2" S = "'478- '" />
+
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

@@ -1,0 +1,103 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>YASL (Yet Another Starminx Lookalike)</Name>
+        <Menu>Other forms\Dodecahedron\Mixed\Vertex-Edge\YASL (Yet Another Starminx Lookalike)</Menu>
+        <Inventor>Casey Mihaloew</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-04-14</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7990</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := R / sqrt(3);
+        D2 := R * sqrt(5) / 3;
+
+        DCut := R * 0.73;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/6; 0; 2*Pi/6" PlaneDistances = "-D2; D2" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+        <Axis NormVector = "Vx[6]; Vy[6]; Vz[6]" />
+        <Axis NormVector = "Vx[7]; Vy[7]; Vz[7]" />
+        <Axis NormVector = "Vx[8]; Vy[8]; Vz[8]" />
+        <Axis NormVector = "Vx[9]; Vy[9]; Vz[9]" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/2; 0; Pi/2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Ex[ 0]; Ey[ 0]; Ez[ 0]" />
+        <Axis NormVector = "Ex[ 8]; Ey[ 8]; Ez[ 8]" />
+        <Axis NormVector = "Ex[14]; Ey[14]; Ez[14]" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <Face Color = "EE0000" VertexIndexes = "4;3;2;1;0" />
+
+                <Face Color = "0033FF" VertexIndexes = "1;2;7;11;6" />
+                <Face Color = "FFFF00" VertexIndexes = "2;3;8;12;7" />
+                <Face Color = "00DD00" VertexIndexes = "3;4;9;13;8" />
+                <Face Color = "BB00EE" VertexIndexes = "4;0;5;14;9" />
+                <Face Color = "FF8800" VertexIndexes = "0;1;6;10;5" />
+
+                <Face Color = "BB00EE" VertexIndexes = "17;16;11;7;12" />
+                <Face Color = "FF8800" VertexIndexes = "18;17;12;8;13" />
+                <Face Color = "0033FF" VertexIndexes = "19;18;13;9;14" />
+                <Face Color = "FFFF00" VertexIndexes = "15;19;14;5;10" />
+                <Face Color = "00DD00" VertexIndexes = "16;15;10;6;11" />
+
+                <Face Color = "EE0000" VertexIndexes = "15;16;17;18;19" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+         <!-- cut vertices for better control -->
+        <Macro Name = "Cut">
+            <HideContaining Vector = "Ex[e]; Ey[e]; Ez[e]" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = "-Cx[c1];-Cy[c1];-Cz[c1]" NormDistance = "-DCut" /> </Cut>
+            <Cut> <Plane NormVector = "-Cx[c2];-Cy[c2];-Cz[c2]" NormDistance = "-DCut" /> </Cut>
+            <ShowAll/>
+            <HideContaining Vector = "-Ex[e];-Ey[e];-Ez[e]" />
+            <InvertVisibility/>
+            <Cut> <Plane NormVector = " Cx[c1]; Cy[c1]; Cz[c1]" NormDistance = "-DCut" /> </Cut>
+            <Cut> <Plane NormVector = " Cx[c2]; Cy[c2]; Cz[c2]" NormDistance = "-DCut" /> </Cut>
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Cut" e = " 0" c1 = " 2" c2 = " 5" />
+        <ExecMacro MacroName = "Cut" e = " 1" c1 = " 1" c2 = " 3" />
+        <ExecMacro MacroName = "Cut" e = " 2" c1 = " 2" c2 = " 4" />
+        <ExecMacro MacroName = "Cut" e = " 3" c1 = " 3" c2 = " 5" />
+        <ExecMacro MacroName = "Cut" e = " 4" c1 = " 4" c2 = " 1" />
+
+        <ExecMacro MacroName = "Cut" e = " 5" c1 = " 0" c2 = " 8" />
+        <ExecMacro MacroName = "Cut" e = " 6" c1 = " 0" c2 = " 9" />
+        <ExecMacro MacroName = "Cut" e = " 7" c1 = " 0" c2 = "10" />
+        <ExecMacro MacroName = "Cut" e = " 8" c1 = " 0" c2 = " 6" />
+        <ExecMacro MacroName = "Cut" e = " 9" c1 = " 0" c2 = " 7" />
+
+        <ExecMacro MacroName = "Cut" e = "10" c1 = " 9" c2 = " 5" />
+        <ExecMacro MacroName = "Cut" e = "11" c1 = "10" c2 = " 1" />
+        <ExecMacro MacroName = "Cut" e = "12" c1 = " 6" c2 = " 2" />
+        <ExecMacro MacroName = "Cut" e = "13" c1 = " 7" c2 = " 3" />
+        <ExecMacro MacroName = "Cut" e = "14" c1 = " 8" c2 = " 4" />
+        <ShowAll/>
+
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

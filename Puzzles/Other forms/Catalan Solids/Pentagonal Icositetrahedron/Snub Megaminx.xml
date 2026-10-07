@@ -1,0 +1,238 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Snub Megaminx</Name>
+        <Menu>Other forms\Catalan Solids\Pentagonal Icositetrahedron\Snub Megaminx</Menu>
+        <Inventor>Michael Montgomery</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2024-02-25</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=11672</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'F0F0F0'; // White
+        Colors[ 1] := 'C0C0C0'; // Silver
+        Colors[ 2] := '808080'; // Gray
+        Colors[ 3] := '202020'; // Black
+        Colors[ 4] := '00FFFF'; // Cyan
+        Colors[ 5] := '008080'; // Teal
+        Colors[ 6] := '0000FF'; // Blue
+        Colors[ 7] := '000080'; // Navy
+        Colors[ 8] := 'FF0000'; // Red
+        Colors[ 9] := '800000'; // Brown
+        Colors[10] := 'FF7F50'; // Coral
+        Colors[11] := 'CD5C5C'; // Indian
+        Colors[12] := 'FFFF00'; // Yellow
+        Colors[13] := '808000'; // Olive
+        Colors[14] := 'FF6000'; // Orange
+        Colors[15] := 'DDBB20'; // Golden
+        Colors[16] := '00FF00'; // Lime
+        Colors[17] := '008000'; // Green
+        Colors[18] := '006400'; // DarkGreen
+        Colors[19] := 'ADFF2F'; // GreenYellow
+        Colors[20] := 'FF00FF'; // Fuchsia
+        Colors[21] := '800080'; // Purple
+        Colors[22] := 'FF69B4'; // Pink
+        Colors[23] := 'DB7093'; // Pale
+
+        K  := 0.5;
+        s33 := 3 * sqrt(33);
+
+        K1 := (2 * (27 + s33))^(1/3) + (2 * (27 - s33))^(1/3);
+        K2 := (2 * (1777 + 11 * s33))^(1/3) + (2 * (1777 - 11 * s33))^(1/3);
+
+        C0 := K * sqrt(6 * (K1 -  6)) / 12;
+        C1 := K * sqrt(6 * (K1 +  6)) / 12;
+        C2 := K * sqrt(6 * (K1 + 18)) / 12;
+        C3 := K * sqrt(6 * (K2 + 14)) / 12;
+
+        n1 := (c1 - c0)^2;
+        n2 := (c2 - c1)^2;
+        n3 := (c2 - c1) * (c1 - c0);
+
+        procedure Add4Axes( ax1, ax2, ax3);
+        begin
+            Nx[i] := ax1; Ny[i] := ax2; Nz[i] := ax3; Inc(i);
+            Nx[i] := ax1; Ny[i] :=-ax2; Nz[i] :=-ax3; Inc(i);
+            Nx[i] := ax1; Ny[i] :=-ax3; Nz[i] := ax2; Inc(i);
+            Nx[i] := ax1; Ny[i] := ax3; Nz[i] :=-ax2; Inc(i);
+        end;
+        i := 0;
+        Add4Axes( n1, n2, n3);
+        Add4Axes(-n1,-n2, n3);
+        Add4Axes( n2, n3, n1);
+        Add4Axes(-n2,-n3, n1);
+        Add4Axes( n3, n1, n2);
+        Add4Axes(-n3,-n1, n2);
+
+//        A1 := VectorRotatingAngle( n3,-n2, n1,  n2,-n1, n3,  n1,-n3, n2);
+        A1 := ArcCos(((19 + s33)^(1/3) + (19 - s33)^(1/3) - 2) / 6);
+        A2 := 2 * A1;
+        A3 := 3 * A1;
+        A4 := 4 * A1;
+
+        D  := K * 1.00;
+    </Script>
+
+    <Axes TurningAngles = "0; 2*Pi" AvailableAngles = "-A4;-A3;-A2;-A1; 0; A1; A2; A3; A4" PlaneDistances = "D" NormVectors = " Nx; Ny; Nz" />
+
+    <Figure>
+
+        <Macro Name = "AddV4">
+            <Add Vector = " V0; V1;-V2" />
+            <Add Vector = " V0;-V1; V2" />
+            <Add Vector = " V0; V2; V1" />
+            <Add Vector = " V0;-V2;-V1" />
+        </Macro>
+
+        <Part>
+            <Vertices>
+                <Add Vector = "-C3;  0;  0" />
+                <Add Vector = " C3;  0;  0" />
+                <ExecMacro MacroName = "AddV4" V0 = "  0" V1 = "  0" V2 = " C3" />
+                <ExecMacro MacroName = "AddV4" V0 = "-C0" V1 = " C1" V2 = "-C2" />
+                <ExecMacro MacroName = "AddV4" V0 = " C0" V1 = " C1" V2 = " C2" />
+                <ExecMacro MacroName = "AddV4" V0 = "-C1" V1 = " C0" V2 = " C2" />
+                <ExecMacro MacroName = "AddV4" V0 = " C1" V1 = "-C0" V2 = " C2" />
+                <ExecMacro MacroName = "AddV4" V0 = "-C2" V1 = "-C0" V2 = " C1" />
+                <ExecMacro MacroName = "AddV4" V0 = " C2" V1 = " C0" V2 = " C1" />
+                <ExecMacro MacroName = "AddV4" V0 = " C1" V1 = " C1" V2 = "-C1" />
+                <ExecMacro MacroName = "AddV4" V0 = "-C1" V1 = "-C1" V2 = " C1" />
+            </Vertices>
+
+            <Faces>
+                <Face Color = "Colors[ 0]" VertexIndexes = " 2; 7;34;22;14" />
+                <Face Color = "Colors[ 1]" VertexIndexes = " 2;18;31;13; 7" />
+                <Face Color = "Colors[ 2]" VertexIndexes = " 2;10;33;26;18" />
+                <Face Color = "Colors[ 3]" VertexIndexes = " 2;14;36; 9;10" />
+                <Face Color = "Colors[ 4]" VertexIndexes = " 3; 6;35;23;15" />
+                <Face Color = "Colors[ 5]" VertexIndexes = " 3;19;30;12; 6" />
+                <Face Color = "Colors[ 6]" VertexIndexes = " 3;11;32;27;19" />
+                <Face Color = "Colors[ 7]" VertexIndexes = " 3;15;37; 8;11" />
+                <Face Color = "Colors[ 8]" VertexIndexes = " 0;23;35;16;24" />
+                <Face Color = "Colors[ 9]" VertexIndexes = " 0;25;37;15;23" />
+                <Face Color = "Colors[10]" VertexIndexes = " 0;22;34;17;25" />
+                <Face Color = "Colors[11]" VertexIndexes = " 0;24;36;14;22" />
+                <Face Color = "Colors[12]" VertexIndexes = " 1;27;32;21;29" />
+                <Face Color = "Colors[13]" VertexIndexes = " 1;28;30;19;27" />
+                <Face Color = "Colors[14]" VertexIndexes = " 1;26;33;20;28" />
+                <Face Color = "Colors[15]" VertexIndexes = " 1;29;31;18;26" />
+                <Face Color = "Colors[16]" VertexIndexes = " 5;21;32;11; 8" />
+                <Face Color = "Colors[17]" VertexIndexes = " 5;13;31;29;21" />
+                <Face Color = "Colors[18]" VertexIndexes = " 5;17;34; 7;13" />
+                <Face Color = "Colors[19]" VertexIndexes = " 5; 8;37;25;17" />
+                <Face Color = "Colors[20]" VertexIndexes = " 4;20;33;10; 9" />
+                <Face Color = "Colors[21]" VertexIndexes = " 4;12;30;28;20" />
+                <Face Color = "Colors[22]" VertexIndexes = " 4;16;35; 6;12" />
+                <Face Color = "Colors[23]" VertexIndexes = " 4; 9;36;24;16" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split">
+            <Turn  Axis = "ax1" Layer = "1" Angle = "-A1" />
+            <Turn  Axis = "ax2" Layer = "1" Angle = " A1" />
+            <Split Axis = "ax1" From  = "1" />
+            <Undo Repeat = "2" />
+            <Turn  Axis = "ax2" Layer = "1" Angle = "-A1" />
+            <Turn  Axis = "ax1" Layer = "1" Angle = " A1" />
+            <Split Axis = "ax2" From  = "1" />
+            <Undo Repeat = "2" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split" ax1 = " 0" ax2 = "18" />
+        <ExecMacro MacroName = "Split" ax1 = " 1" ax2 = "19" />
+        <ExecMacro MacroName = "Split" ax1 = " 2" ax2 = "17" />
+        <ExecMacro MacroName = "Split" ax1 = " 3" ax2 = "16" />
+        <ExecMacro MacroName = "Split" ax1 = " 4" ax2 = "23" />
+        <ExecMacro MacroName = "Split" ax1 = " 5" ax2 = "22" />
+        <ExecMacro MacroName = "Split" ax1 = " 6" ax2 = "20" />
+        <ExecMacro MacroName = "Split" ax1 = " 7" ax2 = "21" />
+        <ExecMacro MacroName = "Split" ax1 = " 8" ax2 = "15" />
+        <ExecMacro MacroName = "Split" ax1 = " 9" ax2 = "14" />
+        <ExecMacro MacroName = "Split" ax1 = "10" ax2 = "12" />
+        <ExecMacro MacroName = "Split" ax1 = "11" ax2 = "13" />
+    </Figure>
+
+    <Macros>
+        <!-- Aliases -->
+        <Macro Name = "A"  ><Turn Axis = "Edge2[E,0]" Layer = "1" Angle = "-A1" /></Macro>
+        <Macro Name = "A'" ><Turn Axis = "Edge2[E,0]" Layer = "1" Angle = " A1" /></Macro>
+        <Macro Name = "B"  ><Turn Axis = "Edge2[E,1]" Layer = "1" Angle = "-A1" /></Macro>
+        <Macro Name = "B'" ><Turn Axis = "Edge2[E,1]" Layer = "1" Angle = " A1" /></Macro>
+        <Macro Name = "Swap1" >
+            <!-- Random Simple Scramble -->
+            <ExecMacro MacroName = "A' A' B' B' B' A  A  A  B  B  A' A' A' B  A  A  A  B' A' B " />
+        </Macro>
+
+        <!-- Aliases -->
+        <Macro Name = "C"  ><Turn Axis = "Edge3[E,0]" Layer = "1" Angle = "-A1" /></Macro>
+        <Macro Name = "C'" ><Turn Axis = "Edge3[E,0]" Layer = "1" Angle = " A1" /></Macro>
+        <Macro Name = "D"  ><Turn Axis = "Edge3[E,1]" Layer = "1" Angle = "-A1" /></Macro>
+        <Macro Name = "D'" ><Turn Axis = "Edge3[E,1]" Layer = "1" Angle = " A1" /></Macro>
+        <Macro Name = "E"  ><Turn Axis = "Edge3[E,2]" Layer = "1" Angle = "-A1" /></Macro>
+        <Macro Name = "E'" ><Turn Axis = "Edge3[E,2]" Layer = "1" Angle = " A1" /></Macro>
+        <Macro Name = "Swap2" >
+            <!-- Split Stored Cuts -->
+            <ExecMacro MacroName = "E  C' C' D  D  D  C  C  D' D' D' D' E' D  D  D  E  D' E' D' D' E  D  D  D  D  C' C' D' D' D' C  C  E' " />
+        </Macro>
+
+        <Macro Name = "RandomSwap" >
+            <ExecMacro MacroName = "Swap1" E = "Random(24)" />
+            <ExecMacro MacroName = "Swap2" E = "Random(24)" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(24)" Layer = "1" Angle = "2*Pi * Random" />
+        </Macro>
+
+        <Macro Name = "Scramble" Public = "1" Description = "Replacing of standard scrambling" >
+            <!-- Preset -->
+            <Script>
+                s33 := 3 * sqrt(33);
+                A1 := ArcCos(((19 + s33) ^ (1/3) + (19 - s33) ^ (1/3) - 2) / 6);
+
+                procedure Add2(ax1, ax2);
+                begin
+                    Edge2[ i, 0] := ax1; Edge2[ i, 1] := ax2; Inc(i);
+                    Edge2[ i, 0] := ax2; Edge2[ i, 1] := ax1; Inc(i);
+                end;
+                i := 0;
+                Add2( 0,18);
+                Add2( 1,19);
+                Add2( 2,17);
+                Add2( 3,16);
+                Add2( 4,23);
+                Add2( 5,22);
+                Add2( 6,20);
+                Add2( 7,21);
+                Add2( 8,15);
+                Add2( 9,14);
+                Add2(10,12);
+                Add2(11,13);
+
+                procedure Add3( ax1, ax2, ax3);
+                begin
+                    Edge3[ i, 0] := ax1; Edge3[ i, 1] := ax2; Edge3[ i, 2] := ax3; Inc(i);
+                    Edge3[ i, 0] := ax2; Edge3[ i, 1] := ax3; Edge3[ i, 2] := ax1; Inc(i);
+                    Edge3[ i, 0] := ax3; Edge3[ i, 1] := ax1; Edge3[ i, 2] := ax2; Inc(i);
+                end;
+                i := 0;
+                Add3( 0, 8,16);
+                Add3( 1, 9,17);
+                Add3( 2,10,18);
+                Add3( 3,11,19);
+                Add3( 4,12,20);
+                Add3( 5,13,21);
+                Add3( 6,14,22);
+                Add3( 7,15,23);
+            </Script>
+
+            <ExecMacro MacroName = "RandomSwap" Repeat = "200" /> <!-- Full Non-Jumbling Scramble -->
+
+            <ExecMacro MacroName = "RandomTurns" Repeat = "200" /> <!-- Jumbling -->
+        </Macro>
+    </Macros>
+</xml>

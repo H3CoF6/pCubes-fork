@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Cross Starminx</Name>
+        <Menu>Other forms\Cross\Cross Starminx</Menu>
+        <Inventor>Michael Sun</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-01-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9507</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+        s5 := sqrt(5);
+
+        D2 := Rsin * 0.82;
+        D1 := (D2 * (s5 - 3) + RSin * (s5 - 1)) / 2;
+    </Script>
+
+    <Axes TurningAngles = "0; sAngle; sAngle" PlaneDistances = "D1; D2" NormVectors = "Cx;Cy;Cz" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+
+        <Macro Name = "ColorSplit" >
+            <Split Color2 = "Colors[i]" Axis = "i" From = "2" />
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "ColorSplit" i = "0" Repeat = "12" />
+        <HideContaining Vectors = "Cx; Cy; Cz" />
+        <RemoveAllVisible/>
+
+        <!-- gray core -->
+        <Script>
+            for i := 0 to 11 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Dodecahedron.xml" R = "R * D2 / RSin" />
+        <ShowAll/>
+        <SplitByAxes/>
+
+        <!-- remove some invisible parts -->
+        <HideContaining Vectors = "Cx; Cy; Cz" />
+        <HideContaining Vectors = "Ex; Ey; Ez" />
+        <HideContaining Vectors = "Vx; Vy; Vz" />
+        <RemoveGrayParts/>
+        <ShowAll/>
+        <HideContaining Vectors = "Cx; Cy; Cz" />
+        <InvertVisibility/>
+        <RemoveGrayParts/>
+        <ShowAll/>
+    </Figure>
+</xml>

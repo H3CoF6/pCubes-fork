@@ -1,0 +1,38 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Tetramate Master</Name>
+        <Menu>Other forms\Tetrahedron\Tetramate Master</Menu>
+        <Inventor>Claus Wenicker</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-11-26</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4993</Link>
+    </Interface>
+
+    <Script>
+        sAngle := 2 * Pi / 5;
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+        
+        D := 0.03;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" >
+        <Axis NormVector = "   0;  ss;  cs" />
+        <Axis NormVector = "   0; -ss;  cs" />
+        <Axis NormVector = "  ss;  cs;   0" />
+        <Axis NormVector = " -ss;  cs;   0" />
+        <Axis NormVector = "  cs;   0;  ss" />
+        <Axis NormVector = "  cs;   0; -ss" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Tetrahedron.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

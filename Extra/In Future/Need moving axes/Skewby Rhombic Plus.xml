@@ -1,0 +1,84 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+<!-- JumbleAngles are not adequate when there is a zero-based axes -->
+
+    <Interface>
+        <Name>Skewby Rhombic Plus</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Skewby Rhombic Plus</Menu>
+        <Aliases>Skewby FTRD plus</Aliases>
+        <Inventor>Vladi Delimollov</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-06-17</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6759</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+
+        D := R * 0.48;
+        DCut := D * sqrt(2);
+        DCut2 := D * 1.3;
+
+        JumAngle := Arccos(1/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi" JumbleAngle = "JumAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = " 0; 1; 1" />
+        <Axis NormVector = " 1; 0; 1" />
+        <Axis NormVector = " 0;-1; 1" />
+        <Axis NormVector = "-1; 0; 1" />
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/3" PlaneDistances = "0" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Vx;Vy;Vz" />
+        <InvertVisibility/>
+        <Hide> <Plane NormVector = "-1; 0; 0" NormDistance = "-DCut" /> </Hide>
+        <Hide> <Plane NormVector = " 1; 0; 0" NormDistance = "-DCut" /> </Hide>
+        <Hide> <Plane NormVector = " 0;-1; 0" NormDistance = "-DCut" /> </Hide>
+        <Hide> <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut" /> </Hide>
+        <Hide> <Plane NormVector = " 0; 0;-1" NormDistance = "-DCut" /> </Hide>
+        <Hide> <Plane NormVector = " 0; 0; 1" NormDistance = "-DCut" /> </Hide>
+        <Cut>  <Plane NormVector = "-1; 0; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut>  <Plane NormVector = " 1; 0; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut>  <Plane NormVector = " 0;-1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut>  <Plane NormVector = " 0; 1; 0" NormDistance = "-DCut2" /> </Cut>
+        <Cut>  <Plane NormVector = " 0; 0;-1" NormDistance = "-DCut2" /> </Cut>
+        <Cut>  <Plane NormVector = " 0; 0; 1" NormDistance = "-DCut2" /> </Cut>
+        <ShowAll/>
+
+        <Macro Name = "Plus" >
+            <Hide> <Plane NormVector = " 1; 0; 1" NormDistance = "D" /> </Hide>
+            <Hide> <Plane NormVector = " 0;-1; 1" NormDistance = "D" /> </Hide>
+            <Turn NormVector = " 1; 0; 1" Angle = " JumAngle" />
+            <Split> <Plane NormVector = " 0;-1; 1" NormDistance = "D" /> </Split>
+            <Turn NormVector = " 1; 0; 1" Angle = "-JumAngle" />
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "Plus" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Plus" Repeat = "4" />
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Plus" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Plus" Repeat = "4" />
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Plus" Repeat = "4" />
+        <Turn NormVector = " 1; 0; 0" Angle = "Pi/2" />
+        <ExecMacro MacroName = "Plus" Repeat = "4" />
+        <Turn NormVector = " 0; 1; 0" Angle = "Pi/2" />
+    </Figure>
+</xml>

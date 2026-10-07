@@ -1,0 +1,135 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Maple Leaves Skewb Mirror</Name>
+        <Menu>Other cubes\Unclassified\Maple Leaves Skewb Mirror</Menu>
+        <Inventor>Zigor Martinez</Inventor>
+        <Programmer>xchemist, Boris</Programmer>
+        <Added>2021-01-30</Added>
+        <Link>https://www.instagram.com/p/B8Hnf-IIu0B/</Link>
+    </Interface>
+
+    <Script>
+        MirrorColor := 'AA22EE';
+        Color1 := 'FFFFFF';
+        Color2 := 'CCFF00';
+
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        DX := W * 0.021;
+        DY := W * 0.012;
+        DZ := W * 0.037;
+
+        K := W * 1.31;
+        D := K * 0.86;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" TurnAxesWithLayer = "1">
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = "-1; 1;-1" />
+        <Axis NormVector = " 1;-1;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi;0;Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = " 1; 2; 1" />
+        <Axis NormVector = "-1; 1; 2" />
+        <Axis NormVector = "-2;-1; 1" />
+        <Axis NormVector = " 1; 1; 2" />
+        <Axis NormVector = " 2;-1; 1" />
+        <Axis NormVector = " 1;-2;-1" />
+        <Axis NormVector = "-1;-2; 1" />
+        <Axis NormVector = " 1;-1; 2" />
+        <Axis NormVector = " 2; 1; 1" />
+        <Axis NormVector = "-1;-1; 2" />
+        <Axis NormVector = "-2; 1; 1" />
+        <Axis NormVector = "-1; 2;-1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "Split2">
+            <Split Axis = "a1" From = "1" />
+            <Turn  Axis = "a1" Layer = "0" Angle = "2*Pi/6" />
+            <Split Axis = "a2    " From = "2" />
+            <Split Axis = "a2 + 1" From = "1" />
+            <Split Axis = "a2 + 2" From = "2" />
+            <Undo/>
+        </Macro>
+        <Macro Name = "Split">
+            <ExecMacro MacroName = "Split2" a1 = "0" a2 = "13" />
+            <ExecMacro MacroName = "Split2" a1 = "1" a2 = " 7" />
+            <ExecMacro MacroName = "Split2" a1 = "2" a2 = " 4" />
+            <ExecMacro MacroName = "Split2" a1 = "3" a2 = "10" />
+        </Macro>
+
+        <Transfer Vector = "-DX;-DY;-DZ" />
+
+
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" Color = "MirrorColor" />
+        <Split Color1 = "MirrorColor" Color2 = "MirrorColor" Axis = "0" From = "1" />
+        <Split Color1 = "MirrorColor" Color2 = "MirrorColor" Axis = "1" From = "1" />
+        <Split Color1 = "MirrorColor" Color2 = "MirrorColor" Axis = "2" From = "1" />
+        <Split Color1 = "MirrorColor" Color2 = "MirrorColor" Axis = "3" From = "1" />
+        <ExecMacro MacroName = "Split" />
+        <HideContaining Vector = "Vx; Vy; Vz" />
+        <RemoveAllVisible/>
+
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color1" />
+        <ExecMacro MacroName = "Split" />
+        <Transfer Vector = " DX; DY; DZ" />
+
+        <Macro Name = "HideTriangle" >
+            <HideContaining Vector = "W / 2; W * 0.001; (D * sqrt(6) - W / 2) / 2" /> // hide triangle
+            <HideContaining Vector = "W / 2; W * 0.001;-(D * sqrt(6) - W / 2) / 2" />
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "HideTriangle" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "HideTriangle" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "HideTriangle" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <RemoveAllVisible />
+
+        <Transfer Vector = "-DX;-DY;-DZ" />
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Color2" />
+        <Transfer Vector = " DX; DY; DZ" />
+        <ExecMacro MacroName = "Split" />
+
+        <Macro Name = "HideLeaf" >
+            <HideContaining Vector = "W / 2; 0; (D * sqrt(6) - W / 2) / 2 * 1.001" /> // hide leaf
+            <HideContaining Vector = "W / 2; 0;-(D * sqrt(6) - W / 2) / 2 * 1.001" />
+            <Turn NormVector = "0;0;1" Angle = "Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "HideLeaf" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "HideLeaf" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "HideLeaf" Repeat = "4" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <RemoveAllVisible />
+
+        <Transfer Vector = "-DX;-DY;-DZ" />
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "MirrorColor" />
+
+        <Macro Name = "SplitC" >
+            <Split> <Plane NormVector = "Cx[i]; Cy[i]; Cz[i]" NormDistance = "W" /> </Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitC" i = "0" Repeat = "6" />
+        <RemoveContaining Vector = "0; 0; 0" />
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+        <Split Axis = "2" From = "1" />
+        <Split Axis = "3" From = "1" />
+        <RemoveContaining Vector = "Cx; Cy; Cz" />
+
+        <Transfer Vector = " DX; DY; DZ" />
+        <ShowAll/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

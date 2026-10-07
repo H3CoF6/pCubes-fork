@@ -1,0 +1,110 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Double Crazy Cube - Trio</Name>
+
+        <Menu>Cubic\Crazy\Double Crazy Cube - Trio</Menu>
+        <Inventor>Zijian Wang and Evgeniy Grigoriev</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added></Added>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=397392</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        include 'Figures\Scripts\Cube_Coordinates.inc';
+
+        Colors[0] := 'FF0000'; // clRed
+        Colors[1] := 'FF7700'; // clOrange
+        Colors[2] := '0044FF'; // clLightBlue
+        Colors[3] := '00BB00'; // clGreen
+        Colors[4] := 'FFFF00'; // clYellow
+        Colors[5] := 'FFFFFF'; // clWhite
+
+        R1 := W * 0.8;
+        R2 := W * 0.54;
+
+        Delta := W * 0.002;
+        W1 := W + Delta;
+        W2 := W1 + Delta;
+        W3 := W2 + Delta;
+
+        D1 := W * 0.21;
+        D2 := (W1 + W2) / 2;
+
+    </Script>
+
+    <Axes TurningAngles = "0;0;Pi/2;Pi/2;Pi/2;0;0" PlaneDistances = "-D2; -W; -D1; D1; W; D2" TurnAxesWithLayer = "3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+
+        <!-- Make cube with gray centers -->
+
+        <LoadFrom File = "Figures\CubeMono.xml" Color = "-1" Width = "BigW" />
+
+        <ExecMacro MacroName = "HideCenters" Repeat = "6" i = "0" />
+
+        <Macro Name = "CutColor">
+            <Cut Color = "Colors[i]" > <Plane NormVector = "-Cx[i]; -Cy[i]; -Cz[i]" NormDistance = "-W" /> </Cut>
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "CutColor" Repeat = "6" i = "0" />
+
+
+
+
+        <!-- First circles -->
+
+        <Circle Radius = "R1" Color = "Colors[0]" Center = "-W1;  0;  0" />
+        <Circle Radius = "R1" Color = "Colors[1]" Center = " W1;  0;  0" />
+        <Circle Radius = "R1" Color = "Colors[2]" Center = "  0;-W1;  0" />
+        <Circle Radius = "R1" Color = "Colors[3]" Center = "  0; W1;  0" />
+        <Circle Radius = "R1" Color = "Colors[4]" Center = "  0;  0;-W1" />
+        <Circle Radius = "R1" Color = "Colors[5]" Center = "  0;  0; W1" />
+
+
+
+
+        <!-- Add second circles -->
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "R2" Color = "Colors[i]" >
+                <Base X = "Cx[i] * W2 / W" Y = "Cy[i] * W2 / W" Z = "Cz[i] * W2 / W" />
+                <Top  X = "Cx[i] * W3 / W" Y = "Cy[i] * W3 / W" Z = "Cz[i] * W3 / W" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "6" i = "0" />
+
+        <SplitByAxes/>
+
+         <Connect Axis = "0" Layers = "1;2" />
+         <Connect Axis = "0" Layers = "6;5;3;0" />
+         <Connect Axis = "1" Layers = "1;2" />
+         <Connect Axis = "1" Layers = "6;5;3;0" />
+         <Connect Axis = "2" Layers = "1;2" />
+         <Connect Axis = "2" Layers = "6;5;3;0" />
+
+    </Figure>
+
+<Textures>
+        <Texture Name = "Black_1" File = "Puzzles\Cubic\Domino\Black_1.vec" />
+        <Texture Name = "Circle1" File = "Puzzles\Cubic\Dodep\Circle1.vec" />
+
+
+    </Textures>
+
+    <SetTextures>
+        <!-- texture name = partNo, faceNo, rotate, ... -->
+        Black_1 = 85,1,0, 103,1,0, 121,1,0
+        Circle1 =  94,1,0, 112,1,0, 130,1,0
+
+    </SetTextures>
+</xml>
+
+

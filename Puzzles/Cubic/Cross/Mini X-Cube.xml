@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Mini X-Cube</Name>
+        <Menu>Cubic\Cross\Mini X-Cube</Menu>
+        <Inventor>Matt Carter</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2018-12-02</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7116</Link>
+    </Interface>
+
+    <Script>
+        W := 0.6;
+        D := W / 3;
+        H := D * 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi;0;Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "W" WZ = "H" />
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "W" WY = "D" WZ = "H" />
+        <SplitByAxes/>
+        <RemoveContaining Vector = " 0; 0; 0" />
+
+        <Script>
+            for i := 0 to 3 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cuboid.xml" WX = "D" WY = "D" WZ = "H" />
+        <SplitByAxes/>
+    </Figure>
+</xml>

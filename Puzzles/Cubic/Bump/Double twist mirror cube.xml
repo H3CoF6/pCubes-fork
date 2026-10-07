@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Double twist mirror cube</Name>
+        <Menu>Cubic\Bump\Double twist mirror cube</Menu>
+        <Inventor>Daniel Martin Ramos Aguila</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-07-19</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6500</Link>
+    </Interface>
+
+    <Script>
+        Color := 'FF8AAA'; // Pink
+
+        W := 0.5;
+
+        D := W / 3;
+
+        DWX :=-W * 0.4;
+        DWY := 0;
+        DWZ :=-W * 0.3;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2; 0; 0" PlaneDistances = "-D" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Transfer Vector = " DWX; DWY; DWZ" />
+        <LoadFrom File = "Figures\CubeMono.xml" Width = "W" />
+        <Transfer Vector = "-DWX;-DWY;-DWZ" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+        <Split InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" Color1 = "-2" Color2 = "-2" ><Plane NormVector = " 1; 0;-1" /></Split>
+        <Hide><Plane NormVector = " 1; 0;-1" /></Hide>
+        <Cut Color = "Color" ><Plane NormVector = " 0; 0;-1" /></Cut>
+        <ShowAll/>
+        <HideContaining Vector = "0;0;0" />
+        <InvertVisibility/>
+        <Hide><Plane NormVector = "-1; 0; 1" /></Hide>
+        <Cut Color = "Color" ><Plane NormVector = "-1; 0; 0" /></Cut>
+        <ShowAll/>
+
+        <Split><Plane NormVector = " 1; 0; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = "-D" /></Split>
+        <Split><Plane NormVector = " 0; 1; 0" NormDistance = " D" /></Split>
+        <Split><Plane NormVector = " 0; 0; 1" NormDistance = " D" /></Split>-->
+    </Figure>
+
+    <Procedures CheckSolved = "CountUniquePlanes = 8" />
+</xml>

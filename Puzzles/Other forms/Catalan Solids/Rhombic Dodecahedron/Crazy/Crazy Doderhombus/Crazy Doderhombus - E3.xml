@@ -1,0 +1,112 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Crazy Doderhombus - E3</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic Dodecahedron\Crazy\Crazy Doderhombus\E\E3</Menu>
+        <Inventor></Inventor>
+        <Programmer>jammytea</Programmer>
+        <Added>2022-04-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9691</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?p=375164</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFF00';
+        Colors[ 1] := 'FFFFCC';
+        Colors[ 2] := 'FF99FF';
+        Colors[ 3] := '888888';
+        Colors[ 4] := '99FF33';
+        Colors[ 5] := '0000CC';
+        Colors[ 6] := '009900';
+        Colors[ 7] := '66FFFF';
+        Colors[ 8] := 'FF0000';
+        Colors[ 9] := 'FFFFFF';
+        Colors[10] := 'FF9933';
+        Colors[11] := '6600CC';
+
+        R := 0.7;
+        include 'Figures\Scripts\Rhombic_Dodecahedron_Coordinates.inc';
+
+        D1 := R * sqrt(2) / 3;
+        D2 := R * sqrt(2) / 2;
+
+        RC := R * 0.234;
+        A := Arccos(1/3);
+
+        Delta := 1.001;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi;Pi" JumbleAngle = "A" PlaneDistances = "D1; D2" NormVectors = "Cx; Cy; Cz" />
+
+    <Figure>
+        <Macro Name = "AddCircle" >
+            <Circle Radius = "RC" Color = "Colors[ax]" Center = " Cx[ax] * Delta; Cy[ax] * Delta; Cz[ax] * Delta" />
+            <SplitByAxes/>
+            <Script>Inc(ax);</Script>
+        </Macro>
+
+        <Macro Name = "HideCenter" >
+            <HideContaining Vector = " Cx[ax] * Delta; Cy[ax] * Delta; Cz[ax] * Delta" />
+            <Script>Inc(ax);</Script>
+        </Macro>
+
+        <Macro Name = "RemoveCenter" >
+            <RemoveContaining Vector = " Cx[ax] * Delta; Cy[ax] * Delta; Cz[ax] * Delta" />
+            <Script>Inc(ax);</Script>
+        </Macro>
+
+        // make center parts ordered from 0 to 11 corresponding to Axis number (for SetTextures)
+        <ExecMacro MacroName = "AddCircle" ax = " 0" Repeat = "12" />
+        <ExecMacro MacroName = "HideCenter" ax = " 0" Repeat = "12" />
+        <RemoveAllVisible/>
+        <ExecMacro MacroName = "AddCircle" ax = " 0" Repeat = "12" />
+        <ExecMacro MacroName = "RemoveCenter" ax = " 0" Repeat = "12" />
+        <ShowAll/>
+
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+
+        <SplitByAxes/>
+        <RemoveContaining Vector = "0;0;0" />
+        <RemoveContaining Vector = " Cx; Cy; Cz" />
+
+        <Connect Axis = " 0" Layers = "1;2" />
+        <Connect Axis = " 1" Layers = "1;2" />
+        <Connect Axis = " 2" Layers = "1;2" />
+        <Connect Axis = " 3" Layers = "1;2" />
+        <Connect Axis = " 4" Layers = "1;2" />
+        <Connect Axis = " 5" Layers = "0;2" />
+        <Connect Axis = " 6" Layers = "0;2" />
+        <Connect Axis = " 7" Layers = "1;2" />
+        <Connect Axis = " 8" Layers = "0;2" />
+        <Connect Axis = " 9" Layers = "0;2" />
+        <Connect Axis = "10" Layers = "0;2" />
+        <Connect Axis = "11" Layers = "1;2" />
+
+        <Macro Name = "SplitEdge" >
+            <Hide><Plane NormVector = " 0;-1; 1" NormDistance = "D1" /></Hide>
+            <Hide><Plane NormVector = " 1; 0; 1" NormDistance = "D1" /></Hide>
+            <Turn NormVector = " 0;-1; 1" Angle = "-A" />
+            <Split><Plane NormVector = " 1; 0; 1" NormDistance = "D1" /></Split>
+            <Turn NormVector = " 0;-1; 1" Angle = " A" />
+            <ShowAll/>
+            <Turn NormVector = " 0; 0; 1" Angle = "Pi/2" />
+        </Macro>
+        <Macro Name = "Split4Edges" >
+            <ExecMacro MacroName = "SplitEdge" Repeat = "4" />
+            <Turn NormVector = " 1; 1; 1" Angle = "2*Pi/3" />
+        </Macro>
+        <ExecMacro MacroName = "Split4Edges" Repeat = "3" />
+        <Turn NormVector = " 1; 0;-1" Angle = "Pi" />
+        <ExecMacro MacroName = "Split4Edges" Repeat = "3" />
+        <Turn NormVector = " 1; 0;-1" Angle = "Pi" />
+    </Figure>
+
+    <Textures>
+        <Texture Name = "Circle" File = "..\Textures\Circle.vec" />
+    </Textures>
+
+    <SetTextures>
+        Circle = 5,0,0, 6,0,0, 8,0,0, 9,0,0, 10,0,0
+    </SetTextures>
+</xml>

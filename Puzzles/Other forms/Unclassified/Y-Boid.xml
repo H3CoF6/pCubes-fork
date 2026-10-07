@@ -1,0 +1,120 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Y-Boid</Name>
+        <Menu>Other forms\Unclassified\Y-Boid</Menu>
+        <Inventor>Anthone Poole</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-10-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9153</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FFFFFF'; // White
+        Colors[1] := 'FFFF00'; // Yellow
+        Colors[2] := '0033EE'; // Blue
+        Colors[3] := 'FF7700'; // Orange
+        Colors[4] := '00AA00'; // Green
+        Colors[5] := 'DD0011'; // Red
+        Colors[6] := 'EE22BB'; // Pink
+        Colors[7] := '9900DD'; // Violett
+        Colors[8] := '808080'; // Gray
+
+        R := 0.9;
+        H := R * 0.5;
+        L := R * cos(Pi/8);
+        D := R * sin(Pi/8);
+        R1 := R * 0.75;
+        WD := L - R1;
+
+        N := 10;
+        M := 2 * N + 9;
+        for i := 0 to N do begin
+            x[i] := L - R1 * cos(Pi/4 / N * i);
+            y[i] :=-D + R1 * sin(Pi/4 / N * i);
+        end;
+        x[N + 1] := x[N] + WD * sqrt(2) * 2;
+        y[N + 1] := y[N] + WD * sqrt(2) * 2;
+        x[N + 2] := x[N + 1] - WD * sqrt(2);
+        y[N + 2] := y[N + 1] + WD * sqrt(2);
+        x[N + 3] := 0;
+        y[N + 3] := y[N + 2] - x[N + 2];
+
+        for i := 0 to N + 2 do begin
+            x[N + 4 + i] :=-x[N + 2 - i];
+            y[N + 4 + i] := y[N + 2 - i];
+        end;
+
+        x[2 * N + 7] :=-WD;
+        y[2 * N + 7] :=-D - 3 * WD;
+        x[2 * N + 8] := WD;
+        y[2 * N + 8] :=-D - 3 * WD;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "0;Pi" PlaneDistances = "D" >
+        <Axis NormVector = "-1; 1; 0" />
+        <Axis NormVector = " 1; 1; 0" />
+        <Axis NormVector = " 0;-1; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi/4" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i;
+                i2 := (i + 1) mod M;
+                Inc(i);
+            </Script>
+            <Face Color = "Colors[c]" VertexIndexes = "i1 + M; i2 + M; i2; i1" InvisibleEdges = "ie" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "x; y; H" />
+            <Vertices Vectors = "x; y;-H" />
+
+            <Faces>
+                <Face Color = "Colors[1]" VertexIndexes = "FromTo(0, 2 * N + 8)" />-->
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" c = "2" ie = "10" />
+                <ExecMacro MacroName = "AddFace" Repeat = "2" c = "2" ie = "10" />
+                <ExecMacro MacroName = "AddFace" Repeat = "1" c = "3" ie = "10" />
+                <ExecMacro MacroName = "AddFace" Repeat = "1" c = "4" ie = "10" />
+                <ExecMacro MacroName = "AddFace" Repeat = "N+4" c = "5" ie = "10" />
+                <ExecMacro MacroName = "AddFace" Repeat = "1" c = "2" ie = "10" />
+                <Face Color = "Colors[0]" VertexIndexes = "FromTo(4 * N + 17, 2 * N + 9)" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "Colors[6]" ><Plane NormVector = " 0; 1; 0" NormDistance = "-D - 2 * WD" /></Cut>
+        <Cut Color = "Colors[7]" ><Plane NormVector = "-1;-1; 0" NormDistance = "-D - 2 * WD" /></Cut>
+        <Cut Color = "Colors[8]" ><Plane NormVector = " 1;-1; 0" NormDistance = "-D - 2 * WD" /></Cut>
+        <SplitByAxes/>
+
+        <!-- split for BSP -->
+        <Macro Name = "Split" >
+            <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1" ><Plane NormVector = " 0; 1; 0" NormDistance = "y[i]" /></Split>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "1" Repeat = "N - 1" />
+        <HideContaining Vector = "0; y[N + 3]; 0" />
+        <InvertVisibility/>
+        <Split Color1 = "-2" Color2 = "-2" InvisibleEdges1 = "-1" InvisibleEdges2 = "-1"><Plane NormVector = " 1; 0; 0" NormDistance = "0" /></Split>
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

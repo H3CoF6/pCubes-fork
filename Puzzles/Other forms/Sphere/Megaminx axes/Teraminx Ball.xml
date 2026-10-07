@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Teraminx Ball</Name>
+        <Menu>Other forms\Sphere\Megaminx axes\Teraminx Ball</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2017-10-03</Added>
+    </Interface>
+
+    <Script>
+        include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc';
+
+        mAngle := ArcTan(2);   // phi := (Sqrt(5) - 1) / 2; // The golden ratio
+        ss := sin(mAngle / 2); // ss := phi / sqrt(2 - phi);
+        cs := cos(mAngle / 2); // cs := 1 / sqrt(2 - phi);
+
+        K := 0.6;
+        D1 := K * 0.56;
+        D2 := K * 0.65;
+        D3 := K * 0.74;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "-D3;-D2;-D1;D1;D2;D3" FixedLayers = "3" >
+        <Axis NormVector = "   0; -cs;  ss" />
+        <Axis NormVector = "   0; -cs; -ss" />
+        <Axis NormVector = " -ss;   0; -cs" />
+        <Axis NormVector = "  ss;   0; -cs" />
+        <Axis NormVector = "  cs; -ss;   0" />
+        <Axis NormVector = "  cs;  ss;   0" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Megaminx_Sphere.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

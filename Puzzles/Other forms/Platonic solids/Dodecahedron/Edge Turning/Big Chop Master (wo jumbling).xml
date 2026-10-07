@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Big Chop Master (w/o jumbling)</Name>
+        <Menu>Other forms\Dodecahedron\Edge Turning\Big Chop Master (w/o jumbling)</Menu>
+        <Inventor>virtual</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-08-02</Added>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := 0.06;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = "Ex[ 0]; Ey[ 0]; Ez[ 0]" />
+        <Axis NormVector = "Ex[ 1]; Ey[ 1]; Ez[ 1]" />
+        <Axis NormVector = "Ex[ 2]; Ey[ 2]; Ez[ 2]" />
+        <Axis NormVector = "Ex[ 3]; Ey[ 3]; Ez[ 3]" />
+        <Axis NormVector = "Ex[ 4]; Ey[ 4]; Ez[ 4]" />
+                                             
+        <Axis NormVector = "Ex[ 5]; Ey[ 5]; Ez[ 5]" />
+        <Axis NormVector = "Ex[ 6]; Ey[ 6]; Ez[ 6]" />
+        <Axis NormVector = "Ex[ 7]; Ey[ 7]; Ez[ 7]" />
+        <Axis NormVector = "Ex[ 8]; Ey[ 8]; Ez[ 8]" />
+        <Axis NormVector = "Ex[ 9]; Ey[ 9]; Ez[ 9]" />
+
+        <Axis NormVector = "Ex[10]; Ey[10]; Ez[10]" />
+        <Axis NormVector = "Ex[11]; Ey[11]; Ez[11]" />
+        <Axis NormVector = "Ex[12]; Ey[12]; Ez[12]" />
+        <Axis NormVector = "Ex[13]; Ey[13]; Ez[13]" />
+        <Axis NormVector = "Ex[14]; Ey[14]; Ez[14]" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Dodecahedron.xml" />
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Script> RCut := R * 0.57; </Script>
+        <Macro Name = "Cut" >
+            <Hide Axis = "a1" Layer = "l1" />
+            <Hide Axis = "a2" Layer = "l2" />
+            <Hide Axis = "a3" Layer = "l3" />
+            <Hide Axis = "a4" Layer = "l4" />
+            <Hide Axis = "a5" Layer = "l5" />
+            <Cut> <Plane NormVector = "cx[ix]; cy[ix]; cz[ix]" NormDistance = "RCut" /> </Cut>
+            <ShowAll/>
+        </Macro>
+
+        <ExecMacro MacroName = "Cut" ix = " 0" a1 = " 5" l1 = "0" a2 = " 9" l2 = "0" a3 = " 8" l3 = "0" a4 = " 7" l4 = "0" a5 = " 6" l5 = "0" />
+        <ExecMacro MacroName = "Cut" ix = " 1" a1 = "12" l1 = "2" a2 = " 4" l2 = "0" a3 = " 1" l3 = "0" a4 = "11" l4 = "0" a5 = " 8" l5 = "2" />
+        <ExecMacro MacroName = "Cut" ix = " 2" a1 = "13" l1 = "2" a2 = " 0" l2 = "0" a3 = " 2" l3 = "0" a4 = "12" l4 = "0" a5 = " 9" l5 = "2" />
+        <ExecMacro MacroName = "Cut" ix = " 3" a1 = " 5" l1 = "2" a2 = "13" l2 = "0" a3 = " 3" l3 = "0" a4 = " 1" l4 = "0" a5 = "14" l5 = "2" />
+        <ExecMacro MacroName = "Cut" ix = " 4" a1 = " 6" l1 = "2" a2 = "14" l2 = "0" a3 = " 4" l3 = "0" a4 = " 2" l4 = "0" a5 = "10" l5 = "2" />
+        <ExecMacro MacroName = "Cut" ix = " 5" a1 = " 7" l1 = "2" a2 = "10" l2 = "0" a3 = " 0" l3 = "0" a4 = " 3" l4 = "0" a5 = "11" l5 = "2" />
+        <ExecMacro MacroName = "Cut" ix = " 6" a1 = " 8" l1 = "0" a2 = "11" l2 = "2" a3 = " 1" l3 = "2" a4 = " 4" l4 = "2" a5 = "12" l5 = "0" />
+        <ExecMacro MacroName = "Cut" ix = " 7" a1 = " 9" l1 = "0" a2 = "12" l2 = "2" a3 = " 2" l3 = "2" a4 = " 0" l4 = "2" a5 = "13" l5 = "0" />
+        <ExecMacro MacroName = "Cut" ix = " 8" a1 = " 5" l1 = "0" a2 = "14" l2 = "0" a3 = " 1" l3 = "2" a4 = " 3" l4 = "2" a5 = "13" l5 = "2" />
+        <ExecMacro MacroName = "Cut" ix = " 9" a1 = " 2" l1 = "2" a2 = " 4" l2 = "2" a3 = "14" l3 = "2" a4 = " 6" l4 = "0" a5 = "10" l5 = "0" />
+        <ExecMacro MacroName = "Cut" ix = "10" a1 = " 3" l1 = "2" a2 = " 0" l2 = "2" a3 = "10" l3 = "2" a4 = " 7" l4 = "0" a5 = "11" l5 = "0" />
+        <ExecMacro MacroName = "Cut" ix = "11" a1 = " 5" l1 = "2" a2 = " 9" l2 = "2" a3 = " 8" l3 = "2" a4 = " 7" l4 = "2" a5 = " 6" l5 = "2" />
+
+    </Figure>
+</xml>

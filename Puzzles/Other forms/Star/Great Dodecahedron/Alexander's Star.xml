@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Alexander's Star</Name>
+        <Menu>Other forms\Star\Great Dodecahedron\Alexander's Star</Menu>
+        <Inventor>Adam Alexander</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=639</Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        include 'Figures\Scripts\Icosahedron_Coordinates.inc';
+
+        D := Rsin;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" FixedLayers = "1" >
+        <Axis NormVector = "Vx[0]; Vy[0]; Vz[0]" />
+        <Axis NormVector = "Vx[1]; Vy[1]; Vz[1]" />
+        <Axis NormVector = "Vx[2]; Vy[2]; Vz[2]" />
+        <Axis NormVector = "Vx[3]; Vy[3]; Vz[3]" />
+        <Axis NormVector = "Vx[4]; Vy[4]; Vz[4]" />
+        <Axis NormVector = "Vx[5]; Vy[5]; Vz[5]" />
+    </Axes>
+
+    <Figure>
+
+        // colored part
+
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+        <Script>include 'Figures\Scripts\Dodecahedron_Standard_Colors.inc'</Script>
+
+        <Macro Name = "SplitAxes">
+            <Split Color2 = "Colors[i]" Axis = "i" From = "2" />
+            <Split Color1 = "Colors[i + 6]" Axis = "i" From = "1" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "SplitAxes" i = "0" Repeat = "6" />
+
+        <Macro Name = "HideEdges">
+            <HideContaining Vector = "Ex[i]*0.9; Ey[i]*0.9; Ez[i]*0.9" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "HideEdges" i = "0" Repeat = "30" />
+
+        <RemoveAllVisible/>
+
+
+        // gray part
+
+        <LoadFrom File = "Figures\Icosahedron.xml" />
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "Ex; Ey; Ez" />
+
+        <ShowAll/>
+    </Figure>
+</xml>

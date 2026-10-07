@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Floppy Comet</Name>
+        <Menu>Other forms\Prism\Hexagonal Prism\Face Turning\Floppy Comet</Menu>
+        <Inventor>Marcell Mágori</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2021-07-10</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=8840</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;t=36835</Link>
+    </Interface>
+
+    <Script>
+        clRed    := 'C80000';
+        clLBlue  := '0055FF';
+        clGreen  := '009600';
+        clOrange := 'FF7700';
+        clBlue   := '0000C8';
+        clLGreen := '00FF33';
+        clYellow := 'EEFF00';
+        clWhite  := 'FFFFFF';
+
+        R := 0.55;
+
+        H := R * 0.8;
+        x1 := R / sqrt(3);
+        x2 := 2 * x1;
+        y1 := R / 3;
+        y2 := R;
+
+        sAngle := Pi / 3;
+        for i := 1 to 5 do begin
+            ax[i] := R * cos(sAngle * i);
+            ay[i] := R * sin(sAngle * i);
+        end;
+
+        D1 := x1;
+        D2 := x1 / 3;
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" PlaneDistances = "D2" >
+        <Axis NormVector = "ax[1]; ay[1]; 0" BaseVector = " D2; 0; 0" />
+        <Axis NormVector = "ax[2]; ay[2]; 0" BaseVector = "-D2; 0; 0" />
+        <Axis NormVector = "ax[4]; ay[4]; 0" BaseVector = "-D2; 0; 0" />
+        <Axis NormVector = "ax[5]; ay[5]; 0" BaseVector = " D2; 0; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-x2; y1;-H" />
+                <Add Vector = "  0; y2;-H" />
+                <Add Vector = " x2; y1;-H" />
+                <Add Vector = " x2;-y1;-H" />
+                <Add Vector = "  0;-y2;-H" />
+                <Add Vector = "-x2;-y1;-H" />
+                <Add Vector = "-x2; y1; H" />
+                <Add Vector = "  0; y2; H" />
+                <Add Vector = " x2; y1; H" />
+                <Add Vector = " x2;-y1; H" />
+                <Add Vector = "  0;-y2; H" />
+                <Add Vector = "-x2;-y1; H" />
+            </Vertices>
+            <Faces>
+                <Face Color = "clRed   " VertexIndexes = " 6; 7; 1; 0" />
+                <Face Color = "clLBlue " VertexIndexes = " 7; 8; 2; 1" />
+                <Face Color = "clGreen " VertexIndexes = " 8; 9; 3; 2" />
+                <Face Color = "clOrange" VertexIndexes = " 9;10; 4; 3" />
+                <Face Color = "clBlue  " VertexIndexes = "10;11; 5; 4" />
+                <Face Color = "clLGreen" VertexIndexes = "11; 6; 0; 5" />
+                <Face Color = "clYellow" VertexIndexes = " 0; 1; 2; 3; 4; 5" />
+                <Face Color = "clWhite " VertexIndexes = "11;10; 9; 8; 7; 6" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <Split><Plane NormVector = "1; 0; 0" NormDistance = "-D1"/></Split>
+        <Split><Plane NormVector = "1; 0; 0" NormDistance = " D1"/></Split>
+    </Figure>
+</xml>

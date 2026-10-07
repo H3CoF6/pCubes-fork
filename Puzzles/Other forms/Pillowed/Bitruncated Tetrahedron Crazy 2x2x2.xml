@@ -1,0 +1,125 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Bitruncated Tetrahedron Crazy 2x2x2</Name>
+        <Menu>Other forms\Pillowed\Bitruncated Tetrahedron Crazy 2x2x2</Menu>
+        <Inventor>Daniel Bujno</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-04-01</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=6936</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '0055EE';
+        Colors[1] := 'EE0000';
+        Colors[2] := '00BB00';
+        Colors[3] := 'FF7700';
+        Colors[4] := 'FFFF00';
+        Colors[5] := 'FFFFFF';
+
+        K := 0.5;
+
+        D := K * 1.25;
+        DR := K * 0.1;
+        DCut1 := K * 0.89;
+        DCut2 := K * 0.35;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2" PlaneDistances = "-D; 0; D" TurnAxesWithPartNo = "3" >
+        <Axis NormVector = " 1; 0; 0" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+
+        <RemoveContaining Vector = "-DR; DR; DR" />
+        <RemoveContaining Vector = " DR; DR;-DR" />
+
+        <Turn NormVector = "0;-1;-1" Angle = "Pi" />
+
+        <HideAll/>
+
+        <Script>
+            Colors[0] := Colors[4];
+            Colors[3] := Colors[5];
+        </Script>
+
+        <LoadFrom File = "Figures\Pillowed Tetrahedron.xml" />
+        <Split Axis = "0" From = "2" />
+        <Split Axis = "1" From = "2" />
+        <Split Axis = "2" From = "2" />
+
+        <HideContaining Vector = " DR; DR; DR" />
+        <HideContaining Vector = "-DR;-DR; DR" />
+        <RemoveContaining Vector = "0;0;0" />
+
+        <ShowAll/>
+
+        <SplitByAxes/>
+
+        <Macro Name = "Cut1" >
+            <Turn NormVector = "0; 0; 1" Angle = "-Pi/2 * x" />
+            <Turn NormVector = "1; 0; 0" Angle = "-Pi/2 * y" />
+            <Turn NormVector = "0; 0; 1" Angle = " Pi/2 * r" />
+            <Hide> <Plane NormVector = " 0; 0; 1" NormDistance = "D" /> </Hide>
+            <Cut> <Plane NormVector = "-1;-1; 0" NormDistance = "-DCut1" /> </Cut>
+            <Turn NormVector = "0; 0; 1" Angle = "-Pi/2 * r" />
+            <Turn NormVector = "1; 0; 0" Angle = " Pi/2 * y" />
+            <Turn NormVector = "0; 0; 1" Angle = " Pi/2 * x" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Cut1" x = " 0" y = " 1" r = " 1" />
+        <ExecMacro MacroName = "Cut1" x = " 1" y = " 1" r = " 2" />
+        <ExecMacro MacroName = "Cut1" x = "-1" y = " 1" r = " 2" />
+        <ExecMacro MacroName = "Cut1" x = " 2" y = " 1" r = " 1" />
+        <ExecMacro MacroName = "Cut1" x = " 0" y = " 2" r = " 0" />
+        <ExecMacro MacroName = "Cut1" x = " 0" y = " 2" r = " 2" />
+
+        <Macro Name = "Cut2" >
+            <Turn NormVector = "0; 0; 1" Angle = "-Pi/2 * x" />
+            <Turn NormVector = "1; 0; 0" Angle = "-Pi/2 * y" />
+            <Turn NormVector = "0; 0; 1" Angle = " Pi/2 * r" />
+            <Hide> <Plane NormVector = " 0; 0; 1" NormDistance = "D" /> </Hide>
+            <Hide> <Plane NormVector = " 1; 0; 0" NormDistance = "0" /> </Hide>
+            <Hide> <Plane NormVector = " 0; 1; 0" NormDistance = "0" /> </Hide>
+            <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "-DCut2" /> </Cut>
+            <Cut> <Plane NormVector = " 0;-1; 0" NormDistance = "-DCut2" /> </Cut>
+            <Turn NormVector = "0; 0; 1" Angle = "-Pi/2 * r" />
+            <Turn NormVector = "1; 0; 0" Angle = " Pi/2 * y" />
+            <Turn NormVector = "0; 0; 1" Angle = " Pi/2 * x" />
+            <ShowAll/>
+        </Macro>
+        <ExecMacro MacroName = "Cut2" x = " 0" y = " 0" r = " 0" />
+        <ExecMacro MacroName = "Cut2" x = " 0" y = " 0" r = " 1" />
+        <ExecMacro MacroName = "Cut2" x = " 0" y = " 0" r = " 2" />
+        <ExecMacro MacroName = "Cut2" x = " 0" y = " 0" r = " 3" />
+
+        <ExecMacro MacroName = "Cut2" x = " 0" y = " 1" r = " 0" />
+        <ExecMacro MacroName = "Cut2" x = " 0" y = " 1" r = " 2" />
+        <ExecMacro MacroName = "Cut2" x = " 0" y = " 1" r = " 3" />
+
+        <ExecMacro MacroName = "Cut2" x = " 1" y = " 1" r = " 0" />
+        <ExecMacro MacroName = "Cut2" x = " 1" y = " 1" r = " 1" />
+        <ExecMacro MacroName = "Cut2" x = " 1" y = " 1" r = " 3" />
+
+        <ExecMacro MacroName = "Cut2" x = "-1" y = " 1" r = " 0" />
+        <ExecMacro MacroName = "Cut2" x = "-1" y = " 1" r = " 1" />
+        <ExecMacro MacroName = "Cut2" x = "-1" y = " 1" r = " 3" />
+
+        <ExecMacro MacroName = "Cut2" x = " 2" y = " 1" r = " 0" />
+        <ExecMacro MacroName = "Cut2" x = " 2" y = " 1" r = " 2" />
+        <ExecMacro MacroName = "Cut2" x = " 2" y = " 1" r = " 3" />
+
+        <ExecMacro MacroName = "Cut2" x = " 0" y = " 2" r = " 1" />
+        <ExecMacro MacroName = "Cut2" x = " 0" y = " 2" r = " 3" />
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

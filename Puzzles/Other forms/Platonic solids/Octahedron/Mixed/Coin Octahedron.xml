@@ -1,0 +1,78 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Coin Octahedron</Name>
+        <Menu>Other forms\Octahedron\Mixed\Coin Octahedron</Menu>
+        <Inventor>Linxiao Xu</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-03-05</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7956</Link>
+        <Link>http://twistypuzzles.com/forum/viewtopic.php?f=15&amp;p=397202</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := '00CC00'; // Green
+        Colors[1] := '0000EE'; // Blue
+        Colors[2] := 'EE0000'; // Red
+        Colors[6] := 'FF7700'; // Orange
+        Colors[4] := 'CC00DD'; // Rose
+        Colors[5] := 'FFFFFF'; // White
+        Colors[3] := 'FFFF33'; // Yellow
+        Colors[7] := '0066FF'; // LightBlue
+
+        W := 1.5 * 0.5;
+
+        D1 := W * 0.52;
+        D2 := W / sqrt(3);
+        Sc := 1.1;
+        RC := (3 * D1 - W * Sc) * sqrt(2/3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "Ex; Ey; Ez" />
+
+        <Macro Name = "AddCircle" >
+            <Cylinder Radius = "RC" Color = "Colors[i]" >
+                <Base X = "Cx[i]" Y = "Cy[i]" Z = "Cz[i]" />
+                <Top  X = "Cx[i] * Sc" Y = "Cy[i] * Sc" Z = "Cz[i] * Sc" Color = "Colors[i]" />
+            </Cylinder>
+            <Script> Inc(i); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddCircle" Repeat = "8" i = "0" />
+
+        <InvertVisibility/>
+
+        <Script>
+            for i := 0 to 7 do
+              Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Octahedron.xml" />
+
+        <SplitByAxes/>
+
+        <HideContaining Vector = "Ex; Ey; Ez" />
+
+        <RemoveAllVisible/>
+
+        <ShowAll/>
+        <SplitByAxes/>
+    </Figure>
+</xml>

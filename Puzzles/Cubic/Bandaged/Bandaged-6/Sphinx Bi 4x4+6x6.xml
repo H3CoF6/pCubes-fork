@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sphinx Bi 4x4+6x6</Name>
+        <Menu>Cubic\Bandaged\Cube 6x6x6\Sphinx Bi 4x4+6x6</Menu>
+        <Inventor>Andrey Polyakov</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-06-16</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4599</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        N := 6;
+
+        include 'Figures\Scripts\Cubic_Bandaged.inc';
+
+        ParseTxt('211=135, 330, 110, 315, 145, 340, 120, 325, 350, 100, 155, 305');
+        ParseTxt('121=513, 033, 531, 514, 034, 011, 532, 012, 010, 515, 530, 035');
+        ParseTxt('112=101, 303, 153, 403, 253, 201, 351, 451, 053, 001, 551, 503');
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cubic_Bandaged_Autofill.xml" />
+        <LoadFrom File = "Figures\Cubic_Bandaged.xml" />
+    </Figure>
+
+    <Macros>
+        <!-- Scramble macro -->
+        <Macro Name = "Sc1" >
+            <Turn Axis = "0" From = "3" To = "5" Angle = "Pi/2"/>
+            <Turn Axis = "1" From = "3" To = "5" Angle = "-Pi/2"/>
+            <Turn Axis = "0" From = "3" To = "5" Angle = "-Pi/2"/>
+            <Turn Axis = "1" From = "3" To = "5" Angle = "Pi/2"/>
+            <Turn Axis = "0" From = "3" To = "5" Angle = "Pi/2"/>
+            <Turn Axis = "1" From = "3" To = "5" Angle = "-Pi/2"/>
+            <Turn Axis = "0" From = "3" To = "5" Angle = "-Pi/2"/>
+            <Turn Axis = "1" From = "3" To = "5" Angle = "Pi/2"/>
+
+            <Turn Axis = "2" Layer = "3" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layer = "4" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layer = "5" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" From = "0" To = "1" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" From = "2" To = "2" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+
+        <Macro Name = "Sc2" >
+            <Turn Axis = "0" From = "1" To = "4" Angle = "Pi/2"/>
+            <Turn Axis = "2" From = "0" To = "0" Angle = "Pi/2"/>
+            <Turn Axis = "0" From = "1" To = "4" Angle = "-Pi/2"/>
+            <Turn Axis = "2" From = "1" To = "4" Angle = "-Pi/2"/>
+        </Macro>
+
+        <Macro Name = "Sc3" >
+            <ExecMacro MacroName = "Sc2" Repeat = "4" />
+            <Turn Axis = "2" Layer = "3" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <Turn Axis = "2" Layer = "4" Angle = "Pi/2 * (Random(3) + 1)"/>
+            <ExecMacro MacroName = "Sc2" Repeat = "4" />
+            <ExecMacro MacroName = "Sc2" Repeat = "4" />
+            <ExecMacro MacroName = "Sc2" Repeat = "4" />
+            <ExecMacro MacroName = "Sc1" Repeat = "20" />
+        </Macro>
+
+        <Macro Name = "RandomTurns" >
+            <Turn Axis = "Random(3)" Layer = "Random(6)" Angle = "Pi/2 * (Random(3) + 1)"/>
+        </Macro>
+        <Macro Name = "Scramble" Public = "1" >
+            <Turn Axis = "0" From = "3" To = "5" Angle = "Pi/2"/>
+            <Turn Axis = "1" From = "3" To = "5" Angle = "Pi"/>
+            <ExecMacro MacroName = "Sc3" Repeat = "10" />
+            <ExecMacro MacroName = "RandomTurns" Repeat = "100" />
+        </Macro>
+    </Macros>
+</xml>

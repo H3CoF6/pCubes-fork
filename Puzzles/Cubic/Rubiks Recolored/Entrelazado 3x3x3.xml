@@ -1,0 +1,228 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Entrelazado 3x3x3</Name>
+        <Menu>Cubic\Rubiks Recolored\Entrelazado 3x3x3</Menu>
+        <Inventor>Antonio Rodriguez Perez</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2022-07-30</Added>
+        <Link>http://twistypuzzles.com/app/museum/museum_showitem.php?pkey=9012</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'FF0080'; // pink
+        Colors[1] := '000078'; // blue
+        Colors[2] := 'F80000'; // red
+        Colors[3] := '005600'; // green
+        Colors[4] := 'F67F05'; // orange
+        Colors[5] := 'FFFF00'; // yellow
+        Colors[6] := '800080'; // violett
+        Colors[7] := 'FFEFA0'; // beige
+        Colors[8] := '222222'; // black
+        Colors[9] := 'FFFFFF'; // white
+
+        sColors[0] := '    543        ';
+        sColors[1] := '    012        ';
+        sColors[2] := '678 012 678 210';
+        sColors[3] := '543 876 345 876';
+        sColors[4] := '    345        ';
+        sColors[5] := '    012        ';
+
+        W := 0.5;
+        D := W / 3;
+
+        N := 9;
+        step := W * 2 / N; // minimal step in coordinates
+        cv := 0; // Vertex Count
+
+        function GetId(xc, yc);
+        begin
+            xi := x + dx1 * xc + dx2 * yc;
+            yi := y + dy1 * xc + dy2 * yc;
+            zi := z + dz1 * xc + dz2 * yc;
+            if VarExists('Idx[' + IntToStr(xi) + ',' + IntToStr(yi) + ',' + IntToStr(zi) + ']') then
+                Result := Idx[xi, yi, zi]
+            else begin
+                Vx[cv] := xi * step - W;
+                Vy[cv] := yi * step - W;
+                Vz[cv] := zi * step - W;
+                Result := IntToStr(cv) + ';';
+                Idx[xi, yi, zi] := Result;
+                Inc(cv);
+            end;
+        end;
+
+        function GetColor(x3, y3);
+        begin
+            char := copy(sColors[sy + y3], sx + x3, 1);
+            Result := Colors[StrToInt(char)];
+        end;
+
+        procedure Polygon4(x1, y1, x2, y2, x3, y3, x4, y4);
+        begin
+	        S[cf] := GetId(x1, y1) + GetId(x2, y2) + GetId(x3, y3) + GetId(x4, y4);
+            Cl[cf] := BrushColor;
+            IE[cf] := -1;
+            Inc(cf);
+        end;
+
+        procedure Polygon(ids);
+        begin
+            S[cf] := ids;
+            Cl[cf] := BrushColor;
+            Inc(cf);
+        end;
+
+        procedure MakeSide(x, y, z, dx1, dy1, dz1, dx2, dy2, dz2, sx, sy);
+        // x, y, z - left-top point of side
+        // dx1, dy1, dz1 - 1st counting vector
+        // dx2, dy2, dz2 - 2nd counting vector
+        // sx, sy - left-top letter in sColors
+        begin
+            Id00 := GetId( 0, 0);
+            Id01 := GetId( 0, 1);
+            Id02 := GetId( 0, 2);
+            Id04 := GetId( 0, 4);
+            Id05 := GetId( 0, 5);
+            Id07 := GetId( 0, 7);
+            Id08 := GetId( 0, 8);
+            Id09 := GetId( 0, 9);
+            Id10 := GetId( 1, 0);
+            Id11 := GetId( 1, 1);
+            Id12 := GetId( 1, 2);
+            Id14 := GetId( 1, 4);
+            Id15 := GetId( 1, 5);
+            Id17 := GetId( 1, 7);
+            Id18 := GetId( 1, 8);
+            Id19 := GetId( 1, 9);
+            Id20 := GetId( 2, 0);
+            Id21 := GetId( 2, 1);
+            Id22 := GetId( 2, 2);
+            Id24 := GetId( 2, 4);
+            Id25 := GetId( 2, 5);
+            Id27 := GetId( 2, 7);
+            Id28 := GetId( 2, 8);
+            Id29 := GetId( 2, 9);
+            Id40 := GetId( 4, 0);
+            Id41 := GetId( 4, 1);
+            Id42 := GetId( 4, 2);
+            Id44 := GetId( 4, 4);
+            Id45 := GetId( 4, 5);
+            Id47 := GetId( 4, 7);
+            Id48 := GetId( 4, 8);
+            Id49 := GetId( 4, 9);
+            Id50 := GetId( 5, 0);
+            Id51 := GetId( 5, 1);
+            Id52 := GetId( 5, 2);
+            Id54 := GetId( 5, 4);
+            Id55 := GetId( 5, 5);
+            Id57 := GetId( 5, 7);
+            Id58 := GetId( 5, 8);
+            Id59 := GetId( 5, 9);
+            Id70 := GetId( 7, 0);
+            Id71 := GetId( 7, 1);
+            Id72 := GetId( 7, 2);
+            Id74 := GetId( 7, 4);
+            Id75 := GetId( 7, 5);
+            Id77 := GetId( 7, 7);
+            Id78 := GetId( 7, 8);
+            Id79 := GetId( 7, 9);
+            Id80 := GetId( 8, 0);
+            Id81 := GetId( 8, 1);
+            Id82 := GetId( 8, 2);
+            Id84 := GetId( 8, 4);
+            Id85 := GetId( 8, 5);
+            Id87 := GetId( 8, 7);
+            Id88 := GetId( 8, 8);
+            Id89 := GetId( 8, 9);
+            Id90 := GetId( 9, 0);
+            Id91 := GetId( 9, 1);
+            Id92 := GetId( 9, 2);
+            Id94 := GetId( 9, 4);
+            Id95 := GetId( 9, 5);
+            Id97 := GetId( 9, 7);
+            Id98 := GetId( 9, 8);
+            Id99 := GetId( 9, 9);
+
+            BrushColor := Colors[9];
+            Polygon( Id00 + Id01 + Id11 + Id10);
+            Polygon( Id20 + Id21 + Id41 + Id40);
+            Polygon( Id50 + Id51 + Id71 + Id70);
+            Polygon( Id80 + Id81 + Id91 + Id90);
+            Polygon( Id02 + Id04 + Id14 + Id12);
+            Polygon( Id22 + Id24 + Id44 + Id42);
+            Polygon( Id52 + Id54 + Id74 + Id72);
+            Polygon( Id82 + Id84 + Id94 + Id92);
+            Polygon( Id05 + Id07 + Id17 + Id15);
+            Polygon( Id25 + Id27 + Id47 + Id45);
+            Polygon( Id55 + Id57 + Id77 + Id75);
+            Polygon( Id85 + Id87 + Id97 + Id95);
+            Polygon( Id08 + Id09 + Id19 + Id18);
+            Polygon( Id28 + Id29 + Id49 + Id48);
+            Polygon( Id58 + Id59 + Id79 + Id78);
+            Polygon( Id88 + Id89 + Id99 + Id98);
+
+            BrushColor := GetColor(0,0);
+            Polygon( Id01 + Id02 + Id42 + Id41);
+            Polygon( Id51 + Id52 + Id92 + Id91);
+
+            BrushColor := GetColor(1,0);
+            Polygon( Id04 + Id05 + Id15 + Id14);
+            Polygon( Id24 + Id25 + Id75 + Id74);
+            Polygon( Id84 + Id85 + Id95 + Id94);
+
+            BrushColor := GetColor(2,0);
+            Polygon( Id07 + Id08 + Id48 + Id47);
+            Polygon( Id57 + Id58 + Id98 + Id97);
+
+            BrushColor := GetColor(0,1);
+            Polygon( Id10 + Id11 + Id21 + Id20);
+            Polygon( Id12 + Id17 + Id27 + Id22);
+            Polygon( Id18 + Id19 + Id29 + Id28);
+
+            BrushColor := GetColor(1,1);
+            Polygon( Id40 + Id44 + Id54 + Id50);
+            Polygon( Id45 + Id49 + Id59 + Id55);
+
+            BrushColor := GetColor(2,1);
+            Polygon( Id70 + Id71 + Id81 + Id80);
+            Polygon( Id72 + Id77 + Id87 + Id82);
+            Polygon( Id78 + Id79 + Id89 + Id88);
+        end;
+
+        cf := 0;
+        MakeSide( 0, N, N,  1, 0, 0,  0,-1, 0,  5, 0); // up
+        MakeSide( 0, 0, 0,  0, 0, 1,  1, 0, 0,  5, 2); // face turned
+        MakeSide( 0, N, N,  0,-1, 0,  0, 0,-1,  1, 2); // left
+        MakeSide( N, 0, N,  0, 1, 0,  0, 0,-1,  9, 2); // right
+        MakeSide( N, N, 0,  0, 0, 1, -1, 0, 0, 13, 2); // back turned
+        MakeSide( 0, 0, 0,  1, 0, 0,  0, 1, 0,  5, 4); // bottom
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Cl[i]" VertexIndexes = "S[i]" InvisibleEdges = "15" />
+            <Script>Inc(i);</Script>
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" i = "0" Repeat = "cf" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+    </Figure>
+
+    <Procedures CheckSolved = "AdjoiningFacesHaveSameColors" />
+</xml>

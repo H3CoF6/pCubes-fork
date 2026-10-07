@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Krystian's Square</Name>
+        <Menu>Other forms\2d\Krystian's Square</Menu>
+        <Inventor>Oskar van Deventer</Inventor>
+        <Programmer>xchemist</Programmer>
+        <Added>2020-08-22</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=5399</Link>
+    </Interface>
+
+    <Script>
+        Col[0] := 'FF0000'; // clRed
+        Col[1] := 'FFFF00'; // clYellow
+        Col[2] := '0066FF'; // clBlue
+        Col[3] := '00DD00'; // clGreen
+
+        K := 0.6;
+        D := K * 0.8571;
+        DCut := K * 0.5;
+
+        T := sqrt(2) - 1; // Tan(Pi / 8)
+    </Script>
+
+    <Axes TurningAngles = "Pi / 4" PlaneDistances = " 0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 1; 0; 0" MinAngles = "-Pi/4;-Pi/4" MaxAngles = "Pi/4; Pi/4" />
+        <Axis NormVector = " 0; 1; 0" MinAngles = "-Pi/4;-Pi/4" MaxAngles = "Pi/4; Pi/4" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi; 0; Pi" PlaneDistances = "-D; D" >
+        <Axis NormVector = "-T; 0; 1" />
+        <Axis NormVector = " 0; T; 1" />
+        <Axis1 NormVector = " 0; 1;-T" />
+        <Axis1 NormVector = " 0; T; 1" />
+        <Axis1 NormVector = " 1; 0; T" />
+        <Axis1 NormVector = " 1;-T; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddSegment" >
+            <LoadFrom File = "Puzzles\Other forms\Sphere\_Macro_For_Cubic_Sphere_Mono.xml" Color = "Col[c]" />
+            <Cut> <Plane NormVector = "-1; 0; 0" NormDistance = "0" /> </Cut>
+            <Cut> <Plane NormVector = " 0; 1; 0" NormDistance = "0" /> </Cut>
+            <HideAll/>
+            <Turn NormVector = "0;0;1" Angle = "Pi / 2" />
+            <Script> Inc(c); </Script>
+        </Macro>
+        <ExecMacro MacroName = "AddSegment" c = "0" Repeat = "4" />
+
+        <ShowAll/>
+        <Cut> <Plane NormVector = " 0; 0; 1" NormDistance = "DCut" /> </Cut>
+
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "1" From = "1" />
+
+        <Turn Axis = "1" Layer = "1" Angle = "-Pi/4" />
+        <Split Axis = "2" From = "2" />
+        <Undo/>
+
+        <Turn Axis = "0" Layer = "1" Angle = "-Pi/4" />
+        <Split Axis = "3" From = "2" />
+        <Undo/>
+
+        <SaveSolvedState/>
+
+        <Turn NormVector = "1;0;0" Angle = "90 * Pi/180" />
+        <Turn NormVector = "1;0;0" Angle = " -20 * Pi/180" />
+        <Turn NormVector = "0;0;1" Angle = "  30 * Pi/180" />
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

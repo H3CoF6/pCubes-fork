@@ -1,0 +1,111 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Deca Crown</Name>
+        <Menu>Other forms\Dodecahedron\Edge Turning\Deca Crown</Menu>
+        <Inventor>Tim Fitzrandolph</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-08-23</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=7890</Link>
+    </Interface>
+
+    <Script>
+        Colors[ 0] := 'FFFFFF'; // White
+        Colors[ 1] := 'FFFF00'; // Yellow
+        Colors[ 2] := '0000CC'; // Blue
+        Colors[ 3] := 'FF0000'; // Red
+        Colors[ 4] := '00AA00'; // Green
+        Colors[ 5] := '800080'; // Violett
+        Colors[ 6] := 'FFFFAA'; // Cream
+        Colors[ 7] := '0066CC'; // LightBlue
+        Colors[ 8] := 'FF6000'; // Orange
+        Colors[ 9] := '00FF00'; // LightGreen
+        Colors[10] := 'FF88CC'; // LightViolett
+        Colors[11] := '666666'; // Gray
+
+        R := 0.7;
+        include 'Figures\Scripts\Dodecahedron_Coordinates.inc';
+
+        D := 0.845 * R;
+
+        k := 1.20;
+        for i := 0 to 11 do begin
+          Cx[i] := Cx[i] * k;
+          Cy[i] := Cy[i] * k;
+          Cz[i] := Cz[i] * k;
+        end;
+
+        JumbleAngle := Arctan(2);
+
+        DCut := Cz[1];
+    </Script>
+
+    <Axes TurningAngles = "0; Pi" AvailableAngles = "0; -JumbleAngle; Pi; Pi - JumbleAngle" PlaneDistances = "D" >
+        <Axis NormVector = " Ex[10]; Ey[10]; Ez[10]" />
+        <Axis NormVector = " Ex[11]; Ey[11]; Ez[11]" />
+        <Axis NormVector = " Ex[12]; Ey[12]; Ez[12]" />
+        <Axis NormVector = " Ex[13]; Ey[13]; Ez[13]" />
+        <Axis NormVector = " Ex[14]; Ey[14]; Ez[14]" />
+    </Axes>
+
+    <Axes TurningAngles = "0; Pi" AvailableAngles = "0; JumbleAngle; Pi; Pi + JumbleAngle"  PlaneDistances = "D" >
+        <Axis NormVector = " Ex[17]; Ey[17]; Ez[17]" />
+        <Axis NormVector = " Ex[18]; Ey[18]; Ez[18]" />
+        <Axis NormVector = " Ex[19]; Ey[19]; Ez[19]" />
+        <Axis NormVector = " Ex[15]; Ey[15]; Ez[15]" />
+        <Axis NormVector = " Ex[16]; Ey[16]; Ez[16]" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Colors[c]" VertexIndexes = "IntToStr(v1) + '';'' + IntToStr(v2) + '';'' + IntToStr(v3)" InvisibleEdges = "6" />
+        </Macro>
+        <Macro Name = "AddPillow" >
+            <ExecMacro MacroName = "AddFace" v1 = "i1" v2 = "i2" v3 = "i6" />
+            <ExecMacro MacroName = "AddFace" v1 = "i2" v2 = "i3" v3 = "i6" />
+            <ExecMacro MacroName = "AddFace" v1 = "i3" v2 = "i4" v3 = "i6" />
+            <ExecMacro MacroName = "AddFace" v1 = "i4" v2 = "i5" v3 = "i6" />
+            <ExecMacro MacroName = "AddFace" v1 = "i5" v2 = "i1" v3 = "i6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Cx; Cy; Cz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddPillow" c = " 0" i1 = " 4" i2 = " 3" i3 = " 2" i4 = " 1" i5 = " 0" i6 = "20" />
+                <ExecMacro MacroName = "AddPillow" c = " 1" i1 = " 0" i2 = " 1" i3 = " 6" i4 = "10" i5 = " 5" i6 = "21" />
+                <ExecMacro MacroName = "AddPillow" c = " 2" i1 = " 1" i2 = " 2" i3 = " 7" i4 = "11" i5 = " 6" i6 = "22" />
+                <ExecMacro MacroName = "AddPillow" c = " 3" i1 = " 2" i2 = " 3" i3 = " 8" i4 = "12" i5 = " 7" i6 = "23" />
+                <ExecMacro MacroName = "AddPillow" c = " 4" i1 = " 3" i2 = " 4" i3 = " 9" i4 = "13" i5 = " 8" i6 = "24" />
+                <ExecMacro MacroName = "AddPillow" c = " 5" i1 = " 4" i2 = " 0" i3 = " 5" i4 = "14" i5 = " 9" i6 = "25" />
+                <ExecMacro MacroName = "AddPillow" c = " 6" i1 = "18" i2 = "17" i3 = "12" i4 = " 8" i5 = "13" i6 = "26" />
+                <ExecMacro MacroName = "AddPillow" c = " 7" i1 = "19" i2 = "18" i3 = "13" i4 = " 9" i5 = "14" i6 = "27" />
+                <ExecMacro MacroName = "AddPillow" c = " 8" i1 = "15" i2 = "19" i3 = "14" i4 = " 5" i5 = "10" i6 = "28" />
+                <ExecMacro MacroName = "AddPillow" c = " 9" i1 = "16" i2 = "15" i3 = "10" i4 = " 6" i5 = "11" i6 = "29" />
+                <ExecMacro MacroName = "AddPillow" c = "10" i1 = "17" i2 = "16" i3 = "11" i4 = " 7" i5 = "12" i6 = "30" />
+                <ExecMacro MacroName = "AddPillow" c = "11" i1 = "15" i2 = "16" i3 = "17" i4 = "18" i5 = "19" i6 = "31" />
+            </Faces>
+        </Part>
+
+        <Cut Color = "Colors[11]" > <Plane NormVector = "Cx[ 0]; Cy[ 0]; Cz[ 0]" NormDistance = "-DCut" /> </Cut>
+        <Cut Color = "Colors[ 0]" > <Plane NormVector = "Cx[11]; Cy[11]; Cz[11]" NormDistance = "-DCut" /> </Cut>
+        <SplitByAxes/>
+
+        <Macro Name = "unbandage">
+            <Turn Axis = "i"   Layer = "1" Angle = "-JumbleAngle" />
+            <Turn Axis = "i+5" Layer = "1" Angle = " JumbleAngle" />
+            <SplitByAxes/>
+            <Undo Repeat = "2" />
+            <Script>inc(i);</Script>
+        </Macro>
+        <ExecMacro MacroName = "unbandage" i =  "0" Repeat = "5" />
+
+        <RemoveContaining Vector = " Vx; Vy; Vz" />
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

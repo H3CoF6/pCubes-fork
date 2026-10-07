@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Rhombic Dodecahedron Mixup 3x3x3</Name>
+        <Menu>Other forms\Catalan Solids\Rhombic dodecahedron\Vertex Turning\Rhombic Dodecahedron Mixup 3x3x3</Menu>
+        <Inventor>unknown</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2020-06-24</Added>
+        <Link></Link>
+    </Interface>
+
+    <Script>
+        R := 0.7;
+        D1 := R * (2 - sqrt(2)) / 2;
+    </Script>
+
+    <Axes TurningAngles = "Pi/2; Pi/4; Pi/2" PlaneDistances = "-D1; D1" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Rhombic Dodecahedron.xml" />
+
+        <SplitByAxes/>
+        <RemoveGrayParts/>
+
+        <Macro Name = "CutPart" >
+            <HideContaining Vector = "0; 0; R/2" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "-1; 0; 1" NormDistance = "D1" /></Cut>
+            <Cut><Plane NormVector = " 0;-1; 1" NormDistance = "D1" /></Cut>
+            <Cut><Plane NormVector = " 1; 0; 1" NormDistance = "D1" /></Cut>
+            <Cut><Plane NormVector = " 0; 1; 1" NormDistance = "D1" /></Cut>
+            <ShowAll/>
+            <Turn NormVector = "1;0;0" Angle = "Pi/4" />
+        </Macro>  
+        <ExecMacro MacroName = "CutPart" Repeat = "8" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "CutPart" Repeat = "8" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+        <ExecMacro MacroName = "CutPart" Repeat = "8" />
+        <Turn NormVector = "1;1;1" Angle = "2*Pi/3" />
+    </Figure>
+
+    <Macros>
+        <Macro Name = "Rotate_vertex" Public = "1" Description = "Rotate one vertex" >
+            <Turn Axis = "0" Layer = "1" Angle = " Pi/2"/>
+            <Turn Axis = "1" Layer = "0" Angle = " Pi/2"/>
+            <Turn Axis = "2" Layer = "1" Angle = "-Pi/2"/>
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi/4"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/2"/>
+            <Turn Axis = "1" Layer = "0" Angle = "-Pi/2"/>
+            <Turn Axis = "0" Layer = "1" Angle = "-Pi/2"/>
+            <Turn Axis = "1" Layer = "1" Angle = " Pi/4"/>
+        </Macro>
+
+        <Macro Name = "Exchange3" Public = "1" Description = "Exchanges 3 elements" >
+            <Turn Axis = "2" Layer = "1" Angle = "-Pi/4"/>
+            <Turn Axis = "0" Layer = "1" Angle = "Pi/4"/>
+            <Turn Axis = "2" Layer = "0" Angle = "-Pi/2"/>
+            <Turn Axis = "1" Layer = "1" Angle = "-Pi/4"/>
+            <Turn Axis = "2" Layer = "1" Angle = "-Pi/4"/>
+            <Turn Axis = "1" Layer = "1" Angle = "Pi/4"/>
+            <Turn Axis = "2" Layer = "0" Angle = "Pi/2"/>
+            <Turn Axis = "0" Layer = "1" Angle = "-Pi/4"/>
+            <Turn Axis = "2" Layer = "1" Angle = "Pi/2"/>
+        </Macro>
+
+        <Macro Name = "Exchange2" Public = "1" Description = "Exchanges 2 elements" >
+            <Turn Axis = "0" Layer = "1" Angle = " Pi"/>
+            <Turn Axis = "2" Layer = "2" Angle = " Pi"/>
+            <Turn Axis = "0" Layer = "1" Angle = " Pi/2"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/4"/>
+            <Turn Axis = "0" Layer = "1" Angle = "-Pi/2"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/4"/>
+            <Turn Axis = "0" Layer = "1" Angle = " Pi/2"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/4"/>
+            <Turn Axis = "0" Layer = "1" Angle = "-Pi/2"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi/4"/>
+            <Turn Axis = "0" Layer = "1" Angle = " Pi/2"/>
+            <Turn Axis = "2" Layer = "1" Angle = " Pi*5/4"/>
+            <Turn Axis = "0" Layer = "1" Angle = " Pi"/>
+            <Turn Axis = "2" Layer = "2" Angle = " Pi"/>
+            <Turn Axis = "0" Layer = "1" Angle = " Pi"/>
+            <Turn Axis = "0" Layer = "1" Angle = " Pi"/>
+        </Macro>
+    </Macros>
+</xml>

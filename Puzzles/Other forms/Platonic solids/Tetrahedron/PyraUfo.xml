@@ -1,0 +1,56 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>PyraUfo</Name>
+        <Menu>Other forms\Tetrahedron\PyraUfo</Menu>
+        <Inventor>José Manuel Garcéa Mouzo</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2016-11-27</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2461</Link>
+    </Interface>
+
+    <Script>
+        for i := 0 to 2 do begin
+            x[i] := cos(Pi / 3 * (2 * i + 1));
+            y[i] := sin(Pi / 3 * (2 * i + 1));
+        end;
+
+        D := sqrt(3) / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = "x[0]; y[0]; 0" />
+        <Axis NormVector = "x[1]; y[1]; 0" />
+        <Axis NormVector = "x[2]; y[2]; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi / 3" PlaneDistances = "0" >
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "2; -2; 2" />
+                <Add Vector = "-2; 2; 2" />
+                <Add Vector = "2; 2; -2" />
+                <Add Vector = "-2; -2; -2" />
+            </Vertices>
+
+            <Faces>
+                <Face VertexIndexes = "0;1;3" />
+                <Face VertexIndexes = "1;2;3" />
+                <Face VertexIndexes = "0;3;2" />
+                <Face VertexIndexes = "0;2;1" />
+            </Faces>
+        </Part>
+
+        <SplitByAxes/>
+        <Turn Axis = "1" Angle = "Pi / 2" Layer = "1" />
+        <Cut Color = "C80000" > <Plane NormVector = "-1;        0;  sqrt(2)" NormDistance = "-D" /> </Cut>
+        <Cut Color = "0000C8" > <Plane NormVector = " 1; -sqrt(2);        0" NormDistance = "-D" /> </Cut>
+        <Cut Color = "009600" > <Plane NormVector = " 1;  sqrt(2);        0" NormDistance = "-D" /> </Cut>
+        <Cut Color = "FFFF00" > <Plane NormVector = "-1;        0; -sqrt(2)" NormDistance = "-D" /> </Cut>
+    </Figure>
+</xml>

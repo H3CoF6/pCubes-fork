@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Void Cuboctahedron</Name>
+        <Menu>Other forms\Void\Archimedean\Cuboctahedron</Menu>
+        <Programmer>Knightcrawler</Programmer>
+        <Added>2016-10-24</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        DV := W * 2 / 3;
+        D1 := W * 0.75;
+        D2 := D1 * 2 / sqrt(3);
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D1; D1" FixedLayers = "1" >
+        <Axis NormVector = " 0; 0;-1" />
+        <Axis NormVector = " 0; 1; 0" />
+        <Axis NormVector = " 1; 0; 0" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi * 2 / 3" PlaneDistances = "-D2; D2" FixedLayers = "1" >
+        <Axis NormVector = " 1; 1; 1" />
+        <Axis NormVector = "-1; 1; 1" />
+        <Axis NormVector = "-1;-1; 1" />
+        <Axis NormVector = " 1;-1; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cuboctahedron.xml" />
+        <SplitByAxes/>
+
+        <RemoveContaining Vector = "  0;  0;  0" />
+        <RemoveContaining Vector = "  0;  0;  W" />
+        <RemoveContaining Vector = "  0;  0; -W" />
+        <RemoveContaining Vector = "  0;  W;  0" />
+        <RemoveContaining Vector = "  0; -W;  0" />
+        <RemoveContaining Vector = "  W;  0;  0" />
+        <RemoveContaining Vector = " -W;  0;  0" />
+        <RemoveContaining Vector = " DV; DV; DV" />
+        <RemoveContaining Vector = "-DV; DV; DV" />
+        <RemoveContaining Vector = "-DV;-DV; DV" />
+        <RemoveContaining Vector = " DV;-DV; DV" />
+        <RemoveContaining Vector = "-DV;-DV;-DV" />
+        <RemoveContaining Vector = " DV;-DV;-DV" />
+        <RemoveContaining Vector = " DV; DV;-DV" />
+        <RemoveContaining Vector = "-DV; DV;-DV" />
+    </Figure>
+
+    <Procedures CheckSolved = "EachColorHasSameOrOppositeDirection" />
+</xml>

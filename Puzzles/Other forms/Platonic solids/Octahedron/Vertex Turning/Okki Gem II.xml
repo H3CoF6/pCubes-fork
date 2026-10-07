@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Okki Gem II</Name>
+        <Menu>Other forms\Octahedron\Vertex Turning\Okki Gem II</Menu>
+        <Menu>Other forms\2x2x2 variants\Okki Gem II</Menu>
+        <Inventor>Milan Vodicka</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2023-03-21</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=1222</Link>
+    </Interface>
+
+    <Script>
+        Colors[0] := 'C80000'; // Red
+        Colors[1] := 'FF800A'; // Orange
+        Colors[2] := '0000C8'; // Blue
+        Colors[3] := '009600'; // Green
+        Colors[4] := 'FFFF00'; // Yellow
+        Colors[5] := 'FFFFFF'; // White
+
+        W := 0.75;
+        include 'Figures\Scripts\Octahedron_Coordinates.inc';
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "0" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Face Color = "Colors[c1]" VertexIndexes = "v1;v2;v0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c2]" VertexIndexes = "v2;v3;v0" InvisibleEdges = "6" />
+            <Face Color = "Colors[c3]" VertexIndexes = "v3;v1;v0" InvisibleEdges = "6" />
+        </Macro>
+
+        <Part>
+            <Vertices Vectors = "Vx; Vy; Vz" />
+            <Vertices Vectors = "Cx; Cy; Cz" />
+
+            <Faces>
+                <ExecMacro MacroName = "AddFace" c1 = "5" c2 = "0" c3 = "2" v0 =  "6" v1 = "0" v2 = "2" v3 = "5" />
+                <ExecMacro MacroName = "AddFace" c1 = "1" c2 = "5" c3 = "2" v0 =  "7" v1 = "5" v2 = "2" v3 = "1" />
+                <ExecMacro MacroName = "AddFace" c1 = "3" c2 = "5" c3 = "1" v0 =  "8" v1 = "5" v2 = "1" v3 = "3" />
+                <ExecMacro MacroName = "AddFace" c1 = "0" c2 = "5" c3 = "3" v0 =  "9" v1 = "5" v2 = "3" v3 = "0" />
+                <ExecMacro MacroName = "AddFace" c1 = "0" c2 = "4" c3 = "2" v0 = "10" v1 = "4" v2 = "2" v3 = "0" />
+                <ExecMacro MacroName = "AddFace" c1 = "2" c2 = "4" c3 = "1" v0 = "11" v1 = "4" v2 = "1" v3 = "2" />
+                <ExecMacro MacroName = "AddFace" c1 = "1" c2 = "4" c3 = "3" v0 = "12" v1 = "4" v2 = "3" v3 = "1" />
+                <ExecMacro MacroName = "AddFace" c1 = "3" c2 = "4" c3 = "0" v0 = "13" v1 = "4" v2 = "0" v3 = "3" />
+            </Faces>
+        </Part>
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

@@ -1,0 +1,111 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Slide Rule Duel (Pentaplenty, cylinder)</Name>
+        <Menu>Other forms\2d\Slide Rule Duel\Pentaplenty (cylinder)</Menu>
+        <Menu>Other forms\Cylinder\Slide Rule Duel (Pentaplenty)</Menu>
+        <Inventor>Douglas A. Engel</Inventor>
+        <Programmer>Skallos</Programmer>
+        <Added>2022-11-18</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=4557</Link>
+    </Interface>
+
+    <Script>
+        clBrown := '88653F';
+        clRed   := 'FF0000';
+        clBlue  := '4444FF';
+
+        R := 0.6;
+        H := R / 2;
+        D := R * cos(2*Pi/5);
+
+        N := 50;
+        for i := 0 to N - 1 do begin
+            A := 2 * Pi / N * i;
+            x[i] := R * sin(A);
+            y[i] :=-R * cos(A);
+        end;
+
+        function FromTo(iFrom, iTo);
+        begin
+            Result := IntToStr(iFrom);
+            for i := iFrom + 1 to iTo do
+                Result := Result + ';' + IntToStr(i);
+            for i := iFrom - 1 downto iTo do
+                Result := Result + ';' + IntToStr(i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = " 0" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 0; 1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D" TurnAxesWithLayer = "0" >
+        <Axis NormVector = " 0; 1; 0" />
+    </Axes>
+
+    <Figure>
+        <Macro Name = "AddFace" >
+            <Script>
+                i1 := i mod N;
+                i2 := (i + 1) mod N;
+                Inc(i);
+            </Script>
+            <Face Color = "Color" VertexIndexes = "i1 + N; i2 + N; i2; i1" InvisibleEdges = "10" />
+        </Macro>
+
+        <Macro Name = "AddCylinder" >
+            <Part>
+                <Vertices Vectors = "x; y; H" />
+                <Vertices Vectors = "x; y;-H" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "FromTo(0, N - 1)" />
+                    <ExecMacro MacroName = "AddFace" i = "0" Repeat = "N" />
+                    <Face Color = "Color" VertexIndexes = "FromTo(2 * N - 1, N)" />
+                </Faces>
+            </Part>
+            <Split> <Plane NormVector = " 0; 0; 1" /> </Split>
+        </Macro>
+
+        <Macro Name = "Split" >
+            <Split> <Plane NormVector = " 0; 1; 0" NormDistance = "-D" /> </Split>
+            <Turn NormVector = "0; 0; 1" Angle = "2*Pi / 5" />
+        </Macro>
+
+        <Macro Name = "HideRemove" >
+            <HideContaining   Vector = "0; R; H"/>
+            <RemoveContaining Vector = "0; R;-H"/>
+            <Turn NormVector = "0; 0; 1" Angle = "2*Pi / 5" />
+        </Macro>
+
+        <ExecMacro MacroName = "AddCylinder" Color = "clBlue" />
+        <ExecMacro MacroName = "Split" Repeat = "5" />
+        <ExecMacro MacroName = "HideRemove" Repeat = "5" />
+        <Hide Axis = "0" Layer = "0" />
+        <RemoveAllVisible/>
+        <Turn NormVector = "0; 1; 0" Angle = "Pi" />
+
+        <ExecMacro MacroName = "AddCylinder" Color = "clRed" />
+        <ExecMacro MacroName = "Split" Repeat = "5" />
+        <ExecMacro MacroName = "HideRemove" Repeat = "5" />
+        <Hide Axis = "0" Layer = "1" />
+        <RemoveAllVisible/>
+        <Turn NormVector = "0; 1; 0" Angle = "Pi" />
+        <ShowAll/>
+
+        <Hide Axis = "0" Layer = "1" />
+        <Cut Axis = "1" From = "1" />
+        <HideAll/>
+
+        <ExecMacro MacroName = "AddCylinder" Color = "clBrown" />
+        <Cut Axis = "0" To = "1" />
+        <Cut Axis = "1" To = "1" />
+        <ShowAll/>
+
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

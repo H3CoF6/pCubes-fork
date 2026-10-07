@@ -1,0 +1,105 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+block after some moves (try to move any of right-up central cubies left-down-righ-up)
+
+    <Interface>
+        <Name>V-Doctor</Name>
+        <Menu>Other cubes\Mixup\V-Doctor</Menu>
+        <Inventor>not invented</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-08-25</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W * sin(Pi / 10);
+    </Script>
+
+    <Axes TurningAngles = "0; Pi/10; Pi/10; 0" PlaneDistances = "-D; 0; D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <SplitByAxes/>
+
+        <Macro Name = "Split123" >
+            <Split Axis = "Ax" From = "1" />
+            <Split Axis = "Ax" From = "2" />
+            <Split Axis = "Ax" From = "3" />
+        </Macro>
+
+
+        <Macro Name = "SplitCut" >
+            <Turn  Axis = "Ax1" From = "1" To = "2" Angle = " Pi/10" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax2" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax3" />
+            <RemoveGrayParts/>
+
+            <Turn  Axis = "Ax2" From = "1" To = "2" Angle = " Pi/10" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax3" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax1" />
+            <RemoveGrayParts/>
+            <Turn  Axis = "Ax2" From = "1" To = "2" Angle = " Pi/10" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax3" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax1" />
+            <RemoveGrayParts/>
+            <Turn  Axis = "Ax2" From = "1" To = "2" Angle = " -2*Pi/5" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax3" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax1" />
+            <RemoveGrayParts/>
+            <Turn  Axis = "Ax2" From = "1" To = "2" Angle = " Pi/10" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax3" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax1" />
+            <RemoveGrayParts/>
+            <Undo/>
+
+            <Turn  Axis = "Ax3" From = "1" To = "2" Angle = " Pi/10" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax1" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax2" />
+            <RemoveGrayParts/>
+            <Turn  Axis = "Ax3" From = "1" To = "2" Angle = " Pi/10" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax1" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax2" />
+            <RemoveGrayParts/>
+            <Turn  Axis = "Ax3" From = "1" To = "2" Angle = " -2*Pi/5" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax1" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax2" />
+            <RemoveGrayParts/>
+            <Turn  Axis = "Ax3" From = "1" To = "2" Angle = " Pi/10" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax1" />
+            <ExecMacro MacroName = "Split123" Ax = "Ax2" />
+            <RemoveGrayParts/>
+            <Undo/>
+
+        </Macro>
+
+        <Macro Name = "Hide" >
+            <HideContaining Vector = " D/2; W;-D/2" />
+            <HideContaining Vector = "-D/2; W;-D/2" />
+            <Turn  Axis = "Ax1" From = "1" To = "2" Angle = " Pi/10" />
+        </Macro>
+
+        <Macro Name = "MakeAxis" >
+            <Hide Axis = "0" Layer = "0" />
+            <Hide Axis = "0" Layer = "3" />
+            <ExecMacro MacroName = "SplitCut" Repeat = "5" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+            <ExecMacro MacroName = "Hide" Repeat = "20" Ax1 = "0" Ax2 = "1" Ax3 = "2" />
+            <Undo/>
+
+            <Cut> <Plane NormVector = "0;0;-1" NormDistance = "W" /> </Cut>
+            <ShowAll/>
+
+            <Turn Axis = "0" From = "0" To = "3" Angle = "-Pi/2" />
+            <Turn Axis = "2" From = "0" To = "3" Angle = "-Pi/2" />
+        </Macro>
+        <ExecMacro MacroName = "MakeAxis" Repeat = "3" />
+
+        <Hide1 Axis = "0" Layer = "3" />
+
+    </Figure>
+</xml>

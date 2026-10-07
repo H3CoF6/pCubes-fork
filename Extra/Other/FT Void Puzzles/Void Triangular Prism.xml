@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml Data_Version="2">
+
+    <Interface>
+        <Name>Void Triangular Prism</Name>
+        <Menu>Other forms\FT Void Puzzles\Void Triangular Prism</Menu>
+    </Interface>
+
+    <Script>
+            clYellow := 'EDFF11';
+            clBlue := '5050FF';
+            clOrange := 'FF5C00';
+            clViolett := '7700CD';
+            clWhite := 'FFFFFF';
+
+        Y := sqrt(3) / 4;
+        K := 2 / sqrt(3);
+        L := sqrt(3) / 2;
+        S := 0.2;
+    </Script>
+
+    <Axes TurningAngles = "2 * Pi / 3" PlaneDistances = "1/4" FixedLayer="0">
+        <Axis NormVector = "0; 0; 1" />
+        <Axis NormVector = "0; 0;-1" />
+    </Axes>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0.15" FixedLayer="0">
+        <Axis NormVector = "  -1;            0; 0" />
+        <Axis NormVector = " 0.5;  L; 0" />
+        <Axis NormVector = " 0.5; -L; 0" />
+    </Axes>
+
+    <Figure>
+        <Part>
+            <Vertices>
+                <Add Vector = "-0.25 * K; Y * K; 0.4"/>
+                <Add Vector = "-0.25 * K; -Y * K; 0.4"/>
+                <Add Vector = "0.5 * K; 0; 0.4"/>
+                <Add Vector = "-0.25 * K; Y * K; -0.4"/>
+                <Add Vector = "-0.25 * K; -Y * K; -0.4"/>
+                <Add Vector = "0.5 * K; 0; -0.4"/>
+            </Vertices>
+            <Faces>
+                <Face Color = "clViolett" VertexIndexes = "0;1;2"/>
+                <Face Color = "clYellow" VertexIndexes = "4;3;5"/>
+                <Face Color = "clOrange" VertexIndexes = "0;3;4;1"/>
+                <Face Color = "clWhite" VertexIndexes = "1;4;5;2"/>
+                <Face Color = "clBlue" VertexIndexes = "2;5;3;0"/>
+            </Faces>
+        </Part>
+    <SplitByAxes/>
+        <RemoveContaining Vector = "   0;   0;   0"/>
+        <RemoveContaining Vector = "   0;   0; 0.4"/>
+        <RemoveContaining Vector = "   0;   0;-0.4"/>
+
+        <RemoveContaining Vector = " 0.5*S;   L*S;     0"/>
+        <RemoveContaining Vector = " 0.5*S;  -L*S;     0"/>
+        <RemoveContaining Vector = "-0.2  ;     0;     0"/>
+    </Figure>
+</xml>

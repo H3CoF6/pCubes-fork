@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Chimera 4x4x6x6</Name>
+        <Menu>Cubic\Bandaged\Cube 6x6x6\Chimera 4x4x6x6</Menu>
+        <Inventor>Tom van der Zanden</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2014-05-06</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=3282</Link>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+
+        for i := 0 to 10 do
+            D[i] := -W + (i + 1) * W / 6;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "D" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+
+        <Macro Name = "Split3" >
+            <Split Axis = "0" From = "L" />
+            <Split Axis = "1" From = "L" />
+            <Split Axis = "2" From = "L" />
+        </Macro>
+
+        <ExecMacro MacroName = "Split3" L = "6" />
+
+        <HideContaining Vector = "-W;-W;-W" />
+        <HideContaining Vector = "-W; W; W" />
+        <HideContaining Vector = " W;-W; W" />
+        <HideContaining Vector = " W; W;-W" />
+
+        <ExecMacro MacroName = "Split3" L = "3" />
+        <ExecMacro MacroName = "Split3" L = "9" />
+
+        <InvertVisibility/>
+
+        <ExecMacro MacroName = "Split3" L = "2" />
+        <ExecMacro MacroName = "Split3" L = "4" />
+        <ExecMacro MacroName = "Split3" L = "8" />
+        <ExecMacro MacroName = "Split3" L = "10" />
+
+        <ShowAll/>
+        <RemoveGrayParts/>
+    </Figure>
+</xml>

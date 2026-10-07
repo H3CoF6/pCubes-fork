@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sq-7</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other cubes\Square-1\Sq-7</Menu>
+        <Inventor>Ge Sheng Yang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12495</Link>
+        <Added>2025-02-16</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        sAngle := 2*Pi / 180; // 2 degrees
+        for i := 0 to 2 do begin
+            ax[i] := sin(2*Pi/3 * i);
+            ay[i] := cos(2*Pi/3 * i);
+        end;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" NormVectors = "0; 0; 1" />
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" NormVectors = " ax; ay; 0" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Hide Axis = "0" Layers = "0;2" />
+        <SplitByAxes/>
+        <ShowAll/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "0" Layers = "0;2" Angle = "sAngle * i" />
+            <Split Axis = "2" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "0" />
+        <ExecMacro MacroName = "Split" i = "15" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <ExecMacro MacroName = "Split" i = "6" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <ExecMacro MacroName = "Split" i = "15" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <ExecMacro MacroName = "Split" i = "6" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <ExecMacro MacroName = "Split" i = "4" />
+        <Undo Repeat = "16" />
+    </Figure>
+</xml>

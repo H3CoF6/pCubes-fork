@@ -1,0 +1,63 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Sq-5 v2</Name>
+        <Class>TSquare1</Class>
+        <Menu>Other cubes\Square-1\Sq-5 v2</Menu>
+        <Inventor>Ge Sheng Yang</Inventor>
+        <Programmer>Boris</Programmer>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=12301</Link>
+        <Added>2024-11-17</Added>
+    </Interface>
+
+    <Script>
+        W := 0.5;
+        D := W / 3;
+        sAngle := 15*Pi / 180; // 15 degrees
+        for i := 0 to 2 do begin
+            ax[i] := sin(2*Pi/3 * i);
+            ay[i] := cos(2*Pi/3 * i);
+        end;
+
+        DCut := W * 0.2;
+    </Script>
+
+    <Axes TurningAngles = "sAngle" PlaneDistances = "-D; D" TurnAxesWithLayer = "1" NormVectors = "0; 0; 1" />
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "0" NormVectors = " ax; ay; 0" />
+
+    <Figure>
+        <LoadFrom File = "Figures\Cube.xml" />
+        <Split Axis = "0" From = "1" />
+        <Split Axis = "0" From = "2" />
+        <Hide Axis = "0" Layers = "0;2" />
+        <SplitByAxes/>
+        <ShowAll/>
+
+        <Macro Name = "Split" >
+            <Turn Axis = "0" Layers = "0;2" Angle = "sAngle * i" />
+            <Split Axis = "2" From = "1" />
+        </Macro>
+        <ExecMacro MacroName = "Split" i = "2" />
+        <ExecMacro MacroName = "Split" i = "1" />
+        <ExecMacro MacroName = "Split" i = "2" />
+        <ExecMacro MacroName = "Split" i = "1" />
+        <ExecMacro MacroName = "Split" i = "2" />
+        <ExecMacro MacroName = "Split" i = "1" />
+        <ExecMacro MacroName = "Split" i = "2" />
+        <ExecMacro MacroName = "Split" i = "1" />
+        <Undo Repeat = "8" />
+
+        <Macro Name = "Cut" >
+            <Turn NormVector = "0;0;1" Angle = "sAngle / 2" />
+            <HideContaining Vector = " 0; DCut*2; W" />
+            <HideContaining Vector = " 0; DCut*2;-W" />
+            <InvertVisibility/>
+            <Cut><Plane NormVector = "0;1;0" NormDistance = "DCut" /></Cut>
+            <ShowAll/>
+            <Turn NormVector = "0;0;1" Angle = "sAngle / 2" />
+        </Macro>
+        <ExecMacro MacroName = "Cut" Repeat = "Round(2*Pi / sAngle)" />
+    </Figure>
+</xml>

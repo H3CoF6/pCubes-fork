@@ -1,0 +1,86 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Star Puzzle Twisted 2-colors</Name>
+        <Menu>Other forms\Star\Star Puzzle Twisted 2-colors</Menu>
+        <Inventor>Matthew Ray</Inventor>
+        <Programmer>Evgeniy Grigoriev</Programmer>
+        <Added>2023-10-04</Added>
+        <Link>https://twistypuzzles.com/app/museum/museum_showitem.php?pkey=2036</Link>
+    </Interface>
+
+    <Script>
+        clBlue         := '0000FF';
+        clWhite        := 'FFFFFF';
+
+        R := 0.7;
+        H := R * 0.5;  // arbitrary
+
+        R1 := 1 / (sin(Pi/5) / H + 1 / R * cos(Pi/5));
+        H1 := H * (1 - R1 / R / cos(Pi/5));
+        D1 := R1 * cos(Pi / 5);
+        D2 := R1 * cos(2 * Pi / 5);
+
+        sAngle := PI * 2 / 5;
+        for i := 0 to 4 do begin
+            x[i] := R * sin(sAngle * i);
+            y[i] := R * cos(sAngle * i);
+            xi[i] := R1 * sin(sAngle * (i + 0.5));
+            yi[i] := R1 * cos(sAngle * (i + 0.5));
+        end;
+
+    </Script>
+
+    <Axes TurningAngles = "Pi" PlaneDistances = "-D2;D1" FixedLayers = "1" NormVectors = " x; y; 0" />
+
+    <Axes TurningAngles = "2*Pi/5" PlaneDistances = "0" NormVectors = " 0; 0; 1" />
+
+    <Figure>
+        <Macro Name = "AddColor" >
+            <Part>
+                <Vertices Vectors = "  0;  0;  H" />
+                <Vertices Vectors = "  x;  y;  0" />
+                <Vertices Vectors = " xi; yi; H1" />
+                <Vertices Vectors = " xi; yi;-H1" />
+                <Vertices Vectors = "  0;  0; -H" />
+
+                <Faces>
+                    <Face Color = "Color" VertexIndexes = "  0; 2; 6; 1" />
+                    <Face Color = "Color" VertexIndexes = "  0; 3; 7; 2" />
+                    <Face Color = "Color" VertexIndexes = "  0; 4; 8; 3" />
+                    <Face Color = "Color" VertexIndexes = "  0; 5; 9; 4" />
+                    <Face Color = "Color" VertexIndexes = "  0; 1;10; 5" />
+                    <Face Color = "Color" VertexIndexes = " 16; 1;11; 2" />
+                    <Face Color = "Color" VertexIndexes = " 16; 2;12; 3" />
+                    <Face Color = "Color" VertexIndexes = " 16; 3;13; 4" />
+                    <Face Color = "Color" VertexIndexes = " 16; 4;14; 5" />
+                    <Face Color = "Color" VertexIndexes = " 16; 5;15; 1" />
+
+                    <Face Color = "Color" VertexIndexes = "  1; 6;11" />
+                    <Face Color = "Color" VertexIndexes = "  6; 2;11" />
+                    <Face Color = "Color" VertexIndexes = "  2; 7;12" />
+                    <Face Color = "Color" VertexIndexes = "  7; 3;12" />
+                    <Face Color = "Color" VertexIndexes = "  3; 8;13" />
+                    <Face Color = "Color" VertexIndexes = "  8; 4;13" />
+                    <Face Color = "Color" VertexIndexes = "  4; 9;14" />
+                    <Face Color = "Color" VertexIndexes = "  9; 5;14" />
+                    <Face Color = "Color" VertexIndexes = "  5;10;15" />
+                    <Face Color = "Color" VertexIndexes = " 10; 1;15" />
+                </Faces>
+            </Part>
+        </Macro>
+
+        <ExecMacro MacroName = "AddColor" Color = "clWhite" />
+        <Cut Axis = "5" From = "1" />
+        <HideAll/>
+        <ExecMacro MacroName = "AddColor" Color = "clBlue" />
+        <Cut Axis = "5" To = "1" />
+        <ShowAll/>
+
+        <SplitByAxes/>
+        <SaveSolvedState/>
+    </Figure>
+
+    <Procedures CheckSolved = "CheckSavedStates" />
+</xml>

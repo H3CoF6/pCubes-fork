@@ -1,0 +1,72 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xml Data_Version = "2" >
+
+    <Interface>
+        <Name>Quatro-2 Cube</Name>
+        <Menu>Cubic\Cross\3x3x3\Quatro-2 Cube</Menu>
+        <Inventor>Evgeniy Grigoriev</Inventor>
+        <Programmer>Boris</Programmer>
+        <Added>2017-10-03</Added>
+    </Interface>
+
+    <Script>
+        W := 0.55;
+        Extra[0] := 1;
+        Extra[1] := 1;
+        Extra[2] := 1;
+        Extra[3] := 0;
+        Extra[4] := 0;
+        Extra[5] := 1;
+
+        D1 := W / 7;
+        D2 := D1 * 3;
+        D3 := D1 * 5;
+    </Script>
+
+    <Axes TurningAngles = "Pi / 2" PlaneDistances = "-D3;-D2;-D1; D1; D2; D3" >
+        <Axis NormVector = "1; 0; 0" />
+        <Axis NormVector = "0; 1; 0" />
+        <Axis NormVector = "0; 0; 1" />
+    </Axes>
+
+    <Figure>
+        <!-- Extra blocks -->
+        <LoadFrom File = "Puzzles\Cubic\Cross\_Macro_For_Cross.xml" W1 = "D2" W2 = "W" />
+        <Macro Name = "Remove1" >
+            <RemoveContaining Vector = " Cx[i] * (1-Extra[i]); Cy[i] * (1-Extra[i]); Cz[i] * (1-Extra[i])" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <Script>include 'Figures\Scripts\Cube_Coordinates.inc';</Script>
+        <ExecMacro MacroName = "Remove1" i = "0" Repeat = "6" />
+
+        <!-- Core -->
+        <Script>
+            for i := 0 to 5 do
+                if Extra[i] = 1 then
+                    Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Figures\Cube.xml" W = "D2" />
+        <SplitByAxes/>
+
+        <!-- Invisible fake parts, preventing some turns -->
+        <HideAll/>
+        <Script>
+            for i := 0 to 5 do
+                Colors[i] := -1;
+        </Script>
+        <LoadFrom File = "Puzzles\Cubic\Cross\_Macro_For_Cross.xml" W1 = "D1*2" W2 = "D1*6" />
+        <Macro Name = "Remove2" >
+            <RemoveContaining Vector = " Cx[i] * Extra[i]; Cy[i] * Extra[i]; Cz[i] * Extra[i]" />
+            <Script>Inc(i);</Script>
+        </Macro>
+        <Script>W := D2; include 'Figures\Scripts\Cube_Coordinates.inc';</Script>
+        <ExecMacro MacroName = "Remove2" i = "0" Repeat = "6" />
+        <Split Axis = "0" From = "3" />
+        <Split Axis = "0" From = "4" />
+        <Split Axis = "1" From = "3" />
+        <Split Axis = "1" From = "4" />
+        <Split Axis = "2" From = "3" />
+        <Split Axis = "2" From = "4" />
+        <InvertVisibility/>
+    </Figure>
+</xml>
